@@ -1,0 +1,41 @@
+{
+  "name": "linear-client",
+  "version": "1.0.0",
+  "description": "Type-safe wrapper around @linear/sdk with caching",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "eslint src --max-warnings 0",
+    "lint:fix": "eslint src --fix",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@linear/sdk": "^22.0.0",
+    "upstash-redis": "^1.28.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.5",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
+  "keywords": [
+    "linear",
+    "api",
+    "typescript",
+    "cache",
+    "real-estate"
+  ]
+} 
