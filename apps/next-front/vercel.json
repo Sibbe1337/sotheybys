@@ -1,0 +1,12 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "pnpm build",
+  "devCommand": "pnpm dev",
+  "installCommand": "pnpm install",
+  "outputDirectory": ".next",
+  "env": {
+    "NEXT_PUBLIC_BASE_URL": "@next_public_base_url",
+    "LINEAR_API_KEY": "@linear_api_key",
+    "LINEAR_COMPANY_ID": "@linear_company_id"
+  }
+}
