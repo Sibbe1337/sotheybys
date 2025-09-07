@@ -1,5 +1,5 @@
 import { LinearClient, IssueConnection } from '@linear/sdk';
-import { Redis } from 'upstash-redis';
+import { Redis } from '@upstash/redis';
 
 export interface LinearClientConfig {
   apiKey: string;
@@ -296,6 +296,5 @@ export class CachedLinearClient {
   }
 }
 
-// Export types and main class
-export type { LinearClientConfig, PropertyListing, LinearSyncResult };
+// Export main class
 export { CachedLinearClient as default }; 

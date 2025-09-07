@@ -1,0 +1,23 @@
+# Cloudflare Pages Configuration for Sotheby's Next.js Frontend
+name = "sothebys-finland"
+compatibility_date = "2024-01-01"
+
+# Build configuration
+[build]
+command = "pnpm build"
+
+# Build output directory
+[build.upload]
+format = "service-worker"
+
+# Environment variables (will be set in Cloudflare dashboard)
+# These are placeholders - actual values should be set in Cloudflare Pages dashboard
+[env.production]
+vars = { NODE_ENV = "production" }
+
+[env.preview]
+vars = { NODE_ENV = "development" }
+
+# Cron triggers (similar to Vercel's cron jobs)
+# Note: Cloudflare Pages doesn't support cron directly, 
+# but you can use Cloudflare Workers for scheduled tasks

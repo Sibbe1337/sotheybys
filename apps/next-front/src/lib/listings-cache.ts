@@ -1,0 +1,218 @@
+/**
+ * Listings Cache Manager
+ * Manages caching and automatic synchronization of Linear API listings
+ */
+
+import { LinearAPIListing } from './linear-api-adapter';
+import { convertCompleteLinearToWordPressFormat } from './linear-api-complete-converter';
+import { CompleteLinearAPIListing } from './linear-api-complete-interface';
+import { hasMarketingContent } from './marketing-content';
+
+interface CacheData {
+  listings: CompleteLinearAPIListing[];
+  lastSyncTime: Date;
+  syncInProgress: boolean;
+}
+
+class ListingsCache {
+  private static instance: ListingsCache;
+  private cache: CacheData = {
+    listings: [],
+    lastSyncTime: new Date(0), // Initialize with epoch
+    syncInProgress: false
+  };
+  
+  private syncInterval: NodeJS.Timeout | null = null;
+  private readonly SYNC_INTERVAL = 10 * 60 * 1000; // 10 minutes
+  private readonly CACHE_DURATION = 10 * 60 * 1000; // 10 minutes
+
+  private constructor() {}
+
+  static getInstance(): ListingsCache {
+    if (!ListingsCache.instance) {
+      ListingsCache.instance = new ListingsCache();
+    }
+    return ListingsCache.instance;
+  }
+
+  /**
+   * Initialize automatic syncing
+   */
+  startAutoSync() {
+    // Initial sync
+    this.syncListings();
+    
+    // Set up interval if not already running
+    if (!this.syncInterval) {
+      this.syncInterval = setInterval(() => {
+        this.syncListings();
+      }, this.SYNC_INTERVAL);
+      
+      console.log('[ListingsCache] Auto-sync started - syncing every 10 minutes');
+    }
+  }
+
+  /**
+   * Stop automatic syncing
+   */
+  stopAutoSync() {
+    if (this.syncInterval) {
+      clearInterval(this.syncInterval);
+      this.syncInterval = null;
+      console.log('[ListingsCache] Auto-sync stopped');
+    }
+  }
+
+  /**
+   * Manually trigger a sync
+   */
+  async syncListings(): Promise<void> {
+    if (this.cache.syncInProgress) {
+      console.log('[ListingsCache] Sync already in progress, skipping...');
+      return;
+    }
+
+    try {
+      this.cache.syncInProgress = true;
+      console.log(`[ListingsCache] Starting sync at ${new Date().toISOString()}`);
+      
+      // Direct API call since LinearAPIClient is not exported
+      const apiUrl = process.env.LINEAR_API_URL || 'https://linear-external-api.azurewebsites.net/api';
+      const apiKey = process.env.LINEAR_API_KEY?.replace('LINEAR-API-KEY ', '') || '';
+      const companyId = process.env.LINEAR_COMPANY_ID || '180';
+      
+      const baseUrl = apiUrl.endsWith('/api') ? apiUrl.replace('/api', '') : apiUrl;
+      const endpoint = `${baseUrl}/v2/listings?languages[]=fi`;
+      
+      const response = await fetch(endpoint, {
+        headers: {
+          'Authorization': `LINEAR-API-KEY ${apiKey}`,
+          'X-Company-Id': companyId,
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error(`API request failed: ${response.status} ${response.statusText}`);
+      }
+      
+      const listings = await response.json();
+      
+      this.cache.listings = listings;
+      this.cache.lastSyncTime = new Date();
+      
+      console.log(`[ListingsCache] Sync completed. Found ${listings.length} listings`);
+      
+      // Log summary for monitoring
+      const summary = listings.map((l: CompleteLinearAPIListing) => ({
+        id: l.identifier?.fi?.value || l.identifier,
+        address: l.address?.fi?.value,
+        status: l.status?.fi?.value
+      }));
+      console.log('[ListingsCache] Listings summary:', summary);
+      
+    } catch (error) {
+      console.error('[ListingsCache] Sync error:', error);
+      throw error;
+    } finally {
+      this.cache.syncInProgress = false;
+    }
+  }
+
+  /**
+   * Get all cached listings
+   */
+  getListings(): CompleteLinearAPIListing[] {
+    return this.cache.listings;
+  }
+
+  /**
+   * Get cached listings in WordPress format
+   */
+  getWordPressFormattedListings(language: 'fi' | 'sv' | 'en' = 'fi') {
+    return this.cache.listings.map(listing => convertCompleteLinearToWordPressFormat(listing));
+  }
+
+  /**
+   * Get a single listing by ID
+   */
+  getListingById(id: string): CompleteLinearAPIListing | undefined {
+    return this.cache.listings.find(listing => 
+      listing.id?.fi?.value === id
+    );
+  }
+
+  /**
+   * Get a single listing by identifier (kohdenumero)
+   */
+  getListingByIdentifier(identifier: string): CompleteLinearAPIListing | undefined {
+    return this.cache.listings.find(listing => {
+      const listingIdentifier = listing.identifier?.fi?.value || (listing.identifier as any);
+      return listingIdentifier == identifier; // Using == for type coercion
+    });
+  }
+
+  /**
+   * Get a single listing by slug (address-based)
+   */
+  getListingBySlug(slug: string): CompleteLinearAPIListing | undefined {
+    return this.cache.listings.find(listing => {
+      const address = listing.address?.fi?.value;
+      if (!address) return false;
+      
+      const generatedSlug = address
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[äå]/g, 'a')
+        .replace(/ö/g, 'o')
+        .replace(/[^a-z0-9-]/g, '');
+      
+      return generatedSlug === slug;
+    });
+  }
+
+  /**
+   * Get a single listing by slug in WordPress format with marketing content
+   */
+  getConvertedListingBySlug(slug: string, language: 'fi' | 'sv' | 'en' = 'fi') {
+    const listing = this.getListingBySlug(slug);
+    return listing ? convertCompleteLinearToWordPressFormat(listing) : null;
+  }
+
+  /**
+   * Check if cache needs refresh
+   */
+  needsRefresh(): boolean {
+    const now = new Date();
+    const timeSinceLastSync = now.getTime() - this.cache.lastSyncTime.getTime();
+    return timeSinceLastSync > this.CACHE_DURATION;
+  }
+
+  /**
+   * Get cache status
+   */
+  getStatus() {
+    return {
+      listingsCount: this.cache.listings.length,
+      lastSyncTime: this.cache.lastSyncTime,
+      syncInProgress: this.cache.syncInProgress,
+      autoSyncActive: this.syncInterval !== null,
+      needsRefresh: this.needsRefresh()
+    };
+  }
+}
+
+// Export singleton instance
+export const listingsCache = ListingsCache.getInstance();
+
+// Helper function to ensure cache is initialized
+export async function ensureCacheInitialized() {
+  const cache = ListingsCache.getInstance();
+  const status = cache.getStatus();
+  
+  if (status.listingsCount === 0 || status.needsRefresh) {
+    await cache.syncListings();
+  }
+  
+  return cache;
+}

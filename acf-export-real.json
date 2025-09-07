@@ -1,0 +1,361 @@
+[
+  {
+    "key": "group_realestate_migration",
+    "title": "Real Estate – Migration",
+    "fields": [
+      {
+        "key": "field_property_group",
+        "label": "Property",
+        "name": "property_group",
+        "aria-label": "",
+        "type": "group",
+        "instructions": "Real estate property information",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "layout": "block",
+        "show_in_graphql": 1,
+        "graphql_field_name": "propertyGroup",
+        "sub_fields": [
+          {
+            "key": "field_property_price",
+            "label": "Price",
+            "name": "price",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "Property price in EUR",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "default_value": "",
+            "min": 0,
+            "max": "",
+            "placeholder": "",
+            "step": 1000,
+            "prepend": "",
+            "append": "€",
+            "show_in_graphql": 1,
+            "graphql_field_name": "price"
+          },
+          {
+            "key": "field_property_address",
+            "label": "Address",
+            "name": "address",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Street address",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "default_value": "",
+            "maxlength": 255,
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "show_in_graphql": 1,
+            "graphql_field_name": "address"
+          },
+          {
+            "key": "field_property_city",
+            "label": "City",
+            "name": "city",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "City name",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "default_value": "",
+            "maxlength": 100,
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "show_in_graphql": 1,
+            "graphql_field_name": "city"
+          },
+          {
+            "key": "field_property_bedrooms",
+            "label": "Bedrooms",
+            "name": "bedrooms",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "Number of bedrooms",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "default_value": "",
+            "min": 0,
+            "max": 20,
+            "placeholder": "",
+            "step": 1,
+            "prepend": "",
+            "append": "",
+            "show_in_graphql": 1,
+            "graphql_field_name": "bedrooms"
+          },
+          {
+            "key": "field_property_bathrooms",
+            "label": "Bathrooms",
+            "name": "bathrooms",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "Number of bathrooms",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "default_value": "",
+            "min": 0,
+            "max": 20,
+            "placeholder": "",
+            "step": 0.5,
+            "prepend": "",
+            "append": "",
+            "show_in_graphql": 1,
+            "graphql_field_name": "bathrooms"
+          },
+          {
+            "key": "field_property_area",
+            "label": "Living area (m²)",
+            "name": "area",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "Living area in square meters",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "default_value": "",
+            "min": 0,
+            "max": "",
+            "placeholder": "",
+            "step": 1,
+            "prepend": "",
+            "append": "m²",
+            "show_in_graphql": 1,
+            "graphql_field_name": "area"
+          },
+          {
+            "key": "field_property_gallery",
+            "label": "Gallery",
+            "name": "gallery",
+            "aria-label": "",
+            "type": "gallery",
+            "instructions": "Property photo gallery",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min": "",
+            "max": "",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "insert": "append",
+            "preview_size": "medium",
+            "show_in_graphql": 1,
+            "graphql_field_name": "gallery"
+          }
+        ]
+      },
+      {
+        "key": "field_agent_group",
+        "label": "Agent",
+        "name": "agent_group",
+        "aria-label": "",
+        "type": "group",
+        "instructions": "Real estate agent information",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "layout": "block",
+        "show_in_graphql": 1,
+        "graphql_field_name": "agentGroup",
+        "sub_fields": [
+          {
+            "key": "field_agent_name",
+            "label": "Name",
+            "name": "name",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Agent full name",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "default_value": "",
+            "maxlength": 100,
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "show_in_graphql": 1,
+            "graphql_field_name": "name"
+          },
+          {
+            "key": "field_agent_photo",
+            "label": "Photo",
+            "name": "photo",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Agent profile photo",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium",
+            "show_in_graphql": 1,
+            "graphql_field_name": "photo"
+          },
+          {
+            "key": "field_agent_phone",
+            "label": "Phone",
+            "name": "phone",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Contact phone number",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "default_value": "",
+            "maxlength": 50,
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "show_in_graphql": 1,
+            "graphql_field_name": "phone"
+          },
+          {
+            "key": "field_agent_email",
+            "label": "Email",
+            "name": "email",
+            "aria-label": "",
+            "type": "email",
+            "instructions": "Contact email address",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "show_in_graphql": 1,
+            "graphql_field_name": "email"
+          },
+          {
+            "key": "field_agent_bio",
+            "label": "Bio",
+            "name": "bio",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "Agent biography and experience",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0,
+            "show_in_graphql": 1,
+            "graphql_field_name": "bio"
+          }
+        ]
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "post_type",
+          "operator": "==",
+          "value": "post"
+        }
+      ],
+      [
+        {
+          "param": "post_type",
+          "operator": "==",
+          "value": "page"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Field groups for real estate properties and agents",
+    "show_in_rest": 0,
+    "show_in_graphql": 1,
+    "graphql_field_name": "acfRealEstate",
+    "map_graphql_types_from_location_rules": 0,
+    "graphql_types": ""
+  }
+]

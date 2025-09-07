@@ -19,7 +19,8 @@
         "sanity-io.vscode-sanity",
         "formulahendry.auto-rename-tag",
         "christian-kohler.path-intellisense",
-        "ms-vscode.vscode-typescript-next"
+        "graphql.vscode-graphql",
+        "graphql.vscode-graphql-syntax"
       ],
       "settings": {
         "editor.formatOnSave": true,
@@ -40,10 +41,21 @@
       }
     }
   },
-  "forwardPorts": [3000, 3333],
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20",
+      "installTooling": true,
+      "pnpm": "latest"
+    }
+  },
+  "forwardPorts": [3000, 3001, 3333],
   "portsAttributes": {
     "3000": {
-      "label": "Next.js Web",
+      "label": "Next.js Web (Legacy)",
+      "onAutoForward": "notify"
+    },
+    "3001": {
+      "label": "Next.js Frontend (New)",
       "onAutoForward": "notify"
     },
     "3333": {
@@ -52,4 +64,4 @@
     }
   },
   "remoteUser": "vscode"
-} 
+}   

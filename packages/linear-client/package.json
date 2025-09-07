@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@linear/sdk": "^22.0.0",
-    "upstash-redis": "^1.28.1"
+    "@upstash/redis": "^1.28.1"
   },
   "devDependencies": {
     "@types/node": "^20.11.5",

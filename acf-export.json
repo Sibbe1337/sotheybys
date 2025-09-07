@@ -1,0 +1,186 @@
+{
+  "key": "group_realestate_migration",
+  "title": "Real Estate – Migration",
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "post"
+      }
+    ],
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "page"
+      }
+    ]
+  ],
+  "fields": [
+    {
+      "key": "field_property_group",
+      "label": "Property",
+      "name": "property_group",
+      "type": "group",
+      "graphql_field_name": "property",
+      "instructions": "Real estate property information",
+      "sub_fields": [
+        {
+          "key": "field_property_price",
+          "label": "Price",
+          "name": "price",
+          "type": "number",
+          "graphql_field_name": "price",
+          "instructions": "Property price in EUR",
+          "required": 0,
+          "min": 0,
+          "step": 1000
+        },
+        {
+          "key": "field_property_address",
+          "label": "Address",
+          "name": "address",
+          "type": "text",
+          "graphql_field_name": "address",
+          "instructions": "Street address",
+          "required": 0,
+          "maxlength": 255
+        },
+        {
+          "key": "field_property_city",
+          "label": "City",
+          "name": "city",
+          "type": "text",
+          "graphql_field_name": "city",
+          "instructions": "City name",
+          "required": 0,
+          "maxlength": 100
+        },
+        {
+          "key": "field_property_bedrooms",
+          "label": "Bedrooms",
+          "name": "bedrooms",
+          "type": "number",
+          "graphql_field_name": "bedrooms",
+          "instructions": "Number of bedrooms",
+          "required": 0,
+          "min": 0,
+          "max": 20,
+          "step": 1
+        },
+        {
+          "key": "field_property_bathrooms",
+          "label": "Bathrooms",
+          "name": "bathrooms",
+          "type": "number",
+          "graphql_field_name": "bathrooms",
+          "instructions": "Number of bathrooms",
+          "required": 0,
+          "min": 0,
+          "max": 20,
+          "step": 0.5
+        },
+        {
+          "key": "field_property_area",
+          "label": "Living area (m²)",
+          "name": "area",
+          "type": "number",
+          "graphql_field_name": "area",
+          "instructions": "Living area in square meters",
+          "required": 0,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "field_property_gallery",
+          "label": "Gallery",
+          "name": "gallery",
+          "type": "gallery",
+          "graphql_field_name": "gallery",
+          "instructions": "Property photo gallery",
+          "required": 0
+        },
+        {
+          "key": "field_property_location",
+          "label": "Location",
+          "name": "location",
+          "type": "google_map",
+          "graphql_field_name": "location",
+          "instructions": "Property location on map",
+          "required": 0,
+          "height": 400,
+          "zoom": 14
+        }
+      ]
+    },
+    {
+      "key": "field_agent_group",
+      "label": "Agent",
+      "name": "agent_group",
+      "type": "group",
+      "graphql_field_name": "agent",
+      "instructions": "Real estate agent information",
+      "sub_fields": [
+        {
+          "key": "field_agent_name",
+          "label": "Name",
+          "name": "name",
+          "type": "text",
+          "graphql_field_name": "name",
+          "instructions": "Agent full name",
+          "required": 0,
+          "maxlength": 100
+        },
+        {
+          "key": "field_agent_photo",
+          "label": "Photo",
+          "name": "photo",
+          "type": "image",
+          "graphql_field_name": "photo",
+          "instructions": "Agent profile photo",
+          "required": 0,
+          "return_format": "array"
+        },
+        {
+          "key": "field_agent_phone",
+          "label": "Phone",
+          "name": "phone",
+          "type": "text",
+          "graphql_field_name": "phone",
+          "instructions": "Contact phone number",
+          "required": 0,
+          "maxlength": 50
+        },
+        {
+          "key": "field_agent_email",
+          "label": "Email",
+          "name": "email",
+          "type": "email",
+          "graphql_field_name": "email",
+          "instructions": "Contact email address",
+          "required": 0
+        },
+        {
+          "key": "field_agent_bio",
+          "label": "Bio",
+          "name": "bio",
+          "type": "wysiwyg",
+          "graphql_field_name": "bio",
+          "instructions": "Agent biography and experience",
+          "required": 0,
+          "toolbar": "basic",
+          "media_upload": 0
+        }
+      ]
+    }
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": "Field groups for real estate properties and agents - exported for Sotheby's migration"
+} 

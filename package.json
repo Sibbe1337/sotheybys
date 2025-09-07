@@ -4,22 +4,32 @@
   "private": true,
   "description": "SothebysRealty.fi rebuild - Modern Next.js + Sanity CMS solution",
   "scripts": {
-    "dev": "pnpm --parallel --recursive dev",
+    "dev": "concurrently -k -r \"pnpm dev:next-front\" \"pnpm dev:sanity\"",
     "dev:web": "pnpm --filter web dev",
     "dev:studio": "pnpm --filter studio dev",
+    "dev:next-front": "pnpm --filter next-front dev",
     "build": "pnpm --recursive build",
     "build:web": "pnpm --filter web build",
     "build:studio": "pnpm --filter studio build",
+    "build:next-front": "pnpm --filter next-front build",
     "lint": "pnpm --recursive lint",
     "lint:fix": "pnpm --recursive lint:fix",
     "test": "pnpm --recursive test",
     "type-check": "pnpm --recursive type-check",
     "clean": "pnpm --recursive clean",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "graphql-codegen": "graphql-codegen --config codegen.yml",
+    "graphql-codegen:watch": "graphql-codegen --config codegen.yml --watch",
+    "dev:sanity": "pnpm --filter sanity-studio exec sanity dev -p 3333"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.0",
+    "@graphql-codegen/typescript": "^4.0.1",
+    "@graphql-codegen/typescript-operations": "^4.0.1",
+    "@graphql-codegen/typescript-react-apollo": "^4.0.0",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
+    "concurrently": "^9.2.0",
     "eslint": "^8.56.0",
     "eslint-config-next": "14.0.4",
     "eslint-config-prettier": "^9.1.0",
@@ -43,4 +53,4 @@
     "pnpm": ">=8.0.0"
   },
   "packageManager": "pnpm@8.15.1"
-} 
+}

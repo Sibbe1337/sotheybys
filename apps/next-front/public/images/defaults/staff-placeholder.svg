@@ -1,0 +1,6 @@
+<svg width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="300" height="300" fill="#F3F4F6"/>
+  <circle cx="150" cy="110" r="40" fill="#E5E7EB"/>
+  <path d="M100 220C100 186.863 125.863 160 159 160H141C174.137 160 200 186.863 200 220V250H100V220Z" fill="#E5E7EB"/>
+  <text x="150" y="280" font-family="Arial, sans-serif" font-size="12" fill="#9CA3AF" text-anchor="middle">Henkilökuva</text>
+</svg>

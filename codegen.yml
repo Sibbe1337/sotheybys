@@ -1,0 +1,16 @@
+overwrite: true
+schema: ${NEXT_PUBLIC_WORDPRESS_GRAPHQL_URL}
+documents: "apps/next-front/src/graphql/**/*.{ts,tsx}"
+generates:
+  apps/next-front/src/__generated__/:
+    preset: client
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+    config:
+      scalars:
+        DateTime: string
+      withHooks: true
+      withComponent: false
+      withHOC: false 

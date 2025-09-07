@@ -1,0 +1,6 @@
+.vercel
+
+# PM2
+logs/
+*.log
+.pm2/
