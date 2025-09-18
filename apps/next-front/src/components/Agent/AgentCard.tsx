@@ -11,7 +11,7 @@ interface AgentCardProps {
 
 export default function AgentCard({ agent, className = '' }: AgentCardProps) {
   return (
-    <div className={`bg-white rounded-lg shadow-md p-6 card transition-all duration-200 hover:shadow-lg ${className}`}>
+    <div className={`bg-white rounded-lg shadow-md p-6 card-hover ${className}`}>
       {/* Agent Photo */}
       {agent.photo && (
         <div className="flex justify-center mb-4">

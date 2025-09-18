@@ -125,7 +125,7 @@ export default function PropertyCard({
   return (
     <Link 
       href={`/property/${slug}`} 
-      className="block bg-white rounded-lg shadow-md overflow-hidden card transition-all duration-200 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-blue)] focus-visible:ring-offset-2"
+      className="block bg-white rounded-lg shadow-md overflow-hidden card-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-blue)] focus-visible:ring-offset-2"
     >
       {/* Property Image */}
       {featuredImage && (
@@ -141,8 +141,12 @@ export default function PropertyCard({
           {/* Action Buttons Overlay */}
           <div className="absolute top-2 right-2 flex gap-2">
             <button
-              onClick={handleSaveProperty}
-              className="p-2 bg-white/80 hover:bg-white rounded-lg shadow-md transition-all"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleSaveProperty();
+              }}
+              className="p-2 bg-white/80 hover:bg-white rounded-lg shadow-md transition-all pointer-events-auto"
               title={isSaved ? "Poista tallennetuista" : "Tallenna kohde"}
             >
               {isSaved ? (
@@ -153,8 +157,12 @@ export default function PropertyCard({
             </button>
             
             <button
-              onClick={handleComparisonToggle}
-              className={`p-2 rounded-lg shadow-md transition-all ${
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleComparisonToggle();
+              }}
+              className={`p-2 rounded-lg shadow-md transition-all pointer-events-auto ${
                 isInComparison 
                   ? 'bg-[#002349] hover:bg-[#003366]' 
                   : 'bg-white/80 hover:bg-white'

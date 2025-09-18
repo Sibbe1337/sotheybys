@@ -18,6 +18,10 @@
     --text-default: #0A0A0A;
     --text-muted: #6B7280;
     --border: #E5E7EB;
+    
+    /* Hover & Focus tokens */
+    --hover-shadow: 0 6px 16px rgba(0,0,0,.08);
+    --hover-translate: -2px;
   }
 
   html {
@@ -42,6 +46,15 @@
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(0,0,0,.08);
     transition: .2s;
+  }
+  
+  /* Card hover utility (reusable) */
+  .card-hover {
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .card-hover:hover, .card-hover:focus-within {
+    transform: translateY(var(--hover-translate));
+    box-shadow: var(--hover-shadow);
   }
   
   :focus-visible {
@@ -130,6 +143,19 @@
   .list-clean {
     list-style: none;
     padding-left: 0;
+  }
+  .list-clean li::before {
+    content: none;
+  }
+  
+  /* Stretched link pattern for card interactivity */
+  .stretched-link {
+    position: relative;
+  }
+  .stretched-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
   }
 }
 
