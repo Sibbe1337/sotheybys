@@ -4,6 +4,8 @@ import HeaderBranding from '@/components/Header/HeaderBranding';
 import MainMenu from '@/components/Header/MainMenu';
 import AgentCard from '@/components/Agent/AgentCard';
 import { getPropertyBySlug } from '@/lib/wordpress';
+import { fetchLinearListings, fetchTestLinearListings } from '@/lib/linear-api-adapter';
+import { listingsCache, ensureCacheInitialized } from '@/lib/listings-cache';
 
 interface PropertyPageProps {
   params: {
@@ -15,18 +17,31 @@ export const revalidate = 60; // ISR: revalidate every 60 seconds
 
 export default async function PropertyPage({ params }: PropertyPageProps) {
   const { slug } = params;
-  const property = await getPropertyBySlug(slug);
+  
+  // First try to get from Linear API cache
+  await ensureCacheInitialized();
+  let property = listingsCache.getConvertedListingBySlug(slug, 'en');
+  
+  // If not found in cache, try WordPress
+  if (!property) {
+    property = await getPropertyBySlug(slug);
+  }
 
   if (!property) {
     notFound();
   }
 
-  const formatPrice = (price: number) => {
+  // Extract property data - handle both WordPress and Linear API formats
+  const propertyData = property.acfRealEstate?.property || property.property || {};
+  const agentData = property.acfRealEstate?.agent || property.agent || {};
+
+  const formatPrice = (price: number | string) => {
+    const numPrice = typeof price === 'string' ? parseInt(price.replace(/\D/g, '')) : price;
     return new Intl.NumberFormat('fi-FI', {
       style: 'currency',
       currency: 'EUR',
       minimumFractionDigits: 0,
-    }).format(price);
+    }).format(numPrice);
   };
 
   return (
@@ -59,9 +74,9 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
                 <h1 className="text-4xl lg:text-5xl font-bold mb-2">
                   {property.title}
                 </h1>
-                {property.property?.price && (
+                {propertyData?.price && (
                   <div className="text-2xl lg:text-3xl font-semibold">
-                    {formatPrice(property.property.price)}
+                    {formatPrice(propertyData.price)}
                   </div>
                 )}
               </div>
@@ -77,34 +92,34 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
               <div className="lg:col-span-2">
                 {/* Property Info */}
                 <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-                  {property.property?.address && (
+                  {propertyData?.address && (
                     <div className="flex items-center gap-2 text-gray-600 mb-4">
                       <span>📍</span>
                       <span>
-                        {property.property.address}
-                        {property.property.city && `, ${property.property.city}`}
+                        {propertyData.address}
+                        {propertyData.city && `, ${propertyData.city}`}
                       </span>
                     </div>
                   )}
 
                   {/* Property Stats */}
-                  {(property.property?.bedrooms || property.property?.bathrooms || property.property?.area) && (
+                  {(propertyData?.bedrooms || propertyData?.bathrooms || propertyData?.area) && (
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
-                      {property.property.bedrooms && (
+                      {propertyData.bedrooms && (
                         <div className="text-center p-4 bg-gray-50 rounded-lg">
-                          <div className="text-lg font-semibold">{property.property.bedrooms}</div>
+                          <div className="text-lg font-semibold">{propertyData.bedrooms}</div>
                           <div className="text-sm text-gray-600">Bedrooms</div>
                         </div>
                       )}
-                      {property.property.bathrooms && (
+                      {propertyData.bathrooms && (
                         <div className="text-center p-4 bg-gray-50 rounded-lg">
-                          <div className="text-lg font-semibold">{property.property.bathrooms}</div>
+                          <div className="text-lg font-semibold">{propertyData.bathrooms}</div>
                           <div className="text-sm text-gray-600">Bathrooms</div>
                         </div>
                       )}
-                      {property.property.area && (
+                      {propertyData.area && (
                         <div className="text-center p-4 bg-gray-50 rounded-lg">
-                          <div className="text-lg font-semibold">{property.property.area}</div>
+                          <div className="text-lg font-semibold">{propertyData.area}</div>
                           <div className="text-sm text-gray-600">Square Meters</div>
                         </div>
                       )}
@@ -112,11 +127,11 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
                   )}
 
                   {/* Description */}
-                  {property.content && (
+                  {(propertyData.description || property.content) && (
                     <div className="prose max-w-none">
                       <h2 className="text-2xl font-semibold mb-4">Description</h2>
                       <div 
-                        dangerouslySetInnerHTML={{ __html: property.content }}
+                        dangerouslySetInnerHTML={{ __html: propertyData.description || property.content }}
                         className="text-gray-700 leading-relaxed"
                       />
                     </div>
@@ -124,15 +139,16 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
                 </div>
 
                 {/* Property Gallery */}
-                {property.property?.gallery && property.property.gallery.length > 0 && (
+                {((propertyData?.gallery && propertyData.gallery.length > 0) || 
+                  (property.images && property.images.length > 0)) && (
                   <div className="bg-white rounded-lg shadow-md p-6 mb-6">
                     <h2 className="text-2xl font-semibold mb-4">Gallery</h2>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                      {property.property.gallery.map((image, index) => (
+                      {(propertyData?.gallery || property.images || []).map((image, index) => (
                         <div key={index} className="relative aspect-square rounded-lg overflow-hidden">
                           <Image
-                            src={image.sourceUrl}
-                            alt={image.altText || `Property image ${index + 1}`}
+                            src={image.url || image.sourceUrl}
+                            alt={image.title || image.altText || `Property image ${index + 1}`}
                             fill
                             className="object-cover hover:scale-105 transition-transform cursor-pointer"
                           />
@@ -143,13 +159,13 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
                 )}
 
                 {/* Location Map */}
-                {property.property?.location && (
+                {propertyData?.location && (
                   <div className="bg-white rounded-lg shadow-md p-6">
                     <h2 className="text-2xl font-semibold mb-4">Location</h2>
                     <div className="text-gray-600 mb-4">
-                      <p>Coordinates: {property.property.location.latitude}, {property.property.location.longitude}</p>
-                      {property.property.location.streetAddress && (
-                        <p>Address: {property.property.location.streetAddress}</p>
+                      <p>Coordinates: {propertyData.location.latitude}, {propertyData.location.longitude}</p>
+                      {propertyData.location.streetAddress && (
+                        <p>Address: {propertyData.location.streetAddress}</p>
                       )}
                     </div>
                     {/* TODO: Add interactive map component */}
@@ -163,10 +179,10 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
               {/* Sidebar */}
               <div className="lg:col-span-1">
                 {/* Contact Agent */}
-                {property.agent && property.agent.name && (
+                {agentData && agentData.name && (
                   <div className="mb-6">
                     <h2 className="text-xl font-semibold mb-4">Contact Agent</h2>
-                    <AgentCard agent={property.agent} />
+                    <AgentCard agent={agentData} />
                   </div>
                 )}
 
