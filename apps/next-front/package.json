@@ -30,11 +30,13 @@
     "@heroicons/react": "^2.0.18",
     "@portabletext/react": "^3.2.1",
     "@sanity/client": "^6.10.0",
+    "clsx": "^2.1.1",
     "graphql": "^16.8.1",
     "next": "14.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sharp": "^0.32.6"
+    "sharp": "^0.32.6",
+    "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.0",
