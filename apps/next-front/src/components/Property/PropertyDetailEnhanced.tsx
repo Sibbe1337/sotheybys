@@ -5,6 +5,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { HeartIcon, ShareIcon, PrinterIcon, ArrowsPointingOutIcon, MagnifyingGlassPlusIcon, XMarkIcon, CalculatorIcon, VideoCameraIcon, CubeIcon, ScaleIcon } from '@heroicons/react/24/outline';
 import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid';
+import { DetailMedia } from '@/components/listings/DetailMedia';
+import { Heading } from '@/components/ui/Heading';
+import { Price } from '@/components/ui/Price';
+import { MetaRow } from '@/components/ui/MetaRow';
+import { Button } from '@/components/ui/Button';
 
 interface PropertyDetailEnhancedProps {
   property: any;
@@ -109,7 +114,7 @@ export default function PropertyDetailEnhanced({
     // Marketing & External Resources
     publishDate, release, dealIncludes, dealDoesNotInclude,
     virtualShowing, videoUrl, externalLinks, propertyBrochureUrl,
-    internationalBrochureUrl, youtubeUrl,
+    internationalBrochureUrl, youtubeUrl, auctionUrl,
     
     // Additional Equipment & Features
     securitySystem, internetConnection, cableTV,
@@ -681,14 +686,44 @@ export default function PropertyDetailEnhanced({
         </div>
       )}
 
+      {/* Top Link Group - International/Auction Links */}
+      {(internationalBrochureUrl || auctionUrl) && (
+        <div className="bg-gray-50 border-b border-gray-200">
+          <div className="container mx-auto px-4 py-2">
+            <div className="flex justify-end gap-4">
+              {internationalBrochureUrl && (
+                <Link
+                  href={internationalBrochureUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-[var(--brand-blue)] hover:underline font-medium"
+                >
+                  International Listing
+                </Link>
+              )}
+              {auctionUrl && (
+                <Link
+                  href={auctionUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-[var(--brand-blue)] hover:underline font-medium"
+                >
+                  Auction
+                </Link>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Property Header */}
       <section className="bg-white shadow-sm sticky top-0 z-40">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div>
-              <h1 className="text-3xl lg:text-4xl font-light text-gray-900">
+              <Heading as="h1">
                 {marketingTitle || freeTextTitle || address}
-              </h1>
+              </Heading>
               {marketingSubtitle && (
                 <p className="text-xl text-gray-700 mt-2 font-light">
                   {marketingSubtitle}
@@ -697,16 +732,19 @@ export default function PropertyDetailEnhanced({
               <p className="text-lg text-gray-600 mt-1">
                 {address} • {postalCode} {city} {province && `, ${province}`}
               </p>
-              <div className="flex flex-wrap gap-4 mt-3 text-sm text-gray-600">
-                {typeOfApartment && <span className="flex items-center gap-1"> {typeOfApartment}</span>}
-                {area && <span className="flex items-center gap-1"> {area}</span>}
-                {yearBuilt && <span className="flex items-center gap-1">📅 Rakennettu {yearBuilt}</span>}
-              </div>
+              <MetaRow 
+                items={[
+                  { value: typeOfApartment || '' },
+                  { value: area || '' },
+                  { label: 'Rakennettu', value: yearBuilt || '' }
+                ]}
+                className="mt-3"
+              />
             </div>
             <div className="text-right">
-              <div className="text-3xl lg:text-4xl font-light text-gray-900">
+              <Price className="text-3xl lg:text-4xl" block>
                 {askPrice ? `${parseInt(askPrice).toLocaleString('fi-FI')} €` : 'Kysy hintaa'}
-              </div>
+              </Price>
               {area && askPrice && (
                 <div className="text-sm text-gray-600 mt-1">
                   {Math.round(parseInt(askPrice) / parseInt(area)).toLocaleString('fi-FI')} €/m²
@@ -2303,67 +2341,21 @@ export default function PropertyDetailEnhanced({
                   </div>
                 )}
 
-                {/* External Links & Virtual Tours */}
-                {(videoUrl || virtualShowing || propertyBrochureUrl || internationalBrochureUrl || youtubeUrl || externalLinks) && (
+                {/* Media Section */}
+                <DetailMedia
+                  youtubeUrl={youtubeUrl}
+                  virtualTourUrl={virtualShowing}
+                  brochureUrl={propertyBrochureUrl || virtualShowing}
+                  floorPlanUrl={floorPlanUrl}
+                  className="mb-8"
+                />
+
+                {/* External Links */}
+                {externalLinks && (
                   <div className="bg-white rounded-lg shadow-sm p-6">
-                    <h3 className="text-xl font-light mb-4">Esittely & Virtuaalikierrokset</h3>
+                    <h3 className="text-xl font-light mb-4">Lisälinkit</h3>
                     <div className="space-y-3">
-                      {videoUrl && (
-                        <a
-                          href={videoUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-[#002349] hover:bg-gray-50 transition-colors"
-                        >
-                          <span className="text-2xl">🎥</span>
-                          <span className="text-gray-700">Video-esittely</span>
-                        </a>
-                      )}
-                      {virtualShowing && (
-                        <a
-                          href={virtualShowing}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-[#002349] hover:bg-gray-50 transition-colors"
-                        >
-                          <span className="text-2xl"></span>
-                          <span className="text-gray-700">Virtuaaliesittely</span>
-                        </a>
-                      )}
-                      {propertyBrochureUrl && (
-                        <a
-                          href={propertyBrochureUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-[#002349] hover:bg-gray-50 transition-colors"
-                        >
-                          <span className="text-2xl">📑</span>
-                          <span className="text-gray-700">Kohde-esite</span>
-                        </a>
-                      )}
-                      {internationalBrochureUrl && (
-                        <a
-                          href={internationalBrochureUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-[#002349] hover:bg-gray-50 transition-colors"
-                        >
-                          <span className="text-2xl"></span>
-                          <span className="text-gray-700">International Property Brochure</span>
-                        </a>
-                      )}
-                      {youtubeUrl && (
-                        <a
-                          href={youtubeUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-[#002349] hover:bg-gray-50 transition-colors"
-                        >
-                          <span className="text-2xl">📺</span>
-                          <span className="text-gray-700">YouTube-esittely</span>
-                        </a>
-                      )}
-                      {externalLinks && externalLinks.split('\n').map((link: string, idx: number) => (
+                      {externalLinks.split('\n').map((link: string, idx: number) => (
                         <a
                           key={idx}
                           href={link.trim()}
