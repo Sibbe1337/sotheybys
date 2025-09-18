@@ -268,6 +268,36 @@ const menuTranslations = {
   ]
 };
 
+// Path translations for language switching
+const pathTranslations: { [key: string]: { fi: string; sv: string; en: string } } = {
+  '/': { fi: '/', sv: '/sv', en: '/en' },
+  '/kohteet': { fi: '/kohteet', sv: '/sv/objekt', en: '/en/properties' },
+  '/myymassa': { fi: '/myymassa', sv: '/sv/salj-med-oss', en: '/en/sell-with-us' },
+  '/kansainvalisesti': { fi: '/kansainvalisesti', sv: '/sv/internationellt', en: '/en/international' },
+  '/henkilosto': { fi: '/henkilosto', sv: '/sv/personal', en: '/en/staff' },
+  '/yhteystiedot': { fi: '/yhteystiedot', sv: '/sv/kontakta-oss', en: '/en/contact-us' },
+  '/yritys': { fi: '/yritys', sv: '/sv/om-oss', en: '/en/about-us' },
+  '/meille-toihin': { fi: '/meille-toihin', sv: '/sv/jobba-hos-oss', en: '/en/work-with-us' },
+  // Swedish paths
+  '/sv': { fi: '/', sv: '/sv', en: '/en' },
+  '/sv/objekt': { fi: '/kohteet', sv: '/sv/objekt', en: '/en/properties' },
+  '/sv/salj-med-oss': { fi: '/myymassa', sv: '/sv/salj-med-oss', en: '/en/sell-with-us' },
+  '/sv/internationellt': { fi: '/kansainvalisesti', sv: '/sv/internationellt', en: '/en/international' },
+  '/sv/personal': { fi: '/henkilosto', sv: '/sv/personal', en: '/en/staff' },
+  '/sv/kontakta-oss': { fi: '/yhteystiedot', sv: '/sv/kontakta-oss', en: '/en/contact-us' },
+  '/sv/om-oss': { fi: '/yritys', sv: '/sv/om-oss', en: '/en/about-us' },
+  '/sv/jobba-hos-oss': { fi: '/meille-toihin', sv: '/sv/jobba-hos-oss', en: '/en/work-with-us' },
+  // English paths
+  '/en': { fi: '/', sv: '/sv', en: '/en' },
+  '/en/properties': { fi: '/kohteet', sv: '/sv/objekt', en: '/en/properties' },
+  '/en/sell-with-us': { fi: '/myymassa', sv: '/sv/salj-med-oss', en: '/en/sell-with-us' },
+  '/en/international': { fi: '/kansainvalisesti', sv: '/sv/internationellt', en: '/en/international' },
+  '/en/staff': { fi: '/henkilosto', sv: '/sv/personal', en: '/en/staff' },
+  '/en/contact-us': { fi: '/yhteystiedot', sv: '/sv/kontakta-oss', en: '/en/contact-us' },
+  '/en/about-us': { fi: '/yritys', sv: '/sv/om-oss', en: '/en/about-us' },
+  '/en/work-with-us': { fi: '/meille-toihin', sv: '/sv/jobba-hos-oss', en: '/en/work-with-us' },
+};
+
 export default function Header() {
   const [currentLang, setCurrentLang] = useState<'fi' | 'sv' | 'en'>('fi');
   const [menuItems, setMenuItems] = useState<MenuItem[]>(menuTranslations.fi);
@@ -276,6 +306,28 @@ export default function Header() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [expandedMobileMenu, setExpandedMobileMenu] = useState<string | null>(null);
   const pathname = usePathname();
+  
+  // Helper function to get translated path
+  const getTranslatedPath = (targetLang: 'fi' | 'sv' | 'en'): string => {
+    // Check if we have a translation for the current path
+    const translations = pathTranslations[pathname];
+    if (translations) {
+      return translations[targetLang];
+    }
+    
+    // For property detail pages, handle the pattern /property/[slug]
+    if (pathname.includes('/property/')) {
+      const slug = pathname.split('/property/')[1];
+      if (targetLang === 'fi') return `/property/${slug}`;
+      if (targetLang === 'sv') return `/sv/property/${slug}`;
+      if (targetLang === 'en') return `/en/property/${slug}`;
+    }
+    
+    // Default fallback to homepage
+    if (targetLang === 'fi') return '/';
+    if (targetLang === 'sv') return '/sv';
+    return '/en';
+  };
 
   // Detect language from URL
   useEffect(() => {
@@ -401,21 +453,21 @@ export default function Header() {
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-3 text-sm">
                 <Link 
-                  href="/" 
+                  href={getTranslatedPath('fi')} 
                   className={`transition-opacity ${currentLang === 'fi' ? 'font-semibold' : 'hover:opacity-80'}`}
                 >
                   Suomi
                 </Link>
                 <span className="text-white/50">|</span>
                 <Link 
-                  href="/sv" 
+                  href={getTranslatedPath('sv')} 
                   className={`transition-opacity ${currentLang === 'sv' ? 'font-semibold' : 'hover:opacity-80'}`}
                 >
                   Svenska
                 </Link>
                 <span className="text-white/50">|</span>
                 <Link 
-                  href="/en" 
+                  href={getTranslatedPath('en')} 
                   className={`transition-opacity ${currentLang === 'en' ? 'font-semibold' : 'hover:opacity-80'}`}
                 >
                   English
@@ -530,6 +582,35 @@ export default function Header() {
               </div>
             );
           })}
+          
+          {/* Mobile Language Switcher */}
+          <div className="mt-4 pt-4 border-t border-white/20">
+            <div className="flex items-center justify-center gap-4 text-sm">
+              <Link 
+                href={getTranslatedPath('fi')} 
+                className={`transition-opacity ${currentLang === 'fi' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Suomi
+              </Link>
+              <span className="text-white/50">|</span>
+              <Link 
+                href={getTranslatedPath('sv')} 
+                className={`transition-opacity ${currentLang === 'sv' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Svenska
+              </Link>
+              <span className="text-white/50">|</span>
+              <Link 
+                href={getTranslatedPath('en')} 
+                className={`transition-opacity ${currentLang === 'en' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                English
+              </Link>
+            </div>
+          </div>
         </nav>
       </div>
     </header>
