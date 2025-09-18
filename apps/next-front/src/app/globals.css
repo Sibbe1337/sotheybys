@@ -2,226 +2,100 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Font Variables */
-:root {
-  --font-inter: 'Inter', sans-serif;
-  --font-playfair: 'Playfair Display', serif;
-}
-
 @layer base {
+  :root {
+    --color-primary: #1a3352;
+    --color-primary-light: #2a4362;
+    --color-primary-dark: #0a2342;
+    --color-accent: #c9a961;
+    --color-text: #333333;
+    --color-text-light: #666666;
+    --color-background: #ffffff;
+    --color-background-light: #f8f8f8;
+  }
+
   html {
-    font-family: var(--font-inter), system-ui, sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply text-gray-900 antialiased;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  /* Custom scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-400 rounded;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-500;
   }
 }
 
 @layer components {
-  .container {
+  /* Utility classes for consistent styling */
+  .container-wide {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
-  
+
+  .section-padding {
+    @apply py-16 sm:py-20 lg:py-24;
+  }
+
+  .heading-primary {
+    @apply text-3xl sm:text-4xl lg:text-5xl font-light leading-tight;
+  }
+
+  .heading-secondary {
+    @apply text-2xl sm:text-3xl lg:text-4xl font-light leading-tight;
+  }
+
+  .text-muted {
+    @apply text-gray-600;
+  }
+
+  /* Button styles */
   .btn-primary {
-    @apply bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-md transition-colors;
+    @apply inline-block bg-[#1a3352] text-white px-6 py-3 text-sm uppercase tracking-wider transition-all duration-300 hover:bg-[#0a2342] hover:shadow-lg;
   }
-  
+
   .btn-secondary {
-    @apply bg-gray-200 hover:bg-gray-300 text-gray-900 font-medium py-2 px-4 rounded-md transition-colors;
+    @apply inline-block border border-[#1a3352] text-[#1a3352] px-6 py-3 text-sm uppercase tracking-wider transition-all duration-300 hover:bg-[#1a3352] hover:text-white;
+  }
+
+  /* Link hover effect */
+  .link-underline {
+    @apply relative inline-block;
+  }
+
+  .link-underline::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-0.5 bg-current transition-all duration-300;
+  }
+
+  .link-underline:hover::after {
+    @apply w-full;
   }
 }
 
-/* Custom animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+@layer utilities {
+  /* Text selection color */
+  ::selection {
+    @apply bg-[#1a3352] text-white;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  /* Focus styles */
+  .focus-visible:focus {
+    @apply outline-none ring-2 ring-[#1a3352] ring-offset-2;
   }
 }
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(100%);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in {
-  animation: fadeInUp 0.3s ease-out;
-}
-
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Better focus states */
-*:focus {
-  outline: none;
-}
-
-*:focus-visible {
-  outline: 2px solid #1a3a4a;
-  outline-offset: 2px;
-}
-
-/* Loading animation */
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-.animate-shimmer {
-  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-}
-
-/* Improved transitions */
-* {
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-
-
-/* Mobile touch optimization */
-.touch-manipulation {
-  touch-action: manipulation;
-}
-
-/* Hide scrollbar but keep functionality */
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-
-/* Smooth snap scrolling */
-.snap-x {
-  scroll-snap-type: x mandatory;
-}
-
-.snap-start {
-  scroll-snap-align: start;
-}
-
-/* Better mobile tap targets */
-@media (max-width: 640px) {
-  button, a {
-    min-height: 44px;
-    min-width: 44px;
-  }
-  
-  /* Prevent zoom on input focus */
-  input, select, textarea {
-    font-size: 16px !important;
-  }
-}
-
-/* Print styles */
-@media print {
-  /* Hide navigation, tabs, and interactive elements */
-  nav,
-  header,
-  footer,
-  .sticky,
-  .share-menu-container,
-  button:not(.print-show),
-  [role="tablist"],
-  .tab-navigation {
-    display: none !important;
-  }
-  
-  /* Show all tab content when printing */
-  [role="tabpanel"] {
-    display: block !important;
-    page-break-inside: avoid;
-  }
-  
-  /* Improve readability */
-  body {
-    font-size: 12pt;
-    line-height: 1.5;
-    color: black;
-    background: white;
-  }
-  
-  /* Better image handling */
-  img {
-    max-width: 100% !important;
-    page-break-inside: avoid;
-  }
-  
-  /* Property header styling */
-  .property-header {
-    border-bottom: 2px solid #000;
-    padding-bottom: 1rem;
-    margin-bottom: 2rem;
-  }
-  
-  /* Ensure content sections are visible */
-  .bg-white {
-    background: white !important;
-    box-shadow: none !important;
-  }
-  
-  /* Add section breaks */
-  .print-page-break {
-    page-break-before: always;
-  }
-  
-  /* Contact info should be prominent */
-  .agent-contact {
-    border: 2px solid #000;
-    padding: 1rem;
-    margin-top: 2rem;
-    page-break-inside: avoid;
-  }
-  
-  /* Links should show URLs */
-  a[href]:after {
-    content: " (" attr(href) ")";
-    font-size: 0.8em;
-    color: #666;
-  }
-  
-  /* But not for internal links */
-  a[href^="#"]:after,
-  a[href^="javascript:"]:after {
-    content: "";
-  }
-} 

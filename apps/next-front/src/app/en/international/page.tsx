@@ -28,8 +28,9 @@ export default function InternationalPage() {
             <Link 
               href="/en/international"
               className="inline-block bg-transparent border-2 border-white text-white px-8 py-3 
-                       hover:bg-white hover:text-black transition-all duration-300 
-                       font-light uppercase tracking-wider text-sm"
+                       hover:bg-white hover:text-[#1a3352] transition-all duration-300 
+                       font-light uppercase tracking-wider text-sm
+                       cursor-pointer transform hover:scale-105"
             >
               READ MORE &gt;
             </Link>

@@ -428,7 +428,7 @@ export default function PropertyDetailClient({ property }: PropertyDetailClientP
                     )}
                     {propertyData?.debtFreePrice && (
                       <div className="flex justify-between items-baseline border-b border-gray-200 pb-2">
-                        <span className="text-gray-700">Velaton myyntihinta</span>
+                        <span className="text-gray-700">Velaton hinta</span>
                         <span className="text-lg font-medium text-gray-900">
                           {parseInt(propertyData.debtFreePrice).toLocaleString('fi-FI')} €
                         </span>
