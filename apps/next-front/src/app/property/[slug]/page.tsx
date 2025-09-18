@@ -144,7 +144,7 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
                   <div className="bg-white rounded-lg shadow-md p-6 mb-6">
                     <h2 className="text-2xl font-semibold mb-4">Gallery</h2>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                      {(propertyData?.gallery || property.images || []).map((image, index) => (
+                      {(propertyData?.gallery || property.images || []).map((image: any, index: number) => (
                         <div key={index} className="relative aspect-square rounded-lg overflow-hidden">
                           <Image
                             src={image.url || image.sourceUrl}
