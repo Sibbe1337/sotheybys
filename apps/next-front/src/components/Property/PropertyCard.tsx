@@ -144,7 +144,7 @@ export default function PropertyCard({
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                handleSaveProperty();
+                handleSaveProperty(e);
               }}
               className="p-2 bg-white/80 hover:bg-white rounded-lg shadow-md transition-all pointer-events-auto"
               title={isSaved ? "Poista tallennetuista" : "Tallenna kohde"}
@@ -160,7 +160,7 @@ export default function PropertyCard({
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                handleComparisonToggle();
+                handleComparisonToggle(e);
               }}
               className={`p-2 rounded-lg shadow-md transition-all pointer-events-auto ${
                 isInComparison 
