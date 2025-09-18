@@ -162,6 +162,44 @@ export default function FooterBottomBar() {
               </ul>
             </div>
 
+            {/* Property Portals */}
+            <div>
+              <h3 className="font-semibold mb-4 text-sm uppercase tracking-wider">Asuntoportaalit</h3>
+              <p className="text-sm text-white/80 mb-4">
+                Katso kaikki myyntikohteemme myös:
+              </p>
+              <ul className="space-y-2 text-sm">
+                <li>
+                  <Link 
+                    href="https://www.etuovi.com/yritys/snellman-sothebys-international-realty" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white/80 hover:text-white transition-colors flex items-center gap-2"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
+                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                    Etuovi.com
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    href="https://www.oikotie.fi/yritys/snellman-sothebys-international-realty" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white/80 hover:text-white transition-colors flex items-center gap-2"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
+                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                    Oikotie.fi
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
             {/* Newsletter Signup */}
             <div>
               <h3 className="font-semibold mb-4 text-sm uppercase tracking-wider">Tilaa Uutiskirje</h3>

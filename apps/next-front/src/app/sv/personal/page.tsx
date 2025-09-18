@@ -33,7 +33,7 @@ const staffMembers = [
     phone: '+358 (0)50 421 0905',
     image: '/images/staff/heidi-metsanen.jpg',
     description: '',
-    flags: ['fi', 'se', 'gb', 'ru']
+    flags: ['fi', 'se', 'gb', 'fr']
   },
   {
     id: '4',
@@ -47,7 +47,7 @@ const staffMembers = [
   },
   {
     id: '5',
-    name: 'Tea Kåyhkö',
+    name: 'Tea Käyhkö',
     title: 'Senior Broker, BA, MA, LKV',
     email: 'tea@sothebysrealty.fi',
     phone: '+358 (0)50 370 1893',
@@ -83,7 +83,7 @@ const staffMembers = [
     phone: '+358 (0)400 889 138',
     image: '/images/staff/petteri-huovila.jpg',
     description: '',
-    flags: ['fi']
+    flags: ['fi', 'se']
   },
   {
     id: '9',
@@ -93,12 +93,12 @@ const staffMembers = [
     phone: '+358 (0)44 235 3979',
     image: '/images/staff/sima-shaygan.jpg',
     description: '',
-    flags: ['fi', 'gb', 'ir']
+    flags: ['fi', 'gb', 'ir', 'tr']
   },
   {
     id: '10',
     name: 'Dennis Forsman',
-    title: 'Sales Assistant',
+    title: 'Sales Assistant, B.Sc.',
     email: 'dennis@sothebysrealty.fi',
     phone: '+358 (0)44 999 4407',
     image: '/images/staff/dennis-forsman.jpg',
@@ -127,7 +127,8 @@ const LanguageFlags = ({ flags }: { flags: string[] }) => {
     fr: '🇫🇷',
     ru: '🇷🇺',
     ee: '🇪🇪',
-    ir: '🇮🇷'
+    ir: '🇮🇷',
+    tr: '🇹🇷'
   };
 
   return (
