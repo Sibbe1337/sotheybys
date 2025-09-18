@@ -19,7 +19,7 @@ interface PropertyCardProps {
   featuredImage?: {
     node: {
       sourceUrl: string;
-      altText: string;
+      altText?: string;
       mediaDetails?: {
         width?: number;
         height?: number;
