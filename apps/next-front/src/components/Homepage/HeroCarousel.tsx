@@ -20,9 +20,17 @@ interface HeroCarouselProps {
 export default function HeroCarousel({ slides }: HeroCarouselProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [hasInitialized, setHasInitialized] = useState(false);
 
   useEffect(() => {
-    if (!isAutoPlaying) return;
+    // Set initialization flag after first render
+    setHasInitialized(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isAutoPlaying) {
+      return;
+    }
     
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -97,7 +105,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                           ? 'translate-y-0 opacity-100' 
                           : 'translate-y-full opacity-0'
                       }`}
-                      style={{ transitionDelay: '200ms' }}
+                      style={{ transitionDelay: (!hasInitialized && index === 0) ? '0ms' : '200ms' }}
                     >
                       {slide.subtitle}
                     </p>
@@ -112,7 +120,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                         ? 'translate-y-0 opacity-100' 
                         : 'translate-y-full opacity-0'
                     }`}
-                    style={{ transitionDelay: '400ms' }}
+                    style={{ transitionDelay: (!hasInitialized && index === 0) ? '0ms' : '400ms' }}
                   >
                     {slide.title}
                   </h1>
@@ -126,7 +134,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                         ? 'translate-y-0 opacity-100' 
                         : 'translate-y-10 opacity-0'
                     }`}
-                    style={{ transitionDelay: '600ms' }}
+                    style={{ transitionDelay: (!hasInitialized && index === 0) ? '0ms' : '600ms' }}
                   >
                     <Link
                       href={slide.buttonLink}
