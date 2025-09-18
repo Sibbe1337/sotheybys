@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { VideoSection } from '@/components/ui/VideoSection';
 
 export const revalidate = 60;
 
@@ -281,6 +282,13 @@ export default function SellingPage() {
             </div>
           </div>
         </section>
+
+        {/* Video Section */}
+        <VideoSection 
+          videoId="hdXkBWw9wk0"
+          title="Miksi myydä kanssamme?"
+          subtitle="Katso miten autamme asiakkaitamme onnistuneeseen asuntokauppaan"
+        />
 
         {/* Consumer Dispute Section */}
         <section className="py-12 bg-[var(--color-primary)] text-white">

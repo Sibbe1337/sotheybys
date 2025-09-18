@@ -30,6 +30,7 @@
     "@heroicons/react": "^2.0.18",
     "@portabletext/react": "^3.2.1",
     "@sanity/client": "^6.10.0",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
     "clsx": "^2.1.1",
     "graphql": "^16.8.1",
     "next": "14.0.4",
