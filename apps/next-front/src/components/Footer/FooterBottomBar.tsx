@@ -197,24 +197,6 @@ export default function FooterBottomBar() {
         </div>
       </div>
 
-      {/* Team Photo Section */}
-      <div className="bg-[#1a3a4a] py-16">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h3 className="text-3xl font-light text-white mb-8">Snellman Sotheby&apos;s International Realty Team</h3>
-            <div className="relative h-96 rounded-lg overflow-hidden">
-              <Image
-                src="/images/international/henkilosto_35.jpg"
-                alt="Snellman Sotheby's International Realty Team"
-                fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1000px"
-                className="object-cover"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Bottom Bar with Copyright and Disclaimer */}
       <div className="bg-[#000e1f] text-white py-6">
         <div className="container mx-auto px-4">
