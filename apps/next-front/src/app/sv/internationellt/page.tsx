@@ -27,10 +27,7 @@ export default function InternationalPage() {
             </p>
             <Link 
               href="/sv/internationellt"
-              className="inline-block bg-transparent border-2 border-white text-white px-8 py-3 
-                       hover:bg-white hover:text-[#1a3352] transition-all duration-300 
-                       font-light uppercase tracking-wider text-sm
-                       cursor-pointer transform hover:scale-105"
+              className="international-button"
             >
               LÄS MER &gt;
             </Link>

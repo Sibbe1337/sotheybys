@@ -86,6 +86,19 @@
   .link-underline:hover::after {
     @apply w-full;
   }
+
+  /* International page button hover fix */
+  .international-button {
+    @apply inline-block bg-transparent border-2 border-white text-white px-8 py-3 
+           transition-all duration-300 font-light uppercase tracking-wider text-sm
+           cursor-pointer transform;
+  }
+  
+  .international-button:hover {
+    background-color: white !important;
+    color: #1a3352 !important;
+    transform: scale(1.05) !important;
+  }
 }
 
 @layer utilities {
