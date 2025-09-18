@@ -10,6 +10,7 @@ import { Heading } from '@/components/ui/Heading';
 import { Price } from '@/components/ui/Price';
 import { MetaRow } from '@/components/ui/MetaRow';
 import { Button } from '@/components/ui/Button';
+import { PropertyTypeChip } from '@/components/ui/PropertyTypeChip';
 
 interface PropertyDetailEnhancedProps {
   property: any;
@@ -732,14 +733,15 @@ export default function PropertyDetailEnhanced({
               <p className="text-lg text-gray-600 mt-1">
                 {address} • {postalCode} {city} {province && `, ${province}`}
               </p>
-              <MetaRow 
-                items={[
-                  { value: typeOfApartment || '' },
-                  { value: area || '' },
-                  { label: 'Rakennettu', value: yearBuilt || '' }
-                ]}
-                className="mt-3"
-              />
+              <div className="flex items-center gap-3 mt-3">
+                {typeOfApartment && <PropertyTypeChip type={typeOfApartment} />}
+                <MetaRow 
+                  items={[
+                    { value: area || '' },
+                    { label: 'Rakennettu', value: yearBuilt || '' }
+                  ]}
+                />
+              </div>
             </div>
             <div className="text-right">
               <Price className="text-3xl lg:text-4xl" block>
