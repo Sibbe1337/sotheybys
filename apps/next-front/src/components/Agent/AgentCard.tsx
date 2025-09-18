@@ -1,5 +1,8 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { Agent } from '@/lib/wordpress';
+import { Button } from '@/components/ui/Button';
+import { Heading } from '@/components/ui/Heading';
 
 interface AgentCardProps {
   agent: Agent;
@@ -8,7 +11,7 @@ interface AgentCardProps {
 
 export default function AgentCard({ agent, className = '' }: AgentCardProps) {
   return (
-    <div className={`bg-white rounded-lg shadow-md p-6 ${className}`}>
+    <div className={`bg-white rounded-lg shadow-md p-6 card transition-all duration-200 hover:shadow-lg ${className}`}>
       {/* Agent Photo */}
       {agent.photo && (
         <div className="flex justify-center mb-4">
@@ -25,9 +28,9 @@ export default function AgentCard({ agent, className = '' }: AgentCardProps) {
 
       {/* Agent Name */}
       {agent.name && (
-        <h3 className="text-xl font-semibold text-gray-900 text-center mb-2">
+        <Heading as="h3" className="text-center mb-2 text-xl">
           {agent.name}
-        </h3>
+        </Heading>
       )}
 
       {/* Contact Information */}
@@ -37,7 +40,7 @@ export default function AgentCard({ agent, className = '' }: AgentCardProps) {
             <span className="text-gray-400">📞</span>
             <a
               href={`tel:${agent.phone}`}
-              className="text-primary-600 hover:text-primary-700 transition-colors"
+              className="text-[var(--brand-blue)] hover:underline transition-colors"
             >
               {agent.phone}
             </a>
@@ -49,7 +52,7 @@ export default function AgentCard({ agent, className = '' }: AgentCardProps) {
             <span className="text-gray-400">✉️</span>
             <a
               href={`mailto:${agent.email}`}
-              className="text-primary-600 hover:text-primary-700 transition-colors"
+              className="text-[var(--brand-blue)] hover:underline transition-colors"
             >
               {agent.email}
             </a>
@@ -59,13 +62,43 @@ export default function AgentCard({ agent, className = '' }: AgentCardProps) {
 
       {/* Agent Bio */}
       {agent.bio && (
-        <div className="text-sm text-gray-600 leading-relaxed">
+        <div className="text-sm text-gray-600 leading-relaxed mb-4">
           <div 
             dangerouslySetInnerHTML={{ __html: agent.bio }}
             className="prose prose-sm max-w-none"
           />
         </div>
       )}
+      
+      {/* Action Buttons */}
+      <div className="flex flex-col gap-2 mt-auto pt-4 border-t">
+        {agent.phone && (
+          <Button 
+            variant="primary" 
+            className="w-full"
+            onClick={() => window.location.href = `tel:${agent.phone}`}
+          >
+            Soita
+          </Button>
+        )}
+        {agent.email && (
+          <Button 
+            variant="secondary" 
+            className="w-full"
+            onClick={() => window.location.href = `mailto:${agent.email}`}
+          >
+            Lähetä viesti
+          </Button>
+        )}
+        {/* TODO: Add agent detail page link when available
+        <Button 
+          variant="link" 
+          className="w-full"
+        >
+          Katso kohteet
+        </Button>
+        */}
+      </div>
     </div>
   );
 } 
