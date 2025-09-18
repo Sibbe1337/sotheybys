@@ -205,6 +205,68 @@
     position: absolute;
     inset: 0;
   }
+
+  /* Sotheby's property page styles */
+  .sotheby-btn {
+    @apply inline-block px-8 py-3 transition-all duration-300 uppercase tracking-wider text-sm font-medium;
+    font-family: 'freight-sans-pro', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  .sotheby-btn.transparent-btn {
+    @apply border-2 border-white text-white bg-transparent;
+  }
+
+  .sotheby-btn.transparent-btn:hover {
+    @apply bg-white;
+    color: var(--color-primary) !important;
+  }
+
+  /* Property carousel styles */
+  .property-carousel {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .property-carousel .carousel-nav {
+    @apply absolute top-1/2 -translate-y-1/2 z-10;
+  }
+
+  .property-carousel .carousel-nav.prev {
+    @apply left-4;
+  }
+
+  .property-carousel .carousel-nav.next {
+    @apply right-4;
+  }
+
+  .property-carousel .carousel-counter {
+    @apply absolute bottom-4 right-4 bg-black/70 text-white px-3 py-1 rounded text-sm;
+  }
+
+  /* Property tabs styling */
+  .property-tabs {
+    @apply flex justify-center bg-gray-100 border-t border-gray-200;
+  }
+
+  .property-tab {
+    @apply px-6 py-4 font-medium text-sm uppercase tracking-wider transition-all relative;
+    font-family: 'freight-sans-pro', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  .property-tab.active {
+    @apply bg-white;
+    color: var(--color-primary);
+  }
+
+  .property-tab:not(.active) {
+    @apply bg-gray-100 text-gray-600 hover:bg-gray-200;
+  }
+
+  .property-tab.active::before {
+    content: '';
+    @apply absolute top-0 left-0 right-0 h-1;
+    background-color: var(--color-primary);
+  }
 }
 
 @layer utilities {
