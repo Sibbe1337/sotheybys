@@ -9,39 +9,39 @@ import { getImageUrl } from '@/config/images';
 
 export const revalidate = 60; // ISR: revalidate every 60 seconds
 
-// Default hero slides matching the original site
+// Default hero slides matching the original site - Swedish version
 const defaultSlides = [
   {
     id: '1',
     image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/57809e7b-2fe2-430d-a7d7-aff39337d0c1/ead27130-4e08-465e-af6d-500d593ae0db.jpg',
-    title: 'Kansainvälinen välittäjäsi paikallisesti',
-    subtitle: '26 100 välittäjää 1100 välitystoimistossa 84 maassa ja alueella',
-    buttonText: 'Avaamme uusia ovia',
-    buttonLink: '#avaamme-uusia-ovia'
+    title: 'Din internationella mäklare lokalt',
+    subtitle: '26 100 mäklare i 1100 kontor i 84 länder och regioner',
+    buttonText: 'Vi öppnar nya dörrar',
+    buttonLink: '#vi-oppnar-nya-dorrar'
   },
   {
     id: '2',
     image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/3cfbb584-8fc0-493a-8b2f-66edf18b027a/e3ffa954-b4a1-4ed6-bed1-f131955d96c2.jpg',
-    title: 'Tervetuloa onnistuneeseen asuntokauppaan!',
-    subtitle: 'Katso kaikki myynnissä olevat kohteemme.',
-    buttonText: 'Löydä unelmien koti',
-    buttonLink: 'https://sothebysrealty.fi/kohteet/'
+    title: 'Välkommen till en framgångsrik bostadsaffär!',
+    subtitle: 'Se alla våra objekt till salu.',
+    buttonText: 'Hitta ditt drömhem',
+    buttonLink: '/sv/objekt/'
   },
   {
     id: '3',
     image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/d01a884f-d504-4652-adf7-29026c1a7449/700fc7d6-6bab-4e3b-baf8-816b8a9f5a02.jpg',
     title: 'Snellman Sotheby\'s International Realty®',
-    subtitle: 'Haluamme luoda kestävän asiakassuhteen, jossa otamme huomioon teidän pienimmätkin toiveet ja tarpeet.',
-    buttonText: 'Tutustu toimintatapaamme',
-    buttonLink: 'https://sothebysrealty.fi/yritys/'
+    subtitle: 'Vi vill skapa en hållbar kundrelation där vi tar hänsyn till era minsta önskemål och behov.',
+    buttonText: 'Bekanta dig med vårt arbetssätt',
+    buttonLink: '/sv/om-oss/'
   },
   {
     id: '4',
     image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/95bfa5eb-449f-40b8-987b-6f65dde19cc0/9e7aa9bf-6a73-4120-a0f4-b75e1eb29b4c.jpg',
-    title: 'Referenssit',
-    subtitle: 'Valikoima myydyistä kohteista',
-    buttonText: 'Tutustu kohteisiin',
-    buttonLink: 'https://sothebysrealty.fi/wp/kohteet/referenssit/'
+    title: 'Referenser',
+    subtitle: 'Ett urval av sålda objekt',
+    buttonText: 'Se objekten',
+    buttonLink: '/sv/objekt/referenser/'
   }
 ];
 
@@ -61,13 +61,13 @@ const sampleProperties = [
       property: {
         price: '00150',
         address: 'Tehtaankatu 19 G',
-        city: 'Helsinki',
+        city: 'Helsingfors',
         bedrooms: undefined,
         bathrooms: undefined,
         area: 97.21,
-        propertyType: 'Kerrostalo',
-        status: 'Myynnissä',
-        description: '3h, k, makuu/työtila, parvitila, 2 x kph, 2 sis. käyntiä'
+        propertyType: 'Höghus',
+        status: 'Till salu',
+        description: '3r, k, sovrum/arbetsrum, loft, 2 x badrum, 2 ingångar'
       }
     }
   },
@@ -89,9 +89,9 @@ const sampleProperties = [
         bedrooms: 6,
         bathrooms: undefined,
         area: 147,
-        propertyType: 'Omakotitalo',
-        status: 'Myynnissä',
-        description: '6 mh, avok., oh, rt, parvi, aula, kph, s, 3 wc, khh/varasto, terassi, autokatos'
+        propertyType: 'Egnahemshus',
+        status: 'Till salu',
+        description: '6 sovrum, öppet kök, vardagsrum, matplats, loft, hall, badrum, bastu, 3 wc, förråd, terrass, carport'
       }
     }
   },
@@ -109,13 +109,13 @@ const sampleProperties = [
       property: {
         price: undefined,
         address: 'Kurö, Orrholmen',
-        city: 'Raasepori',
+        city: 'Raseborg',
         bedrooms: 4,
         bathrooms: undefined,
         area: 385,
-        propertyType: 'Omakotitalo',
-        status: 'Myynnissä',
-        description: 'Päärakennus; 4mh, oh, rt x 2, Sivurakennus; 4mh, Saunarakennus.'
+        propertyType: 'Egnahemshus',
+        status: 'Till salu',
+        description: 'Huvudbyggnad; 4 sovrum, vardagsrum, 2 matplatser, Sidobyggnad; 4 sovrum, Bastubyggnad.'
       }
     }
   },
@@ -133,37 +133,37 @@ const sampleProperties = [
       property: {
         price: '1200000',
         address: 'Nuikontie 140',
-        city: 'Naantali',
+        city: 'Nådendal',
         bedrooms: 2,
         bathrooms: 2,
         area: 158,
-        propertyType: 'Omakotitalo',
-        status: 'Myynnissä',
-        description: '2 mh, olohuone, avok, rt, 2 kph, s, 3 wc, khh, vh, terassi, var, ak, rantasauna'
+        propertyType: 'Egnahemshus',
+        status: 'Till salu',
+        description: '2 sovrum, vardagsrum, öppet kök, matplats, 2 badrum, bastu, 3 wc, förråd, terrass, garage, strandbastu'
       }
     }
   },
   {
     id: '5',
-    title: 'Albertinkatu 19 B',
+    title: 'Albertsgatan 19 B',
     slug: 'albertinkatu-19-b',
     featuredImage: {
       node: {
         sourceUrl: 'https://d33xsej2pkrh3b.cloudfront.net/640x427,fit,q85,f=webp/oviproprodmedia/Production/realty/57809e7b-2fe2-430d-a7d7-aff39337d0c1/ead27130-4e08-465e-af6d-500d593ae0db.jpg',
-        altText: 'Albertinkatu 19 B'
+        altText: 'Albertsgatan 19 B'
       }
     },
     acfRealEstate: {
       property: {
         price: undefined,
-        address: 'Albertinkatu 19 B',
-        city: 'Helsinki',
+        address: 'Albertsgatan 19 B',
+        city: 'Helsingfors',
         bedrooms: 2,
         bathrooms: 2,
         area: 108,
-        propertyType: 'Kerrostalo',
-        status: 'Myynnissä',
-        description: '2-3h, k, 2 kph/wc, et.'
+        propertyType: 'Höghus',
+        status: 'Till salu',
+        description: '2-3r, k, 2 badrum/wc, hall.'
       }
     }
   },
@@ -181,13 +181,13 @@ const sampleProperties = [
       property: {
         price: undefined,
         address: 'Remmarholmen',
-        city: 'Kirkkonummi',
+        city: 'Kyrkslätt',
         bedrooms: 2,
         bathrooms: undefined,
         area: 150,
-        propertyType: 'Omakotitalo',
-        status: 'Myynnissä',
-        description: 'Päärak: 2-3h, avok, kph, 2 wc, khh, et., Sivurak: avok, oh, Rantas. ja tupa, var'
+        propertyType: 'Egnahemshus',
+        status: 'Till salu',
+        description: 'Huvudbyggnad: 2-3r, öppet kök, badrum, 2 wc, förråd, hall., Sidobyggnad: öppet kök, vardagsrum, Strandbastu och stuga, förråd'
       }
     }
   }
@@ -236,10 +236,10 @@ export default async function HomePage() {
       heroSlides = homepage.acf.heroSlider.slide.map((slide: any, index: number) => ({
         id: `slide-${index}`,
         image: slide.image?.sourceUrl || defaultSlides[0].image,
-        title: slide.title || 'Welcome to Sotheby\'s',
+        title: slide.title || 'Välkommen till Sotheby\'s',
         subtitle: slide.subtitle || '',
-        buttonText: slide.buttonText || 'LEARN MORE',
-        buttonLink: slide.buttonLink || '/properties'
+        buttonText: slide.buttonText || 'LÄS MER',
+        buttonLink: slide.buttonLink || '/sv/objekt'
       }));
     }
 
@@ -257,11 +257,11 @@ export default async function HomePage() {
               {/* Section Header */}
               <div className="text-center mb-12">
                 <h2 className="text-4xl font-light text-gray-900 mb-4">
-                  Myyntikohteet
+                  Objekt till salu
                 </h2>
                 <div className="w-24 h-0.5 bg-gray-300 mx-auto mb-6"></div>
                 <p className="text-lg text-gray-600 max-w-3xl mx-auto font-light">
-                  Tutustu huolella valittuun kokoelmaamme ylellisiä kiinteistöjä Suomen halutuimmissa kohteissa
+                  Upptäck vår noggrant utvalda samling av lyxfastigheter på Finlands mest eftertraktade platser
                 </p>
               </div>
 
@@ -271,30 +271,30 @@ export default async function HomePage() {
               {/* View All Button */}
               <div className="text-center mt-12">
                 <Link
-                  href="/kohteet"
+                  href="/sv/objekt"
                   className="inline-block bg-[#1a3a4a] text-white px-8 py-3 
                            hover:bg-[#0f2633] transition-colors duration-300 
                            font-light uppercase tracking-wider text-sm"
                 >
-                  Kaikki myynnissä olevat kohteemme
+                  Alla våra objekt till salu
                 </Link>
               </div>
             </div>
           </section>
 
-          {/* Three Column Section - Avaamme uusia ovia */}
-          <section id="avaamme-uusia-ovia" className="py-16 bg-white">
+          {/* Three Column Section - Vi öppnar nya dörrar */}
+          <section id="vi-oppnar-nya-dorrar" className="py-16 bg-white">
             <div className="container mx-auto px-4">
               {/* Section Header */}
               <div className="max-w-4xl mx-auto text-center mb-12">
                 <h2 className="text-3xl lg:text-4xl font-light text-gray-900 mb-8">
-                  Tervetuloa onnistuneeseen asuntokauppaan!
+                  Välkommen till en framgångsrik bostadsaffär!
                 </h2>
                 <p className="text-lg text-gray-600 font-light leading-relaxed">
-                  Olemme tuoneet Suomen asuntomarkkinoille yhden maailman suurimman kiinteistönvälitysketjun 
-                  Sotheby's International Realty®:n osaamisen ja kokemuksen. Avaamalla kiinteistömarkkinat 
-                  yli valtakunnan rajojen haluamme kehittää koko alaa. Inspiraationamme toimivat mielenkiintoiset 
-                  ja uniikit kohteet kaikkialla maailmassa.
+                  Vi har fört en av världens största fastighetsförmedlingskedjor, Sotheby's International Realty®, 
+                  kunskap och erfarenhet till den finska bostadsmarknaden. Genom att öppna fastighetsmarknaderna 
+                  över nationsgränserna vill vi utveckla hela branschen. Vår inspiration kommer från intressanta 
+                  och unika objekt över hela världen.
                 </p>
               </div>
 
@@ -304,20 +304,20 @@ export default async function HomePage() {
                 <div className="relative h-80 group overflow-hidden">
                   <Image
                     src="/images/content/snellman-sothebys-yritys.jpg"
-                    alt="Avaamme uusia ovia"
+                    alt="Vi öppnar nya dörrar"
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center text-white p-8">
-                    <h3 className="text-2xl font-light mb-4 text-center">Avaamme uusia ovia!</h3>
+                    <h3 className="text-2xl font-light mb-4 text-center">Vi öppnar nya dörrar!</h3>
                     <Link 
-                      href="/kohteet"
+                      href="/sv/objekt"
                       className="inline-block border-2 border-white text-white px-6 py-2 
                                hover:bg-white hover:text-[#1a3a4a] transition-all duration-300 
                                font-light uppercase tracking-wider text-sm"
                     >
-                      Löydä unelmiesi koti
+                      Hitta ditt drömhem
                     </Link>
                   </div>
                 </div>
@@ -326,22 +326,22 @@ export default async function HomePage() {
                 <div className="relative h-80 group overflow-hidden">
                   <Image
                     src="/images/content/snellman-sothebys-kutsu-arviokaynnille.jpg"
-                    alt="Asiantuntemus"
+                    alt="Expertis"
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-[#324b72] bg-opacity-80 flex flex-col items-center justify-center text-white p-8">
                     <h3 className="text-2xl font-light mb-4 text-center">
-                      Asiantuntemus joka ulottuu korttelista kaupunkiin ja aina maailman ympäri
+                      Expertis som sträcker sig från kvarteret till staden och runt om i världen
                     </h3>
                     <Link 
-                      href="/yritys"
+                      href="/sv/om-oss"
                       className="inline-block border-2 border-white text-white px-6 py-2 
                                hover:bg-white hover:text-[#324b72] transition-all duration-300 
                                font-light uppercase tracking-wider text-sm"
                     >
-                      Lue lisää yrityksestämme
+                      Läs mer om vårt företag
                     </Link>
                   </div>
                 </div>
@@ -350,22 +350,22 @@ export default async function HomePage() {
                 <div className="relative h-80 group overflow-hidden">
                   <Image
                     src="/images/content/snellman-sothebys-nakoalapaikka.jpg"
-                    alt="Arviokäynti"
+                    alt="Värdering"
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gray-800 bg-opacity-60 flex flex-col items-center justify-center text-white p-8">
                     <h3 className="text-2xl font-light mb-4 text-center">
-                      Kutsu meidät maksuttomalle arviokäynnille
+                      Bjud in oss för en kostnadsfri värdering
                     </h3>
                     <Link 
-                      href="/myymassa"
+                      href="/sv/salj-med-oss"
                       className="inline-block border-2 border-white text-white px-6 py-2 
                                hover:bg-white hover:text-gray-800 transition-all duration-300 
                                font-light uppercase tracking-wider text-sm"
                     >
-                      Ota meihin yhteyttä
+                      Kontakta oss
                     </Link>
                   </div>
                 </div>
@@ -377,9 +377,9 @@ export default async function HomePage() {
           <section className="py-8 bg-white">
             <div className="container mx-auto px-4 text-center">
               <h3 className="text-2xl font-light text-gray-900">
-                Upea toimistomme palvelee<br />
-                teitä arkisin 10:00 – 17:00<br />
-                sekä muina aikoina sopimuksen mukaan.
+                Vårt magnifika kontor betjänar<br />
+                er vardagar 10:00 – 17:00<br />
+                samt övriga tider enligt överenskommelse.
               </h3>
             </div>
           </section>
@@ -403,7 +403,7 @@ export default async function HomePage() {
                       rel="noopener noreferrer"
                       className="text-gray-900 hover:text-[#1a3a4a] transition-colors"
                     >
-                      Kasarmikatu 34, 00130 Helsinki
+                      Kasarmikatu 34, 00130 Helsingfors
                     </a>
                   </h4>
                 </div>
@@ -430,30 +430,30 @@ export default async function HomePage() {
             <div className="container mx-auto px-4 relative z-10">
               <div className="max-w-md mx-auto text-center">
                 <h2 className="text-3xl font-light text-white mb-8">
-                  Tilaa Uutiskirjeemme
+                  Prenumerera på vårt nyhetsbrev
                 </h2>
                 <form className="space-y-4">
                   <input
                     type="text"
-                    placeholder="Etunimi"
+                    placeholder="Förnamn"
                     className="w-full px-4 py-3 bg-white bg-opacity-90 text-gray-900 placeholder-gray-600 font-light"
                   />
                   <input
                     type="text"
-                    placeholder="Sukunimi"
+                    placeholder="Efternamn"
                     className="w-full px-4 py-3 bg-white bg-opacity-90 text-gray-900 placeholder-gray-600 font-light"
                   />
                   <input
                     type="email"
-                    placeholder="Sähköposti"
+                    placeholder="E-post"
                     className="w-full px-4 py-3 bg-white bg-opacity-90 text-gray-900 placeholder-gray-600 font-light"
                   />
                   <div className="flex items-start text-left">
                     <input type="checkbox" className="mt-1 mr-2" required />
                     <label className="text-white text-sm font-light">
-                      Olen tutustunut Tietosuojaselosteeseen{' '}
-                      <a href="/tietosuojaseloste" className="underline hover:no-underline">
-                        Tietosuojaseloste
+                      Jag har läst dataskyddsbeskrivningen{' '}
+                      <a href="/sv/dataskyddsbeskrivning" className="underline hover:no-underline">
+                        Dataskyddsbeskrivning
                       </a>
                     </label>
                   </div>
@@ -463,7 +463,7 @@ export default async function HomePage() {
                              hover:bg-[#0f2633] transition-colors duration-300 
                              font-light uppercase tracking-wider text-sm"
                   >
-                    Tilaa
+                    Prenumerera
                   </button>
                 </form>
               </div>
@@ -485,9 +485,9 @@ export default async function HomePage() {
           <section className="py-16 bg-gray-50">
             <div className="container mx-auto px-4 text-center">
               <h2 className="text-3xl font-light text-gray-900 mb-4">
-                Loading...
+                Laddar...
               </h2>
-              <p className="text-gray-600">Please refresh the page</p>
+              <p className="text-gray-600">Vänligen uppdatera sidan</p>
             </div>
           </section>
         </main>

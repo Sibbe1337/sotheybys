@@ -19,19 +19,19 @@ export default function InternationalPage() {
           <div className="absolute inset-0 bg-black/40"></div>
           <div className="relative z-10 text-center px-4 max-w-4xl">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-thin mb-6">
-              Kansainvälinen välittäjäsi<br />
-              paikallisesti
+              Your international broker<br />
+              locally
             </h1>
             <p className="text-lg md:text-xl font-light mb-12">
-              26 100 välittäjää 1 000 välitystoimistossa 84 maassa ja alueella
+              26,100 agents in 1,000 offices in 84 countries and territories
             </p>
             <Link 
-              href="/kansainvalisesti"
+              href="/en/international"
               className="inline-block bg-transparent border-2 border-white text-white px-8 py-3 
                        hover:bg-white hover:text-black transition-all duration-300 
                        font-light uppercase tracking-wider text-sm"
             >
-              LUE LISÄÄ &gt;
+              READ MORE &gt;
             </Link>
           </div>
         </section>
@@ -80,8 +80,8 @@ export default function InternationalPage() {
           <div className="container mx-auto px-4">
             <div className="text-center">
               <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-4">
-                Ainutlaatuinen maailmanlaajuinen<br />
-                ulottuvuus ja paikallinen asiantuntemus
+                Unique global<br />
+                reach and local expertise
               </h2>
               <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8 text-gray-700">
                 <a href="tel:+358103156900" className="hover:text-[#1a3352] transition-colors font-light">
@@ -107,18 +107,18 @@ export default function InternationalPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-3xl font-light text-gray-900 mb-8">
-                Avaamme uusia ovia kansainvälisesti
+                We open new doors internationally
               </h2>
               <div className="space-y-4 text-gray-700 font-light leading-relaxed">
                 <p>
-                  Osaamiseemme ei perustu ainoastaan paikalliseen markkinatuntemukseen, sillä teemme työtä myös 
-                  kansainvälisillä markkinoilla. Sotheby´s International Realty®, kuten myös meillä osana suurta ketjua, on pääsy 
-                  tehokkaimpiin ja vaikutusvaltaisimpiin markkinointi- ja mainoskanaviin ympäri maailman.
+                  Our expertise is not based solely on local market knowledge, as we also work in 
+                  international markets. Sotheby's International Realty®, as well as us as part of a large chain, has access 
+                  to the most effective and influential marketing and advertising channels around the world.
                 </p>
                 <p>
-                  Nostamme kaikki mynnissämme olevat asunnot esiin uniikkeina kohteina niin kotimaisissa kuin kansainvälisissä 
-                  kanavissa. Valitsemme ja suosittelemme parhaat markkinointikanavat juuri sinun kohteellesi. Mainontamme näkyy 
-                  kaikissa tärkeimmissä digitaalisissa ja painetuissa markkinointikanavissa sekä Suomessa että maailmalla...
+                  We highlight all the homes for sale as unique properties in both domestic and international 
+                  channels. We select and recommend the best marketing channels for your property. Our advertising is visible 
+                  in all major digital and print marketing channels both in Finland and around the world...
                 </p>
               </div>
             </div>

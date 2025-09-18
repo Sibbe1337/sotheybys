@@ -157,8 +157,7 @@ export default function ContactPage() {
                         Toimisto
                       </h3>
                       <div className="space-y-2 text-gray-700 font-light">
-                        <p>Kasarmikatu 34</p>
-                        <p>00130 Helsinki</p>
+                        <p>Kasarmikatu 34, 00130 Helsinki</p>
                         <p className="mt-4">
                           <a href="tel:+358103156900" className="text-[#1a3a4a] hover:text-[#0f2633] transition-colors">
                             +358 (0)10 315 6900

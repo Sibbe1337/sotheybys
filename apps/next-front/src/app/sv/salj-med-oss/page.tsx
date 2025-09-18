@@ -19,20 +19,19 @@ export default function SellingPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-[#1a3352]/70 to-[#1a3352]/50"></div>
           <div className="relative z-10 text-center px-4 max-w-4xl">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-thin mb-8">
-              Myymässä
+              Sälj med oss
             </h1>
             <p className="text-lg md:text-xl font-light leading-relaxed mb-12 max-w-3xl mx-auto">
-              Haluamme luoda kestävän asiakassuhteen, jossa otamme huomioon pienimmätkin 
-              tarpeesi ja toiveesi. Keskustelemme avoimesti ja kuuntelemme huolella, sillä tehtävämme 
-              on tehdä unelmistasi totta.
+              Vi vill skapa en hållbar kundrelation där vi tar hänsyn till dina minsta behov och önskemål. 
+              Vi diskuterar öppet och lyssnar noga, för vår uppgift är att förverkliga dina drömmar.
             </p>
             <Link 
-              href="/yhteystiedot"
+              href="/sv/kontakta-oss"
               className="inline-block bg-transparent border-2 border-white text-white px-8 py-3 
                        hover:bg-white hover:text-[#1a3352] transition-all duration-300 
                        font-light uppercase tracking-wider text-sm"
             >
-              TEE ELÄMÄSI ASUNTOKAUPAT &gt;
+              GÖR DITT LIVS BOSTADSAFFÄR &gt;
             </Link>
           </div>
         </section>
@@ -81,7 +80,7 @@ export default function SellingPage() {
           <div className="container mx-auto px-4">
             <div className="text-center">
               <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-8">
-                Tervetuloa onnistuneeseen asuntokauppaan!
+                Välkommen till en lyckad bostadsaffär!
               </h2>
               <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8 text-gray-700">
                 <a href="tel:+358103156900" className="hover:text-[#1a3352] transition-colors font-light">
@@ -91,7 +90,7 @@ export default function SellingPage() {
                 <a href="https://goo.gl/maps/8HptT8TwUp42" target="_blank" rel="noopener noreferrer" 
                    className="hover:text-[#1a3352] transition-colors font-light">
                   Kasarmikatu 34,<br className="md:hidden" />
-                  00130 Helsinki
+                  00130 Helsingfors
                 </a>
                 <span className="hidden md:inline text-gray-400">|</span>
                 <a href="mailto:info@sothebysrealty.fi" className="hover:text-[#1a3352] transition-colors font-light">
@@ -109,26 +108,26 @@ export default function SellingPage() {
               {/* Valuation Form */}
               <div className="bg-gray-100 p-8 lg:p-12">
                 <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-6">
-                  Sovi maksuton arviokäynti!
+                  Boka ett gratis värderingsbesök!
                 </h2>
                 <p className="text-gray-700 font-light mb-2">
-                  Tiedätkö asuntosi markkina-arvon?
+                  Känner du till din bostads marknadsvärde?
                 </p>
                 <p className="text-gray-700 font-light mb-8">
-                  Kutsu meidät maksuttomalle arviokäynnille – saat alueen asiantuntevimman lausunnon.
+                  Bjud in oss på ett gratis värderingsbesök – du får områdets mest sakkunniga utlåtande.
                 </p>
                 
                 <form className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <input
                       type="text"
-                      placeholder="Etunimi"
+                      placeholder="Förnamn"
                       className="w-full px-4 py-3 bg-white border border-gray-300 focus:outline-none focus:border-[#1a3352] font-light"
                       required
                     />
                     <input
                       type="text"
-                      placeholder="Sukunimi"
+                      placeholder="Efternamn"
                       className="w-full px-4 py-3 bg-white border border-gray-300 focus:outline-none focus:border-[#1a3352] font-light"
                       required
                     />
@@ -137,20 +136,20 @@ export default function SellingPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <input
                       type="email"
-                      placeholder="Sähköposti"
+                      placeholder="E-post"
                       className="w-full px-4 py-3 bg-white border border-gray-300 focus:outline-none focus:border-[#1a3352] font-light"
                       required
                     />
                     <input
                       type="tel"
-                      placeholder="Puhelinnumero"
+                      placeholder="Telefonnummer"
                       className="w-full px-4 py-3 bg-white border border-gray-300 focus:outline-none focus:border-[#1a3352] font-light"
                       required
                     />
                   </div>
                   
                   <textarea
-                    placeholder="Viesti"
+                    placeholder="Meddelande"
                     rows={6}
                     className="w-full px-4 py-3 bg-white border border-gray-300 focus:outline-none focus:border-[#1a3352] font-light resize-none"
                   />
@@ -160,7 +159,7 @@ export default function SellingPage() {
                     className="w-full bg-[#1a3352] text-white px-6 py-3 hover:bg-[#0f2633] 
                              transition-colors duration-300 font-light"
                   >
-                    Lähetä
+                    Skicka
                   </button>
                 </form>
               </div>
@@ -168,23 +167,23 @@ export default function SellingPage() {
               {/* Mission Section */}
               <div className="bg-white p-8 lg:p-12">
                 <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-6">
-                  Kunniatehtävä
+                  Hedersuppdrag
                 </h2>
                 <div className="space-y-4 text-gray-700 font-light leading-relaxed text-sm">
                   <p>
-                    Snellman | Sotheby's International Realty Finland toimii osana maailman suurimpiin kuuluvaa, menestyksekästä 
-                    kiinteistönvälitysketjua Sotheby's International Realty®, joten tarjoamme käyttöösi laajan kontaktiverkoston 
-                    asiantuntijoineen. Myyntikanavamme kattavat tehokkaan maailmanlaajuisen markkinointiverkoston.
+                    Snellman | Sotheby's International Realty Finland fungerar som en del av en av världens största och mest framgångsrika 
+                    fastighetsförmedlingskedjor Sotheby's International Realty®, så vi erbjuder dig ett omfattande kontaktnätverk 
+                    med experter. Våra försäljningskanaler täcker ett effektivt globalt marknadsföringsnätverk.
                   </p>
                   <p>
-                    Olemme erikoistuneet arvoasuntoihin. Jokainen toimeksianto saa myyntikohteenamme aseman, joka takaa sille erityisen, tavallista 
-                    laadukkaamman palvelun.
+                    Vi är specialiserade på värdebostäder. Varje uppdrag får som vårt försäljningsobjekt en ställning som garanterar det en speciell, 
+                    högre kvalitetsservice än vanligt.
                   </p>
                   <p>
-                    Tarjoamme käyttöösi laajan asiantuntemuksen niin kotimaan kuin kansainvälisilläkin markkinoilla. Edustamme alan parasta 
-                    osaamista ja hoidamme sydämellä koko myyntiprosessin alusta loppuun asti. Takaamme, että käytössäsi on kauttamme alan 
-                    moderneimmat ja tehokkaimmat markkinointikanavat sekä laaja asiakasverkosto. Näin saavutamme kohteellesi korkeimman 
-                    mahdollisen myyntihinnan.
+                    Vi erbjuder dig omfattande expertis på både inhemska och internationella marknader. Vi representerar branschens bästa 
+                    kunnande och hanterar hela försäljningsprocessen från början till slut med hjärtat. Vi garanterar att du genom oss har 
+                    tillgång till branschens mest moderna och effektiva marknadsföringskanaler samt ett omfattande kundnätverk. 
+                    På så sätt uppnår vi högsta möjliga försäljningspris för din bostad.
                   </p>
                 </div>
               </div>
@@ -197,19 +196,19 @@ export default function SellingPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-5xl mx-auto text-center">
               <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-8">
-                Palvelumme
+                Våra tjänster
               </h2>
               <div className="space-y-4 text-gray-700 font-light leading-relaxed max-w-4xl mx-auto">
                 <p>
-                  Haluamme olla mukana elämäsi suuressa taloudellisessa päätöksenteossa, sen vaatimalla arvokkuudella. 
-                  Voit aina olla vakuuttunut siitä, että saat asiantuntivimmat sekä luottamuksellisemmat neuvot kokeneilta välittäjiltämme.
+                  Vi vill vara med i ditt livs stora ekonomiska beslutsfattande, med den värdighet det kräver. 
+                  Du kan alltid vara säker på att du får de mest sakkunniga och konfidentiella råden från våra erfarna mäklare.
                 </p>
                 <p>
-                  Haluamme olla osa koko myyntiprosessia, aina maksuttomasta arviointikäynnistä kauppaan saakka. 
-                  Tinkimätön tavoitteemme on, että yhteistyö on hedelmällistä ja että kaikki asiakkaamme palaavat meille tulevaisuudessakin.
+                  Vi vill vara en del av hela försäljningsprocessen, från det gratis värderingsbesöket till affären. 
+                  Vårt kompromisslösa mål är att samarbetet är fruktbart och att alla våra kunder återvänder till oss även i framtiden.
                 </p>
                 <p className="pt-4">
-                  Pyydä palvelutarjous maksuttomalla arviokäynnillä.
+                  Begär tjänsteoffert med ett gratis värderingsbesök.
                 </p>
               </div>
             </div>
@@ -220,61 +219,61 @@ export default function SellingPage() {
         <section className="py-16 bg-gray-100">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-              {/* Palvelumme Column */}
+              {/* Our Services Column */}
               <div className="bg-white p-8">
                 <h2 className="text-2xl font-light text-gray-900 mb-8">
-                  Palvelumme
+                  Våra tjänster
                 </h2>
                 <div className="space-y-4 text-gray-700 font-light text-sm leading-relaxed">
                   <p>
-                    Haluamme olla mukana elämäsi suuressa taloudellisessa päätöksenteossa, sen vaatimalla arvokkuudella. 
-                    Voit aina olla vakuuttunut siitä, että saat asiantuntivimmat sekä luottamuksellisemmat neuvot kokeneilta välittäjiltämme.
+                    Vi vill vara med i ditt livs stora ekonomiska beslutsfattande, med den värdighet det kräver. 
+                    Du kan alltid vara säker på att du får de mest sakkunniga och konfidentiella råden från våra erfarna mäklare.
                   </p>
                   <p>
-                    Haluamme olla osa koko myyntiprosessia, aina maksuttomasta arviointikäynnistä kauppaan saakka. 
-                    Tinkimätön tavoitteemme on, että yhteistyö on hedelmällistä ja että kaikki asiakkaamme palaavat meille tulevaisuudessakin.
+                    Vi vill vara en del av hela försäljningsprocessen, från det gratis värderingsbesöket till affären. 
+                    Vårt kompromisslösa mål är att samarbetet är fruktbart och att alla våra kunder återvänder till oss även i framtiden.
                   </p>
                   <p className="pt-4">
-                    Pyydä palvelutarjous maksuttomalla arviokäynnillä.
+                    Begär tjänsteoffert med ett gratis värderingsbesök.
                   </p>
                 </div>
               </div>
 
-              {/* Palveluhinnasto Column */}
+              {/* Price List Column */}
               <div className="bg-white p-8">
                 <h2 className="text-2xl font-light text-gray-900 mb-8">
-                  Palveluhinnasto
+                  Prislista
                 </h2>
                 <div className="space-y-1 text-sm">
                   <div className="font-light text-gray-700 mb-4">
-                    <div className="mb-2">Välitys- / Myyntitoimeksianto</div>
+                    <div className="mb-2">Förmedlings- / Försäljningsuppdrag</div>
                     <div className="grid grid-cols-2 gap-y-1">
-                      <div>Osakehuoneistot</div>
-                      <div className="text-right">5 % sis. alv 25,5%*</div>
-                      <div>Kiinteistöt</div>
-                      <div className="text-right">6 % sis. alv 25,5%*</div>
-                      <div>Etä- ja erikoiskohteet</div>
-                      <div className="text-right">7 % sis. alv 25,5%*</div>
-                      <div>Vuokraustoimeksianto</div>
-                      <div className="text-right">2 kk vuokra sis. alv 25,5%*</div>
-                      <div>Minimipalkkio</div>
-                      <div className="text-right">5750 € sis. alv 25,5%*</div>
-                      <div>Kansainvälinen näkyvyys</div>
-                      <div className="text-right">+0,50 % sis. alv 25,5%**</div>
+                      <div>Bostadsaktier</div>
+                      <div className="text-right">5 % inkl. moms 25,5%*</div>
+                      <div>Fastigheter</div>
+                      <div className="text-right">6 % inkl. moms 25,5%*</div>
+                      <div>Distans- och specialobjekt</div>
+                      <div className="text-right">7 % inkl. moms 25,5%*</div>
+                      <div>Uthyrningsuppdrag</div>
+                      <div className="text-right">2 mån hyra inkl. moms 25,5%*</div>
+                      <div>Minimiarvode</div>
+                      <div className="text-right">5750 € inkl. moms 25,5%*</div>
+                      <div>Internationell synlighet</div>
+                      <div className="text-right">+0,50 % inkl. moms 25,5%**</div>
                     </div>
                   </div>
                   <div className="font-light text-gray-700 pt-4">
-                    <div className="mb-2">Aloitusmaksu</div>
+                    <div className="mb-2">Startavgift</div>
                     <div className="grid grid-cols-2 gap-y-1">
-                      <div>Osakehuoneistot</div>
-                      <div className="text-right">Alkaen 500 € sis. alv 25,5%*</div>
-                      <div>Kiinteistöt / Etä- ja erikoiskohteet</div>
-                      <div className="text-right">Alkaen 3000 € sis. alv 25,5%*</div>
+                      <div>Bostadsaktier</div>
+                      <div className="text-right">Från 500 € inkl. moms 25,5%*</div>
+                      <div>Fastigheter / Distans- och specialobjekt</div>
+                      <div className="text-right">Från 3000 € inkl. moms 25,5%*</div>
                     </div>
                   </div>
                   <div className="pt-4 text-xs text-gray-600">
-                    <p>* Tai sopimuksen mukaan</p>
-                    <p>** Soveltuvin osin</p>
+                    <p>* Eller enligt överenskommelse</p>
+                    <p>** I tillämpliga delar</p>
                   </div>
                 </div>
               </div>
@@ -287,13 +286,13 @@ export default function SellingPage() {
           <div className="container mx-auto px-4">
             <div className="text-center">
               <h2 className="text-2xl font-light mb-4">
-                Kuluttajariita
+                Konsumenttvist
               </h2>
               <p className="font-light mb-2">
-                Sopimusta koskeva riita voidaan viedä kuluttajariitalautakunnan ratkaistavaksi.
+                En tvist som gäller avtalet kan föras till konsumenttvistenämnden för avgörande.
               </p>
               <p className="font-light">
-                Lisätietoa osoitteesta:{' '}
+                Mer information på:{' '}
                 <a href="https://www.kuluttajariita.fi" target="_blank" rel="noopener noreferrer" 
                    className="text-white underline hover:text-gray-200">
                   www.kuluttajariita.fi

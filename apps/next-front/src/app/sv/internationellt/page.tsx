@@ -19,19 +19,19 @@ export default function InternationalPage() {
           <div className="absolute inset-0 bg-black/40"></div>
           <div className="relative z-10 text-center px-4 max-w-4xl">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-thin mb-6">
-              Kansainvälinen välittäjäsi<br />
-              paikallisesti
+              Din internationella mäklare<br />
+              lokalt
             </h1>
             <p className="text-lg md:text-xl font-light mb-12">
-              26 100 välittäjää 1 000 välitystoimistossa 84 maassa ja alueella
+              26 100 mäklare i 1 000 kontor i 84 länder och territorier
             </p>
             <Link 
-              href="/kansainvalisesti"
+              href="/sv/internationellt"
               className="inline-block bg-transparent border-2 border-white text-white px-8 py-3 
                        hover:bg-white hover:text-black transition-all duration-300 
                        font-light uppercase tracking-wider text-sm"
             >
-              LUE LISÄÄ &gt;
+              LÄS MER &gt;
             </Link>
           </div>
         </section>
@@ -80,8 +80,8 @@ export default function InternationalPage() {
           <div className="container mx-auto px-4">
             <div className="text-center">
               <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-4">
-                Ainutlaatuinen maailmanlaajuinen<br />
-                ulottuvuus ja paikallinen asiantuntemus
+                Unik global<br />
+                räckvidd och lokal expertis
               </h2>
               <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8 text-gray-700">
                 <a href="tel:+358103156900" className="hover:text-[#1a3352] transition-colors font-light">
@@ -91,7 +91,7 @@ export default function InternationalPage() {
                 <a href="https://goo.gl/maps/8HptT8TwUp42" target="_blank" rel="noopener noreferrer" 
                    className="hover:text-[#1a3352] transition-colors font-light">
                   Kasarmikatu 34, 00130<br className="md:hidden" />
-                  Helsinki
+                  Helsingfors
                 </a>
                 <span className="hidden md:inline text-gray-400">|</span>
                 <a href="mailto:info@sothebysrealty.fi" className="hover:text-[#1a3352] transition-colors font-light">
@@ -107,18 +107,18 @@ export default function InternationalPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-3xl font-light text-gray-900 mb-8">
-                Avaamme uusia ovia kansainvälisesti
+                Vi öppnar nya dörrar internationellt
               </h2>
               <div className="space-y-4 text-gray-700 font-light leading-relaxed">
                 <p>
-                  Osaamiseemme ei perustu ainoastaan paikalliseen markkinatuntemukseen, sillä teemme työtä myös 
-                  kansainvälisillä markkinoilla. Sotheby´s International Realty®, kuten myös meillä osana suurta ketjua, on pääsy 
-                  tehokkaimpiin ja vaikutusvaltaisimpiin markkinointi- ja mainoskanaviin ympäri maailman.
+                  Vår expertis baseras inte enbart på lokal marknadskännedom, eftersom vi också arbetar på 
+                  internationella marknader. Sotheby's International Realty®, liksom vi som en del av en stor kedja, har tillgång 
+                  till de mest effektiva och inflytelserika marknadsförings- och reklamkanalerna runt om i världen.
                 </p>
                 <p>
-                  Nostamme kaikki mynnissämme olevat asunnot esiin uniikkeina kohteina niin kotimaisissa kuin kansainvälisissä 
-                  kanavissa. Valitsemme ja suosittelemme parhaat markkinointikanavat juuri sinun kohteellesi. Mainontamme näkyy 
-                  kaikissa tärkeimmissä digitaalisissa ja painetuissa markkinointikanavissa sekä Suomessa että maailmalla...
+                  Vi lyfter fram alla hem till salu som unika fastigheter i både inhemska och internationella 
+                  kanaler. Vi väljer och rekommenderar de bästa marknadsföringskanalerna för din egendom. Vår reklam syns 
+                  i alla större digitala och tryckta marknadsföringskanaler både i Finland och runt om i världen...
                 </p>
               </div>
             </div>

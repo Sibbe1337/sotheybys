@@ -35,8 +35,7 @@ export default function FooterBottomBar() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
                               d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
-                      Kasarmikatu 34,<br />
-                      <span className="ml-6">00130 Helsinki</span>
+                      Kasarmikatu 34, 00130 Helsinki
                     </p>
                     <p className="flex items-center gap-2">
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -193,6 +192,24 @@ export default function FooterBottomBar() {
                   </Link>
                 </p>
               </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Team Photo Section */}
+      <div className="bg-[#1a3a4a] py-16">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <h3 className="text-3xl font-light text-white mb-8">Snellman Sotheby&apos;s International Realty Team</h3>
+            <div className="relative h-96 rounded-lg overflow-hidden">
+              <Image
+                src="/images/international/henkilosto_35.jpg"
+                alt="Snellman Sotheby's International Realty Team"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1000px"
+                className="object-cover"
+              />
             </div>
           </div>
         </div>

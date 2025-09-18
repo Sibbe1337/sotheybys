@@ -157,7 +157,7 @@ export default function StaffPage() {
           <div className="absolute inset-0 bg-[#1a3352]/60"></div>
           <div className="relative z-10 text-center px-4 max-w-4xl">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-thin mb-8">
-              Henkilöstö
+              Staff
             </h1>
           </div>
         </section>
@@ -206,11 +206,11 @@ export default function StaffPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-3xl font-light text-gray-900 mb-6">
-                Kokenut ja ammattitaitoinen henkilökuntamme antaa<br />
-                sinulle mielellään lisätietoja.
+                Our experienced and professional staff will be happy<br />
+                to provide you with more information.
               </h2>
               <p className="text-gray-600 font-light">
-                Tervetuloa tapaamaan meitä, kuulemme mielellämme miten voimme palvella juuri sinua.
+                Welcome to meet us, we're happy to hear how we can serve you.
               </p>
             </div>
           </div>
@@ -273,9 +273,9 @@ export default function StaffPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center mb-12">
               <h2 className="text-3xl font-light text-gray-900 mb-4">
-                Jos mieleesi herää kysymyksiä, voit aina ottaa meihin yhteyttä<br />
-                soittamalla, lähettämällä sähköpostia tai pistäytymällä<br />
-                toimistollamme!
+                If you have any questions, you can always contact us<br />
+                by calling, sending an email, or visiting<br />
+                our office!
               </h2>
               
               <div className="flex flex-col md:flex-row justify-center items-center gap-8 mt-8 text-gray-700 font-light">
@@ -301,7 +301,7 @@ export default function StaffPage() {
                   <div>
                     <input
                       type="text"
-                      placeholder="Etunimi"
+                      placeholder="First Name"
                       className="w-full px-4 py-3 border-0 bg-white placeholder-gray-500 font-light"
                       required
                     />
@@ -309,7 +309,7 @@ export default function StaffPage() {
                   <div>
                     <input
                       type="text"
-                      placeholder="Sukunimi"
+                      placeholder="Last Name"
                       className="w-full px-4 py-3 border-0 bg-white placeholder-gray-500 font-light"
                       required
                     />
@@ -317,7 +317,7 @@ export default function StaffPage() {
                   <div>
                     <input
                       type="email"
-                      placeholder="Sähköposti"
+                      placeholder="Email"
                       className="w-full px-4 py-3 border-0 bg-white placeholder-gray-500 font-light"
                       required
                     />
@@ -325,7 +325,7 @@ export default function StaffPage() {
                   <div>
                     <input
                       type="tel"
-                      placeholder="Puhelinnumero"
+                      placeholder="Phone Number"
                       className="w-full px-4 py-3 border-0 bg-white placeholder-gray-500 font-light"
                       required
                     />
@@ -335,14 +335,14 @@ export default function StaffPage() {
                 <div>
                   <input
                     type="text"
-                    placeholder="Osoite"
+                    placeholder="Address"
                     className="w-full px-4 py-3 border-0 bg-white placeholder-gray-500 font-light"
                   />
                 </div>
                 
                 <div>
                   <textarea
-                    placeholder="Viesti"
+                    placeholder="Message"
                     rows={6}
                     className="w-full px-4 py-3 border-0 bg-white placeholder-gray-500 font-light resize-none"
                     required
@@ -352,27 +352,27 @@ export default function StaffPage() {
                 <div className="flex items-start">
                   <input
                     type="checkbox"
-                    id="privacy-staff"
+                    id="privacy-staff-en"
                     name="privacy"
                     required
                     className="mt-1 mr-3"
                   />
-                  <label htmlFor="privacy-staff" className="text-sm font-light text-gray-700">
-                    Olen tutustunut Tietosuojaselosteeseen <a href="#" className="text-[#1a3352] underline">Tietosuojaseloste</a>
+                  <label htmlFor="privacy-staff-en" className="text-sm font-light text-gray-700">
+                    I have read and accept the <a href="#" className="text-[#1a3352] underline">Privacy Policy</a>
                   </label>
                 </div>
                 
                 <div className="text-center">
                   <p className="text-xs font-light text-gray-600 mb-4">
-                    Tämän sivun suojaa reCAPTCHA, mikä tarkoittaa, että Googlen{' '}
-                    <a href="#" className="text-[#1a3352] underline">tietosuojakäytännöt</a> ja{' '}
-                    <a href="#" className="text-[#1a3352] underline">käyttöehdot</a> ovat voimassa.
+                    This site is protected by reCAPTCHA and the Google{' '}
+                    <a href="#" className="text-[#1a3352] underline">Privacy Policy</a> and{' '}
+                    <a href="#" className="text-[#1a3352] underline">Terms of Service</a> apply.
                   </p>
                   <button
                     type="submit"
                     className="px-8 py-3 bg-[#1a3352] text-white hover:bg-[#0f2633] transition-colors font-light uppercase tracking-wider"
                   >
-                    Lähetä
+                    Send
                   </button>
                 </div>
               </form>
@@ -385,16 +385,16 @@ export default function StaffPage() {
           <div className="grid md:grid-cols-2">
             {/* Left Column - Office Info */}
             <div className="bg-[#5a7a94] p-12 md:p-16 text-white">
-              <h3 className="text-3xl font-light mb-6">Helsingin Toimipisteemme</h3>
+              <h3 className="text-3xl font-light mb-6">Our Helsinki Office</h3>
               <div className="space-y-4 text-gray-100 font-light">
                 <p>
-                  Helsingin ydinkeskustassa sijaitsevassa toimistossamme tapaat joukon motivoituneita ja asiantuntevia välittäjiä, joiden päämääränä on tehdä unelmastasi totta.
+                  In our office located in the heart of Helsinki, you&apos;ll meet a team of motivated and knowledgeable agents whose goal is to make your dreams come true.
                 </p>
                 <p>
-                  Toimistoamme ympäröi dynaaminen Kaartinkaupunki muotiputiikkeineen, fine-dine-ravintoloineen sekä korkeatasoisine hotelleineen.
+                  Our office is surrounded by the dynamic Kaartinkaupunki district with its fashion boutiques, fine dining restaurants, and high-quality hotels.
                 </p>
                 <p>
-                  Kävelet toimistollemme vain muutamassa minuutissa Esplanadilta tai Senaatintorilta.
+                  You can walk to our office in just a few minutes from the Esplanade or Senate Square.
                 </p>
                 <a 
                   href="https://goo.gl/maps/LjvLpXQFdT82" 
@@ -402,7 +402,7 @@ export default function StaffPage() {
                   rel="noopener noreferrer"
                   className="inline-block mt-4 text-white border border-white px-6 py-2 hover:bg-white hover:text-[#5a7a94] transition-all"
                 >
-                  Reittiohjeet →
+                  Get Directions →
                 </a>
               </div>
             </div>
