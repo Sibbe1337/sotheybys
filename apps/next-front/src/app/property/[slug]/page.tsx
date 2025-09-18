@@ -62,8 +62,16 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
         {property.featuredImage && (
           <section className="relative h-96 lg:h-[500px]">
             <Image
-              src={property.featuredImage.node.sourceUrl}
-              alt={property.featuredImage.node.altText || property.title}
+              src={
+                typeof property.featuredImage === 'string' 
+                  ? property.featuredImage 
+                  : property.featuredImage?.node?.sourceUrl || property.featuredImage
+              }
+              alt={
+                typeof property.featuredImage === 'string'
+                  ? property.title
+                  : property.featuredImage?.node?.altText || property.title
+              }
               fill
               className="object-cover"
               priority
