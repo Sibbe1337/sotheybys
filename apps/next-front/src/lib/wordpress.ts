@@ -83,7 +83,7 @@ export interface Agent {
   bio?: string;
   photo?: {
     sourceUrl: string;
-    altText: string;
+    altText?: string;
     mediaDetails?: {
       width?: number;
       height?: number;
