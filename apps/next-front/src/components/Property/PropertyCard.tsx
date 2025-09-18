@@ -125,7 +125,7 @@ export default function PropertyCard({
   return (
     <Link 
       href={`/property/${slug}`} 
-      className="block bg-white rounded-lg shadow-md overflow-hidden card-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-blue)] focus-visible:ring-offset-2"
+      className="block bg-white rounded-lg shadow-md overflow-hidden card-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2"
     >
       {/* Property Image */}
       {featuredImage && (
@@ -186,7 +186,7 @@ export default function PropertyCard({
         )}
 
         {/* Title */}
-        <h3 className="text-lg font-semibold text-[var(--brand-blue)] mb-2">
+        <h3 className="text-lg font-semibold text-[var(--color-primary)] mb-2">
           <span className="hover:underline">
             {title}
           </span>

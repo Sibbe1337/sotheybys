@@ -55,7 +55,7 @@ export const DetailMedia: React.FC<DetailMediaProps> = ({
                 className={cn(
                   'flex-1 py-3 px-4 text-sm font-medium text-center border-b-2 transition-colors',
                   activeTab === media.type
-                    ? 'border-[var(--brand-blue)] text-[var(--brand-blue)]'
+                    ? 'border-[var(--color-primary)] text-[var(--color-primary)]'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 )}
               >
@@ -95,7 +95,7 @@ export const DetailMedia: React.FC<DetailMediaProps> = ({
                     href={youtubeUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[var(--brand-blue)] hover:underline"
+                    className="text-[var(--color-primary)] hover:underline"
                   >
                     Avaa video uuteen ikkunaan
                   </a>
@@ -111,7 +111,7 @@ export const DetailMedia: React.FC<DetailMediaProps> = ({
               href={virtualTourUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--brand-blue)] text-white rounded-lg hover:bg-opacity-90 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--color-primary)] text-white rounded-lg hover:bg-opacity-90 transition-colors"
             >
               <CubeIcon className="w-5 h-5" />
               Avaa virtuaaliesittely
@@ -125,7 +125,7 @@ export const DetailMedia: React.FC<DetailMediaProps> = ({
               href={brochureUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--brand-blue)] text-white rounded-lg hover:bg-opacity-90 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--color-primary)] text-white rounded-lg hover:bg-opacity-90 transition-colors"
             >
               <DocumentIcon className="w-5 h-5" />
               {isVirtualTourSameAsBrochure ? 'Avaa virtuaaliesittely / esite' : 'Avaa esite'}
@@ -139,7 +139,7 @@ export const DetailMedia: React.FC<DetailMediaProps> = ({
               href={floorPlanUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--brand-blue)] text-white rounded-lg hover:bg-opacity-90 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--color-primary)] text-white rounded-lg hover:bg-opacity-90 transition-colors"
             >
               <MapIcon className="w-5 h-5" />
               Avaa pohjapiirros

@@ -4,20 +4,27 @@
 
 @layer base {
   :root {
-    --color-primary: #1a3352;
-    --color-primary-light: #2a4362;
-    --color-primary-dark: #0a2342;
-    --color-accent: #c9a961;
-    --color-text: #333333;
-    --color-text-light: #666666;
-    --color-background: #ffffff;
-    --color-background-light: #f8f8f8;
+    /* Official Sotheby's Brand Colors */
+    --color-primary: #002349;
+    --color-primary-dark: #001731;
+    --color-accent: #8e740b;
+    --color-light-gray: #f2f2f2;
+    --color-dark-gray: #666;
+    --color-gray: #999;
+    --color-black: #000;
+    --color-white: #fff;
     
-    /* Brand tokens for Sotheby's parity */
-    --brand-blue: #001731;
-    --text-default: #0A0A0A;
-    --text-muted: #6B7280;
-    --border: #E5E7EB;
+    /* Legacy/Compatibility tokens */
+    --brand-blue: #002349;
+    --text-default: #000;
+    --text-muted: #666;
+    --border: #f2f2f2;
+    
+    /* Additional semantic tokens */
+    --color-text: #000;
+    --color-text-light: #666;
+    --color-background: #fff;
+    --color-background-light: #f2f2f2;
     
     /* Hover & Focus tokens */
     --hover-shadow: 0 6px 16px rgba(0,0,0,.08);
@@ -34,7 +41,9 @@
 
   body {
     @apply antialiased;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    /* Freight font will be added when Adobe web kit is provided */
+    font-family: 'Georgia', 'Times New Roman', serif; /* Temporary serif fallback for Freight */
+    /* font-family: 'Freight Text Pro', Georgia, serif; -- To be activated with Adobe fonts */
   }
   
   a:hover {
@@ -58,7 +67,7 @@
   }
   
   :focus-visible {
-    outline: 2px solid var(--brand-blue);
+    outline: 2px solid var(--color-primary);
     outline-offset: 2px;
   }
 
@@ -105,11 +114,11 @@
 
   /* Button styles */
   .btn-primary {
-    @apply inline-block bg-[#1a3352] text-white px-6 py-3 text-sm uppercase tracking-wider transition-all duration-300 hover:bg-[#0a2342] hover:shadow-lg;
+    @apply inline-block bg-[#002349] text-white px-6 py-3 text-sm uppercase tracking-wider transition-all duration-300 hover:bg-[#001731] hover:shadow-lg;
   }
 
   .btn-secondary {
-    @apply inline-block border border-[#1a3352] text-[#1a3352] px-6 py-3 text-sm uppercase tracking-wider transition-all duration-300 hover:bg-[#1a3352] hover:text-white;
+    @apply inline-block border border-[#002349] text-[#002349] px-6 py-3 text-sm uppercase tracking-wider transition-all duration-300 hover:bg-[#002349] hover:text-white;
   }
 
   /* Link hover effect */
@@ -135,7 +144,7 @@
   
   .international-button:hover {
     background-color: white !important;
-    color: #1a3352 !important;
+    color: #002349 !important;
     transform: scale(1.05) !important;
   }
   
@@ -162,11 +171,11 @@
 @layer utilities {
   /* Text selection color */
   ::selection {
-    @apply bg-[#1a3352] text-white;
+    @apply bg-[#002349] text-white;
   }
 
   /* Focus styles */
   .focus-visible:focus {
-    @apply outline-none ring-2 ring-[#1a3352] ring-offset-2;
+    @apply outline-none ring-2 ring-[#002349] ring-offset-2;
   }
 }

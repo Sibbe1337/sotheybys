@@ -20,7 +20,7 @@ export const MetaRow: React.FC<MetaRowProps> = ({
   if (validItems.length === 0) return null;
   
   return (
-    <div className={cn('text-sm text-[var(--text-muted)] truncate', className)}>
+    <div className={cn('text-sm text-[var(--color-dark-gray)] truncate', className)}>
       {validItems.map((item, index) => (
         <React.Fragment key={index}>
           {index > 0 && <span className="mx-1">{separator}</span>}

@@ -42,7 +42,7 @@ export default function AgentCard({ agent, className = '' }: AgentCardProps) {
             <span className="text-gray-400">📞</span>
             <a
               href={`tel:${agent.phone}`}
-              className="text-[var(--brand-blue)] hover:underline transition-colors"
+              className="text-[var(--color-primary)] hover:underline transition-colors"
             >
               {agent.phone}
             </a>
@@ -54,7 +54,7 @@ export default function AgentCard({ agent, className = '' }: AgentCardProps) {
             <span className="text-gray-400">✉️</span>
             <a
               href={`mailto:${agent.email}`}
-              className="text-[var(--brand-blue)] hover:underline transition-colors"
+              className="text-[var(--color-primary)] hover:underline transition-colors"
             >
               {agent.email}
             </a>

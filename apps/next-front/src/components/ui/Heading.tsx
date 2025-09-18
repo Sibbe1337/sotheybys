@@ -13,9 +13,9 @@ export const Heading: React.FC<HeadingProps> = ({
   className 
 }) => {
   const styles = {
-    h1: 'text-4xl md:text-5xl lg:text-6xl font-light text-[var(--brand-blue)]',
-    h2: 'text-3xl md:text-4xl font-light text-[var(--brand-blue)]',
-    h3: 'text-2xl md:text-3xl font-light text-[var(--brand-blue)]'
+    h1: 'text-4xl md:text-5xl lg:text-6xl font-light text-[var(--color-primary)]',
+    h2: 'text-3xl md:text-4xl font-light text-[var(--color-primary)]',
+    h3: 'text-2xl md:text-3xl font-light text-[var(--color-primary)]'
   };
 
   return (

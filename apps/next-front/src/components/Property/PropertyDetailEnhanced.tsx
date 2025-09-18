@@ -697,7 +697,7 @@ export default function PropertyDetailEnhanced({
                   href={internationalBrochureUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-[var(--brand-blue)] hover:underline font-medium"
+                  className="text-sm text-[var(--color-primary)] hover:underline font-medium"
                 >
                   International Listing
                 </Link>
@@ -707,7 +707,7 @@ export default function PropertyDetailEnhanced({
                   href={auctionUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-[var(--brand-blue)] hover:underline font-medium"
+                  className="text-sm text-[var(--color-primary)] hover:underline font-medium"
                 >
                   Auction
                 </Link>

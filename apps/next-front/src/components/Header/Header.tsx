@@ -326,7 +326,7 @@ export default function Header() {
   }, [pathname]);
 
   return (
-    <header className="sticky top-0 z-50 bg-[#1a3352] text-white">
+    <header className="sticky top-0 z-50 bg-[var(--color-primary)] text-white">
       <div className="max-w-[1400px] mx-auto px-6">
         <div className="flex items-center justify-between py-4">
           {/* Logo */}
@@ -381,7 +381,7 @@ export default function Header() {
                               <li key={childItem.id}>
                                 <Link
                                   href={childItem.path || childItem.url}
-                                  className="block px-4 py-3 text-sm text-[#c9a961] hover:text-[#1a3352] transition-colors"
+                                  className="block px-4 py-3 text-sm text-[var(--color-accent)] hover:text-[var(--color-primary)] transition-colors"
                                   target={childItem.target}
                                 >
                                   {childItem.label}
@@ -464,7 +464,7 @@ export default function Header() {
 
       {/* Mobile Menu */}
       <div 
-        className={`lg:hidden bg-[#1a3352] border-t border-white/20 overflow-hidden transition-all duration-300 ${
+        className={`lg:hidden bg-[var(--color-primary)] border-t border-white/20 overflow-hidden transition-all duration-300 ${
           isMobileMenuOpen ? 'max-h-screen' : 'max-h-0'
         }`}
       >
