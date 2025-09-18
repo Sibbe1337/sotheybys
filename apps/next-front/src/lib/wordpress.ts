@@ -54,6 +54,9 @@ export interface Property {
   bedrooms?: number;
   bathrooms?: number;
   area?: number;
+  propertyType?: string;
+  status?: string;
+  description?: string;
   location?: {
     latitude?: number;
     longitude?: number;
