@@ -20,7 +20,7 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
   
   // First try to get from Linear API cache
   await ensureCacheInitialized();
-  let property = listingsCache.getConvertedListingBySlug(slug, 'en');
+  let property: any = listingsCache.getConvertedListingBySlug(slug, 'en');
   
   // If not found in cache, try WordPress
   if (!property) {
