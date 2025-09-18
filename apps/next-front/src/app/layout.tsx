@@ -55,8 +55,9 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#002349" />
+        <link rel="stylesheet" href="https://use.typekit.net/uhz3avz.css" />
       </head>
-      <body className="font-sans antialiased bg-white text-gray-900">
+      <body className="antialiased bg-white text-gray-900">
         <div className="min-h-screen flex flex-col">
           <Header />
           {children}
