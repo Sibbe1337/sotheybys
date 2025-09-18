@@ -6,6 +6,10 @@ import Link from 'next/link';
 import { Property, Agent } from '@/lib/wordpress';
 import { HeartIcon, ScaleIcon } from '@heroicons/react/24/outline';
 import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid';
+import { Price } from '@/components/ui/Price';
+import { MetaRow } from '@/components/ui/MetaRow';
+import { Button } from '@/components/ui/Button';
+import { PropertyTypeChip } from '@/components/ui/PropertyTypeChip';
 
 interface PropertyCardProps {
   id: string;
@@ -119,7 +123,10 @@ export default function PropertyCard({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+    <Link 
+      href={`/property/${slug}`} 
+      className="block bg-white rounded-lg shadow-md overflow-hidden card transition-all duration-200 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-blue)] focus-visible:ring-offset-2"
+    >
       {/* Property Image */}
       {featuredImage && (
         <div className="relative h-48 w-full group">
@@ -165,52 +172,40 @@ export default function PropertyCard({
       <div className="p-4">
         {/* Price */}
         {property?.price && (
-          <div className="text-2xl font-bold text-primary-600 mb-2">
+          <Price className="text-2xl mb-2" block>
             {formatPrice(property.price)}
-          </div>
+          </Price>
         )}
 
         {/* Title */}
-        <h3 className="text-lg font-semibold text-gray-900 mb-2">
-          <Link href={`/property/${slug}`} className="hover:text-primary-600 transition-colors">
+        <h3 className="text-lg font-semibold text-[var(--brand-blue)] mb-2">
+          <span className="hover:underline">
             {title}
-          </Link>
+          </span>
         </h3>
 
-        {/* Address */}
-        {property?.address && (
-          <p className="text-gray-600 mb-2">
-            {property.address}
-            {property.city && `, ${property.city}`}
-          </p>
-        )}
+        {/* Address and Property Type */}
+        <div className="flex items-start justify-between mb-2">
+          {property?.address && (
+            <p className="text-gray-600">
+              {property.address}
+              {property.city && `, ${property.city}`}
+            </p>
+          )}
+          {property?.propertyType && (
+            <PropertyTypeChip type={property.propertyType} />
+          )}
+        </div>
 
         {/* Property Details */}
-        {(property?.bedrooms || property?.bathrooms || property?.area) && (
-          <div className="flex items-center gap-4 text-sm text-gray-600 mb-3">
-            {property.bedrooms && (
-              <span className="flex items-center gap-1">
-
-
-
-
-
-
-                {property.bedrooms} bed{property.bedrooms !== 1 ? 's' : ''}
-              </span>
-            )}
-            {property.bathrooms && (
-              <span className="flex items-center gap-1">
-                {property.bathrooms} bath{property.bathrooms !== 1 ? 's' : ''}
-              </span>
-            )}
-            {property.area && (
-              <span className="flex items-center gap-1">
-                {property.area} m²
-              </span>
-            )}
-          </div>
-        )}
+        <MetaRow 
+          items={[
+            { value: property?.bedrooms ? `${property.bedrooms} mh` : '' },
+            { value: property?.bathrooms ? `${property.bathrooms} kph` : '' },
+            { value: property?.area ? `${property.area} m²` : '' }
+          ]}
+          className="mb-3"
+        />
 
         {/* Excerpt */}
         {excerpt && (
@@ -243,14 +238,15 @@ export default function PropertyCard({
 
         {/* View Property Button */}
         <div className="mt-4">
-          <Link
-            href={`/property/${slug}`}
-            className="inline-block w-full text-center bg-primary-600 hover:bg-primary-700 text-white py-2 px-4 rounded-md text-sm font-medium transition-colors"
+          <Button 
+            variant="primary" 
+            className="w-full"
+            onClick={(e) => e.preventDefault()}
           >
-            View Property
-          </Link>
+            Katso kohde
+          </Button>
         </div>
       </div>
-    </div>
+    </Link>
   );
 } 
