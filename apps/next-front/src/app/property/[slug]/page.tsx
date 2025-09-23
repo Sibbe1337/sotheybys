@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -144,13 +144,13 @@ export default function PropertyPage({ params }: PropertyPageProps) {
     }));
   };
 
-  const nextImage = () => {
+  const nextImage = useCallback(() => {
     setCurrentImageIndex((prev) => (prev + 1) % images.length);
-  };
+  }, [images.length]);
 
-  const prevImage = () => {
+  const prevImage = useCallback(() => {
     setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
-  };
+  }, [images.length]);
 
   // Keyboard navigation for better UX
   useEffect(() => {
@@ -166,7 +166,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [activeTab, images.length]);
+  }, [activeTab, images.length, prevImage, nextImage]);
 
   return (
     <div className="min-h-screen bg-white">
