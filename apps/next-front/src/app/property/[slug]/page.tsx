@@ -5,9 +5,7 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight, Facebook, Linkedin, Mail, Phone, MapPin, Home, Bath, Maximize, FileText } from 'lucide-react';
-import { getPropertyBySlug } from '@/lib/wordpress';
-import { fetchLinearListings } from '@/lib/linear-api-adapter';
-import { listingsCache, ensureCacheInitialized } from '@/lib/listings-cache';
+// API calls will be made through our server-side route
 
 interface PropertyPageProps {
   params: {
@@ -33,20 +31,23 @@ export default function PropertyPage({ params }: PropertyPageProps) {
   useEffect(() => {
     async function loadProperty() {
       try {
-        // First try to get from Linear API cache
-        await ensureCacheInitialized();
-        let foundProperty: any = listingsCache.getConvertedListingBySlug(slug, 'fi');
+        // Fetch property data from our API route
+        const response = await fetch(`/api/property/${slug}?lang=fi`);
         
-        // If not found in cache, try WordPress
-        if (!foundProperty) {
-          foundProperty = await getPropertyBySlug(slug);
+        if (!response.ok) {
+          if (response.status === 404) {
+            notFound();
+          }
+          throw new Error('Failed to fetch property');
         }
-
-        if (!foundProperty) {
+        
+        const result = await response.json();
+        
+        if (!result.success || !result.data) {
           notFound();
         }
 
-        setProperty(foundProperty);
+        setProperty(result.data);
       } catch (error) {
         console.error('Error loading property:', error);
         notFound();
