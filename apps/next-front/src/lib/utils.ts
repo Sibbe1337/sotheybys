@@ -57,3 +57,23 @@ export function getYouTubeEmbedUrl(url: string): string {
   // Return original URL if not a YouTube URL
   return url;
 }
+
+/**
+ * Check if a URL is a valid YouTube video URL
+ */
+export function isValidYouTubeUrl(url: string | null | undefined): boolean {
+  if (!url || typeof url !== 'string') return false;
+  
+  // Check if it's just the YouTube homepage
+  if (url === 'https://www.youtube.com/' || url === 'https://youtube.com/') {
+    return false;
+  }
+  
+  // Check for valid YouTube URL patterns
+  return (
+    url.includes('youtu.be/') ||
+    url.includes('youtube.com/watch') ||
+    url.includes('youtube.com/v/') ||
+    url.includes('youtube.com/embed/')
+  );
+}

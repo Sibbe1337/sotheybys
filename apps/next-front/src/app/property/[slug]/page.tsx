@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight, Facebook, Linkedin, Mail, Phone, MapPin, Home, Bath, Maximize, FileText } from 'lucide-react';
-import { getYouTubeEmbedUrl } from '@/lib/utils';
+import { getYouTubeEmbedUrl, isValidYouTubeUrl } from '@/lib/utils';
 // API calls will be made through our server-side route
 
 interface PropertyPageProps {
@@ -255,11 +255,16 @@ export default function PropertyPage({ params }: PropertyPageProps) {
           {activeTab === 'video' && (
             <div className="relative h-[70vh] min-h-[600px] bg-gray-100">
               <div className="h-full flex items-center justify-center px-4">
-                {propertyData.videoUrl || propertyData.youtubeUrl || propertyData.video ? (
+                {(isValidYouTubeUrl(propertyData.videoUrl) || isValidYouTubeUrl(propertyData.youtubeUrl) || isValidYouTubeUrl(propertyData.video)) ? (
                   <div className="w-full max-w-5xl">
                     <div className="aspect-video">
                       <iframe
-                        src={getYouTubeEmbedUrl(propertyData.videoUrl || propertyData.youtubeUrl || propertyData.video)}
+                        src={getYouTubeEmbedUrl(
+                          (isValidYouTubeUrl(propertyData.videoUrl) && propertyData.videoUrl) ||
+                          (isValidYouTubeUrl(propertyData.youtubeUrl) && propertyData.youtubeUrl) ||
+                          (isValidYouTubeUrl(propertyData.video) && propertyData.video) ||
+                          ''
+                        )}
                         className="w-full h-full rounded-lg shadow-xl"
                         allowFullScreen
                         title="Property Video"
@@ -334,7 +339,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                     <div className="absolute top-0 left-0 right-0 h-1 bg-[var(--color-primary)]"></div>
                   )}
                 </button>
-                {(propertyData.videoUrl || propertyData.youtubeUrl || propertyData.video) && (
+                {(isValidYouTubeUrl(propertyData.videoUrl) || isValidYouTubeUrl(propertyData.youtubeUrl) || isValidYouTubeUrl(propertyData.video)) && (
                   <button
                     onClick={() => setActiveTab('video')}
                     className={`px-6 py-4 font-medium text-sm uppercase tracking-wider transition-all relative ${
