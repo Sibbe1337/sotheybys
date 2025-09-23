@@ -328,7 +328,7 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
   // Extract property data and agent data
   // For Linear API data, the property details might be at the root level
   const propertyData = property?.acfRealEstate?.property || property || {};
-  const agentData = property?.acfRealEstate?.agent || property?.agent || null;
+  const agentData = property?.acfRealEstate?.agent || null;
   const images = property?.images || [];
   
   // Generate structured data
