@@ -199,19 +199,22 @@ export default function PropertyPage({ params }: PropertyPageProps) {
           )}
 
           {activeTab === 'floorplan' && (
-            <div className="relative h-[70vh] min-h-[600px] bg-gray-100">
-              <div className="container mx-auto px-4 py-8 h-full flex items-center justify-center">
+            <div className="relative bg-gray-100 py-8">
+              <div className="container mx-auto px-4">
                 {propertyData.floorPlanUrl || propertyData.floorplan ? (
-                  <div className="relative h-full w-full max-w-4xl">
-                    <Image
-                      src={propertyData.floorPlanUrl || propertyData.floorplan}
-                      alt="Floor plan"
-                      fill
-                      className="object-contain"
-                    />
+                  <div className="max-w-4xl mx-auto">
+                    <div className="relative bg-white rounded-lg shadow-lg p-4" style={{ minHeight: '500px' }}>
+                      <Image
+                        src={propertyData.floorPlanUrl || propertyData.floorplan}
+                        alt="Floor plan"
+                        width={1200}
+                        height={800}
+                        className="w-full h-auto object-contain"
+                      />
+                    </div>
                   </div>
                 ) : (
-                  <div className="text-center">
+                  <div className="text-center py-24">
                     <h2 className="text-2xl font-semibold mb-4 text-gray-700">Pohjakuva</h2>
                     <p className="text-gray-500">Ei saatavilla</p>
                   </div>
@@ -221,31 +224,47 @@ export default function PropertyPage({ params }: PropertyPageProps) {
           )}
 
           {activeTab === 'map' && (
-            <div className="relative h-[70vh] min-h-[600px] bg-gray-100">
-              <div className="h-full bg-gray-200 flex items-center justify-center">
-                <div className="text-center">
-                  <h2 className="text-2xl font-semibold mb-4 text-gray-700">Sijainti kartalla</h2>
-                  <p className="text-gray-500">Kartta ladataan...</p>
-                </div>
+            <div className="relative bg-gray-100 py-8">
+              <div className="container mx-auto px-4">
+                {propertyData.address && propertyData.city ? (
+                  <div className="max-w-6xl mx-auto">
+                    <div className="relative w-full rounded-lg shadow-lg overflow-hidden" style={{ paddingBottom: '56.25%' }}>
+                      <iframe
+                        src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(propertyData.address + ', ' + propertyData.city + ', Finland')}&zoom=15`}
+                        className="absolute top-0 left-0 w-full h-full border-0"
+                        title="Property Location Map"
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-center py-24">
+                    <h2 className="text-2xl font-semibold mb-4 text-gray-700">Sijainti kartalla</h2>
+                    <p className="text-gray-500">Kartta ei saatavilla</p>
+                  </div>
+                )}
               </div>
             </div>
           )}
 
           {activeTab === 'brochure' && (
-            <div className="relative h-[70vh] min-h-[600px] bg-gray-100">
-              <div className="h-full">
+            <div className="relative bg-gray-100 py-8">
+              <div className="container mx-auto px-4">
                 {propertyData.propertyBrochureUrl || propertyData.brochure || propertyData.virtualShowing ? (
-                  <iframe
-                    src={propertyData.propertyBrochureUrl || propertyData.brochure || propertyData.virtualShowing}
-                    className="w-full h-full border-0"
-                    title="Property Brochure"
-                  />
-                ) : (
-                  <div className="h-full flex items-center justify-center">
-                    <div className="text-center">
-                      <h2 className="text-2xl font-semibold mb-4 text-gray-700">Esite</h2>
-                      <p className="text-gray-500">Ei saatavilla</p>
+                  <div className="max-w-6xl mx-auto">
+                    <div className="relative w-full rounded-lg shadow-lg overflow-hidden" style={{ paddingBottom: '75%' }}>
+                      <iframe
+                        src={propertyData.propertyBrochureUrl || propertyData.brochure || propertyData.virtualShowing}
+                        className="absolute top-0 left-0 w-full h-full border-0"
+                        title="Property Brochure"
+                      />
                     </div>
+                  </div>
+                ) : (
+                  <div className="text-center py-24">
+                    <h2 className="text-2xl font-semibold mb-4 text-gray-700">Esite</h2>
+                    <p className="text-gray-500">Ei saatavilla</p>
                   </div>
                 )}
               </div>
@@ -253,11 +272,11 @@ export default function PropertyPage({ params }: PropertyPageProps) {
           )}
 
           {activeTab === 'video' && (
-            <div className="relative h-[70vh] min-h-[600px] bg-gray-100">
-              <div className="h-full flex items-center justify-center px-4">
+            <div className="relative bg-gray-100 py-8">
+              <div className="container mx-auto px-4">
                 {(isValidYouTubeUrl(propertyData.videoUrl) || isValidYouTubeUrl(propertyData.youtubeUrl) || isValidYouTubeUrl(propertyData.video)) ? (
-                  <div className="w-full max-w-5xl">
-                    <div className="aspect-video">
+                  <div className="max-w-6xl mx-auto">
+                    <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                       <iframe
                         src={getYouTubeEmbedUrl(
                           (isValidYouTubeUrl(propertyData.videoUrl) && propertyData.videoUrl) ||
@@ -265,14 +284,14 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                           (isValidYouTubeUrl(propertyData.video) && propertyData.video) ||
                           ''
                         )}
-                        className="w-full h-full rounded-lg shadow-xl"
+                        className="absolute top-0 left-0 w-full h-full rounded-lg shadow-xl"
                         allowFullScreen
                         title="Property Video"
                       />
                     </div>
                   </div>
                 ) : (
-                  <div className="text-center">
+                  <div className="text-center py-24">
                     <h2 className="text-2xl font-semibold mb-4 text-gray-700">Video</h2>
                     <p className="text-gray-500">Ei saatavilla</p>
                   </div>
