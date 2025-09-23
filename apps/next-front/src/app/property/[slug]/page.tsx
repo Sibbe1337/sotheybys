@@ -233,9 +233,9 @@ export default function PropertyPage({ params }: PropertyPageProps) {
           {activeTab === 'brochure' && (
             <div className="relative h-[70vh] min-h-[600px] bg-gray-100">
               <div className="h-full">
-                {propertyData.propertyBrochureUrl || propertyData.brochure ? (
+                {propertyData.propertyBrochureUrl || propertyData.brochure || propertyData.virtualShowing ? (
                   <iframe
-                    src={propertyData.propertyBrochureUrl || propertyData.brochure}
+                    src={propertyData.propertyBrochureUrl || propertyData.brochure || propertyData.virtualShowing}
                     className="w-full h-full border-0"
                     title="Property Brochure"
                   />
@@ -254,11 +254,11 @@ export default function PropertyPage({ params }: PropertyPageProps) {
           {activeTab === 'video' && (
             <div className="relative h-[70vh] min-h-[600px] bg-gray-100">
               <div className="h-full flex items-center justify-center px-4">
-                {propertyData.videoUrl || propertyData.virtualShowing || propertyData.youtubeUrl || propertyData.video ? (
+                {propertyData.videoUrl || propertyData.youtubeUrl || propertyData.video ? (
                   <div className="w-full max-w-5xl">
                     <div className="aspect-video">
                       <iframe
-                        src={propertyData.videoUrl || propertyData.virtualShowing || propertyData.youtubeUrl || propertyData.video}
+                        src={propertyData.videoUrl || propertyData.youtubeUrl || propertyData.video}
                         className="w-full h-full rounded-lg shadow-xl"
                         allowFullScreen
                         title="Property Video"
@@ -333,7 +333,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                     <div className="absolute top-0 left-0 right-0 h-1 bg-[var(--color-primary)]"></div>
                   )}
                 </button>
-                {propertyData.video && (
+                {(propertyData.videoUrl || propertyData.youtubeUrl || propertyData.video) && (
                   <button
                     onClick={() => setActiveTab('video')}
                     className={`px-6 py-4 font-medium text-sm uppercase tracking-wider transition-all relative ${

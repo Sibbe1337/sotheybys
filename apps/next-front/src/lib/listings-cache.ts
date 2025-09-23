@@ -7,6 +7,7 @@ import { LinearAPIListing } from './linear-api-adapter';
 import { convertCompleteLinearToWordPressFormat } from './linear-api-complete-converter';
 import { CompleteLinearAPIListing } from './linear-api-complete-interface';
 import { hasMarketingContent } from './marketing-content';
+import { generateSlug } from './utils';
 
 interface CacheData {
   listings: CompleteLinearAPIListing[];
@@ -158,14 +159,11 @@ class ListingsCache {
   getListingBySlug(slug: string): CompleteLinearAPIListing | undefined {
     return this.cache.listings.find(listing => {
       const address = listing.address?.fi?.value;
-      if (!address) return false;
+      if (!address) {
+        return false;
+      }
       
-      const generatedSlug = address
-        .toLowerCase()
-        .replace(/\s+/g, '-')
-        .replace(/[äå]/g, 'a')
-        .replace(/ö/g, 'o')
-        .replace(/[^a-z0-9-]/g, '');
+      const generatedSlug = generateSlug(address);
       
       return generatedSlug === slug;
     });

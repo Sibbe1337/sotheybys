@@ -4,6 +4,7 @@
  */
 
 import { getMarketingContent, hasMarketingContent } from './marketing-content';
+import { generateSlug } from './utils';
 
 export interface LinearAPIListing {
   id: {
@@ -390,7 +391,7 @@ export function convertLinearToWordPressFormat(listing: LinearAPIListing, langua
   return {
     id,
     title: marketingTitle || address,
-    slug: address.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
+    slug: generateSlug(address),
     featuredImage: mainImage ? {
       node: {
         sourceUrl: mainImage.url,

@@ -4,6 +4,7 @@
  */
 
 import { CompleteLinearAPIListing } from './linear-api-complete-interface';
+import { generateSlug } from './utils';
 
 // Helper function to safely extract localized value
 function extractLocalizedValue<T = string>(field: any, defaultValue: T | null = null): T | null {
@@ -357,11 +358,7 @@ export function convertCompleteLinearToWordPressFormat(listing: CompleteLinearAP
   }
   
   // Generate slug from address
-  const slug = address.toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^\w\-]/g, '')
-    .replace(/\-\-+/g, '-')
-    .trim();
+  const slug = generateSlug(address);
   
   return {
     id,
