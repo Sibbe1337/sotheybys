@@ -1,26 +1,34 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { fetchLinearListings } from '@/lib/linear-api-adapter';
-import { listingsCache } from '@/lib/listings-cache';
 
 export default function DebugDataPage() {
   const [rawData, setRawData] = useState<any>(null);
   const [convertedData, setConvertedData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function loadData() {
       try {
-        // Get raw Linear API data
-        const raw = await fetchLinearListings();
-        setRawData(raw);
+        // Get raw Linear API data via our API route
+        const rawResponse = await fetch('/api/listings?format=raw&source=test');
+        if (!rawResponse.ok) {
+          throw new Error('Failed to fetch raw data');
+        }
+        const rawResult = await rawResponse.json();
+        setRawData(rawResult.data);
         
-        // Get converted data from cache
-        const cached = listingsCache.getWordPressFormattedListings('fi');
-        setConvertedData(cached);
+        // Get converted data from cache via our API route
+        const cachedResponse = await fetch('/api/listings?format=wordpress&source=cache&lang=fi');
+        if (!cachedResponse.ok) {
+          throw new Error('Failed to fetch cached data');
+        }
+        const cachedResult = await cachedResponse.json();
+        setConvertedData(cachedResult.data);
       } catch (error) {
         console.error('Error loading data:', error);
+        setError(error instanceof Error ? error.message : 'Unknown error');
       } finally {
         setLoading(false);
       }
@@ -30,6 +38,15 @@ export default function DebugDataPage() {
   }, []);
 
   if (loading) return <div className="p-8">Loading...</div>;
+  
+  if (error) {
+    return (
+      <div className="p-8 max-w-7xl mx-auto">
+        <h1 className="text-3xl font-bold mb-8 text-red-600">Error Loading Data</h1>
+        <p className="text-red-600">{error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="p-8 max-w-7xl mx-auto">
