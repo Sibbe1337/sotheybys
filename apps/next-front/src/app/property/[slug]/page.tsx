@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight, Facebook, Linkedin, Mail, Phone, MapPin, Home, Bath, Maximize, FileText } from 'lucide-react';
+import { getYouTubeEmbedUrl } from '@/lib/utils';
 // API calls will be made through our server-side route
 
 interface PropertyPageProps {
@@ -258,7 +259,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                   <div className="w-full max-w-5xl">
                     <div className="aspect-video">
                       <iframe
-                        src={propertyData.videoUrl || propertyData.youtubeUrl || propertyData.video}
+                        src={getYouTubeEmbedUrl(propertyData.videoUrl || propertyData.youtubeUrl || propertyData.video)}
                         className="w-full h-full rounded-lg shadow-xl"
                         allowFullScreen
                         title="Property Video"

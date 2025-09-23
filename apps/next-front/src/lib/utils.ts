@@ -23,3 +23,37 @@ export function generateSlug(text: string): string {
     .replace(/--+/g, '-')
     .replace(/^-|-$/g, ''); // Remove leading/trailing hyphens
 }
+
+/**
+ * Convert YouTube URL to embed format
+ * Handles various YouTube URL formats
+ */
+export function getYouTubeEmbedUrl(url: string): string {
+  if (!url) return '';
+  
+  // Already an embed URL
+  if (url.includes('youtube.com/embed/')) {
+    return url;
+  }
+  
+  // Handle youtu.be format
+  const shortMatch = url.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
+  if (shortMatch) {
+    return `https://www.youtube.com/embed/${shortMatch[1]}`;
+  }
+  
+  // Handle youtube.com/watch format
+  const watchMatch = url.match(/youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/);
+  if (watchMatch) {
+    return `https://www.youtube.com/embed/${watchMatch[1]}`;
+  }
+  
+  // Handle youtube.com/v/ format
+  const vMatch = url.match(/youtube\.com\/v\/([a-zA-Z0-9_-]+)/);
+  if (vMatch) {
+    return `https://www.youtube.com/embed/${vMatch[1]}`;
+  }
+  
+  // Return original URL if not a YouTube URL
+  return url;
+}
