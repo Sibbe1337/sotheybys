@@ -351,12 +351,12 @@ export default function PropertyPage({ params }: PropertyPageProps) {
 
         {/* Tab Navigation - Bottom Position like Sotheby's */}
         <div className="bg-gray-100 border-t border-gray-200">
-          <div className="container mx-auto px-4">
-            <div className="flex justify-center">
-              <div className="flex">
+          <div className="container mx-auto px-0 md:px-4">
+            <div className="flex justify-center overflow-x-auto scrollbar-hide">
+              <div className="flex min-w-full md:min-w-0">
                 <button
                   onClick={() => setActiveTab('photos')}
-                  className={`px-6 py-4 font-medium text-sm uppercase tracking-wider transition-all relative ${
+                  className={`px-4 md:px-6 py-4 font-medium text-xs md:text-sm uppercase tracking-wider transition-all relative whitespace-nowrap flex-1 md:flex-initial ${
                     activeTab === 'photos' 
                       ? 'bg-white text-[var(--color-primary)]' 
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -369,7 +369,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                 </button>
                 <button
                   onClick={() => setActiveTab('floorplan')}
-                  className={`px-6 py-4 font-medium text-sm uppercase tracking-wider transition-all relative ${
+                  className={`px-4 md:px-6 py-4 font-medium text-xs md:text-sm uppercase tracking-wider transition-all relative whitespace-nowrap flex-1 md:flex-initial ${
                     activeTab === 'floorplan' 
                       ? 'bg-white text-[var(--color-primary)]' 
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -382,7 +382,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                 </button>
                 <button
                   onClick={() => setActiveTab('map')}
-                  className={`px-6 py-4 font-medium text-sm uppercase tracking-wider transition-all relative ${
+                  className={`px-4 md:px-6 py-4 font-medium text-xs md:text-sm uppercase tracking-wider transition-all relative whitespace-nowrap flex-1 md:flex-initial ${
                     activeTab === 'map' 
                       ? 'bg-white text-[var(--color-primary)]' 
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -395,7 +395,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                 </button>
                 <button
                   onClick={() => setActiveTab('brochure')}
-                  className={`px-6 py-4 font-medium text-sm uppercase tracking-wider transition-all relative ${
+                  className={`px-4 md:px-6 py-4 font-medium text-xs md:text-sm uppercase tracking-wider transition-all relative whitespace-nowrap flex-1 md:flex-initial ${
                     activeTab === 'brochure' 
                       ? 'bg-white text-[var(--color-primary)]' 
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -409,7 +409,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                 {(isValidYouTubeUrl(propertyData.videoUrl) || isValidYouTubeUrl(propertyData.youtubeUrl) || isValidYouTubeUrl(propertyData.video)) && (
                   <button
                     onClick={() => setActiveTab('video')}
-                    className={`px-6 py-4 font-medium text-sm uppercase tracking-wider transition-all relative ${
+                    className={`px-4 md:px-6 py-4 font-medium text-xs md:text-sm uppercase tracking-wider transition-all relative whitespace-nowrap flex-1 md:flex-initial ${
                       activeTab === 'video' 
                         ? 'bg-white text-[var(--color-primary)]' 
                         : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -470,7 +470,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
             {propertyData.area && (
               <div>
                 <h3 className="text-3xl font-bold text-[var(--color-primary)]">
-                  {propertyData.area} m<sup>2</sup>
+                  {String(propertyData.area).includes('m²') || String(propertyData.area).includes('m2') ? propertyData.area : `${propertyData.area} m²`}
                 </h3>
                 <p className="text-sm text-gray-600 mt-2">ASUINPINTA-ALA</p>
               </div>
@@ -478,7 +478,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
             {propertyData.totalArea && (
               <div>
                 <h3 className="text-3xl font-bold text-[var(--color-primary)]">
-                  {propertyData.totalArea} m<sup>2</sup>
+                  {String(propertyData.totalArea).includes('m²') || String(propertyData.totalArea).includes('m2') ? propertyData.totalArea : `${propertyData.totalArea} m²`}
                 </h3>
                 <p className="text-sm text-gray-600 mt-2">KOKONAISALA</p>
               </div>
@@ -502,7 +502,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
             {propertyData.plotArea && (
               <div>
                 <h3 className="text-3xl font-bold text-[var(--color-primary)]">
-                  {formatNumber(propertyData.plotArea)} m<sup>2</sup>
+                  {String(propertyData.plotArea).includes('m²') || String(propertyData.plotArea).includes('m2') ? propertyData.plotArea : `${formatNumber(propertyData.plotArea)} m²`}
                 </h3>
                 <p className="text-sm text-gray-600 mt-2">TONTIN PINTA-ALA</p>
               </div>

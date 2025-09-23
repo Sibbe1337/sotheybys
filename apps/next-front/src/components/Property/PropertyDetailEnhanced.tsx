@@ -737,7 +737,7 @@ export default function PropertyDetailEnhanced({
                 {typeOfApartment && <PropertyTypeChip type={typeOfApartment} />}
                 <MetaRow 
                   items={[
-                    { value: area || '' },
+                    { value: area ? (String(area).includes('m²') || String(area).includes('m2') ? area : `${area} m²`) : '' },
                     { label: 'Rakennettu', value: yearBuilt || '' }
                   ]}
                 />
