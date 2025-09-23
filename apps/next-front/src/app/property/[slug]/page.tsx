@@ -48,6 +48,9 @@ export default function PropertyPage({ params }: PropertyPageProps) {
         }
 
         setProperty(result.data);
+        // Debug log
+        console.log('Loaded property data:', result.data);
+        console.log('ACF Real Estate:', result.data?.acfRealEstate);
       } catch (error) {
         console.error('Error loading property:', error);
         notFound();
@@ -74,6 +77,11 @@ export default function PropertyPage({ params }: PropertyPageProps) {
   // Extract property data - handle both WordPress and Linear API formats
   const propertyData = property.acfRealEstate?.property || property.property || property;
   const agentData = property.acfRealEstate?.agent || property.agent || {};
+  
+  // Debug logs
+  console.log('Property object:', property);
+  console.log('Extracted propertyData:', propertyData);
+  console.log('Agent data:', agentData);
   
   // Get images array
   const images = propertyData.gallery || property.images || (property.featuredImage ? [property.featuredImage] : []);
