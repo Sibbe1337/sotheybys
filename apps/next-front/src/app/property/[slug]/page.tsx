@@ -75,13 +75,15 @@ export default function PropertyPage({ params }: PropertyPageProps) {
   }
 
   // Extract property data - handle both WordPress and Linear API formats
-  const propertyData = property.acfRealEstate?.property || property.property || property;
+  // If acfRealEstate exists, use its property data, otherwise use the root property object
+  const propertyData = property.acfRealEstate?.property || property;
   const agentData = property.acfRealEstate?.agent || property.agent || {};
   
   // Debug logs
   console.log('Property object:', property);
+  console.log('Has acfRealEstate:', !!property.acfRealEstate);
   console.log('Extracted propertyData:', propertyData);
-  console.log('Agent data:', agentData);
+  console.log('Sample fields - address:', propertyData?.address, 'city:', propertyData?.city, 'area:', propertyData?.area);
   
   // Get images array
   const images = propertyData.gallery || property.images || (property.featuredImage ? [property.featuredImage] : []);
