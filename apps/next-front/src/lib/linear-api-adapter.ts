@@ -525,11 +525,13 @@ export async function fetchTestLinearListings(): Promise<any[]> {
   const apiUrl = 'https://ca-externalapi-test-weu-001.livelyrock-4a193af6.westeurope.azurecontainerapps.io';
   
   try {
+    console.log('Using Linear API test properties');
     const response = await fetch(`${apiUrl}/v2/listings?languages[]=fi`, {
       headers: {
         'authorization': testApiKey,
         'Accept': 'application/json',
-      }
+      },
+      next: { revalidate: 300 } // Cache for 5 minutes
     });
     
     if (!response.ok) {
@@ -540,7 +542,8 @@ export async function fetchTestLinearListings(): Promise<any[]> {
     const data = await response.json();
     
     if (Array.isArray(data)) {
-      return data.slice(0, 6).map((listing) => convertLinearToWordPressFormat(listing));
+      console.log(`Found ${data.length} listings from Linear test API`);
+      return data.slice(0, 12).map((listing) => convertLinearToWordPressFormat(listing));
     }
     
     return [];
