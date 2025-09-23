@@ -48,9 +48,6 @@ export default function PropertyPage({ params }: PropertyPageProps) {
         }
 
         setProperty(result.data);
-        // Debug log
-        console.log('Loaded property data:', result.data);
-        console.log('ACF Real Estate:', result.data?.acfRealEstate);
       } catch (error) {
         console.error('Error loading property:', error);
         notFound();
@@ -78,12 +75,6 @@ export default function PropertyPage({ params }: PropertyPageProps) {
   // If acfRealEstate exists, use its property data, otherwise use the root property object
   const propertyData = property.acfRealEstate?.property || property;
   const agentData = property.acfRealEstate?.agent || property.agent || {};
-  
-  // Debug logs
-  console.log('Property object:', property);
-  console.log('Has acfRealEstate:', !!property.acfRealEstate);
-  console.log('Extracted propertyData:', propertyData);
-  console.log('Sample fields - address:', propertyData?.address, 'city:', propertyData?.city, 'area:', propertyData?.area);
   
   // Get images array
   const images = propertyData.gallery || property.images || (property.featuredImage ? [property.featuredImage] : []);
@@ -209,10 +200,10 @@ export default function PropertyPage({ params }: PropertyPageProps) {
           {activeTab === 'floorplan' && (
             <div className="relative h-[70vh] min-h-[600px] bg-gray-100">
               <div className="container mx-auto px-4 py-8 h-full flex items-center justify-center">
-                {propertyData.floorplan ? (
+                {propertyData.floorPlanUrl || propertyData.floorplan ? (
                   <div className="relative h-full w-full max-w-4xl">
                     <Image
-                      src={propertyData.floorplan}
+                      src={propertyData.floorPlanUrl || propertyData.floorplan}
                       alt="Floor plan"
                       fill
                       className="object-contain"
@@ -242,9 +233,9 @@ export default function PropertyPage({ params }: PropertyPageProps) {
           {activeTab === 'brochure' && (
             <div className="relative h-[70vh] min-h-[600px] bg-gray-100">
               <div className="h-full">
-                {propertyData.brochure ? (
+                {propertyData.propertyBrochureUrl || propertyData.brochure ? (
                   <iframe
-                    src={propertyData.brochure}
+                    src={propertyData.propertyBrochureUrl || propertyData.brochure}
                     className="w-full h-full border-0"
                     title="Property Brochure"
                   />
@@ -263,11 +254,11 @@ export default function PropertyPage({ params }: PropertyPageProps) {
           {activeTab === 'video' && (
             <div className="relative h-[70vh] min-h-[600px] bg-gray-100">
               <div className="h-full flex items-center justify-center px-4">
-                {propertyData.video ? (
+                {propertyData.videoUrl || propertyData.virtualShowing || propertyData.youtubeUrl || propertyData.video ? (
                   <div className="w-full max-w-5xl">
                     <div className="aspect-video">
                       <iframe
-                        src={propertyData.video}
+                        src={propertyData.videoUrl || propertyData.virtualShowing || propertyData.youtubeUrl || propertyData.video}
                         className="w-full h-full rounded-lg shadow-xl"
                         allowFullScreen
                         title="Property Video"
