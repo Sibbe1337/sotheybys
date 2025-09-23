@@ -82,8 +82,8 @@ export default function PropertyCard({
           {property?.address && (
             <p className="text-gray-600">
               {property.address}
-              {property.postalCode && property.city && `, ${property.postalCode} ${property.city}`}
-              {!property.postalCode && property.city && `, ${property.city}`}
+              {property.location?.postCode && property.city && `, ${property.location.postCode} ${property.city}`}
+              {!property.location?.postCode && property.city && `, ${property.city}`}
             </p>
           )}
           {property?.propertyType && (
