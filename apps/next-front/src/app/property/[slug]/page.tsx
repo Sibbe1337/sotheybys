@@ -72,13 +72,57 @@ export default function PropertyPage({ params }: PropertyPageProps) {
     notFound();
   }
 
-  // Extract property data - handle both WordPress and Linear API formats
-  // If acfRealEstate exists, use its property data, otherwise use the root property object
-  const propertyData = property.acfRealEstate?.property || property;
-  const agentData = property.acfRealEstate?.agent || property.agent || {};
+  // Extract property data - handle WordPress, Linear API, and new UI formats
+  const isUiFormat = property.location && property.financials && property.specs;
+  let propertyData;
+  let agentData;
+  let images;
   
-  // Get images array
-  const images = propertyData.gallery || property.images || (property.featuredImage ? [property.featuredImage] : []);
+  if (isUiFormat) {
+    // Map UI format to property data format
+    propertyData = {
+      address: property.location.addressLine,
+      city: property.location.city,
+      postalCode: property.location.postalCode,
+      district: property.location.district,
+      lat: property.location.lat,
+      lng: property.location.lng,
+      price: property.financials.price,
+      debtFreePrice: property.financials.debtFreePrice,
+      area: property.specs.livingAreaM2,
+      totalArea: property.specs.totalAreaM2,
+      rooms: property.specs.rooms,
+      bedrooms: property.specs.bedrooms,
+      bathrooms: property.specs.bathrooms,
+      yearBuilt: property.specs.yearBuilt,
+      floor: property.specs.floor,
+      floorCount: property.specs.floorCount,
+      elevator: property.specs.elevator,
+      energyClass: property.features?.energyClass,
+      heatingSystem: property.features?.heatingType,
+      sauna: property.features?.sauna,
+      balcony: property.features?.balcony,
+      terrace: property.features?.terrace,
+      parking: property.features?.parking,
+      maintenanceCharge: property.charges?.hoaFee,
+      propertyTax: property.charges?.propertyTax,
+      waterCharge: property.charges?.waterFee,
+      heatingCharge: property.charges?.heatingFee,
+      description: property.description,
+      floorPlanUrl: property.media?.floorplans?.[0],
+      videoUrl: property.media?.videoUrl,
+      propertyBrochureUrl: property.media?.brochureUrl,
+      housingCooperativeName: property.housingCompany?.name,
+      shareNumbers: property.housingCompany?.shareNumbers,
+    };
+    agentData = property.agents?.[0] || {};
+    images = property.media?.gallery || [];
+  } else {
+    // WordPress or Linear format
+    propertyData = property.acfRealEstate?.property || property;
+    agentData = property.acfRealEstate?.agent || property.agent || {};
+    images = propertyData.gallery || property.images || (property.featuredImage ? [property.featuredImage] : []);
+  }
   
   const formatPrice = (price: number | string) => {
     const numPrice = typeof price === 'string' ? parseInt(price.replace(/\D/g, '')) : price;
@@ -226,11 +270,15 @@ export default function PropertyPage({ params }: PropertyPageProps) {
           {activeTab === 'map' && (
             <div className="relative bg-gray-100 py-8">
               <div className="container mx-auto px-4">
-                {propertyData.address && propertyData.city ? (
+                {(propertyData.lat && propertyData.lng) || (propertyData.address && propertyData.city) ? (
                   <div className="max-w-6xl mx-auto">
                     <div className="relative w-full rounded-lg shadow-lg overflow-hidden" style={{ paddingBottom: '56.25%' }}>
                       <iframe
-                        src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(propertyData.address + ', ' + propertyData.city + ', Finland')}&zoom=15`}
+                        src={
+                          propertyData.lat && propertyData.lng
+                            ? `https://www.google.com/maps/embed/v1/view?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&center=${propertyData.lat},${propertyData.lng}&zoom=15`
+                            : `https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(propertyData.address + ', ' + propertyData.city + ', Finland')}&zoom=15`
+                        }
                         className="absolute top-0 left-0 w-full h-full border-0"
                         title="Property Location Map"
                         loading="lazy"

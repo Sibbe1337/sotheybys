@@ -5,6 +5,7 @@
 
 import { getMarketingContent, hasMarketingContent } from './marketing-content';
 import { generateSlug } from './utils';
+import { adaptLinearRestToIssue, mapLinearIssueToUi, UiListing } from './linear-ui-mapper';
 
 export interface LinearAPIListing {
   id: {
@@ -550,6 +551,92 @@ export async function fetchTestLinearListings(): Promise<any[]> {
     return [];
   } catch (error) {
     console.error('Error fetching test listings:', error);
+    return [];
+  }
+}
+
+// Fetch Linear listings and convert to new UI format
+export async function fetchLinearListingsAsUi(): Promise<UiListing[]> {
+  const apiUrl = process.env.NEXT_PUBLIC_LINEAR_API_URL || process.env.LINEAR_API_URL;
+  const apiKey = process.env.LINEAR_API_KEY;
+  const companyId = process.env.LINEAR_COMPANY_ID;
+  
+  if (!apiUrl || !apiKey) {
+    console.log('Linear API not configured, trying test API');
+    return fetchTestLinearListingsAsUi();
+  }
+  
+  try {
+    const baseUrl = apiUrl.endsWith('/api') ? apiUrl.replace('/api', '') : apiUrl;
+    const endpoint = `${baseUrl}/v2/listings?languages[]=fi`;
+    
+    const headers: Record<string, string> = {
+      'authorization': apiKey,
+      'Accept': 'application/json'
+    };
+    
+    if (companyId) {
+      headers['X-Company-Id'] = companyId;
+    }
+    
+    const response = await fetch(endpoint, {
+      headers,
+      next: { revalidate: 300 } // Cache for 5 minutes
+    });
+    
+    if (!response.ok) {
+      console.log('Linear API error:', response.status);
+      return fetchTestLinearListingsAsUi();
+    }
+    
+    const data = await response.json();
+    
+    if (Array.isArray(data)) {
+      return data.map(listing => {
+        const issue = adaptLinearRestToIssue(listing);
+        return mapLinearIssueToUi(issue);
+      });
+    }
+    
+    return [];
+  } catch (error) {
+    console.error('Error fetching Linear listings:', error);
+    return fetchTestLinearListingsAsUi();
+  }
+}
+
+// Fetch test Linear listings and convert to new UI format
+export async function fetchTestLinearListingsAsUi(): Promise<UiListing[]> {
+  const testApiKey = 'LINEAR-API-KEY 086bc46d-da01-444b-86b3-50710d4c5cf5';
+  const apiUrl = 'https://ca-externalapi-test-weu-001.livelyrock-4a193af6.westeurope.azurecontainerapps.io';
+  
+  try {
+    const response = await fetch(`${apiUrl}/v2/listings?languages[]=fi`, {
+      headers: {
+        'authorization': testApiKey,
+        'Accept': 'application/json',
+      },
+      next: { revalidate: 300 }
+    });
+    
+    if (!response.ok) {
+      console.log('Test Linear API error:', response.status);
+      return [];
+    }
+    
+    const data = await response.json();
+    
+    if (Array.isArray(data)) {
+      console.log(`Found ${data.length} listings from Linear test API (UI format)`);
+      return data.slice(0, 12).map(listing => {
+        const issue = adaptLinearRestToIssue(listing);
+        return mapLinearIssueToUi(issue);
+      });
+    }
+    
+    return [];
+  } catch (error) {
+    console.error('Error fetching test Linear listings:', error);
     return [];
   }
 }
