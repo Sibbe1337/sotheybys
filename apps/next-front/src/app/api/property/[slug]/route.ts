@@ -13,11 +13,15 @@ export async function GET(
 
     // First try to get from Linear API cache
     await ensureCacheInitialized();
-    let foundProperty = listingsCache.getConvertedListingBySlug(slug, language);
+    let foundProperty: any = listingsCache.getConvertedListingBySlug(slug, language);
     
     // If not found in cache, try WordPress
     if (!foundProperty) {
-      foundProperty = await getPropertyBySlug(slug);
+      const wpProperty = await getPropertyBySlug(slug);
+      if (wpProperty) {
+        // Convert WordPress property to expected format
+        foundProperty = wpProperty;
+      }
     }
 
     if (!foundProperty) {
