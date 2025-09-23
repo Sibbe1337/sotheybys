@@ -138,13 +138,16 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                   >
                     <Link
                       href={slide.buttonLink}
-                      className="group inline-flex items-center gap-3 text-white border border-white/60 
-                               px-8 py-4 hover:bg-white hover:text-black transition-all duration-500 
-                               font-light tracking-wider uppercase text-sm relative overflow-hidden"
+                      className="group inline-flex items-center gap-3 text-white border border-white 
+                               px-8 py-4 transition-all duration-300 
+                               font-light tracking-wider uppercase text-sm relative overflow-hidden
+                               hover:border-white"
                     >
-                      <span className="relative z-10">{slide.buttonText}</span>
+                      <span className="relative z-10 transition-colors duration-300 group-hover:text-[#002349]">
+                        {slide.buttonText}
+                      </span>
                       <svg 
-                        className="w-5 h-5 transform transition-transform duration-300 group-hover:translate-x-1" 
+                        className="w-5 h-5 transform transition-all duration-300 group-hover:translate-x-1 relative z-10 group-hover:text-[#002349]" 
                         fill="none" 
                         stroke="currentColor" 
                         viewBox="0 0 24 24"
@@ -158,7 +161,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                       </svg>
                       <span 
                         className="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 
-                                 transition-transform duration-500 origin-left" 
+                                 transition-transform duration-300 ease-out origin-left" 
                       />
                     </Link>
                   </div>
