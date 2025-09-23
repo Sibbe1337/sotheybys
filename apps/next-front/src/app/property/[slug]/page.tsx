@@ -152,6 +152,22 @@ export default function PropertyPage({ params }: PropertyPageProps) {
     setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
   };
 
+  // Keyboard navigation for better UX
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (activeTab === 'photos' && images.length > 1) {
+        if (e.key === 'ArrowLeft') {
+          prevImage();
+        } else if (e.key === 'ArrowRight') {
+          nextImage();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activeTab, images.length]);
+
   return (
     <div className="min-h-screen bg-white">
       {/* Breadcrumb Section */}
@@ -182,15 +198,26 @@ export default function PropertyPage({ params }: PropertyPageProps) {
         {/* Tab Content Container with Consistent Height */}
         <div className="relative min-h-[600px]">
           {activeTab === 'photos' && images.length > 0 && (
-            <div className="relative h-[70vh] min-h-[600px] bg-gray-100">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Image
-                  src={images[currentImageIndex]?.url || images[currentImageIndex]?.sourceUrl || images[currentImageIndex]}
-                  alt={`Property image ${currentImageIndex + 1}`}
-                  fill
-                  className="object-contain"
-                  priority
-                />
+            <div className="relative h-[70vh] min-h-[600px] bg-gray-100 overflow-hidden">
+              {/* Preload and render all images for instant switching */}
+              <div className="absolute inset-0">
+                {images.map((image: any, index: number) => (
+                  <div
+                    key={index}
+                    className={`absolute inset-0 flex items-center justify-center transition-opacity duration-200 ${
+                      currentImageIndex === index ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                    }`}
+                  >
+                    <Image
+                      src={image.url || image.sourceUrl || image}
+                      alt={`Property image ${index + 1}`}
+                      fill
+                      className="object-contain"
+                      priority={index === 0 || index === 1}
+                      loading={index <= 2 ? "eager" : "lazy"}
+                    />
+                  </div>
+                ))}
               </div>
               
               {/* Navigation Arrows */}
@@ -198,13 +225,15 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                 <>
                   <button
                     onClick={prevImage}
-                    className="absolute left-8 top-1/2 -translate-y-1/2 bg-white/90 text-gray-800 w-12 h-12 rounded-full hover:bg-white transition-colors shadow-lg flex items-center justify-center"
+                    className="absolute left-8 top-1/2 -translate-y-1/2 bg-white/90 text-gray-800 w-12 h-12 rounded-full hover:bg-white shadow-lg flex items-center justify-center transform will-change-transform"
+                    aria-label="Previous image"
                   >
                     <ChevronLeft size={28} />
                   </button>
                   <button
                     onClick={nextImage}
-                    className="absolute right-8 top-1/2 -translate-y-1/2 bg-white/90 text-gray-800 w-12 h-12 rounded-full hover:bg-white transition-colors shadow-lg flex items-center justify-center"
+                    className="absolute right-8 top-1/2 -translate-y-1/2 bg-white/90 text-gray-800 w-12 h-12 rounded-full hover:bg-white shadow-lg flex items-center justify-center transform will-change-transform"
+                    aria-label="Next image"
                   >
                     <ChevronRight size={28} />
                   </button>
@@ -219,12 +248,12 @@ export default function PropertyPage({ params }: PropertyPageProps) {
               {/* Thumbnail Strip */}
               {images.length > 1 && (
                 <div className="absolute bottom-0 left-0 right-0 bg-black/50 p-4">
-                  <div className="flex gap-2 justify-center overflow-x-auto max-w-6xl mx-auto">
+                  <div className="flex gap-2 justify-center overflow-x-auto max-w-6xl mx-auto scrollbar-hide">
                     {images.map((image: any, index: number) => (
                       <button
                         key={index}
                         onClick={() => setCurrentImageIndex(index)}
-                        className={`relative flex-shrink-0 w-20 h-20 overflow-hidden transition-all ${
+                        className={`relative flex-shrink-0 w-20 h-20 overflow-hidden transform will-change-transform ${
                           currentImageIndex === index ? 'ring-2 ring-white scale-110' : 'opacity-70 hover:opacity-100'
                         }`}
                       >
@@ -233,6 +262,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                           alt={`Thumbnail ${index + 1}`}
                           fill
                           className="object-cover"
+                          sizes="80px"
                         />
                       </button>
                     ))}

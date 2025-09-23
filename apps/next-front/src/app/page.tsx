@@ -25,7 +25,7 @@ const defaultSlides = [
     title: 'Tervetuloa onnistuneeseen asuntokauppaan!',
     subtitle: 'Katso kaikki myynnissä olevat kohteemme.',
     buttonText: 'Löydä unelmien koti',
-    buttonLink: 'https://sothebysrealty.fi/kohteet/'
+    buttonLink: '/kohteet'
   },
   {
     id: '3',
@@ -33,7 +33,7 @@ const defaultSlides = [
     title: 'Snellman Sotheby\'s International Realty®',
     subtitle: 'Haluamme luoda kestävän asiakassuhteen, jossa otamme huomioon teidän pienimmätkin toiveet ja tarpeet.',
     buttonText: 'Tutustu toimintatapaamme',
-    buttonLink: 'https://sothebysrealty.fi/yritys/'
+    buttonLink: '/yritys'
   },
   {
     id: '4',
@@ -41,7 +41,7 @@ const defaultSlides = [
     title: 'Referenssit',
     subtitle: 'Valikoima myydyistä kohteista',
     buttonText: 'Tutustu kohteisiin',
-    buttonLink: 'https://sothebysrealty.fi/wp/kohteet/referenssit/'
+    buttonLink: '/kohteet/referenssit'
   }
 ];
 
