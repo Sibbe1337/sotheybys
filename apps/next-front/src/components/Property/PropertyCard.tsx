@@ -1,11 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Property, Agent } from '@/lib/wordpress';
-import { HeartIcon, ScaleIcon } from '@heroicons/react/24/outline';
-import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid';
 import { Price } from '@/components/ui/Price';
 import { MetaRow } from '@/components/ui/MetaRow';
 import { Button } from '@/components/ui/Button';
@@ -39,81 +36,6 @@ export default function PropertyCard({
   property,
   agent,
 }: PropertyCardProps) {
-  const [isSaved, setIsSaved] = useState(false);
-  const [isInComparison, setIsInComparison] = useState(false);
-  
-  useEffect(() => {
-    // Check if property is saved
-    const savedProperties = JSON.parse(localStorage.getItem('savedProperties') || '[]');
-    setIsSaved(savedProperties.includes(id));
-    
-    // Check if property is in comparison
-    const comparisonProperties = JSON.parse(localStorage.getItem('comparisonProperties') || '[]');
-    setIsInComparison(comparisonProperties.some((p: any) => p.id === id));
-  }, [id]);
-  
-  // Listen for comparison updates from other components
-  useEffect(() => {
-    const handleComparisonUpdate = () => {
-      const comparisonProperties = JSON.parse(localStorage.getItem('comparisonProperties') || '[]');
-      setIsInComparison(comparisonProperties.some((p: any) => p.id === id));
-    };
-    
-    window.addEventListener('comparisonUpdate', handleComparisonUpdate);
-    return () => window.removeEventListener('comparisonUpdate', handleComparisonUpdate);
-  }, [id]);
-  
-  const handleSaveProperty = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    const savedProperties = JSON.parse(localStorage.getItem('savedProperties') || '[]');
-    
-    if (isSaved) {
-      const updated = savedProperties.filter((propId: string) => propId !== id);
-      localStorage.setItem('savedProperties', JSON.stringify(updated));
-      setIsSaved(false);
-    } else {
-      savedProperties.push(id);
-      localStorage.setItem('savedProperties', JSON.stringify(savedProperties));
-      setIsSaved(true);
-    }
-  };
-  
-  const handleComparisonToggle = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    const comparisonProperties = JSON.parse(localStorage.getItem('comparisonProperties') || '[]');
-    
-    if (isInComparison) {
-      const updated = comparisonProperties.filter((p: any) => p.id !== id);
-      localStorage.setItem('comparisonProperties', JSON.stringify(updated));
-      setIsInComparison(false);
-    } else {
-      if (comparisonProperties.length >= 4) {
-        alert('Voit vertailla enintään 4 kohdetta kerrallaan');
-        return;
-      }
-      
-      const propertyData = {
-        id,
-        address: property?.address || '',
-        askPrice: property?.price?.toString() || '',
-        area: property?.area?.toString() || '',
-        rooms: property?.bedrooms?.toString() || '',
-        image: featuredImage?.node?.sourceUrl || '',
-        marketingTitle: title
-      };
-      
-      comparisonProperties.push(propertyData);
-      localStorage.setItem('comparisonProperties', JSON.stringify(comparisonProperties));
-      setIsInComparison(true);
-    }
-    
-    window.dispatchEvent(new CustomEvent('comparisonUpdate'));
-  };
-  
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('fi-FI', {
       style: 'currency',
@@ -137,43 +59,6 @@ export default function PropertyCard({
             className="object-cover"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
-          
-          {/* Action Buttons Overlay */}
-          <div className="absolute top-2 right-2 flex gap-2">
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                handleSaveProperty(e);
-              }}
-              className="p-2 bg-white/80 hover:bg-white rounded-lg shadow-md transition-all pointer-events-auto"
-              title={isSaved ? "Poista tallennetuista" : "Tallenna kohde"}
-            >
-              {isSaved ? (
-                <HeartIconSolid className="h-5 w-5 text-red-500" />
-              ) : (
-                <HeartIcon className="h-5 w-5 text-gray-700" />
-              )}
-            </button>
-            
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                handleComparisonToggle(e);
-              }}
-              className={`p-2 rounded-lg shadow-md transition-all pointer-events-auto ${
-                isInComparison 
-                  ? 'bg-[#002349] hover:bg-[#003366]' 
-                  : 'bg-white/80 hover:bg-white'
-              }`}
-              title={isInComparison ? "Poista vertailusta" : "Lisää vertailuun"}
-            >
-              <ScaleIcon className={`h-5 w-5 ${
-                isInComparison ? 'text-white' : 'text-gray-700'
-              }`} />
-            </button>
-          </div>
         </div>
       )}
 
@@ -210,7 +95,7 @@ export default function PropertyCard({
           items={[
             { value: property?.bedrooms ? `${property.bedrooms} mh` : '' },
             { value: property?.bathrooms ? `${property.bathrooms} kph` : '' },
-            { value: property?.area ? `${property.area} m²` : '' }
+            { value: property?.area ? (String(property.area).includes('m²') || String(property.area).includes('m2') ? property.area : `${property.area} m²`) : '' }
           ]}
           className="mb-3"
         />

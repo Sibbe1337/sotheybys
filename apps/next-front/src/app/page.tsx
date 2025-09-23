@@ -6,7 +6,6 @@ import { fetchLinearListings, fetchTestLinearListings } from '@/lib/linear-api-a
 import Link from 'next/link';
 import Image from 'next/image';
 import { getImageUrl } from '@/config/images';
-import { VideoSection } from '@/components/ui/VideoSection';
 
 export const revalidate = 60; // ISR: revalidate every 60 seconds
 
@@ -251,14 +250,6 @@ export default async function HomePage() {
         <main className="flex-1">
           {/* Hero Carousel */}
           <HeroCarousel slides={heroSlides} />
-
-          {/* Brand Video Section */}
-          <VideoSection 
-            videoId="vZRncaI6Lw8"
-            title="Snellman Sotheby's International Realty"
-            subtitle="Tervetuloa tutustumaan meihin ja palveluihimme"
-            className="bg-[var(--color-light-gray)]"
-          />
 
           {/* Properties Section */}
           <section className="py-16 bg-gray-50">
