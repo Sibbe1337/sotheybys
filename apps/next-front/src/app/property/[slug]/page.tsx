@@ -60,6 +60,48 @@ export default function PropertyPage({ params }: PropertyPageProps) {
     loadProperty();
   }, [slug]);
 
+  // Move callbacks before any returns to ensure consistent hook order
+  const nextImage = useCallback(() => {
+    setCurrentImageIndex((prev) => {
+      const imagesLength = property?.media?.gallery?.length || 
+                          property?.acfRealEstate?.property?.gallery?.length || 
+                          property?.images?.length || 
+                          1;
+      return (prev + 1) % imagesLength;
+    });
+  }, [property]);
+
+  const prevImage = useCallback(() => {
+    setCurrentImageIndex((prev) => {
+      const imagesLength = property?.media?.gallery?.length || 
+                          property?.acfRealEstate?.property?.gallery?.length || 
+                          property?.images?.length || 
+                          1;
+      return (prev - 1 + imagesLength) % imagesLength;
+    });
+  }, [property]);
+
+  // Keyboard navigation for better UX
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (activeTab === 'photos' && property) {
+        const hasMultipleImages = (property?.media?.gallery?.length || 
+                                  property?.acfRealEstate?.property?.gallery?.length || 
+                                  property?.images?.length || 0) > 1;
+        if (hasMultipleImages) {
+          if (e.key === 'ArrowLeft') {
+            prevImage();
+          } else if (e.key === 'ArrowRight') {
+            nextImage();
+          }
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activeTab, property, prevImage, nextImage]);
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -143,30 +185,6 @@ export default function PropertyPage({ params }: PropertyPageProps) {
       [section]: !prev[section]
     }));
   };
-
-  const nextImage = useCallback(() => {
-    setCurrentImageIndex((prev) => (prev + 1) % images.length);
-  }, [images.length]);
-
-  const prevImage = useCallback(() => {
-    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
-  }, [images.length]);
-
-  // Keyboard navigation for better UX
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (activeTab === 'photos' && images.length > 1) {
-        if (e.key === 'ArrowLeft') {
-          prevImage();
-        } else if (e.key === 'ArrowRight') {
-          nextImage();
-        }
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [activeTab, images.length, prevImage, nextImage]);
 
   return (
     <div className="min-h-screen bg-white">

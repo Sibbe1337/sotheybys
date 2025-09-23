@@ -44,7 +44,7 @@ const sampleReferences = [
     slug: 'skutholminkaari-5-ref',
     featuredImage: {
       node: {
-        sourceUrl: 'https://d33xsej2pkrh3b.cloudfront.net/640x427,fit,q85,f=webp/oviproprodmedia/Production/realty/b5c2b5f1-5e17-4a3f-8c7f-5f5e5c5e5c5e/skutholmin.jpg',
+        sourceUrl: '/images/defaults/noimage.jpg',
         altText: 'Skutholminkaari 5'
       }
     },
@@ -65,7 +65,7 @@ const sampleReferences = [
     slug: 'heikkilantie-1-c-ref',
     featuredImage: {
       node: {
-        sourceUrl: 'https://d33xsej2pkrh3b.cloudfront.net/640x427,fit,q85,f=webp/oviproprodmedia/Production/realty/c5e5c5e5-5e17-4a3f-8c7f-5f5e5c5e5c5e/heikkila.jpg',
+        sourceUrl: '/images/defaults/noimage.jpg',
         altText: 'Heikkiläntie 1 C'
       }
     },
