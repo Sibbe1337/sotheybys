@@ -789,7 +789,18 @@ export function getLocalizedValue<T = string>(
   fallbackLanguage: SupportedLanguage = 'fi'
 ): string {
   if (!localizedValue) return '';
-  return localizedValue[language] || localizedValue[fallbackLanguage] || '';
+  
+  // Extract the value for the specified language
+  const value = localizedValue[language] || localizedValue[fallbackLanguage] || '';
+  
+  // CRITICAL FIX: If value is still an object (nested LocalizedString), return empty string
+  // This prevents React error #31 "object with keys {fi, en, sv}"
+  if (typeof value === 'object') {
+    console.warn('⚠️  getLocalizedValue received nested object:', { localizedValue, language, value });
+    return '';
+  }
+  
+  return value;
 }
 
 /**
