@@ -50,6 +50,22 @@ export default function PropertyPage({ params }: PropertyPageProps) {
         }
 
         setProperty(result.data);
+        
+        // Warn if data contains images but they might not render
+        const data = result.data;
+        const hasImagesInData = data.media?.gallery?.length > 0 || 
+                                data.images?.length > 0 || 
+                                data.gallery?.length > 0 ||
+                                data.featuredImage;
+        if (hasImagesInData) {
+          console.log('✅ Property has images:', {
+            gallery: data.media?.gallery?.length || data.gallery?.length || 0,
+            images: data.images?.length || 0,
+            featuredImage: !!data.featuredImage
+          });
+        } else {
+          console.warn('⚠️  No images found in property data:', data.title || slug);
+        }
       } catch (error) {
         console.error('Error loading property:', error);
         notFound();
@@ -104,6 +120,9 @@ export default function PropertyPage({ params }: PropertyPageProps) {
     notFound();
   }
 
+  // Safe array helper to prevent crashes on undefined/null arrays
+  const safeArray = <T,>(arr?: T[] | null): T[] => (Array.isArray(arr) ? arr : []);
+
   // Extract property data - handle WordPress, Linear API, and new UI formats
   const isUiFormat = property.location && property.financials && property.specs;
   let propertyData;
@@ -147,14 +166,29 @@ export default function PropertyPage({ params }: PropertyPageProps) {
       propertyBrochureUrl: property.media?.brochureUrl,
       housingCooperativeName: property.housingCompany?.name,
       shareNumbers: property.housingCompany?.shareNumbers,
+      gallery: safeArray(property.media?.gallery),
     };
     agentData = property.agents?.[0] || {};
-    images = property.media?.gallery || [];
+    // Image rendering: Use gallery, else images array, else featuredImage fallback
+    images = safeArray(property.media?.gallery).length > 0 
+      ? safeArray(property.media?.gallery)
+      : safeArray(property.images).length > 0
+      ? safeArray(property.images)
+      : property.featuredImage
+      ? [{ url: property.featuredImage }]
+      : [];
   } else {
     // WordPress or Linear format
     propertyData = property.acfRealEstate?.property || property;
     agentData = property.acfRealEstate?.agent || property.agent || {};
-    images = propertyData.gallery || property.images || (property.featuredImage ? [property.featuredImage] : []);
+    // Image rendering: Use gallery, else images array, else featuredImage fallback
+    images = safeArray(propertyData.gallery).length > 0
+      ? safeArray(propertyData.gallery)
+      : safeArray(property.images).length > 0
+      ? safeArray(property.images)
+      : property.featuredImage
+      ? [{ url: property.featuredImage }]
+      : [];
   }
   
   // Use parseEuroNumber for safe number parsing and formatEuroCurrency for display

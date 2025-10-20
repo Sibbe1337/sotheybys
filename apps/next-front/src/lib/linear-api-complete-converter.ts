@@ -59,6 +59,12 @@ export function convertCompleteLinearToWordPressFormat(listing: CompleteLinearAP
   const rawDebt = extractLocalizedValue(listing.debt) || null;
   const debt = rawDebt ? parsePrice(rawDebt) : null;
   
+  // Compute debt if missing but both prices exist (Finnish formula: Velkaosuus = Velaton - Myyntihinta)
+  const computedDebt = (debtFreePrice != null && askPrice != null)
+    ? Math.max(0, parseFloat(debtFreePrice) - parseFloat(askPrice)).toString()
+    : null;
+  const finalDebt = debt ?? computedDebt;
+  
   // Validate prices - warn about suspicious values
   if (askPrice) {
     const priceNum = parseInt(askPrice);
@@ -376,9 +382,12 @@ export function convertCompleteLinearToWordPressFormat(listing: CompleteLinearAP
   const modificationsNotified = extractLocalizedValue(listing.modificationsNotified) || null;
   const modificationsDescription = extractLocalizedValue(listing.modificationsDescription) || null;
   
-  // Images
+  // Images - preserve entire array structure
   const images = listing.images || [];
-  const featuredImage = images.length > 0 ? images[0].url : null;
+  
+  // Featured image = first non-floorplan image if available, else first image
+  const firstNonFloorplan = images.find(img => !img.isFloorPlan);
+  const featuredImage = firstNonFloorplan?.url || (images.length > 0 ? images[0].url : null);
   
   // Agent/Realtor
   const agent = listing.realtor || null;
@@ -432,7 +441,7 @@ export function convertCompleteLinearToWordPressFormat(listing: CompleteLinearAP
         price: askPrice,
         pricePerSqm,
         debtFreePrice,
-        debt,
+        debt: finalDebt,
         maintenanceCharge,
         mandatoryCharges,
         renovationCharge,
