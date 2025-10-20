@@ -329,13 +329,13 @@ export function mapLinearAPIToProperty(
     // ========================================================================
     // 1. GENERAL PROPERTY INFO
     // ========================================================================
-    apartmentType: extractLocalizedString(data.propertyType),
+    apartmentType: extractLocalizedString(data.typeOfApartment || data.rooms),  // Linear API uses typeOfApartment (e.g., "2h+k")
     streetAddress: extractLocalizedString(data.address),
     postalCode: data.postalCode?.fi?.value || '',
     city: extractLocalizedString(data.city),
     region: extractLocalizedString(data.region),  // extractLocalizedString already returns { fi: '', en: '', sv: '' } for undefined
-    heading: extractLocalizedString(data.heading),  // No need for manual fallback
-    description: extractLocalizedString(data.description),  // No need for manual fallback
+    heading: extractLocalizedString(data.freeTextTitle || data.marketingTitle),  // Linear API uses freeTextTitle, not heading
+    description: extractLocalizedString(data.freeText || data.marketingDescription),  // Linear API uses freeText, not description
     releaseDate: 'releaseDate' in linearData && data.releaseDate?.fi?.value
       ? new Date(data.releaseDate.fi.value) 
       : new Date(),
