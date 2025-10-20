@@ -16,6 +16,21 @@ interface PropertyPageProps {
   };
 }
 
+// ============================================================================
+// WARNING DEDUPLICATION
+// ============================================================================
+const warned = new Set<string>();
+function warnOnce(slug: string, msg: string) {
+  if (warned.has(slug)) return;
+  console.warn(msg, slug);
+  warned.add(slug);
+}
+
+// ============================================================================
+// SAFE ARRAY HELPER
+// ============================================================================
+const safeArray = <T,>(arr?: T[] | null): T[] => Array.isArray(arr) ? arr : [];
+
 export default function PropertyPage({ params }: PropertyPageProps) {
   const { slug } = params;
   const searchParams = useSearchParams();
@@ -72,7 +87,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
             featuredImage: !!data.featuredImage
           });
         } else {
-          console.warn('⚠️  No images found in property data:', data.title || slug);
+          warnOnce(slug, '⚠️  No images found in property data:');
         }
       } catch (error) {
         console.error('Error loading property:', error);

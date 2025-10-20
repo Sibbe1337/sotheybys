@@ -62,10 +62,19 @@ export async function GET(
     
     console.log('✅ All LocalizedString objects flattened to strings');
 
-    return NextResponse.json({
+    // IMAGE PIPELINE HARDENING: Always default to arrays to prevent 500 errors
+    if (!Array.isArray(flattened.images)) flattened.images = [];
+    if (!Array.isArray(flattened.photoUrls)) flattened.photoUrls = [];
+
+    const response = NextResponse.json({
       success: true,
       data: flattened
     });
+    
+    // Prevent aggressive caching that can hide image updates
+    response.headers.set('Cache-Control', 'no-store, max-age=0');
+    
+    return response;
   } catch (error) {
     console.error('Error fetching property:', error);
     return NextResponse.json(

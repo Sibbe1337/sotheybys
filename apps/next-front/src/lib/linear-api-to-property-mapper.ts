@@ -16,6 +16,43 @@ import { CompleteLinearAPIListing } from './linear-api-complete-interface';
 import { parseEuroNumber } from './number-eu';
 
 // ============================================================================
+// IMAGE NORMALIZATION HELPERS
+// ============================================================================
+
+/**
+ * Normalize image inputs to a consistent object array format
+ * Accepts: string[], {url}[], or mixed arrays
+ * Returns: [{url, thumbnail?, compressed?, isFloorPlan?, description?, order?}]
+ */
+function toImageObjects(input: any): Array<{
+  url: string;
+  thumbnail?: string;
+  compressed?: string;
+  isFloorPlan?: boolean;
+  description?: string;
+  order?: number;
+}> {
+  if (!input) return [];
+  
+  // Accept arrays of strings or objects
+  if (Array.isArray(input)) {
+    return input
+      .map((it: any, idx: number) => {
+        if (typeof it === 'string') {
+          return { url: it, order: idx };
+        }
+        if (it && typeof it === 'object' && typeof it.url === 'string') {
+          return { ...it, order: it.order ?? idx };
+        }
+        return null;
+      })
+      .filter(Boolean) as any[];
+  }
+  
+  return [];
+}
+
+// ============================================================================
 // LINEAR API TYPES / LINEAR API -TYYPIT
 // ============================================================================
 
@@ -446,11 +483,25 @@ export function mapLinearAPIToProperty(
     showingTime: data.showingTime?.fi?.value || '',
     listingOffice: data.realtor?.primaryCompany?.name || '',
     listingSourceUrl: '', // Not directly available
-    photoUrls: data.images
-      ?.filter((img: any) => !img.isFloorPlan)
-      .map((img: any) => img.compressed || img.url) || [],
-    floorPlanUrl: data.floorPlanUrl || 
-      data.images?.find((img: any) => img.isFloorPlan)?.url || '',
+    
+    // ========================================================================
+    // 6.5 IMAGES (NORMALIZED) - UNIFIED PIPELINE
+    // ========================================================================
+    // Normalize all image sources to consistent format
+    ...(() => {
+      const imagesFromLinear = toImageObjects(data.images || data.media?.gallery);
+      const photosFromStrings = toImageObjects(nv?.photoUrls || data.photoUrls);
+      const allImages = [...imagesFromLinear, ...photosFromStrings];
+      
+      return {
+        images: allImages,  // Normalized objects [{url,...}]
+        photoUrls: allImages.map(img => img.url),  // Plain string array for UI fallback
+        floorPlanUrl: data.floorPlanUrl || 
+          allImages.find(i => i.isFloorPlan)?.url || 
+          data.media?.floorplans?.[0] || '',
+      };
+    })(),
+    
     brochureUrl: data.brochureUrl || '',
 
     // ========================================================================

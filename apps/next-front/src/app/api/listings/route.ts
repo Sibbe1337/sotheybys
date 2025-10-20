@@ -29,9 +29,15 @@ export async function GET(request: Request) {
         const multilingualListings = listingsCache.getMultilingualListings();
         
         // Flatten each listing to the requested language
-        listings = multilingualListings.map(listing => 
-          flattenPropertyForLanguage(listing, language)
-        );
+        listings = multilingualListings.map(listing => {
+          const flattened = flattenPropertyForLanguage(listing, language);
+          
+          // IMAGE PIPELINE HARDENING: Always default to arrays to prevent 500 errors
+          if (!Array.isArray(flattened.images)) flattened.images = [];
+          if (!Array.isArray(flattened.photoUrls)) flattened.photoUrls = [];
+          
+          return flattened;
+        });
         
         console.log(`✅ Flattened ${listings.length} listings for language: ${language}`);
       } else if (format === 'wordpress') {
@@ -47,7 +53,7 @@ export async function GET(request: Request) {
       listings = await fetchLinearListings();
     }
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
       count: listings.length,
       source,
@@ -55,6 +61,11 @@ export async function GET(request: Request) {
       language,
       data: listings
     });
+    
+    // Prevent aggressive caching that can hide image updates
+    response.headers.set('Cache-Control', 'no-store, max-age=0');
+    
+    return response;
   } catch (error) {
     console.error('Error fetching listings:', error);
     return NextResponse.json(
