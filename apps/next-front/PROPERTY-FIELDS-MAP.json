@@ -1,0 +1,445 @@
+{
+  "sections": [
+    {
+      "id": "basicInfo",
+      "title": "Perustiedot",
+      "alwaysShow": true,
+      "order": 1,
+      "displayLocation": "hero",
+      "fields": [
+        {
+          "label": "Osoite",
+          "key": "streetAddress",
+          "required": true,
+          "example": "Kasarmitori 34"
+        },
+        {
+          "label": "Postinumero ja kaupunki",
+          "keys": ["postalCode", "city"],
+          "required": true,
+          "example": "00130 Helsinki"
+        },
+        {
+          "label": "Kaupunginosa",
+          "key": "region",
+          "required": false,
+          "example": "Kaartinkaupunki"
+        },
+        {
+          "label": "Asunnon tyyppi",
+          "key": "apartmentType",
+          "required": false,
+          "example": "Kerrostaloasunto / Kiinteistö"
+        },
+        {
+          "label": "Omistusmuoto",
+          "key": "ownershipType",
+          "required": false,
+          "example": "Oma / Vuokra"
+        },
+        {
+          "label": "Rakennusvuosi",
+          "key": "yearOfBuilding",
+          "required": false,
+          "example": "1912"
+        },
+        {
+          "label": "Kerros / Kerroksia",
+          "keys": ["floorLocation", "numberOfFloors"],
+          "required": false,
+          "example": "13 / 21"
+        },
+        {
+          "label": "Ikkunoiden suunta",
+          "key": "windowDirection",
+          "required": false,
+          "example": "Etelä / Piha"
+        }
+      ]
+    },
+    {
+      "id": "priceInfo",
+      "title": "Hintatiedot",
+      "alwaysShow": true,
+      "order": 2,
+      "fields": [
+        {
+          "label": "Myyntihinta",
+          "key": "salesPrice",
+          "frontendKey": "price",
+          "required": true,
+          "format": "currency",
+          "example": "267 156 €"
+        },
+        {
+          "label": "Velkaosuus",
+          "key": "debtPart",
+          "required": false,
+          "format": "currency",
+          "example": "12 844 €"
+        },
+        {
+          "label": "Velaton hinta",
+          "key": "unencumberedSalesPrice",
+          "frontendKey": "debtFreePrice",
+          "required": false,
+          "format": "currency",
+          "example": "280 000 €"
+        },
+        {
+          "label": "Yhtiövastike",
+          "key": "maintenanceFee",
+          "required": false,
+          "format": "currency",
+          "suffix": "/kk",
+          "example": "894,99 €/kk"
+        },
+        {
+          "label": "Rahoitusvastike",
+          "key": "financingFee",
+          "required": false,
+          "format": "currency",
+          "suffix": "/kk",
+          "example": "344,44 €/kk"
+        },
+        {
+          "label": "Kokonaisvastike",
+          "key": "totalFee",
+          "required": false,
+          "format": "currency",
+          "suffix": "/kk",
+          "calculated": "maintenanceFee + financingFee"
+        },
+        {
+          "label": "Vesimaksu",
+          "key": "waterFee",
+          "required": false,
+          "format": "currency",
+          "suffix": "/hlö/kk",
+          "example": "20 €/hlö/kk"
+        },
+        {
+          "label": "Kiinteistövero",
+          "key": "propertyTax",
+          "required": false,
+          "format": "currency",
+          "suffix": "/v",
+          "propertyTypeOnly": ["kiinteisto"],
+          "example": "500 €/v"
+        },
+        {
+          "label": "Maksutapa",
+          "key": "paymentMethod",
+          "required": false,
+          "example": "Käteinen"
+        }
+      ]
+    },
+    {
+      "id": "energyRating",
+      "title": "Energialuokitus",
+      "alwaysShow": false,
+      "order": 3,
+      "fields": [
+        {
+          "label": "Energialuokka",
+          "key": "energyClass",
+          "required": false,
+          "example": "E2007 / E2018"
+        },
+        {
+          "label": "Energiatodistus",
+          "key": "energyCertificate",
+          "required": false,
+          "format": "boolean",
+          "example": "Kyllä / Ei"
+        },
+        {
+          "label": "Lämmitysjärjestelmä",
+          "key": "heatingSystem",
+          "required": false,
+          "example": "Kaukolämpö / Maalämpö"
+        }
+      ]
+    },
+    {
+      "id": "buildingInfo",
+      "title": "Rakennustiedot",
+      "alwaysShow": false,
+      "order": 4,
+      "fields": [
+        {
+          "label": "Rakennusaine",
+          "key": "buildingMaterial",
+          "required": false,
+          "example": "Tiili / Hirsi / Betoni"
+        },
+        {
+          "label": "Kattotyyppi",
+          "key": "roofType",
+          "required": false,
+          "example": "Harjakatto / Pelti"
+        },
+        {
+          "label": "Kunto",
+          "key": "condition",
+          "required": false,
+          "example": "Hyvä / Erinomainen"
+        },
+        {
+          "label": "Sauna",
+          "key": "sauna",
+          "required": false,
+          "format": "boolean",
+          "example": "Kyllä / Ei"
+        },
+        {
+          "label": "Parveke",
+          "key": "balcony",
+          "required": false,
+          "format": "boolean",
+          "example": "Kyllä / Ei"
+        },
+        {
+          "label": "Hissi",
+          "key": "elevator",
+          "required": false,
+          "format": "boolean",
+          "example": "Kyllä / Ei"
+        }
+      ]
+    },
+    {
+      "id": "propertyInfo",
+      "title": "Kiinteistötiedot / Tontti",
+      "alwaysShow": false,
+      "order": 5,
+      "fields": [
+        {
+          "label": "Tontin pinta-ala",
+          "key": "siteArea",
+          "required": false,
+          "format": "area",
+          "example": "23 476 m²"
+        },
+        {
+          "label": "Tontin omistus",
+          "key": "siteOwnershipType",
+          "required": false,
+          "example": "Oma / Vuokrattu"
+        },
+        {
+          "label": "Kaavoitustilanne",
+          "key": "zoningSituation",
+          "required": false,
+          "example": "Yleiskaava"
+        },
+        {
+          "label": "Rakennusoikeus",
+          "key": "buildingRights",
+          "required": false,
+          "example": "Kyllä / Ei"
+        },
+        {
+          "label": "Kiinteistötunnus",
+          "key": "propertyId",
+          "required": false,
+          "example": "123-123-123-123-1111"
+        },
+        {
+          "label": "Vuokra-aika",
+          "key": "leaseTerm",
+          "required": false,
+          "propertyTypeOnly": ["kiinteisto"],
+          "example": "24.12.2021 asti"
+        },
+        {
+          "label": "Vuokra/vuosi",
+          "key": "annualLease",
+          "required": false,
+          "format": "currency",
+          "suffix": "/v",
+          "propertyTypeOnly": ["kiinteisto"],
+          "example": "55 555 €/v"
+        }
+      ]
+    },
+    {
+      "id": "housingCompanyInfo",
+      "title": "Yhtiötiedot",
+      "alwaysShow": false,
+      "order": 6,
+      "propertyTypeOnly": ["osake"],
+      "fields": [
+        {
+          "label": "Yhtiön nimi",
+          "key": "housingCompanyName",
+          "required": false,
+          "example": "Bostads Ab Maria Asunto Oy"
+        },
+        {
+          "label": "Y-tunnus",
+          "key": "businessId",
+          "required": false,
+          "example": "2644749-2"
+        },
+        {
+          "label": "Isännöitsijä",
+          "keys": ["managerName", "managerPhone", "managerEmail"],
+          "required": false,
+          "example": "Johan Schröder, 0505369106"
+        },
+        {
+          "label": "Kiinteistönhoito",
+          "key": "propertyMaintenance",
+          "required": false,
+          "example": "Sotheby's Kiinteistönhoito"
+        },
+        {
+          "label": "Lunastuspykälä",
+          "key": "redemptionClauseFlats",
+          "required": false,
+          "format": "boolean",
+          "example": "Kyllä / Ei"
+        },
+        {
+          "label": "Osakkeiden numerot",
+          "key": "numberOfShares",
+          "required": false,
+          "example": "1-10"
+        }
+      ]
+    },
+    {
+      "id": "equipmentSpaces",
+      "title": "Varusteet ja tilat",
+      "alwaysShow": false,
+      "order": 7,
+      "fields": [
+        {
+          "label": "Keittiö",
+          "key": "kitchenEquipment",
+          "required": false,
+          "example": "Induktioliesi, Astianpesukone"
+        },
+        {
+          "label": "Kph/WC",
+          "key": "bathroomEquipment",
+          "required": false,
+          "example": "Suihku, Pesukonevaraus"
+        },
+        {
+          "label": "Lattiamateriaalit",
+          "key": "floorMaterial",
+          "required": false,
+          "example": "Parketti / Laatta"
+        },
+        {
+          "label": "Säilytystilat",
+          "key": "storageSpace",
+          "required": false,
+          "example": "Kellari, Komero"
+        }
+      ]
+    },
+    {
+      "id": "locationEnvironment",
+      "title": "Sijainti ja ympäristö",
+      "alwaysShow": false,
+      "order": 8,
+      "fields": [
+        {
+          "label": "Näkymä / suunta",
+          "key": "windowDirection",
+          "required": false,
+          "example": "Puistoon / Kaupunkiin"
+        },
+        {
+          "label": "Palvelut",
+          "key": "services",
+          "required": false,
+          "example": "Metroasema 300 m"
+        },
+        {
+          "label": "Ranta / rannan omistus",
+          "key": "beachRights",
+          "required": false,
+          "example": "Oma / Yhteinen"
+        }
+      ]
+    },
+    {
+      "id": "media",
+      "title": "Media",
+      "alwaysShow": true,
+      "order": 9,
+      "displayLocation": "gallery",
+      "fields": [
+        {
+          "label": "Valokuvat",
+          "key": "photoUrls",
+          "required": false,
+          "format": "imageArray"
+        },
+        {
+          "label": "Pohjakuva",
+          "key": "floorPlanUrl",
+          "required": false,
+          "format": "image"
+        },
+        {
+          "label": "Esitteet",
+          "key": "brochureUrl",
+          "required": false,
+          "format": "pdf"
+        },
+        {
+          "label": "Video",
+          "key": "videoUrl",
+          "required": false,
+          "format": "video"
+        }
+      ]
+    },
+    {
+      "id": "agentInfo",
+      "title": "Välittäjätiedot",
+      "alwaysShow": true,
+      "order": 10,
+      "displayLocation": "footer",
+      "fields": [
+        {
+          "label": "Välittäjä",
+          "key": "estateAgentName",
+          "required": false,
+          "example": "Kadri-Ann Öunap"
+        },
+        {
+          "label": "Puhelin",
+          "key": "estateAgentPhone",
+          "required": false,
+          "example": "+358 (0)40 154 7844"
+        },
+        {
+          "label": "Sähköposti",
+          "key": "estateAgentEmail",
+          "required": false,
+          "example": "kadri-ann@sothebysrealty.fi"
+        },
+        {
+          "label": "Toimipiste",
+          "key": "listingOffice",
+          "required": false,
+          "example": "Snellman Sotheby's International Realty"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "version": "1.0.0",
+    "basedOn": "PDX-Osake and PDX-Kiinteistö PDFs",
+    "lastUpdated": "2025-10-20",
+    "notes": "Complete field mapping for Finnish property listings"
+  }
+}
+
