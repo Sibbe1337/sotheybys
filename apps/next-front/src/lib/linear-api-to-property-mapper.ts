@@ -13,6 +13,7 @@ import {
   SupportedLanguage,
 } from './property-types-multilang';
 import { CompleteLinearAPIListing } from './linear-api-complete-interface';
+import { parseEuroNumber } from './number-eu';
 
 // ============================================================================
 // LINEAR API TYPES / LINEAR API -TYYPIT
@@ -235,54 +236,11 @@ function extractLocalizedString(field: LinearLocalizedField | undefined): Locali
 }
 
 /**
- * Parse numeric value from string
+ * Parse numeric value from string (DEPRECATED - use parseEuroNumber from number-eu.ts)
+ * Kept for backward compatibility, delegates to parseEuroNumber
  */
 function parseNumericValue(value: string | number | undefined): number {
-  if (value === undefined || value === null) return 0;
-  if (typeof value === 'number') return value;
-  
-  // Handle European number format: "142.951.999,45 €" or "142 951 999,45"
-  // 1. Remove currency symbols and letters
-  let cleaned = value.replace(/[€$£¥\s]/g, '');
-  
-  // 2. Check if comma is decimal separator (European format)
-  const hasComma = cleaned.includes(',');
-  const hasPeriod = cleaned.includes('.');
-  
-  if (hasComma && hasPeriod) {
-    // Both present: periods are thousands, comma is decimal
-    // "142.951.999,45" → "142951999.45"
-    cleaned = cleaned.replace(/\./g, '').replace(',', '.');
-  } else if (hasComma) {
-    // Only comma: it's the decimal separator
-    // "142951999,45" → "142951999.45"
-    cleaned = cleaned.replace(',', '.');
-  } else if (hasPeriod) {
-    // Only period: could be thousands OR decimal
-    // If last period has 3+ digits after, it's thousands
-    const lastPeriodIndex = cleaned.lastIndexOf('.');
-    const digitsAfter = cleaned.length - lastPeriodIndex - 1;
-    
-    if (digitsAfter >= 3) {
-      // "142.951.999" → "142951999"
-      cleaned = cleaned.replace(/\./g, '');
-    }
-    // Otherwise leave it as decimal: "199.50" → "199.50"
-  }
-  
-  const result = parseFloat(cleaned) || 0;
-  
-  // Debug suspicious values
-  if (result > 10000000 || (result > 0 && result < 1000)) {
-    console.warn('⚠️  parseNumericValue suspicious result:', {
-      input: value,
-      cleaned,
-      result,
-      note: result > 10000000 ? 'Over 10M EUR' : 'Under 1000 EUR'
-    });
-  }
-  
-  return result;
+  return parseEuroNumber(value);
 }
 
 /**
@@ -326,17 +284,43 @@ export function mapLinearAPIToProperty(
   const data = linearData as any;
   const nv = (data.nonLocalizedValues || {}) as any;
   
-  // Extract and validate price
-  const salesPrice = parseNumericValue(nv?.askPrice || data.askPrice?.fi?.value);
+  // Extract and calculate prices using Finnish formula:
+  // Myyntihinta (salesPrice/askPrice) + Velkaosuus (debtPart) = Velaton hinta (unencumbered)
+  const salesPrice = parseEuroNumber(nv?.askPrice || data.askPrice?.fi?.value);
+  const unencumbered = parseEuroNumber(nv?.debtFreePrice || data.debtFreePrice?.fi?.value);
+  const debtPartCalc = Math.max(0, unencumbered - salesPrice);
   
-  // Validate price - warn about suspicious values
+  // Validate price math - warn about suspicious values
+  if (salesPrice > 0 && unencumbered > 0) {
+    const delta = Math.abs((salesPrice + debtPartCalc) - unencumbered);
+    if (delta > 1) {
+      const address = extractLocalizedString(data.address);
+      console.warn('⚠️  Price math mismatch', {
+        address: address.fi,
+        salesPrice,
+        debtPart: debtPartCalc,
+        unencumbered,
+        delta,
+        formula: `${salesPrice} + ${debtPartCalc} ≠ ${unencumbered}`
+      });
+    }
+  }
+  
+  if (unencumbered < salesPrice) {
+    const address = extractLocalizedString(data.address);
+    console.warn('⚠️  Unencumbered < Sales (unexpected)', {
+      address: address.fi,
+      salesPrice,
+      unencumbered,
+      note: 'Velaton hinta should be >= Myyntihinta'
+    });
+  }
+  
   if (salesPrice > 10000000) {
     const address = extractLocalizedString(data.address);
     console.warn('⚠️  SUSPICIOUS PRICE IN MULTILANG MAPPER:', {
       address: address.fi,
       salesPrice,
-      rawAskPrice: nv?.askPrice,
-      localizedAskPrice: data.askPrice?.fi?.value,
       note: 'Price over 10M EUR - possible data error'
     });
   }
@@ -365,7 +349,7 @@ export function mapLinearAPIToProperty(
     condition: nv.condition 
       ? mapCondition(nv.condition)
       : extractLocalizedString(data.condition),
-    yearOfBuilding: parseInt(nv?.completeYear?.toString() || parseNumericValue(data.completeYear?.fi?.value).toString() || '0'),
+    yearOfBuilding: parseInt(nv?.completeYear?.toString() || parseEuroNumber(data.completeYear?.fi?.value).toString() || '0'),
     roofType: extractLocalizedString(data.roofType),
     heatingSystem: extractLocalizedString(data.heatingType || data.heatingSystem),
     ventilationSystem: extractLocalizedString(data.ventilationType || data.ventilationSystem),
@@ -376,32 +360,33 @@ export function mapLinearAPIToProperty(
     // ========================================================================
     // 2. DIMENSIONS AND USAGE
     // ========================================================================
-    livingArea: parseNumericValue(nv.area || data.livingArea?.fi?.value),
-    totalArea: parseNumericValue(nv.totalArea || data.totalArea?.fi?.value),
-    volume: parseNumericValue(nv.volume || data.volume?.fi?.value),
+    livingArea: parseEuroNumber(nv.area || data.livingArea?.fi?.value),
+    totalArea: parseEuroNumber(nv.totalArea || data.totalArea?.fi?.value),
+    volume: parseEuroNumber(nv.volume || data.volume?.fi?.value),
     numberOfApartments: 0, // Not directly available in Linear API
     businessSpaces: {}, // Not directly available
-    siteArea: parseNumericValue(nv.plotArea || data.plotArea?.fi?.value),
+    siteArea: parseEuroNumber(nv.plotArea || data.plotArea?.fi?.value),
     siteOwnershipType: extractLocalizedString(data.plotOwnership),
     zoningSituation: extractLocalizedString(data.zoningSituation),
     zoningDetails: {}, // Not directly available
 
     // ========================================================================
     // 3. FINANCIAL DATA
+    // Finnish formula: Myyntihinta + Velkaosuus = Velaton hinta
     // ========================================================================
-    salesPrice,
-    debtPart: 0, // Calculate: askPrice - debtFreePrice
-    unencumberedSalesPrice: parseNumericValue(nv.debtFreePrice || data.debtFreePrice?.fi?.value),
+    salesPrice: salesPrice,
+    debtPart: debtPartCalc,
+    unencumberedSalesPrice: unencumbered,
     loanPayable: false, // Not directly available
-    maintenanceFee: parseNumericValue(nv.renovationCharge || data.maintenanceCharge?.fi?.value),
-    financingFee: parseNumericValue(nv.fundingCharge || data.financingCharge?.fi?.value),
-    totalFee: parseNumericValue(nv.renovationCharge) + parseNumericValue(nv.fundingCharge),
+    maintenanceFee: parseEuroNumber(nv.renovationCharge || data.maintenanceCharge?.fi?.value),
+    financingFee: parseEuroNumber(nv.fundingCharge || data.financingCharge?.fi?.value),
+    totalFee: (parseEuroNumber(nv.renovationCharge) || 0) + (parseEuroNumber(nv.fundingCharge) || 0),
     rentIncome: 0, // Not directly available
     waterFee: 0, // Typically included in maintenance fee
-    electricityCost: parseNumericValue(nv.electricHeatingCharge),
-    heatingCost: parseNumericValue(nv.averageTotalHeatingCharge),
+    electricityCost: parseEuroNumber(nv.electricHeatingCharge),
+    heatingCost: parseEuroNumber(nv.averageTotalHeatingCharge),
     cleaningCost: 0, // Not directly available
-    propertyTax: parseNumericValue(nv.propertyTax),
+    propertyTax: parseEuroNumber(nv.propertyTax),
     otherFees: {}, // Could aggregate parking, sauna, broadband charges
     paymentMethod: {}, // Not directly available
 
@@ -421,7 +406,7 @@ export function mapLinearAPIToProperty(
     redemptionClauseParking: false, // Not directly available
     companyLoans: 0, // Not directly available
     companyIncome: 0, // Not directly available
-    constructionYear: nv.completeYear || parseNumericValue(data.completeYear?.fi?.value),
+    constructionYear: nv.completeYear || parseEuroNumber(data.completeYear?.fi?.value),
     totalApartments: 0, // Not directly available
     totalBusinessSpaces: 0, // Not directly available
     sharedSpaces: {}, // Not directly available
@@ -537,12 +522,18 @@ export function extractAgentInfo(linearData: LinearAPIListing) {
 /**
  * Calculate debt portion
  */
+/**
+ * Calculate debt portion using Finnish real estate formula:
+ * Velkaosuus = Velaton hinta - Myyntihinta
+ * (Debt portion = Unencumbered price - Sales price)
+ */
 export function calculateDebtPortion(linearData: LinearAPIListing): number {
   const data = linearData as any;
-  const askPrice = parseNumericValue(data.nonLocalizedValues?.askPrice);
-  const debtFreePrice = parseNumericValue(data.nonLocalizedValues?.debtFreePrice);
+  const askPrice = parseEuroNumber(data?.nonLocalizedValues?.askPrice);
+  const debtFreePrice = parseEuroNumber(data?.nonLocalizedValues?.debtFreePrice);
   
-  return Math.max(0, askPrice - debtFreePrice);
+  // Finnish formula: Velkaosuus = Velaton hinta - Myyntihinta
+  return Math.max(0, debtFreePrice - askPrice);
 }
 
 /**

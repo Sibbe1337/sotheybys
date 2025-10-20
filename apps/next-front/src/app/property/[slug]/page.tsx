@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight, Facebook, Linkedin, Mail, Phone, MapPin, Home, Bath, Maximize, FileText } from 'lucide-react';
 import { getYouTubeEmbedUrl, isValidYouTubeUrl } from '@/lib/utils';
+import { parseEuroNumber, formatEuroCurrency } from '@/lib/number-eu';
 // API calls will be made through our server-side route
 
 interface PropertyPageProps {
@@ -120,6 +121,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
       lng: property.location.lng,
       price: property.financials.price,
       debtFreePrice: property.financials.debtFreePrice,
+      debtPart: property.financials?.debtPart ?? property.financials?.debtShare ?? property.financials?.debt ?? 0,
       area: property.specs.livingAreaM2,
       totalArea: property.specs.totalAreaM2,
       rooms: property.specs.rooms,
@@ -155,15 +157,8 @@ export default function PropertyPage({ params }: PropertyPageProps) {
     images = propertyData.gallery || property.images || (property.featuredImage ? [property.featuredImage] : []);
   }
   
-  const formatPrice = (price: number | string) => {
-    const numPrice = typeof price === 'string' ? parseInt(price.replace(/\D/g, '')) : price;
-    return new Intl.NumberFormat('fi-FI', {
-      style: 'currency',
-      currency: 'EUR',
-      minimumFractionDigits: 0,
-    }).format(numPrice);
-  };
-
+  // Use parseEuroNumber for safe number parsing and formatEuroCurrency for display
+  // Deprecated: keeping formatNumber for non-currency values
   const formatNumber = (num: number | string) => {
     return new Intl.NumberFormat('fi-FI').format(Number(num));
   };
@@ -556,7 +551,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
             {propertyData.price && (
               <div>
                 <h3 className="text-3xl font-bold text-[var(--color-primary)]">
-                  {formatPrice(propertyData.price)}
+                  {formatEuroCurrency(propertyData.price)}
                 </h3>
                 <p className="text-sm text-gray-600 mt-2">MYYNTIHINTA</p>
               </div>
@@ -590,7 +585,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
             </h1>
             {propertyData.address && (
               <h2 className="text-xl text-gray-600 mb-2">
-                {propertyData.address}, {propertyData.zipCode} {propertyData.city}
+                {propertyData.address}{propertyData.postalCode ? `, ${propertyData.postalCode}` : ''} {propertyData.city || ''}
               </h2>
             )}
             {propertyData.propertyType && (
@@ -685,16 +680,27 @@ export default function PropertyPage({ params }: PropertyPageProps) {
               {expandedSections.priceInfo && (
                 <div className="bg-white border border-gray-200 p-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {propertyData.price && (
+                    {propertyData.price != null && (
                       <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">Velaton myyntihinta</span>
-                        <span className="font-semibold">{formatPrice(propertyData.price)}</span>
+                        <span className="text-gray-600">Myyntihinta</span>
+                        <span className="font-semibold">{formatEuroCurrency(propertyData.price)}</span>
                       </div>
                     )}
-                    {propertyData.debtFreePrice && (
+                    {propertyData.debtPart != null && (
                       <div className="flex justify-between py-2 border-b">
                         <span className="text-gray-600">Velkaosuus</span>
-                        <span className="font-semibold">{formatPrice(propertyData.debtFreePrice)}</span>
+                        <span className="font-semibold">{formatEuroCurrency(propertyData.debtPart)}</span>
+                      </div>
+                    )}
+                    {(propertyData.debtFreePrice != null || propertyData.price != null) && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="text-gray-600">Velaton hinta</span>
+                        <span className="font-semibold">
+                          {formatEuroCurrency(
+                            (typeof propertyData.debtFreePrice === 'number' && propertyData.debtFreePrice) ||
+                            (parseEuroNumber(propertyData.price) + parseEuroNumber(propertyData.debtPart))
+                          )}
+                        </span>
                       </div>
                     )}
                     {propertyData.propertyTax && (
