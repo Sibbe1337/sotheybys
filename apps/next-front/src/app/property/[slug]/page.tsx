@@ -713,28 +713,23 @@ export default function PropertyPage({ params }: PropertyPageProps) {
               </button>
               {expandedSections.priceInfo && (
                 <div className="bg-white border border-gray-200 p-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {propertyData.price != null && (
+                  <div className="space-y-2">
+                    {propertyData.price != null && propertyData.price > 0 && (
                       <div className="flex justify-between py-2 border-b">
                         <span className="text-gray-600">Myyntihinta</span>
                         <span className="font-semibold">{formatEuroCurrency(propertyData.price)}</span>
                       </div>
                     )}
-                    {propertyData.debtPart != null && (
+                    {propertyData.debtPart != null && propertyData.debtPart > 0 && (
                       <div className="flex justify-between py-2 border-b">
                         <span className="text-gray-600">Velkaosuus</span>
                         <span className="font-semibold">{formatEuroCurrency(propertyData.debtPart)}</span>
                       </div>
                     )}
-                    {(propertyData.debtFreePrice != null || propertyData.price != null) && (
+                    {propertyData.debtFreePrice != null && propertyData.debtFreePrice > 0 && (
                       <div className="flex justify-between py-2 border-b">
                         <span className="text-gray-600">Velaton hinta</span>
-                        <span className="font-semibold">
-                          {formatEuroCurrency(
-                            (typeof propertyData.debtFreePrice === 'number' && propertyData.debtFreePrice) ||
-                            (parseEuroNumber(propertyData.price) + parseEuroNumber(propertyData.debtPart))
-                          )}
-                        </span>
+                        <span className="font-semibold">{formatEuroCurrency(propertyData.debtFreePrice)}</span>
                       </div>
                     )}
                     {propertyData.propertyTax && (
