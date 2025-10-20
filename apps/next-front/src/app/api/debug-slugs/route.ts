@@ -20,7 +20,6 @@ export async function GET() {
         address,
         slug,
         city: listing.city?.fi?.value,
-        state: listing.state?.fi?.value,
       };
     });
     
