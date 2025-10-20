@@ -9,7 +9,7 @@ export async function GET() {
     // Ensure cache is initialized
     await ensureCacheInitialized();
     
-    const listings = listingsCache.getAllListings();
+    const listings = listingsCache.getListings();
     
     const debug = listings.map(listing => {
       const address = listing.address?.fi?.value || 'NO ADDRESS';

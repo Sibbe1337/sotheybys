@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic';
 export async function GET() {
   try {
     await ensureCacheInitialized();
-    const listings = listingsCache.getAllListings();
+    const listings = listingsCache.getListings();
     
     const properties = listings.map(listing => {
       const address = listing.address?.fi?.value || 'NO ADDRESS';
