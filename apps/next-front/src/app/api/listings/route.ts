@@ -30,7 +30,7 @@ export async function GET(request: Request) {
         
         // Flatten each listing to the requested language
         listings = multilingualListings.map(listing => {
-          const flattened = flattenPropertyForLanguage(listing, language);
+          const flattened: any = flattenPropertyForLanguage(listing, language);
           
           // IMAGE PIPELINE HARDENING: Always default to arrays to prevent 500 errors
           if (!Array.isArray(flattened.images)) flattened.images = [];

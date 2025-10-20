@@ -58,7 +58,7 @@ export async function GET(
     // CRITICAL FIX: Flatten all LocalizedString objects to single language
     // This prevents React error #31 by ensuring no {fi, en, sv} objects reach the client
     console.log('🔄 Flattening LocalizedString objects for language:', language);
-    const flattened = flattenPropertyForLanguage(foundProperty, language);
+    const flattened: any = flattenPropertyForLanguage(foundProperty, language);
     
     console.log('✅ All LocalizedString objects flattened to strings');
 
