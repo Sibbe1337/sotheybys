@@ -223,12 +223,14 @@ export interface LinearAPIListing {
  * Extract localized string from Linear API field
  */
 function extractLocalizedString(field: LinearLocalizedField | undefined): LocalizedString {
-  if (!field) return {};
+  if (!field) {
+    return { fi: '', en: '', sv: '' };
+  }
   
   return {
-    fi: field.fi?.value,
-    en: field.en?.value,
-    sv: field.sv?.value,
+    fi: field.fi?.value || '',
+    en: field.en?.value || '',
+    sv: field.sv?.value || '',
   };
 }
 
