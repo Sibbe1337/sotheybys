@@ -310,17 +310,17 @@ export function mapLinearAPIToProperty(
     streetAddress: extractLocalizedString(data.address),
     postalCode: data.postalCode?.fi?.value || '',
     city: extractLocalizedString(data.city),
-    region: 'region' in linearData ? extractLocalizedString(data.region) : { fi: '', en: '', sv: '' },
-    heading: 'heading' in linearData ? extractLocalizedString(data.heading) : { fi: '', en: '', sv: '' },
-    description: 'description' in linearData ? extractLocalizedString(data.description) : { fi: '', en: '', sv: '' },
+    region: extractLocalizedString(data.region),  // extractLocalizedString already returns { fi: '', en: '', sv: '' } for undefined
+    heading: extractLocalizedString(data.heading),  // No need for manual fallback
+    description: extractLocalizedString(data.description),  // No need for manual fallback
     releaseDate: 'releaseDate' in linearData && data.releaseDate?.fi?.value
       ? new Date(data.releaseDate.fi.value) 
       : new Date(),
-    availableFrom: 'availableFrom' in linearData ? extractLocalizedString(data.availableFrom) : { fi: '', en: '', sv: '' },
+    availableFrom: extractLocalizedString(data.availableFrom),  // No need for manual fallback
     ownershipType: extractLocalizedString(data.ownershipType),
     floorLocation: extractLocalizedString(data.floor),
     numberOfFloors: ('totalFloors' in linearData ? data.totalFloors?.fi?.value : null) || nv.totalFloors?.toString() || '',
-    windowDirection: 'windowDirection' in linearData ? extractLocalizedString(data.windowDirection) : { fi: '', en: '', sv: '' },
+    windowDirection: extractLocalizedString(data.windowDirection),  // No need for manual fallback
     balcony: nv.hasBalcony ?? false,
     sauna: nv.sauna ?? false,
     condition: nv.condition 

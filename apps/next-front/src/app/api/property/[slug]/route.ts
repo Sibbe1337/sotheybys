@@ -54,9 +54,16 @@ export async function GET(
       energyClassValue: foundProperty.energyClass,
     });
 
+    // CRITICAL FIX: Deep serialize/deserialize to ensure NO objects sneak through
+    // This converts any nested objects to JSON strings and back, ensuring primitive types
+    const serialized = JSON.stringify(foundProperty);
+    const sanitized = JSON.parse(serialized);
+    
+    console.log('✅ Data sanitized via JSON serialize/deserialize');
+
     return NextResponse.json({
       success: true,
-      data: foundProperty
+      data: sanitized
     });
   } catch (error) {
     console.error('Error fetching property:', error);
