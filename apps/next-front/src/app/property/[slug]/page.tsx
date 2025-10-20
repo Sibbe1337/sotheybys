@@ -28,6 +28,9 @@ export default function PropertyPage({ params }: PropertyPageProps) {
     propertyInfo: true,
     housingCompanyInfo: true,
     buildingInfo: true,
+    equipmentSpaces: true,
+    locationEnvironment: true,
+    mediaDocuments: true,
     otherInfo: true
   });
 
@@ -988,6 +991,143 @@ export default function PropertyPage({ params }: PropertyPageProps) {
               )}
             </div>
 
+            {/* Equipment and Spaces */}
+            {(propertyData.kitchenEquipment || propertyData.bathroomEquipment || propertyData.floorMaterial || propertyData.storageSpace) && (
+              <div className="mb-6">
+                <button
+                  onClick={() => toggleSection('equipmentSpaces')}
+                  className="w-full bg-gray-100 p-4 text-left hover:bg-gray-200 transition-colors"
+                >
+                  <h3 className="text-xl font-semibold flex items-center justify-between">
+                    Varusteet ja tilat
+                    <span className={`transition-transform ${expandedSections.equipmentSpaces ? 'rotate-180' : ''}`}>
+                      ▼
+                    </span>
+                  </h3>
+                </button>
+                {expandedSections.equipmentSpaces && (
+                  <div className="bg-white border border-gray-200 p-6">
+                    <div className="space-y-4">
+                      {propertyData.kitchenEquipment && (
+                        <div>
+                          <h4 className="text-sm font-semibold text-gray-700 mb-2">Keittiö</h4>
+                          <p className="text-gray-600">{propertyData.kitchenEquipment}</p>
+                        </div>
+                      )}
+                      {propertyData.bathroomEquipment && (
+                        <div>
+                          <h4 className="text-sm font-semibold text-gray-700 mb-2">Kph/WC</h4>
+                          <p className="text-gray-600">{propertyData.bathroomEquipment}</p>
+                        </div>
+                      )}
+                      {propertyData.floorMaterial && (
+                        <div>
+                          <h4 className="text-sm font-semibold text-gray-700 mb-2">Lattiamateriaalit</h4>
+                          <p className="text-gray-600">{propertyData.floorMaterial}</p>
+                        </div>
+                      )}
+                      {propertyData.storageSpace && (
+                        <div>
+                          <h4 className="text-sm font-semibold text-gray-700 mb-2">Säilytystilat</h4>
+                          <p className="text-gray-600">{propertyData.storageSpace}</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Location and Environment */}
+            {(propertyData.windowDirection || propertyData.services || propertyData.beachRights) && (
+              <div className="mb-6">
+                <button
+                  onClick={() => toggleSection('locationEnvironment')}
+                  className="w-full bg-gray-100 p-4 text-left hover:bg-gray-200 transition-colors"
+                >
+                  <h3 className="text-xl font-semibold flex items-center justify-between">
+                    Sijainti ja ympäristö
+                    <span className={`transition-transform ${expandedSections.locationEnvironment ? 'rotate-180' : ''}`}>
+                      ▼
+                    </span>
+                  </h3>
+                </button>
+                {expandedSections.locationEnvironment && (
+                  <div className="bg-white border border-gray-200 p-6">
+                    <div className="space-y-3">
+                      {propertyData.windowDirection && (
+                        <div className="flex justify-between py-2 border-b">
+                          <span className="text-gray-600">Näkymä / Ikkunoiden suunta</span>
+                          <span className="font-semibold">{propertyData.windowDirection}</span>
+                        </div>
+                      )}
+                      {propertyData.services && (
+                        <div>
+                          <h4 className="text-sm font-semibold text-gray-700 mb-2">Palvelut</h4>
+                          <p className="text-gray-600">{propertyData.services}</p>
+                        </div>
+                      )}
+                      {propertyData.beachRights && (
+                        <div className="flex justify-between py-2 border-b">
+                          <span className="text-gray-600">Ranta / Rannan omistus</span>
+                          <span className="font-semibold">{propertyData.beachRights}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Media and Documents */}
+            {(propertyData.brochureUrl || propertyData.videoUrl) && (
+              <div className="mb-6">
+                <button
+                  onClick={() => toggleSection('mediaDocuments')}
+                  className="w-full bg-gray-100 p-4 text-left hover:bg-gray-200 transition-colors"
+                >
+                  <h3 className="text-xl font-semibold flex items-center justify-between">
+                    Esitteet ja videot
+                    <span className={`transition-transform ${expandedSections.mediaDocuments ? 'rotate-180' : ''}`}>
+                      ▼
+                    </span>
+                  </h3>
+                </button>
+                {expandedSections.mediaDocuments && (
+                  <div className="bg-white border border-gray-200 p-6">
+                    <div className="space-y-3">
+                      {propertyData.brochureUrl && (
+                        <div className="flex justify-between items-center py-2 border-b">
+                          <span className="text-gray-600">Esite (PDF)</span>
+                          <a 
+                            href={propertyData.brochureUrl} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="text-[var(--color-primary)] hover:underline font-semibold"
+                          >
+                            Avaa esite →
+                          </a>
+                        </div>
+                      )}
+                      {propertyData.videoUrl && (
+                        <div className="flex justify-between items-center py-2 border-b">
+                          <span className="text-gray-600">Video / Virtuaalikierros</span>
+                          <a 
+                            href={propertyData.videoUrl} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="text-[var(--color-primary)] hover:underline font-semibold"
+                          >
+                            Katso video →
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* Other Information */}
             <div className="mb-6">
               <button
@@ -1008,6 +1148,18 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                       <div className="flex justify-between py-2 border-b">
                         <span className="text-gray-600">Vapautuu</span>
                         <span className="font-semibold">{propertyData.availability}</span>
+                      </div>
+                    )}
+                    {propertyData.zoningSituation && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="text-gray-600">Kaavoitustilanne</span>
+                        <span className="font-semibold">{propertyData.zoningSituation}</span>
+                      </div>
+                    )}
+                    {propertyData.buildingRights && typeof propertyData.buildingRights === 'string' && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="text-gray-600">Rakennusoikeus</span>
+                        <span className="font-semibold">{propertyData.buildingRights}</span>
                       </div>
                     )}
                   </div>
