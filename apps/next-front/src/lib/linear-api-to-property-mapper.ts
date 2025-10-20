@@ -241,9 +241,48 @@ function parseNumericValue(value: string | number | undefined): number {
   if (value === undefined || value === null) return 0;
   if (typeof value === 'number') return value;
   
-  // Remove spaces and convert to number
-  const cleaned = value.replace(/\s/g, '');
-  return parseFloat(cleaned) || 0;
+  // Handle European number format: "142.951.999,45 €" or "142 951 999,45"
+  // 1. Remove currency symbols and letters
+  let cleaned = value.replace(/[€$£¥\s]/g, '');
+  
+  // 2. Check if comma is decimal separator (European format)
+  const hasComma = cleaned.includes(',');
+  const hasPeriod = cleaned.includes('.');
+  
+  if (hasComma && hasPeriod) {
+    // Both present: periods are thousands, comma is decimal
+    // "142.951.999,45" → "142951999.45"
+    cleaned = cleaned.replace(/\./g, '').replace(',', '.');
+  } else if (hasComma) {
+    // Only comma: it's the decimal separator
+    // "142951999,45" → "142951999.45"
+    cleaned = cleaned.replace(',', '.');
+  } else if (hasPeriod) {
+    // Only period: could be thousands OR decimal
+    // If last period has 3+ digits after, it's thousands
+    const lastPeriodIndex = cleaned.lastIndexOf('.');
+    const digitsAfter = cleaned.length - lastPeriodIndex - 1;
+    
+    if (digitsAfter >= 3) {
+      // "142.951.999" → "142951999"
+      cleaned = cleaned.replace(/\./g, '');
+    }
+    // Otherwise leave it as decimal: "199.50" → "199.50"
+  }
+  
+  const result = parseFloat(cleaned) || 0;
+  
+  // Debug suspicious values
+  if (result > 10000000 || (result > 0 && result < 1000)) {
+    console.warn('⚠️  parseNumericValue suspicious result:', {
+      input: value,
+      cleaned,
+      result,
+      note: result > 10000000 ? 'Over 10M EUR' : 'Under 1000 EUR'
+    });
+  }
+  
+  return result;
 }
 
 /**

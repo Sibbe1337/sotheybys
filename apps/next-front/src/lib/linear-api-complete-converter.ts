@@ -23,6 +23,47 @@ function extractLocalizedArray(field: any): Array<{ label: string; value: string
   return Array.isArray(value) ? value : [];
 }
 
+// Helper function to parse price values (handles European number format)
+function parsePrice(value: string | number | null): string | null {
+  if (value === null || value === undefined) return null;
+  if (typeof value === 'number') return value.toString();
+  
+  // Handle European number format: "142.951.999,45 €" or "142 951 999,45"
+  // 1. Remove currency symbols and letters
+  let cleaned = String(value).replace(/[€$£¥\s]/g, '');
+  
+  // 2. Check if comma is decimal separator (European format)
+  const hasComma = cleaned.includes(',');
+  const hasPeriod = cleaned.includes('.');
+  
+  if (hasComma && hasPeriod) {
+    // Both present: periods are thousands, comma is decimal
+    // "142.951.999,45" → "142951999.45"
+    cleaned = cleaned.replace(/\./g, '').replace(',', '.');
+  } else if (hasComma) {
+    // Only comma: it's the decimal separator
+    // "142951999,45" → "142951999.45"
+    cleaned = cleaned.replace(',', '.');
+  } else if (hasPeriod) {
+    // Only period: could be thousands OR decimal
+    // If last period has 3+ digits after, it's thousands
+    const lastPeriodIndex = cleaned.lastIndexOf('.');
+    const digitsAfter = cleaned.length - lastPeriodIndex - 1;
+    
+    if (digitsAfter >= 3) {
+      // "142.951.999" → "142951999"
+      cleaned = cleaned.replace(/\./g, '');
+    }
+    // Otherwise leave it as decimal: "199.50" → "199.50"
+  }
+  
+  const parsed = parseFloat(cleaned);
+  if (isNaN(parsed)) return null;
+  
+  // Return as integer string (remove decimals for prices)
+  return Math.round(parsed).toString();
+}
+
 export function convertCompleteLinearToWordPressFormat(listing: CompleteLinearAPIListing) {
   // Extract all fields with null fallback to prevent React errors
   const id = extractLocalizedValue(listing.id) || '';
@@ -40,11 +81,11 @@ export function convertCompleteLinearToWordPressFormat(listing: CompleteLinearAP
   
   // Pricing - Use nonLocalizedValues first for accuracy
   const rawAskPrice = listing.nonLocalizedValues?.askPrice || extractLocalizedValue(listing.askPrice) || null;
-  const askPrice = rawAskPrice ? String(rawAskPrice).replace(/\D/g, '') : null;
+  const askPrice = rawAskPrice ? parsePrice(rawAskPrice) : null;
   const rawDebtFreePrice = listing.nonLocalizedValues?.debtFreePrice || extractLocalizedValue(listing.debtFreePrice) || null;
-  const debtFreePrice = rawDebtFreePrice ? String(rawDebtFreePrice).replace(/\D/g, '') : null;
+  const debtFreePrice = rawDebtFreePrice ? parsePrice(rawDebtFreePrice) : null;
   const rawDebt = extractLocalizedValue(listing.debt) || null;
-  const debt = rawDebt ? String(rawDebt).replace(/\D/g, '') : null;
+  const debt = rawDebt ? parsePrice(rawDebt) : null;
   
   // Validate prices - warn about suspicious values
   if (askPrice) {

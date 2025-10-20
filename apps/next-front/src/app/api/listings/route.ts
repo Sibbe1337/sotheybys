@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { listingsCache } from '@/lib/listings-cache';
 import { fetchLinearListings, fetchTestLinearListings } from '@/lib/linear-api-adapter';
+import { flattenPropertyForLanguage } from '@/lib/flatten-localized-data';
 
 // Force dynamic rendering as this route uses request.url
 export const dynamic = 'force-dynamic';
@@ -8,7 +9,7 @@ export const dynamic = 'force-dynamic';
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const format = searchParams.get('format') || 'wordpress';
+    const format = searchParams.get('format') || 'multilingual'; // Default to multilingual
     const language = (searchParams.get('lang') || 'fi') as 'fi' | 'sv' | 'en';
     const source = searchParams.get('source') || 'cache';
 
@@ -23,7 +24,17 @@ export async function GET(request: Request) {
         await listingsCache.syncListings();
       }
       
-      if (format === 'wordpress') {
+      if (format === 'multilingual') {
+        // NEW: Get multilingual format and flatten for requested language
+        const multilingualListings = listingsCache.getMultilingualListings();
+        
+        // Flatten each listing to the requested language
+        listings = multilingualListings.map(listing => 
+          flattenPropertyForLanguage(listing, language)
+        );
+        
+        console.log(`✅ Flattened ${listings.length} listings for language: ${language}`);
+      } else if (format === 'wordpress') {
         listings = listingsCache.getWordPressFormattedListings(language);
       } else {
         listings = listingsCache.getListings();

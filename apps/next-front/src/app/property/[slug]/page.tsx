@@ -32,7 +32,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
   useEffect(() => {
     async function loadProperty() {
       try {
-        // Fetch property data from our API route
+        // Fetch property data from our API route (flattened to Finnish)
         const response = await fetch(`/api/property/${slug}?lang=fi`);
         
         if (!response.ok) {
