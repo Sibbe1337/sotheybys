@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
+import { LocaleLink } from '@/components/LocaleLink';
 import { Property, Agent } from '@/lib/wordpress';
 import { Price } from '@/components/ui/Price';
 import { MetaRow } from '@/components/ui/MetaRow';
@@ -45,7 +45,7 @@ export default function PropertyCard({
   };
 
   return (
-    <Link 
+    <LocaleLink 
       href={`/property/${slug}`} 
       className="block bg-white rounded-lg shadow-md overflow-hidden card-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2"
     >
@@ -141,6 +141,6 @@ export default function PropertyCard({
           </Button>
         </div>
       </div>
-    </Link>
+    </LocaleLink>
   );
 } 

@@ -77,3 +77,49 @@ export function isValidYouTubeUrl(url: string | null | undefined): boolean {
     url.includes('youtube.com/embed/')
   );
 }
+
+/**
+ * Convert Vimeo URL to embed format
+ * Handles various Vimeo URL formats
+ */
+export function getVimeoEmbedUrl(url: string): string {
+  if (!url) return '';
+  
+  // Already an embed URL
+  if (url.includes('player.vimeo.com/video/')) {
+    return url;
+  }
+  
+  // Handle standard Vimeo URLs: https://vimeo.com/123456789
+  const match = url.match(/vimeo\.com\/(\d+)/);
+  if (match) {
+    return `https://player.vimeo.com/video/${match[1]}?title=0&byline=0&portrait=0`;
+  }
+  
+  return url;
+}
+
+/**
+ * Check if a URL is a valid Vimeo video URL
+ */
+export function isValidVimeoUrl(url: string | null | undefined): boolean {
+  if (!url || typeof url !== 'string') return false;
+  return url.includes('vimeo.com/') && !url.endsWith('vimeo.com/') && !url.endsWith('vimeo.com');
+}
+
+/**
+ * Check if a URL is a valid video URL (YouTube or Vimeo)
+ */
+export function isValidVideoUrl(url: string | null | undefined): boolean {
+  return isValidYouTubeUrl(url) || isValidVimeoUrl(url);
+}
+
+/**
+ * Get embed URL for any supported video platform
+ */
+export function getVideoEmbedUrl(url: string): string {
+  if (!url) return '';
+  if (isValidYouTubeUrl(url)) return getYouTubeEmbedUrl(url);
+  if (isValidVimeoUrl(url)) return getVimeoEmbedUrl(url);
+  return url;
+}

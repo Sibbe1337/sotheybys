@@ -4,8 +4,9 @@ import { useState, useEffect } from 'react';
 import { notFound, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
+import { LocaleLink } from '@/components/LocaleLink';
 import { ChevronLeft, ChevronRight, Facebook, Linkedin, Mail, Phone, MapPin, Home, Bath, Maximize, FileText } from 'lucide-react';
-import { getYouTubeEmbedUrl, isValidYouTubeUrl } from '@/lib/utils';
+import { getVideoEmbedUrl, isValidVideoUrl, isValidYouTubeUrl, isValidVimeoUrl } from '@/lib/utils';
 import { parseEuroNumber, formatEuroCurrency } from '@/lib/number-eu';
 import { getTranslation, getBooleanText, getUnitSuffix, type SupportedLanguage } from '@/lib/property-translations';
 // API calls will be made through our server-side route
@@ -247,9 +248,9 @@ export default function PropertyPage({ params }: PropertyPageProps) {
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center py-6">
             <div className="text-sm">
-              <Link href="/kohteet" className="text-white/90 hover:text-white transition-colors">
+              <LocaleLink href="/kohteet" className="text-white/90 hover:text-white transition-colors">
                 Myynnissä
-              </Link>
+              </LocaleLink>
               <span className="mx-2 text-white/60">»</span>
               <span className="text-white">{property.title}</span>
             </div>
@@ -444,19 +445,21 @@ export default function PropertyPage({ params }: PropertyPageProps) {
           {activeTab === 'video' && (
             <div className="bg-gray-50 py-8">
               <div className="container mx-auto px-4">
-                {(isValidYouTubeUrl(propertyData.videoUrl) || isValidYouTubeUrl(propertyData.youtubeUrl) || isValidYouTubeUrl(propertyData.video)) ? (
+                {(isValidVideoUrl(propertyData.videoUrl) || isValidVideoUrl(propertyData.youtubeUrl) || isValidVideoUrl(propertyData.video)) ? (
                   <div className="max-w-4xl mx-auto">
                     <div className="relative w-full rounded-lg shadow-lg overflow-hidden" style={{ paddingBottom: '56.25%' }}>
                       <iframe
-                        src={getYouTubeEmbedUrl(
-                          (isValidYouTubeUrl(propertyData.videoUrl) && propertyData.videoUrl) ||
-                          (isValidYouTubeUrl(propertyData.youtubeUrl) && propertyData.youtubeUrl) ||
-                          (isValidYouTubeUrl(propertyData.video) && propertyData.video) ||
+                        src={getVideoEmbedUrl(
+                          (isValidVideoUrl(propertyData.videoUrl) && propertyData.videoUrl) ||
+                          (isValidVideoUrl(propertyData.youtubeUrl) && propertyData.youtubeUrl) ||
+                          (isValidVideoUrl(propertyData.video) && propertyData.video) ||
                           ''
                         )}
                         className="absolute top-0 left-0 w-full h-full"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
                         title="Property Video"
+                        loading="lazy"
                       />
                     </div>
                   </div>
@@ -528,7 +531,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                     <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-primary)]"></div>
                   )}
                 </button>
-                {(isValidYouTubeUrl(propertyData.videoUrl) || isValidYouTubeUrl(propertyData.youtubeUrl) || isValidYouTubeUrl(propertyData.video)) && (
+                {(isValidVideoUrl(propertyData.videoUrl) || isValidVideoUrl(propertyData.youtubeUrl) || isValidVideoUrl(propertyData.video)) && (
                   <button
                     onClick={() => setActiveTab('video')}
                     className={`px-6 md:px-8 py-5 font-light text-sm uppercase tracking-widest transition-all relative ${
