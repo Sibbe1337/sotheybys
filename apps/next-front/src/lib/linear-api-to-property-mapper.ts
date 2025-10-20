@@ -280,19 +280,22 @@ function mapCondition(condition: string | undefined): LocalizedString {
 export function mapLinearAPIToProperty(
   linearData: LinearAPIListing | CompleteLinearAPIListing
 ): MultilingualPropertyListing {
-  const nv = linearData.nonLocalizedValues;
+  // Cast to any to handle both LinearAPIListing and CompleteLinearAPIListing
+  // These types have different field names and structures
+  const data = linearData as any;
+  const nv = (data.nonLocalizedValues || {}) as any;
   
   // Extract and validate price
-  const salesPrice = parseNumericValue(nv.askPrice || linearData.askPrice?.fi?.value);
+  const salesPrice = parseNumericValue(nv?.askPrice || data.askPrice?.fi?.value);
   
   // Validate price - warn about suspicious values
   if (salesPrice > 10000000) {
-    const address = extractLocalizedString(linearData.address);
+    const address = extractLocalizedString(data.address);
     console.warn('⚠️  SUSPICIOUS PRICE IN MULTILANG MAPPER:', {
       address: address.fi,
       salesPrice,
-      rawAskPrice: nv.askPrice,
-      localizedAskPrice: linearData.askPrice?.fi?.value,
+      rawAskPrice: nv?.askPrice,
+      localizedAskPrice: data.askPrice?.fi?.value,
       note: 'Price over 10M EUR - possible data error'
     });
   }
@@ -301,45 +304,45 @@ export function mapLinearAPIToProperty(
     // ========================================================================
     // 1. GENERAL PROPERTY INFO
     // ========================================================================
-    apartmentType: extractLocalizedString(linearData.propertyType),
-    streetAddress: extractLocalizedString(linearData.address),
-    postalCode: linearData.postalCode?.fi?.value || '',
-    city: extractLocalizedString(linearData.city),
-    region: extractLocalizedString(linearData.region),
-    heading: extractLocalizedString(linearData.heading),
-    description: extractLocalizedString(linearData.description),
-    releaseDate: linearData.releaseDate?.fi?.value 
-      ? new Date(linearData.releaseDate.fi.value) 
+    apartmentType: extractLocalizedString(data.propertyType),
+    streetAddress: extractLocalizedString(data.address),
+    postalCode: data.postalCode?.fi?.value || '',
+    city: extractLocalizedString(data.city),
+    region: 'region' in linearData ? extractLocalizedString(data.region) : { fi: '', en: '', sv: '' },
+    heading: 'heading' in linearData ? extractLocalizedString(data.heading) : { fi: '', en: '', sv: '' },
+    description: 'description' in linearData ? extractLocalizedString(data.description) : { fi: '', en: '', sv: '' },
+    releaseDate: 'releaseDate' in linearData && data.releaseDate?.fi?.value
+      ? new Date(data.releaseDate.fi.value) 
       : new Date(),
-    availableFrom: extractLocalizedString(linearData.availableFrom),
-    ownershipType: extractLocalizedString(linearData.ownershipType),
-    floorLocation: extractLocalizedString(linearData.floor),
-    numberOfFloors: linearData.totalFloors?.fi?.value || nv.totalFloors?.toString() || '',
-    windowDirection: extractLocalizedString(linearData.windowDirection),
+    availableFrom: 'availableFrom' in linearData ? extractLocalizedString(data.availableFrom) : { fi: '', en: '', sv: '' },
+    ownershipType: extractLocalizedString(data.ownershipType),
+    floorLocation: extractLocalizedString(data.floor),
+    numberOfFloors: ('totalFloors' in linearData ? data.totalFloors?.fi?.value : null) || nv.totalFloors?.toString() || '',
+    windowDirection: 'windowDirection' in linearData ? extractLocalizedString(data.windowDirection) : { fi: '', en: '', sv: '' },
     balcony: nv.hasBalcony ?? false,
     sauna: nv.sauna ?? false,
     condition: nv.condition 
       ? mapCondition(nv.condition)
-      : extractLocalizedString(linearData.condition),
-    yearOfBuilding: nv.completeYear || parseNumericValue(linearData.completeYear?.fi?.value),
-    roofType: extractLocalizedString(linearData.roofType),
-    heatingSystem: extractLocalizedString(linearData.heatingType),
-    ventilationSystem: extractLocalizedString(linearData.ventilationType),
-    buildingMaterial: extractLocalizedString(linearData.constructionMaterial),
-    energyClass: nv.energyClass || linearData.energyClass?.fi?.value || '',
+      : extractLocalizedString(data.condition),
+    yearOfBuilding: nv.completeYear || parseNumericValue(data.completeYear?.fi?.value),
+    roofType: extractLocalizedString(data.roofType),
+    heatingSystem: extractLocalizedString(data.heatingType),
+    ventilationSystem: extractLocalizedString(data.ventilationType),
+    buildingMaterial: extractLocalizedString(data.constructionMaterial),
+    energyClass: nv.energyClass || data.energyClass?.fi?.value || '',
     energyCertificate: nv.listingHasEnergyCertificate ?? false,
 
     // ========================================================================
     // 2. DIMENSIONS AND USAGE
     // ========================================================================
-    livingArea: parseNumericValue(nv.area || linearData.livingArea?.fi?.value),
-    totalArea: parseNumericValue(nv.totalArea || linearData.totalArea?.fi?.value),
-    volume: parseNumericValue(nv.volume || linearData.volume?.fi?.value),
+    livingArea: parseNumericValue(nv.area || data.livingArea?.fi?.value),
+    totalArea: parseNumericValue(nv.totalArea || data.totalArea?.fi?.value),
+    volume: parseNumericValue(nv.volume || data.volume?.fi?.value),
     numberOfApartments: 0, // Not directly available in Linear API
     businessSpaces: {}, // Not directly available
-    siteArea: parseNumericValue(nv.plotArea || linearData.plotArea?.fi?.value),
-    siteOwnershipType: extractLocalizedString(linearData.plotOwnership),
-    zoningSituation: extractLocalizedString(linearData.zoningSituation),
+    siteArea: parseNumericValue(nv.plotArea || data.plotArea?.fi?.value),
+    siteOwnershipType: extractLocalizedString(data.plotOwnership),
+    zoningSituation: extractLocalizedString(data.zoningSituation),
     zoningDetails: {}, // Not directly available
 
     // ========================================================================
@@ -347,10 +350,10 @@ export function mapLinearAPIToProperty(
     // ========================================================================
     salesPrice,
     debtPart: 0, // Calculate: askPrice - debtFreePrice
-    unencumberedSalesPrice: parseNumericValue(nv.debtFreePrice || linearData.debtFreePrice?.fi?.value),
+    unencumberedSalesPrice: parseNumericValue(nv.debtFreePrice || data.debtFreePrice?.fi?.value),
     loanPayable: false, // Not directly available
-    maintenanceFee: parseNumericValue(nv.renovationCharge || linearData.maintenanceCharge?.fi?.value),
-    financingFee: parseNumericValue(nv.fundingCharge || linearData.financingCharge?.fi?.value),
+    maintenanceFee: parseNumericValue(nv.renovationCharge || data.maintenanceCharge?.fi?.value),
+    financingFee: parseNumericValue(nv.fundingCharge || data.financingCharge?.fi?.value),
     totalFee: parseNumericValue(nv.renovationCharge) + parseNumericValue(nv.fundingCharge),
     rentIncome: 0, // Not directly available
     waterFee: 0, // Typically included in maintenance fee
@@ -364,20 +367,20 @@ export function mapLinearAPIToProperty(
     // ========================================================================
     // 4. COMPANY / MANAGEMENT
     // ========================================================================
-    housingCompanyName: linearData.housingCompanyName?.fi?.value || '',
-    businessId: linearData.businessId?.fi?.value || '',
-    managementCompany: linearData.managementCompany?.fi?.value || '',
+    housingCompanyName: data.housingCompanyName?.fi?.value || '',
+    businessId: data.businessId?.fi?.value || '',
+    managementCompany: data.managementCompany?.fi?.value || '',
     propertyMaintenance: '', // Not directly available
     managerName: '', // Not directly available
     managerPhone: '', // Not directly available
     managerEmail: '', // Not directly available
-    ownershipStatus: extractLocalizedString(linearData.ownershipType),
-    numberOfShares: linearData.shareNumbers?.fi?.value || '',
+    ownershipStatus: extractLocalizedString(data.ownershipType),
+    numberOfShares: data.shareNumbers?.fi?.value || '',
     redemptionClauseFlats: false, // Not directly available
     redemptionClauseParking: false, // Not directly available
     companyLoans: 0, // Not directly available
     companyIncome: 0, // Not directly available
-    constructionYear: nv.completeYear || parseNumericValue(linearData.completeYear?.fi?.value),
+    constructionYear: nv.completeYear || parseNumericValue(data.completeYear?.fi?.value),
     totalApartments: 0, // Not directly available
     totalBusinessSpaces: 0, // Not directly available
     sharedSpaces: {}, // Not directly available
@@ -388,19 +391,19 @@ export function mapLinearAPIToProperty(
     // ========================================================================
     // 5. TECHNICAL AND ENVIRONMENTAL
     // ========================================================================
-    sewerSystem: extractLocalizedString(linearData.sewerSystem),
-    waterConnection: extractLocalizedString(linearData.waterSystem),
+    sewerSystem: extractLocalizedString(data.sewerSystem),
+    waterConnection: extractLocalizedString(data.waterSystem),
     broadband: nv.hasCableTv ?? false,
-    antennaSystem: extractLocalizedString(linearData.antennaSystem),
+    antennaSystem: extractLocalizedString(data.antennaSystem),
     propertyRestrictions: {}, // Not directly available
     terrainDescription: {}, // Not directly available
     soilAndVegetation: {}, // Not directly available
     buildingRights: {}, // Not directly available
     easementsAndRights: {}, // Not directly available
-    propertyId: linearData.propertyId?.fi?.value || '',
+    propertyId: data.propertyId?.fi?.value || '',
     landRegisterNumber: '', // Not directly available
-    municipality: extractLocalizedString(linearData.municipality),
-    villageOrDistrict: extractLocalizedString(linearData.region),
+    municipality: extractLocalizedString(data.municipality),
+    villageOrDistrict: extractLocalizedString(data.region),
     blockNumber: '', // Not directly available
     leaseTerm: {}, // Not directly available
     annualLease: 0, // Not directly available
@@ -408,28 +411,28 @@ export function mapLinearAPIToProperty(
     // ========================================================================
     // 6. LISTING AND AGENT INFO
     // ========================================================================
-    estateAgentName: linearData.realtor?.name || '',
-    estateAgentPhone: linearData.realtor?.tel || '',
-    estateAgentEmail: linearData.realtor?.email || '',
-    showingDate: linearData.showingDate?.fi?.value 
-      ? new Date(linearData.showingDate.fi.value) 
+    estateAgentName: data.realtor?.name || '',
+    estateAgentPhone: data.realtor?.tel || '',
+    estateAgentEmail: data.realtor?.email || '',
+    showingDate: data.showingDate?.fi?.value 
+      ? new Date(data.showingDate.fi.value) 
       : new Date(),
-    showingTime: linearData.showingTime?.fi?.value || '',
-    listingOffice: linearData.realtor?.primaryCompany?.name || '',
+    showingTime: data.showingTime?.fi?.value || '',
+    listingOffice: data.realtor?.primaryCompany?.name || '',
     listingSourceUrl: '', // Not directly available
-    photoUrls: linearData.images
-      ?.filter(img => !img.isFloorPlan)
-      .map(img => img.compressed || img.url) || [],
-    floorPlanUrl: linearData.floorPlanUrl || 
-      linearData.images?.find(img => img.isFloorPlan)?.url || '',
-    brochureUrl: linearData.brochureUrl || '',
+    photoUrls: data.images
+      ?.filter((img: any) => !img.isFloorPlan)
+      .map((img: any) => img.compressed || img.url) || [],
+    floorPlanUrl: data.floorPlanUrl || 
+      data.images?.find((img: any) => img.isFloorPlan)?.url || '',
+    brochureUrl: data.brochureUrl || '',
 
     // ========================================================================
     // 7. METADATA
     // ========================================================================
     parsingDate: new Date(),
     sourceType: 'LINEAR_API',
-    sourceFilename: `linear-${linearData.id?.fi?.value || 'unknown'}.json`,
+    sourceFilename: `linear-${data.id?.fi?.value || 'unknown'}.json`,
     version: '1.0.0',
   };
 }
@@ -451,20 +454,21 @@ export function extractPropertyImages(linearData: LinearAPIListing): {
   floorPlans: string[];
   thumbnails: string[];
 } {
-  const images = linearData.images || [];
+  const data = linearData as any;
+  const images = data.images || [];
   
   return {
     gallery: images
-      .filter(img => !img.isFloorPlan)
-      .sort((a, b) => (a.order || 0) - (b.order || 0))
-      .map(img => img.compressed || img.url),
+      .filter((img: any) => !img.isFloorPlan)
+      .sort((a: any, b: any) => (a.order || 0) - (b.order || 0))
+      .map((img: any) => img.compressed || img.url),
     floorPlans: images
-      .filter(img => img.isFloorPlan)
-      .map(img => img.compressed || img.url),
+      .filter((img: any) => img.isFloorPlan)
+      .map((img: any) => img.compressed || img.url),
     thumbnails: images
-      .filter(img => !img.isFloorPlan)
-      .sort((a, b) => (a.order || 0) - (b.order || 0))
-      .map(img => img.thumbnail),
+      .filter((img: any) => !img.isFloorPlan)
+      .sort((a: any, b: any) => (a.order || 0) - (b.order || 0))
+      .map((img: any) => img.thumbnail),
   };
 }
 
@@ -493,8 +497,9 @@ export function extractAgentInfo(linearData: LinearAPIListing) {
  * Calculate debt portion
  */
 export function calculateDebtPortion(linearData: LinearAPIListing): number {
-  const askPrice = parseNumericValue(linearData.nonLocalizedValues.askPrice);
-  const debtFreePrice = parseNumericValue(linearData.nonLocalizedValues.debtFreePrice);
+  const data = linearData as any;
+  const askPrice = parseNumericValue(data.nonLocalizedValues?.askPrice);
+  const debtFreePrice = parseNumericValue(data.nonLocalizedValues?.debtFreePrice);
   
   return Math.max(0, askPrice - debtFreePrice);
 }
@@ -503,7 +508,8 @@ export function calculateDebtPortion(linearData: LinearAPIListing): number {
  * Get all amenity flags as boolean object
  */
 export function extractAmenities(linearData: LinearAPIListing) {
-  const nv = linearData.nonLocalizedValues;
+  const data = linearData as any;
+  const nv = data.nonLocalizedValues || {};
   
   return {
     sauna: nv.sauna ?? false,
@@ -529,7 +535,8 @@ export function extractRenovationHistory(linearData: LinearAPIListing): {
   roof?: number;
   facade?: number;
 } {
-  const nv = linearData.nonLocalizedValues;
+  const data = linearData as any;
+  const nv = data.nonLocalizedValues || {};
   
   return {
     electrical: nv.electricalSystemRenovationYear,
