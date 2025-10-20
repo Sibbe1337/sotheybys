@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -60,47 +60,36 @@ export default function PropertyPage({ params }: PropertyPageProps) {
     loadProperty();
   }, [slug]);
 
-  // Move callbacks before any returns to ensure consistent hook order
-  const nextImage = useCallback(() => {
-    setCurrentImageIndex((prev) => {
-      const imagesLength = property?.media?.gallery?.length || 
-                          property?.acfRealEstate?.property?.gallery?.length || 
-                          property?.images?.length || 
-                          1;
-      return (prev + 1) % imagesLength;
-    });
-  }, [property]);
-
-  const prevImage = useCallback(() => {
-    setCurrentImageIndex((prev) => {
-      const imagesLength = property?.media?.gallery?.length || 
-                          property?.acfRealEstate?.property?.gallery?.length || 
-                          property?.images?.length || 
-                          1;
-      return (prev - 1 + imagesLength) % imagesLength;
-    });
-  }, [property]);
-
-  // Keyboard navigation for better UX
+  // Keyboard navigation - must be defined before any conditional returns
   useEffect(() => {
+    if (!property || loading) {
+      return;
+    }
+
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (activeTab === 'photos' && property) {
-        const hasMultipleImages = (property?.media?.gallery?.length || 
-                                  property?.acfRealEstate?.property?.gallery?.length || 
-                                  property?.images?.length || 0) > 1;
-        if (hasMultipleImages) {
-          if (e.key === 'ArrowLeft') {
-            prevImage();
-          } else if (e.key === 'ArrowRight') {
-            nextImage();
-          }
+      // Extract images based on property format
+      let images: any[] = [];
+      const isUiFormat = property.location && property.financials && property.specs;
+      
+      if (isUiFormat) {
+        images = property.media?.gallery || [];
+      } else {
+        const propertyData = property.acfRealEstate?.property || property;
+        images = propertyData.gallery || property.images || (property.featuredImage ? [property.featuredImage] : []);
+      }
+
+      if (activeTab === 'photos' && images.length > 1) {
+        if (e.key === 'ArrowLeft') {
+          setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+        } else if (e.key === 'ArrowRight') {
+          setCurrentImageIndex((prev) => (prev + 1) % images.length);
         }
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [activeTab, property, prevImage, nextImage]);
+  }, [activeTab, property, loading]);
 
   if (loading) {
     return (
@@ -186,6 +175,19 @@ export default function PropertyPage({ params }: PropertyPageProps) {
     }));
   };
 
+  // Image navigation functions
+  const nextImage = () => {
+    if (images && images.length > 0) {
+      setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    }
+  };
+
+  const prevImage = () => {
+    if (images && images.length > 0) {
+      setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white">
       {/* Breadcrumb Section */}
@@ -213,89 +215,109 @@ export default function PropertyPage({ params }: PropertyPageProps) {
 
       {/* Main Content Area */}
       <div className="relative">
-        {/* Tab Content Container with Consistent Height */}
-        <div className="relative min-h-[600px]">
+        {/* Tab Content Container */}
+        <div className="relative">
           {activeTab === 'photos' && images.length > 0 && (
-            <div className="relative h-[70vh] min-h-[600px] bg-gray-100 overflow-hidden">
-              {/* Preload and render all images for instant switching */}
-              <div className="absolute inset-0">
-                {images.map((image: any, index: number) => (
-                  <div
-                    key={index}
-                    className={`absolute inset-0 flex items-center justify-center transition-opacity duration-200 ${
-                      currentImageIndex === index ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                    }`}
-                  >
-                    <Image
-                      src={image.url || image.sourceUrl || image}
-                      alt={`Property image ${index + 1}`}
-                      fill
-                      className="object-contain"
-                      priority={index === 0 || index === 1}
-                      loading={index <= 2 ? "eager" : "lazy"}
-                    />
-                  </div>
-                ))}
+            <div className="relative bg-black">
+              {/* Main Image Container with proper aspect ratio */}
+              <div className="relative w-full" style={{ paddingBottom: '56.25%' /* 16:9 Aspect Ratio */ }}>
+                <div className="absolute inset-0">
+                  {images.map((image: any, index: number) => {
+                    const imageSrc = typeof image === 'string' 
+                      ? image 
+                      : image.url || image.sourceUrl || image.node?.sourceUrl || '';
+                    
+                    return (
+                      <div
+                        key={index}
+                        className={`absolute inset-0 transition-opacity duration-300 ${
+                          currentImageIndex === index ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                        }`}
+                      >
+                        <Image
+                          src={imageSrc}
+                          alt={`Property image ${index + 1}`}
+                          fill
+                          className="object-cover"
+                          priority={index === 0 || index === 1}
+                          loading={index <= 2 ? "eager" : "lazy"}
+                          sizes="100vw"
+                          onError={(e) => {
+                            console.error(`Failed to load image ${index + 1}:`, imageSrc);
+                          }}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
               
-              {/* Navigation Arrows */}
+              {/* Navigation Arrows - Sleek Modern Design */}
               {images.length > 1 && (
                 <>
                   <button
                     onClick={prevImage}
-                    className="absolute left-8 top-1/2 -translate-y-1/2 bg-white/90 text-gray-800 w-12 h-12 rounded-full hover:bg-white shadow-lg flex items-center justify-center transform will-change-transform"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-sm text-white w-14 h-14 flex items-center justify-center transition-all hover:bg-white/20 group"
                     aria-label="Previous image"
                   >
-                    <ChevronLeft size={28} />
+                    <ChevronLeft className="w-8 h-8 transition-transform group-hover:-translate-x-0.5" />
                   </button>
                   <button
                     onClick={nextImage}
-                    className="absolute right-8 top-1/2 -translate-y-1/2 bg-white/90 text-gray-800 w-12 h-12 rounded-full hover:bg-white shadow-lg flex items-center justify-center transform will-change-transform"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-sm text-white w-14 h-14 flex items-center justify-center transition-all hover:bg-white/20 group"
                     aria-label="Next image"
                   >
-                    <ChevronRight size={28} />
+                    <ChevronRight className="w-8 h-8 transition-transform group-hover:translate-x-0.5" />
                   </button>
                 </>
               )}
 
-              {/* Image Counter */}
-              <div className="absolute bottom-6 right-6 bg-black/70 text-white px-4 py-2 rounded">
-                {currentImageIndex + 1} / {images.length}
+              {/* Image Counter - Minimalist Style */}
+              <div className="absolute bottom-4 right-4 text-white text-sm font-light tracking-wider">
+                {currentImageIndex + 1} — {images.length}
               </div>
+            </div>
+          )}
 
-              {/* Thumbnail Strip */}
-              {images.length > 1 && (
-                <div className="absolute bottom-0 left-0 right-0 bg-black/50 p-4">
-                  <div className="flex gap-2 justify-center overflow-x-auto max-w-6xl mx-auto scrollbar-hide">
-                    {images.map((image: any, index: number) => (
-                      <button
-                        key={index}
-                        onClick={() => setCurrentImageIndex(index)}
-                        className={`relative flex-shrink-0 w-20 h-20 overflow-hidden transform will-change-transform ${
-                          currentImageIndex === index ? 'ring-2 ring-white scale-110' : 'opacity-70 hover:opacity-100'
-                        }`}
-                      >
-                        <Image
-                          src={image.url || image.sourceUrl || image}
-                          alt={`Thumbnail ${index + 1}`}
-                          fill
-                          className="object-cover"
-                          sizes="80px"
-                        />
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
+          {/* Thumbnail Strip - Below Main Image */}
+          {activeTab === 'photos' && images.length > 1 && (
+            <div className="bg-white py-4">
+              <div className="flex gap-2 justify-center overflow-x-auto max-w-6xl mx-auto px-4 scrollbar-hide">
+                {images.map((image: any, index: number) => {
+                  const imageSrc = typeof image === 'string' 
+                    ? image 
+                    : image.url || image.sourceUrl || image.node?.sourceUrl || '';
+                  
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentImageIndex(index)}
+                      className={`relative flex-shrink-0 w-24 h-24 overflow-hidden transition-all ${
+                        currentImageIndex === index 
+                          ? 'ring-2 ring-[var(--color-primary)] opacity-100' 
+                          : 'opacity-60 hover:opacity-100'
+                      }`}
+                    >
+                      <Image
+                        src={imageSrc}
+                        alt={`Thumbnail ${index + 1}`}
+                        fill
+                        className="object-cover"
+                        sizes="96px"
+                      />
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           )}
 
           {activeTab === 'floorplan' && (
-            <div className="absolute inset-0 bg-gray-100 flex items-center">
+            <div className="bg-gray-50 py-12">
               <div className="container mx-auto px-4">
                 {propertyData.floorPlanUrl || propertyData.floorplan ? (
-                  <div className="max-w-4xl mx-auto">
-                    <div className="relative bg-white rounded-lg shadow-lg p-4" style={{ minHeight: '500px' }}>
+                  <div className="max-w-5xl mx-auto">
+                    <div className="bg-white rounded-lg shadow-lg p-8">
                       <Image
                         src={propertyData.floorPlanUrl || propertyData.floorplan}
                         alt="Floor plan"
@@ -306,8 +328,8 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                     </div>
                   </div>
                 ) : (
-                  <div className="text-center">
-                    <h2 className="text-2xl font-semibold mb-4 text-gray-700">Pohjakuva</h2>
+                  <div className="text-center py-20">
+                    <h2 className="text-2xl font-light text-gray-700 mb-4">Pohjakuva</h2>
                     <p className="text-gray-500">Ei saatavilla</p>
                   </div>
                 )}
@@ -316,10 +338,10 @@ export default function PropertyPage({ params }: PropertyPageProps) {
           )}
 
           {activeTab === 'map' && (
-            <div className="absolute inset-0 bg-gray-100 flex items-center">
+            <div className="bg-gray-50 py-8">
               <div className="container mx-auto px-4">
                 {(propertyData.lat && propertyData.lng) || (propertyData.address && propertyData.city) ? (
-                  <div className="max-w-6xl mx-auto w-full">
+                  <div className="max-w-6xl mx-auto">
                     <div className="relative w-full rounded-lg shadow-lg overflow-hidden" style={{ paddingBottom: '56.25%' }}>
                       <iframe
                         src={
@@ -335,8 +357,8 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                     </div>
                   </div>
                 ) : (
-                  <div className="text-center">
-                    <h2 className="text-2xl font-semibold mb-4 text-gray-700">Sijainti kartalla</h2>
+                  <div className="text-center py-20">
+                    <h2 className="text-2xl font-light text-gray-700 mb-4">Sijainti kartalla</h2>
                     <p className="text-gray-500">Kartta ei saatavilla</p>
                   </div>
                 )}
@@ -345,10 +367,10 @@ export default function PropertyPage({ params }: PropertyPageProps) {
           )}
 
           {activeTab === 'brochure' && (
-            <div className="absolute inset-0 bg-gray-100 flex items-center">
+            <div className="bg-gray-50 py-8">
               <div className="container mx-auto px-4">
                 {propertyData.propertyBrochureUrl || propertyData.brochure || propertyData.virtualShowing ? (
-                  <div className="max-w-6xl mx-auto w-full">
+                  <div className="max-w-6xl mx-auto">
                     <div className="relative w-full rounded-lg shadow-lg overflow-hidden" style={{ paddingBottom: '75%' }}>
                       <iframe
                         src={propertyData.propertyBrochureUrl || propertyData.brochure || propertyData.virtualShowing}
@@ -358,8 +380,8 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                     </div>
                   </div>
                 ) : (
-                  <div className="text-center">
-                    <h2 className="text-2xl font-semibold mb-4 text-gray-700">Esite</h2>
+                  <div className="text-center py-20">
+                    <h2 className="text-2xl font-light text-gray-700 mb-4">Esite</h2>
                     <p className="text-gray-500">Ei saatavilla</p>
                   </div>
                 )}
@@ -368,11 +390,11 @@ export default function PropertyPage({ params }: PropertyPageProps) {
           )}
 
           {activeTab === 'video' && (
-            <div className="absolute inset-0 bg-gray-100 flex items-center">
+            <div className="bg-gray-50 py-8">
               <div className="container mx-auto px-4">
                 {(isValidYouTubeUrl(propertyData.videoUrl) || isValidYouTubeUrl(propertyData.youtubeUrl) || isValidYouTubeUrl(propertyData.video)) ? (
-                  <div className="max-w-6xl mx-auto w-full">
-                    <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                  <div className="max-w-4xl mx-auto">
+                    <div className="relative w-full rounded-lg shadow-lg overflow-hidden" style={{ paddingBottom: '56.25%' }}>
                       <iframe
                         src={getYouTubeEmbedUrl(
                           (isValidYouTubeUrl(propertyData.videoUrl) && propertyData.videoUrl) ||
@@ -380,15 +402,15 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                           (isValidYouTubeUrl(propertyData.video) && propertyData.video) ||
                           ''
                         )}
-                        className="absolute top-0 left-0 w-full h-full rounded-lg shadow-xl"
+                        className="absolute top-0 left-0 w-full h-full"
                         allowFullScreen
                         title="Property Video"
                       />
                     </div>
                   </div>
                 ) : (
-                  <div className="text-center">
-                    <h2 className="text-2xl font-semibold mb-4 text-gray-700">Video</h2>
+                  <div className="text-center py-20">
+                    <h2 className="text-2xl font-light text-gray-700 mb-4">Video</h2>
                     <p className="text-gray-500">Ei saatavilla</p>
                   </div>
                 )}
@@ -397,75 +419,75 @@ export default function PropertyPage({ params }: PropertyPageProps) {
           )}
         </div>
 
-        {/* Tab Navigation - Bottom Position like Sotheby's */}
-        <div className="bg-gray-100 border-t border-gray-200">
-          <div className="container mx-auto px-0 md:px-4">
-            <div className="flex justify-center overflow-x-auto scrollbar-hide">
-              <div className="flex min-w-full md:min-w-0">
+        {/* Tab Navigation - Modern Sotheby's Style */}
+        <div className="bg-white border-t border-gray-200 mt-8">
+          <div className="container mx-auto">
+            <div className="flex justify-center">
+              <div className="flex">
                 <button
                   onClick={() => setActiveTab('photos')}
-                  className={`px-4 md:px-6 py-4 font-medium text-xs md:text-sm uppercase tracking-wider transition-all relative whitespace-nowrap flex-1 md:flex-initial ${
-                    activeTab === 'photos' 
-                      ? 'bg-white text-[var(--color-primary)]' 
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  className={`px-6 md:px-8 py-5 font-light text-sm uppercase tracking-widest transition-all relative ${
+                    activeTab === 'photos'
+                      ? 'text-[var(--color-primary)]'
+                      : 'text-gray-600 hover:text-[var(--color-primary)]'
                   }`}
                 >
                   Valokuvat
                   {activeTab === 'photos' && (
-                    <div className="absolute top-0 left-0 right-0 h-1 bg-[var(--color-primary)]"></div>
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-primary)]"></div>
                   )}
                 </button>
                 <button
                   onClick={() => setActiveTab('floorplan')}
-                  className={`px-4 md:px-6 py-4 font-medium text-xs md:text-sm uppercase tracking-wider transition-all relative whitespace-nowrap flex-1 md:flex-initial ${
+                  className={`px-6 md:px-8 py-5 font-light text-sm uppercase tracking-widest transition-all relative ${
                     activeTab === 'floorplan' 
-                      ? 'bg-white text-[var(--color-primary)]' 
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                      ? 'text-[var(--color-primary)]' 
+                      : 'text-gray-600 hover:text-[var(--color-primary)]'
                   }`}
                 >
                   Pohjakuva
                   {activeTab === 'floorplan' && (
-                    <div className="absolute top-0 left-0 right-0 h-1 bg-[var(--color-primary)]"></div>
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-primary)]"></div>
                   )}
                 </button>
                 <button
                   onClick={() => setActiveTab('map')}
-                  className={`px-4 md:px-6 py-4 font-medium text-xs md:text-sm uppercase tracking-wider transition-all relative whitespace-nowrap flex-1 md:flex-initial ${
+                  className={`px-6 md:px-8 py-5 font-light text-sm uppercase tracking-widest transition-all relative ${
                     activeTab === 'map' 
-                      ? 'bg-white text-[var(--color-primary)]' 
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                      ? 'text-[var(--color-primary)]' 
+                      : 'text-gray-600 hover:text-[var(--color-primary)]'
                   }`}
                 >
                   Kohde kartalla
                   {activeTab === 'map' && (
-                    <div className="absolute top-0 left-0 right-0 h-1 bg-[var(--color-primary)]"></div>
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-primary)]"></div>
                   )}
                 </button>
                 <button
                   onClick={() => setActiveTab('brochure')}
-                  className={`px-4 md:px-6 py-4 font-medium text-xs md:text-sm uppercase tracking-wider transition-all relative whitespace-nowrap flex-1 md:flex-initial ${
+                  className={`px-6 md:px-8 py-5 font-light text-sm uppercase tracking-widest transition-all relative ${
                     activeTab === 'brochure' 
-                      ? 'bg-white text-[var(--color-primary)]' 
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                      ? 'text-[var(--color-primary)]' 
+                      : 'text-gray-600 hover:text-[var(--color-primary)]'
                   }`}
                 >
                   Selaa esitettä
                   {activeTab === 'brochure' && (
-                    <div className="absolute top-0 left-0 right-0 h-1 bg-[var(--color-primary)]"></div>
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-primary)]"></div>
                   )}
                 </button>
                 {(isValidYouTubeUrl(propertyData.videoUrl) || isValidYouTubeUrl(propertyData.youtubeUrl) || isValidYouTubeUrl(propertyData.video)) && (
                   <button
                     onClick={() => setActiveTab('video')}
-                    className={`px-4 md:px-6 py-4 font-medium text-xs md:text-sm uppercase tracking-wider transition-all relative whitespace-nowrap flex-1 md:flex-initial ${
+                    className={`px-6 md:px-8 py-5 font-light text-sm uppercase tracking-widest transition-all relative ${
                       activeTab === 'video' 
-                        ? 'bg-white text-[var(--color-primary)]' 
-                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                        ? 'text-[var(--color-primary)]' 
+                        : 'text-gray-600 hover:text-[var(--color-primary)]'
                     }`}
                   >
                     Katso video
                     {activeTab === 'video' && (
-                      <div className="absolute top-0 left-0 right-0 h-1 bg-[var(--color-primary)]"></div>
+                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-primary)]"></div>
                     )}
                   </button>
                 )}

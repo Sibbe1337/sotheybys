@@ -8,6 +8,8 @@ import { convertCompleteLinearToWordPressFormat } from './linear-api-complete-co
 import { CompleteLinearAPIListing } from './linear-api-complete-interface';
 import { hasMarketingContent } from './marketing-content';
 import { generateSlug } from './utils';
+import { mapLinearAPIToProperty } from './linear-api-to-property-mapper';
+import { MultilingualPropertyListing } from './property-types-multilang';
 
 interface CacheData {
   listings: CompleteLinearAPIListing[];
@@ -175,6 +177,21 @@ class ListingsCache {
   getConvertedListingBySlug(slug: string, language: 'fi' | 'sv' | 'en' = 'fi') {
     const listing = this.getListingBySlug(slug);
     return listing ? convertCompleteLinearToWordPressFormat(listing) : null;
+  }
+
+  /**
+   * Get a single listing by slug in multilingual format (NEW)
+   */
+  getMultilingualListingBySlug(slug: string): MultilingualPropertyListing | null {
+    const listing = this.getListingBySlug(slug);
+    return listing ? mapLinearAPIToProperty(listing as any) : null;
+  }
+
+  /**
+   * Get all listings in multilingual format (NEW)
+   */
+  getMultilingualListings(): MultilingualPropertyListing[] {
+    return this.cache.listings.map(listing => mapLinearAPIToProperty(listing as any));
   }
 
   /**

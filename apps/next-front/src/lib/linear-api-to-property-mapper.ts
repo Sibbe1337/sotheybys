@@ -12,6 +12,7 @@ import {
   LocalizedString,
   SupportedLanguage,
 } from './property-types-multilang';
+import { CompleteLinearAPIListing } from './linear-api-complete-interface';
 
 // ============================================================================
 // LINEAR API TYPES / LINEAR API -TYYPIT
@@ -277,7 +278,7 @@ function mapCondition(condition: string | undefined): LocalizedString {
  * Main mapper: Convert Linear API Listing to MultilingualPropertyListing
  */
 export function mapLinearAPIToProperty(
-  linearData: LinearAPIListing
+  linearData: LinearAPIListing | CompleteLinearAPIListing
 ): MultilingualPropertyListing {
   const nv = linearData.nonLocalizedValues;
   
@@ -456,7 +457,7 @@ export function extractPropertyImages(linearData: LinearAPIListing): {
  * Extract agent/realtor information
  */
 export function extractAgentInfo(linearData: LinearAPIListing) {
-  const realtor = linearData.realtor;
+  const { realtor } = linearData;
   
   return {
     id: realtor?.id,

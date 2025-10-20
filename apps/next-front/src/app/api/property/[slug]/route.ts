@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import { listingsCache, ensureCacheInitialized } from '@/lib/listings-cache';
 import { getPropertyBySlug } from '@/lib/wordpress';
 
+// Force dynamic rendering as this route uses request.url
+export const dynamic = 'force-dynamic';
+
 export async function GET(
   request: Request,
   { params }: { params: { slug: string } }
@@ -11,15 +14,21 @@ export async function GET(
     const { searchParams } = new URL(request.url);
     const language = (searchParams.get('lang') || 'fi') as 'fi' | 'sv' | 'en';
 
-    // First try to get from Linear API cache
+    // Initialize cache
     await ensureCacheInitialized();
-    let foundProperty: any = listingsCache.getConvertedListingBySlug(slug, language);
     
-    // If not found in cache, try WordPress
+    // Try to get from Linear API cache using new multilingual format
+    let foundProperty: any = listingsCache.getMultilingualListingBySlug(slug);
+    
+    // Fallback to old format if not found
+    if (!foundProperty) {
+      foundProperty = listingsCache.getConvertedListingBySlug(slug, language);
+    }
+    
+    // If still not found, try WordPress
     if (!foundProperty) {
       const wpProperty = await getPropertyBySlug(slug);
       if (wpProperty) {
-        // Convert WordPress property to expected format
         foundProperty = wpProperty;
       }
     }

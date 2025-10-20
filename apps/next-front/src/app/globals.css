@@ -280,7 +280,7 @@
     @apply outline-none ring-2 ring-[#002349] ring-offset-2;
   }
 
-/* Hide scrollbar for mobile tabs */
+  /* Hide scrollbar for mobile tabs */
 .scrollbar-hide {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */

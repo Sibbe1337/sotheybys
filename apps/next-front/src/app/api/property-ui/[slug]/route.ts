@@ -3,6 +3,9 @@ import { fetchLinearListingsAsUi, fetchTestLinearListingsAsUi } from '@/lib/line
 import { listingsCache, ensureCacheInitialized } from '@/lib/listings-cache';
 import { getPropertyBySlug } from '@/lib/wordpress';
 
+// Force dynamic rendering as this route uses request.url
+export const dynamic = 'force-dynamic';
+
 export async function GET(
   request: Request,
   { params }: { params: { slug: string } }

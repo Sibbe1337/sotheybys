@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import { listingsCache } from '@/lib/listings-cache';
 import { fetchLinearListings, fetchTestLinearListings } from '@/lib/linear-api-adapter';
 
+// Force dynamic rendering as this route uses request.url
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
