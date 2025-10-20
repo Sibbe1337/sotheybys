@@ -60,6 +60,15 @@ export function flattenPropertyForLanguage(
     }
   }
 
+  // CRITICAL: Map field names for frontend compatibility
+  // Frontend expects 'price', 'debtFreePrice' but we use 'salesPrice', 'unencumberedSalesPrice'
+  if (flattened.salesPrice != null) {
+    flattened.price = flattened.salesPrice;
+  }
+  if (flattened.unencumberedSalesPrice != null) {
+    flattened.debtFreePrice = flattened.unencumberedSalesPrice;
+  }
+
   return flattened as FlattenedProperty;
 }
 
