@@ -324,13 +324,13 @@ export function mapLinearAPIToProperty(
     condition: nv.condition 
       ? mapCondition(nv.condition)
       : extractLocalizedString(data.condition),
-    yearOfBuilding: nv.completeYear || parseNumericValue(data.completeYear?.fi?.value),
+    yearOfBuilding: parseInt(nv?.completeYear?.toString() || parseNumericValue(data.completeYear?.fi?.value).toString() || '0'),
     roofType: extractLocalizedString(data.roofType),
-    heatingSystem: extractLocalizedString(data.heatingType),
-    ventilationSystem: extractLocalizedString(data.ventilationType),
-    buildingMaterial: extractLocalizedString(data.constructionMaterial),
-    energyClass: nv.energyClass || data.energyClass?.fi?.value || '',
-    energyCertificate: nv.listingHasEnergyCertificate ?? false,
+    heatingSystem: extractLocalizedString(data.heatingType || data.heatingSystem),
+    ventilationSystem: extractLocalizedString(data.ventilationType || data.ventilationSystem),
+    buildingMaterial: extractLocalizedString(data.constructionMaterial || data.buildingMaterialFacade),
+    energyClass: (nv as any)?.energyClass || data.energyClass?.fi?.value || '',
+    energyCertificate: (nv as any)?.listingHasEnergyCertificate ?? false,
 
     // ========================================================================
     // 2. DIMENSIONS AND USAGE
