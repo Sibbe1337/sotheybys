@@ -45,6 +45,16 @@ export default function SwedishPropertyPage({ params }: PropertyPageProps) {
           notFound();
         }
 
+        // Debug: Check for LocalizedString objects in wrong fields
+        const prop = result.data;
+        console.log('🔍 Client Debug - Field Types:', {
+          postalCode: { type: typeof prop.postalCode, value: prop.postalCode },
+          energyClass: { type: typeof prop.energyClass, value: prop.energyClass },
+          estateAgentName: { type: typeof prop.estateAgentName, value: prop.estateAgentName },
+          estateAgentPhone: { type: typeof prop.estateAgentPhone, value: prop.estateAgentPhone },
+          estateAgentEmail: { type: typeof prop.estateAgentEmail, value: prop.estateAgentEmail },
+        });
+        
         setProperty(result.data);
       } catch (error) {
         console.error('Error loading property:', error);

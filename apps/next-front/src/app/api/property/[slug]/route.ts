@@ -41,6 +41,19 @@ export async function GET(
       );
     }
 
+    // Debug: Log field types to identify LocalizedString objects being returned as primitives
+    console.log('🔍 API Response Debug:', {
+      hasHeading: !!foundProperty.heading,
+      headingType: typeof foundProperty.heading,
+      headingValue: foundProperty.heading,
+      hasPostalCode: !!foundProperty.postalCode,
+      postalCodeType: typeof foundProperty.postalCode,
+      postalCodeValue: foundProperty.postalCode,
+      hasEnergyClass: !!foundProperty.energyClass,
+      energyClassType: typeof foundProperty.energyClass,
+      energyClassValue: foundProperty.energyClass,
+    });
+
     return NextResponse.json({
       success: true,
       data: foundProperty
