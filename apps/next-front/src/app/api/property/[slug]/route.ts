@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { listingsCache, ensureCacheInitialized } from '@/lib/listings-cache';
 import { getPropertyBySlug } from '@/lib/wordpress';
+import { flattenPropertyForLanguage } from '@/lib/flatten-localized-data';
 
 // Force dynamic rendering as this route uses request.url
 export const dynamic = 'force-dynamic';
@@ -54,16 +55,16 @@ export async function GET(
       energyClassValue: foundProperty.energyClass,
     });
 
-    // CRITICAL FIX: Deep serialize/deserialize to ensure NO objects sneak through
-    // This converts any nested objects to JSON strings and back, ensuring primitive types
-    const serialized = JSON.stringify(foundProperty);
-    const sanitized = JSON.parse(serialized);
+    // CRITICAL FIX: Flatten all LocalizedString objects to single language
+    // This prevents React error #31 by ensuring no {fi, en, sv} objects reach the client
+    console.log('🔄 Flattening LocalizedString objects for language:', language);
+    const flattened = flattenPropertyForLanguage(foundProperty, language);
     
-    console.log('✅ Data sanitized via JSON serialize/deserialize');
+    console.log('✅ All LocalizedString objects flattened to strings');
 
     return NextResponse.json({
       success: true,
-      data: sanitized
+      data: flattened
     });
   } catch (error) {
     console.error('Error fetching property:', error);

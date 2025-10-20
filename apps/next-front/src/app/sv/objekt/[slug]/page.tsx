@@ -45,16 +45,6 @@ export default function SwedishPropertyPage({ params }: PropertyPageProps) {
           notFound();
         }
 
-        // Debug: Check for LocalizedString objects in wrong fields
-        const prop = result.data;
-        console.log('🔍 Client Debug - Field Types:', {
-          postalCode: { type: typeof prop.postalCode, value: prop.postalCode },
-          energyClass: { type: typeof prop.energyClass, value: prop.energyClass },
-          estateAgentName: { type: typeof prop.estateAgentName, value: prop.estateAgentName },
-          estateAgentPhone: { type: typeof prop.estateAgentPhone, value: prop.estateAgentPhone },
-          estateAgentEmail: { type: typeof prop.estateAgentEmail, value: prop.estateAgentEmail },
-        });
-        
         setProperty(result.data);
       } catch (error) {
         console.error('Error loading property:', error);
@@ -79,10 +69,11 @@ export default function SwedishPropertyPage({ params }: PropertyPageProps) {
     notFound();
   }
 
-  const title = getLocalizedValue(property.heading, language, 'fi');
-  const address = getLocalizedValue(property.streetAddress, language, 'fi');
-  const city = getLocalizedValue(property.city, language, 'fi');
-  const description = getLocalizedValue(property.description, language, 'fi');
+  // Data is already flattened to single language by API, no need for getLocalizedValue
+  const title = property.heading as any as string;
+  const address = property.streetAddress as any as string;
+  const city = property.city as any as string;
+  const description = property.description as any as string;
   const images = property.photoUrls || [];
 
   return (
