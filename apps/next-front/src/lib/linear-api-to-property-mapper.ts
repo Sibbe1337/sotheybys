@@ -282,6 +282,21 @@ export function mapLinearAPIToProperty(
 ): MultilingualPropertyListing {
   const nv = linearData.nonLocalizedValues;
   
+  // Extract and validate price
+  const salesPrice = parseNumericValue(nv.askPrice || linearData.askPrice?.fi?.value);
+  
+  // Validate price - warn about suspicious values
+  if (salesPrice > 10000000) {
+    const address = extractLocalizedString(linearData.address);
+    console.warn('⚠️  SUSPICIOUS PRICE IN MULTILANG MAPPER:', {
+      address: address.fi,
+      salesPrice,
+      rawAskPrice: nv.askPrice,
+      localizedAskPrice: linearData.askPrice?.fi?.value,
+      note: 'Price over 10M EUR - possible data error'
+    });
+  }
+  
   return {
     // ========================================================================
     // 1. GENERAL PROPERTY INFO
@@ -330,7 +345,7 @@ export function mapLinearAPIToProperty(
     // ========================================================================
     // 3. FINANCIAL DATA
     // ========================================================================
-    salesPrice: parseNumericValue(nv.askPrice || linearData.askPrice?.fi?.value),
+    salesPrice,
     debtPart: 0, // Calculate: askPrice - debtFreePrice
     unencumberedSalesPrice: parseNumericValue(nv.debtFreePrice || linearData.debtFreePrice?.fi?.value),
     loanPayable: false, // Not directly available

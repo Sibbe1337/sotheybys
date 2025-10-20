@@ -38,12 +38,35 @@ export function convertCompleteLinearToWordPressFormat(listing: CompleteLinearAP
   const province = extractLocalizedValue(listing.province) || null;
   const districtFree = extractLocalizedValue(listing.districtFree) || null;
   
-  // Pricing
-  const rawAskPrice = extractLocalizedValue(listing.askPrice) || null;
+  // Pricing - Use nonLocalizedValues first for accuracy
+  const rawAskPrice = listing.nonLocalizedValues?.askPrice || extractLocalizedValue(listing.askPrice) || null;
   const askPrice = rawAskPrice ? String(rawAskPrice).replace(/\D/g, '') : null;
-  const rawDebtFreePrice = extractLocalizedValue(listing.debtFreePrice) || null;
+  const rawDebtFreePrice = listing.nonLocalizedValues?.debtFreePrice || extractLocalizedValue(listing.debtFreePrice) || null;
   const debtFreePrice = rawDebtFreePrice ? String(rawDebtFreePrice).replace(/\D/g, '') : null;
-  const debt = extractLocalizedValue(listing.debt) || null;
+  const rawDebt = extractLocalizedValue(listing.debt) || null;
+  const debt = rawDebt ? String(rawDebt).replace(/\D/g, '') : null;
+  
+  // Validate prices - warn about suspicious values
+  if (askPrice) {
+    const priceNum = parseInt(askPrice);
+    if (priceNum > 10000000) {
+      console.warn('⚠️  SUSPICIOUS PRICE DETECTED:', {
+        address,
+        askPrice,
+        rawAskPrice,
+        nonLocalizedAskPrice: listing.nonLocalizedValues?.askPrice,
+        note: 'Price over 10M EUR - possible data error'
+      });
+    }
+    if (priceNum < 1000) {
+      console.warn('⚠️  SUSPICIOUS PRICE DETECTED:', {
+        address,
+        askPrice,
+        rawAskPrice,
+        note: 'Price under 1000 EUR - possible data error'
+      });
+    }
+  }
   
   // Debug logging
   if (address === 'Linnankoskenkatu 8') {
