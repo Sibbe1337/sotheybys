@@ -20,15 +20,13 @@ export async function GET(
     // Try to get from Linear API cache using new multilingual format
     let foundProperty: any = listingsCache.getMultilingualListingBySlug(slug);
     
-    // Fallback to old format if not found
-    if (!foundProperty) {
-      foundProperty = listingsCache.getConvertedListingBySlug(slug, language);
-    }
-    
-    // If still not found, try WordPress
+    // If not found in Linear API, try WordPress (but this will have different structure)
+    // NOTE: WordPress data structure is different from MultilingualPropertyListing
+    // Frontend components expecting MultilingualPropertyListing may not work with WP data
     if (!foundProperty) {
       const wpProperty = await getPropertyBySlug(slug);
       if (wpProperty) {
+        // TODO: Convert WordPress format to MultilingualPropertyListing format
         foundProperty = wpProperty;
       }
     }
