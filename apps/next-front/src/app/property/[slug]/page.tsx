@@ -26,6 +26,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
     priceInfo: true,
     energyRating: true,
     propertyInfo: true,
+    housingCompanyInfo: true,
     buildingInfo: true,
     otherInfo: true
   });
@@ -598,6 +599,22 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                 <p className="text-sm text-gray-600 mt-2">KAUPUNGINOSA</p>
               </div>
             )}
+            {propertyData.apartmentType && (
+              <div>
+                <h3 className="text-3xl font-bold text-[var(--color-primary)]">
+                  {propertyData.apartmentType}
+                </h3>
+                <p className="text-sm text-gray-600 mt-2">ASUNNON TYYPPI</p>
+              </div>
+            )}
+            {propertyData.floorLocation && (
+              <div>
+                <h3 className="text-3xl font-bold text-[var(--color-primary)]">
+                  {propertyData.floorLocation}{propertyData.numberOfFloors && propertyData.numberOfFloors > 0 ? ` / ${propertyData.numberOfFloors}` : ''}
+                </h3>
+                <p className="text-sm text-gray-600 mt-2">KERROS</p>
+              </div>
+            )}
             {propertyData.plotArea && (
               <div>
                 <h3 className="text-3xl font-bold text-[var(--color-primary)]">
@@ -732,6 +749,30 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                         <span className="font-semibold">{formatEuroCurrency(propertyData.debtFreePrice)}</span>
                       </div>
                     )}
+                    {propertyData.maintenanceFee != null && propertyData.maintenanceFee > 0 && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="text-gray-600">Yhtiövastike</span>
+                        <span className="font-semibold">{formatEuroCurrency(propertyData.maintenanceFee)}/kk</span>
+                      </div>
+                    )}
+                    {propertyData.financingFee != null && propertyData.financingFee > 0 && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="text-gray-600">Rahoitusvastike</span>
+                        <span className="font-semibold">{formatEuroCurrency(propertyData.financingFee)}/kk</span>
+                      </div>
+                    )}
+                    {propertyData.totalFee != null && propertyData.totalFee > 0 && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="text-gray-600">Kokonaisvastike</span>
+                        <span className="font-semibold">{formatEuroCurrency(propertyData.totalFee)}/kk</span>
+                      </div>
+                    )}
+                    {propertyData.waterFee != null && propertyData.waterFee > 0 && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="text-gray-600">Vesimaksu</span>
+                        <span className="font-semibold">{formatEuroCurrency(propertyData.waterFee)}/hlö/kk</span>
+                      </div>
+                    )}
                     {propertyData.propertyTax && (
                       <div className="flex justify-between py-2 border-b">
                         <span className="text-gray-600">Kiinteistövero</span>
@@ -807,6 +848,77 @@ export default function PropertyPage({ params }: PropertyPageProps) {
               )}
             </div>
 
+            {/* Housing Company Information */}
+            {(propertyData.housingCompanyName || propertyData.businessId || propertyData.managerName || propertyData.numberOfShares || propertyData.propertyMaintenance) && (
+              <div className="mb-6">
+                <button
+                  onClick={() => toggleSection('housingCompanyInfo')}
+                  className="w-full bg-gray-100 p-4 text-left hover:bg-gray-200 transition-colors"
+                >
+                  <h3 className="text-xl font-semibold flex items-center justify-between">
+                    Yhtiötiedot
+                    <span className={`transition-transform ${expandedSections.housingCompanyInfo ? 'rotate-180' : ''}`}>
+                      ▼
+                    </span>
+                  </h3>
+                </button>
+                {expandedSections.housingCompanyInfo && (
+                  <div className="bg-white border border-gray-200 p-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {propertyData.housingCompanyName && (
+                        <div className="flex justify-between py-2 border-b">
+                          <span className="text-gray-600">Yhtiön nimi</span>
+                          <span className="font-semibold">{propertyData.housingCompanyName}</span>
+                        </div>
+                      )}
+                      {propertyData.businessId && (
+                        <div className="flex justify-between py-2 border-b">
+                          <span className="text-gray-600">Y-tunnus</span>
+                          <span className="font-semibold">{propertyData.businessId}</span>
+                        </div>
+                      )}
+                      {propertyData.managerName && (
+                        <div className="flex justify-between py-2 border-b">
+                          <span className="text-gray-600">Isännöitsijä</span>
+                          <span className="font-semibold">{propertyData.managerName}</span>
+                        </div>
+                      )}
+                      {propertyData.managerPhone && (
+                        <div className="flex justify-between py-2 border-b">
+                          <span className="text-gray-600">Isännöitsijän puhelin</span>
+                          <span className="font-semibold">{propertyData.managerPhone}</span>
+                        </div>
+                      )}
+                      {propertyData.managerEmail && (
+                        <div className="flex justify-between py-2 border-b">
+                          <span className="text-gray-600">Isännöitsijän sähköposti</span>
+                          <span className="font-semibold">{propertyData.managerEmail}</span>
+                        </div>
+                      )}
+                      {propertyData.propertyMaintenance && (
+                        <div className="flex justify-between py-2 border-b">
+                          <span className="text-gray-600">Kiinteistönhoito</span>
+                          <span className="font-semibold">{propertyData.propertyMaintenance}</span>
+                        </div>
+                      )}
+                      {propertyData.numberOfShares && (
+                        <div className="flex justify-between py-2 border-b">
+                          <span className="text-gray-600">Osakkeiden numerot</span>
+                          <span className="font-semibold">{propertyData.numberOfShares}</span>
+                        </div>
+                      )}
+                      {propertyData.redemptionClauseFlats !== undefined && (
+                        <div className="flex justify-between py-2 border-b">
+                          <span className="text-gray-600">Lunastuspykälä</span>
+                          <span className="font-semibold">{propertyData.redemptionClauseFlats ? 'Kyllä' : 'Ei'}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* Building Information */}
             <div className="mb-6">
               <button
@@ -839,6 +951,36 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                       <div className="flex justify-between py-2 border-b">
                         <span className="text-gray-600">Lämmitys</span>
                         <span className="font-semibold">{propertyData.heating}</span>
+                      </div>
+                    )}
+                    {propertyData.heatingSystem && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="text-gray-600">Lämmitysjärjestelmä</span>
+                        <span className="font-semibold">{propertyData.heatingSystem}</span>
+                      </div>
+                    )}
+                    {propertyData.roofType && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="text-gray-600">Kattotyyppi</span>
+                        <span className="font-semibold">{propertyData.roofType}</span>
+                      </div>
+                    )}
+                    {propertyData.condition && typeof propertyData.condition === 'string' && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="text-gray-600">Kunto</span>
+                        <span className="font-semibold">{propertyData.condition}</span>
+                      </div>
+                    )}
+                    {propertyData.sauna !== undefined && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="text-gray-600">Sauna</span>
+                        <span className="font-semibold">{propertyData.sauna ? 'Kyllä' : 'Ei'}</span>
+                      </div>
+                    )}
+                    {propertyData.balcony !== undefined && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="text-gray-600">Parveke</span>
+                        <span className="font-semibold">{propertyData.balcony ? 'Kyllä' : 'Ei'}</span>
                       </div>
                     )}
                   </div>
