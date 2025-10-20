@@ -6,6 +6,7 @@
 import { getMarketingContent, hasMarketingContent } from './marketing-content';
 import { generateSlug } from './utils';
 import { adaptLinearRestToIssue, mapLinearIssueToUi, UiListing } from './linear-ui-mapper';
+import { parseEuroNumber } from './number-eu';
 
 export interface LinearAPIListing {
   id: {
@@ -402,8 +403,8 @@ export function convertLinearToWordPressFormat(listing: LinearAPIListing, langua
     images: listing.images || [],
     acfRealEstate: {
       property: {
-        price: price ? String(price).replace(/\D/g, '') : null,
-        debtFreePrice: debtFreePrice ? String(debtFreePrice).replace(/\D/g, '') : null,
+        price: price != null ? Math.round(parseEuroNumber(price)).toString() : null,
+        debtFreePrice: debtFreePrice != null ? Math.round(parseEuroNumber(debtFreePrice)).toString() : null,
         address,
         city,
         rooms: rooms || null,
