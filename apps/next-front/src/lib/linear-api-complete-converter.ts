@@ -55,7 +55,7 @@ export function convertCompleteLinearToWordPressFormat(listing: CompleteLinearAP
   const rawAskPrice = listing.nonLocalizedValues?.askPrice || extractLocalizedValue(listing.askPrice) || null;
   const askPrice = rawAskPrice ? parsePrice(rawAskPrice) : null;
   const rawDebtFreePrice = listing.nonLocalizedValues?.debtFreePrice || extractLocalizedValue(listing.debtFreePrice) || null;
-  const debtFreePrice = rawDebtFreePrice ? parsePrice(rawDebtFreePrice) : null;image.png
+  const debtFreePrice = rawDebtFreePrice ? parsePrice(rawDebtFreePrice) : null;
   const rawDebt = extractLocalizedValue(listing.debt) || null;
   const debt = rawDebt ? parsePrice(rawDebt) : null;
   
