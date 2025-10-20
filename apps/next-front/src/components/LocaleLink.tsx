@@ -36,11 +36,14 @@ export function LocaleLink({
     finalHref = `${pathname}${params.toString() ? '?' + params.toString() : ''}`;
   } else if (typeof href === 'object' && 'pathname' in href && href.pathname) {
     // Handle object href
+    const existingQuery = (href as any).query || {};
+    const queryObj = typeof existingQuery === 'object' ? existingQuery : {};
+    
     finalHref = {
       pathname: href.pathname as string,
       query: {
-        ...(href.query || {}),
-        lang: (href.query as any)?.lang || currentLang,
+        ...queryObj,
+        lang: queryObj.lang || currentLang,
       },
     };
   } else {
