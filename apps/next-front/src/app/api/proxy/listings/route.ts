@@ -7,6 +7,10 @@ import { NextResponse } from 'next/server';
  * Keeps API keys and company IDs secure (not exposed to browser)
  */
 
+// Mark this route as dynamic (always server-rendered, never static)
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 const BASE = process.env.LINEAR_EXTERNAL_BASE ?? 'https://linear-external-api.azurewebsites.net';
 const COMPANY_ID = process.env.COMPANY_ID ?? process.env.LINEAR_COMPANY_ID;
 

@@ -79,24 +79,26 @@ class ListingsCache {
       this.cache.syncInProgress = true;
       console.log(`[ListingsCache] Starting sync at ${new Date().toISOString()}`);
       
-      // Direct API call since LinearAPIClient is not exported
-      const apiUrl = process.env.LINEAR_API_URL || 'https://linear-external-api.azurewebsites.net/api';
-      const apiKey = process.env.LINEAR_API_KEY?.replace('LINEAR-API-KEY ', '') || '';
-      const companyId = process.env.LINEAR_COMPANY_ID || '180';
+      // Use the proxy route to avoid CORS issues and keep credentials secure
+      // The proxy handles authentication and company ID headers server-side
+      const isServer = typeof window === 'undefined';
+      const baseUrl = isServer 
+        ? (process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000')
+        : '';
+      const endpoint = `${baseUrl}/api/proxy/listings?lang=fi`;
       
-      const baseUrl = apiUrl.endsWith('/api') ? apiUrl.replace('/api', '') : apiUrl;
-      const endpoint = `${baseUrl}/v2/listings?languages[]=fi`;
+      console.log(`[ListingsCache] Fetching from proxy: ${endpoint}`);
       
       const response = await fetch(endpoint, {
+        cache: 'no-store',
         headers: {
-          'Authorization': `LINEAR-API-KEY ${apiKey}`,
-          'X-Company-Id': companyId,
           'Content-Type': 'application/json'
         }
       });
       
       if (!response.ok) {
-        throw new Error(`API request failed: ${response.status} ${response.statusText}`);
+        const errorText = await response.text();
+        throw new Error(`Proxy request failed: ${response.status} ${response.statusText} - ${errorText}`);
       }
       
       const listings = await response.json();
