@@ -135,7 +135,12 @@ export default function PropertyPage({ params }: PropertyPageProps) {
         
         // Handle graceful 404 without throwing
         if (!response.ok || !result.success || !result.data) {
-          console.warn('Property not found:', { slug, result });
+          console.warn(`⚠️ Property not found: "${slug}"`, {
+            status: response.status,
+            error: result?.error || 'No data',
+            normalized: result?.normalized,
+            resolved: result?.resolved
+          });
           setProperty(null);
           setLoading(false);
           return;
