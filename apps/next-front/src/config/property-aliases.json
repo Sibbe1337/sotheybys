@@ -1,13 +1,32 @@
 {
-  "comment": "Property slug aliases for marketing URLs and common misspellings",
+  "comment": "Property slug aliases - maps marketing URLs and common variations to actual property slugs",
   "aliases": {
     "albertinkatu-19-b": "albertinkatu-19-b-3",
-    "remmarholmen": "remmarholmen-1",
+    "albertinkatu": "albertinkatu-19-b-3",
+    "remmarholmen": "Remmarholmen",
+    "remmarholmen-1": "Remmarholmen",
+    "kuro-orrholmen": "Kurö, Orrholmen",
+    "orrholmen": "Kurö, Orrholmen",
     "tehtaankatu-19-g": "tehtaankatu-19-g-15",
-    "pengerkatu": "pengerkatu-25",
-    "bernhardinkatu": "bernhardinkatu-1",
-    "heikkilantie": "heikkilantie-1",
-    "nuikontie-140": "nuijontie-140"
+    "tehtaankatu": "tehtaankatu-19-g-15",
+    "pengerkatu": "Pengerkatu 25",
+    "pengerkatu-25": "Pengerkatu 25",
+    "bernhardinkatu": "Bernhardinkatu 1",
+    "bernhardinkatu-1": "Bernhardinkatu 1",
+    "heikkilantie": "Heikkiläntie 1",
+    "heikkilantie-1": "Heikkiläntie 1",
+    "heikkilantie-11": "Heikkiläntie 1",
+    "heikkilaentie": "Heikkiläntie 1",
+    "aleksanteri": "Aleksanteri 1",
+    "aleksanteri-1": "Aleksanteri 1", 
+    "aleksanteri-11": "Aleksanteri 1",
+    "nuikontie-140": "Nuijontie 140",
+    "nuijontie": "Nuijontie 140",
+    "nuikontie": "Nuijontie 140",
+    "vuosselmtie": "Vuosselmtie 19",
+    "vuosselmtie-19": "Vuosselmtie 19",
+    "tehtaankatu-19-g-15": "Tehtaankatu 19 G",
+    "tehtaankatu-19-g": "Tehtaankatu 19 G"
   }
 }
 
