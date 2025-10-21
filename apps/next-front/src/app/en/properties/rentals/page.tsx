@@ -1,7 +1,6 @@
 import PropertyGrid from '@/components/Property/PropertyGrid';
 import { fetchLinearListings } from '@/lib/linear-api-adapter';
 import Link from 'next/link';
-import Image from 'next/image';
 
 export const revalidate = 60;
 
