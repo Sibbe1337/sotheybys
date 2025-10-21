@@ -8,6 +8,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { getHomepageTranslation, type SupportedLanguage } from '@/lib/homepage-translations';
 import { listingsCache, ensureCacheInitialized } from '@/lib/listings-cache';
+import { convertCompleteLinearToWordPressFormat } from '@/lib/linear-api-complete-converter';
 
 // Function to get translated hero slides
 const getTranslatedSlides = (language: SupportedLanguage) => [
@@ -208,7 +209,11 @@ function HomePageContent() {
         
         if (linearProperties && linearProperties.length > 0) {
           console.log('✅ Using real Linear API properties:', linearProperties.length);
-          setProperties(linearProperties);
+          // Transform Linear API format to WordPress format for PropertyCard compatibility
+          const transformedProperties = linearProperties.map(listing => 
+            convertCompleteLinearToWordPressFormat(listing)
+          );
+          setProperties(transformedProperties);
         } else {
           console.warn('⚠️ No Linear properties found, using sample data');
         }
