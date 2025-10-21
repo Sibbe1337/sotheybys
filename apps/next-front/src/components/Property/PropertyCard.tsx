@@ -65,6 +65,18 @@ export default function PropertyCard({
     }).format(price);
   };
 
+  // Debug logging for agent photo
+  if (agent) {
+    console.log('🎨 PropertyCard agent data:', {
+      title,
+      hasAgent: !!agent,
+      agentName: agent.name,
+      hasPhoto: !!agent.photo,
+      photoSourceUrl: agent.photo?.sourceUrl,
+      photoAltText: agent.photo?.altText
+    });
+  }
+
   return (
     <LocaleLink 
       href={`/property/${slug}`} 

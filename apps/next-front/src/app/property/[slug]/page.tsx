@@ -338,6 +338,18 @@ export default function PropertyPage({ params }: PropertyPageProps) {
       : [];
   }
   
+  // Debug logging for agent data in property detail
+  console.log('📍 Property detail agent data:', {
+    propertyTitle: property.title,
+    hasAgent: !!agentData,
+    agentName: agentData?.name,
+    hasImage: !!agentData?.image,
+    hasPhoto: !!agentData?.photo,
+    imageUrl: agentData?.image,
+    photoSourceUrl: agentData?.photo?.sourceUrl,
+    willDisplay: !!(agentData?.image || agentData?.photo?.sourceUrl)
+  });
+  
   // Use parseEuroNumber for safe number parsing and formatEuroCurrency for display
   // Deprecated: keeping formatNumber for non-currency values
   const formatNumber = (num: number | string) => {

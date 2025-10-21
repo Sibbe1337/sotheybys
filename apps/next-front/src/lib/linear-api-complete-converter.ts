@@ -400,6 +400,17 @@ export function convertCompleteLinearToWordPressFormat(listing: CompleteLinearAP
     } : null
   } : null;
   
+  // Debug logging for agent transformation
+  if (listing.realtor?.avatar) {
+    console.log('✅ Agent photo transformed:', {
+      address,
+      hasRealtor: !!listing.realtor,
+      hasAvatar: !!listing.realtor.avatar,
+      avatarUrl: listing.realtor.avatar,
+      transformedPhoto: agent?.photo?.sourceUrl
+    });
+  }
+  
   // Calculate price per sqm
   let pricePerSqm = null;
   if (askPrice && area) {
