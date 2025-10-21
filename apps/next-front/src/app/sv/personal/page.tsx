@@ -17,16 +17,6 @@ const staffMembers = [
   },
   {
     id: '2',
-    name: 'Niclas Sergelius',
-    title: 'Partner, LKV',
-    email: 'niclas@sothebysrealty.fi',
-    phone: '+358 (0)40 569 1369',
-    image: '/images/staff/niclas-sergelius.jpg',
-    description: '',
-    flags: ['fi', 'se', 'gb', 'de']
-  },
-  {
-    id: '3',
     name: 'Heidi Metsänen',
     title: 'Global Sales Coordinator, M.Sc., LKV',
     email: 'heidi@sothebysrealty.fi',
@@ -36,7 +26,7 @@ const staffMembers = [
     flags: ['fi', 'se', 'gb', 'fr']
   },
   {
-    id: '4',
+    id: '3',
     name: 'Soile Goodall',
     title: 'Senior Broker, LKV',
     email: 'soile@sothebysrealty.fi',
@@ -46,7 +36,7 @@ const staffMembers = [
     flags: ['fi', 'gb']
   },
   {
-    id: '5',
+    id: '4',
     name: 'Tea Käyhkö',
     title: 'Senior Broker, BA, MA, LKV',
     email: 'tea@sothebysrealty.fi',
@@ -56,7 +46,7 @@ const staffMembers = [
     flags: ['fi', 'se', 'gb']
   },
   {
-    id: '6',
+    id: '5',
     name: 'Kadri-Ann Õunap',
     title: 'Sales Associate, Notary, KED, KIAT',
     email: 'kadri-ann@sothebysrealty.fi',
@@ -66,7 +56,7 @@ const staffMembers = [
     flags: ['fi', 'se', 'gb', 'ee', 'ru']
   },
   {
-    id: '7',
+    id: '6',
     name: 'Ali Ahola',
     title: 'Senior Broker, LKV',
     email: 'ali@sothebysrealty.fi',
@@ -76,7 +66,7 @@ const staffMembers = [
     flags: ['fi']
   },
   {
-    id: '8',
+    id: '7',
     name: 'Petteri Huovila',
     title: 'Senior Advisor, LKV',
     email: 'petteri@sothebysrealty.fi',
@@ -86,7 +76,7 @@ const staffMembers = [
     flags: ['fi', 'se']
   },
   {
-    id: '9',
+    id: '8',
     name: 'Sima Shaygan',
     title: 'Sales Associate, B.Sc, KiLaT',
     email: 'sima@sothebysrealty.fi',
@@ -96,7 +86,7 @@ const staffMembers = [
     flags: ['fi', 'gb', 'ir', 'tr']
   },
   {
-    id: '10',
+    id: '9',
     name: 'Dennis Forsman',
     title: 'Sales Assistant, B.Sc.',
     email: 'dennis@sothebysrealty.fi',
@@ -106,7 +96,7 @@ const staffMembers = [
     flags: ['fi', 'se', 'gb']
   },
   {
-    id: '11',
+    id: '10',
     name: 'Johan Schröder',
     title: 'Graphic Designer',
     email: 'johan@sothebysrealty.fi',
