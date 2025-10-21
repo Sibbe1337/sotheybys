@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Debug Property 404 Issue</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background: #f5f5f5;
+    }
+    .card {
+      background: white;
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #002349;
+      margin-top: 0;
+    }
+    h2 {
+      color: #002349;
+      font-size: 18px;
+      margin-top: 24px;
+      border-bottom: 2px solid #002349;
+      padding-bottom: 8px;
+    }
+    .result {
+      background: #f8f9fa;
+      border-left: 4px solid #002349;
+      padding: 12px;
+      margin: 12px 0;
+      font-family: 'Monaco', 'Menlo', monospace;
+      font-size: 13px;
+      overflow-x: auto;
+    }
+    .success {
+      border-left-color: #28a745;
+      background: #d4edda;
+    }
+    .error {
+      border-left-color: #dc3545;
+      background: #f8d7da;
+    }
+    .warning {
+      border-left-color: #ffc107;
+      background: #fff3cd;
+    }
+    button {
+      background: #002349;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+    button:hover {
+      background: #001731;
+    }
+    input {
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      width: 300px;
+    }
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    .loading {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🔍 Property 404 Debugger</h1>
+    <p>This tool helps diagnose why properties show on homepage but 404 on detail pages.</p>
+  </div>
+
+  <div class="card">
+    <h2>Step 1: Find Property Slug on Homepage</h2>
+    <p>Check what slugs are actually being used for "Remmarholmen" type properties:</p>
+    <button onclick="findHomepageLinks()">🔗 Find "remmar" Links</button>
+    <div id="linksResult"></div>
+  </div>
+
+  <div class="card">
+    <h2>Step 2: Test API with Slug</h2>
+    <p>Test if the API can find the property:</p>
+    <input type="text" id="slugInput" placeholder="e.g., remmarholmen" value="remmarholmen">
+    <button onclick="testAPI()">🧪 Test API</button>
+    <div id="apiResult"></div>
+  </div>
+
+  <div class="card">
+    <h2>Step 3: Check All Properties in Cache</h2>
+    <p>See all properties that match "remmar":</p>
+    <button onclick="searchCache()">🔍 Search Cache</button>
+    <div id="cacheResult"></div>
+  </div>
+
+  <div class="card">
+    <h2>Step 4: Quick Fix</h2>
+    <div id="fixSuggestion"></div>
+  </div>
+
+  <script>
+    const baseUrl = window.location.origin;
+
+    function log(elementId, message, type = 'result') {
+      const el = document.getElementById(elementId);
+      el.innerHTML = `<div class="result ${type}"><pre>${message}</pre></div>`;
+    }
+
+    async function findHomepageLinks() {
+      log('linksResult', 'Searching for links...', 'warning');
+      
+      try {
+        const links = document.querySelectorAll('a[href*="remmar"]');
+        
+        if (links.length === 0) {
+          log('linksResult', '❌ No links found containing "remmar" on this page.\n\nMake sure you\'re on the homepage first!', 'error');
+          return;
+        }
+
+        let output = `✅ Found ${links.length} link(s):\n\n`;
+        links.forEach((link, i) => {
+          const href = link.getAttribute('href');
+          const fullUrl = link.href;
+          const slug = href.split('/').pop()?.split('?')[0];
+          output += `${i + 1}. Href: ${href}\n`;
+          output += `   Slug: ${slug}\n`;
+          output += `   Full URL: ${fullUrl}\n\n`;
+        });
+
+        output += '📝 Copy the slug value and test it in Step 2!';
+        log('linksResult', output, 'success');
+      } catch (err) {
+        log('linksResult', `❌ Error: ${err.message}`, 'error');
+      }
+    }
+
+    async function testAPI() {
+      const slug = document.getElementById('slugInput').value.trim();
+      
+      if (!slug) {
+        log('apiResult', '❌ Please enter a slug', 'error');
+        return;
+      }
+
+      log('apiResult', `Testing slug: "${slug}"...`, 'warning');
+
+      try {
+        const languages = ['fi', 'sv', 'en'];
+        let output = '';
+
+        for (const lang of languages) {
+          const url = `${baseUrl}/api/property/${slug}?lang=${lang}`;
+          const response = await fetch(url);
+          const data = await response.json();
+
+          output += `\n━━━ Language: ${lang.toUpperCase()} ━━━\n`;
+          output += `Status: ${response.status}\n`;
+          output += `Success: ${data.success}\n`;
+
+          if (data.success) {
+            output += `✅ Property found!\n`;
+            output += `   Title: ${data.data?.title || 'N/A'}\n`;
+            output += `   Address: ${data.data?.streetAddress || 'N/A'}\n`;
+            output += `   City: ${data.data?.city || 'N/A'}\n`;
+          } else {
+            output += `❌ ${data.error || 'Unknown error'}\n`;
+            if (data.normalized) output += `   Normalized: ${data.normalized}\n`;
+            if (data.resolved) output += `   Resolved: ${data.resolved}\n`;
+          }
+        }
+
+        const type = output.includes('✅') ? 'success' : 'error';
+        log('apiResult', output, type);
+
+        if (!output.includes('✅')) {
+          log('fixSuggestion', 
+            `❌ Property "${slug}" not found in cache.\n\n` +
+            `Possible solutions:\n` +
+            `1. The property might use a different slug - check Step 1\n` +
+            `2. The property might not be published in Linear API\n` +
+            `3. The alias in property-aliases.json might be incorrect\n` +
+            `4. The cache might need to refresh (wait 10 minutes or restart server)`, 
+            'error'
+          );
+        } else {
+          log('fixSuggestion', 
+            `✅ Property found! The 404 might be a browser cache issue.\n\n` +
+            `Try:\n` +
+            `1. Hard refresh the page (Cmd+Shift+R on Mac, Ctrl+Shift+R on Windows)\n` +
+            `2. Clear browser cache\n` +
+            `3. Try in incognito/private window`, 
+            'success'
+          );
+        }
+      } catch (err) {
+        log('apiResult', `❌ Error: ${err.message}`, 'error');
+      }
+    }
+
+    async function searchCache() {
+      log('cacheResult', 'Fetching homepage data...', 'warning');
+
+      try {
+        const response = await fetch(`${baseUrl}/api/homepage`);
+        const data = await response.json();
+
+        const listings = data.listings || [];
+        const matches = listings.filter(p => 
+          (p.title || '').toLowerCase().includes('remmar') ||
+          (p.slug || '').toLowerCase().includes('remmar') ||
+          (p.address || '').toLowerCase().includes('remmar')
+        );
+
+        if (matches.length === 0) {
+          log('cacheResult', 
+            `❌ No properties found matching "remmar" in cache.\n\n` +
+            `Total properties in cache: ${listings.length}\n\n` +
+            `This means:\n` +
+            `• The property is not published in Linear API, OR\n` +
+            `• It's filtered out somewhere, OR\n` +
+            `• The cache hasn't synced yet (wait 10 minutes)`, 
+            'error'
+          );
+          return;
+        }
+
+        let output = `✅ Found ${matches.length} matching propert${matches.length === 1 ? 'y' : 'ies'}:\n\n`;
+        
+        matches.forEach((prop, i) => {
+          output += `━━━ Property ${i + 1} ━━━\n`;
+          output += `Title: ${prop.title || 'N/A'}\n`;
+          output += `Slug: ${prop.slug || 'N/A'}\n`;
+          output += `ID: ${prop.id || 'N/A'}\n`;
+          output += `Address: ${prop.address || 'N/A'}\n`;
+          output += `City: ${prop.city || 'N/A'}\n\n`;
+        });
+
+        output += `📝 Update property-aliases.json with:\n`;
+        output += `"remmarholmen": "${matches[0].slug}"\n`;
+
+        log('cacheResult', output, 'success');
+
+        log('fixSuggestion', 
+          `✅ Property exists in cache!\n\n` +
+          `TO FIX THE 404:\n` +
+          `1. Update /src/config/property-aliases.json:\n` +
+          `   "remmarholmen": "${matches[0].slug}"\n\n` +
+          `2. Restart the dev server or wait for Vercel redeploy\n\n` +
+          `3. Test: Visit /property/remmarholmen`, 
+          'success'
+        );
+      } catch (err) {
+        log('cacheResult', `❌ Error: ${err.message}`, 'error');
+      }
+    }
+  </script>
+</body>
+</html>
+
