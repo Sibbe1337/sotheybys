@@ -13,13 +13,22 @@ export const revalidate = 0;
 
 const BASE = process.env.LINEAR_EXTERNAL_BASE ?? 'https://linear-external-api.azurewebsites.net';
 const COMPANY_ID = process.env.COMPANY_ID ?? process.env.LINEAR_COMPANY_ID;
+const API_KEY = process.env.LINEAR_API_KEY;
 
 export async function GET(request: Request) {
   try {
     if (!COMPANY_ID) {
       console.error('❌ COMPANY_ID environment variable not set');
       return NextResponse.json(
-        { success: false, error: 'Server configuration error' },
+        { success: false, error: 'Server configuration error: COMPANY_ID missing' },
+        { status: 500 }
+      );
+    }
+
+    if (!API_KEY) {
+      console.error('❌ LINEAR_API_KEY environment variable not set');
+      return NextResponse.json(
+        { success: false, error: 'Server configuration error: LINEAR_API_KEY missing' },
         { status: 500 }
       );
     }
@@ -35,8 +44,14 @@ export async function GET(request: Request) {
     
     console.log('🔄 Proxying request to:', externalUrl);
 
+    // Format API key - ensure it has the LINEAR-API-KEY prefix
+    const formattedApiKey = API_KEY.startsWith('LINEAR-API-KEY ') 
+      ? API_KEY 
+      : `LINEAR-API-KEY ${API_KEY}`;
+
     const response = await fetch(externalUrl, {
       headers: {
+        'Authorization': formattedApiKey,
         'x-company-id': COMPANY_ID,
         'accept': 'application/json',
       },
