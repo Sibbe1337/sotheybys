@@ -40,17 +40,36 @@ export async function GET(
     // Initialize cache
     await ensureCacheInitialized();
     
+    // Debug: Log cache status
+    const cacheStatus = listingsCache.getStatus();
+    console.log('📦 Cache status:', {
+      listingsCount: cacheStatus.listingsCount,
+      lastSync: cacheStatus.lastSyncTime,
+      syncInProgress: cacheStatus.syncInProgress
+    });
+    
+    // Debug: Log all available slugs
+    const allListings = listingsCache.getListings();
+    const availableSlugs = allListings.map(l => {
+      const addr = l.address?.fi?.value;
+      return addr ? generateSlug(addr) : null;
+    }).filter(Boolean);
+    console.log('📋 Available slugs in cache:', availableSlugs);
+    
     // Try 1: Get from Linear API cache using resolved slug
     let foundProperty: any = listingsCache.getMultilingualListingBySlug(resolvedSlug);
+    console.log('🔍 Try 1 (resolved slug):', { resolvedSlug, found: !!foundProperty });
     
     // Try 2: If normalized slug is different, try that too
     if (!foundProperty && normalizedSlug !== resolvedSlug) {
       foundProperty = listingsCache.getMultilingualListingBySlug(normalizedSlug);
+      console.log('🔍 Try 2 (normalized slug):', { normalizedSlug, found: !!foundProperty });
     }
     
     // Try 3: If still not found, try original slug (case-sensitive fallback)
     if (!foundProperty && rawSlug !== resolvedSlug) {
       foundProperty = listingsCache.getMultilingualListingBySlug(rawSlug);
+      console.log('🔍 Try 3 (raw slug):', { rawSlug, found: !!foundProperty });
     }
     
     // Try 4: WordPress fallback (different data structure)
