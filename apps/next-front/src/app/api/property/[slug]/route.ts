@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { listingsCache, ensureCacheInitialized } from '@/lib/listings-cache';
 import { getPropertyBySlug } from '@/lib/wordpress';
 import { flattenPropertyForLanguage } from '@/lib/flatten-localized-data';
+import { generateSlug } from '@/lib/utils';
 import aliasesData from '@/config/property-aliases.json';
 
 // Force dynamic rendering as this route uses request.url
@@ -14,24 +15,11 @@ const ALIAS_MAP: Record<string, string> = aliasesData.aliases;
 
 /**
  * Normalizes a slug for consistent lookup
- * Handles: case, accents/diacritics (ä→a, ö→o), spaces, commas, special chars
- * Matches the slug generation logic used in listingsCache
+ * CRITICAL: Uses the same generateSlug() function as the cache to ensure consistency
+ * This fixes the slug resolution issue documented in memory:9241337
  */
 function normalizeSlug(s: string): string {
-  return s
-    .trim()
-    .toLowerCase()
-    // Finnish character mappings (must happen before normalization)
-    .replace(/ä/g, 'a')
-    .replace(/ö/g, 'o')
-    .replace(/å/g, 'a')
-    .normalize('NFKD')                    // split accented chars
-    .replace(/[\u0300-\u036f]/g, '')      // strip diacritics
-    .replace(/\s+/g, '-')                 // spaces → hyphen
-    .replace(/,/g, '')                    // remove commas
-    .replace(/-+/g, '-')                  // collapse multiple hyphens
-    .replace(/[^a-z0-9-]/g, '')          // keep only safe chars
-    .replace(/^-+|-+$/g, '');            // trim leading/trailing hyphens
+  return generateSlug(s);
 }
 
 export async function GET(
