@@ -210,9 +210,24 @@ function HomePageContent() {
         if (linearProperties && linearProperties.length > 0) {
           console.log('✅ Using real Linear API properties:', linearProperties.length);
           // Transform Linear API format to WordPress format for PropertyCard compatibility
-          const transformedProperties = linearProperties.map(listing => 
-            convertCompleteLinearToWordPressFormat(listing)
-          );
+          const transformedProperties = linearProperties.map(listing => {
+            const converted = convertCompleteLinearToWordPressFormat(listing);
+            // Ensure featuredImage is in the correct nested format for PropertyCard
+            return {
+              ...converted,
+              featuredImage: converted.featuredImage ? {
+                node: {
+                  sourceUrl: converted.featuredImage,
+                  altText: converted.title || converted.acfRealEstate?.property?.address || ''
+                }
+              } : {
+                node: {
+                  sourceUrl: '/images/defaults/placeholder-property.jpg',
+                  altText: converted.title || 'Property'
+                }
+              }
+            };
+          });
           setProperties(transformedProperties);
         } else {
           console.warn('⚠️ No Linear properties found, using sample data');
