@@ -3,7 +3,7 @@ import { Inter, Playfair_Display } from 'next/font/google';
 import { headers } from 'next/headers';
 import './globals.css';
 import Header from '@/components/Header/Header';
-import FooterBottomBar from '@/components/Footer/FooterBottomBar';
+import FooterWithTeam from '@/components/Footer/FooterWithTeam';
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -70,7 +70,7 @@ export default function RootLayout({
         <div className="min-h-screen flex flex-col">
           <Header />
           {children}
-          <FooterBottomBar />
+          <FooterWithTeam />
         </div>
       </body>
     </html>

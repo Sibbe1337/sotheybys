@@ -1,126 +1,33 @@
 import PropertyGrid from '@/components/Property/PropertyGrid';
-import { getClient } from '@/lib/wordpress';
-import { gql } from '@apollo/client';
+import { fetchLinearListings } from '@/lib/linear-api-adapter';
 import Link from 'next/link';
 
 export const revalidate = 60;
 
-const GET_REFERENCE_PROPERTIES = gql`
-  query GetReferenceProperties {
-    posts(first: 100, where: { categoryName: "referenssit" }) {
-      nodes {
-        id
-        title
-        slug
-        featuredImage {
-          node {
-            sourceUrl
-            altText
-          }
-        }
-        acfRealEstate {
-          property {
-            price
-            address
-            city
-            bedrooms
-            bathrooms
-            area
-            propertyType
-            status
-            description
-          }
-        }
-      }
-    }
-  }
-`;
-
-// Sample reference properties based on the actual site
-const sampleReferences = [
-  {
-    id: 'ref-1',
-    title: 'Skutholminkaari 5',
-    slug: 'skutholminkaari-5-ref',
-    featuredImage: {
-      node: {
-        sourceUrl: '/images/defaults/noimage.jpg',
-        altText: 'Skutholminkaari 5'
-      }
-    },
-    acfRealEstate: {
-      property: {
-        address: 'Skutholminkaari 5',
-        city: 'Helsinki',
-        area: 198,
-        propertyType: 'Omakotitalo',
-        status: 'Myyty',
-        description: '5h, khh, tupak, vh, kph, s, terassi, wc, p'
-      }
-    }
-  },
-  {
-    id: 'ref-2',
-    title: 'Heikkiläntie 1 C',
-    slug: 'heikkilantie-1-c-ref',
-    featuredImage: {
-      node: {
-        sourceUrl: '/images/defaults/noimage.jpg',
-        altText: 'Heikkiläntie 1 C'
-      }
-    },
-    acfRealEstate: {
-      property: {
-        address: 'Heikkiläntie 1 C',
-        city: 'Helsinki',
-        area: 141,
-        propertyType: 'Kerrostalo',
-        status: 'Myyty',
-        description: '3mh, oh, rt, k, kph, 2 wc, lasitettu parveke ja terassi'
-      }
-    }
-  },
-  {
-    id: 'ref-3',
-    title: 'Albertinkatu 19 B',
-    slug: 'albertinkatu-19-b-ref',
-    featuredImage: {
-      node: {
-        sourceUrl: 'https://d33xsej2pkrh3b.cloudfront.net/640x427,fit,q85,f=webp/oviproprodmedia/Production/realty/d5e5c5e5-5e17-4a3f-8c7f-5f5e5c5e5c5e/albertin.jpg',
-        altText: 'Albertinkatu 19 B'
-      }
-    },
-    acfRealEstate: {
-      property: {
-        address: 'Albertinkatu 19 B',
-        city: 'Helsinki',
-        area: 108,
-        propertyType: 'Kerrostalo',
-        status: 'Myyty',
-        description: '2-3h, k, 2 kph/wc, et.'
-      }
-    }
-  }
-];
-
 export default async function ReferencesPage() {
   let referenceProperties = [];
   
-  // Try to fetch from WordPress
+  // Fetch sold properties from Linear API
   try {
-    const { data } = await getClient().query({
-      query: GET_REFERENCE_PROPERTIES,
+    const allListings = await fetchLinearListings('fi');
+    
+    // Filter for sold properties (status: 'Myyty')
+    referenceProperties = allListings.filter(listing => {
+      const status = listing.property?.status?.toLowerCase();
+      return status === 'myyty' || status === 'såld' || status === 'sold';
     });
-    if (data?.posts?.nodes && data.posts.nodes.length > 0) {
-      referenceProperties = data.posts.nodes;
-    }
+    
+    // Sort by most recent first (if date available)
+    referenceProperties.sort((a, b) => {
+      const dateA = a.date ? new Date(a.date).getTime() : 0;
+      const dateB = b.date ? new Date(b.date).getTime() : 0;
+      return dateB - dateA;
+    });
+    
+    console.log(`✅ Found ${referenceProperties.length} sold properties (Referenser)`);
   } catch (error) {
-    console.error('Error fetching reference properties:', error);
-  }
-  
-  // Use sample data if no WordPress data
-  if (referenceProperties.length === 0) {
-    referenceProperties = sampleReferences;
+    console.error('Error fetching sold properties from Linear:', error);
+    referenceProperties = [];
   }
 
   return (
