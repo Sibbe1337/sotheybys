@@ -335,10 +335,10 @@ export default function Header() {
                     >
                       <LocaleLink
                         href={item.path || item.url}
-                        className={`flex items-center px-3 py-2 text-sm font-normal tracking-wider uppercase
+                        className={`flex items-center px-5 py-2 text-sm font-light tracking-[0.15em] uppercase
                                    transition-all duration-200 ${
                                      isActive 
-                                       ? 'text-[var(--color-gold)] font-medium' 
+                                       ? 'text-[var(--color-gold)]' 
                                        : 'text-white/90 hover:text-[var(--color-gold)]'
                                    }`}
                         target={item.target}
@@ -465,9 +465,9 @@ export default function Header() {
                 <div className="flex items-center justify-between">
                   <LocaleLink
                     href={item.path || item.url}
-                    className={`block py-3 text-sm font-normal tracking-wide uppercase border-b border-white/10 flex-1
+                    className={`block py-3 text-sm font-light tracking-[0.15em] uppercase border-b border-white/10 flex-1
                              ${isActive 
-                               ? 'text-[var(--color-gold)] font-medium' 
+                               ? 'text-[var(--color-gold)]' 
                                : 'text-white/90 hover:text-[var(--color-gold)]'
                              }`}
                     target={item.target}
