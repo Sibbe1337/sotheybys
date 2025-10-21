@@ -40,42 +40,25 @@ export default async function RentalPropertiesPage() {
   let rentalProperties = [];
   
   try {
-    // Try to fetch from Linear API first
-    const linearProperties = await fetchLinearListings();
-    if (linearProperties && linearProperties.length > 0) {
-      // Filter for rental properties based on status or other criteria
-      rentalProperties = linearProperties.filter(p => 
-        p.acfRealEstate?.property?.status?.toLowerCase().includes('vuokra') ||
-        p.acfRealEstate?.property?.status?.toLowerCase().includes('rent')
-      );
-    }
+    const allListings = await fetchLinearListings('fi');
     
-    if (rentalProperties.length === 0) {
-      // Try test API
-      const testProperties = await fetchTestLinearListings();
-      if (testProperties && testProperties.length > 0) {
-        rentalProperties = testProperties.filter(p => 
-          p.acfRealEstate?.property?.status?.toLowerCase().includes('vuokra') ||
-          p.acfRealEstate?.property?.status?.toLowerCase().includes('rent')
-        );
-      }
-    }
+    // Filter for rental properties (vuokrakohteet)
+    rentalProperties = allListings.filter(listing => {
+      const type = listing.property?.saleType?.toLowerCase() || '';
+      const status = listing.property?.status?.toLowerCase() || '';
+      return (
+        type.includes('vuokra') || 
+        type.includes('rent') || 
+        type.includes('hyra') || 
+        status.includes('vuokra') ||
+        status.includes('rent')
+      );
+    });
+    
+    console.log(`✅ Found ${rentalProperties.length} rental properties (Vuokrakohteet)`);
   } catch (error) {
     console.error('Error fetching rental properties from Linear:', error);
-  }
-  
-  // If no Linear properties, try WordPress
-  if (rentalProperties.length === 0) {
-    try {
-      const { data } = await getClient().query({
-        query: GET_RENTAL_PROPERTIES,
-      });
-      if (data?.posts?.nodes) {
-        rentalProperties = data.posts.nodes;
-      }
-    } catch (error) {
-      console.error('Error fetching rental properties from WordPress:', error);
-    }
+    rentalProperties = [];
   }
 
   return (
@@ -139,7 +122,7 @@ export default async function RentalPropertiesPage() {
         <section className="py-12 lg:py-20">
           <div className="container mx-auto px-4">
             {rentalProperties.length > 0 ? (
-              <PropertyGrid properties={rentalProperties} showStatus={true} />
+              <PropertyGrid properties={rentalProperties} showStatus={true} language="fi" />
             ) : (
               <div className="text-center py-20">
                 <div className="inline-flex items-center justify-center w-20 h-20 

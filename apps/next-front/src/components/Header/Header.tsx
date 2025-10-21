@@ -40,7 +40,9 @@ export default function Header({ menuItems }: HeaderProps) {
           childItems: {
             nodes: [
               { id: '2-1', label: 'Försäljningsobjekt', path: '/sv/objekt', url: '/sv/objekt' },
-              { id: '2-2', label: 'Hyresobjekt', path: '/sv/objekt/hyra', url: '/sv/objekt/hyra' },
+              { id: '2-2', label: 'Hyresobjekt', path: '/sv/objekt/hyresobjekt', url: '/sv/objekt/hyresobjekt' },
+              { id: '2-3', label: 'Köpuppdrag', path: '/sv/objekt/kopuppdrag', url: '/sv/objekt/kopuppdrag' },
+              { id: '2-4', label: 'Referenser', path: '/sv/objekt/referenser', url: '/sv/objekt/referenser' },
             ]
           }
         },
@@ -72,6 +74,8 @@ export default function Header({ menuItems }: HeaderProps) {
             nodes: [
               { id: '2-1', label: 'For Sale', path: '/en/properties', url: '/en/properties' },
               { id: '2-2', label: 'For Rent', path: '/en/properties/rentals', url: '/en/properties/rentals' },
+              { id: '2-3', label: 'Purchase Assignments', path: '/en/properties/purchase-assignments', url: '/en/properties/purchase-assignments' },
+              { id: '2-4', label: 'References', path: '/en/properties/references', url: '/en/properties/references' },
             ]
           }
         },
@@ -104,6 +108,8 @@ export default function Header({ menuItems }: HeaderProps) {
             nodes: [
               { id: '2-1', label: 'Myyntikohteet', path: '/kohteet', url: '/kohteet' },
               { id: '2-2', label: 'Vuokrakohteet', path: '/kohteet/vuokrakohteet', url: '/kohteet/vuokrakohteet' },
+              { id: '2-3', label: 'Ostotoimeksiannot', path: '/kohteet/ostotoimeksiannot', url: '/kohteet/ostotoimeksiannot' },
+              { id: '2-4', label: 'Referenssit', path: '/kohteet/referenssit', url: '/kohteet/referenssit' },
             ]
           }
         },
