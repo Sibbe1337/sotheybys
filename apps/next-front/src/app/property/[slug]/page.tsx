@@ -555,8 +555,8 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                   </div>
                 ) : (
                   <div className="text-center py-20">
-                    <h2 className="text-2xl font-light text-gray-700 mb-4">Sijainti kartalla</h2>
-                    <p className="text-gray-500">Kartta ei saatavilla</p>
+                    <h2 className="text-2xl font-light text-gray-700 mb-4">{getTranslation('mapLocation', language)}</h2>
+                    <p className="text-gray-500">{getTranslation('mapNotAvailable', language)}</p>
                   </div>
                 )}
               </div>
@@ -652,9 +652,14 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                     </div>
                   </div>
                 ) : (
-                  <div className="text-center py-20">
-                    <h2 className="text-2xl font-light text-gray-700 mb-4">{getTranslation('videoTab', language)}</h2>
-                    <p className="text-gray-500">{getTranslation('notAvailable', language)}</p>
+                  <div className="max-w-4xl mx-auto">
+                    <div className="relative w-full rounded-lg shadow-lg overflow-hidden bg-gray-300" style={{ paddingBottom: '56.25%' }}>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <p className="text-4xl font-light text-gray-600">
+                          {getTranslation('comingSoon', language)}
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>
@@ -719,21 +724,19 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                     <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-primary)]"></div>
                   )}
                 </button>
-                {(isValidVideoUrl(propertyData.videoUrl) || isValidVideoUrl(propertyData.youtubeUrl) || isValidVideoUrl(propertyData.video)) && (
-                  <button
-                    onClick={() => setActiveTab('video')}
-                    className={`px-6 md:px-8 py-5 font-light text-sm uppercase tracking-widest transition-all relative ${
-                      activeTab === 'video' 
-                        ? 'text-[var(--color-primary)]' 
-                        : 'text-gray-600 hover:text-[var(--color-primary)]'
-                    }`}
-                  >
-                    Katso video
-                    {activeTab === 'video' && (
-                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-primary)]"></div>
-                    )}
-                  </button>
-                )}
+                <button
+                  onClick={() => setActiveTab('video')}
+                  className={`px-6 md:px-8 py-5 font-light text-sm uppercase tracking-widest transition-all relative ${
+                    activeTab === 'video' 
+                      ? 'text-[var(--color-primary)]' 
+                      : 'text-gray-600 hover:text-[var(--color-primary)]'
+                  }`}
+                >
+                  {getTranslation('videoTab', language)}
+                  {activeTab === 'video' && (
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-primary)]"></div>
+                  )}
+                </button>
               </div>
             </div>
           </div>
@@ -744,7 +747,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
       <div className="bg-white py-6 border-b border-gray-200">
         <div className="container mx-auto px-4">
           <div className="flex justify-center items-center space-x-6">
-            <span className="text-sm text-gray-600 uppercase tracking-wider">Jaa:</span>
+            <span className="text-sm text-gray-600 uppercase tracking-wider">{getTranslation('share', language)}:</span>
             <button
               onClick={() => {
                 const url = window.location.href;
@@ -810,92 +813,105 @@ export default function PropertyPage({ params }: PropertyPageProps) {
         </div>
       </section>
 
-      {/* Property Title and Description */}
+      {/* Property Title, Type, Description and Agent */}
       <section className="py-12">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h1 className="text-3xl md:text-4xl font-bold text-[var(--color-primary)] mb-4">
+          <div className="max-w-4xl mx-auto">
+            {/* 1. Titel på presentationen */}
+            <h1 className="text-3xl md:text-4xl font-bold text-[var(--color-primary)] mb-4 text-center">
               {property.title}
             </h1>
-            {propertyData.address && (
-              <h2 className="text-xl text-gray-600 mb-2">
-                {propertyData.address}{propertyData.postalCode ? `, ${propertyData.postalCode}` : ''} {propertyData.city || ''}
-              </h2>
-            )}
-            {propertyData.propertyType && (
-              <h4 className="text-lg text-gray-500">
-                {propertyData.propertyType} | {propertyData.rooms}
+            
+            {/* 2. Typ av hus | lägenhetsbeskrivning */}
+            {(propertyData.propertyType || propertyData.rooms) && (
+              <h4 className="text-lg text-gray-500 mb-8 text-center">
+                {propertyData.propertyType || ''}{propertyData.propertyType && propertyData.rooms ? ' | ' : ''}{propertyData.rooms || ''}
               </h4>
             )}
-          </div>
-
-          {/* Description Section */}
-          <div className="max-w-4xl mx-auto">
-            <div className="mb-12">
-              <button
-                onClick={() => toggleSection('description')}
-                className="w-full text-left"
-              >
-                <h3 className="text-2xl font-semibold text-[var(--color-primary)] mb-4 flex items-center justify-center">
+            
+            {/* 3. Presentationstext (expanderad som default) */}
+            {(propertyData.description || property.content) && (
+              <div className="mb-12">
+                <h3 className="text-2xl font-semibold text-[var(--color-primary)] mb-6 text-center">
                   {getTranslation('description', language)}
-                  <span className={`ml-2 transition-transform ${expandedSections.description ? 'rotate-180' : ''}`}>
-                    ▼
-                  </span>
                 </h3>
-              </button>
-              {expandedSections.description && (
-                <div className="prose max-w-none text-gray-700 leading-relaxed">
+                <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
                   <div dangerouslySetInnerHTML={{ __html: propertyData.description || property.content || '' }} />
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
+        </div>
+      </section>
 
-          {/* Agent Contact */}
-          {agentData && agentData.name && (
-            <div className="max-w-2xl mx-auto text-center py-8">
-              <h3 className="text-2xl font-semibold mb-6">Lisätiedot ja esittelyt</h3>
-              <div className="bg-white rounded-lg shadow-lg p-8">
-                <div className="flex flex-col md:flex-row items-center gap-6">
-                  {agentData.image && (
-                    <div className="relative w-32 h-32 rounded-full overflow-hidden">
-                      <Image
-                        src={agentData.image}
-                        alt={agentData.name}
-                        fill
-                        className="object-cover"
-                      />
+      {/* 4. Agent Contact - EFTER beskrivningen */}
+      {agentData && agentData.name && (
+        <section className="py-12 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto">
+              <h3 className="text-2xl font-semibold mb-8 text-center">
+                {getTranslation('contactAgent', language)}
+              </h3>
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div className="p-8">
+                  <div className="flex flex-col md:flex-row items-center gap-8">
+                    {/* Agent Image */}
+                    {agentData.image && (
+                      <div className="relative w-40 h-40 rounded-full overflow-hidden flex-shrink-0 shadow-lg">
+                        <Image
+                          src={agentData.image}
+                          alt={agentData.name}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                    )}
+                    
+                    {/* Agent Info */}
+                    <div className="text-center md:text-left flex-1">
+                      <h4 className="text-2xl font-semibold text-gray-900">{agentData.name}</h4>
+                      <p className="text-gray-600 text-lg mb-4">{agentData.title || 'Senior Broker, LKV'}</p>
+                      
+                      <div className="space-y-2">
+                        {agentData.phone && (
+                          <p className="flex items-center justify-center md:justify-start gap-2">
+                            <Phone size={18} className="text-[var(--color-primary)]" />
+                            <a href={`tel:${agentData.phone}`} className="text-[var(--color-primary)] hover:underline">
+                              {agentData.phone}
+                            </a>
+                          </p>
+                        )}
+                        {agentData.email && (
+                          <p className="flex items-center justify-center md:justify-start gap-2">
+                            <Mail size={18} className="text-[var(--color-primary)]" />
+                            <a href={`mailto:${agentData.email}`} className="text-[var(--color-primary)] hover:underline">
+                              {agentData.email}
+                            </a>
+                          </p>
+                        )}
+                      </div>
                     </div>
-                  )}
-                  <div className="text-center md:text-left">
-                    <h3 className="text-xl font-semibold">{agentData.name}</h3>
-                    <p className="text-gray-600">{agentData.title || 'Senior Broker, LKV'}</p>
-                    {agentData.phone && (
-                      <p className="mt-2">
-                        <a href={`tel:${agentData.phone}`} className="text-[var(--color-primary)] hover:underline">
-                          {agentData.phone}
-                        </a>
-                      </p>
-                    )}
-                    {agentData.email && (
-                      <p>
-                        <a href={`mailto:${agentData.email}`} className="text-[var(--color-primary)] hover:underline">
-                          {agentData.email}
-                        </a>
-                      </p>
-                    )}
+                  </div>
+                  
+                  {/* Contact Button - Direkt till mäklarens e-post */}
+                  <div className="mt-8 text-center">
                     <a 
-                      href={`mailto:${agentData.email || 'info@sothebysrealty.fi'}`}
-                      className="inline-block mt-4 bg-[var(--color-primary)] text-white px-6 py-3 rounded hover:bg-[var(--color-primary-dark)] transition-colors"
+                      href={`mailto:${agentData.email || 'info@sothebysrealty.fi'}?subject=${encodeURIComponent(property.title)}&body=${encodeURIComponent(`Hej,\n\nJag är intresserad av: ${property.title}\n\nLänk: ${typeof window !== 'undefined' ? window.location.href : ''}`)}`}
+                      className="inline-block bg-[var(--color-primary)] text-white px-10 py-4 rounded hover:bg-[var(--color-primary-dark)] transition-colors uppercase tracking-wider text-sm font-light"
                     >
-                      OTA YHTEYTTÄ
+                      {getTranslation('contactButton', language)}
                     </a>
                   </div>
                 </div>
               </div>
             </div>
-          )}
+          </div>
+        </section>
+      )}
 
+      {/* Detailed Property Information */}
+      <section className="py-12">
+        <div className="container mx-auto px-4">
           {/* Detailed Property Information */}
           <div className="max-w-6xl mx-auto mt-12">
             {/* Price Information */}
@@ -975,7 +991,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                   className="w-full bg-gray-100 p-4 text-left hover:bg-gray-200 transition-colors"
                 >
                   <h3 className="text-xl font-semibold flex items-center justify-between">
-                    Energialuokitus
+                    {getTranslation('energyRating', language)}
                     <span className={`transition-transform ${expandedSections.energyRating ? 'rotate-180' : ''}`}>
                       ▼
                     </span>
@@ -984,7 +1000,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                 {expandedSections.energyRating && (
                   <div className="bg-white border border-gray-200 p-6">
                     <div className="flex justify-between py-2">
-                      <span className="text-gray-600">Energialuokka</span>
+                      <span className="text-gray-600">{getTranslation('energyClass', language)}</span>
                       <span className="font-semibold">{propertyData.energyClass}</span>
                     </div>
                   </div>
@@ -999,7 +1015,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                 className="w-full bg-gray-100 p-4 text-left hover:bg-gray-200 transition-colors"
               >
                 <h3 className="text-xl font-semibold flex items-center justify-between">
-                  Kiinteistötiedot
+                  {getTranslation('propertyInfo', language)}
                   <span className={`transition-transform ${expandedSections.propertyInfo ? 'rotate-180' : ''}`}>
                     ▼
                   </span>
@@ -1010,19 +1026,19 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {propertyData.propertyId && (
                       <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">Kiinteistön tunnus</span>
+                        <span className="text-gray-600">{getTranslation('propertyId', language)}</span>
                         <span className="font-semibold">{propertyData.propertyId}</span>
                       </div>
                     )}
                     {propertyData.plotArea && (
                       <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">Tontin pinta-ala</span>
+                        <span className="text-gray-600">{getTranslation('plotArea', language)}</span>
                         <span className="font-semibold">{formatNumber(propertyData.plotArea)} m²</span>
                       </div>
                     )}
                     {propertyData.plotOwnership && (
                       <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">Tontin omistus</span>
+                        <span className="text-gray-600">{getTranslation('plotOwnership', language)}</span>
                         <span className="font-semibold">{propertyData.plotOwnership}</span>
                       </div>
                     )}

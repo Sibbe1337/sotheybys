@@ -173,6 +173,21 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     sv: 'Inlösenklausul',
     en: 'Redemption Clause'
   },
+  propertyId: {
+    fi: 'Kiinteistön tunnus',
+    sv: 'Fastighetsbeteckning',
+    en: 'Property ID'
+  },
+  plotArea: {
+    fi: 'Tontin pinta-ala',
+    sv: 'Tomtstorlek',
+    en: 'Plot Area'
+  },
+  plotOwnership: {
+    fi: 'Tontin omistus',
+    sv: 'Ägandet',
+    en: 'Plot Ownership'
+  },
   
   // Building Fields
   buildingMaterial: {
@@ -309,6 +324,36 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     fi: 'Video',
     sv: 'Video',
     en: 'Video'
+  },
+  comingSoon: {
+    fi: 'Tulossa',
+    sv: 'På kommande',
+    en: 'Coming soon'
+  },
+  contactAgent: {
+    fi: 'Lisätiedot ja esittelyt',
+    sv: 'Mer information och visningar',
+    en: 'More information and viewings'
+  },
+  contactButton: {
+    fi: 'Ota yhteyttä',
+    sv: 'Kontakta',
+    en: 'Contact'
+  },
+  share: {
+    fi: 'Jaa',
+    sv: 'Dela',
+    en: 'Share'
+  },
+  mapLocation: {
+    fi: 'Sijainti kartalla',
+    sv: 'Visa på kartan',
+    en: 'Location on map'
+  },
+  mapNotAvailable: {
+    fi: 'Kartta ei saatavilla',
+    sv: 'Karta inte tillgänglig',
+    en: 'Map not available'
   },
   notAvailable: {
     fi: 'Ei saatavilla',
