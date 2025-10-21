@@ -121,23 +121,41 @@ export async function GET(
       );
     }
     
-    // CRITICAL: Use 'identifier' (numeric) NOT 'id' (UUID) for detail endpoint
-    const matchId = match.identifier?.fi?.value || match.identifier || match.id?.fi?.value || match.id;
-    console.log('✅ Match found:', { 
-      id: matchId, 
-      uuid: match.id,
-      identifier: match.identifier,
-      address: match.address?.fi?.value || match.address 
-    });
+           // CRITICAL: Use 'identifier' (numeric) NOT 'id' (UUID) for detail endpoint
+           const matchId = match.identifier?.fi?.value || match.identifier || match.id?.fi?.value || match.id;
+           const matchDetails = {
+             id: matchId, 
+             uuid: match.id,
+             identifier: match.identifier,
+             identifierFi: match.identifier?.fi?.value,
+             address: match.address?.fi?.value || match.address,
+             slug: match.slug ?? match.canonicalSlug ?? '(empty)'
+           };
+           console.log('✅ Match found:', matchDetails);
+           
+           // Diagnostic: Check if matchId is valid
+           if (!matchId) {
+             console.error('❌ No valid identifier found in match:', matchDetails);
+             return NextResponse.json(
+               { success: false, error: "NO_IDENTIFIER", details: matchDetails },
+               { status: 404, headers: { "cache-control": "no-store" }}
+             );
+           }
 
     // Step 3: Fetch full details by ID (using numeric identifier)
     const detail = await fetchJSON(`${BASE}/v2/property/${matchId}?languages[]=${lang}`);
     
     if (!detail.ok) {
-      console.error('❌ Detail upstream error:', detail.status);
+      console.error('❌ Detail upstream error:', detail.status, `for identifier: ${matchId}`);
       const code = detail.status === 404 ? 404 : 502;
       return NextResponse.json(
-        { success: false, error: "DETAILS_UPSTREAM", status: detail.status },
+        { 
+          success: false, 
+          error: "DETAILS_UPSTREAM", 
+          status: detail.status,
+          identifier: matchId,
+          address: matchDetails.address
+        },
         { status: code, headers: { "cache-control": "no-store" }}
       );
     }
