@@ -837,7 +837,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                 className="w-full text-left"
               >
                 <h3 className="text-2xl font-semibold text-[var(--color-primary)] mb-4 flex items-center justify-center">
-                  Kuvaus
+                  {getTranslation('description', language)}
                   <span className={`ml-2 transition-transform ${expandedSections.description ? 'rotate-180' : ''}`}>
                     ▼
                   </span>

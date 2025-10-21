@@ -285,6 +285,11 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     sv: 'Bilder',
     en: 'Photos'
   },
+  description: {
+    fi: 'Kuvaus',
+    sv: 'Beskrivning',
+    en: 'Description'
+  },
   floorPlan: {
     fi: 'Pohjakuva',
     sv: 'Planritning',
