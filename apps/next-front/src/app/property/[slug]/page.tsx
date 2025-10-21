@@ -163,6 +163,9 @@ export default function PropertyPage({ params }: PropertyPageProps) {
         } else {
           warnOnce(slug, '⚠️  No images found in property data:');
         }
+        
+        // CRITICAL: Clear loading state after successful data load
+        setLoading(false);
       } catch (error) {
         console.error('Error loading property:', error);
         setProperty(null);
