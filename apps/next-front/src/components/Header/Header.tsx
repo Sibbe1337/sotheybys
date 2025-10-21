@@ -27,39 +27,106 @@ export default function Header({ menuItems }: HeaderProps) {
   const [expandedMobileMenu, setExpandedMobileMenu] = useState<string | null>(null);
   const [currentLang, setCurrentLang] = useState<string>('fi');
 
-  // Default menu items if none provided
-  const defaultMenuItems: MenuItem[] = [
-    { id: '1', label: 'KOTI', path: '/', url: '/' },
-    { 
-      id: '2', 
-      label: 'KOHTEET', 
-      path: '/kohteet', 
-      url: '/kohteet',
-      childItems: {
-        nodes: [
-          { id: '2-1', label: 'Myyntikohteet', path: '/kohteet', url: '/kohteet' },
-          { id: '2-2', label: 'Vuokrakohteet', path: '/kohteet/vuokrakohteet', url: '/kohteet/vuokrakohteet' },
-        ]
-      }
-    },
-    { id: '3', label: 'MYYMÄSSÄ', path: '/myymassa', url: '/myymassa' },
-    { id: '4', label: 'KANSAINVÄLISESTI', path: '/kansainvalisesti', url: '/kansainvalisesti' },
-    { id: '5', label: 'HENKILÖSTÖ', path: '/henkilosto', url: '/henkilosto' },
-    { 
-      id: '6', 
-      label: 'OTA YHTEYTTÄ', 
-      path: '/ota-yhteytta', 
-      url: '/ota-yhteytta',
-      childItems: {
-        nodes: [
-          { id: '6-1', label: 'Yhteystiedot', path: '/yhteystiedot', url: '/yhteystiedot' },
-          { id: '6-2', label: 'Yritys', path: '/yritys', url: '/yritys' },
-        ]
-      }
-    },
-  ];
+  // Multilingual menu items
+  const getMenuItemsForLanguage = (lang: string): MenuItem[] => {
+    if (lang === 'sv') {
+      return [
+        { id: '1', label: 'HEM', path: '/sv', url: '/sv' },
+        { 
+          id: '2', 
+          label: 'OBJEKT', 
+          path: '/sv/objekt', 
+          url: '/sv/objekt',
+          childItems: {
+            nodes: [
+              { id: '2-1', label: 'Försäljningsobjekt', path: '/sv/objekt', url: '/sv/objekt' },
+              { id: '2-2', label: 'Hyresobjekt', path: '/sv/objekt/hyra', url: '/sv/objekt/hyra' },
+            ]
+          }
+        },
+        { id: '3', label: 'SÄLJA', path: '/sv/salj-med-oss', url: '/sv/salj-med-oss' },
+        { id: '4', label: 'INTERNATIONELLT', path: '/sv/internationellt', url: '/sv/internationellt' },
+        { id: '5', label: 'PERSONAL', path: '/sv/personal', url: '/sv/personal' },
+        { 
+          id: '6', 
+          label: 'KONTAKTA OSS', 
+          path: '/sv/kontakta-oss', 
+          url: '/sv/kontakta-oss',
+          childItems: {
+            nodes: [
+              { id: '6-1', label: 'Kontaktuppgifter', path: '/sv/kontakta-oss', url: '/sv/kontakta-oss' },
+              { id: '6-2', label: 'Företaget', path: '/sv/om-oss', url: '/sv/om-oss' },
+            ]
+          }
+        },
+      ];
+    } else if (lang === 'en') {
+      return [
+        { id: '1', label: 'HOME', path: '/en', url: '/en' },
+        { 
+          id: '2', 
+          label: 'PROPERTIES', 
+          path: '/en/properties', 
+          url: '/en/properties',
+          childItems: {
+            nodes: [
+              { id: '2-1', label: 'For Sale', path: '/en/properties', url: '/en/properties' },
+              { id: '2-2', label: 'For Rent', path: '/en/properties/rent', url: '/en/properties/rent' },
+            ]
+          }
+        },
+        { id: '3', label: 'SELLING', path: '/en/sell-with-us', url: '/en/sell-with-us' },
+        { id: '4', label: 'INTERNATIONALLY', path: '/en/internationally', url: '/en/internationally' },
+        { id: '5', label: 'STAFF', path: '/en/staff', url: '/en/staff' },
+        { 
+          id: '6', 
+          label: 'CONTACT US', 
+          path: '/en/contact-us', 
+          url: '/en/contact-us',
+          childItems: {
+            nodes: [
+              { id: '6-1', label: 'Contact Info', path: '/en/contact-us', url: '/en/contact-us' },
+              { id: '6-2', label: 'About Us', path: '/en/about', url: '/en/about' },
+            ]
+          }
+        },
+      ];
+    } else {
+      // Finnish (default)
+      return [
+        { id: '1', label: 'KOTI', path: '/', url: '/' },
+        { 
+          id: '2', 
+          label: 'KOHTEET', 
+          path: '/kohteet', 
+          url: '/kohteet',
+          childItems: {
+            nodes: [
+              { id: '2-1', label: 'Myyntikohteet', path: '/kohteet', url: '/kohteet' },
+              { id: '2-2', label: 'Vuokrakohteet', path: '/kohteet/vuokrakohteet', url: '/kohteet/vuokrakohteet' },
+            ]
+          }
+        },
+        { id: '3', label: 'MYYMÄSSÄ', path: '/myymassa', url: '/myymassa' },
+        { id: '4', label: 'KANSAINVÄLISESTI', path: '/kansainvalisesti', url: '/kansainvalisesti' },
+        { id: '5', label: 'HENKILÖSTÖ', path: '/henkilosto', url: '/henkilosto' },
+        { 
+          id: '6', 
+          label: 'OTA YHTEYTTÄ', 
+          path: '/ota-yhteytta', 
+          url: '/ota-yhteytta',
+          childItems: {
+            nodes: [
+              { id: '6-1', label: 'Yhteystiedot', path: '/yhteystiedot', url: '/yhteystiedot' },
+              { id: '6-2', label: 'Yritys', path: '/yritys', url: '/yritys' },
+            ]
+          }
+        },
+      ];
+    }
+  };
 
-  const items = menuItems || defaultMenuItems;
+  const items = menuItems || getMenuItemsForLanguage(currentLang);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -137,10 +204,11 @@ export default function Header({ menuItems }: HeaderProps) {
             <Image
               src="/images/logos/logo-white.png"
               alt="Snellman Sotheby's International Realty"
-              width={300}
-              height={90}
-              className="h-14 w-auto"
+              width={350}
+              height={105}
+              className="h-16 w-auto"
               priority
+              quality={100}
             />
           </LocaleLink>
 
@@ -160,7 +228,7 @@ export default function Header({ menuItems }: HeaderProps) {
                   >
                     <LocaleLink
                       href={item.path || item.url}
-                      className={`flex items-center px-5 py-2 text-sm font-normal tracking-[0.2em] uppercase
+                      className={`flex items-center px-5 py-2 text-sm font-bold tracking-[0.2em] uppercase
                                  transition-all duration-200 [font-family:'freight-sans-pro',sans-serif] ${
                                    isActive 
                                      ? 'text-[var(--color-gold)]' 
@@ -232,7 +300,7 @@ export default function Header({ menuItems }: HeaderProps) {
                   <div className="flex items-center justify-between">
                     <LocaleLink
                       href={item.path || item.url}
-                      className={`block py-3 text-sm font-normal tracking-[0.15em] uppercase border-b border-white/10 flex-1
+                      className={`block py-3 text-sm font-bold tracking-[0.15em] uppercase border-b border-white/10 flex-1
                                [font-family:'freight-sans-pro',sans-serif] ${isActive 
                                  ? 'text-[var(--color-gold)]' 
                                  : 'text-white hover:text-[var(--color-gold)]'
