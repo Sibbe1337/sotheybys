@@ -394,96 +394,117 @@ export default function PropertyPage({ params }: PropertyPageProps) {
         {/* Tab Content Container */}
         <div className="relative">
           {activeTab === 'photos' && images.length > 0 && (
-            <div className="relative bg-black">
-              {/* Main Image Container with proper aspect ratio */}
-              <div className="relative w-full" style={{ paddingBottom: '56.25%' /* 16:9 Aspect Ratio */ }}>
-                <div className="absolute inset-0">
-                  {images.map((image: any, index: number) => {
-                    const imageSrc = typeof image === 'string' 
-                      ? image 
-                      : image.url || image.sourceUrl || image.node?.sourceUrl || '';
+            <div className="bg-white py-8">
+              <div className="container mx-auto px-4">
+                {/* Grid Layout: Large image on left, smaller images on right */}
+                <div className="flex flex-col lg:flex-row gap-2">
+                  {/* Main Large Image */}
+                  <div className="relative w-full lg:w-2/3 h-[400px] lg:h-[600px] overflow-hidden">
+                    <Image
+                      src={typeof images[currentImageIndex] === 'string' 
+                        ? images[currentImageIndex] as string
+                        : (images[currentImageIndex] as any).url || (images[currentImageIndex] as any).sourceUrl || (images[currentImageIndex] as any).node?.sourceUrl || ''}
+                      alt={`Property image ${currentImageIndex + 1}`}
+                      fill
+                      className="object-cover"
+                      priority
+                      sizes="(max-width: 1024px) 100vw, 66vw"
+                    />
                     
-                    return (
-                      <div
-                        key={index}
-                        className={`absolute inset-0 transition-opacity duration-300 ${
-                          currentImageIndex === index ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                        }`}
-                      >
-                        <Image
-                          src={imageSrc}
-                          alt={`Property image ${index + 1}`}
-                          fill
-                          className="object-cover"
-                          priority={index === 0 || index === 1}
-                          loading={index <= 2 ? "eager" : "lazy"}
-                          sizes="100vw"
-                          onError={(e) => {
-                            console.error(`Failed to load image ${index + 1}:`, imageSrc);
-                          }}
-                        />
-                      </div>
-                    );
-                  })}
+                    {/* Image Counter Overlay */}
+                    <div className="absolute top-4 right-4 bg-black/60 text-white px-3 py-1.5 text-sm font-light">
+                      {currentImageIndex + 1} / {images.length}
+                    </div>
+
+                    {/* Navigation Arrows */}
+                    {images.length > 1 && (
+                      <>
+                        <button
+                          onClick={prevImage}
+                          className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-black w-10 h-10 flex items-center justify-center transition-all shadow-md"
+                          aria-label="Previous image"
+                        >
+                          <ChevronLeft className="w-6 h-6" />
+                        </button>
+                        <button
+                          onClick={nextImage}
+                          className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-black w-10 h-10 flex items-center justify-center transition-all shadow-md"
+                          aria-label="Next image"
+                        >
+                          <ChevronRight className="w-6 h-6" />
+                        </button>
+                      </>
+                    )}
+                  </div>
+
+                  {/* Right Side: Grid of smaller images (4 visible) */}
+                  <div className="w-full lg:w-1/3 grid grid-cols-2 gap-2 h-[200px] lg:h-[600px]">
+                    {images.slice(1, 5).map((image: any, idx: number) => {
+                      const imageSrc = typeof image === 'string' 
+                        ? image 
+                        : image.url || image.sourceUrl || image.node?.sourceUrl || '';
+                      const actualIndex = idx + 1;
+                      
+                      return (
+                        <button
+                          key={actualIndex}
+                          onClick={() => setCurrentImageIndex(actualIndex)}
+                          className={`relative overflow-hidden transition-all ${
+                            currentImageIndex === actualIndex 
+                              ? 'ring-2 ring-[#002349]' 
+                              : 'opacity-90 hover:opacity-100'
+                          }`}
+                        >
+                          <Image
+                            src={imageSrc}
+                            alt={`Thumbnail ${actualIndex + 1}`}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 1024px) 50vw, 16vw"
+                          />
+                          
+                          {/* Show +N overlay on last thumbnail if more images exist */}
+                          {idx === 3 && images.length > 5 && (
+                            <div className="absolute inset-0 bg-black/70 flex items-center justify-center text-white text-xl font-light">
+                              +{images.length - 5}
+                            </div>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-              
-              {/* Navigation Arrows - Sleek Modern Design */}
-              {images.length > 1 && (
-                <>
-                  <button
-                    onClick={prevImage}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-sm text-white w-14 h-14 flex items-center justify-center transition-all hover:bg-white/20 group"
-                    aria-label="Previous image"
-                  >
-                    <ChevronLeft className="w-8 h-8 transition-transform group-hover:-translate-x-0.5" />
-                  </button>
-                  <button
-                    onClick={nextImage}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-sm text-white w-14 h-14 flex items-center justify-center transition-all hover:bg-white/20 group"
-                    aria-label="Next image"
-                  >
-                    <ChevronRight className="w-8 h-8 transition-transform group-hover:translate-x-0.5" />
-                  </button>
-                </>
-              )}
 
-              {/* Image Counter - Minimalist Style */}
-              <div className="absolute bottom-4 right-4 text-white text-sm font-light tracking-wider">
-                {currentImageIndex + 1} — {images.length}
-              </div>
-            </div>
-          )}
-
-          {/* Thumbnail Strip - Below Main Image */}
-          {activeTab === 'photos' && images.length > 1 && (
-            <div className="bg-white py-4">
-              <div className="flex gap-2 justify-center overflow-x-auto max-w-6xl mx-auto px-4 scrollbar-hide">
-                {images.map((image: any, index: number) => {
-                  const imageSrc = typeof image === 'string' 
-                    ? image 
-                    : image.url || image.sourceUrl || image.node?.sourceUrl || '';
-                  
-                  return (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentImageIndex(index)}
-                      className={`relative flex-shrink-0 w-24 h-24 overflow-hidden transition-all ${
-                        currentImageIndex === index 
-                          ? 'ring-2 ring-[var(--color-primary)] opacity-100' 
-                          : 'opacity-60 hover:opacity-100'
-                      }`}
-                    >
-                      <Image
-                        src={imageSrc}
-                        alt={`Thumbnail ${index + 1}`}
-                        fill
-                        className="object-cover"
-                        sizes="96px"
-                      />
-                    </button>
-                  );
-                })}
+                {/* Thumbnail Strip Below (all images) */}
+                {images.length > 1 && (
+                  <div className="mt-4 flex gap-2 overflow-x-auto pb-2">
+                    {images.map((image: any, index: number) => {
+                      const imageSrc = typeof image === 'string' 
+                        ? image 
+                        : image.url || image.sourceUrl || image.node?.sourceUrl || '';
+                      
+                      return (
+                        <button
+                          key={index}
+                          onClick={() => setCurrentImageIndex(index)}
+                          className={`relative flex-shrink-0 w-20 h-20 overflow-hidden transition-all ${
+                            currentImageIndex === index 
+                              ? 'ring-2 ring-[#002349] opacity-100' 
+                              : 'opacity-60 hover:opacity-100'
+                          }`}
+                        >
+                          <Image
+                            src={imageSrc}
+                            alt={`Thumbnail ${index + 1}`}
+                            fill
+                            className="object-cover"
+                            sizes="80px"
+                          />
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             </div>
           )}
@@ -543,22 +564,70 @@ export default function PropertyPage({ params }: PropertyPageProps) {
           )}
 
           {activeTab === 'brochure' && (
-            <div className="bg-gray-50 py-8">
+            <div className="bg-white py-8">
               <div className="container mx-auto px-4">
                 {propertyData.propertyBrochureUrl || propertyData.brochure || propertyData.virtualShowing ? (
                   <div className="max-w-6xl mx-auto">
-                    <div className="relative w-full rounded-lg shadow-lg overflow-hidden" style={{ paddingBottom: '75%' }}>
-                      <iframe
-                        src={propertyData.propertyBrochureUrl || propertyData.brochure || propertyData.virtualShowing}
-                        className="absolute top-0 left-0 w-full h-full border-0"
-                        title="Property Brochure"
-                      />
+                    {/* PDF Viewer with Download Button */}
+                    <div className="bg-gray-50 rounded-lg shadow-lg overflow-hidden">
+                      {/* Header with Download Button */}
+                      <div className="flex items-center justify-between px-6 py-4 bg-white border-b border-gray-200">
+                        <h3 className="text-lg font-light text-gray-800">
+                          {getTranslation('brochure', language)}
+                        </h3>
+                        <a
+                          href={propertyData.propertyBrochureUrl || propertyData.brochure || propertyData.virtualShowing}
+                          download
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-[#002349] text-white hover:bg-[#003666] transition-colors text-sm font-light"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                          </svg>
+                          {language === 'fi' ? 'Lataa PDF' : language === 'sv' ? 'Ladda ner PDF' : 'Download PDF'}
+                        </a>
+                      </div>
+                      
+                      {/* PDF Embed with proper sizing */}
+                      <div className="relative w-full bg-gray-100" style={{ minHeight: '800px' }}>
+                        <iframe
+                          src={`${propertyData.propertyBrochureUrl || propertyData.brochure || propertyData.virtualShowing}#toolbar=1&navpanes=0&scrollbar=1`}
+                          className="w-full border-0"
+                          style={{ height: '800px' }}
+                          title="Property Brochure"
+                          loading="lazy"
+                        />
+                      </div>
+
+                      {/* Fallback for mobile - Direct link */}
+                      <div className="lg:hidden p-6 bg-white text-center border-t border-gray-200">
+                        <p className="text-sm text-gray-600 mb-4">
+                          {language === 'fi' 
+                            ? 'PDF-tiedosto ei näy? Avaa se uudessa välilehdessä.' 
+                            : language === 'sv'
+                            ? 'Kan du inte se PDF-filen? Öppna den i en ny flik.'
+                            : 'Can\'t see the PDF? Open it in a new tab.'}
+                        </p>
+                        <a
+                          href={propertyData.propertyBrochureUrl || propertyData.brochure || propertyData.virtualShowing}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-6 py-3 bg-[#002349] text-white hover:bg-[#003666] transition-colors"
+                        >
+                          {language === 'fi' ? 'Avaa PDF' : language === 'sv' ? 'Öppna PDF' : 'Open PDF'}
+                        </a>
+                      </div>
                     </div>
                   </div>
                 ) : (
                   <div className="text-center py-20">
-                    <h2 className="text-2xl font-light text-gray-700 mb-4">Esite</h2>
-                    <p className="text-gray-500">Ei saatavilla</p>
+                    <h2 className="text-2xl font-light text-gray-700 mb-4">
+                      {getTranslation('brochure', language)}
+                    </h2>
+                    <p className="text-gray-500">
+                      {language === 'fi' ? 'Ei saatavilla' : language === 'sv' ? 'Inte tillgänglig' : 'Not available'}
+                    </p>
                   </div>
                 )}
               </div>

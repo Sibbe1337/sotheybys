@@ -82,14 +82,24 @@ class ListingsCache {
       // Use the proxy route to avoid CORS issues and keep credentials secure
       // The proxy handles authentication and company ID headers server-side
       const isServer = typeof window === 'undefined';
+      
+      // On Vercel, VERCEL_URL is automatically set (e.g., "your-app.vercel.app")
+      // On local development, use localhost
+      // CRITICAL: Never use localhost when deployed
       const baseUrl = isServer 
         ? (process.env.VERCEL_URL 
             ? `https://${process.env.VERCEL_URL}` 
-            : process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000')
+            : 'http://localhost:3000')
         : '';
       const endpoint = `${baseUrl}/api/proxy/listings?lang=fi`;
       
-      console.log(`[ListingsCache] Fetching from proxy: ${endpoint}`);
+      console.log(`[ListingsCache] Environment:`, {
+        isServer,
+        hasVercelUrl: !!process.env.VERCEL_URL,
+        vercelUrl: process.env.VERCEL_URL || '(not set)',
+        baseUrl,
+        endpoint
+      });
       
       const response = await fetch(endpoint, {
         cache: 'no-store',
