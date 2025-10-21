@@ -20,12 +20,46 @@ interface HeaderProps {
   menuItems?: MenuItem[];
 }
 
-export default function Header({ menuItems = [] }: HeaderProps) {
+export default function Header({ menuItems }: HeaderProps) {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [expandedMobileMenu, setExpandedMobileMenu] = useState<string | null>(null);
   const [currentLang, setCurrentLang] = useState<string>('fi');
+
+  // Default menu items if none provided
+  const defaultMenuItems: MenuItem[] = [
+    { id: '1', label: 'KOTI', path: '/', url: '/' },
+    { 
+      id: '2', 
+      label: 'KOHTEET', 
+      path: '/kohteet', 
+      url: '/kohteet',
+      childItems: {
+        nodes: [
+          { id: '2-1', label: 'Myyntikohteet', path: '/kohteet', url: '/kohteet' },
+          { id: '2-2', label: 'Vuokrakohteet', path: '/kohteet/vuokrakohteet', url: '/kohteet/vuokrakohteet' },
+        ]
+      }
+    },
+    { id: '3', label: 'MYYMÄSSÄ', path: '/myymassa', url: '/myymassa' },
+    { id: '4', label: 'KANSAINVÄLISESTI', path: '/kansainvalisesti', url: '/kansainvalisesti' },
+    { id: '5', label: 'HENKILÖSTÖ', path: '/henkilosto', url: '/henkilosto' },
+    { 
+      id: '6', 
+      label: 'OTA YHTEYTTÄ', 
+      path: '/ota-yhteytta', 
+      url: '/ota-yhteytta',
+      childItems: {
+        nodes: [
+          { id: '6-1', label: 'Yhteystiedot', path: '/yhteystiedot', url: '/yhteystiedot' },
+          { id: '6-2', label: 'Yritys', path: '/yritys', url: '/yritys' },
+        ]
+      }
+    },
+  ];
+
+  const items = menuItems || defaultMenuItems;
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -101,11 +135,11 @@ export default function Header({ menuItems = [] }: HeaderProps) {
             onClick={() => setIsMobileMenuOpen(false)}
           >
             <Image
-              src="/sothebys-logo-white.svg"
+              src="/images/logos/logo-white.png"
               alt="Snellman Sotheby's International Realty"
-              width={280}
-              height={84}
-              className="h-16 w-auto"
+              width={300}
+              height={90}
+              className="h-14 w-auto"
               priority
             />
           </LocaleLink>
@@ -113,7 +147,7 @@ export default function Header({ menuItems = [] }: HeaderProps) {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center">
             <ul className="flex items-center gap-1">
-              {menuItems.map((item) => {
+              {items.map((item) => {
                 const isActive = pathname === item.path || 
                                (item.path !== '/' && pathname.startsWith(item.path));
                 
@@ -188,7 +222,7 @@ export default function Header({ menuItems = [] }: HeaderProps) {
         <div className="lg:hidden bg-[var(--color-primary)] border-t border-white/10">
           <nav className="max-w-[1400px] mx-auto px-6 py-4">
             {/* Mobile Navigation */}
-            {menuItems.map((item) => {
+            {items.map((item) => {
               const isActive = pathname === item.path;
               const hasChildren = item.childItems && item.childItems.nodes.length > 0;
               const isExpanded = expandedMobileMenu === item.id;
