@@ -40,8 +40,8 @@ export default async function PropertiesPage() {
   let allProperties = [];
   
   try {
-    // Try to fetch from Linear API first
-    const linearProperties = await fetchLinearListings();
+    // Try to fetch from Linear API first - FINNISH LANGUAGE
+    const linearProperties = await fetchLinearListings('fi');
     if (linearProperties && linearProperties.length > 0) {
       allProperties = linearProperties;
     } else {

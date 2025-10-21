@@ -123,7 +123,7 @@ export default function PropertyCard({
             </p>
           )}
           {property?.propertyType && (
-            <PropertyTypeChip type={property.propertyType} />
+            <PropertyTypeChip type={property.propertyType} language={language} />
           )}
         </div>
 

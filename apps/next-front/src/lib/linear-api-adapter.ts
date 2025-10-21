@@ -323,15 +323,16 @@ export interface LinearAPIListing {
 }
 
 export function convertLinearToWordPressFormat(listing: LinearAPIListing, language: 'fi' | 'sv' | 'en' = 'fi') {
-  const id = listing.id?.fi?.value || '';
-  const address = listing.address?.fi?.value || '';
-  const city = listing.city?.fi?.value || '';
-  const price = listing.askPrice?.fi?.value;
-  const debtFreePrice = listing.debtFreePrice?.fi?.value;
-  const area = listing.area?.fi?.value;
-  const rooms = listing.rooms?.fi?.value;
-  const description = listing.description?.fi?.value || '';
-  const propertyType = listing.propertyType?.fi?.value || 'Asunto';
+  // Extract data using the specified language with fallback to Finnish
+  const id = listing.id?.[language]?.value || listing.id?.fi?.value || '';
+  const address = listing.address?.[language]?.value || listing.address?.fi?.value || '';
+  const city = listing.city?.[language]?.value || listing.city?.fi?.value || '';
+  const price = listing.askPrice?.[language]?.value ?? listing.askPrice?.fi?.value;
+  const debtFreePrice = listing.debtFreePrice?.[language]?.value ?? listing.debtFreePrice?.fi?.value;
+  const area = listing.area?.[language]?.value || listing.area?.fi?.value;
+  const rooms = listing.rooms?.[language]?.value || listing.rooms?.fi?.value;
+  const description = listing.description?.[language]?.value || listing.description?.fi?.value || '';
+  const propertyType = listing.propertyType?.[language]?.value || listing.propertyType?.fi?.value || (language === 'sv' ? 'Lägenhet' : language === 'en' ? 'Apartment' : 'Asunto');
   
   // Debug logging to check price values
   if (address === 'Linnankoskenkatu 8') {
@@ -352,43 +353,43 @@ export function convertLinearToWordPressFormat(listing: LinearAPIListing, langua
   const mainImage = listing.images?.find(img => img.isMain) || listing.images?.[0];
   
   // Extract external links
-  const externalLinks = listing.links?.fi?.value || [];
-  const videoUrl = listing.videoUrl?.fi?.value || null;
+  const externalLinks = listing.links?.[language]?.value || listing.links?.fi?.value || [];
+  const videoUrl = listing.videoUrl?.[language]?.value || listing.videoUrl?.fi?.value || null;
   
-  // Extract additional property details
-  const maintenanceCharge = listing.maintenanceCharge?.fi?.value || null;
-  const waterCharge = listing.waterCharge?.fi?.value || null;
-  const shareNumbers = listing.shareNumbers?.fi?.value || null;
-  const floor = listing.floor?.fi?.value || null;
-  const floorCount = listing.floorCount?.fi?.value || null;
-  const energyClass = listing.energyClass?.fi?.value || null;
-  const constructionMaterial = listing.constructionMaterial?.fi?.value || null;
-  const housingCooperativeName = listing.housingCooperativeName?.fi?.value || null;
-  const propertyManagerName = listing.propertyManagerName?.fi?.value || null;
-  const propertyManagerOffice = listing.propertyManagerOffice?.fi?.value || null;
-  const heatingSystem = listing.heatingSystem?.fi?.value || null;
-  const constructionYear = listing.constructionYear?.fi?.value || listing.completeYear?.fi?.value || null;
-  const lotOwnership = listing.lotOwnership?.fi?.value || null;
+  // Extract additional property details - use language with fallback
+  const maintenanceCharge = listing.maintenanceCharge?.[language]?.value ?? listing.maintenanceCharge?.fi?.value ?? null;
+  const waterCharge = listing.waterCharge?.[language]?.value ?? listing.waterCharge?.fi?.value ?? null;
+  const shareNumbers = listing.shareNumbers?.[language]?.value || listing.shareNumbers?.fi?.value || null;
+  const floor = listing.floor?.[language]?.value || listing.floor?.fi?.value || null;
+  const floorCount = listing.floorCount?.[language]?.value || listing.floorCount?.fi?.value || null;
+  const energyClass = listing.energyClass?.[language]?.value || listing.energyClass?.fi?.value || null;
+  const constructionMaterial = listing.constructionMaterial?.[language]?.value || listing.constructionMaterial?.fi?.value || null;
+  const housingCooperativeName = listing.housingCooperativeName?.[language]?.value || listing.housingCooperativeName?.fi?.value || null;
+  const propertyManagerName = listing.propertyManagerName?.[language]?.value || listing.propertyManagerName?.fi?.value || null;
+  const propertyManagerOffice = listing.propertyManagerOffice?.[language]?.value || listing.propertyManagerOffice?.fi?.value || null;
+  const heatingSystem = listing.heatingSystem?.[language]?.value || listing.heatingSystem?.fi?.value || null;
+  const constructionYear = listing.constructionYear?.[language]?.value || listing.constructionYear?.fi?.value || listing.completeYear?.[language]?.value || listing.completeYear?.fi?.value || null;
+  const lotOwnership = listing.lotOwnership?.[language]?.value || listing.lotOwnership?.fi?.value || null;
   
   // Extract additional detailed fields - ensure null instead of undefined
-  const balcony = listing.balcony?.fi?.value || null;
-  const terrace = listing.terrace?.fi?.value || null;
-  const sauna = listing.sauna?.fi?.value || null;
-  const elevator = listing.elevator?.fi?.value || null;
-  const parkingSpaces = listing.parkingSpaces?.fi?.value || null;
-  const lotArea = listing.lotArea?.fi?.value || null;
-  const buildingMaterialFacade = listing.buildingMaterialFacade?.fi?.value || null;
-  const roofMaterial = listing.roofMaterial?.fi?.value || null;
-  const roofType = listing.roofType?.fi?.value || null;
-  const windowsDirection = listing.windowsDirection?.fi?.value || null;
-  const kitchenDescription = listing.kitchenDescription?.fi?.value || null;
-  const bathroomDescription = listing.bathroomDescription?.fi?.value || null;
-  const condition = listing.condition?.fi?.value || null;
-  const furnished = listing.furnished?.fi?.value || null;
-  const antenna = listing.antenna?.fi?.value || null;
-  const autoparkingType = listing.autoparkingType?.fi?.value || null;
-  const generalCondition = listing.generalCondition?.fi?.value || null;
-  const listingType = listing.listingType?.fi?.value || null;
+  const balcony = listing.balcony?.[language]?.value || listing.balcony?.fi?.value || null;
+  const terrace = listing.terrace?.[language]?.value || listing.terrace?.fi?.value || null;
+  const sauna = listing.sauna?.[language]?.value || listing.sauna?.fi?.value || null;
+  const elevator = listing.elevator?.[language]?.value || listing.elevator?.fi?.value || null;
+  const parkingSpaces = listing.parkingSpaces?.[language]?.value || listing.parkingSpaces?.fi?.value || null;
+  const lotArea = listing.lotArea?.[language]?.value || listing.lotArea?.fi?.value || null;
+  const buildingMaterialFacade = listing.buildingMaterialFacade?.[language]?.value || listing.buildingMaterialFacade?.fi?.value || null;
+  const roofMaterial = listing.roofMaterial?.[language]?.value || listing.roofMaterial?.fi?.value || null;
+  const roofType = listing.roofType?.[language]?.value || listing.roofType?.fi?.value || null;
+  const windowsDirection = listing.windowsDirection?.[language]?.value || listing.windowsDirection?.fi?.value || null;
+  const kitchenDescription = listing.kitchenDescription?.[language]?.value || listing.kitchenDescription?.fi?.value || null;
+  const bathroomDescription = listing.bathroomDescription?.[language]?.value || listing.bathroomDescription?.fi?.value || null;
+  const condition = listing.condition?.[language]?.value || listing.condition?.fi?.value || null;
+  const furnished = listing.furnished?.[language]?.value || listing.furnished?.fi?.value || null;
+  const antenna = listing.antenna?.[language]?.value || listing.antenna?.fi?.value || null;
+  const autoparkingType = listing.autoparkingType?.[language]?.value || listing.autoparkingType?.fi?.value || null;
+  const generalCondition = listing.generalCondition?.[language]?.value || listing.generalCondition?.fi?.value || null;
+  const listingType = listing.listingType?.[language]?.value || listing.listingType?.fi?.value || null;
   
   return {
     id,
@@ -412,7 +413,7 @@ export function convertLinearToWordPressFormat(listing: LinearAPIListing, langua
         bathrooms: null,
         area: area || null,
         propertyType,
-        status: 'Myynnissä',
+        status: language === 'sv' ? 'Till salu' : language === 'en' ? 'For sale' : 'Myynnissä',
         description: enrichedDescription || '',
         freeText: enrichedDescription || '',
         freeTextTitle: marketingTitle || '',
@@ -475,7 +476,7 @@ function extractBedrooms(rooms?: string): string | null {
   return match ? match[1] : null;
 }
 
-export async function fetchLinearListings(): Promise<any[]> {
+export async function fetchLinearListings(language: 'fi' | 'sv' | 'en' = 'fi'): Promise<any[]> {
   const apiUrl = process.env.NEXT_PUBLIC_LINEAR_API_URL || process.env.LINEAR_API_URL;
   const apiKey = process.env.LINEAR_API_KEY;
   const companyId = process.env.LINEAR_COMPANY_ID;
@@ -488,7 +489,7 @@ export async function fetchLinearListings(): Promise<any[]> {
   try {
     // Fix the API URL - remove /api if it's at the end
     const baseUrl = apiUrl.endsWith('/api') ? apiUrl.replace('/api', '') : apiUrl;
-    const endpoint = `${baseUrl}/v2/listings?languages[]=fi`;
+    const endpoint = `${baseUrl}/v2/listings?languages[]=${language}`;
     
     const headers: Record<string, string> = {
       'authorization': apiKey,
@@ -512,7 +513,7 @@ export async function fetchLinearListings(): Promise<any[]> {
     const data = await response.json();
     
     if (Array.isArray(data)) {
-      return data.map(listing => convertLinearToWordPressFormat(listing, 'fi'));
+      return data.map(listing => convertLinearToWordPressFormat(listing, language));
     }
     
     return [];

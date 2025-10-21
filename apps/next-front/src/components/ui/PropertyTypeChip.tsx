@@ -4,27 +4,45 @@ import { cn } from '@/lib/utils';
 interface PropertyTypeChipProps {
   type: string;
   className?: string;
+  language?: 'fi' | 'sv' | 'en';
 }
 
-// Map common property types to display names
-const typeMap: Record<string, string> = {
-  'asunto': 'Asunto',
-  'omakotitalo': 'Omakotitalo',
-  'kerrostalo': 'Kerrostalo',
-  'rivitalo': 'Rivitalo',
-  'paritalo': 'Paritalo',
-  'erillistalo': 'Erillistalo',
-  'mökki': 'Mökki',
-  'tontti': 'Tontti',
-  'liiketila': 'Liiketila',
-  // Add more mappings as needed
+// Multi-language translations for property types
+const typeTranslations: Record<string, Record<'fi' | 'sv' | 'en', string>> = {
+  'asunto': { fi: 'Asunto', sv: 'Lägenhet', en: 'Apartment' },
+  'lägenhet': { fi: 'Asunto', sv: 'Lägenhet', en: 'Apartment' },
+  'apartment': { fi: 'Asunto', sv: 'Lägenhet', en: 'Apartment' },
+  'omakotitalo': { fi: 'Omakotitalo', sv: 'Villa', en: 'Detached house' },
+  'villa': { fi: 'Omakotitalo', sv: 'Villa', en: 'Detached house' },
+  'kerrostalo': { fi: 'Kerrostalo', sv: 'Flervåningshus', en: 'Apartment building' },
+  'rivitalo': { fi: 'Rivitalo', sv: 'Radhus', en: 'Townhouse' },
+  'radhus': { fi: 'Rivitalo', sv: 'Radhus', en: 'Townhouse' },
+  'townhouse': { fi: 'Rivitalo', sv: 'Radhus', en: 'Townhouse' },
+  'paritalo': { fi: 'Paritalo', sv: 'Parhus', en: 'Semi-detached' },
+  'parhus': { fi: 'Paritalo', sv: 'Parhus', en: 'Semi-detached' },
+  'erillistalo': { fi: 'Erillistalo', sv: 'Fristående hus', en: 'Detached house' },
+  'tila': { fi: 'Tila', sv: 'Gård', en: 'Farm' },
+  'gård': { fi: 'Tila', sv: 'Gård', en: 'Farm' },
+  'farm': { fi: 'Tila', sv: 'Gård', en: 'Farm' },
+  'mökki': { fi: 'Mökki', sv: 'Stuga', en: 'Cottage' },
+  'stuga': { fi: 'Mökki', sv: 'Stuga', en: 'Cottage' },
+  'cottage': { fi: 'Mökki', sv: 'Stuga', en: 'Cottage' },
+  'tontti': { fi: 'Tontti', sv: 'Tomt', en: 'Plot' },
+  'tomt': { fi: 'Tontti', sv: 'Tomt', en: 'Plot' },
+  'plot': { fi: 'Tontti', sv: 'Tomt', en: 'Plot' },
+  'liiketila': { fi: 'Liiketila', sv: 'Affärslokal', en: 'Commercial' },
+  'affärslokal': { fi: 'Liiketila', sv: 'Affärslokal', en: 'Commercial' },
+  'commercial': { fi: 'Liiketila', sv: 'Affärslokal', en: 'Commercial' },
 };
 
 export const PropertyTypeChip: React.FC<PropertyTypeChipProps> = ({ 
   type, 
-  className 
+  className,
+  language = 'fi'
 }) => {
-  const displayType = typeMap[type.toLowerCase()] || type;
+  const normalizedType = type.toLowerCase().trim();
+  const translations = typeTranslations[normalizedType];
+  const displayType = translations?.[language] || type;
   
   return (
     <span 
