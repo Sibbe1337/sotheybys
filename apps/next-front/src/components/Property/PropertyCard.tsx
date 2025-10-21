@@ -7,6 +7,25 @@ import { Price } from '@/components/ui/Price';
 import { MetaRow } from '@/components/ui/MetaRow';
 import { Button } from '@/components/ui/Button';
 import { PropertyTypeChip } from '@/components/ui/PropertyTypeChip';
+import { getHomepageTranslation, type SupportedLanguage } from '@/lib/homepage-translations';
+
+// ============================================================================
+// IMAGE RESOLVER - Prevents 400 errors from missing/malformed image paths
+// ============================================================================
+const FALLBACK_IMG = '/images/defaults/placeholder-property.jpg';
+
+function resolveLocalImage(src?: string): string {
+  if (!src) return FALLBACK_IMG;
+  
+  // If looks like an absolute remote URL, pass through
+  if (/^https?:\/\//i.test(src)) return src;
+  
+  // Normalize leading slashes and case-sensitive public path
+  const clean = src.startsWith('/') ? src : `/${src}`;
+  
+  // Our images live under /public/images/... — keep that prefix
+  return clean.replace(/\/+/g, '/');
+}
 
 interface PropertyCardProps {
   id: string;
@@ -25,6 +44,7 @@ interface PropertyCardProps {
   };
   property?: Property;
   agent?: Agent;
+  language?: SupportedLanguage;
 }
 
 export default function PropertyCard({
@@ -35,6 +55,7 @@ export default function PropertyCard({
   featuredImage,
   property,
   agent,
+  language = 'fi',
 }: PropertyCardProps) {
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('fi-FI', {
@@ -53,11 +74,14 @@ export default function PropertyCard({
       {featuredImage && (
         <div className="relative h-48 w-full group">
           <Image
-            src={featuredImage.node.sourceUrl}
+            src={resolveLocalImage(featuredImage.node.sourceUrl)}
             alt={featuredImage.node.altText || title}
             fill
             className="object-cover"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            onError={(e: any) => { 
+              e.currentTarget.src = FALLBACK_IMG; 
+            }}
           />
         </div>
       )}
@@ -94,8 +118,8 @@ export default function PropertyCard({
         {/* Property Details */}
         <MetaRow 
           items={[
-            { value: property?.bedrooms ? `${property.bedrooms} mh` : '' },
-            { value: property?.bathrooms ? `${property.bathrooms} kph` : '' },
+            { value: property?.bedrooms ? `${property.bedrooms} ${getHomepageTranslation('bedrooms', language)}` : '' },
+            { value: property?.bathrooms ? `${property.bathrooms} ${getHomepageTranslation('bathrooms', language)}` : '' },
             { value: property?.area ? (String(property.area).includes('m²') || String(property.area).includes('m2') ? property.area : `${property.area} m²`) : '' }
           ]}
           className="mb-3"
@@ -137,7 +161,7 @@ export default function PropertyCard({
             className="w-full"
             onClick={(e) => e.preventDefault()}
           >
-            Katso kohde
+            {getHomepageTranslation('viewProperty', language)}
           </Button>
         </div>
       </div>

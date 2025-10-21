@@ -1,46 +1,45 @@
+'use client';
+
+import { Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import HeroCarousel from '@/components/Homepage/HeroCarousel';
 import PropertyGrid from '@/components/Property/PropertyGrid';
-import { getClient } from '@/lib/wordpress';
-import { GET_HOMEPAGE_DATA } from '@/graphql/homepage-queries';
-import { fetchLinearListings, fetchTestLinearListings } from '@/lib/linear-api-adapter';
 import Link from 'next/link';
 import Image from 'next/image';
-import { getImageUrl } from '@/config/images';
+import { getHomepageTranslation, type SupportedLanguage } from '@/lib/homepage-translations';
 
-export const revalidate = 60; // ISR: revalidate every 60 seconds
-
-// Default hero slides matching the original site
-const defaultSlides = [
+// Function to get translated hero slides
+const getTranslatedSlides = (language: SupportedLanguage) => [
   {
     id: '1',
     image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/57809e7b-2fe2-430d-a7d7-aff39337d0c1/ead27130-4e08-465e-af6d-500d593ae0db.jpg',
-    title: 'Kansainvälinen välittäjäsi paikallisesti',
-    subtitle: '26 100 välittäjää 1100 välitystoimistossa 84 maassa ja alueella',
-    buttonText: 'Avaamme uusia ovia',
+    title: getHomepageTranslation('hero1Title', language),
+    subtitle: getHomepageTranslation('hero1Subtitle', language),
+    buttonText: getHomepageTranslation('hero1Button', language),
     buttonLink: '#avaamme-uusia-ovia'
   },
   {
     id: '2',
     image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/3cfbb584-8fc0-493a-8b2f-66edf18b027a/e3ffa954-b4a1-4ed6-bed1-f131955d96c2.jpg',
-    title: 'Tervetuloa onnistuneeseen asuntokauppaan!',
-    subtitle: 'Katso kaikki myynnissä olevat kohteemme.',
-    buttonText: 'Löydä unelmien koti',
+    title: getHomepageTranslation('hero2Title', language),
+    subtitle: getHomepageTranslation('hero2Subtitle', language),
+    buttonText: getHomepageTranslation('hero2Button', language),
     buttonLink: '/kohteet'
   },
   {
     id: '3',
     image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/d01a884f-d504-4652-adf7-29026c1a7449/700fc7d6-6bab-4e3b-baf8-816b8a9f5a02.jpg',
-    title: 'Snellman Sotheby\'s International Realty®',
-    subtitle: 'Haluamme luoda kestävän asiakassuhteen, jossa otamme huomioon teidän pienimmätkin toiveet ja tarpeet.',
-    buttonText: 'Tutustu toimintatapaamme',
+    title: getHomepageTranslation('hero3Title', language),
+    subtitle: getHomepageTranslation('hero3Subtitle', language),
+    buttonText: getHomepageTranslation('hero3Button', language),
     buttonLink: '/yritys'
   },
   {
     id: '4',
     image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/95bfa5eb-449f-40b8-987b-6f65dde19cc0/9e7aa9bf-6a73-4120-a0f4-b75e1eb29b4c.jpg',
-    title: 'Referenssit',
-    subtitle: 'Valikoima myydyistä kohteista',
-    buttonText: 'Tutustu kohteisiin',
+    title: getHomepageTranslation('hero4Title', language),
+    subtitle: getHomepageTranslation('hero4Subtitle', language),
+    buttonText: getHomepageTranslation('hero4Button', language),
     buttonLink: '/kohteet/referenssit'
   }
 ];
@@ -193,55 +192,13 @@ const sampleProperties = [
   }
 ];
 
-export default async function HomePage() {
-  try {
-    // Fetch homepage data from WordPress
-    const { data } = await getClient().query({
-      query: GET_HOMEPAGE_DATA,
-    });
-
-    // Extract data
-    const homepage = data?.page;
-    const properties = data?.posts?.nodes || [];
-    const mediaItems = data?.mediaItems?.nodes || [];
-    
-    // Try to fetch from Linear API
-    let displayProperties = sampleProperties;
-    
-    try {
-      // First try real Linear API
-      const linearProperties = await fetchLinearListings();
-      
-      if (linearProperties && linearProperties.length > 0) {
-        console.log('Using Linear API properties');
-        displayProperties = linearProperties;
-      } else {
-        // If no real properties, try test API for demo
-        console.log('Trying test Linear API...');
-        const testProperties = await fetchTestLinearListings();
-        if (testProperties && testProperties.length > 0) {
-          console.log('Using test Linear API properties');
-          displayProperties = testProperties;
-        }
-      }
-    } catch (error) {
-      console.log('Using sample properties, Linear API error:', error);
-    }
-    
-    // Process hero slides
-    let heroSlides = defaultSlides;
-    
-    // Check if ACF slider data exists
-    if (homepage?.acf?.heroSlider?.slide && homepage.acf.heroSlider.slide.length > 0) {
-      heroSlides = homepage.acf.heroSlider.slide.map((slide: any, index: number) => ({
-        id: `slide-${index}`,
-        image: slide.image?.sourceUrl || defaultSlides[0].image,
-        title: slide.title || 'Welcome to Sotheby\'s',
-        subtitle: slide.subtitle || '',
-        buttonText: slide.buttonText || 'LEARN MORE',
-        buttonLink: slide.buttonLink || '/properties'
-      }));
-    }
+function HomePageContent() {
+  const searchParams = useSearchParams();
+  const language = (searchParams.get('lang') || 'fi') as SupportedLanguage;
+  
+  // Get translated slides
+  const heroSlides = getTranslatedSlides(language);
+  const displayProperties = sampleProperties;
 
     return (
       <div className="min-h-screen flex flex-col">
@@ -257,16 +214,16 @@ export default async function HomePage() {
               {/* Section Header */}
               <div className="text-center mb-12">
                 <h2 className="text-4xl font-light text-gray-900 mb-4">
-                  Myyntikohteet
+                  {getHomepageTranslation('propertiesHeading', language)}
                 </h2>
                 <div className="w-24 h-0.5 bg-gray-300 mx-auto mb-6"></div>
                 <p className="text-lg text-gray-600 max-w-3xl mx-auto font-light">
-                  Tutustu huolella valittuun kokoelmaamme ylellisiä kiinteistöjä Suomen halutuimmissa kohteissa
+                  {getHomepageTranslation('propertiesSubtitle', language)}
                 </p>
               </div>
 
               {/* Property Grid */}
-              <PropertyGrid properties={displayProperties} />
+              <PropertyGrid properties={displayProperties} language={language} />
               
               {/* View All Button */}
               <div className="text-center mt-12">
@@ -276,7 +233,7 @@ export default async function HomePage() {
                            hover:bg-[#0f2633] transition-colors duration-300 
                            font-light uppercase tracking-wider text-sm"
                 >
-                  Kaikki myynnissä olevat kohteemme
+                  {getHomepageTranslation('viewAllProperties', language)}
                 </Link>
               </div>
             </div>
@@ -288,13 +245,10 @@ export default async function HomePage() {
               {/* Section Header */}
               <div className="max-w-4xl mx-auto text-center mb-12">
                 <h2 className="text-3xl lg:text-4xl font-light text-gray-900 mb-8">
-                  Tervetuloa onnistuneeseen asuntokauppaan!
+                  {getHomepageTranslation('welcomeHeading', language)}
                 </h2>
                 <p className="text-lg text-gray-600 font-light leading-relaxed">
-                  Olemme tuoneet Suomen asuntomarkkinoille yhden maailman suurimman kiinteistönvälitysketjun 
-                  Sotheby's International Realty®:n osaamisen ja kokemuksen. Avaamalla kiinteistömarkkinat 
-                  yli valtakunnan rajojen haluamme kehittää koko alaa. Inspiraationamme toimivat mielenkiintoiset 
-                  ja uniikit kohteet kaikkialla maailmassa.
+                  {getHomepageTranslation('welcomeText', language)}
                 </p>
               </div>
 
@@ -304,20 +258,20 @@ export default async function HomePage() {
                 <div className="relative h-80 group overflow-hidden">
                   <Image
                     src="/images/content/snellman-sothebys-yritys.jpg"
-                    alt="Avaamme uusia ovia"
+                    alt={getHomepageTranslation('openNewDoors', language)}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center text-white p-8">
-                    <h3 className="text-2xl font-light mb-4 text-center">Avaamme uusia ovia!</h3>
+                    <h3 className="text-2xl font-light mb-4 text-center">{getHomepageTranslation('openNewDoors', language)}</h3>
                     <Link 
                       href="/kohteet"
                       className="inline-block border-2 border-white text-white px-6 py-2 
                                hover:bg-white hover:text-[#1a3a4a] transition-all duration-300 
                                font-light uppercase tracking-wider text-sm"
                     >
-                      Löydä unelmiesi koti
+                      {getHomepageTranslation('findDreamHome', language)}
                     </Link>
                   </div>
                 </div>
@@ -326,14 +280,14 @@ export default async function HomePage() {
                 <div className="relative h-80 group overflow-hidden">
                   <Image
                     src="/images/content/snellman-sothebys-kutsu-arviokaynnille.jpg"
-                    alt="Asiantuntemus"
+                    alt={getHomepageTranslation('expertiseHeading', language)}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-[#324b72] bg-opacity-80 flex flex-col items-center justify-center text-white p-8">
                     <h3 className="text-2xl font-light mb-4 text-center">
-                      Asiantuntemus joka ulottuu korttelista kaupunkiin ja aina maailman ympäri
+                      {getHomepageTranslation('expertiseHeading', language)}
                     </h3>
                     <Link 
                       href="/yritys"
@@ -341,7 +295,7 @@ export default async function HomePage() {
                                hover:bg-white hover:text-[#324b72] transition-all duration-300 
                                font-light uppercase tracking-wider text-sm"
                     >
-                      Lue lisää yrityksestämme
+                      {getHomepageTranslation('readMoreAboutUs', language)}
                     </Link>
                   </div>
                 </div>
@@ -350,14 +304,14 @@ export default async function HomePage() {
                 <div className="relative h-80 group overflow-hidden">
                   <Image
                     src="/images/content/snellman-sothebys-nakoalapaikka.jpg"
-                    alt="Arviokäynti"
+                    alt={getHomepageTranslation('freeValuationHeading', language)}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gray-800 bg-opacity-60 flex flex-col items-center justify-center text-white p-8">
                     <h3 className="text-2xl font-light mb-4 text-center">
-                      Kutsu meidät maksuttomalle arviokäynnille
+                      {getHomepageTranslation('freeValuationHeading', language)}
                     </h3>
                     <Link 
                       href="/myymassa"
@@ -365,7 +319,7 @@ export default async function HomePage() {
                                hover:bg-white hover:text-gray-800 transition-all duration-300 
                                font-light uppercase tracking-wider text-sm"
                     >
-                      Ota meihin yhteyttä
+                      {getHomepageTranslation('contactUs', language)}
                     </Link>
                   </div>
                 </div>
@@ -377,9 +331,9 @@ export default async function HomePage() {
           <section className="py-8 bg-white">
             <div className="container mx-auto px-4 text-center">
               <h3 className="text-2xl font-light text-gray-900">
-                Upea toimistomme palvelee<br />
-                teitä arkisin 10:00 – 17:00<br />
-                sekä muina aikoina sopimuksen mukaan.
+                {getHomepageTranslation('officeHoursLine1', language)}<br />
+                {getHomepageTranslation('officeHoursLine2', language)}<br />
+                {getHomepageTranslation('officeHoursLine3', language)}
               </h3>
             </div>
           </section>
@@ -430,30 +384,30 @@ export default async function HomePage() {
             <div className="container mx-auto px-4 relative z-10">
               <div className="max-w-md mx-auto text-center">
                 <h2 className="text-3xl font-light text-white mb-8">
-                  Tilaa Uutiskirjeemme
+                  {getHomepageTranslation('subscribeNewsletter', language)}
                 </h2>
                 <form className="space-y-4">
                   <input
                     type="text"
-                    placeholder="Etunimi"
+                    placeholder={getHomepageTranslation('firstName', language)}
                     className="w-full px-4 py-3 bg-white bg-opacity-90 text-gray-900 placeholder-gray-600 font-light"
                   />
                   <input
                     type="text"
-                    placeholder="Sukunimi"
+                    placeholder={getHomepageTranslation('lastName', language)}
                     className="w-full px-4 py-3 bg-white bg-opacity-90 text-gray-900 placeholder-gray-600 font-light"
                   />
                   <input
                     type="email"
-                    placeholder="Sähköposti"
+                    placeholder={getHomepageTranslation('email', language)}
                     className="w-full px-4 py-3 bg-white bg-opacity-90 text-gray-900 placeholder-gray-600 font-light"
                   />
                   <div className="flex items-start text-left">
                     <input type="checkbox" className="mt-1 mr-2" required />
                     <label className="text-white text-sm font-light">
-                      Olen tutustunut Tietosuojaselosteeseen{' '}
+                      {getHomepageTranslation('privacyConsent', language)}{' '}
                       <a href="/tietosuojaseloste" className="underline hover:no-underline">
-                        Tietosuojaseloste
+                        {getHomepageTranslation('privacyPolicy', language)}
                       </a>
                     </label>
                   </div>
@@ -463,7 +417,7 @@ export default async function HomePage() {
                              hover:bg-[#0f2633] transition-colors duration-300 
                              font-light uppercase tracking-wider text-sm"
                   >
-                    Tilaa
+                    {getHomepageTranslation('subscribe', language)}
                   </button>
                 </form>
               </div>
@@ -474,24 +428,21 @@ export default async function HomePage() {
         {/* Footer */}
       </div>
     );
-  } catch (error) {
-    console.error('Error loading homepage:', error);
-    
-    // Fallback UI
-    return (
-      <div className="min-h-screen flex flex-col">
-        <main className="flex-1">
-          <HeroCarousel slides={defaultSlides} />
-          <section className="py-16 bg-gray-50">
-            <div className="container mx-auto px-4 text-center">
-              <h2 className="text-3xl font-light text-gray-900 mb-4">
-                Loading...
-              </h2>
-              <p className="text-gray-600">Please refresh the page</p>
-            </div>
-          </section>
-        </main>
+}
+
+export default function HomePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" role="status">
+            <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+          </div>
+          <p className="mt-4 text-gray-600">Loading...</p>
+        </div>
       </div>
-    );
-  }
+    }>
+      <HomePageContent />
+    </Suspense>
+  );
 }

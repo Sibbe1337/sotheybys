@@ -1,4 +1,5 @@
 import PropertyCard from './PropertyCard';
+import { type SupportedLanguage } from '@/lib/homepage-translations';
 
 interface Property {
   id: string;
@@ -37,9 +38,10 @@ interface Property {
 interface PropertyGridProps {
   properties: Property[];
   showStatus?: boolean;
+  language?: SupportedLanguage;
 }
 
-export default function PropertyGrid({ properties, showStatus = true }: PropertyGridProps) {
+export default function PropertyGrid({ properties, showStatus = true, language = 'fi' }: PropertyGridProps) {
   if (!properties || properties.length === 0) {
     return (
       <div className="text-center py-16">
@@ -69,6 +71,7 @@ export default function PropertyGrid({ properties, showStatus = true }: Property
             price: property.acfRealEstate?.property?.price ? Number(property.acfRealEstate.property.price) : undefined
           }}
           agent={property.acfRealEstate?.agent}
+          language={language}
         />
       ))}
     </div>

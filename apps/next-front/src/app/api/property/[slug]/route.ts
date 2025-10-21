@@ -2,43 +2,81 @@ import { NextResponse } from 'next/server';
 import { listingsCache, ensureCacheInitialized } from '@/lib/listings-cache';
 import { getPropertyBySlug } from '@/lib/wordpress';
 import { flattenPropertyForLanguage } from '@/lib/flatten-localized-data';
+import aliasesData from '@/config/property-aliases.json';
 
 // Force dynamic rendering as this route uses request.url
 export const dynamic = 'force-dynamic';
+
+// ============================================================================
+// SLUG NORMALIZATION & ALIAS MAPPING
+// ============================================================================
+const ALIAS_MAP: Record<string, string> = aliasesData.aliases;
+
+function normalizeSlug(s: string): string {
+  return s
+    .trim()
+    .toLowerCase()
+    .normalize('NFKD')                    // split accented chars
+    .replace(/[\u0300-\u036f]/g, '')      // strip diacritics (ä→a, ö→o)
+    .replace(/\s+/g, '-')                 // spaces → hyphen
+    .replace(/-+/g, '-')                  // collapse multiple hyphens
+    .replace(/[^a-z0-9-]/g, '');         // keep only safe chars
+}
 
 export async function GET(
   request: Request,
   { params }: { params: { slug: string } }
 ) {
   try {
-    const { slug } = params;
+    const rawSlug = params.slug;
     const { searchParams } = new URL(request.url);
     const language = (searchParams.get('lang') || 'fi') as 'fi' | 'sv' | 'en';
+
+    // Normalize slug and apply alias mapping
+    const normalizedSlug = normalizeSlug(rawSlug);
+    const resolvedSlug = ALIAS_MAP[normalizedSlug] || normalizedSlug;
+
+    console.log('🔍 Slug resolution:', { rawSlug, normalizedSlug, resolvedSlug });
 
     // Initialize cache
     await ensureCacheInitialized();
     
-    // Try to get from Linear API cache using new multilingual format
-    let foundProperty: any = listingsCache.getMultilingualListingBySlug(slug);
+    // Try 1: Get from Linear API cache using resolved slug
+    let foundProperty: any = listingsCache.getMultilingualListingBySlug(resolvedSlug);
     
-    // If not found in Linear API, try WordPress (but this will have different structure)
-    // NOTE: WordPress data structure is different from MultilingualPropertyListing
-    // Frontend components expecting MultilingualPropertyListing may not work with WP data
+    // Try 2: If normalized slug is different, try that too
+    if (!foundProperty && normalizedSlug !== resolvedSlug) {
+      foundProperty = listingsCache.getMultilingualListingBySlug(normalizedSlug);
+    }
+    
+    // Try 3: If still not found, try original slug (case-sensitive fallback)
+    if (!foundProperty && rawSlug !== resolvedSlug) {
+      foundProperty = listingsCache.getMultilingualListingBySlug(rawSlug);
+    }
+    
+    // Try 4: WordPress fallback (different data structure)
     if (!foundProperty) {
-      const wpProperty = await getPropertyBySlug(slug);
+      const wpProperty = await getPropertyBySlug(resolvedSlug);
       if (wpProperty) {
         // TODO: Convert WordPress format to MultilingualPropertyListing format
         foundProperty = wpProperty;
       }
     }
 
+    // Graceful 404 - no NEXT_NOT_FOUND crash
     if (!foundProperty) {
       return NextResponse.json(
         { 
           success: false, 
-          error: 'Property not found' 
+          error: 'NOT_FOUND',
+          slug: rawSlug,
+          normalized: normalizedSlug,
+          resolved: resolvedSlug
         },
-        { status: 404 }
+        { 
+          status: 404,
+          headers: { 'Cache-Control': 'no-store, max-age=0' }
+        }
       );
     }
 
@@ -60,6 +98,22 @@ export async function GET(
     console.log('🔄 Flattening LocalizedString objects for language:', language);
     const flattened: any = flattenPropertyForLanguage(foundProperty, language);
     
+    if (!flattened) {
+      console.error('❌ flattenPropertyForLanguage returned null/undefined');
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: 'FLATTEN_ERROR',
+          slug: rawSlug,
+          details: 'Property data could not be flattened'
+        },
+        { 
+          status: 500,
+          headers: { 'Cache-Control': 'no-store, max-age=0' }
+        }
+      );
+    }
+    
     console.log('✅ All LocalizedString objects flattened to strings');
 
     // IMAGE PIPELINE HARDENING: Always default to arrays to prevent 500 errors
@@ -77,13 +131,17 @@ export async function GET(
     return response;
   } catch (error) {
     console.error('Error fetching property:', error);
+    // Don't bubble NEXT_NOT_FOUND; return controlled 500 JSON
     return NextResponse.json(
       { 
         success: false, 
-        error: 'Failed to fetch property',
+        error: 'SERVER_ERROR',
         details: error instanceof Error ? error.message : 'Unknown error'
       },
-      { status: 500 }
+      { 
+        status: 500,
+        headers: { 'Cache-Control': 'no-store, max-age=0' }
+      }
     );
   }
 }

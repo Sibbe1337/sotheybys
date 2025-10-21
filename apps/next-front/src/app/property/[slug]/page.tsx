@@ -11,6 +11,78 @@ import { parseEuroNumber, formatEuroCurrency } from '@/lib/number-eu';
 import { getTranslation, getBooleanText, getUnitSuffix, type SupportedLanguage } from '@/lib/property-translations';
 // API calls will be made through our server-side route
 
+// ============================================================================
+// HERO INFO ROW HELPERS
+// ============================================================================
+interface HeroItem {
+  label: string;
+  value: string;
+  key: string;
+  numValue?: number;
+  areaValue?: number;
+}
+
+const isNum = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v);
+const gt0 = (v: unknown) => isNum(v) && v > 0;
+const hasText = (v: unknown) => typeof v === 'string' && v.trim().length > 0;
+
+function formatAreaM2(v?: number) {
+  if (!gt0(v)) return '';
+  return `${v} m²`;
+}
+
+function formatSiteArea(v?: number) {
+  if (!gt0(v)) return '';
+  if (v! >= 10000) {
+    const ha = v! / 10000;
+    return `${ha.toFixed(2)} ha`;
+  }
+  return `${v} m²`;
+}
+
+function getHeroItems(propertyData: any, language: 'fi' | 'sv' | 'en'): HeroItem[] {
+  // Determine if this is a fastighet/kiinteistö
+  const isFastighet =
+    (propertyData?.apartmentType && /villa|hus|fastighet|omakotitalo|egendom/i.test(propertyData.apartmentType)) ||
+    propertyData?.estateType === 'KIINTEISTO' ||
+    propertyData?.apartmentRealEstateType === 'KIINTEISTO' ||
+    propertyData?.propertyType?.toLowerCase().includes('omakotitalo') ||
+    propertyData?.propertyType?.toLowerCase().includes('fastighet');
+
+  const region = propertyData?.region || propertyData?.district || propertyData?.city || '';
+  
+  // Labels by language
+  const labels = {
+    livingArea: language === 'sv' ? 'Bostadsyta' : language === 'en' ? 'Living area' : 'Asuinpinta-ala',
+    totalArea: language === 'sv' ? 'Total yta' : language === 'en' ? 'Total area' : 'Kokonaispinta-ala',
+    price: language === 'sv' ? 'Pris' : language === 'en' ? 'Price' : 'Myyntihinta',
+    debtFreePrice: language === 'sv' ? 'Skuldfritt pris' : language === 'en' ? 'Debt-free price' : 'Velaton hinta',
+    district: language === 'sv' ? 'Stadsdel' : language === 'en' ? 'District' : 'Kaupunginosa',
+    yearBuilt: language === 'sv' ? 'Byggnadsår' : language === 'en' ? 'Year built' : 'Rakennusvuosi',
+    siteArea: language === 'sv' ? 'Tomtstorlek' : language === 'en' ? 'Plot size' : 'Tontin koko',
+  };
+
+  if (isFastighet) {
+    // FASTIGHET: Bostadsyta | Total yta | Pris | Stadsdel | Tomtstorlek
+    return [
+      { label: labels.livingArea, value: formatAreaM2(propertyData?.area || propertyData?.livingArea), key: 'livingArea' },
+      { label: labels.totalArea, value: formatAreaM2(propertyData?.totalArea), key: 'totalArea' },
+      { label: labels.price, value: gt0(propertyData?.price) ? formatEuroCurrency(propertyData.price) : '', key: 'price', numValue: propertyData?.price },
+      { label: labels.district, value: hasText(region) ? region : '', key: 'district' },
+      { label: labels.siteArea, value: formatSiteArea(propertyData?.plotArea || propertyData?.siteArea), key: 'siteArea' },
+    ].filter(it => hasText(it.value));
+  } else {
+    // LÄGENHET/OSAKE: Bostadsyta | Pris | Skuldfritt pris | Stadsdel | Byggnadsår
+    return [
+      { label: labels.livingArea, value: formatAreaM2(propertyData?.area || propertyData?.livingArea), key: 'livingArea', areaValue: propertyData?.area || propertyData?.livingArea },
+      { label: labels.price, value: gt0(propertyData?.price) ? formatEuroCurrency(propertyData.price) : '', key: 'price', numValue: propertyData?.price, areaValue: propertyData?.area || propertyData?.livingArea },
+      { label: labels.debtFreePrice, value: gt0(propertyData?.debtFreePrice) ? formatEuroCurrency(propertyData.debtFreePrice) : '', key: 'debtFreePrice', numValue: propertyData?.debtFreePrice, areaValue: propertyData?.area || propertyData?.livingArea },
+      { label: labels.district, value: hasText(region) ? region : '', key: 'district' },
+      { label: labels.yearBuilt, value: gt0(propertyData?.yearBuilt || propertyData?.yearOfBuilding) ? String(propertyData.yearBuilt || propertyData.yearOfBuilding) : '', key: 'yearBuilt' },
+    ].filter(it => hasText(it.value));
+  }
+}
+
 interface PropertyPageProps {
   params: {
     slug: string;
@@ -59,18 +131,14 @@ export default function PropertyPage({ params }: PropertyPageProps) {
       try {
         // Fetch property data from our API route (flattened to detected language)
         const response = await fetch(`/api/property/${slug}?lang=${language}`);
-        
-        if (!response.ok) {
-          if (response.status === 404) {
-            notFound();
-          }
-          throw new Error('Failed to fetch property');
-        }
-        
         const result = await response.json();
         
-        if (!result.success || !result.data) {
-          notFound();
+        // Handle graceful 404 without throwing
+        if (!response.ok || !result.success || !result.data) {
+          console.warn('Property not found:', { slug, result });
+          setProperty(null);
+          setLoading(false);
+          return;
         }
 
         setProperty(result.data);
@@ -92,14 +160,13 @@ export default function PropertyPage({ params }: PropertyPageProps) {
         }
       } catch (error) {
         console.error('Error loading property:', error);
-        notFound();
-      } finally {
+        setProperty(null);
         setLoading(false);
       }
     }
 
     loadProperty();
-  }, [slug]);
+  }, [slug, language]);
 
   // Keyboard navigation - must be defined before any conditional returns
   useEffect(() => {
@@ -140,8 +207,56 @@ export default function PropertyPage({ params }: PropertyPageProps) {
     );
   }
 
+  // Friendly "not found" state instead of throwing
   if (!property) {
-    notFound();
+    const translations = {
+      fi: {
+        title: 'Kohdetta ei löytynyt',
+        message: 'Tarkista linkki tai palaa kohdelistaukseen.',
+        backLink: 'Takaisin etusivulle'
+      },
+      sv: {
+        title: 'Objektet hittades inte',
+        message: 'Kontrollera länken eller gå tillbaka till listan.',
+        backLink: 'Tillbaka till startsidan'
+      },
+      en: {
+        title: 'Listing not found',
+        message: 'Check the link or go back to listings.',
+        backLink: 'Back to home'
+      }
+    };
+    
+    const t = translations[language] || translations.fi;
+    
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="max-w-2xl mx-auto px-4 py-12 text-center">
+          <div className="bg-white rounded-lg shadow-lg p-8">
+            <h1 className="text-3xl font-semibold text-gray-900 mb-4">
+              {t.title}
+            </h1>
+            <p className="text-lg text-gray-600 mb-8">
+              {t.message}
+            </p>
+            <div className="flex justify-center gap-4">
+              <LocaleLink 
+                href="/"
+                className="inline-block bg-[var(--color-primary)] text-white px-8 py-3 rounded hover:bg-[var(--color-primary-dark)] transition-colors"
+              >
+                {t.backLink}
+              </LocaleLink>
+              <LocaleLink 
+                href="/kohteet"
+                className="inline-block bg-gray-200 text-gray-800 px-8 py-3 rounded hover:bg-gray-300 transition-colors"
+              >
+                {language === 'sv' ? 'Till objekten' : language === 'en' ? 'View properties' : 'Katso kohteet'}
+              </LocaleLink>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   // Safe array helper to prevent crashes on undefined/null arrays
@@ -588,67 +703,37 @@ export default function PropertyPage({ params }: PropertyPageProps) {
         </div>
       </div>
 
-      {/* Property Key Information */}
+      {/* Property Key Information - Client Order */}
       <section className="bg-gray-50 py-12">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
-            {propertyData.area && (
-              <div>
-                <h3 className="text-3xl font-bold text-[var(--color-primary)]">
-                  {String(propertyData.area).includes('m²') || String(propertyData.area).includes('m2') ? propertyData.area : `${propertyData.area} m²`}
-                </h3>
-                <p className="text-sm text-gray-600 mt-2">ASUINPINTA-ALA</p>
+          {(() => {
+            const heroItems = getHeroItems(propertyData, language);
+            return (
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 text-center">
+                {heroItems.map((item, index) => (
+                  <div key={index}>
+                    <h3 className="text-3xl font-bold text-[var(--color-primary)]">
+                      {item.value}
+                    </h3>
+                    <p className="text-sm text-gray-600 mt-2 uppercase tracking-wider">
+                      {item.label}
+                    </p>
+                    {/* Show €/m² for prices with living area */}
+                    {item.key === 'price' && item.numValue && item.areaValue && gt0(item.areaValue) && (
+                      <p className="text-xs text-gray-500 mt-1">
+                        {formatEuroCurrency(item.numValue! / item.areaValue!)} / m²
+                      </p>
+                    )}
+                    {item.key === 'debtFreePrice' && item.numValue && item.areaValue && gt0(item.areaValue) && (
+                      <p className="text-xs text-gray-500 mt-1">
+                        {formatEuroCurrency(item.numValue! / item.areaValue!)} / m²
+                      </p>
+                    )}
+                  </div>
+                ))}
               </div>
-            )}
-            {propertyData.totalArea && (
-              <div>
-                <h3 className="text-3xl font-bold text-[var(--color-primary)]">
-                  {String(propertyData.totalArea).includes('m²') || String(propertyData.totalArea).includes('m2') ? propertyData.totalArea : `${propertyData.totalArea} m²`}
-                </h3>
-                <p className="text-sm text-gray-600 mt-2">KOKONAISALA</p>
-              </div>
-            )}
-            {propertyData.price && (
-              <div>
-                <h3 className="text-3xl font-bold text-[var(--color-primary)]">
-                  {formatEuroCurrency(propertyData.price)}
-                </h3>
-                <p className="text-sm text-gray-600 mt-2">MYYNTIHINTA</p>
-              </div>
-            )}
-            {propertyData.city && (
-              <div>
-                <h3 className="text-3xl font-bold text-[var(--color-primary)]">
-                  {propertyData.city}
-                </h3>
-                <p className="text-sm text-gray-600 mt-2">KAUPUNGINOSA</p>
-              </div>
-            )}
-            {propertyData.apartmentType && (
-              <div>
-                <h3 className="text-3xl font-bold text-[var(--color-primary)]">
-                  {propertyData.apartmentType}
-                </h3>
-                <p className="text-sm text-gray-600 mt-2">{getTranslation('apartmentType', language)}</p>
-              </div>
-            )}
-            {propertyData.floorLocation && (
-              <div>
-                <h3 className="text-3xl font-bold text-[var(--color-primary)]">
-                  {propertyData.floorLocation}{propertyData.numberOfFloors && propertyData.numberOfFloors > 0 ? ` / ${propertyData.numberOfFloors}` : ''}
-                </h3>
-                <p className="text-sm text-gray-600 mt-2">{getTranslation('floor', language)}</p>
-              </div>
-            )}
-            {propertyData.plotArea && (
-              <div>
-                <h3 className="text-3xl font-bold text-[var(--color-primary)]">
-                  {String(propertyData.plotArea).includes('m²') || String(propertyData.plotArea).includes('m2') ? propertyData.plotArea : `${formatNumber(propertyData.plotArea)} m²`}
-                </h3>
-                <p className="text-sm text-gray-600 mt-2">TONTIN PINTA-ALA</p>
-              </div>
-            )}
-          </div>
+            );
+          })()}
         </div>
       </section>
 
