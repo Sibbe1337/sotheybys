@@ -197,7 +197,7 @@ const sampleProperties = [
 function HomePageContent() {
   const searchParams = useSearchParams();
   const language = (searchParams.get('lang') || 'fi') as SupportedLanguage;
-  const [properties, setProperties] = useState(sampleProperties);
+  const [properties, setProperties] = useState<any[]>(sampleProperties);
   const [loading, setLoading] = useState(true);
   
   // Fetch real properties from Linear API cache
