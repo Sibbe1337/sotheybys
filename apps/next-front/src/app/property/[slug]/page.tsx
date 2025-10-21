@@ -875,6 +875,13 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                           alt={agentData.photo?.altText || agentData.name}
                           fill
                           className="object-cover"
+                          unoptimized
+                          onError={(e) => {
+                            console.error('❌ Property detail: Agent photo failed to load:', agentData.image || agentData.photo?.sourceUrl);
+                          }}
+                          onLoad={() => {
+                            console.log('✅ Property detail: Agent photo loaded successfully:', agentData.image || agentData.photo?.sourceUrl);
+                          }}
                         />
                       </div>
                     )}

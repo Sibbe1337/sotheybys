@@ -147,13 +147,20 @@ export default function PropertyCard({
         {/* Agent Info */}
         {agent && agent.name && (
           <div className="flex items-center gap-2 pt-3 border-t border-gray-100">
-            {agent.photo && (
-              <div className="relative w-8 h-8 rounded-full overflow-hidden">
+            {agent.photo?.sourceUrl && (
+              <div className="relative w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
                 <Image
                   src={agent.photo.sourceUrl}
                   alt={agent.photo.altText || agent.name}
                   fill
                   className="object-cover"
+                  unoptimized
+                  onError={(e) => {
+                    console.error('❌ Agent photo failed to load:', agent.photo.sourceUrl);
+                  }}
+                  onLoad={() => {
+                    console.log('✅ Agent photo loaded successfully:', agent.photo.sourceUrl);
+                  }}
                 />
               </div>
             )}
