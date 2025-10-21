@@ -207,6 +207,13 @@ export const HOMEPAGE_TRANSLATIONS: HomepageTranslations = {
     sv: 'Se objekten',
     en: 'View Properties'
   },
+  
+  // Loading state
+  loading: {
+    fi: 'Ladataan…',
+    sv: 'Laddar…',
+    en: 'Loading…'
+  },
 };
 
 /**
