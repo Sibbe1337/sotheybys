@@ -173,24 +173,32 @@ export async function GET(
       
       // Use listing data instead of details
       console.log('✅ Using listing data as fallback');
-      const mapped = mapLinearAPIToProperty(raw);
-      const flattened: any = flattenPropertyForLanguage(mapped, lang);
-      
-      if (!flattened) {
-        console.error('❌ Flatten failed on listing data');
+      try {
+        const mapped = mapLinearAPIToProperty(raw);
+        const flattened: any = flattenPropertyForLanguage(mapped, lang);
+        
+        if (!flattened) {
+          console.error('❌ Flatten failed on listing data');
+          return NextResponse.json(
+            { success: false, error: "FLATTEN_ERROR", lang },
+            { status: 500, headers: { "cache-control": "no-store" }}
+          );
+        }
+
+        if (!Array.isArray(flattened.images)) flattened.images = [];
+        if (!Array.isArray(flattened.photoUrls)) flattened.photoUrls = [];
+        
         return NextResponse.json(
-          { success: false, error: "FLATTEN_ERROR" },
+          { success: true, data: flattened, fallback: true },
+          { status: 200, headers: { "cache-control": "no-store" }}
+        );
+      } catch (mappingError) {
+        console.error('❌ Error mapping/flattening listing data:', mappingError);
+        return NextResponse.json(
+          { success: false, error: "MAPPING_ERROR", details: mappingError instanceof Error ? mappingError.message : 'Unknown', lang },
           { status: 500, headers: { "cache-control": "no-store" }}
         );
       }
-
-      if (!Array.isArray(flattened.images)) flattened.images = [];
-      if (!Array.isArray(flattened.photoUrls)) flattened.photoUrls = [];
-      
-      return NextResponse.json(
-        { success: true, data: flattened, fallback: true },
-        { status: 200, headers: { "cache-control": "no-store" }}
-      );
     }
     
     const raw = detail.data?.data || detail.data;
@@ -204,33 +212,41 @@ export async function GET(
 
     // Step 4: Map to our format & flatten for single language
     console.log('🔄 Mapping Linear API data to property format...');
-    const mapped = mapLinearAPIToProperty(raw);
-    
-    console.log('🔄 Flattening for language:', lang);
-    const flattened: any = flattenPropertyForLanguage(mapped, lang);
-    
-    if (!flattened) {
-      console.error('❌ Flatten returned null');
+    try {
+      const mapped = mapLinearAPIToProperty(raw);
+      
+      console.log('🔄 Flattening for language:', lang);
+      const flattened: any = flattenPropertyForLanguage(mapped, lang);
+      
+      if (!flattened) {
+        console.error('❌ Flatten returned null');
+        return NextResponse.json(
+          { success: false, error: "FLATTEN_ERROR", lang },
+          { status: 500, headers: { "cache-control": "no-store" }}
+        );
+      }
+
+      // Step 5: Safe defaults for arrays
+      if (!Array.isArray(flattened.images)) flattened.images = [];
+      if (!Array.isArray(flattened.photoUrls)) flattened.photoUrls = [];
+      
+      console.log('✅ Property ready:', {
+        address: flattened.streetAddress || flattened.address,
+        images: flattened.images.length,
+        hasDescription: !!flattened.description
+      });
+
       return NextResponse.json(
-        { success: false, error: "FLATTEN_ERROR" },
+        { success: true, data: flattened },
+        { status: 200, headers: { "cache-control": "no-store" }}
+      );
+    } catch (mappingError) {
+      console.error('❌ Error mapping/flattening property data:', mappingError);
+      return NextResponse.json(
+        { success: false, error: "MAPPING_ERROR", details: mappingError instanceof Error ? mappingError.message : 'Unknown', lang },
         { status: 500, headers: { "cache-control": "no-store" }}
       );
     }
-
-    // Step 5: Safe defaults for arrays
-    if (!Array.isArray(flattened.images)) flattened.images = [];
-    if (!Array.isArray(flattened.photoUrls)) flattened.photoUrls = [];
-    
-    console.log('✅ Property ready:', {
-      address: flattened.streetAddress || flattened.address,
-      images: flattened.images.length,
-      hasDescription: !!flattened.description
-    });
-
-    return NextResponse.json(
-      { success: true, data: flattened },
-      { status: 200, headers: { "cache-control": "no-store" }}
-    );
     
   } catch (e) {
     // Never throw to framework – always return JSON
