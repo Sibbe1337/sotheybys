@@ -156,10 +156,10 @@ export default function PropertyCard({
                   className="object-cover"
                   unoptimized
                   onError={(e) => {
-                    console.error('❌ Agent photo failed to load:', agent.photo.sourceUrl);
+                    console.error('❌ Agent photo failed to load:', agent.photo?.sourceUrl);
                   }}
                   onLoad={() => {
-                    console.log('✅ Agent photo loaded successfully:', agent.photo.sourceUrl);
+                    console.log('✅ Agent photo loaded successfully:', agent.photo?.sourceUrl);
                   }}
                 />
               </div>
