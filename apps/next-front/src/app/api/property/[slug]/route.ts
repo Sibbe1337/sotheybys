@@ -96,11 +96,16 @@ export async function GET(
     console.log('📋 Listings count:', items.length);
     
     // Try to match by slug or address
-    let match = items.find((x: any) => {
-      const itemSlug = x.slug ?? x.canonicalSlug ?? '';
-      const itemAddr = x.address?.fi?.value || x.address || '';
-      return normalize(itemSlug) === lookupSlug || normalize(itemAddr) === lookupSlug;
-    });
+           let match = items.find((x: any) => {
+             const itemSlug = x.slug ?? x.canonicalSlug ?? '';
+             const itemAddr = x.address?.fi?.value || x.address || '';
+             const normalizedSlug = normalize(itemSlug);
+             const normalizedAddr = normalize(itemAddr);
+             
+             // Match by slug first, then by address (for properties with missing slugs)
+             return (normalizedSlug && normalizedSlug === lookupSlug) || 
+                    (normalizedAddr && normalizedAddr === lookupSlug);
+           });
     
     if (!match) {
       console.warn('⚠️  No match found. Available addresses:', 
