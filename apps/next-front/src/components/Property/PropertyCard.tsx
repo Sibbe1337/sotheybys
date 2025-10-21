@@ -151,6 +151,16 @@ export default function PropertyCard({
                 <p className="text-xs text-gray-600">{agent.phone}</p>
               )}
             </div>
+            {agent.email && (
+              <a 
+                href={`mailto:${agent.email}`}
+                onClick={(e) => e.stopPropagation()}
+                className="text-xs text-[var(--color-primary)] hover:underline font-medium"
+                title={getHomepageTranslation('contactAgent', language)}
+              >
+                {getHomepageTranslation('contact', language)}
+              </a>
+            )}
           </div>
         )}
 

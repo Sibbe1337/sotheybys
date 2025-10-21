@@ -221,6 +221,18 @@ export const HOMEPAGE_TRANSLATIONS: HomepageTranslations = {
     sv: 'Inga objekt hittades.',
     en: 'No properties found.'
   },
+  
+  // Agent contact
+  contact: {
+    fi: 'Ota yhteyttä',
+    sv: 'Kontakta',
+    en: 'Contact'
+  },
+  contactAgent: {
+    fi: 'Ota yhteyttä meklaariin',
+    sv: 'Kontakta mäklaren',
+    en: 'Contact agent'
+  },
 };
 
 /**

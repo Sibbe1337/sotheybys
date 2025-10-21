@@ -389,8 +389,16 @@ export function convertCompleteLinearToWordPressFormat(listing: CompleteLinearAP
   const firstNonFloorplan = images.find(img => !img.isFloorPlan);
   const featuredImage = firstNonFloorplan?.url || (images.length > 0 ? images[0].url : null);
   
-  // Agent/Realtor
-  const agent = listing.realtor || null;
+  // Agent/Realtor - Transform to WordPress format
+  const agent = listing.realtor ? {
+    name: listing.realtor.name || null,
+    phone: listing.realtor.tel || null,
+    email: listing.realtor.email || null,
+    photo: listing.realtor.avatar ? {
+      sourceUrl: listing.realtor.avatar,
+      altText: listing.realtor.name || 'Agent photo'
+    } : null
+  } : null;
   
   // Calculate price per sqm
   let pricePerSqm = null;
