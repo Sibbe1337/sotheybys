@@ -72,11 +72,13 @@ export async function GET(
   try {
     // Step 1: Normalize slug and apply aliases
     const norm = normalize(params.slug);
-    const lookupSlug = ALIAS_MAP[norm] ?? norm;
+    const alias = ALIAS_MAP[norm] ?? norm;
+    const lookupSlug = normalize(alias);  // ← Normalize AFTER alias to handle Finnish chars
     
     console.log('🔍 Property lookup:', { 
       raw: params.slug, 
-      normalized: norm, 
+      normalized: norm,
+      alias: alias,
       lookup: lookupSlug,
       lang 
     });
