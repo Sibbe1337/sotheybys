@@ -152,16 +152,44 @@ export async function GET(
     
     if (!detail.ok) {
       console.error('❌ Detail upstream error:', detail.status, `for identifier: ${matchId}`);
-      const code = detail.status === 404 ? 404 : 502;
+      console.warn('⚠️  Using listing data as fallback for:', matchDetails.address);
+      
+      // FALLBACK: Use the listing data directly when details endpoint fails
+      // This handles cases where properties exist in listings but not in details
+      const raw = match;
+      if (!raw) {
+        const code = detail.status === 404 ? 404 : 502;
+        return NextResponse.json(
+          { 
+            success: false, 
+            error: "DETAILS_UPSTREAM", 
+            status: detail.status,
+            identifier: matchId,
+            address: matchDetails.address
+          },
+          { status: code, headers: { "cache-control": "no-store" }}
+        );
+      }
+      
+      // Use listing data instead of details
+      console.log('✅ Using listing data as fallback');
+      const mapped = mapLinearAPIToProperty(raw);
+      const flattened: any = flattenPropertyForLanguage(mapped, lang);
+      
+      if (!flattened) {
+        console.error('❌ Flatten failed on listing data');
+        return NextResponse.json(
+          { success: false, error: "FLATTEN_ERROR" },
+          { status: 500, headers: { "cache-control": "no-store" }}
+        );
+      }
+
+      if (!Array.isArray(flattened.images)) flattened.images = [];
+      if (!Array.isArray(flattened.photoUrls)) flattened.photoUrls = [];
+      
       return NextResponse.json(
-        { 
-          success: false, 
-          error: "DETAILS_UPSTREAM", 
-          status: detail.status,
-          identifier: matchId,
-          address: matchDetails.address
-        },
-        { status: code, headers: { "cache-control": "no-store" }}
+        { success: true, data: flattened, fallback: true },
+        { status: 200, headers: { "cache-control": "no-store" }}
       );
     }
     
