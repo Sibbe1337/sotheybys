@@ -188,7 +188,6 @@ export default function PropertyCard({
           <Button 
             variant="primary" 
             className="w-full"
-            onClick={(e) => e.preventDefault()}
           >
             {getHomepageTranslation('viewProperty', language)}
           </Button>

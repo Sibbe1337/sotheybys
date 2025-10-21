@@ -27,6 +27,16 @@ const staffMembers = [
   },
   {
     id: '3',
+    name: 'Eeva Kyläkoski',
+    title: 'Senior Advisor - Board Member, LKV',
+    email: 'eeva@sothebysrealty.fi',
+    phone: '+358 (0)46 850 5850',
+    image: '/images/staff/eeva-kylakoski.jpg',
+    description: '',
+    flags: ['fi', 'gb']
+  },
+  {
+    id: '4',
     name: 'Soile Goodall',
     title: 'Senior Broker, LKV',
     email: 'soile@sothebysrealty.fi',
@@ -36,7 +46,7 @@ const staffMembers = [
     flags: ['fi', 'gb']
   },
   {
-    id: '4',
+    id: '5',
     name: 'Tea Käyhkö',
     title: 'Senior Broker, BA, MA, LKV',
     email: 'tea@sothebysrealty.fi',
@@ -46,7 +56,7 @@ const staffMembers = [
     flags: ['fi', 'se', 'gb']
   },
   {
-    id: '5',
+    id: '6',
     name: 'Kadri-Ann Õunap',
     title: 'Sales Associate, Notary, KED, KIAT',
     email: 'kadri-ann@sothebysrealty.fi',
@@ -56,7 +66,7 @@ const staffMembers = [
     flags: ['fi', 'se', 'gb', 'ee', 'ru']
   },
   {
-    id: '6',
+    id: '7',
     name: 'Ali Ahola',
     title: 'Senior Broker, LKV',
     email: 'ali@sothebysrealty.fi',
@@ -66,7 +76,7 @@ const staffMembers = [
     flags: ['fi']
   },
   {
-    id: '7',
+    id: '8',
     name: 'Petteri Huovila',
     title: 'Senior Advisor, LKV',
     email: 'petteri@sothebysrealty.fi',
@@ -76,7 +86,7 @@ const staffMembers = [
     flags: ['fi', 'se']
   },
   {
-    id: '8',
+    id: '9',
     name: 'Sima Shaygan',
     title: 'Sales Associate, B.Sc, KiLaT',
     email: 'sima@sothebysrealty.fi',
@@ -86,7 +96,7 @@ const staffMembers = [
     flags: ['fi', 'gb', 'ir', 'tr']
   },
   {
-    id: '9',
+    id: '10',
     name: 'Dennis Forsman',
     title: 'Sales Assistant, B.Sc.',
     email: 'dennis@sothebysrealty.fi',
@@ -96,7 +106,7 @@ const staffMembers = [
     flags: ['fi', 'se', 'gb']
   },
   {
-    id: '10',
+    id: '11',
     name: 'Johan Schröder',
     title: 'Graphic Designer',
     email: 'johan@sothebysrealty.fi',

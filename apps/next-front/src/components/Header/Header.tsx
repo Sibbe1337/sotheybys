@@ -338,8 +338,8 @@ export default function Header() {
                         className={`flex items-center px-3 py-2 text-sm font-normal tracking-wider uppercase
                                    transition-all duration-200 ${
                                      isActive 
-                                       ? 'text-white font-medium' 
-                                       : 'text-white/80 hover:text-white'
+                                       ? 'text-[var(--color-gold)] font-medium' 
+                                       : 'text-white/90 hover:text-[var(--color-gold)]'
                                    }`}
                         target={item.target}
                       >
@@ -354,7 +354,7 @@ export default function Header() {
                               <li key={childItem.id}>
                                 <LocaleLink
                                   href={childItem.path || childItem.url}
-                                  className="block px-4 py-3 text-sm text-[var(--color-accent)] hover:text-[var(--color-primary)] transition-colors"
+                                  className="block px-4 py-3 text-sm text-gray-700 hover:text-[var(--color-gold)] hover:bg-gray-50 transition-colors"
                                   target={childItem.target}
                                 >
                                   {childItem.label}
@@ -467,8 +467,8 @@ export default function Header() {
                     href={item.path || item.url}
                     className={`block py-3 text-sm font-normal tracking-wide uppercase border-b border-white/10 flex-1
                              ${isActive 
-                               ? 'text-white font-medium' 
-                               : 'text-white/80 hover:text-white'
+                               ? 'text-[var(--color-gold)] font-medium' 
+                               : 'text-white/90 hover:text-[var(--color-gold)]'
                              }`}
                     target={item.target}
                     onClick={() => {
@@ -503,7 +503,7 @@ export default function Header() {
                       <LocaleLink
                         key={childItem.id}
                         href={childItem.path || childItem.url}
-                        className="block py-2 text-sm text-white/70 hover:text-white border-b border-white/5"
+                        className="block py-2 text-sm text-white/80 hover:text-[var(--color-gold)] border-b border-white/5"
                         target={childItem.target}
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
