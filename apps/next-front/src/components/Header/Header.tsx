@@ -71,12 +71,12 @@ export default function Header({ menuItems }: HeaderProps) {
           childItems: {
             nodes: [
               { id: '2-1', label: 'For Sale', path: '/en/properties', url: '/en/properties' },
-              { id: '2-2', label: 'For Rent', path: '/en/properties/rent', url: '/en/properties/rent' },
+              { id: '2-2', label: 'For Rent', path: '/en/properties/rentals', url: '/en/properties/rentals' },
             ]
           }
         },
         { id: '3', label: 'SELLING', path: '/en/sell-with-us', url: '/en/sell-with-us' },
-        { id: '4', label: 'INTERNATIONALLY', path: '/en/internationally', url: '/en/internationally' },
+        { id: '4', label: 'INTERNATIONALLY', path: '/en/international', url: '/en/international' },
         { id: '5', label: 'STAFF', path: '/en/staff', url: '/en/staff' },
         { 
           id: '6', 

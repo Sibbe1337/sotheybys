@@ -61,7 +61,7 @@ export default async function ReferencesPage() {
         {/* Properties Grid */}
         <section className="py-12 lg:py-20">
           <div className="container mx-auto px-4">
-            <PropertyGrid properties={referenceProperties} showStatus={true} />
+            <PropertyGrid properties={referenceProperties} showStatus={true} language="fi" />
             
             {referenceProperties.length === 0 && (
               <div className="text-center py-20">
