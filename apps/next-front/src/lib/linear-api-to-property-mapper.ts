@@ -477,6 +477,8 @@ export function mapLinearAPIToProperty(
     estateAgentName: data.realtor?.name || '',
     estateAgentPhone: data.realtor?.tel || '',
     estateAgentEmail: data.realtor?.email || '',
+    // Agent object with photo for property detail pages
+    agent: extractAgentInfo(linearData),
     showingDate: data.showingDate?.fi?.value 
       ? new Date(data.showingDate.fi.value) 
       : new Date(),
@@ -551,15 +553,23 @@ export function extractPropertyImages(linearData: LinearAPIListing): {
 
 /**
  * Extract agent/realtor information
+ * Transforms to WordPress-compatible format with photo.sourceUrl
  */
-export function extractAgentInfo(linearData: LinearAPIListing) {
-  const { realtor } = linearData;
+export function extractAgentInfo(linearData: LinearAPIListing | CompleteLinearAPIListing) {
+  const data = linearData as any; // Cast to any to handle both types
+  const realtor = data.realtor;
   
   return {
     id: realtor?.id,
     name: realtor?.name,
     phone: realtor?.tel,
     email: realtor?.email,
+    // Transform avatar (string) to photo object for compatibility
+    photo: realtor?.avatar ? {
+      sourceUrl: realtor.avatar,
+      altText: realtor.name || 'Agent photo'
+    } : null,
+    // Keep avatar for backwards compatibility
     avatar: realtor?.avatar,
     company: {
       name: realtor?.primaryCompany?.name,

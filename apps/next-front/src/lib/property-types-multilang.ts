@@ -693,6 +693,30 @@ export interface MultilingualPropertyListing {
   estateAgentEmail: string;
 
   /**
+   * Agent/realtor information object
+   * FI: Kiinteistönvälittäjän tiedot
+   * SV: Mäklarens information
+   * Contains: name, phone, email, photo {sourceUrl, altText}, company info
+   */
+  agent?: {
+    id?: string;
+    name?: string;
+    phone?: string;
+    email?: string;
+    photo?: {
+      sourceUrl: string;
+      altText?: string;
+    } | null;
+    avatar?: string;
+    company?: {
+      name?: string;
+      logo?: string;
+      businessId?: string;
+      privacyLink?: string;
+    };
+  };
+
+  /**
    * Showing/viewing date
    * FI: Esittelypäivä
    * SV: Visningsdatum
