@@ -856,11 +856,11 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                 <div className="p-8">
                   <div className="flex flex-col md:flex-row items-center gap-8">
                     {/* Agent Image */}
-                    {agentData.image && (
+                    {(agentData.image || agentData.photo?.sourceUrl) && (
                       <div className="relative w-40 h-40 rounded-full overflow-hidden flex-shrink-0 shadow-lg">
                         <Image
-                          src={agentData.image}
-                          alt={agentData.name}
+                          src={agentData.image || agentData.photo?.sourceUrl}
+                          alt={agentData.photo?.altText || agentData.name}
                           fill
                           className="object-cover"
                         />
