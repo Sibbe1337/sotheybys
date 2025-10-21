@@ -35,7 +35,7 @@ export async function GET() {
       LINEAR_COMPANY_ID: process.env.LINEAR_COMPANY_ID ? `${process.env.LINEAR_COMPANY_ID.substring(0, 4)}****` : '(not set)',
       LINEAR_EXTERNAL_BASE: process.env.LINEAR_EXTERNAL_BASE || '(not set)',
     },
-    recommendations: []
+    recommendations: [] as string[]
   };
   
   // Add recommendations based on findings
