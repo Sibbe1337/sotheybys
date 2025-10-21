@@ -1,165 +1,181 @@
 import { NextResponse } from 'next/server';
-import { listingsCache, ensureCacheInitialized } from '@/lib/listings-cache';
-import { getPropertyBySlug } from '@/lib/wordpress';
+import { mapLinearAPIToProperty } from '@/lib/linear-api-to-property-mapper';
 import { flattenPropertyForLanguage } from '@/lib/flatten-localized-data';
-import { generateSlug } from '@/lib/utils';
 import aliasesData from '@/config/property-aliases.json';
 
 // Force dynamic rendering as this route uses request.url
 export const dynamic = 'force-dynamic';
 
 // ============================================================================
-// SLUG NORMALIZATION & ALIAS MAPPING
+// ENVIRONMENT & CONFIGURATION
 // ============================================================================
+const BASE = process.env.LINEAR_EXTERNAL_BASE ?? 'https://linear-external-api.azurewebsites.net';
+const COMPANY = process.env.COMPANY_ID ?? process.env.LINEAR_COMPANY_ID;
+const APIKEY = process.env.LINEAR_API_KEY;
+
+// SLUG ALIASES - for marketing URLs or common variations
 const ALIAS_MAP: Record<string, string> = aliasesData.aliases;
 
 /**
- * Normalizes a slug for consistent lookup
- * CRITICAL: Uses the same generateSlug() function as the cache to ensure consistency
- * This fixes the slug resolution issue documented in memory:9241337
+ * Normalize slug for consistent lookups
+ * Handles: case, accents, spaces, Finnish chars (ä→a, ö→o, å→a)
  */
-function normalizeSlug(s: string): string {
-  return generateSlug(s);
+const normalize = (s: string) =>
+  s.trim().toLowerCase()
+   .replace(/ä/g, 'a')
+   .replace(/ö/g, 'o')
+   .replace(/å/g, 'a')
+   .normalize("NFKD").replace(/[\u0300-\u036f]/g,"")
+   .replace(/\s+/g,"-").replace(/-+/g,"-")
+   .replace(/[^a-z0-9-]/g,"")
+   .replace(/^-+|-+$/g, '');
+
+/**
+ * Fetch JSON from Linear API with proper auth headers
+ */
+async function fetchJSON(url: string) {
+  if (!COMPANY || !APIKEY) {
+    throw new Error('Missing LINEAR_COMPANY_ID or LINEAR_API_KEY');
+  }
+  
+  const formattedApiKey = APIKEY.startsWith('LINEAR-API-KEY ') 
+    ? APIKEY 
+    : `LINEAR-API-KEY ${APIKEY}`;
+  
+  const r = await fetch(url, {
+    headers: { 
+      accept: "application/json", 
+      "x-company-id": COMPANY, 
+      authorization: formattedApiKey
+    },
+    cache: "no-store",
+  });
+  
+  const text = await r.text();
+  const data = text ? JSON.parse(text) : null;
+  return { ok: r.ok, status: r.status, data };
 }
 
+/**
+ * Property Detail API Route
+ * 
+ * CRITICAL: Resolves slug → ID → details using the SAME listings feed as cards
+ * This eliminates slug drift between homepage and detail pages
+ */
 export async function GET(
-  request: Request,
+  req: Request, 
   { params }: { params: { slug: string } }
 ) {
+  const u = new URL(req.url);
+  const lang = (u.searchParams.get("lang") ?? "fi") as 'fi' | 'sv' | 'en';
+
   try {
-    const rawSlug = params.slug;
-    const { searchParams } = new URL(request.url);
-    const language = (searchParams.get('lang') || 'fi') as 'fi' | 'sv' | 'en';
-
-    // Normalize slug and apply alias mapping
-    const normalizedSlug = normalizeSlug(rawSlug);
-    const resolvedSlug = ALIAS_MAP[normalizedSlug] || normalizedSlug;
-
-    console.log('🔍 Slug resolution:', { rawSlug, normalizedSlug, resolvedSlug });
-
-    // Initialize cache
-    await ensureCacheInitialized();
+    // Step 1: Normalize slug and apply aliases
+    const norm = normalize(params.slug);
+    const lookupSlug = ALIAS_MAP[norm] ?? norm;
     
-    // Debug: Log cache status
-    const cacheStatus = listingsCache.getStatus();
-    console.log('📦 Cache status:', {
-      listingsCount: cacheStatus.listingsCount,
-      lastSync: cacheStatus.lastSyncTime,
-      syncInProgress: cacheStatus.syncInProgress
+    console.log('🔍 Property lookup:', { 
+      raw: params.slug, 
+      normalized: norm, 
+      lookup: lookupSlug,
+      lang 
+    });
+
+    // Step 2: Resolve slug → ID using the SAME feed as the cards
+    const list = await fetchJSON(`${BASE}/v2/listings?languages[]=${lang}`);
+    
+    if (!list.ok) {
+      console.error('❌ Listings upstream error:', list.status);
+      return NextResponse.json(
+        { success: false, error: "LISTINGS_UPSTREAM", status: list.status },
+        { status: 502, headers: { "cache-control": "no-store" }}
+      );
+    }
+    
+    const items = Array.isArray(list.data) ? list.data : (list.data?.data ?? []);
+    console.log('📋 Listings count:', items.length);
+    
+    // Try to match by slug or address
+    let match = items.find((x: any) => {
+      const itemSlug = x.slug ?? x.canonicalSlug ?? '';
+      const itemAddr = x.address?.fi?.value || x.address || '';
+      return normalize(itemSlug) === lookupSlug || normalize(itemAddr) === lookupSlug;
     });
     
-    // Debug: Log all available slugs
-    const allListings = listingsCache.getListings();
-    const availableSlugs = allListings.map(l => {
-      const addr = l.address?.fi?.value;
-      return addr ? generateSlug(addr) : null;
-    }).filter(Boolean);
-    console.log('📋 Available slugs in cache:', availableSlugs);
-    
-    // Try 1: Get from Linear API cache using resolved slug
-    let foundProperty: any = listingsCache.getMultilingualListingBySlug(resolvedSlug);
-    console.log('🔍 Try 1 (resolved slug):', { resolvedSlug, found: !!foundProperty });
-    
-    // Try 2: If normalized slug is different, try that too
-    if (!foundProperty && normalizedSlug !== resolvedSlug) {
-      foundProperty = listingsCache.getMultilingualListingBySlug(normalizedSlug);
-      console.log('🔍 Try 2 (normalized slug):', { normalizedSlug, found: !!foundProperty });
-    }
-    
-    // Try 3: If still not found, try original slug (case-sensitive fallback)
-    if (!foundProperty && rawSlug !== resolvedSlug) {
-      foundProperty = listingsCache.getMultilingualListingBySlug(rawSlug);
-      console.log('🔍 Try 3 (raw slug):', { rawSlug, found: !!foundProperty });
-    }
-    
-    // Try 4: WordPress fallback (different data structure)
-    if (!foundProperty) {
-      const wpProperty = await getPropertyBySlug(resolvedSlug);
-      if (wpProperty) {
-        // TODO: Convert WordPress format to MultilingualPropertyListing format
-        foundProperty = wpProperty;
-      }
-    }
-
-    // Graceful 404 - no NEXT_NOT_FOUND crash
-    if (!foundProperty) {
+    if (!match) {
+      console.warn('⚠️  No match found. Available addresses:', 
+        items.slice(0, 5).map((x: any) => ({
+          addr: x.address?.fi?.value || x.address,
+          normalized: normalize(x.address?.fi?.value || x.address || '')
+        }))
+      );
+      
       return NextResponse.json(
-        { 
-          success: false, 
-          error: 'NOT_FOUND',
-          slug: rawSlug,
-          normalized: normalizedSlug,
-          resolved: resolvedSlug
-        },
-        { 
-          status: 404,
-          headers: { 'Cache-Control': 'no-store, max-age=0' }
-        }
+        { success: false, error: "NOT_FOUND", slug: lookupSlug },
+        { status: 404, headers: { "cache-control": "no-store" }}
+      );
+    }
+    
+    const matchId = match.id?.fi?.value || match.id || match.identifier?.fi?.value || match.identifier;
+    console.log('✅ Match found:', { id: matchId, address: match.address?.fi?.value });
+
+    // Step 3: Fetch full details by ID
+    const detail = await fetchJSON(`${BASE}/v2/property/${matchId}?languages[]=${lang}`);
+    
+    if (!detail.ok) {
+      console.error('❌ Detail upstream error:', detail.status);
+      const code = detail.status === 404 ? 404 : 502;
+      return NextResponse.json(
+        { success: false, error: "DETAILS_UPSTREAM", status: detail.status },
+        { status: code, headers: { "cache-control": "no-store" }}
+      );
+    }
+    
+    const raw = detail.data?.data || detail.data;
+    if (!raw) {
+      console.error('❌ No data in detail response');
+      return NextResponse.json(
+        { success: false, error: "NO_DATA" },
+        { status: 404, headers: { "cache-control": "no-store" }}
       );
     }
 
-    // Debug: Log field types to identify LocalizedString objects being returned as primitives
-    console.log('🔍 API Response Debug:', {
-      hasHeading: !!foundProperty.heading,
-      headingType: typeof foundProperty.heading,
-      headingValue: foundProperty.heading,
-      hasPostalCode: !!foundProperty.postalCode,
-      postalCodeType: typeof foundProperty.postalCode,
-      postalCodeValue: foundProperty.postalCode,
-      hasEnergyClass: !!foundProperty.energyClass,
-      energyClassType: typeof foundProperty.energyClass,
-      energyClassValue: foundProperty.energyClass,
-    });
-
-    // CRITICAL FIX: Flatten all LocalizedString objects to single language
-    // This prevents React error #31 by ensuring no {fi, en, sv} objects reach the client
-    console.log('🔄 Flattening LocalizedString objects for language:', language);
-    const flattened: any = flattenPropertyForLanguage(foundProperty, language);
+    // Step 4: Map to our format & flatten for single language
+    console.log('🔄 Mapping Linear API data to property format...');
+    const mapped = mapLinearAPIToProperty(raw);
+    
+    console.log('🔄 Flattening for language:', lang);
+    const flattened: any = flattenPropertyForLanguage(mapped, lang);
     
     if (!flattened) {
-      console.error('❌ flattenPropertyForLanguage returned null/undefined');
+      console.error('❌ Flatten returned null');
       return NextResponse.json(
-        { 
-          success: false, 
-          error: 'FLATTEN_ERROR',
-          slug: rawSlug,
-          details: 'Property data could not be flattened'
-        },
-        { 
-          status: 500,
-          headers: { 'Cache-Control': 'no-store, max-age=0' }
-        }
+        { success: false, error: "FLATTEN_ERROR" },
+        { status: 500, headers: { "cache-control": "no-store" }}
       );
     }
-    
-    console.log('✅ All LocalizedString objects flattened to strings');
 
-    // IMAGE PIPELINE HARDENING: Always default to arrays to prevent 500 errors
+    // Step 5: Safe defaults for arrays
     if (!Array.isArray(flattened.images)) flattened.images = [];
     if (!Array.isArray(flattened.photoUrls)) flattened.photoUrls = [];
-
-    const response = NextResponse.json({
-      success: true,
-      data: flattened
+    
+    console.log('✅ Property ready:', {
+      address: flattened.streetAddress || flattened.address,
+      images: flattened.images.length,
+      hasDescription: !!flattened.description
     });
-    
-    // Prevent aggressive caching that can hide image updates
-    response.headers.set('Cache-Control', 'no-store, max-age=0');
-    
-    return response;
-  } catch (error) {
-    console.error('Error fetching property:', error);
-    // Don't bubble NEXT_NOT_FOUND; return controlled 500 JSON
+
     return NextResponse.json(
-      { 
-        success: false, 
-        error: 'SERVER_ERROR',
-        details: error instanceof Error ? error.message : 'Unknown error'
-      },
-      { 
-        status: 500,
-        headers: { 'Cache-Control': 'no-store, max-age=0' }
-      }
+      { success: true, data: flattened },
+      { status: 200, headers: { "cache-control": "no-store" }}
+    );
+    
+  } catch (e) {
+    // Never throw to framework – always return JSON
+    console.error('❌ Property API error:', e);
+    return NextResponse.json(
+      { success: false, error: "SERVER_ERROR", details: e instanceof Error ? e.message : 'Unknown' },
+      { status: 500, headers: { "cache-control": "no-store" }}
     );
   }
 }
