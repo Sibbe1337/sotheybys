@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
+import { headers } from 'next/headers';
 import './globals.css';
 import Header from '@/components/Header/Header';
 import FooterBottomBar from '@/components/Footer/FooterBottomBar';
@@ -49,8 +50,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // Get locale from middleware header (defaults to 'fi')
+  const headersList = headers();
+  const locale = headersList.get('x-locale') || 'fi';
+  
   return (
-    <html lang="fi" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang={locale} className={`${inter.variable} ${playfair.variable}`}>
       <head>
         <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

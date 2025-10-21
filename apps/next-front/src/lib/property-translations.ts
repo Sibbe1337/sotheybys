@@ -279,6 +279,53 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     en: 'Available From'
   },
   
+  // Tab/Button Labels
+  photos: {
+    fi: 'Valokuvat',
+    sv: 'Bilder',
+    en: 'Photos'
+  },
+  floorPlan: {
+    fi: 'Pohjakuva',
+    sv: 'Planritning',
+    en: 'Floor Plan'
+  },
+  viewOnMap: {
+    fi: 'Kohde kartalla',
+    sv: 'Visa på karta',
+    en: 'View on Map'
+  },
+  viewBrochure: {
+    fi: 'Selaa esitettä',
+    sv: 'Bläddra i broschyr',
+    en: 'View Brochure'
+  },
+  videoTab: {
+    fi: 'Video',
+    sv: 'Video',
+    en: 'Video'
+  },
+  notAvailable: {
+    fi: 'Ei saatavilla',
+    sv: 'Inte tillgänglig',
+    en: 'Not Available'
+  },
+  downloadPDF: {
+    fi: 'Lataa PDF',
+    sv: 'Ladda ner PDF',
+    en: 'Download PDF'
+  },
+  openPDF: {
+    fi: 'Avaa PDF',
+    sv: 'Öppna PDF',
+    en: 'Open PDF'
+  },
+  pdfViewerFallback: {
+    fi: 'PDF-tiedosto ei näy? Avaa se uudessa välilehdessä.',
+    sv: 'Kan du inte se PDF-filen? Öppna den i en ny flik.',
+    en: 'Can\'t see the PDF? Open it in a new tab.'
+  },
+  
   // Boolean Values
   yes: {
     fi: 'Kyllä',

@@ -526,8 +526,8 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                   </div>
                 ) : (
                   <div className="text-center py-20">
-                    <h2 className="text-2xl font-light text-gray-700 mb-4">Pohjakuva</h2>
-                    <p className="text-gray-500">Ei saatavilla</p>
+                    <h2 className="text-2xl font-light text-gray-700 mb-4">{getTranslation('floorPlan', language)}</h2>
+                    <p className="text-gray-500">{getTranslation('notAvailable', language)}</p>
                   </div>
                 )}
               </div>
@@ -585,7 +585,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                           </svg>
-                          {language === 'fi' ? 'Lataa PDF' : language === 'sv' ? 'Ladda ner PDF' : 'Download PDF'}
+                          {getTranslation('downloadPDF', language)}
                         </a>
                       </div>
                       
@@ -603,11 +603,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                       {/* Fallback for mobile - Direct link */}
                       <div className="lg:hidden p-6 bg-white text-center border-t border-gray-200">
                         <p className="text-sm text-gray-600 mb-4">
-                          {language === 'fi' 
-                            ? 'PDF-tiedosto ei näy? Avaa se uudessa välilehdessä.' 
-                            : language === 'sv'
-                            ? 'Kan du inte se PDF-filen? Öppna den i en ny flik.'
-                            : 'Can\'t see the PDF? Open it in a new tab.'}
+                          {getTranslation('pdfViewerFallback', language)}
                         </p>
                         <a
                           href={propertyData.propertyBrochureUrl || propertyData.brochure || propertyData.virtualShowing}
@@ -615,7 +611,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-2 px-6 py-3 bg-[#002349] text-white hover:bg-[#003666] transition-colors"
                         >
-                          {language === 'fi' ? 'Avaa PDF' : language === 'sv' ? 'Öppna PDF' : 'Open PDF'}
+                          {getTranslation('openPDF', language)}
                         </a>
                       </div>
                     </div>
@@ -626,7 +622,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                       {getTranslation('brochure', language)}
                     </h2>
                     <p className="text-gray-500">
-                      {language === 'fi' ? 'Ei saatavilla' : language === 'sv' ? 'Inte tillgänglig' : 'Not available'}
+                      {getTranslation('notAvailable', language)}
                     </p>
                   </div>
                 )}
@@ -657,8 +653,8 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                   </div>
                 ) : (
                   <div className="text-center py-20">
-                    <h2 className="text-2xl font-light text-gray-700 mb-4">Video</h2>
-                    <p className="text-gray-500">Ei saatavilla</p>
+                    <h2 className="text-2xl font-light text-gray-700 mb-4">{getTranslation('videoTab', language)}</h2>
+                    <p className="text-gray-500">{getTranslation('notAvailable', language)}</p>
                   </div>
                 )}
               </div>
@@ -679,7 +675,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                       : 'text-gray-600 hover:text-[var(--color-primary)]'
                   }`}
                 >
-                  Valokuvat
+                  {getTranslation('photos', language)}
                   {activeTab === 'photos' && (
                     <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-primary)]"></div>
                   )}
@@ -692,7 +688,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                       : 'text-gray-600 hover:text-[var(--color-primary)]'
                   }`}
                 >
-                  Pohjakuva
+                  {getTranslation('floorPlan', language)}
                   {activeTab === 'floorplan' && (
                     <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-primary)]"></div>
                   )}
@@ -705,7 +701,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                       : 'text-gray-600 hover:text-[var(--color-primary)]'
                   }`}
                 >
-                  Kohde kartalla
+                  {getTranslation('viewOnMap', language)}
                   {activeTab === 'map' && (
                     <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-primary)]"></div>
                   )}
@@ -718,7 +714,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                       : 'text-gray-600 hover:text-[var(--color-primary)]'
                   }`}
                 >
-                  Selaa esitettä
+                  {getTranslation('viewBrochure', language)}
                   {activeTab === 'brochure' && (
                     <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-primary)]"></div>
                   )}
