@@ -1,12 +1,13 @@
 'use client';
 
-import { Suspense } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import HeroCarousel from '@/components/Homepage/HeroCarousel';
 import PropertyGrid from '@/components/Property/PropertyGrid';
 import Link from 'next/link';
 import Image from 'next/image';
 import { getHomepageTranslation, type SupportedLanguage } from '@/lib/homepage-translations';
+import { listingsCache, ensureCacheInitialized } from '@/lib/listings-cache';
 
 // Function to get translated hero slides
 const getTranslatedSlides = (language: SupportedLanguage) => [
@@ -195,10 +196,36 @@ const sampleProperties = [
 function HomePageContent() {
   const searchParams = useSearchParams();
   const language = (searchParams.get('lang') || 'fi') as SupportedLanguage;
+  const [properties, setProperties] = useState(sampleProperties);
+  const [loading, setLoading] = useState(true);
+  
+  // Fetch real properties from Linear API cache
+  useEffect(() => {
+    async function loadProperties() {
+      try {
+        await ensureCacheInitialized();
+        const linearProperties = listingsCache.getAllListings();
+        
+        if (linearProperties && linearProperties.length > 0) {
+          console.log('✅ Using real Linear API properties:', linearProperties.length);
+          setProperties(linearProperties);
+        } else {
+          console.warn('⚠️ No Linear properties found, using sample data');
+        }
+      } catch (error) {
+        console.error('Error loading properties:', error);
+        console.warn('⚠️ Using sample properties as fallback');
+      } finally {
+        setLoading(false);
+      }
+    }
+    
+    loadProperties();
+  }, []);
   
   // Get translated slides
   const heroSlides = getTranslatedSlides(language);
-  const displayProperties = sampleProperties;
+  const displayProperties = properties;
 
     return (
       <div className="min-h-screen flex flex-col">
@@ -223,7 +250,18 @@ function HomePageContent() {
               </div>
 
               {/* Property Grid */}
-              <PropertyGrid properties={displayProperties} language={language} />
+              {loading ? (
+                <div className="text-center py-12">
+                  <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-[#002349] border-r-transparent" role="status">
+                    <span className="sr-only">Loading properties...</span>
+                  </div>
+                  <p className="mt-4 text-gray-600 font-light">
+                    {getHomepageTranslation('loading', language) || 'Ladataan kohteita...'}
+                  </p>
+                </div>
+              ) : (
+                <PropertyGrid properties={displayProperties} language={language} />
+              )}
               
               {/* View All Button */}
               <div className="text-center mt-12">
