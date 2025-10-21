@@ -336,7 +336,7 @@ export default function Header() {
                       <LocaleLink
                         href={item.path || item.url}
                         className={`flex items-center px-5 py-2 text-sm font-light tracking-[0.15em] uppercase
-                                   transition-all duration-200 ${
+                                   transition-all duration-200 [font-family:'freight-sans-pro',sans-serif] ${
                                      isActive 
                                        ? 'text-[var(--color-gold)]' 
                                        : 'text-white/90 hover:text-[var(--color-gold)]'
@@ -354,7 +354,7 @@ export default function Header() {
                               <li key={childItem.id}>
                                 <LocaleLink
                                   href={childItem.path || childItem.url}
-                                  className="block px-4 py-3 text-sm text-gray-700 hover:text-[var(--color-gold)] hover:bg-gray-50 transition-colors"
+                                  className="block px-4 py-3 text-sm text-gray-700 hover:text-[var(--color-gold)] hover:bg-gray-50 transition-colors [font-family:'freight-sans-pro',sans-serif]"
                                   target={childItem.target}
                                 >
                                   {childItem.label}
@@ -379,7 +379,7 @@ export default function Header() {
                     url.searchParams.set('lang', 'fi');
                     window.location.href = url.toString();
                   }}
-                  className={`transition-opacity ${currentLang === 'fi' ? 'font-semibold' : 'hover:opacity-80'}`}
+                  className={`transition-opacity [font-family:'freight-sans-pro',sans-serif] ${currentLang === 'fi' ? 'font-semibold' : 'hover:opacity-80'}`}
                 >
                   Suomi
                 </button>
@@ -390,7 +390,7 @@ export default function Header() {
                     url.searchParams.set('lang', 'sv');
                     window.location.href = url.toString();
                   }}
-                  className={`transition-opacity ${currentLang === 'sv' ? 'font-semibold' : 'hover:opacity-80'}`}
+                  className={`transition-opacity [font-family:'freight-sans-pro',sans-serif] ${currentLang === 'sv' ? 'font-semibold' : 'hover:opacity-80'}`}
                 >
                   Svenska
                 </button>
@@ -401,7 +401,7 @@ export default function Header() {
                     url.searchParams.set('lang', 'en');
                     window.location.href = url.toString();
                   }}
-                  className={`transition-opacity ${currentLang === 'en' ? 'font-semibold' : 'hover:opacity-80'}`}
+                  className={`transition-opacity [font-family:'freight-sans-pro',sans-serif] ${currentLang === 'en' ? 'font-semibold' : 'hover:opacity-80'}`}
                 >
                   English
                 </button>
@@ -466,7 +466,7 @@ export default function Header() {
                   <LocaleLink
                     href={item.path || item.url}
                     className={`block py-3 text-sm font-light tracking-[0.15em] uppercase border-b border-white/10 flex-1
-                             ${isActive 
+                             [font-family:'freight-sans-pro',sans-serif] ${isActive 
                                ? 'text-[var(--color-gold)]' 
                                : 'text-white/90 hover:text-[var(--color-gold)]'
                              }`}
@@ -503,7 +503,7 @@ export default function Header() {
                       <LocaleLink
                         key={childItem.id}
                         href={childItem.path || childItem.url}
-                        className="block py-2 text-sm text-white/80 hover:text-[var(--color-gold)] border-b border-white/5"
+                        className="block py-2 text-sm text-white/80 hover:text-[var(--color-gold)] border-b border-white/5 [font-family:'freight-sans-pro',sans-serif]"
                         target={childItem.target}
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
@@ -525,7 +525,7 @@ export default function Header() {
                   url.searchParams.set('lang', 'fi');
                   window.location.href = url.toString();
                 }}
-                className={`transition-opacity ${currentLang === 'fi' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
+                className={`transition-opacity [font-family:'freight-sans-pro',sans-serif] ${currentLang === 'fi' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
               >
                 Suomi
               </button>
@@ -536,7 +536,7 @@ export default function Header() {
                   url.searchParams.set('lang', 'sv');
                   window.location.href = url.toString();
                 }}
-                className={`transition-opacity ${currentLang === 'sv' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
+                className={`transition-opacity [font-family:'freight-sans-pro',sans-serif] ${currentLang === 'sv' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
               >
                 Svenska
               </button>
@@ -547,7 +547,7 @@ export default function Header() {
                   url.searchParams.set('lang', 'en');
                   window.location.href = url.toString();
                 }}
-                className={`transition-opacity ${currentLang === 'en' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
+                className={`transition-opacity [font-family:'freight-sans-pro',sans-serif] ${currentLang === 'en' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
               >
                 English
               </button>
