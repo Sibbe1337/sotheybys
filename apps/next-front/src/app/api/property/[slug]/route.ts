@@ -217,6 +217,16 @@ export async function GET(
     try {
       const mapped = mapLinearAPIToProperty(raw);
       
+      // Debug: Check if agent exists in mapped data BEFORE flatten
+      console.log('🔍 Mapped Agent (before flatten):', {
+        address: mapped.streetAddress?.fi || mapped.streetAddress,
+        hasAgent: !!mapped.agent,
+        agentName: mapped.agent?.name,
+        agentPhone: mapped.agent?.phone,
+        agentPhotoUrl: mapped.agent?.photo?.sourceUrl,
+        estateAgentName: mapped.estateAgentName
+      });
+      
       console.log('🔄 Flattening for language:', lang);
       const flattened: any = flattenPropertyForLanguage(mapped, lang);
       
@@ -231,6 +241,18 @@ export async function GET(
       // Step 5: Safe defaults for arrays
       if (!Array.isArray(flattened.images)) flattened.images = [];
       if (!Array.isArray(flattened.photoUrls)) flattened.photoUrls = [];
+      
+      // Debug: Check agent data before sending to frontend
+      console.log('🔍 API Agent Debug:', {
+        address: flattened.streetAddress || flattened.address,
+        hasAgent: !!flattened.agent,
+        agentName: flattened.agent?.name,
+        agentPhoto: flattened.agent?.photo,
+        agentPhotoUrl: flattened.agent?.photo?.sourceUrl,
+        // Also check old format fields
+        estateAgentName: flattened.estateAgentName,
+        estateAgentPhone: flattened.estateAgentPhone
+      });
       
       console.log('✅ Property ready:', {
         address: flattened.streetAddress || flattened.address,
