@@ -204,7 +204,7 @@ function HomePageContent() {
     async function loadProperties() {
       try {
         await ensureCacheInitialized();
-        const linearProperties = listingsCache.getAllListings();
+        const linearProperties = listingsCache.getListings();
         
         if (linearProperties && linearProperties.length > 0) {
           console.log('✅ Using real Linear API properties:', linearProperties.length);
