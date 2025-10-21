@@ -121,6 +121,9 @@ export async function GET(
       );
     }
     
+           // Debug: Log the raw match object structure
+           console.log('🔍 Raw match object:', JSON.stringify(match, null, 2).substring(0, 1000));
+           
            // CRITICAL: Use 'identifier' (numeric) NOT 'id' (UUID) for detail endpoint
            const matchId = match.identifier?.fi?.value || match.identifier || match.id?.fi?.value || match.id;
            const matchDetails = {
