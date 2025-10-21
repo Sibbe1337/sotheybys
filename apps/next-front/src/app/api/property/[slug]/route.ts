@@ -84,7 +84,9 @@ export async function GET(
     });
 
     // Step 2: Resolve slug → ID using the SAME feed as the cards
-    const list = await fetchJSON(`${BASE}/v2/listings?languages[]=${lang}`);
+    // CRITICAL: Always use lang=fi for slug lookup (same as cache)
+    // The requested language is only used for flattening the final data
+    const list = await fetchJSON(`${BASE}/v2/listings?languages[]=fi`);
     
     if (!list.ok) {
       console.error('❌ Listings upstream error:', list.status);
