@@ -127,7 +127,7 @@ export default async function PropertiesPage() {
       {/* Properties Grid */}
       <section className="py-12 lg:py-20">
         <div className="container mx-auto px-4">
-          <PropertyGrid properties={allProperties} showStatus={true} />
+          <PropertyGrid properties={allProperties} showStatus={true} language="sv" />
           
           {allProperties.length === 0 && (
             <div className="text-center py-20">

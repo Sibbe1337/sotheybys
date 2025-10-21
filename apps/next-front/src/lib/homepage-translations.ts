@@ -214,6 +214,13 @@ export const HOMEPAGE_TRANSLATIONS: HomepageTranslations = {
     sv: 'Laddar…',
     en: 'Loading…'
   },
+  
+  // Empty state
+  noPropertiesFound: {
+    fi: 'Kohteita ei löytynyt.',
+    sv: 'Inga objekt hittades.',
+    en: 'No properties found.'
+  },
 };
 
 /**
