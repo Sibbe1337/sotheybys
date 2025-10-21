@@ -116,10 +116,16 @@ export async function GET(
       );
     }
     
-    const matchId = match.id?.fi?.value || match.id || match.identifier?.fi?.value || match.identifier;
-    console.log('✅ Match found:', { id: matchId, address: match.address?.fi?.value });
+    // CRITICAL: Use 'identifier' (numeric) NOT 'id' (UUID) for detail endpoint
+    const matchId = match.identifier?.fi?.value || match.identifier || match.id?.fi?.value || match.id;
+    console.log('✅ Match found:', { 
+      id: matchId, 
+      uuid: match.id,
+      identifier: match.identifier,
+      address: match.address?.fi?.value || match.address 
+    });
 
-    // Step 3: Fetch full details by ID
+    // Step 3: Fetch full details by ID (using numeric identifier)
     const detail = await fetchJSON(`${BASE}/v2/property/${matchId}?languages[]=${lang}`);
     
     if (!detail.ok) {
