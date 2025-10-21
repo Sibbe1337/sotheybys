@@ -83,7 +83,9 @@ class ListingsCache {
       // The proxy handles authentication and company ID headers server-side
       const isServer = typeof window === 'undefined';
       const baseUrl = isServer 
-        ? (process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000')
+        ? (process.env.VERCEL_URL 
+            ? `https://${process.env.VERCEL_URL}` 
+            : process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000')
         : '';
       const endpoint = `${baseUrl}/api/proxy/listings?lang=fi`;
       
