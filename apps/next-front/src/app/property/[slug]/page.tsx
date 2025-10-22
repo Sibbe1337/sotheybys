@@ -49,7 +49,8 @@ function getHeroItems(propertyData: any, language: 'fi' | 'sv' | 'en'): HeroItem
     propertyData?.propertyType?.toLowerCase().includes('omakotitalo') ||
     propertyData?.propertyType?.toLowerCase().includes('fastighet');
 
-  const region = propertyData?.region || propertyData?.district || propertyData?.city || '';
+  // Prioritize districtFree (e.g., "Lauttasaari/Drumsö") over city
+  const region = propertyData?.districtFree || propertyData?.region || propertyData?.district || propertyData?.city || '';
   
   // Labels by language
   const labels = {
@@ -66,7 +67,7 @@ function getHeroItems(propertyData: any, language: 'fi' | 'sv' | 'en'): HeroItem
     // FASTIGHET: Bostadsyta | Total yta | Pris | Stadsdel | Tomtstorlek
     return [
       { label: labels.livingArea, value: formatAreaM2(propertyData?.area || propertyData?.livingArea), key: 'livingArea' },
-      { label: labels.totalArea, value: formatAreaM2(propertyData?.totalArea), key: 'totalArea' },
+      { label: labels.totalArea, value: formatAreaM2(propertyData?.overallArea || propertyData?.totalArea), key: 'totalArea' },
       { label: labels.price, value: gt0(propertyData?.price) ? formatEuroCurrency(propertyData.price) : '', key: 'price', numValue: propertyData?.price },
       { label: labels.district, value: hasText(region) ? region : '', key: 'district' },
       { label: labels.siteArea, value: formatSiteArea(propertyData?.plotArea || propertyData?.siteArea), key: 'siteArea' },
@@ -825,6 +826,29 @@ export default function PropertyPage({ params }: PropertyPageProps) {
         </div>
       </section>
 
+      {/* Welcome Text Section - FÖRE beskrivningen */}
+      {propertyData.freeTextTitle && (
+        <section className="py-12 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto text-center bg-gray-50 p-8 rounded-lg shadow-sm">
+              <h2 className="text-2xl md:text-3xl font-light text-gray-800 mb-6 leading-relaxed">
+                {propertyData.freeTextTitle}
+              </h2>
+              {propertyData.address && (
+                <p className="text-lg text-gray-600 font-light mb-2">
+                  {propertyData.address}{propertyData.postalCode && `, ${propertyData.postalCode}`}{propertyData.city && ` ${propertyData.city}`}
+                </p>
+              )}
+              {propertyData.rooms && (
+                <p className="text-base text-gray-500">
+                  {propertyData.rooms}
+                </p>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Property Title, Type, Description and Agent */}
       <section className="py-12">
         <div className="container mx-auto px-4">
@@ -1026,6 +1050,31 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                       <div className="flex justify-between py-2 border-b">
                         <span className="text-gray-600">{getTranslation('totalFee', language)}</span>
                         <span className="font-semibold">{formatEuroCurrency(propertyData.totalFee)}{getUnitSuffix('perMonth', language)}</span>
+                      </div>
+                    )}
+                    {/* Additional charges from Linear API */}
+                    {propertyData.maintenanceCharge != null && propertyData.maintenanceCharge > 0 && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="text-gray-600">{getTranslation('maintenanceCharge', language)}</span>
+                        <span className="font-semibold">{formatEuroCurrency(propertyData.maintenanceCharge)}{getUnitSuffix('perMonth', language)}</span>
+                      </div>
+                    )}
+                    {propertyData.fundingCharge != null && propertyData.fundingCharge > 0 && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="text-gray-600">{getTranslation('fundingCharge', language)}</span>
+                        <span className="font-semibold">{formatEuroCurrency(propertyData.fundingCharge)}{getUnitSuffix('perMonth', language)}</span>
+                      </div>
+                    )}
+                    {propertyData.mandatoryCharges != null && propertyData.mandatoryCharges > 0 && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="text-gray-600">{getTranslation('mandatoryCharges', language)}</span>
+                        <span className="font-semibold">{formatEuroCurrency(propertyData.mandatoryCharges)}{getUnitSuffix('perMonth', language)}</span>
+                      </div>
+                    )}
+                    {propertyData.waterCharge != null && propertyData.waterCharge > 0 && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="text-gray-600">{getTranslation('waterCharge', language)}</span>
+                        <span className="font-semibold">{formatEuroCurrency(propertyData.waterCharge)}{getUnitSuffix('perMonth', language)}</span>
                       </div>
                     )}
                     {propertyData.waterFee != null && propertyData.waterFee > 0 && (

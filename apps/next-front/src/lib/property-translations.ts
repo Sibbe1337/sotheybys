@@ -109,6 +109,26 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     sv: 'Vattenavgift',
     en: 'Water Fee'
   },
+  maintenanceCharge: {
+    fi: 'Hoitovastike',
+    sv: 'Underhållsavgift',
+    en: 'Maintenance Charge'
+  },
+  fundingCharge: {
+    fi: 'Rahoitusvastike',
+    sv: 'Finansieringsavgift',
+    en: 'Funding Charge'
+  },
+  mandatoryCharges: {
+    fi: 'Pakolliset maksut',
+    sv: 'Obligatoriska avgifter',
+    en: 'Mandatory Charges'
+  },
+  waterCharge: {
+    fi: 'Vesimaksu',
+    sv: 'Vattenavgift',
+    en: 'Water Charge'
+  },
   propertyTax: {
     fi: 'Kiinteistövero',
     sv: 'Fastighetsskatt',
