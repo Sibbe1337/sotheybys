@@ -74,6 +74,27 @@ export interface Property {
       height?: number;
     };
   }>;
+  
+  // 🏠 Rental Properties (Hyresobjekt / Vuokrakohteet / Rentals)
+  rent?: string;  // Vuokran määrä / Hyresbelopp / Monthly rent
+  rentUpdateDate?: string;
+  rentPaymentDate?: string;
+  rentIncreaseBasis?: string;
+  securityDepositType?: string;  // Vuokravakuus / Deposition / Security deposit
+  latestDepositPaymentDate?: string;
+  earliestTerminateDate?: string;
+  rentalContractType?: string;
+  subleasing?: string;
+  subleasingDetails?: string;
+  housingTenure?: string;
+  petsAllowed?: string;
+  smokingAllowed?: string;
+  laundryRoomChargeType?: string;
+  tenantIsResponsibleFor?: string;
+  tenantIsResponsibleForHeatingSystemCleanup?: string;
+  tenantHomeInsuranceRequirement?: string;
+  drillingOtherThanFurnituresTilesSeams?: string;
+  failureOfReturnOfKeysPenaltyAmount?: string;
 }
 
 export interface Agent {
