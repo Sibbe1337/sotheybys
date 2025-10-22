@@ -949,23 +949,66 @@ export default function PropertyPage({ params }: PropertyPageProps) {
               {expandedSections.priceInfo && (
                 <div className="bg-white border border-gray-200 p-6">
                   <div className="space-y-2">
-                    {propertyData.price != null && propertyData.price > 0 && (
-                      <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">{getTranslation('salesPrice', language)}</span>
-                        <span className="font-semibold">{formatEuroCurrency(propertyData.price)}</span>
-                      </div>
-                    )}
-                    {propertyData.debtPart != null && propertyData.debtPart > 0 && (
-                      <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">{getTranslation('debtPart', language)}</span>
-                        <span className="font-semibold">{formatEuroCurrency(propertyData.debtPart)}</span>
-                      </div>
-                    )}
-                    {propertyData.debtFreePrice != null && propertyData.debtFreePrice > 0 && (
-                      <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">{getTranslation('debtFreePrice', language)}</span>
-                        <span className="font-semibold">{formatEuroCurrency(propertyData.debtFreePrice)}</span>
-                      </div>
+                    {/* 🏠 RENTAL PROPERTY - Show rent info */}
+                    {propertyData.rent && parseInt(propertyData.rent) > 0 ? (
+                      <>
+                        <div className="flex justify-between py-2 border-b">
+                          <span className="text-gray-600">{getTranslation('monthlyRent', language)}</span>
+                          <span className="font-semibold">{formatEuroCurrency(parseInt(propertyData.rent))}{getUnitSuffix('perMonth', language)}</span>
+                        </div>
+                        {propertyData.securityDepositType && (
+                          <div className="flex justify-between py-2 border-b">
+                            <span className="text-gray-600">{getTranslation('securityDeposit', language)}</span>
+                            <span className="font-semibold">{propertyData.securityDepositType}</span>
+                          </div>
+                        )}
+                        {propertyData.rentalContractType && (
+                          <div className="flex justify-between py-2 border-b">
+                            <span className="text-gray-600">{getTranslation('rentalContractType', language)}</span>
+                            <span className="font-semibold">{propertyData.rentalContractType}</span>
+                          </div>
+                        )}
+                        {propertyData.earliestTerminateDate && (
+                          <div className="flex justify-between py-2 border-b">
+                            <span className="text-gray-600">{getTranslation('earliestTerminateDate', language)}</span>
+                            <span className="font-semibold">{propertyData.earliestTerminateDate}</span>
+                          </div>
+                        )}
+                        {propertyData.petsAllowed && (
+                          <div className="flex justify-between py-2 border-b">
+                            <span className="text-gray-600">{getTranslation('petsAllowed', language)}</span>
+                            <span className="font-semibold">{propertyData.petsAllowed}</span>
+                          </div>
+                        )}
+                        {propertyData.smokingAllowed && (
+                          <div className="flex justify-between py-2 border-b">
+                            <span className="text-gray-600">{getTranslation('smokingAllowed', language)}</span>
+                            <span className="font-semibold">{propertyData.smokingAllowed}</span>
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      /* 🏡 SALE PROPERTY - Show price info */
+                      <>
+                        {propertyData.price != null && propertyData.price > 0 && (
+                          <div className="flex justify-between py-2 border-b">
+                            <span className="text-gray-600">{getTranslation('salesPrice', language)}</span>
+                            <span className="font-semibold">{formatEuroCurrency(propertyData.price)}</span>
+                          </div>
+                        )}
+                        {propertyData.debtPart != null && propertyData.debtPart > 0 && (
+                          <div className="flex justify-between py-2 border-b">
+                            <span className="text-gray-600">{getTranslation('debtPart', language)}</span>
+                            <span className="font-semibold">{formatEuroCurrency(propertyData.debtPart)}</span>
+                          </div>
+                        )}
+                        {propertyData.debtFreePrice != null && propertyData.debtFreePrice > 0 && (
+                          <div className="flex justify-between py-2 border-b">
+                            <span className="text-gray-600">{getTranslation('debtFreePrice', language)}</span>
+                            <span className="font-semibold">{formatEuroCurrency(propertyData.debtFreePrice)}</span>
+                          </div>
+                        )}
+                      </>
                     )}
                     {propertyData.maintenanceFee != null && propertyData.maintenanceFee > 0 && (
                       <div className="flex justify-between py-2 border-b">

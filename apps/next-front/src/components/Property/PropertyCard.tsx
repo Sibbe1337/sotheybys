@@ -99,12 +99,18 @@ export default function PropertyCard({
       )}
 
       <div className="p-4">
-        {/* Price */}
-        {property?.price && (
+        {/* Price or Rent */}
+        {property?.rent ? (
+          // Rental property - show monthly rent
+          <Price className="text-2xl mb-2" block>
+            {formatPrice(parseInt(property.rent))} / {getHomepageTranslation('month', language)}
+          </Price>
+        ) : property?.price ? (
+          // Sale property - show sale price
           <Price className="text-2xl mb-2" block>
             {formatPrice(property.price)}
           </Price>
-        )}
+        ) : null}
 
         {/* Title */}
         <h3 className="text-lg font-semibold text-[var(--color-primary)] mb-2">

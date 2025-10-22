@@ -145,6 +145,11 @@ export const HOMEPAGE_TRANSLATIONS: HomepageTranslations = {
     sv: 'br',
     en: 'ba'
   },
+  month: {
+    fi: 'kk',
+    sv: 'mån',
+    en: 'mo'
+  },
   
   // Hero Slides
   hero1Title: {

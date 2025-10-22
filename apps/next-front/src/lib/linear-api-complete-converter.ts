@@ -382,6 +382,27 @@ export function convertCompleteLinearToWordPressFormat(listing: CompleteLinearAP
   const modificationsNotified = extractLocalizedValue(listing.modificationsNotified) || null;
   const modificationsDescription = extractLocalizedValue(listing.modificationsDescription) || null;
   
+  // 🏠 RENTAL INFORMATION (Vuokrakohteet / Hyresobjekt / Rentals)
+  const rent = extractLocalizedValue(listing.rent) || null;  // Vuokran määrä / Hyresbelopp / Monthly rent
+  const rentUpdateDate = extractLocalizedValue(listing.rentUpdateDate) || null;
+  const rentPaymentDate = extractLocalizedValue(listing.rentPaymentDate) || null;
+  const rentIncreaseBasis = extractLocalizedValue(listing.rentIncreaseBasis) || null;
+  const securityDepositType = extractLocalizedValue(listing.securityDepositType) || null;  // Vuokravakuus / Depositionstyp / Security deposit
+  const latestDepositPaymentDate = extractLocalizedValue(listing.latestDepositPaymentDate) || null;
+  const earliestTerminateDate = extractLocalizedValue(listing.earliestTerminateDate) || null;
+  const rentalContractType = extractLocalizedValue(listing.rentalContractType) || null;
+  const subleasing = extractLocalizedValue(listing.subleasing) || null;
+  const subleasingDetails = extractLocalizedValue(listing.subleasingDetails) || null;
+  const housingTenure = extractLocalizedValue(listing.housingTenure) || null;
+  const petsAllowed = extractLocalizedValue(listing.petsAllowed) || null;
+  const smokingAllowed = extractLocalizedValue(listing.smokingAllowed) || null;
+  const laundryRoomChargeType = extractLocalizedValue(listing.laundryRoomChargeType) || null;
+  const tenantIsResponsibleFor = extractLocalizedValue(listing.tenantIsResponsibleFor) || null;
+  const tenantIsResponsibleForHeatingSystemCleanup = extractLocalizedValue(listing.tenantIsResponsibleForHeatingSystemCleanup) || null;
+  const tenantHomeInsuranceRequirement = extractLocalizedValue(listing.tenantHomeInsuranceRequirement) || null;
+  const drillingOtherThanFurnituresTilesSeams = extractLocalizedValue(listing.drillingOtherThanFurnituresTilesSeams) || null;
+  const failureOfReturnOfKeysPenaltyAmount = extractLocalizedValue(listing.failureOfReturnOfKeysPenaltyAmount) || null;
+  
   // Images - preserve entire array structure
   const images = listing.images || [];
   
@@ -767,7 +788,28 @@ export function convertCompleteLinearToWordPressFormat(listing: CompleteLinearAP
         
         // Marketing
         marketingTitle,
-        marketingDescription
+        marketingDescription,
+        
+        // 🏠 Rental Information (Hyresobjekt / Vuokrakohteet / Rentals)
+        rent,  // Vuokran määrä / Monthly rent
+        rentUpdateDate,
+        rentPaymentDate,
+        rentIncreaseBasis,
+        securityDepositType,  // Vuokravakuus / Security deposit
+        latestDepositPaymentDate,
+        earliestTerminateDate,
+        rentalContractType,
+        subleasing,
+        subleasingDetails,
+        housingTenure,
+        petsAllowed,
+        smokingAllowed,
+        laundryRoomChargeType,
+        tenantIsResponsibleFor,
+        tenantIsResponsibleForHeatingSystemCleanup,
+        tenantHomeInsuranceRequirement,
+        drillingOtherThanFurnituresTilesSeams,
+        failureOfReturnOfKeysPenaltyAmount
       },
       agent
     }

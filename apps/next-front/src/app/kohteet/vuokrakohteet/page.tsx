@@ -12,10 +12,13 @@ export default async function RentalPropertiesPage() {
     const allListings = await fetchLinearListings('fi');
     
     // Filter for rental properties (vuokrakohteet)
+    // ✅ PRIMARY CHECK: Has rent field from Linear API
     rentalProperties = allListings.filter(listing => {
+      const hasRent = listing.property?.rent && parseInt(listing.property.rent) > 0;
       const type = listing.property?.saleType?.toLowerCase() || '';
       const status = listing.property?.status?.toLowerCase() || '';
-      return (
+      
+      return hasRent || (
         type.includes('vuokra') || 
         type.includes('rent') || 
         type.includes('hyra') || 

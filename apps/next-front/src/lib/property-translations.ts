@@ -115,6 +115,83 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     en: 'Property Tax'
   },
   
+  // 🏠 Rental Fields (Vuokrakohteet / Hyresobjekt / Rentals)
+  rent: {
+    fi: 'Vuokra',
+    sv: 'Hyra',
+    en: 'Rent'
+  },
+  monthlyRent: {
+    fi: 'Kuukausivuokra',
+    sv: 'Månadshyra',
+    en: 'Monthly Rent'
+  },
+  securityDeposit: {
+    fi: 'Vakuus',
+    sv: 'Deposition',
+    en: 'Security Deposit'
+  },
+  securityDepositType: {
+    fi: 'Vakuustyyppi',
+    sv: 'Depositionstyp',
+    en: 'Security Deposit Type'
+  },
+  rentalContractType: {
+    fi: 'Vuokrasopimuksen tyyppi',
+    sv: 'Typ av hyresavtal',
+    en: 'Contract Type'
+  },
+  rentUpdateDate: {
+    fi: 'Vuokran tarkistuspäivä',
+    sv: 'Hyresgranskningsdag',
+    en: 'Rent Update Date'
+  },
+  rentPaymentDate: {
+    fi: 'Vuokran eräpäivä',
+    sv: 'Hyresförfallodag',
+    en: 'Rent Payment Date'
+  },
+  rentIncreaseBasis: {
+    fi: 'Vuokrankorotusperuste',
+    sv: 'Grund för hyreshöjning',
+    en: 'Rent Increase Basis'
+  },
+  earliestTerminateDate: {
+    fi: 'Aikaisin irtisanomispäivä',
+    sv: 'Tidigaste uppsägningsdatum',
+    en: 'Earliest Termination Date'
+  },
+  subleasing: {
+    fi: 'Jatkuvuokraus',
+    sv: 'Andrahandsuthyrning',
+    en: 'Subleasing'
+  },
+  petsAllowed: {
+    fi: 'Lemmikkieläimet sallittu',
+    sv: 'Husdjur tillåtna',
+    en: 'Pets Allowed'
+  },
+  smokingAllowed: {
+    fi: 'Tupakointi sallittu',
+    sv: 'Rökning tillåten',
+    en: 'Smoking Allowed'
+  },
+  rentalInfo: {
+    fi: 'Vuokratiedot',
+    sv: 'Hyresinformation',
+    en: 'Rental Information'
+  },
+  availableFrom: {
+    fi: 'Vapautuu',
+    sv: 'Tillgänglig från',
+    en: 'Available From'
+  },
+  tenantResponsibilities: {
+    fi: 'Vuokralaisen vastuulla',
+    sv: 'Hyresgästen ansvarar för',
+    en: 'Tenant Responsibilities'
+  },
+  
   // Energy Fields
   energyClass: {
     fi: 'Energialuokka',
