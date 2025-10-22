@@ -1,7 +1,8 @@
 import PropertySearch from '@/components/Property/PropertySearch';
 import { fetchLinearListings } from '@/lib/linear-api-adapter';
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default async function PropertiesPage() {
   let allProperties = [];
