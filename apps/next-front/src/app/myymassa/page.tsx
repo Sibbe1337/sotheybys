@@ -38,41 +38,18 @@ export default function SellingPage() {
           </div>
         </section>
 
-        {/* Social Media Icons */}
-        <section className="py-6 bg-white">
+        {/* Attention Section */}
+        <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
-            <div className="flex justify-center items-center gap-6">
-              <a 
-                href="https://www.facebook.com/Snellmansothebysrealty/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border border-gray-400 flex items-center justify-center
-                         text-gray-600 hover:text-[var(--color-primary)] hover:border-[var(--color-primary)] transition-colors"
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
-              </a>
-              <a 
-                href="https://www.linkedin.com/company/snellman-sothebys-international-realty" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border border-gray-400 flex items-center justify-center
-                         text-gray-600 hover:text-[var(--color-primary)] hover:border-[var(--color-primary)] transition-colors"
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                </svg>
-              </a>
-              <a 
-                href="mailto:info@sothebysrealty.fi"
-                className="w-10 h-10 rounded-full border border-gray-400 flex items-center justify-center
-                         text-gray-600 hover:text-[var(--color-primary)] hover:border-[var(--color-primary)] transition-colors"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-              </a>
+            <div className="max-w-4xl mx-auto text-center">
+              <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-6">
+                Älä vain saa sitä markkinoille. Anna sille ansaitsemansa huomio.
+              </h2>
+              <p className="text-lg text-gray-700 font-light leading-relaxed mb-8">
+                Niille, jotka vaativat korotettua palvelua, jollaista ei muualla ole, on Sotheby's International Realty. 
+                Olemme alan parhaita välittäjiä, ja huolenpitomme tyyliin ja yksityiskohtiin on vertaansa vailla. 
+                Olemme täällä auttamassa sinua myymään kotisi mittakaavassa, jota et löydä muualta.
+              </p>
             </div>
           </div>
         </section>
@@ -156,6 +133,32 @@ export default function SellingPage() {
                     className="w-full px-4 py-3 bg-white border border-gray-300 focus:outline-none focus:border-[var(--color-primary)] font-light resize-none"
                   />
                   
+                  <div className="flex items-start gap-3">
+                    <input
+                      type="checkbox"
+                      id="privacy-fi"
+                      required
+                      className="mt-1"
+                    />
+                    <label htmlFor="privacy-fi" className="text-sm text-gray-700 font-light">
+                      Olen lukenut{' '}
+                      <Link href="/tietosuojaseloste" className="text-[var(--color-primary)] hover:underline">
+                        Tietosuojaselosteen
+                      </Link>
+                    </label>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
+                    <input
+                      type="checkbox"
+                      id="newsletter-fi"
+                      className="mt-1"
+                    />
+                    <label htmlFor="newsletter-fi" className="text-sm text-gray-700 font-light">
+                      Haluan vastaanottaa Snellman Sotheby's uutiskirjeen
+                    </label>
+                  </div>
+                  
                   <button
                     type="submit"
                     className="w-full bg-[var(--color-primary)] text-white px-6 py-3 hover:bg-[var(--color-primary-dark)] 
@@ -193,24 +196,53 @@ export default function SellingPage() {
           </div>
         </section>
 
-        {/* Services Section */}
+        {/* A Valuable Relationship Section */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
-            <div className="max-w-5xl mx-auto text-center">
-              <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-8">
-                Palvelumme
+            <div className="max-w-5xl mx-auto">
+              <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-8 text-center">
+                Arvokas asiakassuhde
               </h2>
-              <div className="space-y-4 text-gray-700 font-light leading-relaxed max-w-4xl mx-auto">
+              <div className="space-y-6 text-gray-700 font-light leading-relaxed text-base">
                 <p>
-                  Haluamme olla mukana elämäsi suuressa taloudellisessa päätöksenteossa, sen vaatimalla arvokkuudella. 
-                  Voit aina olla vakuuttunut siitä, että saat asiantuntivimmat sekä luottamuksellisemmat neuvot kokeneilta välittäjiltämme.
+                  Toivomme, että yhteistyö kanssamme on aina pitkäaikainen suhde henkilökohtaisella tasolla. 
+                  Pidämme jokaista asiakastamme ainutlaatuisena ja arvokkaana kaikilta osa-alueilta. 
+                  Meillä kaikilla on erilaiset tarpeet ja toiveet, keskustelemme ja räätälöimme asiakkaidemme toiveiden ja vaatimusten mukaan. 
+                  Tehtävämme on tehdä unelmastasi totta.
                 </p>
                 <p>
-                  Haluamme olla osa koko myyntiprosessia, aina maksuttomasta arviointikäynnistä kauppaan saakka. 
-                  Tinkimätön tavoitteemme on, että yhteistyö on hedelmällistä ja että kaikki asiakkaamme palaavat meille tulevaisuudessakin.
+                  Snellman Sotheby's International Realty Finland kuuluu yhdeksi maailman arvostetuimmista 
+                  kiinteistönvälitysketjuista. Jäsenyys Sotheby's International Realty®:ssä merkitsee jäsenyyttä globaalissa verkostossa, 
+                  jolla on laaja asiantuntemus, elintärkeät kontaktit, poikkeukselliset myyntikanavat sekä pääsy tehokkaimpiin 
+                  markkinointikanaviin.
                 </p>
-                <p className="pt-4">
-                  Pyydä palvelutarjous maksuttomalla arviokäynnillä.
+                <p>
+                  Olemme erikoistuneet luksus- ja arvoasuntoihin, ja tarjoamme sinulle markkinoiden haluttuimpia koteja. 
+                  Kokeneet tiimimme jäsenet kunnioittavat aina mahdollisuutta jakaa asiantuntemuksensa kanssasi, 
+                  ja haluamme olla mukana prosessissa alusta loppuun. Takaamme pääsyn uusimpiin markkinointikanaviin, 
+                  oikeaan asiakasverkostoon, korkeimpaan mahdolliseen hintaan ja tietysti kokemuksen, jonka muistat mielellään.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Our Service Promise Section */}
+        <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <div className="max-w-5xl mx-auto">
+              <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-8 text-center">
+                Palvelulupauksemme
+              </h2>
+              <div className="space-y-6 text-gray-700 font-light leading-relaxed text-base">
+                <p>
+                  Haluamme tukea sinua, kun olet tekemässä yhtä elämäsi tärkeimmistä taloudellisista päätöksistä 
+                  ja varmistaa, että teet oikean valinnan. Takaamme, että saat kokeneiden asiantuntijoidemme mielipiteen 
+                  ja tuen koko prosessin ajan. Korkein toiveemme on, että kaikki asiakkaamme tuntevat olonsa mukavaksi 
+                  kanssamme ja että yhteistyö tulevaisuudessa on luonnollinen päätös jokaiselle asiakkaallemme.
+                </p>
+                <p>
+                  Älä unohda pyytää palvelutarjousta.
                 </p>
               </div>
             </div>
@@ -218,65 +250,71 @@ export default function SellingPage() {
         </section>
 
         {/* Pricing Section */}
-        <section className="py-16 bg-gray-100">
+        <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-              {/* Palvelumme Column */}
-              <div className="bg-white p-8">
-                <h2 className="text-2xl font-light text-gray-900 mb-8">
-                  Palvelumme
-                </h2>
-                <div className="space-y-4 text-gray-700 font-light text-sm leading-relaxed">
-                  <p>
-                    Haluamme olla mukana elämäsi suuressa taloudellisessa päätöksenteossa, sen vaatimalla arvokkuudella. 
-                    Voit aina olla vakuuttunut siitä, että saat asiantuntivimmat sekä luottamuksellisemmat neuvot kokeneilta välittäjiltämme.
-                  </p>
-                  <p>
-                    Haluamme olla osa koko myyntiprosessia, aina maksuttomasta arviointikäynnistä kauppaan saakka. 
-                    Tinkimätön tavoitteemme on, että yhteistyö on hedelmällistä ja että kaikki asiakkaamme palaavat meille tulevaisuudessakin.
-                  </p>
-                  <p className="pt-4">
-                    Pyydä palvelutarjous maksuttomalla arviokäynnillä.
-                  </p>
-                </div>
-              </div>
-
-              {/* Palveluhinnasto Column */}
-              <div className="bg-white p-8">
-                <h2 className="text-2xl font-light text-gray-900 mb-8">
-                  Palveluhinnasto
-                </h2>
-                <div className="space-y-1 text-sm">
-                  <div className="font-light text-gray-700 mb-4">
-                    <div className="mb-2">Välitys- / Myyntitoimeksianto</div>
-                    <div className="grid grid-cols-2 gap-y-1">
-                      <div>Osakehuoneistot</div>
-                      <div className="text-right">5 % sis. alv 25,5%*</div>
-                      <div>Kiinteistöt</div>
-                      <div className="text-right">6 % sis. alv 25,5%*</div>
-                      <div>Etä- ja erikoiskohteet</div>
-                      <div className="text-right">7 % sis. alv 25,5%*</div>
-                      <div>Vuokraustoimeksianto</div>
-                      <div className="text-right">2 kk vuokra sis. alv 25,5%*</div>
-                      <div>Minimipalkkio</div>
-                      <div className="text-right">5750 € sis. alv 25,5%*</div>
-                      <div>Kansainvälinen näkyvyys</div>
-                      <div className="text-right">+0,50 % sis. alv 25,5%**</div>
-                    </div>
-                  </div>
-                  <div className="font-light text-gray-700 pt-4">
-                    <div className="mb-2">Aloitusmaksu</div>
-                    <div className="grid grid-cols-2 gap-y-1">
-                      <div>Osakehuoneistot</div>
-                      <div className="text-right">Alkaen 500 € sis. alv 25,5%*</div>
-                      <div>Kiinteistöt / Etä- ja erikoiskohteet</div>
-                      <div className="text-right">Alkaen 3000 € sis. alv 25,5%*</div>
-                    </div>
-                  </div>
-                  <div className="pt-4 text-xs text-gray-600">
-                    <p>* Tai sopimuksen mukaan</p>
-                    <p>** Soveltuvin osin</p>
-                  </div>
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-12 text-center">
+                Palveluhinnasto
+              </h2>
+              
+              <div className="bg-gray-50 p-8 md:p-12 rounded-lg">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-gray-300">
+                      <th className="text-left pb-4 font-light text-lg">Välittäjä / Myyntitoimeksiannot</th>
+                      <th className="text-right pb-4 font-light text-lg"></th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-gray-700">
+                    <tr className="border-b border-gray-200">
+                      <td className="py-3 font-light">Osakehuoneistot</td>
+                      <td className="py-3 text-right font-light">5 % sis. alv 25,5%*</td>
+                    </tr>
+                    <tr className="border-b border-gray-200">
+                      <td className="py-3 font-light">Kiinteistöt</td>
+                      <td className="py-3 text-right font-light">6 % sis. alv 25,5%*</td>
+                    </tr>
+                    <tr className="border-b border-gray-200">
+                      <td className="py-3 font-light">Etä- ja erikoiskohteet</td>
+                      <td className="py-3 text-right font-light">7 % sis. alv 25,5%*</td>
+                    </tr>
+                    <tr className="border-b border-gray-200">
+                      <td className="py-3 font-light">Vuokraustoimeksianto</td>
+                      <td className="py-3 text-right font-light">2 kk vuokra sis. alv 25,5%*</td>
+                    </tr>
+                    <tr className="border-b border-gray-200">
+                      <td className="py-3 font-light">Minimipalkkio</td>
+                      <td className="py-3 text-right font-light">5750 € sis. alv 25,5%*</td>
+                    </tr>
+                    <tr className="border-b border-gray-200">
+                      <td className="py-3 font-light">Kansainvälinen näkyvyys</td>
+                      <td className="py-3 text-right font-light">+0,50 % sis. alv 25,5%**</td>
+                    </tr>
+                  </tbody>
+                </table>
+                
+                <table className="w-full mt-8">
+                  <thead>
+                    <tr className="border-b border-gray-300">
+                      <th className="text-left pb-4 font-light text-lg">Aloitusmaksu</th>
+                      <th className="text-right pb-4 font-light text-lg"></th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-gray-700">
+                    <tr className="border-b border-gray-200">
+                      <td className="py-3 font-light">Osakehuoneistot</td>
+                      <td className="py-3 text-right font-light">Alkaen 500 € sis. alv 25,5%*</td>
+                    </tr>
+                    <tr className="border-b border-gray-200">
+                      <td className="py-3 font-light">Kiinteistöt / Etä- ja erikoiskohteet</td>
+                      <td className="py-3 text-right font-light">Alkaen 3000 € sis. alv 25,5%*</td>
+                    </tr>
+                  </tbody>
+                </table>
+                
+                <div className="mt-8 text-sm text-gray-600 font-light">
+                  <p>* Tai sopimuksen mukaan</p>
+                  <p>** Soveltuvin osin</p>
                 </div>
               </div>
             </div>

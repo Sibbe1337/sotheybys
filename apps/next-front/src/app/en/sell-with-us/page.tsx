@@ -38,41 +38,18 @@ export default function SellingPage() {
           </div>
         </section>
 
-        {/* Social Media Icons */}
-        <section className="py-6 bg-white">
+        {/* Attention Section */}
+        <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
-            <div className="flex justify-center items-center gap-6">
-              <a 
-                href="https://www.facebook.com/Snellmansothebysrealty/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border border-gray-400 flex items-center justify-center
-                         text-gray-600 hover:text-[var(--color-primary)] hover:border-[var(--color-primary)] transition-colors"
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
-              </a>
-              <a 
-                href="https://www.linkedin.com/company/snellman-sothebys-international-realty" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border border-gray-400 flex items-center justify-center
-                         text-gray-600 hover:text-[var(--color-primary)] hover:border-[var(--color-primary)] transition-colors"
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                </svg>
-              </a>
-              <a 
-                href="mailto:info@sothebysrealty.fi"
-                className="w-10 h-10 rounded-full border border-gray-400 flex items-center justify-center
-                         text-gray-600 hover:text-[var(--color-primary)] hover:border-[var(--color-primary)] transition-colors"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-              </a>
+            <div className="max-w-4xl mx-auto text-center">
+              <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-6">
+                Don't just get it on the market. Get it the attention it deserves.
+              </h2>
+              <p className="text-lg text-gray-700 font-light leading-relaxed mb-8">
+                For those who demand an elevated service like none other, there's Sotheby's International Realty. 
+                We're the industry's best agents, curating with incomparable attention to style and detail. 
+                We're here for you to help sell your home at a scale you just won't find anywhere else.
+              </p>
             </div>
           </div>
         </section>
@@ -156,6 +133,32 @@ export default function SellingPage() {
                     className="w-full px-4 py-3 bg-white border border-gray-300 focus:outline-none focus:border-[var(--color-primary)] font-light resize-none"
                   />
                   
+                  <div className="flex items-start gap-3">
+                    <input
+                      type="checkbox"
+                      id="privacy-en"
+                      required
+                      className="mt-1"
+                    />
+                    <label htmlFor="privacy-en" className="text-sm text-gray-700 font-light">
+                      I have read the{' '}
+                      <Link href="/en/privacy-policy" className="text-[var(--color-primary)] hover:underline">
+                        Privacy Policy
+                      </Link>
+                    </label>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
+                    <input
+                      type="checkbox"
+                      id="newsletter-en"
+                      className="mt-1"
+                    />
+                    <label htmlFor="newsletter-en" className="text-sm text-gray-700 font-light">
+                      I want to receive the Snellman Sotheby's Newsletter
+                    </label>
+                  </div>
+                  
                   <button
                     type="submit"
                     className="w-full bg-[var(--color-primary)] text-white px-6 py-3 hover:bg-[#0f2633] 
@@ -193,24 +196,52 @@ export default function SellingPage() {
           </div>
         </section>
 
-        {/* Services Section */}
+        {/* A Valuable Relationship Section */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
-            <div className="max-w-5xl mx-auto text-center">
-              <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-8">
-                Our Services
+            <div className="max-w-5xl mx-auto">
+              <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-8 text-center">
+                A Valuable Relationship
               </h2>
-              <div className="space-y-4 text-gray-700 font-light leading-relaxed max-w-4xl mx-auto">
+              <div className="space-y-6 text-gray-700 font-light leading-relaxed text-base">
                 <p>
-                  We want to be involved in the major financial decision-making of your life, with the dignity it requires. 
-                  You can always be assured that you will receive the most knowledgeable and confidential advice from our experienced brokers.
+                  Our wish is that cooperation with us always equals a long-term relationship on a personal level. 
+                  We regard every single one of our customers as unique and valuable, all aspects considered. 
+                  We all have different needs and preferences, and we discuss and customize according to our customers' wishes and requirements. 
+                  Our mission is to make your dream come true.
                 </p>
                 <p>
-                  We want to be part of the entire sales process, from the free valuation to the deal. 
-                  Our uncompromising goal is that the cooperation is fruitful and that all our customers return to us in the future as well.
+                  Snellman Sotheby's International Realty Finland is part of one of the most prestigious real estate chains in the world. 
+                  Membership in Sotheby's International Realty® equals membership in a global network with excessive expertise, 
+                  vital contacts, extraordinary sales channels as well as access to the most effective marketing channels available.
                 </p>
-                <p className="pt-4">
-                  Request a service quote with a free valuation.
+                <p>
+                  We specialize in luxury and high-end real estate and we provide you the most desirable of homes that the market has to offer. 
+                  Our experienced team members are always honored to share their expertise with you and we wish to be part of the process 
+                  from beginning to end. We guarantee you access to the latest marketing channels, the correct customer network, 
+                  the highest possible price and of course an experience you will fondly remember.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Our Service Promise Section */}
+        <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <div className="max-w-5xl mx-auto">
+              <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-8 text-center">
+                Our Service Promise
+              </h2>
+              <div className="space-y-6 text-gray-700 font-light leading-relaxed text-base">
+                <p>
+                  We want to support you when you are about to make one of the most important financial decisions of your life 
+                  and make sure you take the right choice. We guarantee that you get our experienced experts' opinion and support 
+                  throughout the whole process. Our highest wish is that all our customers feel comfortable with us and that 
+                  cooperation in the future will be a natural decision for every one of our customers.
+                </p>
+                <p>
+                  Please do not forget to ask for a service offer.
                 </p>
               </div>
             </div>
@@ -218,65 +249,71 @@ export default function SellingPage() {
         </section>
 
         {/* Pricing Section */}
-        <section className="py-16 bg-gray-100">
+        <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-              {/* Our Services Column */}
-              <div className="bg-white p-8">
-                <h2 className="text-2xl font-light text-gray-900 mb-8">
-                  Our Services
-                </h2>
-                <div className="space-y-4 text-gray-700 font-light text-sm leading-relaxed">
-                  <p>
-                    We want to be involved in the major financial decision-making of your life, with the dignity it requires. 
-                    You can always be assured that you will receive the most knowledgeable and confidential advice from our experienced brokers.
-                  </p>
-                  <p>
-                    We want to be part of the entire sales process, from the free valuation to the deal. 
-                    Our uncompromising goal is that the cooperation is fruitful and that all our customers return to us in the future as well.
-                  </p>
-                  <p className="pt-4">
-                    Request a service quote with a free valuation.
-                  </p>
-                </div>
-              </div>
-
-              {/* Price List Column */}
-              <div className="bg-white p-8">
-                <h2 className="text-2xl font-light text-gray-900 mb-8">
-                  Price List
-                </h2>
-                <div className="space-y-1 text-sm">
-                  <div className="font-light text-gray-700 mb-4">
-                    <div className="mb-2">Brokerage / Sales Assignment</div>
-                    <div className="grid grid-cols-2 gap-y-1">
-                      <div>Apartment shares</div>
-                      <div className="text-right">5% incl. VAT 25.5%*</div>
-                      <div>Properties</div>
-                      <div className="text-right">6% incl. VAT 25.5%*</div>
-                      <div>Remote and special properties</div>
-                      <div className="text-right">7% incl. VAT 25.5%*</div>
-                      <div>Rental assignment</div>
-                      <div className="text-right">2 months' rent incl. VAT 25.5%*</div>
-                      <div>Minimum fee</div>
-                      <div className="text-right">€5750 incl. VAT 25.5%*</div>
-                      <div>International visibility</div>
-                      <div className="text-right">+0.50% incl. VAT 25.5%**</div>
-                    </div>
-                  </div>
-                  <div className="font-light text-gray-700 pt-4">
-                    <div className="mb-2">Initial fee</div>
-                    <div className="grid grid-cols-2 gap-y-1">
-                      <div>Apartment shares</div>
-                      <div className="text-right">From €500 incl. VAT 25.5%*</div>
-                      <div>Properties / Remote and special properties</div>
-                      <div className="text-right">From €3000 incl. VAT 25.5%*</div>
-                    </div>
-                  </div>
-                  <div className="pt-4 text-xs text-gray-600">
-                    <p>* Or by agreement</p>
-                    <p>** As applicable</p>
-                  </div>
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-12 text-center">
+                Price List
+              </h2>
+              
+              <div className="bg-gray-50 p-8 md:p-12 rounded-lg">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-gray-300">
+                      <th className="text-left pb-4 font-light text-lg">Broker / Sales Assignments</th>
+                      <th className="text-right pb-4 font-light text-lg"></th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-gray-700">
+                    <tr className="border-b border-gray-200">
+                      <td className="py-3 font-light">Apartments</td>
+                      <td className="py-3 text-right font-light">5% incl. VAT 25.5%*</td>
+                    </tr>
+                    <tr className="border-b border-gray-200">
+                      <td className="py-3 font-light">Properties</td>
+                      <td className="py-3 text-right font-light">6% incl. VAT 25.5%*</td>
+                    </tr>
+                    <tr className="border-b border-gray-200">
+                      <td className="py-3 font-light">Long-distance and special listings</td>
+                      <td className="py-3 text-right font-light">7% incl. VAT 25.5%*</td>
+                    </tr>
+                    <tr className="border-b border-gray-200">
+                      <td className="py-3 font-light">Assignment for rentals</td>
+                      <td className="py-3 text-right font-light">2 months rent incl. VAT 25.5%*</td>
+                    </tr>
+                    <tr className="border-b border-gray-200">
+                      <td className="py-3 font-light">Minimum fee</td>
+                      <td className="py-3 text-right font-light">€5750 incl. VAT 25.5%*</td>
+                    </tr>
+                    <tr className="border-b border-gray-200">
+                      <td className="py-3 font-light">International visibility</td>
+                      <td className="py-3 text-right font-light">+0.50% incl. VAT 25.5%**</td>
+                    </tr>
+                  </tbody>
+                </table>
+                
+                <table className="w-full mt-8">
+                  <thead>
+                    <tr className="border-b border-gray-300">
+                      <th className="text-left pb-4 font-light text-lg">Start-up fee</th>
+                      <th className="text-right pb-4 font-light text-lg"></th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-gray-700">
+                    <tr className="border-b border-gray-200">
+                      <td className="py-3 font-light">Apartments</td>
+                      <td className="py-3 text-right font-light">From €500 incl. VAT 25.5%*</td>
+                    </tr>
+                    <tr className="border-b border-gray-200">
+                      <td className="py-3 font-light">Properties / Long-distance and special listings</td>
+                      <td className="py-3 text-right font-light">From €3000 incl. VAT 25.5%*</td>
+                    </tr>
+                  </tbody>
+                </table>
+                
+                <div className="mt-8 text-sm text-gray-600 font-light">
+                  <p>* According to agreement</p>
+                  <p>** When applicable</p>
                 </div>
               </div>
             </div>
