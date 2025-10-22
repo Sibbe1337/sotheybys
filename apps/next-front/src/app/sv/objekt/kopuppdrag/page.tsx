@@ -149,37 +149,6 @@ export default function PurchaseAssignmentsPage() {
             </div>
           </div>
         </section>
-
-        {/* Team Photo Section */}
-        <section className="py-20 bg-[var(--color-primary)]">
-          <div className="max-w-[1400px] mx-auto px-6">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              {/* Logo */}
-              <div className="text-center lg:text-left">
-                <Image
-                  src="/images/logos/logo-white.png"
-                  alt="Snellman Sotheby's International Realty"
-                  width={400}
-                  height={120}
-                  className="inline-block mb-8"
-                />
-                <p className="text-xl text-white font-light">Helsingfors</p>
-              </div>
-
-              {/* Team Photo */}
-              <div className="relative h-96 lg:h-[500px]">
-                <Image
-                  src="/images/content/snellman-sothebys-toimisto.jpg"
-                  alt="Snellman Sotheby's Team"
-                  fill
-                  className="object-cover rounded-lg"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  priority
-                />
-              </div>
-            </div>
-          </div>
-        </section>
       </main>
     </div>
   );
