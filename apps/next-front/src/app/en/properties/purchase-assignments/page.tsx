@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import ClientGoogleMap from '@/components/ClientGoogleMap';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -139,14 +140,9 @@ export default function PurchaseAssignmentsPage() {
 
               {/* Google Maps */}
               <div className="relative h-96 lg:h-[500px] rounded-lg overflow-hidden shadow-2xl">
-                <iframe
+                <ClientGoogleMap
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1983.4469348473456!2d24.948847!3d60.165641!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46920bcfef7f1a35%3A0x5e8a9b4e4e5c7d4f!2sSnellman%20Sotheby&#39;s%20International%20Realty!5e0!3m2!1sen!2sfi!4v1234567890123!5m2!1sen!2sfi"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Snellman Sotheby's International Realty Office"
                   className="w-full h-full"
                 />
               </div>
