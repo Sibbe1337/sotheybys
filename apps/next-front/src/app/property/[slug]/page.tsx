@@ -364,36 +364,6 @@ export default function PropertyPage({ params }: PropertyPageProps) {
       : [];
   }
   
-  // Debug logging for property data
-  console.log('🏠 Property Data Debug:', {
-    address: propertyData.address,
-    districtFree: propertyData.districtFree,
-    district: propertyData.district,
-    partOfCity: propertyData.partOfCity,
-    region: propertyData.region,
-    city: propertyData.city,
-    freeTextTitle: propertyData.freeTextTitle,
-    description: propertyData.description?.substring(0, 100),
-    freeText: propertyData.freeText?.substring(0, 100),
-    apartmentType: propertyData.apartmentType,
-    estateType: propertyData.estateType,
-    propertyType: propertyData.propertyType,
-    siteArea: propertyData.siteArea,
-    plotArea: propertyData.plotArea
-  });
-  
-  // Debug logging for agent data in property detail
-  console.log('📍 Property detail agent data:', {
-    propertyTitle: property.title,
-    hasAgent: !!agentData,
-    agentName: agentData?.name,
-    hasImage: !!agentData?.image,
-    hasPhoto: !!agentData?.photo,
-    imageUrl: agentData?.image,
-    photoSourceUrl: agentData?.photo?.sourceUrl,
-    willDisplay: !!(agentData?.image || agentData?.photo?.sourceUrl)
-  });
-  
   // Use parseEuroNumber for safe number parsing and formatEuroCurrency for display
   // Deprecated: keeping formatNumber for non-currency values
   const formatNumber = (num: number | string) => {

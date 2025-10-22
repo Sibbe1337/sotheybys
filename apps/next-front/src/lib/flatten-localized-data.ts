@@ -71,6 +71,9 @@ export function flattenPropertyForLanguage(
   if (flattened.streetAddress != null) {
     flattened.address = flattened.streetAddress;
   }
+  if (flattened.heading != null) {
+    flattened.freeTextTitle = flattened.heading;
+  }
 
   return flattened as FlattenedProperty;
 }
