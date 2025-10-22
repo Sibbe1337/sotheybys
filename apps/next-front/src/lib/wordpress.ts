@@ -57,6 +57,8 @@ export interface Property {
   propertyType?: string;
   status?: string;
   description?: string;
+  
+  // Location fields
   location?: {
     latitude?: number;
     longitude?: number;
@@ -66,6 +68,10 @@ export interface Property {
     postCode?: string;
     country?: string;
   };
+  districtFree?: string;  // e.g., "Lauttasaari/Drumsö"
+  district?: string;
+  partOfCity?: string;
+  region?: string;
   gallery?: Array<{
     sourceUrl: string;
     altText: string;
