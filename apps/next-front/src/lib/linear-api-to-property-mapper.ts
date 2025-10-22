@@ -324,6 +324,16 @@ export function mapLinearAPIToProperty(
   const data = linearData as any;
   const nv = (data.nonLocalizedValues || {}) as any;
   
+  // DEBUG: Check if location fields exist in raw data
+  console.log('🔍 Location fields in raw data:', {
+    address: data.address?.fi?.value || 'MISSING',
+    city: data.city?.fi?.value || 'MISSING',
+    districtFree: data.districtFree?.fi?.value || 'MISSING',
+    district: data.district?.fi?.value || 'MISSING',
+    partOfCity: data.partOfCity?.fi?.value || 'MISSING',
+    region: data.region?.fi?.value || 'MISSING'
+  });
+  
   // Extract and calculate prices using Finnish formula:
   // Myyntihinta (salesPrice/askPrice) + Velkaosuus (debtPart) = Velaton hinta (unencumbered)
   const salesPrice = parseEuroNumber(nv?.askPrice || data.askPrice?.fi?.value);
