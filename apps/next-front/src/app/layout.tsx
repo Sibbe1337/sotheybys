@@ -60,6 +60,13 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#002349" />
+        
+        {/* Hreflang tags for multilingual SEO */}
+        <link rel="alternate" hrefLang="fi" href="https://sothebysrealty.fi" />
+        <link rel="alternate" hrefLang="sv" href="https://sothebysrealty.fi/sv" />
+        <link rel="alternate" hrefLang="en" href="https://sothebysrealty.fi/en" />
+        <link rel="alternate" hrefLang="x-default" href="https://sothebysrealty.fi" />
+        
         {/* Preconnect to external resources for faster loading */}
         <link rel="preconnect" href="https://images.linear.fi" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://www.youtube.com" crossOrigin="anonymous" />

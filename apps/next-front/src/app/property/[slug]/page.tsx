@@ -377,8 +377,52 @@ export default function PropertyPage({ params }: PropertyPageProps) {
     }
   };
 
+  // Generate Schema.org structured data for SEO
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "RealEstateListing",
+    "name": property.title || propertyData.address,
+    "description": propertyData.description?.replace(/<[^>]*>/g, '').substring(0, 500) || `${propertyData.rooms || 'Property'} in ${propertyData.city || 'Finland'}`,
+    "url": `https://sothebysrealty.fi/property/${slug}`,
+    "image": images.map((img: any) => img.sourceUrl || img.url || img),
+    "offers": propertyData.price ? {
+      "@type": "Offer",
+      "price": propertyData.price,
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "priceValidUntil": new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] // 90 days from now
+    } : undefined,
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": propertyData.address,
+      "addressLocality": propertyData.city,
+      "postalCode": propertyData.postalCode,
+      "addressCountry": "FI"
+    },
+    "floorSize": propertyData.area || propertyData.livingArea ? {
+      "@type": "QuantitativeValue",
+      "value": propertyData.area || propertyData.livingArea,
+      "unitCode": "MTK"
+    } : undefined,
+    "numberOfRooms": propertyData.rooms,
+    "numberOfBathroomsTotal": propertyData.bathrooms,
+    "numberOfBedrooms": propertyData.bedrooms,
+    "yearBuilt": propertyData.yearBuilt || propertyData.yearOfBuilding,
+    "geo": propertyData.latitude && propertyData.longitude ? {
+      "@type": "GeoCoordinates",
+      "latitude": propertyData.latitude,
+      "longitude": propertyData.longitude
+    } : undefined
+  };
+
   return (
     <div className="min-h-screen bg-white">
+      {/* Schema.org JSON-LD for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      
       {/* Breadcrumb Section */}
       <div className="bg-[var(--color-primary)] text-white">
         <div className="container mx-auto px-4">
@@ -417,7 +461,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                       src={typeof images[currentImageIndex] === 'string' 
                         ? images[currentImageIndex] as string
                         : (images[currentImageIndex] as any).url || (images[currentImageIndex] as any).sourceUrl || (images[currentImageIndex] as any).node?.sourceUrl || ''}
-                      alt={`Property image ${currentImageIndex + 1}`}
+                      alt={`${property.title || propertyData.address} - ${propertyData.city || ''} - Bild ${currentImageIndex + 1} av ${images.length}`}
                       fill
                       className="object-cover"
                       priority
@@ -470,7 +514,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                         >
                           <Image
                             src={imageSrc}
-                            alt={`Thumbnail ${actualIndex + 1}`}
+                            alt={`${property.title || propertyData.address} - Miniatyrbild ${actualIndex + 1}`}
                             fill
                             className="object-cover"
                             sizes="(max-width: 1024px) 50vw, 16vw"
@@ -508,7 +552,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                         >
                           <Image
                             src={imageSrc}
-                            alt={`Thumbnail ${index + 1}`}
+                            alt={`${property.title || propertyData.address} - Miniatyrbild ${index + 1}`}
                             fill
                             className="object-cover"
                             sizes="80px"
@@ -530,7 +574,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                     <div className="bg-white rounded-lg shadow-lg p-8">
                       <Image
                         src={propertyData.floorPlanUrl || propertyData.floorplan}
-                        alt="Floor plan"
+                        alt={`${property.title || propertyData.address} - Planritning / Pohjapiirros`}
                         width={1200}
                         height={800}
                         className="w-full h-auto object-contain"
@@ -896,7 +940,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                       <div className="relative w-40 h-40 rounded-full overflow-hidden flex-shrink-0 shadow-lg">
                         <Image
                           src={agentData.image || agentData.photo?.sourceUrl}
-                          alt={agentData.photo?.altText || agentData.name}
+                          alt={`${agentData.name} - Fastighetsmäklare / Kiinteistönvälittäjä - Snellman Sotheby's International Realty`}
                           fill
                           className="object-cover"
                           unoptimized

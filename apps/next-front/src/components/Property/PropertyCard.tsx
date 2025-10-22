@@ -87,7 +87,7 @@ export default function PropertyCard({
         <div className="relative h-48 w-full group">
           <Image
             src={resolveLocalImage(featuredImage.node.sourceUrl)}
-            alt={featuredImage.node.altText || title}
+            alt={`${title} - ${property?.address || ''} ${property?.city || ''} - Snellman Sotheby's International Realty`.trim()}
             fill
             className="object-cover"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -157,7 +157,7 @@ export default function PropertyCard({
               <div className="relative w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
                 <Image
                   src={agent.photo.sourceUrl}
-                  alt={agent.photo.altText || agent.name}
+                  alt={`${agent.name} - Fastighetsmäklare / Kiinteistönvälittäjä - Snellman Sotheby's International Realty`}
                   fill
                   className="object-cover"
                   unoptimized
