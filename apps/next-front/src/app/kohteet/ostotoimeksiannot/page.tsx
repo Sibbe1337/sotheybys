@@ -173,9 +173,8 @@ export default function PurchaseAssignmentsPage() {
                   alt="Snellman Sotheby's Team"
                   fill
                   className="object-cover rounded-lg"
-                  onError={(e: any) => {
-                    e.currentTarget.style.display = 'none';
-                  }}
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  priority
                 />
               </div>
             </div>
