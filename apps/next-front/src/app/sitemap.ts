@@ -30,13 +30,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             lastModified: updatedAt,
             changeFrequency: 'daily' as const,
             priority: 0.8,
-            alternates: {
-              languages: {
-                fi: `${baseUrl}/property/${slug}?lang=fi`,
-                sv: `${baseUrl}/property/${slug}?lang=sv`,
-                en: `${baseUrl}/property/${slug}?lang=en`,
-              }
-            }
+          },
+          {
+            url: `${baseUrl}/property/${slug}?lang=fi`,
+            lastModified: updatedAt,
+            changeFrequency: 'daily' as const,
+            priority: 0.8,
+          },
+          {
+            url: `${baseUrl}/property/${slug}?lang=sv`,
+            lastModified: updatedAt,
+            changeFrequency: 'daily' as const,
+            priority: 0.8,
+          },
+          {
+            url: `${baseUrl}/property/${slug}?lang=en`,
+            lastModified: updatedAt,
+            changeFrequency: 'daily' as const,
+            priority: 0.8,
           }
         ];
       });
@@ -51,154 +62,209 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: baseUrl,
       lastModified: new Date(),
-      changeFrequency: 'daily',
+      changeFrequency: 'daily' as const,
       priority: 1.0,
-      alternates: {
-        languages: {
-          fi: baseUrl,
-          sv: `${baseUrl}/sv`,
-          en: `${baseUrl}/en`,
-        }
-      }
+    },
+    {
+      url: `${baseUrl}/?lang=fi`,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 1.0,
+    },
+    {
+      url: `${baseUrl}/sv`,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 1.0,
+    },
+    {
+      url: `${baseUrl}/en`,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 1.0,
     },
     
     // Property listings (all languages)
     {
       url: `${baseUrl}/kohteet`,
       lastModified: new Date(),
-      changeFrequency: 'hourly',
+      changeFrequency: 'hourly' as const,
       priority: 0.9,
-      alternates: {
-        languages: {
-          fi: `${baseUrl}/kohteet`,
-          sv: `${baseUrl}/sv/objekt`,
-          en: `${baseUrl}/en/properties`,
-        }
-      }
+    },
+    {
+      url: `${baseUrl}/sv/objekt`,
+      lastModified: new Date(),
+      changeFrequency: 'hourly' as const,
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/en/properties`,
+      lastModified: new Date(),
+      changeFrequency: 'hourly' as const,
+      priority: 0.9,
     },
     
     // Rental properties (all languages)
     {
       url: `${baseUrl}/kohteet/vuokrakohteet`,
       lastModified: new Date(),
-      changeFrequency: 'daily',
+      changeFrequency: 'daily' as const,
       priority: 0.8,
-      alternates: {
-        languages: {
-          fi: `${baseUrl}/kohteet/vuokrakohteet`,
-          sv: `${baseUrl}/sv/objekt/hyresobjekt`,
-          en: `${baseUrl}/en/properties/rentals`,
-        }
-      }
+    },
+    {
+      url: `${baseUrl}/sv/objekt/hyresobjekt`,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/en/properties/rentals`,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 0.8,
     },
     
     // References (all languages)
     {
       url: `${baseUrl}/kohteet/referenssit`,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: 'weekly' as const,
       priority: 0.7,
-      alternates: {
-        languages: {
-          fi: `${baseUrl}/kohteet/referenssit`,
-          sv: `${baseUrl}/sv/objekt/referenser`,
-          en: `${baseUrl}/en/properties/references`,
-        }
-      }
+    },
+    {
+      url: `${baseUrl}/sv/objekt/referenser`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/en/properties/references`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
     },
     
     // Purchase assignments (all languages)
     {
       url: `${baseUrl}/kohteet/ostotoimeksiannot`,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: 'weekly' as const,
       priority: 0.7,
-      alternates: {
-        languages: {
-          fi: `${baseUrl}/kohteet/ostotoimeksiannot`,
-          sv: `${baseUrl}/sv/objekt/kopuppdrag`,
-          en: `${baseUrl}/en/properties/purchase-assignments`,
-        }
-      }
+    },
+    {
+      url: `${baseUrl}/sv/objekt/kopuppdrag`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/en/properties/purchase-assignments`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
     },
     
     // Sell with us (all languages)
     {
       url: `${baseUrl}/myymassa`,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: 'monthly' as const,
       priority: 0.7,
-      alternates: {
-        languages: {
-          fi: `${baseUrl}/myymassa`,
-          sv: `${baseUrl}/sv/salj-med-oss`,
-          en: `${baseUrl}/en/sell-with-us`,
-        }
-      }
+    },
+    {
+      url: `${baseUrl}/sv/salj-med-oss`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/en/sell-with-us`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
     },
     
     // About us (all languages)
     {
       url: `${baseUrl}/yritys`,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: 'monthly' as const,
       priority: 0.6,
-      alternates: {
-        languages: {
-          fi: `${baseUrl}/yritys`,
-          sv: `${baseUrl}/sv/om-oss`,
-          en: `${baseUrl}/en/about-us`,
-        }
-      }
+    },
+    {
+      url: `${baseUrl}/sv/om-oss`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    },
+    {
+      url: `${baseUrl}/en/about-us`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
     },
     
     // Staff (all languages)
     {
       url: `${baseUrl}/henkilosto`,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: 'monthly' as const,
       priority: 0.6,
-      alternates: {
-        languages: {
-          fi: `${baseUrl}/henkilosto`,
-          sv: `${baseUrl}/sv/personal`,
-          en: `${baseUrl}/en/staff`,
-        }
-      }
+    },
+    {
+      url: `${baseUrl}/sv/personal`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    },
+    {
+      url: `${baseUrl}/en/staff`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
     },
     
     // Contact (all languages)
     {
       url: `${baseUrl}/yhteystiedot`,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: 'monthly' as const,
       priority: 0.6,
-      alternates: {
-        languages: {
-          fi: `${baseUrl}/yhteystiedot`,
-          sv: `${baseUrl}/sv/kontakta-oss`,
-          en: `${baseUrl}/en/contact-us`,
-        }
-      }
+    },
+    {
+      url: `${baseUrl}/sv/kontakta-oss`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    },
+    {
+      url: `${baseUrl}/en/contact-us`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
     },
     
     // International (all languages)
     {
       url: `${baseUrl}/kansainvalisesti`,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: 'monthly' as const,
       priority: 0.6,
-      alternates: {
-        languages: {
-          fi: `${baseUrl}/kansainvalisesti`,
-          sv: `${baseUrl}/sv/internationellt`,
-          en: `${baseUrl}/en/international`,
-        }
-      }
+    },
+    {
+      url: `${baseUrl}/sv/internationellt`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    },
+    {
+      url: `${baseUrl}/en/international`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
     },
   ];
 
   // Combine static pages and property pages
   return [...staticPages, ...propertyUrls];
 }
-
