@@ -1,44 +1,51 @@
 import { defineConfig } from 'sanity';
-import { deskTool } from 'sanity/desk';
+import { structureTool } from 'sanity/structure';
 import { visionTool } from '@sanity/vision';
-import { orderableDocumentListDeskItem } from '@sanity/orderable-document-list';
 import { schemaTypes } from './schemas';
 
 export default defineConfig({
   name: 'sothebys-rebuild',
   title: 'SothebysRealty.fi CMS',
   
-  projectId: process.env.SANITY_STUDIO_PROJECT_ID || '',
-  dataset: process.env.SANITY_STUDIO_DATASET || 'prod',
+  projectId: 'uy5hhchg',
+  dataset: 'production',
   
   plugins: [
-    deskTool({
-      structure: (S, context) => {
+    structureTool({
+      structure: (S) => {
         return S.list()
           .title('Content')
           .items([
-            // Orderable listing overrides
-            orderableDocumentListDeskItem({
-              type: 'listingOverride',
-              title: 'Featured Listings',
-              icon: () => '⭐',
-              S,
-              context,
-            }),
+            // Featured Listings
+            S.listItem()
+              .title('Featured Listings')
+              .icon(() => '⭐')
+              .child(S.documentTypeList('listingOverride').title('Featured Listings')),
             S.divider(),
-            // Regular document types
+            // Pages
             S.listItem()
               .title('Pages')
               .icon(() => '📄')
-              .child(S.documentTypeList('page')),
+              .child(S.documentTypeList('page').title('Pages')),
+            // Staff
+            S.listItem()
+              .title('Staff')
+              .icon(() => '👤')
+              .child(
+                S.documentTypeList('staff')
+                  .title('Staff Members')
+                  .defaultOrdering([{ field: 'order', direction: 'asc' }])
+              ),
+            S.divider(),
+            // Global Settings (Singleton)
             S.listItem()
               .title('Global Settings')
               .icon(() => '⚙️')
-              .child(S.document().schemaType('globalSettings').documentId('globalSettings')),
-            S.divider(),
-            // Other document types
-            ...S.documentTypeListItems()
-              .filter(listItem => !['listingOverride', 'page', 'globalSettings'].includes(listItem.getId()!))
+              .child(
+                S.document()
+                  .schemaType('globalSettings')
+                  .documentId('globalSettings')
+              ),
           ]);
       },
     }),

@@ -43,14 +43,39 @@ function formatSiteArea(v?: number) {
 function getHeroItems(propertyData: any, language: 'fi' | 'sv' | 'en'): HeroItem[] {
   // Determine if this is a fastighet/kiinteistö
   const isFastighet =
-    (propertyData?.apartmentType && /villa|hus|fastighet|omakotitalo|egendom/i.test(propertyData.apartmentType)) ||
     propertyData?.estateType === 'KIINTEISTO' ||
     propertyData?.apartmentRealEstateType === 'KIINTEISTO' ||
-    propertyData?.propertyType?.toLowerCase().includes('omakotitalo') ||
-    propertyData?.propertyType?.toLowerCase().includes('fastighet');
+    (propertyData?.apartmentType && /villa|hus|fastighet|omakotitalo|egendom|egnahemshus/i.test(propertyData.apartmentType)) ||
+    (propertyData?.propertyType && /omakotitalo|fastighet|villa|egendom|egnahemshus/i.test(propertyData.propertyType)) ||
+    (propertyData?.siteArea && parseInt(propertyData.siteArea) > 0) ||
+    (propertyData?.plotArea && parseInt(propertyData.plotArea) > 0);
+
+  // Debug property type detection
+  if (propertyData?.address) {
+    console.log('🏠 Property Type Detection for', propertyData.address, {
+      isFastighet,
+      apartmentType: propertyData?.apartmentType,
+      estateType: propertyData?.estateType,
+      propertyType: propertyData?.propertyType,
+      siteArea: propertyData?.siteArea,
+      plotArea: propertyData?.plotArea
+    });
+  }
 
   // Prioritize districtFree (e.g., "Lauttasaari/Drumsö") over city
-  const region = propertyData?.districtFree || propertyData?.region || propertyData?.district || propertyData?.city || '';
+  const region = propertyData?.districtFree || propertyData?.district || propertyData?.partOfCity || propertyData?.region || propertyData?.city || '';
+  
+  // Debug region selection
+  if (propertyData?.address) {
+    console.log('🗺️  Region Selection for', propertyData.address, {
+      selected: region,
+      districtFree: propertyData?.districtFree,
+      district: propertyData?.district,
+      partOfCity: propertyData?.partOfCity,
+      region: propertyData?.region,
+      city: propertyData?.city
+    });
+  }
   
   // Labels by language
   const labels = {
@@ -338,6 +363,24 @@ export default function PropertyPage({ params }: PropertyPageProps) {
       ? [{ url: property.featuredImage }]
       : [];
   }
+  
+  // Debug logging for property data
+  console.log('🏠 Property Data Debug:', {
+    address: propertyData.address,
+    districtFree: propertyData.districtFree,
+    district: propertyData.district,
+    partOfCity: propertyData.partOfCity,
+    region: propertyData.region,
+    city: propertyData.city,
+    freeTextTitle: propertyData.freeTextTitle,
+    description: propertyData.description?.substring(0, 100),
+    freeText: propertyData.freeText?.substring(0, 100),
+    apartmentType: propertyData.apartmentType,
+    estateType: propertyData.estateType,
+    propertyType: propertyData.propertyType,
+    siteArea: propertyData.siteArea,
+    plotArea: propertyData.plotArea
+  });
   
   // Debug logging for agent data in property detail
   console.log('📍 Property detail agent data:', {
@@ -910,16 +953,31 @@ export default function PropertyPage({ params }: PropertyPageProps) {
             )}
             
             {/* 3. Presentationstext (expanderad som default) */}
-            {(propertyData.description || property.content) && (
-              <div className="mb-12">
-                <h3 className="text-2xl font-semibold text-[var(--color-primary)] mb-6 text-center">
-                  {getTranslation('description', language)}
-                </h3>
-                <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
-                  <div dangerouslySetInnerHTML={{ __html: propertyData.description || property.content || '' }} />
+            {(() => {
+              const descriptionText = propertyData.description || propertyData.freeText || property.content || '';
+              const hasDescription = descriptionText && descriptionText.trim().length > 0;
+              
+              if (hasDescription) {
+                console.log('📝 Rendering description:', {
+                  hasDescription: !!propertyData.description,
+                  hasFreeText: !!propertyData.freeText,
+                  hasContent: !!property.content,
+                  length: descriptionText.length,
+                  preview: descriptionText.substring(0, 100)
+                });
+              }
+              
+              return hasDescription ? (
+                <div className="mb-12">
+                  <h3 className="text-2xl font-semibold text-[var(--color-primary)] mb-6 text-center">
+                    {getTranslation('description', language)}
+                  </h3>
+                  <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
+                    <div dangerouslySetInnerHTML={{ __html: descriptionText }} />
+                  </div>
                 </div>
-              </div>
-            )}
+              ) : null;
+            })()}
           </div>
         </div>
       </section>
