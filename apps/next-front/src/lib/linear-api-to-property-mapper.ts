@@ -181,6 +181,9 @@ export interface LinearAPIListing {
   postalCode: LinearLocalizedField;
   city: LinearLocalizedField;
   region: LinearLocalizedField;
+  districtFree: LinearLocalizedField;
+  district: LinearLocalizedField;
+  partOfCity: LinearLocalizedField;
   heading: LinearLocalizedField;
   description: LinearLocalizedField;
   
@@ -371,6 +374,9 @@ export function mapLinearAPIToProperty(
     postalCode: data.postalCode?.fi?.value || '',
     city: extractLocalizedString(data.city),
     region: extractLocalizedString(data.region),  // extractLocalizedString already returns { fi: '', en: '', sv: '' } for undefined
+    districtFree: extractLocalizedString(data.districtFree),  // e.g., "Lauttasaari/Drumsö"
+    district: extractLocalizedString(data.district),
+    partOfCity: extractLocalizedString(data.partOfCity),
     heading: extractLocalizedString(data.freeTextTitle || data.marketingTitle),  // Linear API uses freeTextTitle, not heading
     description: extractLocalizedString(data.freeText || data.marketingDescription),  // Linear API uses freeText, not description
     releaseDate: 'releaseDate' in linearData && data.releaseDate?.fi?.value

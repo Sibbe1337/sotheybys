@@ -96,6 +96,28 @@ export interface MultilingualPropertyListing {
   region: LocalizedString;
 
   /**
+   * District (free text)
+   * FI: Kaupunginosa/kylä (vapaa teksti)
+   * SV: Stadsdel/by (fritext)
+   * Example: "Lauttasaari/Drumsö"
+   */
+  districtFree: LocalizedString;
+
+  /**
+   * District (structured)
+   * FI: Kaupunginosa
+   * SV: Stadsdel
+   */
+  district: LocalizedString;
+
+  /**
+   * Part of city
+   * FI: Kaupunginosa
+   * SV: Del av staden
+   */
+  partOfCity: LocalizedString;
+
+  /**
    * Listing title/heading
    * FI: Ilmoituksen otsikko
    * SV: Annonstitel
