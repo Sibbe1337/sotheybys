@@ -209,8 +209,26 @@ function HomePageContent() {
         
         if (linearProperties && linearProperties.length > 0) {
           console.log('✅ Using real Linear API properties:', linearProperties.length);
+          
+          // 🏠 FILTER OUT RENTAL PROPERTIES - Only show sale properties on homepage
+          const saleProperties = linearProperties.filter(listing => {
+            const rentValue = listing.rent?.fi?.value;
+            const hasRent = rentValue && 
+                            String(rentValue).trim().length > 0 && 
+                            String(rentValue) !== '0' &&
+                            String(rentValue) !== 'null' &&
+                            !String(rentValue).toLowerCase().includes('null');
+            
+            if (hasRent) {
+              console.log(`🏠 HOMEPAGE: RENTAL FOUND: ${listing.address?.fi?.value} | Rent: "${rentValue}" | EXCLUDING from homepage`);
+            }
+            return !hasRent; // Exclude properties with rent field
+          });
+          
+          console.log(`✅ Filtered ${saleProperties.length} sale properties for homepage (excluded ${linearProperties.length - saleProperties.length} rentals)`);
+          
           // Transform Linear API format to WordPress format for PropertyCard compatibility
-          const transformedProperties = linearProperties.map(listing => {
+          const transformedProperties = saleProperties.map(listing => {
             const converted = convertCompleteLinearToWordPressFormat(listing);
             // Ensure featuredImage is in the correct nested format for PropertyCard
             return {
