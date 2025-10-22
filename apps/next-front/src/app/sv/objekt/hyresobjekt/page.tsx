@@ -15,9 +15,19 @@ export default async function RentalPropertiesPage() {
     // ✅ PRIMARY CHECK: Has rent field from Linear API
     rentalProperties = allListings.filter(listing => {
       // Check if rent field exists and has a non-null value
-      const hasRent = listing.property?.rent && listing.property.rent !== 'null' && listing.property.rent.trim() !== '';
-      const type = listing.property?.saleType?.toLowerCase() || '';
-      const status = listing.property?.status?.toLowerCase() || '';
+      const rentValue = listing.acfRealEstate?.property?.rent;
+      const hasRent = rentValue && 
+                      rentValue.trim().length > 0 && 
+                      rentValue !== '0' &&
+                      rentValue !== 'null' &&
+                      !rentValue.toLowerCase().includes('null');
+      
+      const type = listing.acfRealEstate?.property?.saleType?.toLowerCase() || '';
+      const status = listing.acfRealEstate?.property?.status?.toLowerCase() || '';
+      
+      if (hasRent) {
+        console.log(`🏠 RENTAL FOUND: ${listing.title} | Rent: "${rentValue}" | INCLUDING in rental listings`);
+      }
       
       return hasRent || (
         type.includes('hyra') || 

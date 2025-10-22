@@ -12,7 +12,16 @@ export default async function PropertiesPage() {
     
     // ✅ FILTER OUT RENTAL PROPERTIES - Only show sale properties
     allProperties = allListings.filter(listing => {
-      const hasRent = listing.property?.rent && listing.property.rent.length > 0;
+      const rentValue = listing.acfRealEstate?.property?.rent;
+      const hasRent = rentValue && 
+                      rentValue.trim().length > 0 && 
+                      rentValue !== '0' &&
+                      rentValue !== 'null' &&
+                      !rentValue.toLowerCase().includes('null');
+      
+      if (hasRent) {
+        console.log(`🏠 RENTAL FOUND: ${listing.title} | Rent: "${rentValue}" | EXCLUDING from sale listings`);
+      }
       return !hasRent; // Exclude properties with rent field
     });
     
