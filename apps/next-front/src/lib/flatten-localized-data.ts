@@ -61,12 +61,15 @@ export function flattenPropertyForLanguage(
   }
 
   // CRITICAL: Map field names for frontend compatibility
-  // Frontend expects 'price', 'debtFreePrice' but we use 'salesPrice', 'unencumberedSalesPrice'
+  // Frontend expects different field names than our internal schema
   if (flattened.salesPrice != null) {
     flattened.price = flattened.salesPrice;
   }
   if (flattened.unencumberedSalesPrice != null) {
     flattened.debtFreePrice = flattened.unencumberedSalesPrice;
+  }
+  if (flattened.streetAddress != null) {
+    flattened.address = flattened.streetAddress;
   }
 
   return flattened as FlattenedProperty;
