@@ -14,7 +14,8 @@ export default async function RentalPropertiesPage() {
     // Filter for rental properties (vuokrakohteet)
     // ✅ PRIMARY CHECK: Has rent field from Linear API
     rentalProperties = allListings.filter(listing => {
-      const hasRent = listing.property?.rent && parseInt(listing.property.rent) > 0;
+      // Check if rent field exists and has a non-null value
+      const hasRent = listing.property?.rent && listing.property.rent !== 'null' && listing.property.rent.trim() !== '';
       const type = listing.property?.saleType?.toLowerCase() || '';
       const status = listing.property?.status?.toLowerCase() || '';
       
