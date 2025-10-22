@@ -320,6 +320,49 @@ export interface LinearAPIListing {
       category: string;
     };
   };
+  // 🏠 RENTAL FIELDS (Vuokrakohteet / Hyresobjekt / Rentals)
+  rent?: {
+    fi: {
+      key: string;
+      value: string | null;
+      category: string;
+    };
+  };
+  securityDepositType?: {
+    fi: {
+      key: string;
+      value: string | null;
+      category: string;
+    };
+  };
+  rentalContractType?: {
+    fi: {
+      key: string;
+      value: string | null;
+      category: string;
+    };
+  };
+  earliestTerminateDate?: {
+    fi: {
+      key: string;
+      value: string | null;
+      category: string;
+    };
+  };
+  petsAllowed?: {
+    fi: {
+      key: string;
+      value: string | null;
+      category: string;
+    };
+  };
+  smokingAllowed?: {
+    fi: {
+      key: string;
+      value: string | null;
+      category: string;
+    };
+  };
 }
 
 // Helper function to safely extract multilingual values
@@ -388,6 +431,14 @@ export function convertLinearToWordPressFormat(listing: LinearAPIListing, langua
   const autoparkingType = getMultilingualValue(listing.autoparkingType, language, null);
   const generalCondition = getMultilingualValue(listing.generalCondition, language, null);
   const listingType = getMultilingualValue(listing.listingType, language, null);
+  
+  // 🏠 RENTAL FIELDS (Vuokrakohteet / Hyresobjekt / Rentals)
+  const rent = getMultilingualValue(listing.rent, language, null);
+  const securityDepositType = getMultilingualValue(listing.securityDepositType, language, null);
+  const rentalContractType = getMultilingualValue(listing.rentalContractType, language, null);
+  const earliestTerminateDate = getMultilingualValue(listing.earliestTerminateDate, language, null);
+  const petsAllowed = getMultilingualValue(listing.petsAllowed, language, null);
+  const smokingAllowed = getMultilingualValue(listing.smokingAllowed, language, null);
   
   return {
     id,
@@ -459,7 +510,14 @@ export function convertLinearToWordPressFormat(listing: LinearAPIListing, langua
         antenna,
         autoparkingType,
         generalCondition,
-        listingType
+        listingType,
+        // 🏠 Rental fields
+        rent,
+        securityDepositType,
+        rentalContractType,
+        earliestTerminateDate,
+        petsAllowed,
+        smokingAllowed
       }
     }
   };
