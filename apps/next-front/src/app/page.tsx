@@ -212,7 +212,8 @@ function HomePageContent() {
           
           // 🏠 FILTER OUT RENTAL PROPERTIES - Only show sale properties on homepage
           const saleProperties = linearProperties.filter(listing => {
-            const rentValue = listing.rent?.fi?.value;
+            // listingsCache.getListings() returns WordPress format, not CompleteLinearAPIListing
+            const rentValue = listing.acfRealEstate?.property?.rent;
             const hasRent = rentValue && 
                             String(rentValue).trim().length > 0 && 
                             String(rentValue) !== '0' &&
@@ -220,7 +221,7 @@ function HomePageContent() {
                             !String(rentValue).toLowerCase().includes('null');
             
             if (hasRent) {
-              console.log(`🏠 HOMEPAGE: RENTAL FOUND: ${listing.address?.fi?.value} | Rent: "${rentValue}" | EXCLUDING from homepage`);
+              console.log(`🏠 HOMEPAGE: RENTAL FOUND: ${listing.title} | Rent: "${rentValue}" | EXCLUDING from homepage`);
             }
             return !hasRent; // Exclude properties with rent field
           });
