@@ -1223,6 +1223,23 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                           <span className="font-semibold">{getBooleanText(propertyData.listingHasEnergyCertificate, language)}</span>
                         </div>
                       )}
+                      {/* NEW: Energicertifikat URL - Länk till PDF */}
+                      {propertyData.energyCertificateUrl && (
+                        <div className="flex justify-between py-2 border-b">
+                          <span className="text-gray-600">{getTranslation('energyCertificateUrl', language)}</span>
+                          <a 
+                            href={propertyData.energyCertificateUrl} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="font-semibold text-[var(--color-primary)] hover:underline flex items-center gap-2"
+                          >
+                            {language === 'sv' ? 'Visa certifikat' : language === 'en' ? 'View certificate' : 'Näytä todistus'}
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                          </a>
+                        </div>
+                      )}
                     </div>
                   </div>
                 )}

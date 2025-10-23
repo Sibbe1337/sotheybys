@@ -223,6 +223,11 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     sv: 'Energicertifikat',
     en: 'Energy Certificate'
   },
+  energyCertificateUrl: {
+    fi: 'Energiatodistus (PDF)',
+    sv: 'Energicertifikat (PDF)',
+    en: 'Energy Certificate (PDF)'
+  },
   heatingSystem: {
     fi: 'Lämmitysjärjestelmä',
     sv: 'Värmesystem',
