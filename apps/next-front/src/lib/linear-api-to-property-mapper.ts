@@ -461,7 +461,27 @@ export function mapLinearAPIToProperty(
     // 2. DIMENSIONS AND USAGE
     // ========================================================================
     livingArea: parseEuroNumber(nv.area || data.livingArea?.fi?.value),
-    totalArea: parseEuroNumber(nv.totalArea || data.totalArea?.fi?.value),
+    totalArea: (() => {
+      // Try to get totalArea from API first
+      const apiTotalArea = parseEuroNumber(nv.totalArea || data.totalArea?.fi?.value);
+      if (apiTotalArea > 0) return apiTotalArea;
+      
+      // CRITICAL: Calculate totalArea = livingArea + otherArea if not provided
+      // This is how Linear.fi defines "Kokonaispinta-ala"
+      const living = parseEuroNumber(nv.area || data.livingArea?.fi?.value);
+      const other = parseEuroNumber(nv.otherArea || data.otherArea?.fi?.value);
+      if (living > 0 && other > 0) {
+        console.log('✅ Calculated totalArea in mapper:', { 
+          address: extractLocalizedString(data.address).fi,
+          livingArea: living, 
+          otherArea: other, 
+          total: living + other 
+        });
+        return living + other;
+      }
+      
+      return apiTotalArea; // Return 0 if calculation not possible
+    })(),
     volume: parseEuroNumber(nv.volume || data.volume?.fi?.value),
     numberOfApartments: 0, // Not directly available in Linear API
     businessSpaces: {}, // Not directly available
