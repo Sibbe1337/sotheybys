@@ -506,13 +506,14 @@ export function mapLinearAPIToProperty(
         });
       }
       
-      // If unit is 'ha' (hektar), convert to m² (1 ha = 10,000 m²)
-      if (unit.toLowerCase() === 'ha' && plotAreaValue > 0) {
+      // If unit is 'ha' or 'HECTARE', convert to m² (1 ha = 10,000 m²)
+      const unitLower = unit.toLowerCase();
+      if ((unitLower === 'ha' || unitLower === 'hectare') && plotAreaValue > 0) {
         const convertedArea = plotAreaValue * 10000;
-        console.log('✅ Converted plot area from ha to m²:', { 
+        console.log('✅ Converted plot area from hectares to m²:', { 
           address: addr,
           originalValue: plotAreaValue,
-          unit: 'ha',
+          unit: unit,
           convertedValue: convertedArea,
           convertedUnit: 'm²'
         });

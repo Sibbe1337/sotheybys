@@ -201,14 +201,15 @@ export function convertCompleteLinearToWordPressFormat(listing: CompleteLinearAP
   const lotAreaUnit = listing.nonLocalizedValues?.lotAreaUnit || '';
   
   // Convert from hectares to square meters if needed
-  if (lotArea && lotAreaUnit.toLowerCase() === 'ha') {
+  const unitLower = lotAreaUnit.toLowerCase();
+  if (lotArea && (unitLower === 'ha' || unitLower === 'hectare')) {
     const originalValue = parseFloat(lotArea);
     if (!isNaN(originalValue)) {
       lotArea = (originalValue * 10000).toString();
-      console.log('✅ Converted plot area from ha to m²:', { 
+      console.log('✅ Converted plot area from hectares to m²:', { 
         address, 
         originalValue, 
-        unit: 'ha', 
+        unit: lotAreaUnit, 
         convertedValue: lotArea, 
         convertedUnit: 'm²' 
       });
