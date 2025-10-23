@@ -447,11 +447,29 @@ export function convertCompleteLinearToWordPressFormat(listing: CompleteLinearAP
   // If address is empty, use id/identifier as fallback
   const validId = id && id !== '' ? id : null;
   const validIdentifier = identifier && identifier !== 0 ? identifier : null;
+  
+  // Debug logging
+  if (!address) {
+    console.log('🔍 Slug generation debug:', {
+      address,
+      id,
+      identifier,
+      runningNumber,
+      validId,
+      validIdentifier
+    });
+  }
+  
   const slugSource = address || 
                      (validId ? `property-${validId}` : null) ||
                      (validIdentifier ? `property-${validIdentifier}` : null) ||
                      `property-${runningNumber || 'unknown'}`;
   const slug = generateSlug(slugSource);
+  
+  // Debug final slug
+  if (!slug || slug === '') {
+    console.log('⚠️ Empty slug generated!', { slugSource, slug, address });
+  }
   
   return {
     id,
