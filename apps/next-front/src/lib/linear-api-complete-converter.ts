@@ -121,6 +121,17 @@ export function convertCompleteLinearToWordPressFormat(listing: CompleteLinearAP
   // CRITICAL: Use nonLocalizedValues for numeric fields (totalArea, plotArea) for accuracy
   const area = extractLocalizedValue(listing.area) || null;
   const overallArea = listing.nonLocalizedValues?.totalArea || extractLocalizedValue(listing.overallArea) || null;
+  
+  // Debug logging for Mailatie 3
+  if (address && address.toLowerCase().includes('mailatie')) {
+    console.log('🏠 Mailatie area data:', {
+      address,
+      'nonLocalizedValues.totalArea': listing.nonLocalizedValues?.totalArea,
+      'listing.overallArea': listing.overallArea,
+      'extracted overallArea': overallArea
+    });
+  }
+  
   const otherArea = extractLocalizedValue(listing.otherArea) || null;
   const businessPremiseArea = extractLocalizedValue(listing.businessPremiseArea) || null;
   const areaBasis = extractLocalizedValue(listing.areaBasis) || null;
@@ -171,6 +182,17 @@ export function convertCompleteLinearToWordPressFormat(listing: CompleteLinearAP
   // Lot information
   // CRITICAL: Use nonLocalizedValues for numeric fields (plotArea) for accuracy
   const lotArea = listing.nonLocalizedValues?.plotArea || extractLocalizedValue(listing.lotArea) || null;
+  
+  // Debug logging for Mailatie 3
+  if (address && address.toLowerCase().includes('mailatie')) {
+    console.log('🏠 Mailatie plot data:', {
+      address,
+      'nonLocalizedValues.plotArea': listing.nonLocalizedValues?.plotArea,
+      'listing.lotArea': listing.lotArea,
+      'extracted lotArea': lotArea
+    });
+  }
+  
   const lotType = extractLocalizedValue(listing.lotType) || null;
   const lotOwnership = extractLocalizedValue(listing.lotOwnership) || null;
   const lotNumber = extractLocalizedValue(listing.lotNumber) || null;
