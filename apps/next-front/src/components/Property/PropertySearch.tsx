@@ -21,8 +21,11 @@ const PROPERTY_TYPES = [
     label: { fi: 'Asunnot', sv: 'Lägenheter', en: 'Apartments' },
     image: '/images/property-types/apartment.jpg',
     filter: (p: any) => {
-      const type = p.acfRealEstate?.property?.propertyType?.toLowerCase() || '';
-      return type.includes('asunto') || type.includes('lägenhet') || type.includes('apartment') || type.includes('osake');
+      // Kolla båda format: root-nivå OCH acfRealEstate.property
+      const type = (p.propertyType || p.acfRealEstate?.property?.propertyType || '').toLowerCase();
+      const aptType = (p.apartmentType || p.acfRealEstate?.property?.apartmentType || '').toLowerCase();
+      const allTypes = `${type} ${aptType}`;
+      return allTypes.includes('asunto') || allTypes.includes('lägenhet') || allTypes.includes('apartment') || allTypes.includes('osake');
     }
   },
   {
@@ -30,9 +33,10 @@ const PROPERTY_TYPES = [
     label: { fi: 'Omakotitalot', sv: 'Villor', en: 'Houses' },
     image: '/images/property-types/house.jpg',
     filter: (p: any) => {
-      const propertyType = p.acfRealEstate?.property?.propertyType?.toLowerCase() || '';
-      const apartmentType = p.acfRealEstate?.property?.apartmentType?.toLowerCase() || '';
-      const estateType = p.acfRealEstate?.property?.estateType?.toLowerCase() || '';
+      // Kolla båda format: root-nivå OCH acfRealEstate.property
+      const propertyType = (p.propertyType || p.acfRealEstate?.property?.propertyType || '').toLowerCase();
+      const apartmentType = (p.apartmentType || p.acfRealEstate?.property?.apartmentType || '').toLowerCase();
+      const estateType = (p.estateType || p.acfRealEstate?.property?.estateType || '').toLowerCase();
       const allTypes = `${propertyType} ${apartmentType} ${estateType}`;
       
       return allTypes.includes('omakoti') || allTypes.includes('villa') || allTypes.includes('house') || 
@@ -45,8 +49,11 @@ const PROPERTY_TYPES = [
     label: { fi: 'Rivitalot', sv: 'Radhus', en: 'Townhouses' },
     image: '/images/property-types/townhouse.jpg',
     filter: (p: any) => {
-      const type = p.acfRealEstate?.property?.propertyType?.toLowerCase() || '';
-      return type.includes('rivi') || type.includes('radhus') || type.includes('townhouse');
+      // Kolla båda format: root-nivå OCH acfRealEstate.property
+      const type = (p.propertyType || p.acfRealEstate?.property?.propertyType || '').toLowerCase();
+      const aptType = (p.apartmentType || p.acfRealEstate?.property?.apartmentType || '').toLowerCase();
+      const allTypes = `${type} ${aptType}`;
+      return allTypes.includes('rivi') || allTypes.includes('radhus') || allTypes.includes('townhouse');
     }
   },
   {
@@ -54,7 +61,8 @@ const PROPERTY_TYPES = [
     label: { fi: 'Vuokrakohteet', sv: 'Hyresobjekt', en: 'Rentals' },
     image: '/images/property-types/rental.jpg',
     filter: (p: any) => {
-      const rent = p.acfRealEstate?.property?.rent;
+      // Kolla båda format: root-nivå OCH acfRealEstate.property
+      const rent = p.rent || p.acfRealEstate?.property?.rent;
       return rent && parseInt(rent) > 0;
     }
   }
@@ -73,17 +81,20 @@ export default function PropertySearch({ properties, language }: PropertySearchP
       const typeFilter = PROPERTY_TYPES.find(t => t.id === selectedType);
       if (!typeFilter?.filter(property)) return false;
 
-      // Price filter - använd debtFreePrice som primär
-      const price = property.acfRealEstate?.property?.debtFreePrice || property.acfRealEstate?.property?.price || 0;
+      // Price filter - kolla båda format
+      const price = property.debtFreePrice || property.price || 
+                    property.acfRealEstate?.property?.debtFreePrice || 
+                    property.acfRealEstate?.property?.price || 0;
       if (price > 0 && (price < priceRange[0] || price > priceRange[1])) return false;
 
-      // Area filter
-      const area = parseInt(property.acfRealEstate?.property?.area || '0');
+      // Area filter - kolla båda format
+      const area = parseInt(String(property.livingArea || property.area || 
+                                    property.acfRealEstate?.property?.area || '0'));
       if (area > 0 && (area < areaRange[0] || area > areaRange[1])) return false;
 
-      // Location filter
+      // Location filter - kolla båda format
       if (selectedArea !== 'all') {
-        const city = property.acfRealEstate?.property?.city?.toLowerCase() || '';
+        const city = (property.city || property.acfRealEstate?.property?.city || '').toLowerCase();
         if (!city.includes(selectedArea.toLowerCase())) return false;
       }
 
