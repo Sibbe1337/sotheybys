@@ -28,6 +28,15 @@ export default async function PropertiesPage() {
     });
     
     console.log(`✅ Filtered ${allProperties.length} sale properties (excluded rentals)`);
+    
+    // 💎 SORT BY PRICE: Most expensive first (Premium branding)
+    allProperties.sort((a, b) => {
+      const priceA = a.acfRealEstate?.property?.price || 0;
+      const priceB = b.acfRealEstate?.property?.price || 0;
+      return priceB - priceA; // Descending order (highest first)
+    });
+    
+    console.log(`💎 Sorted ${allProperties.length} properties by price (highest first)`);
   } catch (error) {
     console.error('Error fetching properties from Linear:', error);
   }
