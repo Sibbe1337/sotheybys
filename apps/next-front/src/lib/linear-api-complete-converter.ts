@@ -38,6 +38,7 @@ function parsePrice(value: string | number | null): string | null {
 
 export function convertCompleteLinearToWordPressFormat(listing: CompleteLinearAPIListing) {
   // Extract all fields with null fallback to prevent React errors
+  // Updated: 2025-01-23 - Fixed slug generation with robust fallback chain
   const id = extractLocalizedValue(listing.id) || '';
   const identifier = extractLocalizedValue(listing.identifier, 0) || 0;
   const runningNumber = extractLocalizedValue(listing.runningNumber) || null;
