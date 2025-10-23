@@ -9,7 +9,43 @@ import { ChevronLeft, ChevronRight, Facebook, Linkedin, Mail, Phone, MapPin, Hom
 import { getVideoEmbedUrl, isValidVideoUrl, isValidYouTubeUrl, isValidVimeoUrl } from '@/lib/utils';
 import { parseEuroNumber, formatEuroCurrency } from '@/lib/number-eu';
 import { getTranslation, getBooleanText, getUnitSuffix, type SupportedLanguage } from '@/lib/property-translations';
+import { formatPerM2 } from '@/lib/utils';
 // API calls will be made through our server-side route
+
+// ============================================================================
+// CONDITIONAL ROW COMPONENT (RowIf)
+// ============================================================================
+interface RowIfProps {
+  value?: string | number | boolean | null;
+  label: string;
+  suffix?: string;
+  right?: string;
+  language?: SupportedLanguage;
+}
+
+/**
+ * Conditional row component - only renders if value exists and is not 0
+ * Used for apartment detail pages to hide empty fields
+ */
+function RowIf({ value, label, suffix = '', right, language = 'fi' }: RowIfProps) {
+  // Hide if value is null, undefined, empty string, or 0
+  if (value == null || value === '' || value === 0) return null;
+  
+  // For boolean values, convert to Ja/Nej text
+  const displayValue = typeof value === 'boolean' 
+    ? getBooleanText(value, language)
+    : `${value}${suffix}`;
+  
+  return (
+    <div className="flex justify-between py-2 border-b">
+      <span className="text-gray-600">{label}</span>
+      <div className="text-right">
+        <span className="font-semibold">{displayValue}</span>
+        {right && <span className="text-gray-500 ml-2 text-sm">{right}</span>}
+      </div>
+    </div>
+  );
+}
 
 // ============================================================================
 // HERO INFO ROW HELPERS
@@ -1118,119 +1154,94 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                     {/* 🏠 RENTAL PROPERTY - Show rent info */}
                     {propertyData.rent && parseInt(propertyData.rent) > 0 ? (
                       <>
-                        <div className="flex justify-between py-2 border-b">
-                          <span className="text-gray-600">{getTranslation('monthlyRent', language)}</span>
-                          <span className="font-semibold">{formatEuroCurrency(parseInt(propertyData.rent))}{getUnitSuffix('perMonth', language)}</span>
-                        </div>
-                        {propertyData.securityDepositType && (
-                          <div className="flex justify-between py-2 border-b">
-                            <span className="text-gray-600">{getTranslation('securityDeposit', language)}</span>
-                            <span className="font-semibold">{propertyData.securityDepositType}</span>
-                          </div>
-                        )}
-                        {propertyData.rentalContractType && (
-                          <div className="flex justify-between py-2 border-b">
-                            <span className="text-gray-600">{getTranslation('rentalContractType', language)}</span>
-                            <span className="font-semibold">{propertyData.rentalContractType}</span>
-                          </div>
-                        )}
-                        {propertyData.earliestTerminateDate && (
-                          <div className="flex justify-between py-2 border-b">
-                            <span className="text-gray-600">{getTranslation('earliestTerminateDate', language)}</span>
-                            <span className="font-semibold">{propertyData.earliestTerminateDate}</span>
-                          </div>
-                        )}
-                        {propertyData.petsAllowed && (
-                          <div className="flex justify-between py-2 border-b">
-                            <span className="text-gray-600">{getTranslation('petsAllowed', language)}</span>
-                            <span className="font-semibold">{propertyData.petsAllowed}</span>
-                          </div>
-                        )}
-                        {propertyData.smokingAllowed && (
-                          <div className="flex justify-between py-2 border-b">
-                            <span className="text-gray-600">{getTranslation('smokingAllowed', language)}</span>
-                            <span className="font-semibold">{propertyData.smokingAllowed}</span>
-                          </div>
-                        )}
+                        <RowIf 
+                          value={parseInt(propertyData.rent)} 
+                          label={getTranslation('monthlyRent', language)} 
+                          suffix={getUnitSuffix('perMonth', language)}
+                          language={language}
+                        />
+                        <RowIf 
+                          value={propertyData.securityDepositType} 
+                          label={getTranslation('securityDeposit', language)}
+                          language={language}
+                        />
+                        <RowIf 
+                          value={propertyData.rentalContractType} 
+                          label={getTranslation('rentalContractType', language)}
+                          language={language}
+                        />
+                        <RowIf 
+                          value={propertyData.earliestTerminateDate} 
+                          label={getTranslation('earliestTerminateDate', language)}
+                          language={language}
+                        />
+                        <RowIf 
+                          value={propertyData.petsAllowed} 
+                          label={getTranslation('petsAllowed', language)}
+                          language={language}
+                        />
+                        <RowIf 
+                          value={propertyData.smokingAllowed} 
+                          label={getTranslation('smokingAllowed', language)}
+                          language={language}
+                        />
                       </>
                     ) : (
-                      /* 🏡 SALE PROPERTY - Show price info */
+                      /* 🏡 SALE PROPERTY (LÄGENHET) - Show price info with €/m² */
                       <>
-                        {propertyData.price != null && propertyData.price > 0 && (
-                          <div className="flex justify-between py-2 border-b">
-                            <span className="text-gray-600">{getTranslation('salesPrice', language)}</span>
-                            <span className="font-semibold">{formatEuroCurrency(propertyData.price)}</span>
-                          </div>
-                        )}
-                        {propertyData.debtPart != null && propertyData.debtPart > 0 && (
-                          <div className="flex justify-between py-2 border-b">
-                            <span className="text-gray-600">{getTranslation('debtPart', language)}</span>
-                            <span className="font-semibold">{formatEuroCurrency(propertyData.debtPart)}</span>
-                          </div>
-                        )}
-                        {propertyData.debtFreePrice != null && propertyData.debtFreePrice > 0 && (
-                          <div className="flex justify-between py-2 border-b">
-                            <span className="text-gray-600">{getTranslation('debtFreePrice', language)}</span>
-                            <span className="font-semibold">{formatEuroCurrency(propertyData.debtFreePrice)}</span>
-                          </div>
-                        )}
+                        <RowIf 
+                          value={propertyData.price} 
+                          label={getTranslation('salesPrice', language)}
+                          right={formatPerM2(propertyData.price, propertyData.livingArea)}
+                          language={language}
+                        />
+                        <RowIf 
+                          value={propertyData.debtFreePrice} 
+                          label={getTranslation('debtFreePrice', language)}
+                          right={formatPerM2(propertyData.debtFreePrice, propertyData.livingArea)}
+                          language={language}
+                        />
+                        <RowIf 
+                          value={propertyData.maintenanceFee} 
+                          label={getTranslation('maintenanceFee', language)}
+                          suffix={getUnitSuffix('perMonth', language)}
+                          right={formatPerM2(propertyData.maintenanceFee, propertyData.livingArea)}
+                          language={language}
+                        />
+                        <RowIf 
+                          value={propertyData.financingFee} 
+                          label={getTranslation('financingFee', language)}
+                          suffix={getUnitSuffix('perMonth', language)}
+                          right={formatPerM2(propertyData.financingFee, propertyData.livingArea)}
+                          language={language}
+                        />
+                        <RowIf 
+                          value={propertyData.totalFee} 
+                          label={getTranslation('totalMonthlyFee', language)}
+                          suffix={getUnitSuffix('perMonth', language)}
+                          right={formatPerM2(propertyData.totalFee, propertyData.livingArea)}
+                          language={language}
+                        />
+                        <RowIf 
+                          value={propertyData.waterFee} 
+                          label={getTranslation('waterFeePerPerson', language)}
+                          suffix={getUnitSuffix('perPersonMonth', language)}
+                          language={language}
+                        />
+                        <RowIf 
+                          value={propertyData.debtPart} 
+                          label={getTranslation('debtPart', language)}
+                          language={language}
+                        />
                       </>
                     )}
-                    {propertyData.maintenanceFee != null && propertyData.maintenanceFee > 0 && (
-                      <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">{getTranslation('maintenanceFee', language)}</span>
-                        <span className="font-semibold">{formatEuroCurrency(propertyData.maintenanceFee)}{getUnitSuffix('perMonth', language)}</span>
-                      </div>
-                    )}
-                    {propertyData.financingFee != null && propertyData.financingFee > 0 && (
-                      <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">{getTranslation('financingFee', language)}</span>
-                        <span className="font-semibold">{formatEuroCurrency(propertyData.financingFee)}{getUnitSuffix('perMonth', language)}</span>
-                      </div>
-                    )}
-                    {propertyData.totalFee != null && propertyData.totalFee > 0 && (
-                      <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">{getTranslation('totalFee', language)}</span>
-                        <span className="font-semibold">{formatEuroCurrency(propertyData.totalFee)}{getUnitSuffix('perMonth', language)}</span>
-                      </div>
-                    )}
-                    {/* Additional charges from Linear API */}
-                    {propertyData.maintenanceCharge != null && propertyData.maintenanceCharge > 0 && (
-                      <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">{getTranslation('maintenanceCharge', language)}</span>
-                        <span className="font-semibold">{formatEuroCurrency(propertyData.maintenanceCharge)}{getUnitSuffix('perMonth', language)}</span>
-                      </div>
-                    )}
-                    {propertyData.fundingCharge != null && propertyData.fundingCharge > 0 && (
-                      <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">{getTranslation('fundingCharge', language)}</span>
-                        <span className="font-semibold">{formatEuroCurrency(propertyData.fundingCharge)}{getUnitSuffix('perMonth', language)}</span>
-                      </div>
-                    )}
-                    {propertyData.mandatoryCharges != null && propertyData.mandatoryCharges > 0 && (
-                      <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">{getTranslation('mandatoryCharges', language)}</span>
-                        <span className="font-semibold">{formatEuroCurrency(propertyData.mandatoryCharges)}{getUnitSuffix('perMonth', language)}</span>
-                      </div>
-                    )}
-                    {propertyData.waterCharge != null && propertyData.waterCharge > 0 && (
-                      <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">{getTranslation('waterCharge', language)}</span>
-                        <span className="font-semibold">{formatEuroCurrency(propertyData.waterCharge)}{getUnitSuffix('perMonth', language)}</span>
-                      </div>
-                    )}
-                    {propertyData.waterFee != null && propertyData.waterFee > 0 && (
-                      <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">{getTranslation('waterFee', language)}</span>
-                        <span className="font-semibold">{formatEuroCurrency(propertyData.waterFee)}{getUnitSuffix('perPersonMonth', language)}</span>
-                      </div>
-                    )}
-                    {propertyData.propertyTax && parseInt(String(propertyData.propertyTax).replace(/[^0-9]/g, '')) > 0 && (
-                      <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">{getTranslation('propertyTax', language)}</span>
-                        <span className="font-semibold">{propertyData.propertyTax} {getUnitSuffix('perYear', language)}</span>
-                      </div>
-                    )}
+                    {/* Property Tax (for properties, not apartments) */}
+                    <RowIf 
+                      value={propertyData.propertyTax && parseInt(String(propertyData.propertyTax).replace(/[^0-9]/g, '')) > 0 ? propertyData.propertyTax : null} 
+                      label={getTranslation('propertyTax', language)}
+                      suffix={` ${getUnitSuffix('perYear', language)}`}
+                      language={language}
+                    />
                   </div>
                 </div>
               )}
@@ -1253,18 +1264,18 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                 {expandedSections.energyRating && (
                   <div className="bg-white border border-gray-200 p-6">
                     <div className="space-y-2">
-                      <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">{getTranslation('energyClass', language)}</span>
-                        <span className="font-semibold">{propertyData.energyClass}</span>
-                      </div>
-                      {/* NEW: Energicertifikat (Ja/Nej) */}
-                      {propertyData.listingHasEnergyCertificate !== undefined && (
-                        <div className="flex justify-between py-2 border-b">
-                          <span className="text-gray-600">{getTranslation('listingHasEnergyCertificate', language)}</span>
-                          <span className="font-semibold">{getBooleanText(propertyData.listingHasEnergyCertificate, language)}</span>
-                        </div>
-                      )}
-                      {/* NEW: Energicertifikat URL - Länk till PDF */}
+                      <RowIf 
+                        value={propertyData.energyClass} 
+                        label={getTranslation('energyClass', language)}
+                        language={language}
+                      />
+                      {/* Energicertifikat (Ja/Nej) - only show if explicitly true, hide if false/unknown for apartments */}
+                      <RowIf 
+                        value={propertyData.listingHasEnergyCertificate === true ? true : null} 
+                        label={getTranslation('listingHasEnergyCertificate', language)}
+                        language={language}
+                      />
+                      {/* Energicertifikat URL - Länk till PDF */}
                       {propertyData.energyCertificateUrl && (
                         <div className="flex justify-between py-2 border-b">
                           <span className="text-gray-600">{getTranslation('energyCertificateUrl', language)}</span>

@@ -104,10 +104,20 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     sv: 'Total avgift',
     en: 'Total Fee'
   },
+  totalMonthlyFee: {
+    fi: 'Kuukausittaiset maksut yhteensä',
+    sv: 'Totala månadsvederlaget',
+    en: 'Total Monthly Fee'
+  },
   waterFee: {
     fi: 'Vesimaksu',
     sv: 'Vattenavgift',
     en: 'Water Fee'
+  },
+  waterFeePerPerson: {
+    fi: 'Vesimaksu per henkilö',
+    sv: 'Vattenavgift per person',
+    en: 'Water Fee per Person'
   },
   maintenanceCharge: {
     fi: 'Hoitovastike',
@@ -233,6 +243,11 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     sv: 'Värmesystem',
     en: 'Heating System'
   },
+  antennaSystem: {
+    fi: 'Antennijärjestelmä',
+    sv: 'Antenn/Kabel',
+    en: 'Antenna System'
+  },
   
   // Housing Company Fields
   housingCompanyName: {
@@ -275,6 +290,11 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     sv: 'Inlösenklausul',
     en: 'Redemption Clause'
   },
+  redemptionClauseFlats: {
+    fi: 'Lunastuspykälä (asunnot)',
+    sv: 'Inlösenklausul (lägenheter)',
+    en: 'Redemption Clause (Flats)'
+  },
   propertyId: {
     fi: 'Kiinteistön tunnus',
     sv: 'Fastighetsbeteckning',
@@ -289,6 +309,11 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     fi: 'Tontin omistus',
     sv: 'Ägandet',
     en: 'Plot Ownership'
+  },
+  ownershipType: {
+    fi: 'Omistusmuoto',
+    sv: 'Form av ägandet',
+    en: 'Ownership Type'
   },
   
   // Building Fields
@@ -311,6 +336,11 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     fi: 'Sauna',
     sv: 'Bastu',
     en: 'Sauna'
+  },
+  ownSauna: {
+    fi: 'Oma sauna',
+    sv: 'Egen bastu',
+    en: 'Own Sauna'
   },
   balcony: {
     fi: 'Parveke',
@@ -516,6 +546,11 @@ export const PROPERTY_TRANSLATIONS: Translations = {
   },
   
   // Housing Company Details (Lägenhet)
+  city: {
+    fi: 'Kaupunki',
+    sv: 'Hemort',
+    en: 'City'
+  },
   housingCompanyHomeCity: {
     fi: 'Yhtiön kotipaikka',
     sv: 'Bolagets hemort',
@@ -535,6 +570,11 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     fi: 'Yhtiölaina',
     sv: 'Bolagslån',
     en: 'Company Mortgage'
+  },
+  companyLoans: {
+    fi: 'Yhtiölainat',
+    sv: 'Långfristiga lån',
+    en: 'Company Loans'
   },
   housingCompanyMortgageDate: {
     fi: 'Yhtiölainan päivämäärä',
