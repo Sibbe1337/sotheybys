@@ -90,32 +90,51 @@ function getHeroItems(propertyData: any, language: 'fi' | 'sv' | 'en'): HeroItem
   const addressStr = (propertyData?.address || propertyData?.streetAddress || '').toLowerCase();
   const hasPropertyRoadName = /tie|vägen|väg(?!en)|road/i.test(addressStr) && !/katu|gatan|street/i.test(addressStr);
   
+  // CRITICAL: En lägenhet är om den har debtFreePrice OCH price är OLIKA
+  // Detta betyder att det finns bostadsbolagslån (aktielägenhet)
+  const hasCompanyDebt = gt0(propertyData?.debtFreePrice) && 
+                         gt0(propertyData?.price) && 
+                         propertyData.debtFreePrice !== propertyData.price;
+  
+  // En lägenhet är också om den har housingCompanyName
+  const hasHousingCompany = hasText(propertyData?.housingCompanyName);
+  
+  // En lägenhet är:
+  // 1. Har bostadsbolagslån (debtFreePrice !== price)
+  // 2. Har housingCompanyName
+  // 3. Adress innehåller "katu" eller "gatan" (stadsgata)
+  const isApartment = hasCompanyDebt || hasHousingCompany || /katu|gatan|street/i.test(addressStr);
+  
   // En fastighet är:
-  // 1. Har typeOfApartment/apartmentType som innehåller "kiinteistö" (från Linear API)
-  // 2. Har propertyType som innehåller villa/hus/fastighet/omakotitalo etc
-  // 3. Har tomtstorlek (plotArea/siteArea/lotArea > 0)
-  // 4. FALLBACK: Adress innehåller "tie" eller "vägen" (men INTE "katu" eller "gatan")
-  const isFastighet =
+  // 1. INTE en lägenhet (viktigast!)
+  // 2. Har typeOfApartment/apartmentType som innehåller "kiinteistö" (från Linear API)
+  // 3. Har propertyType som innehåller villa/hus/fastighet/omakotitalo etc
+  // 4. Har tomtstorlek (plotArea/siteArea/lotArea > 0)
+  // 5. FALLBACK: Adress innehåller "tie" eller "vägen" (men INTE "katu" eller "gatan")
+  const isFastighet = !isApartment && (
     /kiinteist[öo]/i.test(typeOfApartmentStr) ||
     /villa|hus|fastighet|omakotitalo|egendom|egnahemshus|radhus|parhus/i.test(propertyTypeStr) ||
     hasPlot ||
-    hasPropertyRoadName;
+    hasPropertyRoadName
+  );
   
   // Debug logging för att förstå vilken typ av objekt det är
   console.log('🏠 Property type detection:', {
     address: propertyData?.address,
+    isApartment,
     isFastighet,
+    hasCompanyDebt,
+    hasHousingCompany,
+    housingCompanyName: propertyData?.housingCompanyName,
+    price: propertyData?.price,
+    debtFreePrice: propertyData?.debtFreePrice,
+    addressPattern: /katu|gatan|street/i.test(addressStr) ? 'apartment-street' : 'property-road',
     propertyType: propertyData?.propertyType,
     typeOfApartment: propertyData?.typeOfApartment,
     apartmentType: propertyData?.apartmentType,
-    propertyTypeStr,
-    typeOfApartmentStr,
     siteArea: propertyData?.siteArea,
-    plotArea: propertyData?.plotArea,
-    lotArea: propertyData?.lotArea,
     hasPlot,
-    hasPropertyRoadName,
-    fallbackMatch: hasPropertyRoadName
+    hasPropertyRoadName
   });
 
   // Prioritize districtFree (e.g., "Lauttasaari/Drumsö") over city
