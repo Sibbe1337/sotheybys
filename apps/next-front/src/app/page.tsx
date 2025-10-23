@@ -232,8 +232,8 @@ function HomePageContent() {
           
           // 💎 SORT BY PRICE: Most expensive first (Premium branding)
           saleProperties.sort((a, b) => {
-            const priceA = a.salesPrice?.fi?.value || 0;
-            const priceB = b.salesPrice?.fi?.value || 0;
+            const priceA = Number(a.askPrice?.fi?.value) || 0;
+            const priceB = Number(b.askPrice?.fi?.value) || 0;
             return priceB - priceA; // Descending order (highest first)
           });
           
