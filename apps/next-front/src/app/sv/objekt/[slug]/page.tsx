@@ -174,46 +174,40 @@ export default function SwedishPropertyPage({ params }: PropertyPageProps) {
               
               if (isFastighet) {
                 // FASTIGHET: Bostadsyta | Total yta | Pris | Stadsdel | Tomtstorlek
+                // ALWAYS show all 5 fields, use "Ej angivet" for missing data
+                const notSpecified = 'Ej angivet';
                 return (
                   <>
-                    {property.livingArea > 0 && (
-                      <div>
-                        <h3 className="text-3xl font-bold text-[#002349]">
-                          {formatAreaLocalized(property.livingArea, language)}
-                        </h3>
-                        <p className="text-sm text-gray-600 mt-2">BOSTADSYTA</p>
-                      </div>
-                    )}
-                    {(property as any).overallArea > 0 && (
-                      <div>
-                        <h3 className="text-3xl font-bold text-[#002349]">
-                          {formatAreaLocalized((property as any).overallArea, language)}
-                        </h3>
-                        <p className="text-sm text-gray-600 mt-2">TOTAL YTA</p>
-                      </div>
-                    )}
-                    {property.salesPrice > 0 && (
-                      <div>
-                        <h3 className="text-3xl font-bold text-[#002349]">
-                          {formatPriceLocalized(property.salesPrice, language)}
-                        </h3>
-                        <p className="text-sm text-gray-600 mt-2">PRIS</p>
-                      </div>
-                    )}
-                    {city && (
-                      <div>
-                        <h3 className="text-3xl font-bold text-[#002349]">{city}</h3>
-                        <p className="text-sm text-gray-600 mt-2">STADSDEL</p>
-                      </div>
-                    )}
-                    {((property as any).siteArea > 0 || (property as any).plotArea > 0) && (
-                      <div>
-                        <h3 className="text-3xl font-bold text-[#002349]">
-                          {formatAreaLocalized((property as any).siteArea || (property as any).plotArea, language)}
-                        </h3>
-                        <p className="text-sm text-gray-600 mt-2">TOMTSTORLEK</p>
-                      </div>
-                    )}
+                    <div>
+                      <h3 className="text-3xl font-bold text-[#002349]">
+                        {property.livingArea > 0 ? formatAreaLocalized(property.livingArea, language) : notSpecified}
+                      </h3>
+                      <p className="text-sm text-gray-600 mt-2">BOSTADSYTA</p>
+                    </div>
+                    <div>
+                      <h3 className="text-3xl font-bold text-[#002349]">
+                        {(property as any).overallArea > 0 ? formatAreaLocalized((property as any).overallArea, language) : notSpecified}
+                      </h3>
+                      <p className="text-sm text-gray-600 mt-2">TOTAL YTA</p>
+                    </div>
+                    <div>
+                      <h3 className="text-3xl font-bold text-[#002349]">
+                        {property.salesPrice > 0 ? formatPriceLocalized(property.salesPrice, language) : notSpecified}
+                      </h3>
+                      <p className="text-sm text-gray-600 mt-2">PRIS</p>
+                    </div>
+                    <div>
+                      <h3 className="text-3xl font-bold text-[#002349]">{city || notSpecified}</h3>
+                      <p className="text-sm text-gray-600 mt-2">STADSDEL</p>
+                    </div>
+                    <div>
+                      <h3 className="text-3xl font-bold text-[#002349]">
+                        {((property as any).siteArea > 0 || (property as any).plotArea > 0) 
+                          ? formatAreaLocalized((property as any).siteArea || (property as any).plotArea, language)
+                          : notSpecified}
+                      </h3>
+                      <p className="text-sm text-gray-600 mt-2">TOMTSTORLEK</p>
+                    </div>
                   </>
                 );
               } else {

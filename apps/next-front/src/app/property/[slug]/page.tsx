@@ -94,15 +94,19 @@ function getHeroItems(propertyData: any, language: 'fi' | 'sv' | 'en'): HeroItem
     siteArea: language === 'sv' ? 'Tomtstorlek' : language === 'en' ? 'Plot size' : 'Tontin koko',
   };
 
+  // "Not specified" text by language
+  const notSpecified = language === 'sv' ? 'Ej angivet' : language === 'en' ? 'Not specified' : 'Ei määritelty';
+
   if (isFastighet) {
     // FASTIGHET: Bostadsyta | Total yta | Pris | Stadsdel | Tomtstorlek
+    // ALWAYS show all 5 fields, use "Ej angivet" for missing data
     return [
-      { label: labels.livingArea, value: formatAreaM2(propertyData?.area || propertyData?.livingArea), key: 'livingArea' },
-      { label: labels.totalArea, value: formatAreaM2(propertyData?.overallArea || propertyData?.totalArea), key: 'totalArea' },
-      { label: labels.price, value: gt0(propertyData?.price) ? formatEuroCurrency(propertyData.price) : '', key: 'price', numValue: propertyData?.price },
-      { label: labels.district, value: hasText(region) ? region : '', key: 'district' },
-      { label: labels.siteArea, value: formatSiteArea(propertyData?.plotArea || propertyData?.siteArea), key: 'siteArea' },
-    ].filter(it => hasText(it.value));
+      { label: labels.livingArea, value: formatAreaM2(propertyData?.area || propertyData?.livingArea) || notSpecified, key: 'livingArea' },
+      { label: labels.totalArea, value: formatAreaM2(propertyData?.overallArea || propertyData?.totalArea) || notSpecified, key: 'totalArea' },
+      { label: labels.price, value: gt0(propertyData?.price) ? formatEuroCurrency(propertyData.price) : notSpecified, key: 'price', numValue: propertyData?.price },
+      { label: labels.district, value: hasText(region) ? region : notSpecified, key: 'district' },
+      { label: labels.siteArea, value: formatSiteArea(propertyData?.plotArea || propertyData?.siteArea) || notSpecified, key: 'siteArea' },
+    ];
   } else {
     // LÄGENHET/OSAKE: Bostadsyta | Pris | Skuldfritt pris | Stadsdel | Byggnadsår
     return [
