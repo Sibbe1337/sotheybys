@@ -117,7 +117,9 @@ export default function PropertyCard({
             const rentMatch = property.rent.toString().match(/\d+/);
             const rentAmount = rentMatch ? parseInt(rentMatch[0]) : 0;
             
-            if (rentAmount > 0) {
+            // Only show rent if it's realistic (>= 100€/month)
+            // This filters out bad data like "3 €/kk"
+            if (rentAmount >= 100) {
               return (
                 <Price className="text-2xl mb-2" block>
                   {formatPrice(rentAmount)} / {getHomepageTranslation('month', language)}
@@ -257,11 +259,11 @@ export default function PropertyCard({
           </div>
         )}
 
-        {/* View Property Button */}
+        {/* View Property Button - Smaller on mobile */}
         <div className="mt-4">
           <Button 
             variant="primary" 
-            className="w-full"
+            className="w-full py-2 sm:py-3 text-sm sm:text-base"
           >
             {getHomepageTranslation('viewProperty', language)}
           </Button>
