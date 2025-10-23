@@ -13,13 +13,13 @@ const PROPERTY_TYPES = [
   {
     id: 'all',
     label: { fi: 'Kaikki kohteet', sv: 'Alla objekt', en: 'All properties' },
-    image: '/images/property-types/all.jpg',
+    image: '/images/property-types/all.svg',
     filter: () => true
   },
   {
     id: 'apartment',
     label: { fi: 'Asunnot', sv: 'Lägenheter', en: 'Apartments' },
-    image: '/images/property-types/apartment.jpg',
+    image: '/images/property-types/apartment.svg',
     filter: (p: any) => {
       // Kolla båda format: root-nivå OCH acfRealEstate.property
       const type = (p.propertyType || p.acfRealEstate?.property?.propertyType || '').toLowerCase();
@@ -31,7 +31,7 @@ const PROPERTY_TYPES = [
   {
     id: 'house',
     label: { fi: 'Omakotitalot', sv: 'Villor', en: 'Houses' },
-    image: '/images/property-types/house.jpg',
+    image: '/images/property-types/house.svg',
     filter: (p: any) => {
       // Kolla båda format: root-nivå OCH acfRealEstate.property
       const propertyType = (p.propertyType || p.acfRealEstate?.property?.propertyType || '').toLowerCase();
@@ -47,7 +47,7 @@ const PROPERTY_TYPES = [
   {
     id: 'townhouse',
     label: { fi: 'Rivitalot', sv: 'Radhus', en: 'Townhouses' },
-    image: '/images/property-types/townhouse.jpg',
+    image: '/images/property-types/townhouse.svg',
     filter: (p: any) => {
       // Kolla båda format: root-nivå OCH acfRealEstate.property
       const type = (p.propertyType || p.acfRealEstate?.property?.propertyType || '').toLowerCase();
@@ -59,7 +59,7 @@ const PROPERTY_TYPES = [
   {
     id: 'rental',
     label: { fi: 'Vuokrakohteet', sv: 'Hyresobjekt', en: 'Rentals' },
-    image: '/images/property-types/rental.jpg',
+    image: '/images/property-types/rental.svg',
     filter: (p: any) => {
       // Kolla båda format: root-nivå OCH acfRealEstate.property
       const rent = p.rent || p.acfRealEstate?.property?.rent;

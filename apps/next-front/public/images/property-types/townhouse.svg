@@ -1,0 +1,19 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#744210;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#5a2e0a;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#grad4)"/>
+  <!-- Townhouse icon (3 connected houses) -->
+  <polygon points="280,200 220,250 340,250" fill="#8e740b" opacity="0.3"/>
+  <rect x="240" y="250" width="80" height="120" fill="#8e740b" opacity="0.3"/>
+  <polygon points="400,200 340,250 460,250" fill="#8e740b" opacity="0.3"/>
+  <rect x="360" y="250" width="80" height="120" fill="#8e740b" opacity="0.3"/>
+  <polygon points="520,200 460,250 580,250" fill="#8e740b" opacity="0.3"/>
+  <rect x="480" y="250" width="80" height="120" fill="#8e740b" opacity="0.3"/>
+  <text x="400" y="450" font-family="Arial, sans-serif" font-size="42" fill="#8e740b" text-anchor="middle" font-weight="bold">RADHUS</text>
+  <text x="400" y="490" font-family="Arial, sans-serif" font-size="28" fill="white" text-anchor="middle">TOWNHOUSES</text>
+</svg>
+
