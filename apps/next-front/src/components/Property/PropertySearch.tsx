@@ -130,17 +130,17 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                     src={type.image}
                     alt={type.label[language]}
                     fill
+                    unoptimized
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
                     sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <h3 className="text-white text-base lg:text-lg font-light tracking-wider uppercase">
+                  <div className="absolute bottom-0 left-0 right-0 p-4 z-10">
+                    <h3 className="text-white text-base lg:text-lg font-semibold tracking-wider uppercase drop-shadow-lg">
                       {type.label[language]}
                     </h3>
                   </div>
                   {selectedType === type.id && (
-                    <div className="absolute top-2 right-2 bg-[var(--color-gold)] text-white rounded-full p-2">
+                    <div className="absolute top-2 right-2 bg-[var(--color-gold)] text-white rounded-full p-2 z-10">
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
