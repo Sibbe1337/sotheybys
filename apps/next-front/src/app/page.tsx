@@ -230,6 +230,15 @@ function HomePageContent() {
           
           console.log(`✅ Filtered ${saleProperties.length} sale properties for homepage (excluded ${linearProperties.length - saleProperties.length} rentals)`);
           
+          // 💎 SORT BY PRICE: Most expensive first (Premium branding)
+          saleProperties.sort((a, b) => {
+            const priceA = a.salesPrice?.fi?.value || 0;
+            const priceB = b.salesPrice?.fi?.value || 0;
+            return priceB - priceA; // Descending order (highest first)
+          });
+          
+          console.log(`💎 Sorted ${saleProperties.length} properties by price (highest first)`);
+          
           // Transform Linear API format to WordPress format for PropertyCard compatibility
           const transformedProperties = saleProperties.map(listing => {
             const converted = convertCompleteLinearToWordPressFormat(listing);
