@@ -450,7 +450,6 @@ export function mapLinearAPIToProperty(
     energyClass: (nv as any)?.energyClass || data.energyClass?.fi?.value || '',
     energyCertificate: (nv as any)?.listingHasEnergyCertificate ?? false,
     energyCertificateUrl: data.energyCertificateUrl || '',
-    listingHasEnergyCertificate: extractLocalizedString(data.listingHasEnergyCertificate),
 
     // ========================================================================
     // 2. DIMENSIONS AND USAGE
@@ -464,6 +463,7 @@ export function mapLinearAPIToProperty(
     siteOwnershipType: extractLocalizedString(data.plotOwnership),
     zoningSituation: extractLocalizedString(data.zoningSituation),
     zoningDetails: {}, // Not directly available
+    propertyBuildingRights: extractLocalizedString(data.propertyBuildingRights || data.buildingRights),
 
     // ========================================================================
     // 3. FINANCIAL DATA
@@ -502,7 +502,7 @@ export function mapLinearAPIToProperty(
     ownershipStatus: extractLocalizedString(data.ownershipType),
     numberOfShares: data.shareNumbers?.fi?.value || '',
     redemptionClauseFlats: data.housingCompanyRedemptionRight?.fi?.value === 'true' || false,
-    partnerRedemptionRight: data.partnerRedemptionRight?.fi?.value === 'true' || false,
+    partnerRedemptionRight: extractLocalizedString(data.partnerRedemptionRight),
     redemptionClauseParking: false, // Not directly available
     companyLoans: parseEuroNumber(data.housingCompanyMortgage?.fi?.value),
     housingCompanyMortgageDate: extractLocalizedString(data.housingCompanyMortgageDate),
@@ -573,12 +573,6 @@ export function mapLinearAPIToProperty(
     internationalBrochureUrl: data.internationalBrochureUrl || '',
     internationalUrl: data.internationalUrl || '',
     videoUrl: data.videoUrl || '',
-
-    // ========================================================================
-    // 6.7 FASTIGHET-SPECIFIC FIELDS
-    // ========================================================================
-    propertyBuildingRights: extractLocalizedString(data.propertyBuildingRights),
-    siteOwnershipType: extractLocalizedString(data.siteOwnershipType || data.plotOwnership),
     
     // ========================================================================
     // 6.8 RENTAL-SPECIFIC FIELDS (HYRESOBJEKT)

@@ -251,6 +251,13 @@ export interface MultilingualPropertyListing {
    */
   energyCertificate: boolean;
 
+  /**
+   * Energy certificate URL
+   * FI: Energiatodistuksen URL-osoite
+   * SV: Energicertifikat URL
+   */
+  energyCertificateUrl?: string;
+
   // ============================================================================
   // 2. DIMENSIONS AND USAGE / MITAT JA KÄYTTÖ / DIMENSIONER OCH ANVÄNDNING
   // ============================================================================
@@ -320,6 +327,13 @@ export interface MultilingualPropertyListing {
    */
   zoningDetails: LocalizedString;
 
+  /**
+   * Building rights (m²)
+   * FI: Rakennusoikeus (m²)
+   * SV: Byggnadsrätt (m²)
+   */
+  propertyBuildingRights?: LocalizedString;
+
   // ============================================================================
   // 3. FINANCIAL DATA / TALOUDELLISET TIEDOT / EKONOMISK INFORMATION
   // ============================================================================
@@ -388,6 +402,20 @@ export interface MultilingualPropertyListing {
   waterFee: number;
 
   /**
+   * Mandatory charges in EUR
+   * FI: Pakolliset maksut euroina
+   * SV: Obligatoriska avgifter i euro
+   */
+  mandatoryCharges?: number;
+
+  /**
+   * Funding charge in EUR
+   * FI: Rahoitusvastike euroina
+   * SV: Finansieringsavgift i euro
+   */
+  fundingCharge?: number;
+
+  /**
    * Electricity cost in EUR
    * FI: Sähkökustannus euroina
    * SV: Elkostnad i euro
@@ -430,6 +458,52 @@ export interface MultilingualPropertyListing {
   paymentMethod: LocalizedString;
 
   // ============================================================================
+  // 3.5 RENTAL-SPECIFIC FIELDS / VUOKRAKOHTEET / HYRESOBJEKT
+  // ============================================================================
+
+  /**
+   * Monthly rent in EUR
+   * FI: Kuukausivuokra euroina
+   * SV: Månadshyra i euro
+   */
+  rent?: number;
+
+  /**
+   * Security deposit type
+   * FI: Vakuuden tyyppi
+   * SV: Depositionstyp
+   */
+  securityDepositType?: LocalizedString;
+
+  /**
+   * Rental contract type
+   * FI: Vuokrasopimuksen tyyppi
+   * SV: Hyresavtalstyp
+   */
+  rentalContractType?: LocalizedString;
+
+  /**
+   * Earliest termination date
+   * FI: Aikaisin irtisanomispäivä
+   * SV: Tidigaste uppsägningsdatum
+   */
+  earliestTerminateDate?: LocalizedString;
+
+  /**
+   * Pets allowed
+   * FI: Lemmikit sallittu
+   * SV: Husdjur tillåtna
+   */
+  petsAllowed?: boolean;
+
+  /**
+   * Smoking allowed
+   * FI: Tupakointi sallittu
+   * SV: Rökning tillåten
+   */
+  smokingAllowed?: boolean;
+
+  // ============================================================================
   // 4. COMPANY / MANAGEMENT / YHTIÖ / HALLINTA / FÖRETAG / FÖRVALTNING
   // ============================================================================
 
@@ -439,6 +513,83 @@ export interface MultilingualPropertyListing {
    * SV: Bostadsbolagets namn
    */
   housingCompanyName: string;
+
+  /**
+   * Housing company home city
+   * FI: Yhtiön kotipaikka
+   * SV: Bolagets hemort
+   */
+  housingCompanyHomeCity?: LocalizedString;
+
+  /**
+   * Number of apartments in housing company
+   * FI: Asuntojen lukumäärä
+   * SV: Antal bostäder
+   */
+  housingCompanyApartmentCount?: LocalizedString;
+
+  /**
+   * Number of business spaces in housing company
+   * FI: Liiketilojen lukumäärä
+   * SV: Antal affärslokaler
+   */
+  housingCompanyBusinessSpaceCount?: LocalizedString;
+
+  /**
+   * Housing company mortgage
+   * FI: Yhtiölaina
+   * SV: Bolagslån
+   */
+  housingCompanyMortgage?: number;
+
+  /**
+   * Housing company mortgage date
+   * FI: Yhtiölainan päivämäärä
+   * SV: Bolagslånets datum
+   */
+  housingCompanyMortgageDate?: LocalizedString;
+
+  /**
+   * Housing company revenue
+   * FI: Yhtiön tulot
+   * SV: Bolagets intäkter
+   */
+  housingCompanyRevenue?: number;
+
+  /**
+   * Housing company upcoming renovations
+   * FI: Tulevat remontit
+   * SV: Kommande renoveringar
+   */
+  housingCompanyUpcomingRenovations?: LocalizedString;
+
+  /**
+   * Housing company redemption right
+   * FI: Yhtiön lunastusoikeus
+   * SV: Bolagets inlösenrätt
+   */
+  housingCompanyRedemptionRight?: LocalizedString;
+
+  /**
+   * Partner redemption right
+   * FI: Osakaslunastuslauseke
+   * SV: Andelsägarens inlösenklausul
+   */
+  partnerRedemptionRight?: LocalizedString;
+
+  /**
+   * Report on maintenance needs year
+   * FI: Kunnossapitotarveselvitys vuosi
+   * SV: Underhållsbehovsutredning år
+   */
+  reportOnMaintenanceNeedsYear?: LocalizedString;
+
+  /**
+   * Property manager office
+   * FI: Isännöitsijätoimisto
+   * SV: Förvaltningskontor
+   */
+  propertyManagerOffice?: LocalizedString;
 
   /**
    * Business ID (Y-tunnus)
@@ -786,6 +937,27 @@ export interface MultilingualPropertyListing {
    * SV: Fastighetsmäklarens PDF-URL
    */
   brochureUrl: string;
+
+  /**
+   * International brochure PDF URL
+   * FI: Kansainvälinen esite PDF URL-osoite
+   * SV: Internationell broschyr PDF-URL
+   */
+  internationalBrochureUrl?: string;
+
+  /**
+   * International listing URL (e.g., Sotheby's International)
+   * FI: Kansainvälinen listaus URL-osoite
+   * SV: Internationell listnings-URL
+   */
+  internationalUrl?: string;
+
+  /**
+   * Property video URL (YouTube, Vimeo, etc.)
+   * FI: Kiinteistön video URL-osoite
+   * SV: Fastighetsvideo-URL
+   */
+  videoUrl?: string;
 
   // ============================================================================
   // 7. METADATA / METATIEDOT / METADATA
