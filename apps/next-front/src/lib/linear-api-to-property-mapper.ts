@@ -485,7 +485,27 @@ export function mapLinearAPIToProperty(
     volume: parseEuroNumber(nv.volume || data.volume?.fi?.value),
     numberOfApartments: 0, // Not directly available in Linear API
     businessSpaces: {}, // Not directly available
-    siteArea: parseEuroNumber(nv.plotArea || data.plotArea?.fi?.value),
+    siteArea: (() => {
+      // CRITICAL: Handle plot area with unit conversion (ha → m²)
+      // Linear API sends plotArea in either m² or ha, with lotAreaUnit specifying the unit
+      const plotAreaValue = parseEuroNumber(nv.plotArea || nv.lotArea || data.plotArea?.fi?.value || data.lotArea?.fi?.value);
+      const unit = (nv as any)?.lotAreaUnit || '';
+      
+      // If unit is 'ha' (hektar), convert to m² (1 ha = 10,000 m²)
+      if (unit.toLowerCase() === 'ha' && plotAreaValue > 0) {
+        const convertedArea = plotAreaValue * 10000;
+        console.log('✅ Converted plot area from ha to m²:', { 
+          address: extractLocalizedString(data.address).fi,
+          originalValue: plotAreaValue,
+          unit: 'ha',
+          convertedValue: convertedArea,
+          convertedUnit: 'm²'
+        });
+        return convertedArea;
+      }
+      
+      return plotAreaValue;
+    })(),
     siteOwnershipType: extractLocalizedString(data.plotOwnership),
     zoningSituation: extractLocalizedString(data.zoningSituation),
     zoningDetails: {}, // Not directly available

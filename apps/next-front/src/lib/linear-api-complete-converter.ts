@@ -196,15 +196,34 @@ export function convertCompleteLinearToWordPressFormat(listing: CompleteLinearAP
   
   // Lot information
   // CRITICAL: Use nonLocalizedValues for numeric fields (plotArea) for accuracy
-  const lotArea = listing.nonLocalizedValues?.plotArea || extractLocalizedValue(listing.lotArea) || null;
+  // Handle unit conversion: ha → m² (1 ha = 10,000 m²)
+  let lotArea = listing.nonLocalizedValues?.plotArea || listing.nonLocalizedValues?.lotArea || extractLocalizedValue(listing.lotArea) || null;
+  const lotAreaUnit = listing.nonLocalizedValues?.lotAreaUnit || '';
+  
+  // Convert from hectares to square meters if needed
+  if (lotArea && lotAreaUnit.toLowerCase() === 'ha') {
+    const originalValue = parseFloat(lotArea);
+    if (!isNaN(originalValue)) {
+      lotArea = (originalValue * 10000).toString();
+      console.log('✅ Converted plot area from ha to m²:', { 
+        address, 
+        originalValue, 
+        unit: 'ha', 
+        convertedValue: lotArea, 
+        convertedUnit: 'm²' 
+      });
+    }
+  }
   
   // Debug logging for Mailatie 3
   if (address && address.toLowerCase().includes('mailatie')) {
     console.log('🏠 Mailatie plot data:', {
       address,
       'nonLocalizedValues.plotArea': listing.nonLocalizedValues?.plotArea,
+      'nonLocalizedValues.lotArea': listing.nonLocalizedValues?.lotArea,
+      'nonLocalizedValues.lotAreaUnit': listing.nonLocalizedValues?.lotAreaUnit,
       'listing.lotArea': listing.lotArea,
-      'extracted lotArea': lotArea
+      'extracted/converted lotArea': lotArea
     });
   }
   
