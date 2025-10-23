@@ -491,11 +491,26 @@ export function mapLinearAPIToProperty(
       const plotAreaValue = parseEuroNumber(nv.plotArea || nv.lotArea || data.plotArea?.fi?.value || data.lotArea?.fi?.value);
       const unit = (nv as any)?.lotAreaUnit || '';
       
+      // Debug logging for ALL properties (temporarily)
+      const addr = extractLocalizedString(data.address).fi;
+      if (addr) {
+        console.log('🔍 Plot area debug:', {
+          address: addr,
+          'nv.plotArea': nv.plotArea,
+          'nv.lotArea': nv.lotArea,
+          'nv.lotAreaUnit': (nv as any)?.lotAreaUnit,
+          'data.plotArea': data.plotArea,
+          'data.lotArea': data.lotArea,
+          'parsed plotAreaValue': plotAreaValue,
+          'unit': unit
+        });
+      }
+      
       // If unit is 'ha' (hektar), convert to m² (1 ha = 10,000 m²)
       if (unit.toLowerCase() === 'ha' && plotAreaValue > 0) {
         const convertedArea = plotAreaValue * 10000;
         console.log('✅ Converted plot area from ha to m²:', { 
-          address: extractLocalizedString(data.address).fi,
+          address: addr,
           originalValue: plotAreaValue,
           unit: 'ha',
           convertedValue: convertedArea,
