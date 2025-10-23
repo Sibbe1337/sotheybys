@@ -153,35 +153,106 @@ export default function SwedishPropertyPage({ params }: PropertyPageProps) {
       {/* Property Details */}
       <section className="bg-gray-50 py-12">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            {property.livingArea > 0 && (
-              <div>
-                <h3 className="text-3xl font-bold text-[#002349]">
-                  {formatAreaLocalized(property.livingArea, language)}
-                </h3>
-                <p className="text-sm text-gray-600 mt-2">BOAREA</p>
-              </div>
-            )}
-            {property.salesPrice > 0 && (
-              <div>
-                <h3 className="text-3xl font-bold text-[#002349]">
-                  {formatPriceLocalized(property.salesPrice, language)}
-                </h3>
-                <p className="text-sm text-gray-600 mt-2">FÖRSÄLJNINGSPRIS</p>
-              </div>
-            )}
-            {city && (
-              <div>
-                <h3 className="text-3xl font-bold text-[#002349]">{city}</h3>
-                <p className="text-sm text-gray-600 mt-2">STADSDEL</p>
-              </div>
-            )}
-            {property.energyClass && (
-              <div>
-                <h3 className="text-3xl font-bold text-[#002349]">{property.energyClass}</h3>
-                <p className="text-sm text-gray-600 mt-2">ENERGIKLASS</p>
-              </div>
-            )}
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
+            {(() => {
+              // Fastighet-detektion (samma logik som i /property/[slug]/page.tsx)
+              const typeOfApartmentStr = ((property as any).typeOfApartment || '').toLowerCase();
+              const propertyTypeStr = ((property as any).propertyType || '').toLowerCase();
+              const hasPlot = (property as any).siteArea > 0 || (property as any).plotArea > 0 || (property as any).lotArea > 0;
+              
+              const isFastighet =
+                /kiinteist[öo]/i.test(typeOfApartmentStr) ||
+                /villa|hus|fastighet|omakotitalo|egendom|egnahemshus|radhus|parhus/i.test(propertyTypeStr) ||
+                hasPlot;
+              
+              if (isFastighet) {
+                // FASTIGHET: Bostadsyta | Total yta | Pris | Stadsdel | Tomtstorlek
+                return (
+                  <>
+                    {property.livingArea > 0 && (
+                      <div>
+                        <h3 className="text-3xl font-bold text-[#002349]">
+                          {formatAreaLocalized(property.livingArea, language)}
+                        </h3>
+                        <p className="text-sm text-gray-600 mt-2">BOSTADSYTA</p>
+                      </div>
+                    )}
+                    {(property as any).overallArea > 0 && (
+                      <div>
+                        <h3 className="text-3xl font-bold text-[#002349]">
+                          {formatAreaLocalized((property as any).overallArea, language)}
+                        </h3>
+                        <p className="text-sm text-gray-600 mt-2">TOTAL YTA</p>
+                      </div>
+                    )}
+                    {property.salesPrice > 0 && (
+                      <div>
+                        <h3 className="text-3xl font-bold text-[#002349]">
+                          {formatPriceLocalized(property.salesPrice, language)}
+                        </h3>
+                        <p className="text-sm text-gray-600 mt-2">PRIS</p>
+                      </div>
+                    )}
+                    {city && (
+                      <div>
+                        <h3 className="text-3xl font-bold text-[#002349]">{city}</h3>
+                        <p className="text-sm text-gray-600 mt-2">STADSDEL</p>
+                      </div>
+                    )}
+                    {((property as any).siteArea > 0 || (property as any).plotArea > 0) && (
+                      <div>
+                        <h3 className="text-3xl font-bold text-[#002349]">
+                          {formatAreaLocalized((property as any).siteArea || (property as any).plotArea, language)}
+                        </h3>
+                        <p className="text-sm text-gray-600 mt-2">TOMTSTORLEK</p>
+                      </div>
+                    )}
+                  </>
+                );
+              } else {
+                // LÄGENHET: Bostadsyta | Pris | Skuldfritt pris | Stadsdel | Byggnadsår
+                return (
+                  <>
+                    {property.livingArea > 0 && (
+                      <div>
+                        <h3 className="text-3xl font-bold text-[#002349]">
+                          {formatAreaLocalized(property.livingArea, language)}
+                        </h3>
+                        <p className="text-sm text-gray-600 mt-2">BOSTADSYTA</p>
+                      </div>
+                    )}
+                    {property.salesPrice > 0 && (
+                      <div>
+                        <h3 className="text-3xl font-bold text-[#002349]">
+                          {formatPriceLocalized(property.salesPrice, language)}
+                        </h3>
+                        <p className="text-sm text-gray-600 mt-2">PRIS</p>
+                      </div>
+                    )}
+                    {(property as any).debtFreePrice > 0 && (
+                      <div>
+                        <h3 className="text-3xl font-bold text-[#002349]">
+                          {formatPriceLocalized((property as any).debtFreePrice, language)}
+                        </h3>
+                        <p className="text-sm text-gray-600 mt-2">SKULDFRITT PRIS</p>
+                      </div>
+                    )}
+                    {city && (
+                      <div>
+                        <h3 className="text-3xl font-bold text-[#002349]">{city}</h3>
+                        <p className="text-sm text-gray-600 mt-2">STADSDEL</p>
+                      </div>
+                    )}
+                    {(property as any).yearBuilt > 0 && (
+                      <div>
+                        <h3 className="text-3xl font-bold text-[#002349]">{(property as any).yearBuilt}</h3>
+                        <p className="text-sm text-gray-600 mt-2">BYGGNADSÅR</p>
+                      </div>
+                    )}
+                  </>
+                );
+              }
+            })()}
           </div>
         </div>
       </section>

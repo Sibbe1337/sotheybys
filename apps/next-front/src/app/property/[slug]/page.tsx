@@ -43,19 +43,16 @@ function formatSiteArea(v?: number) {
 function getHeroItems(propertyData: any, language: 'fi' | 'sv' | 'en'): HeroItem[] {
   // Förbättrad fastighet-detektion
   const propertyTypeStr = (propertyData?.propertyType || '').toLowerCase();
-  const apartmentTypeStr = (propertyData?.apartmentType || '').toLowerCase();
-  const estateTypeStr = (propertyData?.estateType || '').toLowerCase();
-  const hasPlot = gt0(propertyData?.siteArea) || gt0(propertyData?.plotArea);
+  const typeOfApartmentStr = (propertyData?.typeOfApartment || '').toLowerCase();
+  const hasPlot = gt0(propertyData?.siteArea) || gt0(propertyData?.plotArea) || gt0(propertyData?.lotArea);
   
   // En fastighet är:
-  // 1. Har estateType = "KIINTEISTO" eller "Kiinteistö"
-  // 2. Har apartmentType som innehåller "kiinteistö"
-  // 3. Har propertyType som innehåller villa/hus/fastighet/omakotitalo etc
-  // 4. Har tomtstorlek (plotArea/siteArea > 0)
+  // 1. Har typeOfApartment som innehåller "kiinteistö" (från Linear API)
+  // 2. Har propertyType som innehåller villa/hus/fastighet/omakotitalo etc
+  // 3. Har tomtstorlek (plotArea/siteArea/lotArea > 0)
   const isFastighet =
-    /kiinteist[öo]/i.test(estateTypeStr) ||
-    /kiinteist[öo]/i.test(apartmentTypeStr) ||
-    /villa|hus|fastighet|omakotitalo|egendom|egnahemshus|radhus|parhus|kerrosta/i.test(propertyTypeStr) ||
+    /kiinteist[öo]/i.test(typeOfApartmentStr) ||
+    /villa|hus|fastighet|omakotitalo|egendom|egnahemshus|radhus|parhus/i.test(propertyTypeStr) ||
     hasPlot;
   
   // Debug logging för att förstå vilken typ av objekt det är
@@ -63,13 +60,12 @@ function getHeroItems(propertyData: any, language: 'fi' | 'sv' | 'en'): HeroItem
     address: propertyData?.address,
     isFastighet,
     propertyType: propertyData?.propertyType,
-    apartmentType: propertyData?.apartmentType,
-    estateType: propertyData?.estateType,
+    typeOfApartment: propertyData?.typeOfApartment,
     propertyTypeStr,
-    apartmentTypeStr,
-    estateTypeStr,
+    typeOfApartmentStr,
     siteArea: propertyData?.siteArea,
     plotArea: propertyData?.plotArea,
+    lotArea: propertyData?.lotArea,
     hasPlot
   });
 
