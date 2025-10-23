@@ -928,22 +928,17 @@ export default function PropertyPage({ params }: PropertyPageProps) {
               )}
               
               {/* PUNKT 4: Typ av objekt (Radhus, Höghus, Egnahemshus) | Rumsantal (5-6h, k, wc...) */}
-              <div className="flex flex-wrap justify-center gap-4 text-base text-gray-600 font-medium mt-4">
-                {/* Typ av objekt */}
+              <div className="flex flex-wrap justify-center gap-2 text-base text-gray-900 font-medium mt-4">
+                {/* Typ av objekt - UTAN "Typ av objekt:" prefix, bara värdet */}
                 {(propertyData.propertyType || propertyData.apartmentType || propertyData.estateType) && (
-                  <span>
-                    <span className="text-gray-500">
-                      {language === 'sv' ? 'Typ av objekt: ' : language === 'en' ? 'Property type: ' : 'Kohteen tyyppi: '}
-                    </span>
-                    <span className="text-gray-900">
-                      {propertyData.propertyType || propertyData.apartmentType || propertyData.estateType}
-                    </span>
+                  <span className="text-gray-900">
+                    {propertyData.propertyType || propertyData.apartmentType || propertyData.estateType}
                   </span>
                 )}
                 
                 {/* Separator om båda finns */}
                 {(propertyData.propertyType || propertyData.apartmentType || propertyData.estateType) && propertyData.rooms && (
-                  <span className="text-gray-400">|</span>
+                  <span className="text-gray-400 mx-1">|</span>
                 )}
                 
                 {/* Rumsantal (5-6h, k, wc, vh, sauna...) */}
@@ -1344,7 +1339,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                       </div>
                     )}
                     {/* Bostäder (antal) */}
-                    {propertyData.housingCompanyApartmentCount && (
+                    {propertyData.housingCompanyApartmentCount != null && propertyData.housingCompanyApartmentCount > 0 && (
                       <div className="flex justify-between py-2 border-b">
                         <span className="text-gray-600">{getTranslation('housingCompanyApartmentCount', language)}</span>
                         <span className="font-semibold">{propertyData.housingCompanyApartmentCount}</span>
@@ -1394,14 +1389,14 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                         </div>
                       )}
                       {/* Antal lägenheter */}
-                      {propertyData.housingCompanyApartmentCount && (
+                      {propertyData.housingCompanyApartmentCount != null && propertyData.housingCompanyApartmentCount > 0 && (
                         <div className="flex justify-between py-2 border-b">
                           <span className="text-gray-600">{getTranslation('housingCompanyApartmentCount', language)}</span>
                           <span className="font-semibold">{propertyData.housingCompanyApartmentCount}</span>
                         </div>
                       )}
                       {/* Antal affärslokaler */}
-                      {propertyData.housingCompanyBusinessSpaceCount && (
+                      {propertyData.housingCompanyBusinessSpaceCount != null && propertyData.housingCompanyBusinessSpaceCount > 0 && (
                         <div className="flex justify-between py-2 border-b">
                           <span className="text-gray-600">{getTranslation('housingCompanyBusinessSpaceCount', language)}</span>
                           <span className="font-semibold">{propertyData.housingCompanyBusinessSpaceCount}</span>

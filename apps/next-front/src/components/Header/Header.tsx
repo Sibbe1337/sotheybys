@@ -163,6 +163,11 @@ export default function Header({ menuItems }: HeaderProps) {
     const checkOrientation = () => {
       const isLandscapeMode = window.innerWidth > window.innerHeight && window.innerWidth < 1024;
       setIsLandscape(isLandscapeMode);
+      
+      // Stäng mobilmenyn automatiskt i landscape för att inte täcka skärmen
+      if (isLandscapeMode && isMobileMenuOpen) {
+        setIsMobileMenuOpen(false);
+      }
     };
     
     checkOrientation();
@@ -173,7 +178,7 @@ export default function Header({ menuItems }: HeaderProps) {
       window.removeEventListener('resize', checkOrientation);
       window.removeEventListener('orientationchange', checkOrientation);
     };
-  }, []);
+  }, [isMobileMenuOpen]);
 
   return (
     <header className={`sticky top-0 z-50 bg-[var(--color-primary)] text-white transition-all duration-300 ${
@@ -234,7 +239,7 @@ export default function Header({ menuItems }: HeaderProps) {
       {/* MAIN HEADER BAR - RAD 2 (Logo + Navigation) - Komprimera på mobil när scrollad ELLER landscape */}
       <div className="max-w-[1400px] mx-auto px-6">
         <div className={`flex items-center justify-between transition-all duration-300 ${
-          isScrolled || isLandscape ? 'py-1 md:py-4' : 'py-4'
+          isLandscape ? 'py-0.5' : isScrolled ? 'py-1 md:py-4' : 'py-4'
         }`}>
           {/* Logo - Mycket mindre på mobil landscape */}
           <LocaleLink 
@@ -245,9 +250,9 @@ export default function Header({ menuItems }: HeaderProps) {
             <Image
               src="/images/logos/logo-white.png"
               alt="Snellman Sotheby's International Realty"
-              width={isLandscape ? 200 : isScrolled ? 280 : 350}
-              height={isLandscape ? 60 : isScrolled ? 84 : 105}
-              className="h-16 w-auto"
+              width={isLandscape ? 150 : isScrolled ? 280 : 350}
+              height={isLandscape ? 45 : isScrolled ? 84 : 105}
+              className={isLandscape ? 'h-10 w-auto' : 'h-16 w-auto'}
               priority
               quality={100}
             />
@@ -306,14 +311,14 @@ export default function Header({ menuItems }: HeaderProps) {
             </ul>
           </nav>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button - Mindre i landscape */}
           <button 
-            className="lg:hidden p-2 text-white"
+            className={`lg:hidden text-white ${isLandscape ? 'p-1' : 'p-2'}`}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
             <svg 
-              className="w-6 h-6" 
+              className={isLandscape ? 'w-5 h-5' : 'w-6 h-6'}
               fill="none" 
               stroke="currentColor" 
               viewBox="0 0 24 24"
@@ -328,10 +333,12 @@ export default function Header({ menuItems }: HeaderProps) {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Max-höjd och scroll i landscape */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden bg-[var(--color-primary)] border-t border-white/10">
-          <nav className="max-w-[1400px] mx-auto px-6 py-4">
+        <div className={`lg:hidden bg-[var(--color-primary)] border-t border-white/10 ${
+          isLandscape ? 'max-h-[50vh] overflow-y-auto' : ''
+        }`}>
+          <nav className={`max-w-[1400px] mx-auto px-6 ${isLandscape ? 'py-2' : 'py-4'}`}>
             {/* Mobile Navigation */}
             {items.map((item) => {
               const isActive = pathname === item.path;
