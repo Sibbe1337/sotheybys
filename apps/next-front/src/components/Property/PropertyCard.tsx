@@ -110,22 +110,42 @@ export default function PropertyCard({
 
       <div className="p-4">
         {/* Price or Rent */}
-        {property?.rent && !isNaN(parseInt(property.rent)) && parseInt(property.rent) > 0 ? (
-          // Rental property - show monthly rent (säkerställ att det är ett giltigt nummer)
-          <Price className="text-2xl mb-2" block>
-            {formatPrice(parseInt(property.rent))} / {getHomepageTranslation('month', language)}
-          </Price>
-        ) : property?.debtFreePrice ? (
+        {(() => {
+          // Check if it's a rental property
+          if (property?.rent) {
+            // Extract number from rent string (e.g., "3 €/kk" -> 3, "1500" -> 1500)
+            const rentMatch = property.rent.toString().match(/\d+/);
+            const rentAmount = rentMatch ? parseInt(rentMatch[0]) : 0;
+            
+            if (rentAmount > 0) {
+              return (
+                <Price className="text-2xl mb-2" block>
+                  {formatPrice(rentAmount)} / {getHomepageTranslation('month', language)}
+                </Price>
+              );
+            }
+          }
+          
           // Sale property - show DEBT-FREE price (skuldfritt pris) - PRIORITET
-          <Price className="text-2xl mb-2" block>
-            {formatPrice(property.debtFreePrice)}
-          </Price>
-        ) : property?.price ? (
+          if (property?.debtFreePrice) {
+            return (
+              <Price className="text-2xl mb-2" block>
+                {formatPrice(property.debtFreePrice)}
+              </Price>
+            );
+          }
+          
           // Fallback to regular price if debtFreePrice is missing
-          <Price className="text-2xl mb-2" block>
-            {formatPrice(property.price)}
-          </Price>
-        ) : null}
+          if (property?.price) {
+            return (
+              <Price className="text-2xl mb-2" block>
+                {formatPrice(property.price)}
+              </Price>
+            );
+          }
+          
+          return null;
+        })()}
 
         {/* Title */}
         <h3 className="text-lg font-semibold text-[var(--color-primary)] mb-2">
@@ -148,31 +168,45 @@ export default function PropertyCard({
           )}
         </div>
 
-        {/* Property Details - More comprehensive info */}
-        <div className="space-y-2 mb-3">
-          {/* Row 1: Living Area, Rooms */}
-          <div className="flex items-center gap-4 text-sm text-gray-700">
+        {/* Property Details - More comprehensive info with better mobile layout */}
+        <div className="space-y-3 mb-4">
+          {/* Row 1: Living Area & Rooms - Always visible */}
+          <div className="flex flex-wrap items-center gap-3 sm:gap-4">
             {property?.area && (
-              <div className="flex items-center gap-1">
-                <span className="font-semibold">{property.area}</span>
-                <span className="text-gray-500">m²</span>
+              <div className="flex items-center gap-1.5 bg-gray-50 px-3 py-1.5 rounded-md">
+                <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                </svg>
+                <span className="font-semibold text-gray-900">{property.area}</span>
+                <span className="text-gray-600 text-sm">m²</span>
               </div>
             )}
             {property?.bedrooms && (
-              <div className="flex items-center gap-1">
-                <span className="font-semibold">{property.bedrooms}</span>
-                <span className="text-gray-500">{getHomepageTranslation('rooms', language)}</span>
+              <div className="flex items-center gap-1.5 bg-gray-50 px-3 py-1.5 rounded-md">
+                <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span className="font-semibold text-gray-900">{property.bedrooms}</span>
+                <span className="text-gray-600 text-sm">{getHomepageTranslation('rooms', language)}</span>
               </div>
             )}
           </div>
 
-          {/* Row 2: Property Type, Location */}
-          <div className="flex items-center gap-4 text-sm">
+          {/* Row 2: Additional info - Better mobile wrapping */}
+          <div className="flex flex-wrap items-center gap-2 text-sm">
             {property?.propertyType && (
-              <span className="text-gray-600">{property.propertyType}</span>
+              <span className="inline-flex items-center px-2.5 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-medium">
+                {property.propertyType}
+              </span>
             )}
             {property?.city && (
-              <span className="text-gray-600">{property.city}</span>
+              <span className="inline-flex items-center gap-1 text-gray-600">
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                {property.city}
+              </span>
             )}
           </div>
         </div>

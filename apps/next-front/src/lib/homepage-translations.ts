@@ -145,6 +145,11 @@ export const HOMEPAGE_TRANSLATIONS: HomepageTranslations = {
     sv: 'br',
     en: 'ba'
   },
+  rooms: {
+    fi: 'huonetta',
+    sv: 'rum',
+    en: 'rooms'
+  },
   month: {
     fi: 'kk',
     sv: 'mån',
