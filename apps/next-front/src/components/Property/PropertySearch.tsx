@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react';
 import Image from 'next/image';
 import PropertyGrid from './PropertyGrid';
+import PropertyMap from './PropertyMap';
 
 interface PropertySearchProps {
   properties: any[];
@@ -281,7 +282,70 @@ export default function PropertySearch({ properties, language }: PropertySearchP
       <section className="py-12 lg:py-20 bg-white">
         <div className="max-w-[1400px] mx-auto px-6">
           {filteredProperties.length > 0 ? (
-            <PropertyGrid properties={filteredProperties} language={language} />
+            <>
+              {/* Grid View */}
+              {viewMode === 'grid' && (
+                <PropertyGrid properties={filteredProperties} language={language} />
+              )}
+
+              {/* List View */}
+              {viewMode === 'list' && (
+                <div className="space-y-6">
+                  {filteredProperties.map((property: any) => {
+                    const price = property.debtFreePrice || property.price || 
+                                  property.acfRealEstate?.property?.debtFreePrice || 
+                                  property.acfRealEstate?.property?.price || 0;
+                    const area = property.livingArea || property.area || 
+                                 property.acfRealEstate?.property?.area || '';
+                    const address = property.address || property.acfRealEstate?.property?.address || '';
+                    const city = property.city || property.acfRealEstate?.property?.city || '';
+                    const propertyType = property.propertyType || property.acfRealEstate?.property?.propertyType || '';
+                    const image = property.featuredImage?.node?.sourceUrl || 
+                                  property.acfRealEstate?.property?.images?.[0]?.sourceUrl ||
+                                  '/images/defaults/property-placeholder.jpg';
+
+                    return (
+                      <div key={property.id} className="flex gap-6 bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+                        <div className="relative w-80 h-64 flex-shrink-0">
+                          <Image
+                            src={image}
+                            alt={address}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                        <div className="flex-1 p-6 flex flex-col justify-between">
+                          <div>
+                            <h3 className="text-2xl font-light text-gray-900 mb-2">{address}</h3>
+                            <p className="text-gray-600 mb-4">{city}</p>
+                            <div className="flex gap-6 text-sm text-gray-600 mb-4">
+                              {area && <span>{area} m²</span>}
+                              {propertyType && <span>{propertyType}</span>}
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <p className="text-3xl font-light text-[var(--color-primary)]">
+                              {price > 0 ? `${price.toLocaleString('fi-FI')} €` : ''}
+                            </p>
+                            <a
+                              href={`/${language}/property/${property.slug}`}
+                              className="px-6 py-3 bg-[var(--color-primary)] text-white rounded hover:bg-[var(--color-primary-dark)] transition-colors"
+                            >
+                              {language === 'fi' ? 'Katso kohde' : language === 'sv' ? 'Se objekt' : 'View property'}
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
+              {/* Map View */}
+              {viewMode === 'map' && (
+                <PropertyMap properties={filteredProperties} language={language} />
+              )}
+            </>
           ) : (
             <div className="text-center py-20">
               <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gray-100 mb-6">
