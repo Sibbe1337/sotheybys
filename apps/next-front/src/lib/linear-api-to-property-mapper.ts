@@ -245,12 +245,62 @@ export interface LinearAPIListing {
   floorPlanUrl?: string;
   brochureUrl?: string;
   videoUrl?: string;
+  internationalBrochureUrl?: string;
   
   // Agent
   realtor: LinearAPIRealtor;
   
   // Non-localized actual values
   nonLocalizedValues: LinearAPINonLocalizedValues;
+  
+  // NEW FIELDS - Kundens feedback (PUNKT 5-12)
+  // Energy & Certificates
+  listingHasEnergyCertificate: LinearLocalizedField;
+  energyCertificateUrl?: string;
+  
+  // Housing Company Details (Lägenhet)
+  housingCompanyHomeCity: LinearLocalizedField;
+  housingCompanyApartmentCount: LinearLocalizedField;
+  housingCompanyBusinessSpaceCount: LinearLocalizedField;
+  housingCompanyMortgage: LinearLocalizedField;
+  housingCompanyMortgageDate: LinearLocalizedField;
+  housingCompanyRevenue: LinearLocalizedField;
+  housingCompanyUpcomingRenovations: LinearLocalizedField;
+  housingCompanyRedemptionRight: LinearLocalizedField;
+  partnerRedemptionRight: LinearLocalizedField;
+  reportOnMaintenanceNeedsYear: LinearLocalizedField;
+  
+  // Additional Charges (Lägenhet)
+  waterCharge: LinearLocalizedField;
+  mandatoryCharges: LinearLocalizedField;
+  fundingCharge: LinearLocalizedField;
+  
+  // Property Management
+  propertyManagerName: LinearLocalizedField;
+  propertyManagerOffice: LinearLocalizedField;
+  propertyManagerEmail: LinearLocalizedField;
+  propertyManagerPhone: LinearLocalizedField;
+  
+  // Building Details
+  numberOfFloors: LinearLocalizedField;
+  buildingYear: LinearLocalizedField;
+  
+  // Plot/Property (Fastighet)
+  siteArea: LinearLocalizedField;
+  propertyBuildingRights: LinearLocalizedField;
+  propertyTax: LinearLocalizedField;
+  siteOwnershipType: LinearLocalizedField;
+  
+  // International
+  internationalUrl?: string;
+  
+  // Rental (Hyresobjekt)
+  rent: LinearLocalizedField;
+  securityDepositType: LinearLocalizedField;
+  rentalContractType: LinearLocalizedField;
+  earliestTerminateDate: LinearLocalizedField;
+  petsAllowed: LinearLocalizedField;
+  smokingAllowed: LinearLocalizedField;
   
   // Additional fields (240+ total available)
   [key: string]: any;
@@ -399,6 +449,8 @@ export function mapLinearAPIToProperty(
     buildingMaterial: extractLocalizedString(data.constructionMaterial || data.buildingMaterialFacade),
     energyClass: (nv as any)?.energyClass || data.energyClass?.fi?.value || '',
     energyCertificate: (nv as any)?.listingHasEnergyCertificate ?? false,
+    energyCertificateUrl: data.energyCertificateUrl || '',
+    listingHasEnergyCertificate: extractLocalizedString(data.listingHasEnergyCertificate),
 
     // ========================================================================
     // 2. DIMENSIONS AND USAGE
@@ -425,11 +477,13 @@ export function mapLinearAPIToProperty(
     financingFee: parseEuroNumber(nv.fundingCharge || data.financingCharge?.fi?.value),
     totalFee: (parseEuroNumber(nv.renovationCharge) || 0) + (parseEuroNumber(nv.fundingCharge) || 0),
     rentIncome: 0, // Not directly available
-    waterFee: 0, // Typically included in maintenance fee
+    waterFee: parseEuroNumber(nv.waterCharge || data.waterCharge?.fi?.value),
+    mandatoryCharges: parseEuroNumber(nv.mandatoryCharges || data.mandatoryCharges?.fi?.value),
+    fundingCharge: parseEuroNumber(nv.fundingCharge || data.fundingCharge?.fi?.value),
     electricityCost: parseEuroNumber(nv.electricHeatingCharge),
     heatingCost: parseEuroNumber(nv.averageTotalHeatingCharge),
     cleaningCost: 0, // Not directly available
-    propertyTax: parseEuroNumber(nv.propertyTax),
+    propertyTax: parseEuroNumber(nv.propertyTax || data.propertyTax?.fi?.value),
     otherFees: {}, // Could aggregate parking, sauna, broadband charges
     paymentMethod: {}, // Not directly available
 
@@ -437,25 +491,30 @@ export function mapLinearAPIToProperty(
     // 4. COMPANY / MANAGEMENT
     // ========================================================================
     housingCompanyName: data.housingCompanyName?.fi?.value || '',
+    housingCompanyHomeCity: extractLocalizedString(data.housingCompanyHomeCity),
     businessId: data.businessId?.fi?.value || '',
     managementCompany: data.managementCompany?.fi?.value || '',
     propertyMaintenance: '', // Not directly available
-    managerName: '', // Not directly available
-    managerPhone: '', // Not directly available
-    managerEmail: '', // Not directly available
+    managerName: data.propertyManagerName?.fi?.value || '',
+    managerPhone: data.propertyManagerPhone?.fi?.value || '',
+    managerEmail: data.propertyManagerEmail?.fi?.value || '',
+    propertyManagerOffice: extractLocalizedString(data.propertyManagerOffice),
     ownershipStatus: extractLocalizedString(data.ownershipType),
     numberOfShares: data.shareNumbers?.fi?.value || '',
-    redemptionClauseFlats: false, // Not directly available
+    redemptionClauseFlats: data.housingCompanyRedemptionRight?.fi?.value === 'true' || false,
+    partnerRedemptionRight: data.partnerRedemptionRight?.fi?.value === 'true' || false,
     redemptionClauseParking: false, // Not directly available
-    companyLoans: 0, // Not directly available
-    companyIncome: 0, // Not directly available
+    companyLoans: parseEuroNumber(data.housingCompanyMortgage?.fi?.value),
+    housingCompanyMortgageDate: extractLocalizedString(data.housingCompanyMortgageDate),
+    companyIncome: parseEuroNumber(data.housingCompanyRevenue?.fi?.value),
     constructionYear: nv.completeYear || parseEuroNumber(data.completeYear?.fi?.value),
-    totalApartments: 0, // Not directly available
-    totalBusinessSpaces: 0, // Not directly available
+    totalApartments: parseEuroNumber(data.housingCompanyApartmentCount?.fi?.value),
+    totalBusinessSpaces: parseEuroNumber(data.housingCompanyBusinessSpaceCount?.fi?.value),
     sharedSpaces: {}, // Not directly available
     asbestosSurvey: false, // Not directly available
     repairHistory: {}, // Could use renovation year fields
-    upcomingRepairs: {}, // Not directly available
+    upcomingRepairs: extractLocalizedString(data.housingCompanyUpcomingRenovations),
+    reportOnMaintenanceNeedsYear: extractLocalizedString(data.reportOnMaintenanceNeedsYear),
 
     // ========================================================================
     // 5. TECHNICAL AND ENVIRONMENTAL
@@ -511,6 +570,25 @@ export function mapLinearAPIToProperty(
     })(),
     
     brochureUrl: data.brochureUrl || '',
+    internationalBrochureUrl: data.internationalBrochureUrl || '',
+    internationalUrl: data.internationalUrl || '',
+    videoUrl: data.videoUrl || '',
+
+    // ========================================================================
+    // 6.7 FASTIGHET-SPECIFIC FIELDS
+    // ========================================================================
+    propertyBuildingRights: extractLocalizedString(data.propertyBuildingRights),
+    siteOwnershipType: extractLocalizedString(data.siteOwnershipType || data.plotOwnership),
+    
+    // ========================================================================
+    // 6.8 RENTAL-SPECIFIC FIELDS (HYRESOBJEKT)
+    // ========================================================================
+    rent: parseEuroNumber(nv.rent || data.rent?.fi?.value),
+    securityDepositType: extractLocalizedString(data.securityDepositType),
+    rentalContractType: extractLocalizedString(data.rentalContractType),
+    earliestTerminateDate: extractLocalizedString(data.earliestTerminateDate),
+    petsAllowed: nv.petsAllowed ?? false,
+    smokingAllowed: nv.smokingAllowed ?? false,
 
     // ========================================================================
     // 7. METADATA
