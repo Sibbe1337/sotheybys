@@ -161,10 +161,20 @@ export default function SwedishPropertyPage({ params }: PropertyPageProps) {
               const propertyTypeStr = ((property as any).propertyType || '').toLowerCase();
               const hasPlot = (property as any).siteArea > 0 || (property as any).plotArea > 0 || (property as any).lotArea > 0;
               
+              // FALLBACK: Check if debtFreePrice === salesPrice (indicates no housing company debt → likely a property)
+              const debtFree = (property as any).debtFreePrice || (property as any).unencumberedSalesPrice || 0;
+              const salesPrice = (property as any).salesPrice || (property as any).price || 0;
+              const noDebt = debtFree > 0 && salesPrice > 0 && Math.abs(debtFree - salesPrice) < 100;
+              
+              // FALLBACK 2: Check address pattern - properties often have road names (tie, vägen, katu, etc)
+              const addressStr = ((property as any).address || (property as any).streetAddress || '').toLowerCase();
+              const hasRoadName = /tie|vägen|katu|gatan|väg|road|street/i.test(addressStr);
+              
               const isFastighet =
                 /kiinteist[öo]/i.test(typeOfApartmentStr) ||
                 /villa|hus|fastighet|omakotitalo|egendom|egnahemshus|radhus|parhus/i.test(propertyTypeStr) ||
-                hasPlot;
+                hasPlot ||
+                (noDebt && hasRoadName);
               
               if (isFastighet) {
                 // FASTIGHET: Bostadsyta | Total yta | Pris | Stadsdel | Tomtstorlek

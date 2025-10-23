@@ -47,14 +47,26 @@ function getHeroItems(propertyData: any, language: 'fi' | 'sv' | 'en'): HeroItem
   const typeOfApartmentStr = (propertyData?.typeOfApartment || propertyData?.apartmentType || '').toLowerCase();
   const hasPlot = gt0(propertyData?.siteArea) || gt0(propertyData?.plotArea) || gt0(propertyData?.lotArea);
   
+  // FALLBACK: Check if debtFreePrice === salesPrice (indicates no housing company debt → likely a property)
+  const debtFree = propertyData?.debtFreePrice || propertyData?.unencumberedSalesPrice || 0;
+  const salesPrice = propertyData?.salesPrice || propertyData?.price || 0;
+  const noDebt = debtFree > 0 && salesPrice > 0 && Math.abs(debtFree - salesPrice) < 100;
+  
+  // FALLBACK 2: Check address pattern - properties often have road names (tie, vägen, katu, etc)
+  const addressStr = (propertyData?.address || propertyData?.streetAddress || '').toLowerCase();
+  const hasRoadName = /tie|vägen|katu|gatan|väg|road|street/i.test(addressStr);
+  
   // En fastighet är:
   // 1. Har typeOfApartment/apartmentType som innehåller "kiinteistö" (från Linear API)
   // 2. Har propertyType som innehåller villa/hus/fastighet/omakotitalo etc
   // 3. Har tomtstorlek (plotArea/siteArea/lotArea > 0)
+  // 4. FALLBACK: Skuldfritt pris === försäljningspris (ingen bostadsrättsskuld)
+  // 5. FALLBACK: Adress innehåller vägnamn (tie, vägen, katu, etc)
   const isFastighet =
     /kiinteist[öo]/i.test(typeOfApartmentStr) ||
     /villa|hus|fastighet|omakotitalo|egendom|egnahemshus|radhus|parhus/i.test(propertyTypeStr) ||
-    hasPlot;
+    hasPlot ||
+    (noDebt && hasRoadName);
   
   // Debug logging för att förstå vilken typ av objekt det är
   console.log('🏠 Property type detection:', {
@@ -68,7 +80,12 @@ function getHeroItems(propertyData: any, language: 'fi' | 'sv' | 'en'): HeroItem
     siteArea: propertyData?.siteArea,
     plotArea: propertyData?.plotArea,
     lotArea: propertyData?.lotArea,
-    hasPlot
+    hasPlot,
+    debtFree,
+    salesPrice,
+    noDebt,
+    hasRoadName,
+    fallbackMatch: noDebt && hasRoadName
   });
 
   // Prioritize districtFree (e.g., "Lauttasaari/Drumsö") over city
