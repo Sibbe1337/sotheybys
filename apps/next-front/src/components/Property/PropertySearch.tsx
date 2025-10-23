@@ -30,10 +30,14 @@ const PROPERTY_TYPES = [
     label: { fi: 'Omakotitalot', sv: 'Villor', en: 'Houses' },
     image: '/images/property-types/house.jpg',
     filter: (p: any) => {
-      const type = p.acfRealEstate?.property?.propertyType?.toLowerCase() || '';
-      return type.includes('omakoti') || type.includes('villa') || type.includes('house') || 
-             type.includes('kiinteistö') || type.includes('egnahemshus') || 
-             type.includes('egendom') || type.includes('fastighet');
+      const propertyType = p.acfRealEstate?.property?.propertyType?.toLowerCase() || '';
+      const apartmentType = p.acfRealEstate?.property?.apartmentType?.toLowerCase() || '';
+      const estateType = p.acfRealEstate?.property?.estateType?.toLowerCase() || '';
+      const allTypes = `${propertyType} ${apartmentType} ${estateType}`;
+      
+      return allTypes.includes('omakoti') || allTypes.includes('villa') || allTypes.includes('house') || 
+             allTypes.includes('kiinteistö') || allTypes.includes('egnahemshus') || 
+             allTypes.includes('egendom') || allTypes.includes('fastighet');
     }
   },
   {
