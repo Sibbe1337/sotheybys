@@ -41,14 +41,27 @@ function formatSiteArea(v?: number) {
 }
 
 function getHeroItems(propertyData: any, language: 'fi' | 'sv' | 'en'): HeroItem[] {
-  // Determine if this is a fastighet/kiinteistö
+  // Förbättrad fastighet-detektion
+  const propertyTypeStr = (propertyData?.propertyType || propertyData?.apartmentType || '').toLowerCase();
+  const hasPlot = gt0(propertyData?.siteArea) || gt0(propertyData?.plotArea);
+  
   const isFastighet =
     propertyData?.estateType === 'KIINTEISTO' ||
     propertyData?.apartmentRealEstateType === 'KIINTEISTO' ||
-    (propertyData?.apartmentType && /villa|hus|fastighet|omakotitalo|egendom|egnahemshus/i.test(propertyData.apartmentType)) ||
-    (propertyData?.propertyType && /omakotitalo|fastighet|villa|egendom|egnahemshus/i.test(propertyData.propertyType)) ||
-    (propertyData?.siteArea && parseInt(propertyData.siteArea) > 0) ||
-    (propertyData?.plotArea && parseInt(propertyData.plotArea) > 0);
+    /villa|hus|fastighet|omakotitalo|egendom|egnahemshus|kiinteistö/i.test(propertyTypeStr) ||
+    hasPlot;
+  
+  // Debug logging för att förstå vilken typ av objekt det är
+  console.log('🏠 Property type detection:', {
+    address: propertyData?.address,
+    isFastighet,
+    propertyType: propertyData?.propertyType,
+    apartmentType: propertyData?.apartmentType,
+    estateType: propertyData?.estateType,
+    siteArea: propertyData?.siteArea,
+    plotArea: propertyData?.plotArea,
+    hasPlot
+  });
 
   // Prioritize districtFree (e.g., "Lauttasaari/Drumsö") over city
   const region = propertyData?.districtFree || propertyData?.district || propertyData?.partOfCity || propertyData?.region || propertyData?.city || '';
@@ -115,6 +128,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
   const [loading, setLoading] = useState(true);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState('photos');
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [expandedSections, setExpandedSections] = useState<{[key: string]: boolean}>({
     description: true,
     priceInfo: true,
@@ -485,15 +499,9 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                     </>
                   )}
 
-                  {/* PUNKT 2: Zoom-knapp (nedre höger) */}
+                  {/* PUNKT 2: Zoom-knapp (nedre höger) - Öppnar lightbox */}
                   <button
-                    onClick={() => {
-                      // Open image in new tab for full-screen view
-                      const imageSrc = typeof images[currentImageIndex] === 'string' 
-                        ? images[currentImageIndex] as string
-                        : (images[currentImageIndex] as any).url || (images[currentImageIndex] as any).sourceUrl || (images[currentImageIndex] as any).node?.sourceUrl || '';
-                      window.open(imageSrc, '_blank');
-                    }}
+                    onClick={() => setIsLightboxOpen(true)}
                     className="absolute bottom-4 right-4 bg-white/90 hover:bg-white text-black px-4 py-2 flex items-center gap-2 transition-all shadow-md"
                     aria-label={language === 'sv' ? 'Förstora' : language === 'en' ? 'Zoom' : 'Suurenna'}
                   >
@@ -877,41 +885,51 @@ export default function PropertyPage({ params }: PropertyPageProps) {
       </section>
 
       {/* Welcome Text Section - PUNKT 4: Intro-block med Typ av hus + Lägenhetsbeskrivning */}
-      {propertyData.freeTextTitle && (
+      {(propertyData.freeTextTitle || propertyData.address || propertyData.propertyType || propertyData.apartmentType) && (
         <section className="py-12 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center bg-gray-50 p-8 rounded-lg shadow-sm">
-              <h2 className="text-2xl md:text-3xl font-light text-gray-800 mb-6 leading-relaxed">
-                {propertyData.freeTextTitle}
-              </h2>
+              {/* Rubrik på objektets presentationstext */}
+              {propertyData.freeTextTitle && (
+                <h2 className="text-2xl md:text-3xl font-light text-gray-800 mb-6 leading-relaxed">
+                  {propertyData.freeTextTitle}
+                </h2>
+              )}
+              
+              {/* Adress */}
               {propertyData.address && (
                 <p className="text-lg text-gray-600 font-light mb-2">
                   {propertyData.address}{propertyData.postalCode && `, ${propertyData.postalCode}`}{propertyData.city && ` ${propertyData.city}`}
                 </p>
               )}
+              
+              {/* Rumsantal */}
               {propertyData.rooms && (
                 <p className="text-base text-gray-500 mb-3">
                   {propertyData.rooms}
                 </p>
               )}
-              {/* PUNKT 4: Typ av hus (propertyType eller estateType) */}
-              {(propertyData.propertyType || propertyData.estateType) && (
-                <p className="text-base text-gray-600 font-medium mb-2">
-                  <span className="text-gray-500">
-                    {language === 'sv' ? 'Typ av hus: ' : language === 'en' ? 'Property type: ' : 'Talon tyyppi: '}
+              
+              {/* PUNKT 4: Typ av hus | Lägenhetsbeskrivning (på samma rad) */}
+              <div className="flex flex-wrap justify-center gap-4 text-base text-gray-600 font-medium">
+                {(propertyData.propertyType || propertyData.estateType) && (
+                  <span>
+                    <span className="text-gray-500">
+                      {language === 'sv' ? 'Typ av hus: ' : language === 'en' ? 'Property type: ' : 'Talon tyyppi: '}
+                    </span>
+                    {propertyData.propertyType || propertyData.estateType}
                   </span>
-                  {propertyData.propertyType || propertyData.estateType}
-                </p>
-              )}
-              {/* PUNKT 4: Lägenhetsbeskrivning (apartmentType eller typeOfApartment) */}
-              {(propertyData.apartmentType || propertyData.typeOfApartment) && (
-                <p className="text-base text-gray-600 font-medium">
-                  <span className="text-gray-500">
-                    {language === 'sv' ? 'Lägenhetsbeskrivning: ' : language === 'en' ? 'Apartment description: ' : 'Huoneistoselitys: '}
+                )}
+                {(propertyData.apartmentType || propertyData.typeOfApartment) && (
+                  <span>
+                    <span className="text-gray-500">|</span>
+                    <span className="ml-2 text-gray-500">
+                      {language === 'sv' ? 'Lägenhetsbeskrivning: ' : language === 'en' ? 'Apartment description: ' : 'Huoneistoselitys: '}
+                    </span>
+                    {propertyData.apartmentType || propertyData.typeOfApartment}
                   </span>
-                  {propertyData.apartmentType || propertyData.typeOfApartment}
-                </p>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </section>
@@ -1619,6 +1637,72 @@ export default function PropertyPage({ params }: PropertyPageProps) {
           </div>
         </div>
       </section>
+
+      {/* ============================================================================ */}
+      {/* LIGHTBOX MODAL - Fullskärmsvisning av bilder */}
+      {/* ============================================================================ */}
+      {isLightboxOpen && images.length > 0 && (
+        <div 
+          className="fixed inset-0 bg-black/95 z-[9999] flex items-center justify-center"
+          onClick={() => setIsLightboxOpen(false)}
+        >
+          {/* Stäng-knapp */}
+          <button
+            onClick={() => setIsLightboxOpen(false)}
+            className="absolute top-4 right-4 text-white hover:text-gray-300 z-10 bg-black/50 rounded-full p-2"
+            aria-label={language === 'sv' ? 'Stäng' : language === 'en' ? 'Close' : 'Sulje'}
+          >
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          
+          {/* Huvudbild */}
+          <div className="relative w-full h-full flex items-center justify-center p-8">
+            <Image
+              src={typeof images[currentImageIndex] === 'string' 
+                ? images[currentImageIndex] as string
+                : (images[currentImageIndex] as any).url || (images[currentImageIndex] as any).sourceUrl || (images[currentImageIndex] as any).node?.sourceUrl || ''}
+              alt={`${propertyData?.address || ''} - ${language === 'sv' ? 'Fullskärm' : language === 'en' ? 'Fullscreen' : 'Koko näyttö'}`}
+              fill
+              className="object-contain"
+              onClick={(e) => e.stopPropagation()}
+              sizes="100vw"
+            />
+            
+            {/* Navigation i lightbox */}
+            {images.length > 1 && (
+              <>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+                  }}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-all"
+                  aria-label={language === 'sv' ? 'Föregående' : language === 'en' ? 'Previous' : 'Edellinen'}
+                >
+                  <ChevronLeft className="w-8 h-8" />
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setCurrentImageIndex((prev) => (prev + 1) % images.length);
+                  }}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-all"
+                  aria-label={language === 'sv' ? 'Nästa' : language === 'en' ? 'Next' : 'Seuraava'}
+                >
+                  <ChevronRight className="w-8 h-8" />
+                </button>
+              </>
+            )}
+            
+            {/* Bildräknare */}
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-black/60 text-white px-4 py-2 rounded-full text-sm">
+              {currentImageIndex + 1} / {images.length}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

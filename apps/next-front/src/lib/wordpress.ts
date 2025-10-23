@@ -49,6 +49,8 @@ export const getClient = () => createApolloClient();
 // Type definitions for WordPress data
 export interface Property {
   price?: number;
+  debtFreePrice?: number;  // Velaton hinta / Skuldfritt pris / Debt-free price
+  debtPart?: number;  // Velkaosuus / Skulddel / Debt part
   address?: string;
   city?: string;
   bedrooms?: number;

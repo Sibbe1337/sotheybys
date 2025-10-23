@@ -26,6 +26,7 @@ export default function Header({ menuItems }: HeaderProps) {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [expandedMobileMenu, setExpandedMobileMenu] = useState<string | null>(null);
   const [currentLang, setCurrentLang] = useState<string>('fi');
+  const [isScrolled, setIsScrolled] = useState(false);
 
   // Multilingual menu items
   const getMenuItemsForLanguage = (lang: string): MenuItem[] => {
@@ -146,10 +147,24 @@ export default function Header({ menuItems }: HeaderProps) {
     setIsMobileMenuOpen(false);
   }, [pathname]);
 
+  // Scroll listener för komprimerande header
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-50 bg-[var(--color-primary)] text-white">
-      {/* TOP BAR - RAD 1 (Language + Search) */}
-      <div className="border-b border-white/10">
+    <header className={`sticky top-0 z-50 bg-[var(--color-primary)] text-white transition-all duration-300 ${
+      isScrolled ? 'shadow-lg' : ''
+    }`}>
+      {/* TOP BAR - RAD 1 (Language + Search) - Dölj på mobil när scrollad */}
+      <div className={`border-b border-white/10 transition-all duration-300 ${
+        isScrolled ? 'hidden md:block md:py-1' : 'block'
+      }`}>
         <div className="max-w-[1400px] mx-auto px-6">
           <div className="flex items-center justify-end gap-6 py-2">
             {/* Language Switcher */}
@@ -198,10 +213,12 @@ export default function Header({ menuItems }: HeaderProps) {
         </div>
       </div>
 
-      {/* MAIN HEADER BAR - RAD 2 (Logo + Navigation) */}
+      {/* MAIN HEADER BAR - RAD 2 (Logo + Navigation) - Komprimera på mobil när scrollad */}
       <div className="max-w-[1400px] mx-auto px-6">
-        <div className="flex items-center justify-between py-4">
-          {/* Logo */}
+        <div className={`flex items-center justify-between transition-all duration-300 ${
+          isScrolled ? 'py-2 md:py-4' : 'py-4'
+        }`}>
+          {/* Logo - Mindre på mobil när scrollad */}
           <LocaleLink 
             href="/" 
             className="flex items-center flex-shrink-0"
@@ -210,8 +227,8 @@ export default function Header({ menuItems }: HeaderProps) {
             <Image
               src="/images/logos/logo-white.png"
               alt="Snellman Sotheby's International Realty"
-              width={350}
-              height={105}
+              width={isScrolled ? 280 : 350}
+              height={isScrolled ? 84 : 105}
               className="h-16 w-auto"
               priority
               quality={100}

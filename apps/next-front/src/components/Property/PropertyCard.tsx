@@ -65,7 +65,17 @@ export default function PropertyCard({
     }).format(price);
   };
 
-  // Debug logging for agent photo
+  // Debug logging for rent and agent
+  if (property?.rent) {
+    console.log('💰 PropertyCard rent debug:', {
+      title,
+      rent: property.rent,
+      rentType: typeof property.rent,
+      rentParsed: parseInt(property.rent),
+      rentIsValid: !isNaN(parseInt(property.rent))
+    });
+  }
+  
   if (agent) {
     console.log('🎨 PropertyCard agent data:', {
       title,
@@ -100,13 +110,18 @@ export default function PropertyCard({
 
       <div className="p-4">
         {/* Price or Rent */}
-        {property?.rent ? (
-          // Rental property - show monthly rent
+        {property?.rent && !isNaN(parseInt(property.rent)) && parseInt(property.rent) > 0 ? (
+          // Rental property - show monthly rent (säkerställ att det är ett giltigt nummer)
           <Price className="text-2xl mb-2" block>
             {formatPrice(parseInt(property.rent))} / {getHomepageTranslation('month', language)}
           </Price>
+        ) : property?.debtFreePrice ? (
+          // Sale property - show DEBT-FREE price (skuldfritt pris) - PRIORITET
+          <Price className="text-2xl mb-2" block>
+            {formatPrice(property.debtFreePrice)}
+          </Price>
         ) : property?.price ? (
-          // Sale property - show sale price
+          // Fallback to regular price if debtFreePrice is missing
           <Price className="text-2xl mb-2" block>
             {formatPrice(property.price)}
           </Price>

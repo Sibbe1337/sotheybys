@@ -231,10 +231,11 @@ function HomePageContent() {
           console.log(`✅ Filtered ${saleProperties.length} sale properties for homepage (excluded ${linearProperties.length - saleProperties.length} rentals)`);
           
           // 💎 SORT BY PRICE: Most expensive first (Premium branding)
+          // VIKTIGT: Använd SKULDFRITT PRIS (debtFreePrice) som primär sortering
           saleProperties.sort((a, b) => {
-            // nonLocalizedValues.askPrice is a string, convert to number
-            const priceA = parseFloat(a.nonLocalizedValues?.askPrice || '0') || 0;
-            const priceB = parseFloat(b.nonLocalizedValues?.askPrice || '0') || 0;
+            // Prioritera debtFreePrice, fallback till askPrice
+            const priceA = parseFloat(a.nonLocalizedValues?.debtFreePrice || a.nonLocalizedValues?.askPrice || '0') || 0;
+            const priceB = parseFloat(b.nonLocalizedValues?.debtFreePrice || b.nonLocalizedValues?.askPrice || '0') || 0;
             return priceB - priceA; // Descending order (highest first)
           });
           

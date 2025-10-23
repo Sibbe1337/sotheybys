@@ -30,9 +30,10 @@ export default async function PropertiesPage() {
     console.log(`✅ Filtered ${allProperties.length} sale properties (excluded rentals)`);
     
     // 💎 SORT BY PRICE: Most expensive first (Premium branding)
+    // VIKTIGT: Använd SKULDFRITT PRIS (debtFreePrice) som primär sortering
     allProperties.sort((a, b) => {
-      const priceA = a.acfRealEstate?.property?.price || 0;
-      const priceB = b.acfRealEstate?.property?.price || 0;
+      const priceA = a.acfRealEstate?.property?.debtFreePrice || a.acfRealEstate?.property?.price || 0;
+      const priceB = b.acfRealEstate?.property?.debtFreePrice || b.acfRealEstate?.property?.price || 0;
       return priceB - priceA; // Descending order (highest first)
     });
     
