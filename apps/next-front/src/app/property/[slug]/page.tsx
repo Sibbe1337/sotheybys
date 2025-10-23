@@ -1315,77 +1315,72 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                 <div className="bg-white border border-gray-200 p-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Husbolagets namn */}
-                    {propertyData.housingCompanyName && (
-                      <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">{getTranslation('housingCompanyName', language)}</span>
-                        <span className="font-semibold">{propertyData.housingCompanyName}</span>
-                      </div>
-                    )}
+                    <RowIf 
+                      value={propertyData.housingCompanyName} 
+                      label={getTranslation('housingCompanyName', language)}
+                      language={language}
+                    />
                     {/* Hemort / Stad */}
-                    {propertyData.housingCompanyHomeCity && (
-                      <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">{getTranslation('housingCompanyHomeCity', language)}</span>
-                        <span className="font-semibold">{propertyData.housingCompanyHomeCity}</span>
-                      </div>
-                    )}
+                    <RowIf 
+                      value={propertyData.housingCompanyHomeCity || propertyData.city} 
+                      label={getTranslation('city', language)}
+                      language={language}
+                    />
+                    {/* Fastighetsskötsel */}
+                    <RowIf 
+                      value={propertyData.propertyMaintenance} 
+                      label={getTranslation('propertyMaintenance', language)}
+                      language={language}
+                    />
+                    {/* Långfristiga lån */}
+                    <RowIf 
+                      value={propertyData.companyLoans} 
+                      label={getTranslation('companyLoans', language)}
+                      language={language}
+                    />
                     {/* Tomtstorlek (m²/ha) */}
-                    {propertyData.siteArea != null && propertyData.siteArea > 0 && (
-                      <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">{getTranslation('siteArea', language)}</span>
-                        <span className="font-semibold">{formatSiteArea(propertyData.siteArea)}</span>
-                      </div>
-                    )}
+                    <RowIf 
+                      value={propertyData.siteArea && propertyData.siteArea > 0 ? formatSiteArea(propertyData.siteArea) : null} 
+                      label={getTranslation('siteArea', language)}
+                      language={language}
+                    />
                     {/* Våning (format "x/y") */}
-                    {propertyData.floor && (
-                      <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">{getTranslation('floor', language)}</span>
-                        <span className="font-semibold">
-                          {propertyData.floor}{propertyData.numberOfFloors ? `/${propertyData.numberOfFloors}` : ''}
-                        </span>
-                      </div>
-                    )}
+                    <RowIf 
+                      value={propertyData.floor ? `${propertyData.floor}${propertyData.numberOfFloors ? `/${propertyData.numberOfFloors}` : ''}` : null} 
+                      label={getTranslation('floor', language)}
+                      language={language}
+                    />
                     {/* Byggnadsår */}
-                    {propertyData.yearOfBuilding && (
-                      <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">{getTranslation('buildingYear', language)}</span>
-                        <span className="font-semibold">{propertyData.yearOfBuilding}</span>
-                      </div>
-                    )}
+                    <RowIf 
+                      value={propertyData.yearOfBuilding} 
+                      label={getTranslation('buildingYear', language)}
+                      language={language}
+                    />
                     {/* Byggnadsmaterial */}
-                    {propertyData.buildingMaterial && (
-                      <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">{getTranslation('buildingMaterial', language)}</span>
-                        <span className="font-semibold">{propertyData.buildingMaterial}</span>
-                      </div>
-                    )}
+                    <RowIf 
+                      value={propertyData.buildingMaterial} 
+                      label={getTranslation('buildingMaterial', language)}
+                      language={language}
+                    />
                     {/* Taktyp / Takmaterial */}
-                    {propertyData.roofType && (
-                      <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">{getTranslation('roofType', language)}</span>
-                        <span className="font-semibold">{propertyData.roofType}</span>
-                      </div>
-                    )}
+                    <RowIf 
+                      value={propertyData.roofType} 
+                      label={getTranslation('roofType', language)}
+                      language={language}
+                    />
                     {/* Uppvärmning */}
-                    {propertyData.heatingType && (
-                      <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">{getTranslation('heatingType', language)}</span>
-                        <span className="font-semibold">{propertyData.heatingType}</span>
-                      </div>
-                    )}
-                    {/* Bostäder (antal) */}
-                    {propertyData.housingCompanyApartmentCount != null && propertyData.housingCompanyApartmentCount > 0 && (
-                      <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">{getTranslation('housingCompanyApartmentCount', language)}</span>
-                        <span className="font-semibold">{propertyData.housingCompanyApartmentCount}</span>
-                      </div>
-                    )}
-                    {/* Antenn / Kabel */}
-                    {propertyData.antennaOrCable && (
-                      <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">{getTranslation('antennaOrCable', language)}</span>
-                        <span className="font-semibold">{propertyData.antennaOrCable}</span>
-                      </div>
-                    )}
+                    <RowIf 
+                      value={propertyData.heatingType || propertyData.heatingSystem} 
+                      label={getTranslation('heatingSystem', language)}
+                      language={language}
+                    />
+                    {/* Antenn / Kabel - UPDATED: Use antennaSystem from mapper */}
+                    <RowIf 
+                      value={propertyData.antennaSystem || propertyData.antennaOrCable} 
+                      label={getTranslation('antennaSystem', language)}
+                      language={language}
+                    />
+                    {/* REMOVED: Antal bostäder (housingCompanyApartmentCount) - enligt kravspec */}
                   </div>
                 </div>
               )}
@@ -1408,118 +1403,39 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                 {expandedSections.housingCompanyInfo && (
                   <div className="bg-white border border-gray-200 p-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {/* Bolagets namn */}
-                      {propertyData.housingCompanyName && (
-                        <div className="flex justify-between py-2 border-b">
-                          <span className="text-gray-600">{getTranslation('housingCompanyName', language)}</span>
-                          <span className="font-semibold">{propertyData.housingCompanyName}</span>
-                        </div>
+                      {/* KRAVSPEC: Bolagsinformation för lägenheter */}
+                      {/* Aktienummer */}
+                      <RowIf 
+                        value={propertyData.numberOfShares} 
+                        label={getTranslation('numberOfShares', language)}
+                        language={language}
+                      />
+                      {/* Våning - visa bara om den inte redan visas i Fastighetsinformation */}
+                      {!propertyData.floor && (
+                        <RowIf 
+                          value={propertyData.floorLocation ? `${propertyData.floorLocation}${propertyData.numberOfFloors ? `/${propertyData.numberOfFloors}` : ''}` : null} 
+                          label={getTranslation('floor', language)}
+                          language={language}
+                        />
                       )}
-                      {/* FO-nummer */}
-                      {propertyData.businessId && (
-                        <div className="flex justify-between py-2 border-b">
-                          <span className="text-gray-600">{getTranslation('businessId', language)}</span>
-                          <span className="font-semibold">{propertyData.businessId}</span>
-                        </div>
-                      )}
-                      {/* Antal lägenheter */}
-                      {propertyData.housingCompanyApartmentCount != null && propertyData.housingCompanyApartmentCount > 0 && (
-                        <div className="flex justify-between py-2 border-b">
-                          <span className="text-gray-600">{getTranslation('housingCompanyApartmentCount', language)}</span>
-                          <span className="font-semibold">{propertyData.housingCompanyApartmentCount}</span>
-                        </div>
-                      )}
-                      {/* Antal affärslokaler */}
-                      {propertyData.housingCompanyBusinessSpaceCount != null && propertyData.housingCompanyBusinessSpaceCount > 0 && (
-                        <div className="flex justify-between py-2 border-b">
-                          <span className="text-gray-600">{getTranslation('housingCompanyBusinessSpaceCount', language)}</span>
-                          <span className="font-semibold">{propertyData.housingCompanyBusinessSpaceCount}</span>
-                        </div>
-                      )}
-                      {/* Bolagslån */}
-                      {propertyData.housingCompanyMortgage != null && propertyData.housingCompanyMortgage > 0 && (
-                        <div className="flex justify-between py-2 border-b">
-                          <span className="text-gray-600">{getTranslation('housingCompanyMortgage', language)}</span>
-                          <span className="font-semibold">{formatEuroCurrency(propertyData.housingCompanyMortgage)}</span>
-                        </div>
-                      )}
-                      {/* Bolagslånets datum */}
-                      {propertyData.housingCompanyMortgageDate && (
-                        <div className="flex justify-between py-2 border-b">
-                          <span className="text-gray-600">{getTranslation('housingCompanyMortgageDate', language)}</span>
-                          <span className="font-semibold">{propertyData.housingCompanyMortgageDate}</span>
-                        </div>
-                      )}
-                      {/* Bolagets intäkter */}
-                      {propertyData.housingCompanyRevenue != null && propertyData.housingCompanyRevenue > 0 && (
-                        <div className="flex justify-between py-2 border-b">
-                          <span className="text-gray-600">{getTranslation('housingCompanyRevenue', language)}</span>
-                          <span className="font-semibold">{formatEuroCurrency(propertyData.housingCompanyRevenue)}</span>
-                        </div>
-                      )}
-                      {/* Kommande renoveringar */}
-                      {propertyData.housingCompanyUpcomingRenovations && (
-                        <div className="flex justify-between py-2 border-b">
-                          <span className="text-gray-600">{getTranslation('housingCompanyUpcomingRenovations', language)}</span>
-                          <span className="font-semibold">{propertyData.housingCompanyUpcomingRenovations}</span>
-                        </div>
-                      )}
-                      {/* Bolagets inlösenrätt */}
-                      {propertyData.housingCompanyRedemptionRight !== undefined && (
-                        <div className="flex justify-between py-2 border-b">
-                          <span className="text-gray-600">{getTranslation('housingCompanyRedemptionRight', language)}</span>
-                          <span className="font-semibold">{getBooleanText(propertyData.housingCompanyRedemptionRight, language)}</span>
-                        </div>
-                      )}
-                      {/* Andelsägarens inlösenklausul */}
-                      {propertyData.partnerRedemptionRight !== undefined && (
-                        <div className="flex justify-between py-2 border-b">
-                          <span className="text-gray-600">{getTranslation('partnerRedemptionRight', language)}</span>
-                          <span className="font-semibold">{getBooleanText(propertyData.partnerRedemptionRight, language)}</span>
-                        </div>
-                      )}
-                      {/* Underhållsbehovsutredning år */}
-                      {propertyData.reportOnMaintenanceNeedsYear && (
-                        <div className="flex justify-between py-2 border-b">
-                          <span className="text-gray-600">{getTranslation('reportOnMaintenanceNeedsYear', language)}</span>
-                          <span className="font-semibold">{propertyData.reportOnMaintenanceNeedsYear}</span>
-                        </div>
-                      )}
-                      {/* Förvaltningskontor */}
-                      {propertyData.propertyManagerOffice && (
-                        <div className="flex justify-between py-2 border-b">
-                          <span className="text-gray-600">{getTranslation('propertyManagerOffice', language)}</span>
-                          <span className="font-semibold">{propertyData.propertyManagerOffice}</span>
-                        </div>
-                      )}
-                      {/* Förvaltare (namn) */}
-                      {propertyData.managerName && (
-                        <div className="flex justify-between py-2 border-b">
-                          <span className="text-gray-600">{getTranslation('managerName', language)}</span>
-                          <span className="font-semibold">{propertyData.managerName}</span>
-                        </div>
-                      )}
-                      {/* Förvaltare (telefon) */}
-                      {propertyData.managerPhone && (
-                        <div className="flex justify-between py-2 border-b">
-                          <span className="text-gray-600">{getTranslation('managerPhone', language)}</span>
-                          <span className="font-semibold">{propertyData.managerPhone}</span>
-                        </div>
-                      )}
-                      {/* Förvaltare (e-post) */}
-                      {propertyData.managerEmail && (
-                        <div className="flex justify-between py-2 border-b">
-                          <span className="text-gray-600">{getTranslation('managerEmail', language)}</span>
-                          <span className="font-semibold">{propertyData.managerEmail}</span>
-                        </div>
-                      )}
-                      {/* Andelsnummer */}
-                      {propertyData.numberOfShares && (
-                        <div className="flex justify-between py-2 border-b">
-                          <span className="text-gray-600">{getTranslation('numberOfShares', language)}</span>
-                          <span className="font-semibold">{propertyData.numberOfShares}</span>
-                        </div>
-                      )}
+                      {/* Balkong */}
+                      <RowIf 
+                        value={propertyData.balcony} 
+                        label={getTranslation('balcony', language)}
+                        language={language}
+                      />
+                      {/* Egen bastu */}
+                      <RowIf 
+                        value={propertyData.sauna || propertyData.ownSauna} 
+                        label={getTranslation('ownSauna', language)}
+                        language={language}
+                      />
+                      {/* Inlösenklausul (lägenheter) */}
+                      <RowIf 
+                        value={propertyData.redemptionClauseFlats} 
+                        label={getTranslation('redemptionClauseFlats', language)}
+                        language={language}
+                      />
                     </div>
                   </div>
                 )}
@@ -1681,24 +1597,31 @@ export default function PropertyPage({ params }: PropertyPageProps) {
               {expandedSections.otherInfo && (
                 <div className="bg-white border border-gray-200 p-6">
                   <div className="grid grid-cols-1 gap-4">
-                    {propertyData.availability && (
-                      <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">{getTranslation('availability', language)}</span>
-                        <span className="font-semibold">{propertyData.availability}</span>
-                      </div>
-                    )}
-                    {propertyData.zoningSituation && (
-                      <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">{getTranslation('zoningSituation', language)}</span>
-                        <span className="font-semibold">{propertyData.zoningSituation}</span>
-                      </div>
-                    )}
-                    {propertyData.buildingRights && typeof propertyData.buildingRights === 'string' && (
-                      <div className="flex justify-between py-2 border-b">
-                        <span className="text-gray-600">{getTranslation('buildingRights', language)}</span>
-                        <span className="font-semibold">{propertyData.buildingRights}</span>
-                      </div>
-                    )}
+                    {/* KRAVSPEC: Övrig information för lägenheter */}
+                    {/* Blir ledig */}
+                    <RowIf 
+                      value={propertyData.availableFrom || propertyData.availability} 
+                      label={getTranslation('availableFrom', language)}
+                      language={language}
+                    />
+                    {/* Form av ägandet */}
+                    <RowIf 
+                      value={propertyData.ownershipType} 
+                      label={getTranslation('ownershipType', language)}
+                      language={language}
+                    />
+                    {/* Generalplan */}
+                    <RowIf 
+                      value={propertyData.zoningSituation} 
+                      label={getTranslation('zoningSituation', language)}
+                      language={language}
+                    />
+                    {/* Byggrätt (extra fält) */}
+                    <RowIf 
+                      value={propertyData.buildingRights && typeof propertyData.buildingRights === 'string' ? propertyData.buildingRights : null} 
+                      label={getTranslation('buildingRights', language)}
+                      language={language}
+                    />
                   </div>
                 </div>
               )}
