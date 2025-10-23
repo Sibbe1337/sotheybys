@@ -43,11 +43,12 @@ function formatSiteArea(v?: number) {
 function getHeroItems(propertyData: any, language: 'fi' | 'sv' | 'en'): HeroItem[] {
   // Förbättrad fastighet-detektion
   const propertyTypeStr = (propertyData?.propertyType || '').toLowerCase();
-  const typeOfApartmentStr = (propertyData?.typeOfApartment || '').toLowerCase();
+  // CRITICAL: Check both typeOfApartment (from Linear API) and apartmentType (mapped field)
+  const typeOfApartmentStr = (propertyData?.typeOfApartment || propertyData?.apartmentType || '').toLowerCase();
   const hasPlot = gt0(propertyData?.siteArea) || gt0(propertyData?.plotArea) || gt0(propertyData?.lotArea);
   
   // En fastighet är:
-  // 1. Har typeOfApartment som innehåller "kiinteistö" (från Linear API)
+  // 1. Har typeOfApartment/apartmentType som innehåller "kiinteistö" (från Linear API)
   // 2. Har propertyType som innehåller villa/hus/fastighet/omakotitalo etc
   // 3. Har tomtstorlek (plotArea/siteArea/lotArea > 0)
   const isFastighet =
@@ -61,6 +62,7 @@ function getHeroItems(propertyData: any, language: 'fi' | 'sv' | 'en'): HeroItem
     isFastighet,
     propertyType: propertyData?.propertyType,
     typeOfApartment: propertyData?.typeOfApartment,
+    apartmentType: propertyData?.apartmentType,
     propertyTypeStr,
     typeOfApartmentStr,
     siteArea: propertyData?.siteArea,

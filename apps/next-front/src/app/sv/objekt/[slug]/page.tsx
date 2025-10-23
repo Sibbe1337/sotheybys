@@ -156,7 +156,8 @@ export default function SwedishPropertyPage({ params }: PropertyPageProps) {
           <div className="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
             {(() => {
               // Fastighet-detektion (samma logik som i /property/[slug]/page.tsx)
-              const typeOfApartmentStr = ((property as any).typeOfApartment || '').toLowerCase();
+              // CRITICAL: Check both typeOfApartment (from Linear API) and apartmentType (mapped field)
+              const typeOfApartmentStr = ((property as any).typeOfApartment || (property as any).apartmentType || '').toLowerCase();
               const propertyTypeStr = ((property as any).propertyType || '').toLowerCase();
               const hasPlot = (property as any).siteArea > 0 || (property as any).plotArea > 0 || (property as any).lotArea > 0;
               
