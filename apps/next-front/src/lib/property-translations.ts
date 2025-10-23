@@ -500,6 +500,153 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     fi: '€/v',
     sv: '€/år',
     en: '€/year'
+  },
+  
+  // NEW TRANSLATIONS - Kundens feedback (PUNKT 5-12)
+  // Energy & Certificates
+  listingHasEnergyCertificate: {
+    fi: 'Energiatodistus (Kyllä/Ei)',
+    sv: 'Energicertifikat (Ja/Nej)',
+    en: 'Energy Certificate (Yes/No)'
+  },
+  
+  // Housing Company Details (Lägenhet)
+  housingCompanyHomeCity: {
+    fi: 'Yhtiön kotipaikka',
+    sv: 'Bolagets hemort',
+    en: 'Company Home City'
+  },
+  housingCompanyApartmentCount: {
+    fi: 'Asuntojen lukumäärä',
+    sv: 'Antal bostäder',
+    en: 'Number of Apartments'
+  },
+  housingCompanyBusinessSpaceCount: {
+    fi: 'Liiketilojen lukumäärä',
+    sv: 'Antal affärslokaler',
+    en: 'Number of Business Spaces'
+  },
+  housingCompanyMortgage: {
+    fi: 'Yhtiölaina',
+    sv: 'Bolagslån',
+    en: 'Company Mortgage'
+  },
+  housingCompanyMortgageDate: {
+    fi: 'Yhtiölainan päivämäärä',
+    sv: 'Bolagslånets datum',
+    en: 'Mortgage Date'
+  },
+  housingCompanyRevenue: {
+    fi: 'Yhtiön tulot',
+    sv: 'Bolagets intäkter',
+    en: 'Company Revenue'
+  },
+  housingCompanyUpcomingRenovations: {
+    fi: 'Tulevat remontit',
+    sv: 'Kommande renoveringar',
+    en: 'Upcoming Renovations'
+  },
+  housingCompanyRedemptionRight: {
+    fi: 'Yhtiön lunastusoikeus',
+    sv: 'Bolagets inlösenrätt',
+    en: 'Company Redemption Right'
+  },
+  partnerRedemptionRight: {
+    fi: 'Osakaslunastuslauseke',
+    sv: 'Andelsägarens inlösenklausul',
+    en: 'Partner Redemption Right'
+  },
+  reportOnMaintenanceNeedsYear: {
+    fi: 'Kunnossapitotarveselvitys vuosi',
+    sv: 'Underhållsbehovsutredning år',
+    en: 'Maintenance Needs Report Year'
+  },
+  
+  // Property Management
+  propertyManagerOffice: {
+    fi: 'Isännöitsijätoimisto',
+    sv: 'Förvaltningskontor',
+    en: 'Property Management Office'
+  },
+  
+  // Building Details
+  numberOfFloors: {
+    fi: 'Kerrosten lukumäärä',
+    sv: 'Antal våningar',
+    en: 'Number of Floors'
+  },
+  buildingYear: {
+    fi: 'Rakennusvuosi',
+    sv: 'Byggnadsår',
+    en: 'Building Year'
+  },
+  
+  // Plot/Property (Fastighet)
+  siteArea: {
+    fi: 'Tontin pinta-ala',
+    sv: 'Tomtstorlek',
+    en: 'Site Area'
+  },
+  propertyBuildingRights: {
+    fi: 'Rakennusoikeus',
+    sv: 'Byggnadsrätt',
+    en: 'Building Rights'
+  },
+  siteOwnershipType: {
+    fi: 'Tontin omistusmuoto',
+    sv: 'Ägande',
+    en: 'Site Ownership Type'
+  },
+  
+  // International
+  internationalUrl: {
+    fi: 'Kansainvälinen listaus',
+    sv: 'Global Listing',
+    en: 'Global Listing'
+  },
+  internationalBrochureUrl: {
+    fi: 'Kansainvälinen esite',
+    sv: 'Internationell broschyr',
+    en: 'International Brochure'
+  },
+  
+  // Rental (Hyresobjekt)
+  rentalContractType: {
+    fi: 'Vuokrasopimuksen tyyppi',
+    sv: 'Hyresavtalstyp',
+    en: 'Rental Contract Type'
+  },
+  earliestTerminateDate: {
+    fi: 'Aikaisin irtisanomispäivä',
+    sv: 'Tidigaste uppsägningsdatum',
+    en: 'Earliest Termination Date'
+  },
+  petsAllowed: {
+    fi: 'Lemmikit sallittu',
+    sv: 'Husdjur tillåtna',
+    en: 'Pets Allowed'
+  },
+  smokingAllowed: {
+    fi: 'Tupakointi sallittu',
+    sv: 'Rökning tillåten',
+    en: 'Smoking Allowed'
+  },
+  
+  // Additional labels
+  propertyType: {
+    fi: 'Talon tyyppi',
+    sv: 'Typ av hus',
+    en: 'Property Type'
+  },
+  apartmentDescription: {
+    fi: 'Huoneistoselitys',
+    sv: 'Lägenhetsbeskrivning',
+    en: 'Apartment Description'
+  },
+  totalArea: {
+    fi: 'Kokonaispinta-ala',
+    sv: 'Total yta',
+    en: 'Total Area'
   }
 };
 
