@@ -50,32 +50,8 @@ function getHeroItems(propertyData: any, language: 'fi' | 'sv' | 'en'): HeroItem
     (propertyData?.siteArea && parseInt(propertyData.siteArea) > 0) ||
     (propertyData?.plotArea && parseInt(propertyData.plotArea) > 0);
 
-  // Debug property type detection
-  if (propertyData?.address) {
-    console.log('🏠 Property Type Detection for', propertyData.address, {
-      isFastighet,
-      apartmentType: propertyData?.apartmentType,
-      estateType: propertyData?.estateType,
-      propertyType: propertyData?.propertyType,
-      siteArea: propertyData?.siteArea,
-      plotArea: propertyData?.plotArea
-    });
-  }
-
   // Prioritize districtFree (e.g., "Lauttasaari/Drumsö") over city
   const region = propertyData?.districtFree || propertyData?.district || propertyData?.partOfCity || propertyData?.region || propertyData?.city || '';
-  
-  // Debug region selection
-  if (propertyData?.address) {
-    console.log('🗺️  Region Selection for', propertyData.address, {
-      selected: region,
-      districtFree: propertyData?.districtFree,
-      district: propertyData?.district,
-      partOfCity: propertyData?.partOfCity,
-      region: propertyData?.region,
-      city: propertyData?.city
-    });
-  }
   
   // Labels by language
   const labels = {

@@ -610,28 +610,6 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     en: 'International Brochure'
   },
   
-  // Rental (Hyresobjekt)
-  rentalContractType: {
-    fi: 'Vuokrasopimuksen tyyppi',
-    sv: 'Hyresavtalstyp',
-    en: 'Rental Contract Type'
-  },
-  earliestTerminateDate: {
-    fi: 'Aikaisin irtisanomispäivä',
-    sv: 'Tidigaste uppsägningsdatum',
-    en: 'Earliest Termination Date'
-  },
-  petsAllowed: {
-    fi: 'Lemmikit sallittu',
-    sv: 'Husdjur tillåtna',
-    en: 'Pets Allowed'
-  },
-  smokingAllowed: {
-    fi: 'Tupakointi sallittu',
-    sv: 'Rökning tillåten',
-    en: 'Smoking Allowed'
-  },
-  
   // Additional labels
   propertyType: {
     fi: 'Talon tyyppi',
