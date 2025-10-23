@@ -113,13 +113,17 @@ export default function PropertyCard({
         {(() => {
           // Check if it's a rental property
           if (property?.rent) {
-            // Extract number from rent string (e.g., "3 €/kk" -> 3, "1500" -> 1500)
-            const rentMatch = property.rent.toString().match(/\d+/);
-            const rentAmount = rentMatch ? parseInt(rentMatch[0]) : 0;
+            // Extract ALL digits from rent string, removing spaces and non-digit chars
+            // Examples:
+            // "3 840 €/kk" -> "3840" -> 3840
+            // "3840" -> "3840" -> 3840
+            // "1 500 €/mån" -> "1500" -> 1500
+            const rentStr = property.rent.toString();
+            const digitsOnly = rentStr.replace(/[^\d]/g, ''); // Remove everything except digits
+            const rentAmount = digitsOnly ? parseInt(digitsOnly) : 0;
             
-            // Only show rent if it's realistic (>= 100€/month)
-            // This filters out bad data like "3 €/kk"
-            if (rentAmount >= 100) {
+            // Show rent if it's a valid amount (> 0)
+            if (rentAmount > 0) {
               return (
                 <Price className="text-2xl mb-2" block>
                   {formatPrice(rentAmount)} / {getHomepageTranslation('month', language)}
