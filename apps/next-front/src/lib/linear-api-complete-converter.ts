@@ -442,8 +442,10 @@ export function convertCompleteLinearToWordPressFormat(listing: CompleteLinearAP
     }
   }
   
-  // Generate slug from address
-  const slug = generateSlug(address);
+  // Generate slug from address with fallback
+  // If address is empty, use id/identifier as fallback
+  const slugSource = address || `property-${id || identifier || 'unknown'}`;
+  const slug = generateSlug(slugSource);
   
   return {
     id,
