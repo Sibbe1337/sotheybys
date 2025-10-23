@@ -123,3 +123,32 @@ export function getVideoEmbedUrl(url: string): string {
   if (isValidVimeoUrl(url)) return getVimeoEmbedUrl(url);
   return url;
 }
+
+/**
+ * Calculate price per square meter
+ * Used for displaying €/m² for prices and fees
+ * @param value - The value in euros
+ * @param area - The area in square meters (livingArea)
+ * @returns The value per m² or undefined if calculation not possible
+ */
+export function perM2(value?: number | null, area?: number | null): number | undefined {
+  if (!value || !area || area <= 0) return undefined;
+  return value / area;
+}
+
+/**
+ * Format price per square meter with proper rounding
+ * @param value - The value in euros
+ * @param area - The area in square meters
+ * @returns Formatted string like "1 234 €/m²" or empty string
+ */
+export function formatPerM2(value?: number | null, area?: number | null): string {
+  const perSqm = perM2(value, area);
+  if (perSqm === undefined) return '';
+  
+  // Round to whole number for €/m² display
+  const rounded = Math.round(perSqm);
+  
+  // Format with Finnish number formatting (space as thousands separator)
+  return `${rounded.toLocaleString('fi-FI')} €/m²`;
+}

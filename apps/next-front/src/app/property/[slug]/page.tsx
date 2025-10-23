@@ -37,7 +37,9 @@ function formatSiteArea(v?: number) {
     const ha = v! / 10000;
     return `${ha.toFixed(2)} ha`;
   }
-  return `${v} m²`;
+  // Avrunda till heltal och formatera med mellanslag som tusentalsavgränsare
+  const rounded = Math.round(v!);
+  return `${rounded.toLocaleString('fi-FI')} m²`;
 }
 
 function getHeroItems(propertyData: any, language: 'fi' | 'sv' | 'en'): HeroItem[] {

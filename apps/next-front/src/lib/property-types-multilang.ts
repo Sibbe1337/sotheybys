@@ -1044,12 +1044,14 @@ export function formatPriceLocalized(price: number, language: SupportedLanguage)
     sv: 'sv-FI',
   }[language];
 
+  // Avrunda till heltal för att undvika decimaler
+  const rounded = Math.round(price);
   return new Intl.NumberFormat(locale, {
     style: 'currency',
     currency: 'EUR',
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
-  }).format(price);
+  }).format(rounded);
 }
 
 /**
@@ -1064,7 +1066,9 @@ export function formatAreaLocalized(area: number, language: SupportedLanguage): 
     sv: 'sv-FI',
   }[language];
 
-  return `${new Intl.NumberFormat(locale).format(area)} m²`;
+  // Avrunda till heltal för att undvika decimaler som 1298.9999999999998
+  const rounded = Math.round(area);
+  return `${new Intl.NumberFormat(locale).format(rounded)} m²`;
 }
 
 /**
