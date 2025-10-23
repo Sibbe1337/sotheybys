@@ -31,7 +31,9 @@ const PROPERTY_TYPES = [
     image: '/images/property-types/house.jpg',
     filter: (p: any) => {
       const type = p.acfRealEstate?.property?.propertyType?.toLowerCase() || '';
-      return type.includes('omakoti') || type.includes('villa') || type.includes('house') || type.includes('kiinteistö');
+      return type.includes('omakoti') || type.includes('villa') || type.includes('house') || 
+             type.includes('kiinteistö') || type.includes('egnahemshus') || 
+             type.includes('egendom') || type.includes('fastighet');
     }
   },
   {

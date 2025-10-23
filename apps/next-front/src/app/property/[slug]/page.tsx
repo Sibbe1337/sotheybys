@@ -420,6 +420,28 @@ export default function PropertyPage({ params }: PropertyPageProps) {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* PUNKT 1: Breadcrumbs - Överst till vänster */}
+      <nav className="bg-gray-50 border-b border-gray-200">
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex items-center gap-2 text-sm text-gray-600">
+            <LocaleLink href="/" className="hover:text-[var(--color-primary)] transition-colors">
+              {language === 'sv' ? 'Hem' : language === 'en' ? 'Home' : 'Koti'}
+            </LocaleLink>
+            <ChevronRight className="w-4 h-4" />
+            <LocaleLink 
+              href={language === 'sv' ? '/sv/objekt' : language === 'en' ? '/en/properties' : '/kohteet'} 
+              className="hover:text-[var(--color-primary)] transition-colors"
+            >
+              {language === 'sv' ? 'Objekt' : language === 'en' ? 'Properties' : 'Kohteet'}
+            </LocaleLink>
+            <ChevronRight className="w-4 h-4" />
+            <span className="text-gray-900 font-medium">
+              {propertyData.address}{propertyData.postalCode && `, ${propertyData.postalCode}`}{propertyData.city && ` ${propertyData.city}`}
+            </span>
+          </div>
+        </div>
+      </nav>
+
       {/* Schema.org JSON-LD for SEO */}
       <script
         type="application/ld+json"
@@ -499,6 +521,26 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                     </>
                   )}
 
+                  
+                  {/* PUNKT 2: Tilläggsinfo-knapp (nedre mitten) - Scrollar till hero-info */}
+                  <button
+                    onClick={() => {
+                      const heroSection = document.getElementById('hero-info-section');
+                      if (heroSection) {
+                        heroSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      }
+                    }}
+                    className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 hover:bg-white text-black px-4 py-2 flex items-center gap-2 transition-all shadow-md"
+                    aria-label={language === 'sv' ? 'Tilläggsinfo' : language === 'en' ? 'Additional info' : 'Lisätietoja'}
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span className="text-sm font-medium">
+                      {language === 'sv' ? 'Tilläggsinfo' : language === 'en' ? 'Additional info' : 'Lisätietoja'}
+                    </span>
+                  </button>
+                  
                   {/* PUNKT 2: Zoom-knapp (nedre höger) - Öppnar lightbox */}
                   <button
                     onClick={() => setIsLightboxOpen(true)}
@@ -508,24 +550,6 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                     <Maximize className="w-5 h-5" />
                     <span className="text-sm font-medium">
                       {language === 'sv' ? 'Förstora' : language === 'en' ? 'Zoom' : 'Suurenna'}
-                    </span>
-                  </button>
-
-                  {/* PUNKT 2: Tilläggsinfo-knapp (nedre mitten) */}
-                  <button
-                    onClick={() => {
-                      // Scroll to hero info section
-                      const heroSection = document.getElementById('hero-info-section');
-                      if (heroSection) {
-                        heroSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                      }
-                    }}
-                    className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 hover:bg-white text-black px-6 py-2 flex items-center gap-2 transition-all shadow-md"
-                    aria-label={language === 'sv' ? 'Tilläggsinfo' : language === 'en' ? 'Additional info' : 'Lisätiedot'}
-                  >
-                    <FileText className="w-5 h-5" />
-                    <span className="text-sm font-medium">
-                      {language === 'sv' ? 'Tilläggsinfo' : language === 'en' ? 'Additional info' : 'Lisätiedot'}
                     </span>
                   </button>
                 </div>
@@ -903,30 +927,29 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                 </p>
               )}
               
-              {/* Rumsantal */}
-              {propertyData.rooms && (
-                <p className="text-base text-gray-500 mb-3">
-                  {propertyData.rooms}
-                </p>
-              )}
-              
-              {/* PUNKT 4: Typ av hus | Lägenhetsbeskrivning (på samma rad) */}
-              <div className="flex flex-wrap justify-center gap-4 text-base text-gray-600 font-medium">
-                {(propertyData.propertyType || propertyData.estateType) && (
+              {/* PUNKT 4: Typ av objekt (Radhus, Höghus, Egnahemshus) | Rumsantal (5-6h, k, wc...) */}
+              <div className="flex flex-wrap justify-center gap-4 text-base text-gray-600 font-medium mt-4">
+                {/* Typ av objekt */}
+                {(propertyData.propertyType || propertyData.apartmentType || propertyData.estateType) && (
                   <span>
                     <span className="text-gray-500">
-                      {language === 'sv' ? 'Typ av hus: ' : language === 'en' ? 'Property type: ' : 'Talon tyyppi: '}
+                      {language === 'sv' ? 'Typ av objekt: ' : language === 'en' ? 'Property type: ' : 'Kohteen tyyppi: '}
                     </span>
-                    {propertyData.propertyType || propertyData.estateType}
+                    <span className="text-gray-900">
+                      {propertyData.propertyType || propertyData.apartmentType || propertyData.estateType}
+                    </span>
                   </span>
                 )}
-                {(propertyData.apartmentType || propertyData.typeOfApartment) && (
-                  <span>
-                    <span className="text-gray-500">|</span>
-                    <span className="ml-2 text-gray-500">
-                      {language === 'sv' ? 'Lägenhetsbeskrivning: ' : language === 'en' ? 'Apartment description: ' : 'Huoneistoselitys: '}
-                    </span>
-                    {propertyData.apartmentType || propertyData.typeOfApartment}
+                
+                {/* Separator om båda finns */}
+                {(propertyData.propertyType || propertyData.apartmentType || propertyData.estateType) && propertyData.rooms && (
+                  <span className="text-gray-400">|</span>
+                )}
+                
+                {/* Rumsantal (5-6h, k, wc, vh, sauna...) */}
+                {propertyData.rooms && (
+                  <span className="text-gray-900">
+                    {propertyData.rooms}
                   </span>
                 )}
               </div>
@@ -1184,7 +1207,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                         <span className="font-semibold">{formatEuroCurrency(propertyData.waterFee)}{getUnitSuffix('perPersonMonth', language)}</span>
                       </div>
                     )}
-                    {propertyData.propertyTax && (
+                    {propertyData.propertyTax && parseInt(String(propertyData.propertyTax).replace(/[^0-9]/g, '')) > 0 && (
                       <div className="flex justify-between py-2 border-b">
                         <span className="text-gray-600">{getTranslation('propertyTax', language)}</span>
                         <span className="font-semibold">{propertyData.propertyTax} {getUnitSuffix('perYear', language)}</span>

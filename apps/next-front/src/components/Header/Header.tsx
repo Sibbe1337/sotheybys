@@ -27,6 +27,7 @@ export default function Header({ menuItems }: HeaderProps) {
   const [expandedMobileMenu, setExpandedMobileMenu] = useState<string | null>(null);
   const [currentLang, setCurrentLang] = useState<string>('fi');
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isLandscape, setIsLandscape] = useState(false);
 
   // Multilingual menu items
   const getMenuItemsForLanguage = (lang: string): MenuItem[] => {
@@ -157,13 +158,30 @@ export default function Header({ menuItems }: HeaderProps) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Landscape orientation detector för mobil
+  useEffect(() => {
+    const checkOrientation = () => {
+      const isLandscapeMode = window.innerWidth > window.innerHeight && window.innerWidth < 1024;
+      setIsLandscape(isLandscapeMode);
+    };
+    
+    checkOrientation();
+    window.addEventListener('resize', checkOrientation);
+    window.addEventListener('orientationchange', checkOrientation);
+    
+    return () => {
+      window.removeEventListener('resize', checkOrientation);
+      window.removeEventListener('orientationchange', checkOrientation);
+    };
+  }, []);
+
   return (
     <header className={`sticky top-0 z-50 bg-[var(--color-primary)] text-white transition-all duration-300 ${
-      isScrolled ? 'shadow-lg' : ''
+      isScrolled || isLandscape ? 'shadow-lg' : ''
     }`}>
-      {/* TOP BAR - RAD 1 (Language + Search) - Dölj på mobil när scrollad */}
+      {/* TOP BAR - RAD 1 (Language + Search) - Dölj på mobil när scrollad ELLER landscape */}
       <div className={`border-b border-white/10 transition-all duration-300 ${
-        isScrolled ? 'hidden md:block md:py-1' : 'block'
+        isScrolled || isLandscape ? 'hidden md:block md:py-1' : 'block'
       }`}>
         <div className="max-w-[1400px] mx-auto px-6">
           <div className="flex items-center justify-end gap-6 py-2">
@@ -213,12 +231,12 @@ export default function Header({ menuItems }: HeaderProps) {
         </div>
       </div>
 
-      {/* MAIN HEADER BAR - RAD 2 (Logo + Navigation) - Komprimera på mobil när scrollad */}
+      {/* MAIN HEADER BAR - RAD 2 (Logo + Navigation) - Komprimera på mobil när scrollad ELLER landscape */}
       <div className="max-w-[1400px] mx-auto px-6">
         <div className={`flex items-center justify-between transition-all duration-300 ${
-          isScrolled ? 'py-2 md:py-4' : 'py-4'
+          isScrolled || isLandscape ? 'py-1 md:py-4' : 'py-4'
         }`}>
-          {/* Logo - Mindre på mobil när scrollad */}
+          {/* Logo - Mycket mindre på mobil landscape */}
           <LocaleLink 
             href="/" 
             className="flex items-center flex-shrink-0"
@@ -227,8 +245,8 @@ export default function Header({ menuItems }: HeaderProps) {
             <Image
               src="/images/logos/logo-white.png"
               alt="Snellman Sotheby's International Realty"
-              width={isScrolled ? 280 : 350}
-              height={isScrolled ? 84 : 105}
+              width={isLandscape ? 200 : isScrolled ? 280 : 350}
+              height={isLandscape ? 60 : isScrolled ? 84 : 105}
               className="h-16 w-auto"
               priority
               quality={100}
@@ -251,8 +269,10 @@ export default function Header({ menuItems }: HeaderProps) {
                   >
                     <LocaleLink
                       href={item.path || item.url}
-                      className={`flex items-center px-5 py-2 text-sm font-bold tracking-[0.2em] uppercase
+                      className={`flex items-center py-2 text-sm font-bold uppercase
                                  transition-all duration-200 [font-family:'freight-sans-pro',sans-serif] ${
+                                   isLandscape ? 'px-2 text-xs tracking-[0.1em]' : 'px-5 tracking-[0.2em]'
+                                 } ${
                                    isActive 
                                      ? 'text-[var(--color-gold)]' 
                                      : 'text-white hover:text-[var(--color-gold)]'
