@@ -56,6 +56,17 @@ export interface LocalizedDate {
  */
 export interface MultilingualPropertyListing {
   // ============================================================================
+  // 0. CORE IDENTIFIERS / TUNNISTEET / IDENTIFIERARE
+  // ============================================================================
+
+  /**
+   * URL-safe slug for the property (generated from address)
+   * FI: URL-turvallinen tunniste (luotu osoitteesta)
+   * SV: URL-säker identifierare (genererad från adress)
+   */
+  slug: string;
+
+  // ============================================================================
   // 1. GENERAL PROPERTY INFO / YLEISET KIINTEISTÖTIEDOT / ALLMÄN FASTIGHETSINFORMATION
   // ============================================================================
 

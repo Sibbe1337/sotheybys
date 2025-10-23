@@ -7,6 +7,7 @@
  * multilingual property listing schema.
  */
 
+import { generateSlug } from './utils';
 import {
   MultilingualPropertyListing,
   LocalizedString,
@@ -416,6 +417,11 @@ export function mapLinearAPIToProperty(
   }
   
   return {
+    // ========================================================================
+    // 0. CORE IDENTIFIERS
+    // ========================================================================
+    slug: generateSlug(extractLocalizedString(data.address).fi || `property-${nv.identifier || 'unknown'}`),
+    
     // ========================================================================
     // 1. GENERAL PROPERTY INFO
     // ========================================================================
