@@ -120,19 +120,34 @@ export function convertCompleteLinearToWordPressFormat(listing: CompleteLinearAP
   // Property specifications
   // CRITICAL: Use nonLocalizedValues for numeric fields (totalArea, plotArea) for accuracy
   const area = extractLocalizedValue(listing.area) || null;
-  const overallArea = listing.nonLocalizedValues?.totalArea || extractLocalizedValue(listing.overallArea) || null;
+  const otherArea = extractLocalizedValue(listing.otherArea) || null;
+  
+  // CRITICAL: Calculate totalArea (Kokonaispinta-ala) = area + otherArea
+  // Linear API may not send totalArea directly, but it's the sum of living area + other spaces
+  let overallArea = listing.nonLocalizedValues?.totalArea || extractLocalizedValue(listing.overallArea) || null;
+  
+  // If totalArea is missing but we have area and otherArea, calculate it
+  if (!overallArea && area && otherArea) {
+    const areaNum = parseFloat(area);
+    const otherAreaNum = parseFloat(otherArea);
+    if (!isNaN(areaNum) && !isNaN(otherAreaNum)) {
+      overallArea = (areaNum + otherAreaNum).toString();
+      console.log('✅ Calculated totalArea:', { address, area: areaNum, otherArea: otherAreaNum, total: overallArea });
+    }
+  }
   
   // Debug logging for Mailatie 3
   if (address && address.toLowerCase().includes('mailatie')) {
     console.log('🏠 Mailatie area data:', {
       address,
+      area,
+      otherArea,
       'nonLocalizedValues.totalArea': listing.nonLocalizedValues?.totalArea,
       'listing.overallArea': listing.overallArea,
-      'extracted overallArea': overallArea
+      'calculated/extracted overallArea': overallArea
     });
+    console.log('🔍 ALL nonLocalizedValues:', listing.nonLocalizedValues);
   }
-  
-  const otherArea = extractLocalizedValue(listing.otherArea) || null;
   const businessPremiseArea = extractLocalizedValue(listing.businessPremiseArea) || null;
   const areaBasis = extractLocalizedValue(listing.areaBasis) || null;
   const areaBasisControlMeasured = extractLocalizedValue(listing.areaBasisControlMeasured) || null;
