@@ -148,15 +148,34 @@ export default function PropertyCard({
           )}
         </div>
 
-        {/* Property Details */}
-        <MetaRow 
-          items={[
-            { value: property?.bedrooms ? `${property.bedrooms} ${getHomepageTranslation('bedrooms', language)}` : '' },
-            { value: property?.bathrooms ? `${property.bathrooms} ${getHomepageTranslation('bathrooms', language)}` : '' },
-            { value: property?.area ? (String(property.area).includes('m²') || String(property.area).includes('m2') ? property.area : `${property.area} m²`) : '' }
-          ]}
-          className="mb-3"
-        />
+        {/* Property Details - More comprehensive info */}
+        <div className="space-y-2 mb-3">
+          {/* Row 1: Living Area, Rooms */}
+          <div className="flex items-center gap-4 text-sm text-gray-700">
+            {property?.area && (
+              <div className="flex items-center gap-1">
+                <span className="font-semibold">{property.area}</span>
+                <span className="text-gray-500">m²</span>
+              </div>
+            )}
+            {property?.bedrooms && (
+              <div className="flex items-center gap-1">
+                <span className="font-semibold">{property.bedrooms}</span>
+                <span className="text-gray-500">{getHomepageTranslation('rooms', language)}</span>
+              </div>
+            )}
+          </div>
+
+          {/* Row 2: Property Type, Location */}
+          <div className="flex items-center gap-4 text-sm">
+            {property?.propertyType && (
+              <span className="text-gray-600">{property.propertyType}</span>
+            )}
+            {property?.city && (
+              <span className="text-gray-600">{property.city}</span>
+            )}
+          </div>
+        </div>
 
         {/* Excerpt */}
         {excerpt && (
