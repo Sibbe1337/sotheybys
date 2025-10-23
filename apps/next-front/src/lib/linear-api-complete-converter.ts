@@ -118,8 +118,9 @@ export function convertCompleteLinearToWordPressFormat(listing: CompleteLinearAP
   const averageTotalHeatingCharge = extractLocalizedValue(listing.averageTotalHeatingCharge) || null;
   
   // Property specifications
+  // CRITICAL: Use nonLocalizedValues for numeric fields (totalArea, plotArea) for accuracy
   const area = extractLocalizedValue(listing.area) || null;
-  const overallArea = extractLocalizedValue(listing.overallArea) || null;
+  const overallArea = listing.nonLocalizedValues?.totalArea || extractLocalizedValue(listing.overallArea) || null;
   const otherArea = extractLocalizedValue(listing.otherArea) || null;
   const businessPremiseArea = extractLocalizedValue(listing.businessPremiseArea) || null;
   const areaBasis = extractLocalizedValue(listing.areaBasis) || null;
@@ -168,7 +169,8 @@ export function convertCompleteLinearToWordPressFormat(listing: CompleteLinearAP
   const electricHeatingPowerUsage = extractLocalizedValue(listing.electricHeatingPowerUsage) || null;
   
   // Lot information
-  const lotArea = extractLocalizedValue(listing.lotArea) || null;
+  // CRITICAL: Use nonLocalizedValues for numeric fields (plotArea) for accuracy
+  const lotArea = listing.nonLocalizedValues?.plotArea || extractLocalizedValue(listing.lotArea) || null;
   const lotType = extractLocalizedValue(listing.lotType) || null;
   const lotOwnership = extractLocalizedValue(listing.lotOwnership) || null;
   const lotNumber = extractLocalizedValue(listing.lotNumber) || null;

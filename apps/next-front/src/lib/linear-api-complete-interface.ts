@@ -51,6 +51,8 @@ export interface LinearAPINonLocalizedValues {
   floorCount: string;
   lotArea: string;
   lotAreaUnit: string;
+  plotArea?: string; // Tomtstorlek (plot size)
+  totalArea?: string; // Total yta (total area)
   debtFreePrice: string;
   publishDate: string;
   askPrice: string;
@@ -137,6 +139,7 @@ export interface CompleteLinearAPIListing {
   // Property specifications
   area: LocalizedField;
   overallArea: LocalizedField;
+  totalArea: LocalizedField; // Total yta (same as overallArea, from Linear API)
   otherArea: LocalizedField;
   businessPremiseArea: LocalizedField;
   areaBasis: LocalizedField;
@@ -190,6 +193,7 @@ export interface CompleteLinearAPIListing {
   
   // Lot and property details
   lotArea: LocalizedField;
+  plotArea: LocalizedField; // Tomtstorlek (same as lotArea, from Linear API)
   lotType: LocalizedField;
   lotOwnership: LocalizedField;
   lotNumber: LocalizedField;
