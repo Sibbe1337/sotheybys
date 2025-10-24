@@ -153,7 +153,7 @@ function getHeroItems(propertyData: any, language: 'fi' | 'sv' | 'en'): HeroItem
   };
 
   // "Not specified" text by language
-  const notSpecified = language === 'sv' ? 'Ej angivet' : language === 'en' ? 'Not specified' : 'Ei määritelty';
+  const notSpecified = getTranslation('notSpecified', language);
 
   if (isFastighet) {
     // FASTIGHET: Bostadsyta | Total yta | Pris | Stadsdel | Tomtstorlek
@@ -1361,16 +1361,16 @@ export default function PropertyPage({ params }: PropertyPageProps) {
               {expandedSections.propertyInfo && (
                 <div className="bg-white border border-gray-200 p-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* Våning (format "x/y") - OBLIGATORISKT, visa alltid */}
-                    <div className="flex justify-between py-2 border-b">
-                      <span className="text-gray-600">{getTranslation('floor', language)}</span>
-                      <span className="font-semibold">
-                        {propertyData.floor 
-                          ? `${propertyData.floor}${propertyData.numberOfFloors ? `/${propertyData.numberOfFloors}` : ''}`
-                          : language === 'sv' ? 'Ej angivet' : language === 'en' ? 'Not specified' : 'Ei ilmoitettu'
-                        }
-                      </span>
-                    </div>
+             {/* Våning (format "x/y") - OBLIGATORISKT, visa alltid */}
+             <div className="flex justify-between py-2 border-b">
+               <span className="text-gray-600">{getTranslation('floor', language)}</span>
+               <span className="font-semibold">
+                 {propertyData.floor 
+                   ? `${propertyData.floor}${propertyData.numberOfFloors ? `/${propertyData.numberOfFloors}` : ''}`
+                   : getTranslation('notSpecified', language)
+                 }
+               </span>
+             </div>
                     {/* Vapautuminen (Tillträde) */}
                     <RowIf 
                       value={propertyData.availableFrom || propertyData.availability} 
@@ -1379,16 +1379,16 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                     />
                     
                     {/* 🆕 FLYTTADE FRÅN ENERGICERTIFIKAT: Hissi, Balkong, Sauna */}
-                    {/* Hissi (Hiss) */}
-                    <div className="flex justify-between py-2 border-b">
-                      <span className="text-gray-600">{getTranslation('elevator', language)}</span>
-                      <span className="font-semibold">
-                        {propertyData.elevator != null
-                          ? getBooleanText(propertyData.elevator, language)
-                          : language === 'sv' ? 'Ej angivet' : language === 'en' ? 'Not specified' : 'Ei ilmoitettu'
-                        }
-                      </span>
-                    </div>
+             {/* Hissi (Hiss) */}
+             <div className="flex justify-between py-2 border-b">
+               <span className="text-gray-600">{getTranslation('elevator', language)}</span>
+               <span className="font-semibold">
+                 {propertyData.elevator != null
+                   ? getBooleanText(propertyData.elevator, language)
+                   : getTranslation('notSpecified', language)
+                 }
+               </span>
+             </div>
                     
                     {/* Parveke (Balkong) */}
                     <div className="flex justify-between py-2 border-b">
@@ -1396,7 +1396,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                       <span className="font-semibold">
                         {propertyData.balcony != null
                           ? getBooleanText(propertyData.balcony, language)
-                          : language === 'sv' ? 'Ej angivet' : language === 'en' ? 'Not specified' : 'Ei ilmoitettu'
+                          : getTranslation('notSpecified', language)
                         }
                       </span>
                     </div>
@@ -1407,7 +1407,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                       <span className="font-semibold">
                         {propertyData.sauna != null
                           ? getBooleanText(propertyData.sauna, language)
-                          : language === 'sv' ? 'Ej angivet' : language === 'en' ? 'Not specified' : 'Ei ilmoitettu'
+                          : getTranslation('notSpecified', language)
                         }
                       </span>
                     </div>

@@ -519,6 +519,11 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     sv: 'Nej',
     en: 'No'
   },
+  notSpecified: {
+    fi: 'Ei ilmoitettu',
+    sv: 'Ej angivet',
+    en: 'Not specified'
+  },
   
   // Unit Suffixes
   perMonth: {
