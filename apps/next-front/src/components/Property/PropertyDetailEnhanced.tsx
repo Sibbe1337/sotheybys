@@ -378,13 +378,18 @@ export default function PropertyDetailEnhanced({
   const hasCompanyDebt = gt0(debtFreePrice) && gt0(askPrice) && debtFreePrice !== askPrice;
   const hasHousingCompany = hasText(housingCooperativeName);
   
+  // Check description for house/villa keywords (highest priority)
+  const descriptionStr = String(propertyData?.description || propertyData?.freeText || '').toLowerCase();
+  const isDefinitelyHouse = /omakotitalo|villa|egendom|egnahemshus|detached house|single-family|radhus|townhouse|parhus|semi-detached/i.test(descriptionStr);
+  
   // LÄGENHET (Apartment) identification:
-  // 1. Has housing company debt (debtFreePrice !== askPrice)
-  // 2. Has housingCompanyName
-  // 3. Address contains "katu" or "gatan" (city street)
-  // 4. typeOfApartment contains apartment format like "2h+k", "3h, k", "5-6h, k, kph"
-  // 5. NOT a rental
-  const isApartment = !isRental && (
+  // 1. NOT a house (checked via description keywords)
+  // 2. Has housing company debt (debtFreePrice !== askPrice)
+  // 3. Has housingCompanyName
+  // 4. Address contains "katu" or "gatan" (city street)
+  // 5. typeOfApartment contains apartment format like "2h+k", "3h, k", "5-6h, k, kph"
+  // 6. NOT a rental
+  const isApartment = !isRental && !isDefinitelyHouse && (
     hasCompanyDebt || 
     hasHousingCompany || 
     /katu|gatan|street/i.test(addressStr) ||
