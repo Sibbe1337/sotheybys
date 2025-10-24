@@ -670,6 +670,38 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     fi: 'Kokonaispinta-ala',
     sv: 'Total yta',
     en: 'Total Area'
+  },
+  
+  // 🆕 OBLIGATORISKA FÄLT FÖR LÄGENHETER (från kundens kravlista)
+  elevator: {
+    fi: 'Hissi',
+    sv: 'Hiss',
+    en: 'Elevator'
+  },
+  encumbrances: {
+    fi: 'Rasitteet',
+    sv: 'Belastningar',
+    en: 'Encumbrances'
+  },
+  specialRights: {
+    fi: 'Erityiset oikeudet',
+    sv: 'Särskilda rättigheter',
+    en: 'Special Rights'
+  },
+  decidedRenovations: {
+    fi: 'Päätetyt korjaukset',
+    sv: 'Beslutade reparationer',
+    en: 'Decided Renovations'
+  },
+  plannedRenovations: {
+    fi: 'Suunnitellut korjaukset',
+    sv: 'Planerade reparationer',
+    en: 'Planned Renovations'
+  },
+  companyFinancialStatus: {
+    fi: 'Yhtiön taloudellinen tila',
+    sv: 'Bolagets ekonomiska ställning',
+    en: 'Company Financial Status'
   }
 };
 

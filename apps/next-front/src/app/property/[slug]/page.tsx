@@ -1369,6 +1369,12 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                       label={getTranslation('floor', language)}
                       language={language}
                     />
+                    {/* 🆕 Hiss (Ja/Nej) - OBLIGATORISKT för lägenheter */}
+                    <RowIf 
+                      value={propertyData.elevator} 
+                      label={getTranslation('elevator', language)}
+                      language={language}
+                    />
                     {/* Byggnadsår */}
                     <RowIf 
                       value={propertyData.yearOfBuilding} 
@@ -1453,6 +1459,30 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                       <RowIf 
                         value={propertyData.redemptionClauseFlats} 
                         label={getTranslation('redemptionClauseFlats', language)}
+                        language={language}
+                      />
+                      {/* 🆕 Fastighetens ägarform (Ägande) - OBLIGATORISKT för lägenheter */}
+                      <RowIf 
+                        value={propertyData.siteOwnershipType || propertyData.plotOwnership} 
+                        label={getTranslation('siteOwnershipType', language)}
+                        language={language}
+                      />
+                      {/* 🆕 Beslutade reparationer - OBLIGATORISKT för lägenheter */}
+                      <RowIf 
+                        value={propertyData.decidedRenovations} 
+                        label={getTranslation('decidedRenovations', language)}
+                        language={language}
+                      />
+                      {/* 🆕 Planerade reparationer - OBLIGATORISKT för lägenheter */}
+                      <RowIf 
+                        value={propertyData.plannedRenovations || propertyData.housingCompanyUpcomingRenovations} 
+                        label={getTranslation('plannedRenovations', language)}
+                        language={language}
+                      />
+                      {/* 🆕 Bolagets ekonomiska ställning - OBLIGATORISKT för lägenheter */}
+                      <RowIf 
+                        value={propertyData.companyFinancialStatus} 
+                        label={getTranslation('companyFinancialStatus', language)}
                         language={language}
                       />
                     </div>
@@ -1639,6 +1669,17 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                     <RowIf 
                       value={propertyData.buildingRights && typeof propertyData.buildingRights === 'string' ? propertyData.buildingRights : null} 
                       label={getTranslation('buildingRights', language)}
+                      language={language}
+                    />
+                    {/* 🆕 Belastningar / Särskilda rättigheter - OBLIGATORISKT för lägenheter */}
+                    <RowIf 
+                      value={propertyData.encumbrances} 
+                      label={getTranslation('encumbrances', language)}
+                      language={language}
+                    />
+                    <RowIf 
+                      value={propertyData.specialRights} 
+                      label={getTranslation('specialRights', language)}
                       language={language}
                     />
                   </div>
