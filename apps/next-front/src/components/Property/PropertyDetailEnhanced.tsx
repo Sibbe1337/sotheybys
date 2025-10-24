@@ -619,7 +619,17 @@ export default function PropertyDetailEnhanced({
       return null;
     }
     
-    const url = virtualShowing || videoUrl || youtubeUrl;
+    // Extract URL string from object if needed (Linear API returns {key, value, category})
+    let url = virtualShowing || videoUrl || youtubeUrl;
+    if (typeof url === 'object' && url !== null && 'value' in url) {
+      url = url.value;
+    }
+    
+    // Ensure url is a string
+    if (typeof url !== 'string') {
+      console.warn('videoUrl is not a string:', url);
+      return null;
+    }
     
     // Check for common virtual tour providers
     if (url.includes('matterport.com')) {
