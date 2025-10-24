@@ -1497,19 +1497,19 @@ export default function PropertyDetailEnhanced({
                       {propertyData?.siteOwnershipType && (
                         <div className="flex justify-between">
                           <span className="text-gray-600">Tontin omistus:</span>
-                          <span className="font-medium">{propertyData.siteOwnershipType}</span>
+                          <span className="font-medium">{getLocalizedText(propertyData.siteOwnershipType, language)}</span>
                         </div>
                       )}
                       {propertyData?.ownershipType && (
                         <div className="flex justify-between">
                           <span className="text-gray-600">Omistusmuoto:</span>
-                          <span className="font-medium">{propertyData.ownershipType}</span>
+                          <span className="font-medium">{getLocalizedText(propertyData.ownershipType, language)}</span>
                         </div>
                       )}
                       {propertyData?.housingTenure && (
                         <div className="flex justify-between">
                           <span className="text-gray-600">Hallintamuoto:</span>
-                          <span className="font-medium">{propertyData.housingTenure}</span>
+                          <span className="font-medium">{getLocalizedText(propertyData.housingTenure, language)}</span>
                         </div>
                       )}
                     </div>
@@ -1811,7 +1811,7 @@ export default function PropertyDetailEnhanced({
                     {propertyData?.siteOwnershipType && (
                       <div className="flex justify-between">
                         <span className="text-gray-600">Tontin omistus:</span>
-                        <span className="font-medium">{propertyData.siteOwnershipType}</span>
+                        <span className="font-medium">{getLocalizedText(propertyData.siteOwnershipType, language)}</span>
                       </div>
                     )}
                   </div>
@@ -2576,7 +2576,7 @@ export default function PropertyDetailEnhanced({
                           {propertyData?.siteOwnershipType && (
                             <div className="flex justify-between">
                               <span className="text-gray-600">Tontin omistus:</span>
-                              <span className="font-medium">{propertyData.siteOwnershipType}</span>
+                              <span className="font-medium">{getLocalizedText(propertyData.siteOwnershipType, language)}</span>
                             </div>
                           )}
                           {propertyData?.ownershipType && (
