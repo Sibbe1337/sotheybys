@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { LocaleLink } from '@/components/LocaleLink';
 import { ChevronLeft, ChevronRight, Facebook, Linkedin, Mail, Phone, MapPin, Home, Bath, Maximize, FileText } from 'lucide-react';
-import { getVideoEmbedUrl, isValidVideoUrl, isValidYouTubeUrl, isValidVimeoUrl } from '@/lib/utils';
+import { getVideoEmbedUrl, isValidVideoUrl, isValidYouTubeUrl, isValidVimeoUrl, removeEmojis } from '@/lib/utils';
 import { parseEuroNumber, formatEuroCurrency } from '@/lib/number-eu';
 import { getTranslation, getBooleanText, getUnitSuffix, type SupportedLanguage } from '@/lib/property-translations';
 import { formatPerM2 } from '@/lib/utils';
@@ -1038,7 +1038,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
           <div className="max-w-4xl mx-auto">
             {/* 1. Titel på presentationen */}
             <h1 className="text-3xl md:text-4xl font-bold text-[var(--color-primary)] mb-4 text-center">
-              {property.title}
+              {removeEmojis(property.title || '')}
             </h1>
             
             {/* 2. Typ av hus | lägenhetsbeskrivning */}
@@ -1063,13 +1063,16 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                 });
               }
               
+              // Remove emojis from description
+              const cleanDescription = removeEmojis(descriptionText);
+              
               return hasDescription ? (
                 <div className="mb-12">
                   <h3 className="text-2xl font-semibold text-[var(--color-primary)] mb-6 text-center">
                     {getTranslation('description', language)}
                   </h3>
                   <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
-                    <div dangerouslySetInnerHTML={{ __html: descriptionText }} />
+                    <div dangerouslySetInnerHTML={{ __html: cleanDescription }} />
                   </div>
                 </div>
               ) : null;
