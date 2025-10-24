@@ -1336,36 +1336,6 @@ export default function PropertyPage({ params }: PropertyPageProps) {
               {expandedSections.propertyInfo && (
                 <div className="bg-white border border-gray-200 p-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* Husbolagets namn */}
-                    <RowIf 
-                      value={propertyData.housingCompanyName} 
-                      label={getTranslation('housingCompanyName', language)}
-                      language={language}
-                    />
-                    {/* Hemort / Stad */}
-                    <RowIf 
-                      value={propertyData.housingCompanyHomeCity || propertyData.city} 
-                      label={getTranslation('city', language)}
-                      language={language}
-                    />
-                    {/* Fastighetsskötsel */}
-                    <RowIf 
-                      value={propertyData.propertyMaintenance} 
-                      label={getTranslation('propertyMaintenance', language)}
-                      language={language}
-                    />
-                    {/* Långfristiga lån */}
-                    <RowIf 
-                      value={propertyData.companyLoans} 
-                      label={getTranslation('companyLoans', language)}
-                      language={language}
-                    />
-                    {/* Tomtstorlek (m²/ha) */}
-                    <RowIf 
-                      value={propertyData.siteArea && propertyData.siteArea > 0 ? formatSiteArea(propertyData.siteArea) : null} 
-                      label={getTranslation('siteArea', language)}
-                      language={language}
-                    />
                     {/* Våning (format "x/y") */}
                     <RowIf 
                       value={propertyData.floor ? `${propertyData.floor}${propertyData.numberOfFloors ? `/${propertyData.numberOfFloors}` : ''}` : null} 
@@ -1378,37 +1348,6 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                       label={getTranslation('elevator', language)}
                       language={language}
                     />
-                    {/* Byggnadsår */}
-                    <RowIf 
-                      value={propertyData.yearOfBuilding} 
-                      label={getTranslation('buildingYear', language)}
-                      language={language}
-                    />
-                    {/* Byggnadsmaterial */}
-                    <RowIf 
-                      value={propertyData.buildingMaterial} 
-                      label={getTranslation('buildingMaterial', language)}
-                      language={language}
-                    />
-                    {/* Taktyp / Takmaterial */}
-                    <RowIf 
-                      value={propertyData.roofType} 
-                      label={getTranslation('roofType', language)}
-                      language={language}
-                    />
-                    {/* Uppvärmning */}
-                    <RowIf 
-                      value={propertyData.heatingType || propertyData.heatingSystem} 
-                      label={getTranslation('heatingSystem', language)}
-                      language={language}
-                    />
-                    {/* Antenn / Kabel - UPDATED: Use antennaSystem from mapper */}
-                    <RowIf 
-                      value={propertyData.antennaSystem || propertyData.antennaOrCable} 
-                      label={getTranslation('antennaSystem', language)}
-                      language={language}
-                    />
-                    {/* REMOVED: Antal bostäder (housingCompanyApartmentCount) - enligt kravspec */}
                   </div>
                 </div>
               )}
@@ -1431,21 +1370,75 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                 {expandedSections.housingCompanyInfo && (
                   <div className="bg-white border border-gray-200 p-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {/* KRAVSPEC: Bolagsinformation för lägenheter */}
+                      {/* KRAVSPEC: Bolags- och fastighetsuppgifter för lägenheter */}
+                      
+                      {/* Husbolagets namn */}
+                      <RowIf 
+                        value={propertyData.housingCompanyName} 
+                        label={getTranslation('housingCompanyName', language)}
+                        language={language}
+                      />
+                      {/* Hemort / Stad */}
+                      <RowIf 
+                        value={propertyData.housingCompanyHomeCity || propertyData.city} 
+                        label={getTranslation('city', language)}
+                        language={language}
+                      />
+                      {/* Fastighetsskötsel */}
+                      <RowIf 
+                        value={propertyData.propertyMaintenance} 
+                        label={getTranslation('propertyMaintenance', language)}
+                        language={language}
+                      />
+                      {/* Långfristiga lån */}
+                      <RowIf 
+                        value={propertyData.companyLoans} 
+                        label={getTranslation('companyLoans', language)}
+                        language={language}
+                      />
+                      {/* Tomtstorlek (m²/ha) */}
+                      <RowIf 
+                        value={propertyData.siteArea && propertyData.siteArea > 0 ? formatSiteArea(propertyData.siteArea) : null} 
+                        label={getTranslation('siteArea', language)}
+                        language={language}
+                      />
+                      {/* Byggnadsår */}
+                      <RowIf 
+                        value={propertyData.yearOfBuilding} 
+                        label={getTranslation('buildingYear', language)}
+                        language={language}
+                      />
+                      {/* Byggnadsmaterial */}
+                      <RowIf 
+                        value={propertyData.buildingMaterial} 
+                        label={getTranslation('buildingMaterial', language)}
+                        language={language}
+                      />
+                      {/* Taktyp / Takmaterial */}
+                      <RowIf 
+                        value={propertyData.roofType} 
+                        label={getTranslation('roofType', language)}
+                        language={language}
+                      />
+                      {/* Uppvärmning */}
+                      <RowIf 
+                        value={propertyData.heatingType || propertyData.heatingSystem} 
+                        label={getTranslation('heatingSystem', language)}
+                        language={language}
+                      />
+                      {/* Antenn / Kabel */}
+                      <RowIf 
+                        value={propertyData.antennaSystem || propertyData.antennaOrCable} 
+                        label={getTranslation('antennaSystem', language)}
+                        language={language}
+                      />
+                      
                       {/* Aktienummer */}
                       <RowIf 
                         value={propertyData.numberOfShares} 
                         label={getTranslation('numberOfShares', language)}
                         language={language}
                       />
-                      {/* Våning - visa bara om den inte redan visas i Fastighetsinformation */}
-                      {!propertyData.floor && (
-                        <RowIf 
-                          value={propertyData.floorLocation ? `${propertyData.floorLocation}${propertyData.numberOfFloors ? `/${propertyData.numberOfFloors}` : ''}` : null} 
-                          label={getTranslation('floor', language)}
-                          language={language}
-                        />
-                      )}
                       {/* Balkong */}
                       <RowIf 
                         value={propertyData.balcony} 
