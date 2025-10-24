@@ -90,13 +90,13 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     en: 'Debt-Free Price'
   },
   maintenanceFee: {
-    fi: 'Yhtiövastike',
-    sv: 'Bolagsavgift',
+    fi: 'Hoitovastike',
+    sv: 'Vederlag',
     en: 'Maintenance Fee'
   },
   financingFee: {
     fi: 'Rahoitusvastike',
-    sv: 'Finansieringsavgift',
+    sv: 'Finansieringsvederlag',
     en: 'Financing Fee'
   },
   totalFee: {
@@ -212,8 +212,8 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     en: 'Rental Information'
   },
   availableFrom: {
-    fi: 'Vapautuu',
-    sv: 'Tillgänglig från',
+    fi: 'Vapautuminen',
+    sv: 'Tillträde',
     en: 'Available From'
   },
   tenantResponsibilities: {
@@ -312,7 +312,7 @@ export const PROPERTY_TRANSLATIONS: Translations = {
   },
   ownershipType: {
     fi: 'Omistusmuoto',
-    sv: 'Form av ägandet',
+    sv: 'Äganderätt',
     en: 'Ownership Type'
   },
   
@@ -411,8 +411,8 @@ export const PROPERTY_TRANSLATIONS: Translations = {
   
   // Other Fields
   zoningSituation: {
-    fi: 'Kaavoitustilanne',
-    sv: 'Planläggningssituation',
+    fi: 'Kaavatilanne',
+    sv: 'Generalplan',
     en: 'Zoning Situation'
   },
   buildingRights: {
