@@ -187,6 +187,7 @@ export async function GET(
         plotOwnership_fi: raw.plotOwnership?.fi?.value,
         plotOwnership_obj: raw.plotOwnership,
         lotOwnership_fi: (raw as any).lotOwnership?.fi?.value,
+        siteOwnershipType_RAW: (raw as any).siteOwnershipType,  // ← Show raw value (might be string!)
         siteOwnershipType_fi: (raw as any).siteOwnershipType?.fi?.value,
         
         // Vesijohto (Water connection)
@@ -198,7 +199,12 @@ export async function GET(
         // Other rental/property fields
         petsAllowed: raw.nonLocalizedValues?.petsAllowed,
         smokingAllowed: raw.nonLocalizedValues?.smokingAllowed,
-        rent: raw.nonLocalizedValues?.rent
+        rent: raw.nonLocalizedValues?.rent,
+        
+        // Check nonLocalizedValues too
+        nv_siteOwnershipType: raw.nonLocalizedValues?.siteOwnershipType,
+        nv_ownershipType: raw.nonLocalizedValues?.ownershipType,
+        nv_housingTenure: raw.nonLocalizedValues?.housingTenure
       });
       
       // Debug: Show ALL keys from raw data to find missing fields
