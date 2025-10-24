@@ -1091,17 +1091,34 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                     </h3>
                     
                     {/* Agent Image */}
-                    {(agentData.image || agentData.photo?.sourceUrl) && (
-                      <div className="relative w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden">
-                        <Image
-                          src={agentData.image || agentData.photo?.sourceUrl}
-                          alt={agentData.name}
-                          fill
-                          className="object-cover"
-                          unoptimized
-                        />
-                      </div>
-                    )}
+                    {(() => {
+                      const imageUrl = agentData.image || agentData.photo?.sourceUrl || agentData.photo;
+                      console.log('🖼️ Agent sidebar image data:', {
+                        hasImage: !!agentData.image,
+                        hasPhotoSourceUrl: !!agentData.photo?.sourceUrl,
+                        hasPhoto: !!agentData.photo,
+                        imageUrl,
+                        fullAgentData: agentData
+                      });
+                      
+                      return imageUrl ? (
+                        <div className="relative w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden shadow-lg">
+                          <Image
+                            src={imageUrl}
+                            alt={agentData.name}
+                            fill
+                            className="object-cover"
+                            unoptimized
+                            onError={(e) => {
+                              console.error('❌ Sidebar: Agent photo failed to load:', imageUrl);
+                            }}
+                            onLoad={() => {
+                              console.log('✅ Sidebar: Agent photo loaded successfully:', imageUrl);
+                            }}
+                          />
+                        </div>
+                      ) : null;
+                    })()}
                     
                     {/* Agent Info */}
                     <div className="text-center mb-6">
