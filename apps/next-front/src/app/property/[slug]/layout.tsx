@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import { generatePropertyMetadata } from './metadata';
 
 interface PropertyLayoutProps {
   children: React.ReactNode;
@@ -10,11 +9,13 @@ interface PropertyLayoutProps {
 
 /**
  * Server Component Layout for Property Pages
- * Generates dynamic metadata for SEO
+ * CRITICAL: Use static metadata to avoid server-side fetch errors
+ * Client-side page component will handle dynamic content
  */
-export async function generateMetadata({ params }: PropertyLayoutProps): Promise<Metadata> {
-  return generatePropertyMetadata(params.slug);
-}
+export const metadata: Metadata = {
+  title: 'Snellman Sotheby\'s International Realty',
+  description: 'Premium real estate in Finland',
+};
 
 export default function PropertyLayout({ children }: PropertyLayoutProps) {
   return <>{children}</>;
