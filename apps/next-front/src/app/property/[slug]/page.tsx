@@ -1244,6 +1244,12 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                           label={getTranslation('waterFeePerPerson', language)}
                           language={language}
                         />
+                        {/* 🆕 Övriga avgifter (Muut maksut) - OBLIGATORISKT om det finns */}
+                        <RowIf 
+                          value={propertyData.otherCharges || propertyData.additionalFees} 
+                          label={getTranslation('otherCharges', language)}
+                          language={language}
+                        />
                         <RowIf 
                           value={propertyData.debtPart ? formatPriceLocalized(propertyData.debtPart, language) : null} 
                           label={getTranslation('debtPart', language)}

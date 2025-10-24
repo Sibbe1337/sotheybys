@@ -702,6 +702,16 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     fi: 'Yhtiön taloudellinen tila',
     sv: 'Bolagets ekonomiska ställning',
     en: 'Company Financial Status'
+  },
+  otherCharges: {
+    fi: 'Muut maksut',
+    sv: 'Övriga avgifter',
+    en: 'Other Charges'
+  },
+  additionalFees: {
+    fi: 'Lisämaksut',
+    sv: 'Tilläggsavgifter',
+    en: 'Additional Fees'
   }
 };
 
