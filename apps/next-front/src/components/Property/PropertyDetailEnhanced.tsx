@@ -2124,8 +2124,10 @@ export default function PropertyDetailEnhanced({
                             </div>
                           )}
                           <div className="flex justify-between">
-                            <span className="text-gray-600">Omistusmuoto:</span>
-                            <span className={propertyData?.ownershipType ? "font-medium" : "text-gray-400 italic"}>{propertyData?.ownershipType || '(Täydennetään)'}</span>
+                            <span className="text-gray-600">Tontin omistus:</span>
+                            <span className={propertyData?.siteOwnershipType ? "font-medium" : "text-gray-400 italic"}>
+                              {propertyData?.siteOwnershipType ? getLocalizedText(propertyData.siteOwnershipType, language) : '(Täydennetään)'}
+                            </span>
                           </div>
                           {(zoningStatus || propertyData?.zoningSituation) && (
                             <div className="flex justify-between">
