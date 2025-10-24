@@ -10,6 +10,7 @@ import { getVideoEmbedUrl, isValidVideoUrl, isValidYouTubeUrl, isValidVimeoUrl }
 import { parseEuroNumber, formatEuroCurrency } from '@/lib/number-eu';
 import { getTranslation, getBooleanText, getUnitSuffix, type SupportedLanguage } from '@/lib/property-translations';
 import { formatPerM2 } from '@/lib/utils';
+import { formatPriceLocalized } from '@/lib/property-types-multilang';
 // API calls will be made through our server-side route
 
 // ============================================================================
@@ -1209,46 +1210,42 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                       /* 🏡 SALE PROPERTY (LÄGENHET) - Show price info with €/m² */
                       <>
                         <RowIf 
-                          value={propertyData.price} 
+                          value={propertyData.price ? formatPriceLocalized(propertyData.price, language) : null} 
                           label={getTranslation('salesPrice', language)}
                           right={formatPerM2(propertyData.price, propertyData.livingArea)}
                           language={language}
                         />
                         <RowIf 
-                          value={propertyData.debtFreePrice} 
+                          value={propertyData.debtFreePrice ? formatPriceLocalized(propertyData.debtFreePrice, language) : null} 
                           label={getTranslation('debtFreePrice', language)}
                           right={formatPerM2(propertyData.debtFreePrice, propertyData.livingArea)}
                           language={language}
                         />
                         <RowIf 
-                          value={propertyData.maintenanceFee} 
+                          value={propertyData.maintenanceFee ? `${formatPriceLocalized(propertyData.maintenanceFee, language)}${getUnitSuffix('perMonth', language)}` : null} 
                           label={getTranslation('maintenanceFee', language)}
-                          suffix={getUnitSuffix('perMonth', language)}
                           right={formatPerM2(propertyData.maintenanceFee, propertyData.livingArea)}
                           language={language}
                         />
                         <RowIf 
-                          value={propertyData.financingFee} 
+                          value={propertyData.financingFee ? `${formatPriceLocalized(propertyData.financingFee, language)}${getUnitSuffix('perMonth', language)}` : null} 
                           label={getTranslation('financingFee', language)}
-                          suffix={getUnitSuffix('perMonth', language)}
                           right={formatPerM2(propertyData.financingFee, propertyData.livingArea)}
                           language={language}
                         />
                         <RowIf 
-                          value={propertyData.totalFee} 
+                          value={propertyData.totalFee ? `${formatPriceLocalized(propertyData.totalFee, language)}${getUnitSuffix('perMonth', language)}` : null} 
                           label={getTranslation('totalMonthlyFee', language)}
-                          suffix={getUnitSuffix('perMonth', language)}
                           right={formatPerM2(propertyData.totalFee, propertyData.livingArea)}
                           language={language}
                         />
                         <RowIf 
-                          value={propertyData.waterFee} 
+                          value={propertyData.waterFee ? `${formatPriceLocalized(propertyData.waterFee, language)}${getUnitSuffix('perPersonMonth', language)}` : null} 
                           label={getTranslation('waterFeePerPerson', language)}
-                          suffix={getUnitSuffix('perPersonMonth', language)}
                           language={language}
                         />
                         <RowIf 
-                          value={propertyData.debtPart} 
+                          value={propertyData.debtPart ? formatPriceLocalized(propertyData.debtPart, language) : null} 
                           label={getTranslation('debtPart', language)}
                           language={language}
                         />
