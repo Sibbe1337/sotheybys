@@ -1091,25 +1091,18 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                     </h3>
                     
                     {/* Agent Image */}
-                    {(() => {
-                      const imageUrl = agentData.avatar || agentData.photo?.sourceUrl || agentData.image || agentData.photo;
-                      
-                      if (imageUrl) {
-                        return (
-                          <div className="relative w-40 h-40 mx-auto mb-6 rounded-full overflow-hidden shadow-lg border-4 border-white">
-                            <Image
-                              src={imageUrl}
-                              alt={agentData.name || 'Agent'}
-                              fill
-                              className="object-cover"
-                              unoptimized
-                              priority
-                            />
-                          </div>
-                        );
-                      }
-                      return null;
-                    })()}
+                    {agentData && (agentData.avatar || agentData.photo?.sourceUrl || agentData.image || agentData.photo) && (
+                      <div className="relative w-40 h-40 mx-auto mb-6 rounded-full overflow-hidden shadow-lg border-4 border-white">
+                        <Image
+                          src={agentData.avatar || agentData.photo?.sourceUrl || agentData.image || agentData.photo}
+                          alt={agentData.name || 'Agent'}
+                          fill
+                          className="object-cover"
+                          unoptimized
+                          priority
+                        />
+                      </div>
+                    )}
                     
                     {/* Agent Info */}
                     <div className="text-center mb-6">
