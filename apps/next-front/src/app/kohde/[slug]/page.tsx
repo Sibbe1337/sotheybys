@@ -103,43 +103,31 @@ interface PropertyWithACF {
 export const revalidate = 60;
 
 // Helper function to fetch property data
-async function fetchPropertyData(slug: string): Promise<PropertyWithACF | null> {
-  // Try to fetch from WordPress first
-  let property: PropertyWithACF | null = await getPostBySlug(slug) as PropertyWithACF;
-  
-  // If not found in WordPress, try Linear API
-  if (!property) {
-    try {
-      // Ensure cache is initialized
-      await ensureCacheInitialized();
-      
-      // Try to get from cache first (which includes enriched marketing content)
-      const cachedProperty = listingsCache.getConvertedListingBySlug(slug, 'fi');
-      if (cachedProperty) {
-        property = cachedProperty as unknown as PropertyWithACF;
-      } 
-      
-      // If not in cache, try fetching directly
-      if (!property) {
-        const linearProperties = await fetchLinearListings();
-        if (linearProperties) {
-          property = linearProperties.find((p: any) => p.slug === slug) as PropertyWithACF;
-        }
+async function fetchPropertyData(slug: string, lang: string = 'fi'): Promise<PropertyWithACF | null> {
+  // CRITICAL: Use the API route which properly maps all fields
+  // This ensures siteOwnershipType, ownershipType, housingTenure are correctly mapped
+  try {
+    // Determine the base URL for server-side fetching
+    const baseUrl = process.env.VERCEL_URL 
+      ? `https://${process.env.VERCEL_URL}`
+      : (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000');
+    
+    const response = await fetch(`${baseUrl}/api/property/${slug}?lang=${lang}`, {
+      next: { revalidate: 60 }
+    });
+    
+    if (response.ok) {
+      const result = await response.json();
+      if (result.success && result.data) {
+        return result.data as PropertyWithACF;
       }
-      
-      // If still not found, try test API
-      if (!property) {
-        const testProperties = await fetchTestLinearListings();
-        if (testProperties) {
-          property = testProperties.find((p: any) => p.slug === slug) as PropertyWithACF;
-        }
-      }
-    } catch (error) {
-      console.error('Error fetching property from Linear:', error);
     }
+  } catch (error) {
+    console.error('Error fetching property from API:', error);
   }
   
-  return property;
+  // Fallback: Try WordPress
+  return await getPostBySlug(slug) as PropertyWithACF;
 }
 
 // Generate metadata for SEO and social sharing
@@ -323,7 +311,7 @@ export default async function PropertyDetailPage({ params, searchParams }: Prope
   const language = searchParams?.lang || 'fi';
   
   // Use shared function to fetch property data
-  const property = await fetchPropertyData(slug);
+  const property = await fetchPropertyData(slug, language);
   
   if (!property) {
     notFound();
