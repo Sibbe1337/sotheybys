@@ -10,7 +10,12 @@ export async function generatePropertyMetadata(
 ): Promise<Metadata> {
   try {
     // Fetch property data from our API
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://sothebysrealty.fi';
+    // CRITICAL: Use relative URL for server-side fetch during build/runtime
+    // This ensures we fetch from the same deployment (preview/production)
+    const baseUrl = process.env.VERCEL_URL 
+      ? `https://${process.env.VERCEL_URL}` 
+      : process.env.NEXT_PUBLIC_APP_URL || 'https://sothebysrealty.fi';
+    
     const response = await fetch(`${baseUrl}/api/property/${slug}?lang=${lang}`, {
       next: { revalidate: 600 } // Cache for 10 minutes
     });
