@@ -1094,23 +1094,29 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                     {(() => {
                       const imageUrl = agentData.avatar || agentData.photo?.sourceUrl || agentData.image || agentData.photo;
                       
-                      return imageUrl ? (
-                        <div className="relative w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden shadow-lg">
-                          <Image
-                            src={imageUrl}
-                            alt={agentData.name}
-                            fill
-                            className="object-cover"
-                            unoptimized
-                          />
-                        </div>
-                      ) : null;
+                      if (imageUrl) {
+                        return (
+                          <div className="relative w-40 h-40 mx-auto mb-6 rounded-full overflow-hidden shadow-lg border-4 border-white">
+                            <Image
+                              src={imageUrl}
+                              alt={agentData.name || 'Agent'}
+                              fill
+                              className="object-cover"
+                              unoptimized
+                              priority
+                            />
+                          </div>
+                        );
+                      }
+                      return null;
                     })()}
                     
                     {/* Agent Info */}
                     <div className="text-center mb-6">
                       <h4 className="text-lg font-semibold text-gray-900">{agentData.name}</h4>
-                      <p className="text-gray-600 text-sm">{agentData.title || language === 'sv' ? 'Fastighetsmäklare' : language === 'en' ? 'Real Estate Agent' : 'Kiinteistönvälittäjä'}</p>
+                      <p className="text-gray-600 text-sm">
+                        {agentData.title || (language === 'sv' ? 'Fastighetsmäklare' : language === 'en' ? 'Real Estate Agent' : 'Kiinteistönvälittäjä')}
+                      </p>
                     </div>
                     
                     {/* Contact Buttons */}
