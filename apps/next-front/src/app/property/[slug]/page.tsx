@@ -1207,52 +1207,77 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                         />
                       </>
                     ) : (
-                      /* 🏡 SALE PROPERTY (LÄGENHET) - Show price info with €/m² */
+                      /* 🏡 SALE PROPERTY (LÄGENHET) - KUNDENS NYA ORDNING 2025-10-24 */
                       <>
+                        {/* 1. Skuldfritt pris (synlig ifall det finns skuld) */}
+                        {propertyData.debtFreePrice && propertyData.price && propertyData.debtFreePrice !== propertyData.price && (
+                          <RowIf 
+                            value={formatPriceLocalized(propertyData.debtFreePrice, language)} 
+                            label={getTranslation('debtFreePrice', language)}
+                            right={formatPerM2(propertyData.debtFreePrice, propertyData.livingArea)}
+                            language={language}
+                          />
+                        )}
+                        
+                        {/* 2. Försäljningspris */}
                         <RowIf 
                           value={propertyData.price ? formatPriceLocalized(propertyData.price, language) : null} 
                           label={getTranslation('salesPrice', language)}
                           right={formatPerM2(propertyData.price, propertyData.livingArea)}
                           language={language}
                         />
-                        <RowIf 
-                          value={propertyData.debtFreePrice ? formatPriceLocalized(propertyData.debtFreePrice, language) : null} 
-                          label={getTranslation('debtFreePrice', language)}
-                          right={formatPerM2(propertyData.debtFreePrice, propertyData.livingArea)}
-                          language={language}
-                        />
+                        
+                        {/* 3. Skuldandel (synlig ifall det finns skuld) */}
+                        {propertyData.debtPart && (
+                          <RowIf 
+                            value={formatPriceLocalized(propertyData.debtPart, language)} 
+                            label={getTranslation('debtPart', language)}
+                            language={language}
+                          />
+                        )}
+                        
+                        {/* 4. Vederlag (Hoitovastike) */}
                         <RowIf 
                           value={propertyData.maintenanceFee ? `${formatPriceLocalized(propertyData.maintenanceFee, language)}${getUnitSuffix('perMonth', language)}` : null} 
                           label={getTranslation('maintenanceFee', language)}
                           right={formatPerM2(propertyData.maintenanceFee, propertyData.livingArea)}
                           language={language}
                         />
+                        
+                        {/* 5. Andra vederlag (synliga ifall de finns) */}
+                        {/* Finansieringsvederlag (Rahoitusvastike) */}
                         <RowIf 
                           value={propertyData.financingFee ? `${formatPriceLocalized(propertyData.financingFee, language)}${getUnitSuffix('perMonth', language)}` : null} 
                           label={getTranslation('financingFee', language)}
                           right={formatPerM2(propertyData.financingFee, propertyData.livingArea)}
                           language={language}
                         />
+                        
+                        {/* TODO: Lägg till fler vederlag när de finns i Linear API:
+                        - Korjausvastike (Reparationsvederlag)
+                        - Tontin vuokravastike (Tomthyresvederlag)
+                        - Muu vastike (Annat vederlag)
+                        */}
+                        
+                        {/* 6. Total månadsvederlag */}
                         <RowIf 
                           value={propertyData.totalFee ? `${formatPriceLocalized(propertyData.totalFee, language)}${getUnitSuffix('perMonth', language)}` : null} 
                           label={getTranslation('totalMonthlyFee', language)}
                           right={formatPerM2(propertyData.totalFee, propertyData.livingArea)}
                           language={language}
                         />
+                        
+                        {/* 7. Vattenavgift + andra eventuella kostnader */}
                         <RowIf 
                           value={propertyData.waterFee ? `${formatPriceLocalized(propertyData.waterFee, language)}${getUnitSuffix('perPersonMonth', language)}` : null} 
                           label={getTranslation('waterFeePerPerson', language)}
                           language={language}
                         />
-                        {/* 🆕 Övriga avgifter (Muut maksut) - OBLIGATORISKT om det finns */}
+                        
+                        {/* Övriga avgifter (Muut maksut) */}
                         <RowIf 
                           value={propertyData.otherCharges || propertyData.additionalFees} 
                           label={getTranslation('otherCharges', language)}
-                          language={language}
-                        />
-                        <RowIf 
-                          value={propertyData.debtPart ? formatPriceLocalized(propertyData.debtPart, language) : null} 
-                          label={getTranslation('debtPart', language)}
                           language={language}
                         />
                       </>
@@ -1346,12 +1371,42 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                         }
                       </span>
                     </div>
-                    {/* Hiss (Ja/Nej) - OBLIGATORISKT, visa alltid */}
+                    {/* Vapautuminen (Tillträde) */}
+                    <RowIf 
+                      value={propertyData.availableFrom || propertyData.availability} 
+                      label={getTranslation('availableFrom', language)} 
+                      language={language}
+                    />
+                    
+                    {/* 🆕 FLYTTADE FRÅN ENERGICERTIFIKAT: Hissi, Balkong, Sauna */}
+                    {/* Hissi (Hiss) */}
                     <div className="flex justify-between py-2 border-b">
                       <span className="text-gray-600">{getTranslation('elevator', language)}</span>
                       <span className="font-semibold">
                         {propertyData.elevator != null
                           ? getBooleanText(propertyData.elevator, language)
+                          : language === 'sv' ? 'Ej angivet' : language === 'en' ? 'Not specified' : 'Ei ilmoitettu'
+                        }
+                      </span>
+                    </div>
+                    
+                    {/* Parveke (Balkong) */}
+                    <div className="flex justify-between py-2 border-b">
+                      <span className="text-gray-600">{getTranslation('balcony', language)}</span>
+                      <span className="font-semibold">
+                        {propertyData.balcony != null
+                          ? getBooleanText(propertyData.balcony, language)
+                          : language === 'sv' ? 'Ej angivet' : language === 'en' ? 'Not specified' : 'Ei ilmoitettu'
+                        }
+                      </span>
+                    </div>
+                    
+                    {/* Oma sauna (Egen bastu) */}
+                    <div className="flex justify-between py-2 border-b">
+                      <span className="text-gray-600">{getTranslation('ownSauna', language)}</span>
+                      <span className="font-semibold">
+                        {propertyData.sauna != null
+                          ? getBooleanText(propertyData.sauna, language)
                           : language === 'sv' ? 'Ej angivet' : language === 'en' ? 'Not specified' : 'Ei ilmoitettu'
                         }
                       </span>
@@ -1387,7 +1442,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                         label={getTranslation('housingCompanyName', language)}
                         language={language}
                       />
-                      {/* Fastighetens ägarform (egen/arrendetomt) - OBLIGATORISKT */}
+                      {/* 🆕 Tontin omistus (Tomtens ägarform) - FLYTTAD HIT från Muut tiedot */}
                       <RowIf 
                         value={propertyData.siteOwnershipType || propertyData.plotOwnership} 
                         label={getTranslation('siteOwnershipType', language)}
@@ -1423,12 +1478,6 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                       <RowIf 
                         value={propertyData.housingCompanyApartmentCount && propertyData.housingCompanyApartmentCount > 0 ? propertyData.housingCompanyApartmentCount : null} 
                         label={getTranslation('housingCompanyApartmentCount', language)}
-                        language={language}
-                      />
-                      {/* Disponent (Isännöitsijä) */}
-                      <RowIf 
-                        value={propertyData.managerName} 
-                        label={getTranslation('managerName', language)}
                         language={language}
                       />
                     </div>
@@ -1592,31 +1641,31 @@ export default function PropertyPage({ params }: PropertyPageProps) {
               {expandedSections.otherInfo && (
                 <div className="bg-white border border-gray-200 p-6">
                   <div className="grid grid-cols-1 gap-4">
-                    {/* KRAVSPEC: Övrig information för lägenheter */}
-                    {/* Blir ledig */}
-                    <RowIf 
-                      value={propertyData.availableFrom || propertyData.availability} 
-                      label={getTranslation('availableFrom', language)}
-                      language={language}
-                    />
-                    {/* Form av ägandet */}
-                    <RowIf 
-                      value={propertyData.ownershipType} 
-                      label={getTranslation('ownershipType', language)}
-                      language={language}
-                    />
-                    {/* Generalplan */}
+                    {/* KRAVSPEC 2025-10-24: Andra uppgifter för lägenheter */}
+                    {/* OBS: Hissi, Balkong och Sauna flyttades till Energiatodistus-sektionen */}
+                    {/* OBS: Tontin omistus flyttades till Yhtiö- ja kiinteistötiedot */}
+                    
+                    {/* 🆕 Kaavoitus (Asemakaava) - FLYTTAD HIT från Yhtiö- ja kiinteistötiedot */}
                     <RowIf 
                       value={propertyData.zoningSituation} 
                       label={getTranslation('zoningSituation', language)}
                       language={language}
                     />
+                    
+                    {/* Omistusmuoto (Äganderätt) - från Linear API */}
+                    <RowIf 
+                      value={propertyData.ownershipType} 
+                      label={getTranslation('ownershipType', language)}
+                      language={language}
+                    />
+                    
                     {/* Byggrätt (extra fält) */}
                     <RowIf 
                       value={propertyData.buildingRights && typeof propertyData.buildingRights === 'string' ? propertyData.buildingRights : null} 
                       label={getTranslation('buildingRights', language)}
                       language={language}
                     />
+                    
                     {/* 🆕 Belastningar / Särskilda rättigheter - OBLIGATORISKT för lägenheter */}
                     <RowIf 
                       value={propertyData.encumbrances} 

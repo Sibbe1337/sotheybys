@@ -71,9 +71,11 @@ export interface LinearAPINonLocalizedValues {
   listingType: string;
   terrace: boolean;
   floor: string;
+  totalFloors: number;
   status: string;
   lotOwnership: string;
   sauna: boolean;
+  elevator: boolean;
   newlyConstructed: boolean;
   beach: string;
   inIsland: boolean;

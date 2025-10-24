@@ -87,9 +87,19 @@ export default function PropertyCard({
     });
   }
 
+  // Generate correct property URL based on language
+  const getPropertyUrl = () => {
+    if (language === 'sv') {
+      return `/sv/objekt/${slug}`;
+    } else if (language === 'en') {
+      return `/en/properties/${slug}`;
+    }
+    return `/kohde/${slug}`; // Finnish default
+  };
+
   return (
     <LocaleLink 
-      href={`/property/${slug}`} 
+      href={getPropertyUrl()} 
       className="block bg-white rounded-lg shadow-md overflow-hidden card-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2"
     >
       {/* Property Image */}

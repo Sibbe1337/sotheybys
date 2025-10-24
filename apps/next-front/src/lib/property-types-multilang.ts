@@ -202,6 +202,13 @@ export interface MultilingualPropertyListing {
   sauna: boolean;
 
   /**
+   * Has elevator
+   * FI: Hissi
+   * SV: Hiss
+   */
+  elevator: boolean;
+
+  /**
    * Property condition
    * FI: Kunto (esim. "Hyvä", "Erinomainen", "Remontoitu")
    * EN: Condition (e.g., "Good", "Excellent", "Renovated")

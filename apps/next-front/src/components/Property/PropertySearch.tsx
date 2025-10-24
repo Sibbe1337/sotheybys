@@ -78,9 +78,11 @@ export default function PropertySearch({ properties, language }: PropertySearchP
 
   const filteredProperties = useMemo(() => {
     return properties.filter(property => {
-      // Type filter
-      const typeFilter = PROPERTY_TYPES.find(t => t.id === selectedType);
-      if (!typeFilter?.filter(property)) return false;
+      // Type filter (visa alla om "all" är valt)
+      if (selectedType !== 'all') {
+        const typeFilter = PROPERTY_TYPES.find(t => t.id === selectedType);
+        if (!typeFilter?.filter(property)) return false;
+      }
 
       // Price filter - kolla båda format
       const price = property.debtFreePrice || property.price || 
@@ -104,56 +106,17 @@ export default function PropertySearch({ properties, language }: PropertySearchP
   }, [properties, selectedType, priceRange, areaRange, selectedArea]);
 
   const translations = {
-    searchTitle: { fi: 'Sök objekt', sv: 'Sök objekt', en: 'Search properties' },
-    area: { fi: 'OMRÅDE', sv: 'OMRÅDE', en: 'AREA' },
-    allAreas: { fi: 'Kaikki alueet', sv: 'Alla områden', en: 'All areas' },
-    propertyType: { fi: 'OBJEKTTYP', sv: 'OBJEKTTYP', en: 'PROPERTY TYPE' },
-    priceRange: { fi: 'PRISINTERVALL', sv: 'PRISINTERVALL', en: 'PRICE RANGE' },
-    areaRange: { fi: 'STORLEKSINTERVALL', sv: 'STORLEKSINTERVALL', en: 'SIZE RANGE' },
-    resultsFound: { fi: 'kohdetta löytyi', sv: 'objekt hittades', en: 'properties found' }
+    searchTitle: { fi: 'Hae kohteita', sv: 'Sok objekt', en: 'Search properties' },
+    area: { fi: 'ALUE', sv: 'OMRADE', en: 'AREA' },
+    allAreas: { fi: 'Kaikki alueet', sv: 'Alla omraden', en: 'All areas' },
+    propertyType: { fi: 'KOHDETYYPPI', sv: 'OBJEKTTYP', en: 'PROPERTY TYPE' },
+    priceRange: { fi: 'HINTAVALI', sv: 'PRISINTERVALL', en: 'PRICE RANGE' },
+    areaRange: { fi: 'KOKOVALIT', sv: 'STORLEKSINTERVALL', en: 'SIZE RANGE' },
+    resultsFound: { fi: 'kohdetta loytyi', sv: 'objekt hittades', en: 'properties found' }
   };
 
   return (
     <div>
-      {/* Visual Property Type Selector */}
-      <section className="py-12 bg-gray-50">
-        <div className="max-w-[1400px] mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-            {PROPERTY_TYPES.map(type => (
-              <button
-                key={type.id}
-                onClick={() => setSelectedType(type.id)}
-                className={`relative overflow-hidden rounded-lg group cursor-pointer transition-all
-                  ${selectedType === type.id ? 'ring-4 ring-[var(--color-gold)] shadow-2xl scale-105' : 'hover:shadow-xl'}`}
-              >
-                <div className="aspect-[4/3] relative">
-                  <Image
-                    src={type.image}
-                    alt={type.label[language]}
-                    fill
-                    unoptimized
-                    className="object-cover group-hover:scale-110 transition-transform duration-500"
-                    sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 p-4 z-10">
-                    <h3 className="text-white text-base lg:text-lg font-semibold tracking-wider uppercase drop-shadow-lg">
-                      {type.label[language]}
-                    </h3>
-                  </div>
-                  {selectedType === type.id && (
-                    <div className="absolute top-2 right-2 bg-[var(--color-gold)] text-white rounded-full p-2 z-10">
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
-                    </div>
-                  )}
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Advanced Search Filters */}
       <section className="py-8 bg-white border-y border-gray-200 sticky top-0 z-40">
         <div className="max-w-[1400px] mx-auto px-6">

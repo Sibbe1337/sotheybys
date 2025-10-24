@@ -74,6 +74,9 @@ export function flattenPropertyForLanguage(
   if (flattened.heading != null) {
     flattened.freeTextTitle = flattened.heading;
   }
+  if (flattened.floorLocation != null) {
+    flattened.floor = flattened.floorLocation;
+  }
 
   return flattened as FlattenedProperty;
 }

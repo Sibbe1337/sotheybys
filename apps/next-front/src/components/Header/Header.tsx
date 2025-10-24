@@ -250,9 +250,9 @@ export default function Header({ menuItems }: HeaderProps) {
             <Image
               src="/images/logos/logo-white.png"
               alt="Snellman Sotheby's International Realty"
-              width={isLandscape ? 150 : isScrolled ? 280 : 350}
-              height={isLandscape ? 45 : isScrolled ? 84 : 105}
-              className={isLandscape ? 'h-10 w-auto' : 'h-16 w-auto'}
+              width={isLandscape ? 150 : isScrolled ? 400 : 550}
+              height={isLandscape ? 45 : isScrolled ? 120 : 165}
+              className={isLandscape ? 'h-10 w-auto' : isScrolled ? 'h-18 w-auto' : 'h-24 w-auto'}
               priority
               quality={100}
             />

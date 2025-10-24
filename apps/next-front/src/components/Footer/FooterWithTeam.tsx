@@ -46,14 +46,14 @@ export default function FooterWithTeam({ contact, social, logo }: FooterProps = 
             
             {/* LEFT COLUMN: Logo, Contact, Badges, Social */}
             <div className="space-y-8">
-              {/* Logo */}
+              {/* Logo - STÖRRE enligt kundens önskemål */}
               <div className="mb-6">
                 <Image
                   src={logoSrc}
                   alt="Snellman Sotheby's International Realty"
-                  width={300}
-                  height={90}
-                  className="h-14 w-auto"
+                  width={400}
+                  height={120}
+                  className="h-20 w-auto"
                 />
               </div>
 

@@ -440,11 +440,23 @@ export function mapLinearAPIToProperty(
       : new Date(),
     availableFrom: extractLocalizedString(data.availableFrom),  // No need for manual fallback
     ownershipType: extractLocalizedString(data.ownershipType),
-    floorLocation: extractLocalizedString(data.floor),
-    numberOfFloors: ('totalFloors' in linearData ? data.totalFloors?.fi?.value : null) || nv.totalFloors?.toString() || '',
+    floorLocation: nv.floor || extractLocalizedString(data.floor),
+    numberOfFloors: nv.totalFloors?.toString() || data.floorCount?.fi?.value || ('totalFloors' in linearData ? data.totalFloors?.fi?.value : null) || '',
     windowDirection: extractLocalizedString(data.windowDirection),  // No need for manual fallback
     balcony: nv.hasBalcony ?? false,
     sauna: nv.sauna ?? false,
+    elevator: (() => {
+      // Try nonLocalizedValues first, then localized field
+      if (nv.elevator !== undefined && nv.elevator !== null) {
+        return nv.elevator === true || nv.elevator === 'true' || nv.elevator === 1 || nv.elevator === '1';
+      }
+      const elevatorStr = data.elevator?.fi?.value || data.elevator?.en?.value || data.elevator?.sv?.value;
+      if (elevatorStr) {
+        const lowerStr = elevatorStr.toLowerCase();
+        return lowerStr === 'true' || lowerStr === '1' || lowerStr === 'kyllä' || lowerStr === 'ja' || lowerStr === 'yes';
+      }
+      return false;
+    })(),
     condition: nv.condition 
       ? mapCondition(nv.condition)
       : extractLocalizedString(data.condition),
@@ -522,8 +534,8 @@ export function mapLinearAPIToProperty(
       
       return plotAreaValue;
     })(),
-    siteOwnershipType: extractLocalizedString(data.plotOwnership),
-    zoningSituation: extractLocalizedString(data.zoningSituation),
+    siteOwnershipType: extractLocalizedString(data.housingTenure || data.plotOwnership),
+    zoningSituation: extractLocalizedString(data.zoningStatus || data.zoningSituation),
     zoningDetails: {}, // Not directly available
     propertyBuildingRights: extractLocalizedString(data.propertyBuildingRights || data.buildingRights),
 
@@ -537,7 +549,11 @@ export function mapLinearAPIToProperty(
     loanPayable: false, // Not directly available
     maintenanceFee: parseEuroNumber(nv.renovationCharge || data.maintenanceCharge?.fi?.value),
     financingFee: parseEuroNumber(nv.fundingCharge || data.financingCharge?.fi?.value),
-    totalFee: (parseEuroNumber(nv.renovationCharge) || 0) + (parseEuroNumber(nv.fundingCharge) || 0),
+    totalFee: (() => {
+      const maintenance = parseEuroNumber(nv.renovationCharge || data.maintenanceCharge?.fi?.value) || 0;
+      const financing = parseEuroNumber(nv.fundingCharge || data.financingCharge?.fi?.value) || 0;
+      return maintenance + financing;
+    })(),
     rentIncome: 0, // Not directly available
     waterFee: parseEuroNumber(nv.waterCharge || data.waterCharge?.fi?.value),
     mandatoryCharges: parseEuroNumber(nv.mandatoryCharges || data.mandatoryCharges?.fi?.value),
@@ -552,7 +568,7 @@ export function mapLinearAPIToProperty(
     // ========================================================================
     // 4. COMPANY / MANAGEMENT
     // ========================================================================
-    housingCompanyName: data.housingCompanyName?.fi?.value || '',
+    housingCompanyName: data.housingCooperativeName?.fi?.value || data.housingCompanyName?.fi?.value || '',
     housingCompanyHomeCity: extractLocalizedString(data.housingCompanyHomeCity),
     businessId: data.businessId?.fi?.value || '',
     managementCompany: data.managementCompany?.fi?.value || '',
