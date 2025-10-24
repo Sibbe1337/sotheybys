@@ -440,8 +440,30 @@ export function mapLinearAPIToProperty(
       ? new Date(data.releaseDate.fi.value) 
       : new Date(),
     availableFrom: extractLocalizedString(data.availableFrom),  // No need for manual fallback
-    ownershipType: extractLocalizedString(data.ownershipType),
-    housingTenure: extractLocalizedString(data.housingTenure),
+    ownershipType: (() => {
+      // Try localized field first
+      const localized = extractLocalizedString(data.ownershipType);
+      if (localized.fi) return localized;
+      
+      // Fallback to plain string
+      if (typeof data.ownershipType === 'string' && data.ownershipType) {
+        return { fi: data.ownershipType, en: '', sv: '' };
+      }
+      
+      return localized;
+    })(),
+    housingTenure: (() => {
+      // Try localized field first
+      const localized = extractLocalizedString(data.housingTenure);
+      if (localized.fi) return localized;
+      
+      // Fallback to plain string
+      if (typeof data.housingTenure === 'string' && data.housingTenure) {
+        return { fi: data.housingTenure, en: '', sv: '' };
+      }
+      
+      return localized;
+    })(),
     floorLocation: nv.floor || extractLocalizedString(data.floor),
     numberOfFloors: nv.totalFloors?.toString() || data.floorCount?.fi?.value || ('totalFloors' in linearData ? data.totalFloors?.fi?.value : null) || '',
     windowDirection: extractLocalizedString(data.windowDirection),  // No need for manual fallback
