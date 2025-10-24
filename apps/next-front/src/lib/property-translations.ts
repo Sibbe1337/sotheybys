@@ -29,7 +29,7 @@ export const PROPERTY_TRANSLATIONS: Translations = {
   // Section Headers
   priceInfo: {
     fi: 'Hintatiedot',
-    sv: 'Prisinformation',
+    sv: 'Pris- och boendekostnader',
     en: 'Price Information'
   },
   energyRating: {
@@ -39,12 +39,12 @@ export const PROPERTY_TRANSLATIONS: Translations = {
   },
   propertyInfo: {
     fi: 'Kiinteistötiedot',
-    sv: 'Fastighetsinformation',
+    sv: 'Bostadsinformation',
     en: 'Property Information'
   },
   housingCompanyInfo: {
     fi: 'Yhtiötiedot',
-    sv: 'Bolagsinformation',
+    sv: 'Bostads- och fastighetsinformation',
     en: 'Housing Company Information'
   },
   buildingInfo: {
@@ -69,7 +69,7 @@ export const PROPERTY_TRANSLATIONS: Translations = {
   },
   otherInfo: {
     fi: 'Muut tiedot',
-    sv: 'Övrig information',
+    sv: 'Andra uppgifter',
     en: 'Other Information'
   },
   
