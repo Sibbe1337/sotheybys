@@ -537,7 +537,18 @@ export function mapLinearAPIToProperty(
       
       return plotAreaValue;
     })(),
-    siteOwnershipType: extractLocalizedString(data.lotOwnership || data.plotOwnership),
+    siteOwnershipType: (() => {
+      // Try lotOwnership/plotOwnership first (localized fields)
+      const localized = extractLocalizedString(data.lotOwnership || data.plotOwnership);
+      if (localized.fi) return localized;
+      
+      // Fallback to siteOwnershipType if it's a plain string
+      if (typeof data.siteOwnershipType === 'string') {
+        return { fi: data.siteOwnershipType, en: '', sv: '' };
+      }
+      
+      return localized;
+    })(),
     zoningSituation: extractLocalizedString(data.zoningStatus || data.zoningSituation),
     zoningDetails: {}, // Not directly available
     propertyBuildingRights: extractLocalizedString(data.propertyBuildingRights || data.buildingRights),
