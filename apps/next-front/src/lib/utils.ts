@@ -132,8 +132,14 @@ export function getVideoEmbedUrl(url: string): string {
 export function removeEmojis(text: string): string {
   if (!text) return '';
   
-  // Remove all emojis using Unicode ranges
-  return text.replace(/[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]|[\u{1F900}-\u{1F9FF}]|[\u{1FA00}-\u{1FA6F}]|[\u{1FA70}-\u{1FAFF}]|[\u{FE00}-\u{FE0F}]|[\u{1F004}]|[\u{1F0CF}]|[\u{1F170}-\u{1F251}]/gu, '').trim();
+  // Remove all emojis using a comprehensive regex pattern
+  // This pattern covers most common emoji ranges
+  return text
+    .replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, '') // Surrogate pairs (most emojis)
+    .replace(/[\u2600-\u27BF]/g, '') // Miscellaneous Symbols and Dingbats
+    .replace(/[\uFE00-\uFE0F]/g, '') // Variation Selectors
+    .replace(/[\u203C-\u3299]/g, '') // Various symbols
+    .trim();
 }
 
 /**
