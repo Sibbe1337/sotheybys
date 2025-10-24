@@ -411,12 +411,6 @@ export default function PropertyPage({ params }: PropertyPageProps) {
       gallery: safeArray(property.media?.gallery),
     };
     agentData = property.agents?.[0] || {};
-    console.log('🔍 Agent data (Strapi format):', {
-      hasAgents: !!property.agents,
-      agentsLength: property.agents?.length,
-      firstAgent: property.agents?.[0],
-      agentData
-    });
     // Image rendering: Use gallery, else images array, else featuredImage fallback
     images = safeArray(property.media?.gallery).length > 0 
       ? safeArray(property.media?.gallery)
@@ -429,12 +423,6 @@ export default function PropertyPage({ params }: PropertyPageProps) {
     // WordPress or Linear format
     propertyData = property.acfRealEstate?.property || property;
     agentData = property.acfRealEstate?.agent || property.agent || {};
-    console.log('🔍 Agent data (WordPress/Linear format):', {
-      hasAcfAgent: !!property.acfRealEstate?.agent,
-      hasPropertyAgent: !!property.agent,
-      agentData,
-      fullProperty: property
-    });
     // Image rendering: Use gallery, else images array, else featuredImage fallback
     images = safeArray(propertyData.gallery).length > 0
       ? safeArray(propertyData.gallery)
@@ -1104,14 +1092,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                     
                     {/* Agent Image */}
                     {(() => {
-                      const imageUrl = agentData.image || agentData.photo?.sourceUrl || agentData.photo;
-                      console.log('🖼️ Agent sidebar image data:', {
-                        hasImage: !!agentData.image,
-                        hasPhotoSourceUrl: !!agentData.photo?.sourceUrl,
-                        hasPhoto: !!agentData.photo,
-                        imageUrl,
-                        fullAgentData: agentData
-                      });
+                      const imageUrl = agentData.avatar || agentData.photo?.sourceUrl || agentData.image || agentData.photo;
                       
                       return imageUrl ? (
                         <div className="relative w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden shadow-lg">
@@ -1121,12 +1102,6 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                             fill
                             className="object-cover"
                             unoptimized
-                            onError={(e) => {
-                              console.error('❌ Sidebar: Agent photo failed to load:', imageUrl);
-                            }}
-                            onLoad={() => {
-                              console.log('✅ Sidebar: Agent photo loaded successfully:', imageUrl);
-                            }}
                           />
                         </div>
                       ) : null;
