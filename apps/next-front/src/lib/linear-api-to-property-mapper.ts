@@ -686,7 +686,14 @@ export function mapLinearAPIToProperty(
     brochureUrl: data.brochureUrl || '',
     internationalBrochureUrl: data.internationalBrochureUrl || '',
     internationalUrl: data.internationalUrl || '',
-    videoUrl: data.videoUrl || '',
+    videoUrl: (() => {
+      // Extract URL from object if needed (Linear API returns {key, value, category})
+      const vid = data.videoUrl;
+      if (!vid) return '';
+      if (typeof vid === 'string') return vid;
+      if (typeof vid === 'object' && 'value' in vid) return vid.value || '';
+      return '';
+    })(),
     
     // ========================================================================
     // 6.8 RENTAL-SPECIFIC FIELDS (HYRESOBJEKT)
