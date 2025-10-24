@@ -411,6 +411,12 @@ export default function PropertyPage({ params }: PropertyPageProps) {
       gallery: safeArray(property.media?.gallery),
     };
     agentData = property.agents?.[0] || {};
+    console.log('🔍 Agent data (Strapi format):', {
+      hasAgents: !!property.agents,
+      agentsLength: property.agents?.length,
+      firstAgent: property.agents?.[0],
+      agentData
+    });
     // Image rendering: Use gallery, else images array, else featuredImage fallback
     images = safeArray(property.media?.gallery).length > 0 
       ? safeArray(property.media?.gallery)
@@ -423,6 +429,12 @@ export default function PropertyPage({ params }: PropertyPageProps) {
     // WordPress or Linear format
     propertyData = property.acfRealEstate?.property || property;
     agentData = property.acfRealEstate?.agent || property.agent || {};
+    console.log('🔍 Agent data (WordPress/Linear format):', {
+      hasAcfAgent: !!property.acfRealEstate?.agent,
+      hasPropertyAgent: !!property.agent,
+      agentData,
+      fullProperty: property
+    });
     // Image rendering: Use gallery, else images array, else featuredImage fallback
     images = safeArray(propertyData.gallery).length > 0
       ? safeArray(propertyData.gallery)
