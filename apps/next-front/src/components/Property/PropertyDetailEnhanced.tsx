@@ -382,13 +382,14 @@ export default function PropertyDetailEnhanced({
   // 1. Has housing company debt (debtFreePrice !== askPrice)
   // 2. Has housingCompanyName
   // 3. Address contains "katu" or "gatan" (city street)
-  // 4. typeOfApartment contains apartment format like "2h+k" or "3h, k, kph"
+  // 4. typeOfApartment contains apartment format like "2h+k", "3h, k", "5-6h, k, kph"
   // 5. NOT a rental
   const isApartment = !isRental && (
     hasCompanyDebt || 
     hasHousingCompany || 
     /katu|gatan|street/i.test(addressStr) ||
-    /^\d+[-h,\s]+[hk]/i.test(typeOfApartmentStr.trim()) // Matches "2h+k", "3h, k", "5-6h, k" etc
+    /\d+h/i.test(typeOfApartmentStr) || // Matches patterns with digit+h like "2h", "5-6h", "kph"
+    /huoneisto|lägenhet|apartment/i.test(typeOfApartmentStr)
   );
   
   // FASTIGHET (House/Villa) identification:
