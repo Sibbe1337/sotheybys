@@ -1035,7 +1035,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
       {/* Property Title, Type, Description and Agent */}
       <section className="py-12">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-7xl mx-auto">
             {/* 1. Titel på presentationen */}
             <h1 className="text-3xl md:text-4xl font-bold text-[var(--color-primary)] mb-4 text-center">
               {removeEmojis(property.title || '')}
@@ -1048,35 +1048,106 @@ export default function PropertyPage({ params }: PropertyPageProps) {
               </h4>
             )}
             
-            {/* 3. Presentationstext (expanderad som default) */}
-            {(() => {
-              const descriptionText = propertyData.description || propertyData.freeText || property.content || '';
-              const hasDescription = descriptionText && descriptionText.trim().length > 0;
+            {/* 3. Presentationstext med sidebar */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* Left column - Description */}
+              <div className="lg:col-span-2">
+                {(() => {
+                  const descriptionText = propertyData.description || propertyData.freeText || property.content || '';
+                  const hasDescription = descriptionText && descriptionText.trim().length > 0;
+                  
+                  if (hasDescription) {
+                    console.log('📝 Rendering description:', {
+                      hasDescription: !!propertyData.description,
+                      hasFreeText: !!propertyData.freeText,
+                      hasContent: !!property.content,
+                      length: descriptionText.length,
+                      preview: descriptionText.substring(0, 100)
+                    });
+                  }
+                  
+                  // Remove emojis from description
+                  const cleanDescription = removeEmojis(descriptionText);
+                  
+                  return hasDescription ? (
+                    <div className="mb-12">
+                      <h3 className="text-2xl font-semibold text-[var(--color-primary)] mb-6">
+                        {getTranslation('description', language)}
+                      </h3>
+                      <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
+                        <div dangerouslySetInnerHTML={{ __html: cleanDescription }} />
+                      </div>
+                    </div>
+                  ) : null;
+                })()}
+              </div>
               
-              if (hasDescription) {
-                console.log('📝 Rendering description:', {
-                  hasDescription: !!propertyData.description,
-                  hasFreeText: !!propertyData.freeText,
-                  hasContent: !!property.content,
-                  length: descriptionText.length,
-                  preview: descriptionText.substring(0, 100)
-                });
-              }
-              
-              // Remove emojis from description
-              const cleanDescription = removeEmojis(descriptionText);
-              
-              return hasDescription ? (
-                <div className="mb-12">
-                  <h3 className="text-2xl font-semibold text-[var(--color-primary)] mb-6 text-center">
-                    {getTranslation('description', language)}
-                  </h3>
-                  <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
-                    <div dangerouslySetInnerHTML={{ __html: cleanDescription }} />
+              {/* Right column - Agent Contact Box */}
+              {agentData && agentData.name && (
+                <div className="lg:col-span-1">
+                  <div className="bg-white border border-gray-200 rounded-lg p-6 sticky top-4">
+                    <h3 className="text-xl font-semibold mb-4">
+                      {language === 'sv' ? 'Ta kontakt' : language === 'en' ? 'Contact' : 'Ota yhteyttä'}
+                    </h3>
+                    
+                    {/* Agent Image */}
+                    {(agentData.image || agentData.photo?.sourceUrl) && (
+                      <div className="relative w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden">
+                        <Image
+                          src={agentData.image || agentData.photo?.sourceUrl}
+                          alt={agentData.name}
+                          fill
+                          className="object-cover"
+                          unoptimized
+                        />
+                      </div>
+                    )}
+                    
+                    {/* Agent Info */}
+                    <div className="text-center mb-6">
+                      <h4 className="text-lg font-semibold text-gray-900">{agentData.name}</h4>
+                      <p className="text-gray-600 text-sm">{agentData.title || language === 'sv' ? 'Fastighetsmäklare' : language === 'en' ? 'Real Estate Agent' : 'Kiinteistönvälittäjä'}</p>
+                    </div>
+                    
+                    {/* Contact Buttons */}
+                    <div className="space-y-3">
+                      {agentData.phone && (
+                        <a
+                          href={`tel:${agentData.phone}`}
+                          className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-[var(--color-primary)] text-white rounded hover:bg-[var(--color-primary-dark)] transition-colors"
+                        >
+                          <Phone size={18} />
+                        </a>
+                      )}
+                      {agentData.email && (
+                        <a
+                          href={`mailto:${agentData.email}`}
+                          className="w-full flex items-center justify-center gap-2 px-4 py-3 border border-gray-300 text-gray-700 rounded hover:bg-gray-50 transition-colors"
+                        >
+                          <Mail size={18} />
+                          {agentData.email}
+                        </a>
+                      )}
+                    </div>
+                    
+                    {/* Property Details */}
+                    <div className="mt-6 pt-6 border-t border-gray-200">
+                      <h4 className="font-semibold mb-2">
+                        {language === 'sv' ? 'Grunduppgifter' : language === 'en' ? 'Basic Info' : 'Perustiedot'}
+                      </h4>
+                      <div className="text-sm text-gray-600 space-y-1">
+                        <p>
+                          <span className="font-medium">{language === 'sv' ? 'Objektnummer' : language === 'en' ? 'Property ID' : 'Kohdenumero'}:</span>
+                        </p>
+                        {propertyData.propertyId && (
+                          <p className="font-mono">{propertyData.propertyId}</p>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
-              ) : null;
-            })()}
+              )}
+            </div>
           </div>
         </div>
       </section>
