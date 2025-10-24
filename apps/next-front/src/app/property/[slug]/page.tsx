@@ -1320,7 +1320,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
               </div>
             )}
 
-            {/* Property Details - PUNKT 5C: Fastighetsinformation (lägenhet) */}
+            {/* Bostadsuppgifter (Huoneistotiedot) - OBLIGATORISKA fält, visa alltid */}
             <div className="mb-6">
               <button
                 onClick={() => toggleSection('propertyInfo')}
@@ -1336,18 +1336,26 @@ export default function PropertyPage({ params }: PropertyPageProps) {
               {expandedSections.propertyInfo && (
                 <div className="bg-white border border-gray-200 p-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* Våning (format "x/y") */}
-                    <RowIf 
-                      value={propertyData.floor ? `${propertyData.floor}${propertyData.numberOfFloors ? `/${propertyData.numberOfFloors}` : ''}` : null} 
-                      label={getTranslation('floor', language)}
-                      language={language}
-                    />
-                    {/* 🆕 Hiss (Ja/Nej) - OBLIGATORISKT för lägenheter */}
-                    <RowIf 
-                      value={propertyData.elevator} 
-                      label={getTranslation('elevator', language)}
-                      language={language}
-                    />
+                    {/* Våning (format "x/y") - OBLIGATORISKT, visa alltid */}
+                    <div className="flex justify-between py-2 border-b">
+                      <span className="text-gray-600">{getTranslation('floor', language)}</span>
+                      <span className="font-semibold">
+                        {propertyData.floor 
+                          ? `${propertyData.floor}${propertyData.numberOfFloors ? `/${propertyData.numberOfFloors}` : ''}`
+                          : language === 'sv' ? 'Ej angivet' : language === 'en' ? 'Not specified' : 'Ei ilmoitettu'
+                        }
+                      </span>
+                    </div>
+                    {/* Hiss (Ja/Nej) - OBLIGATORISKT, visa alltid */}
+                    <div className="flex justify-between py-2 border-b">
+                      <span className="text-gray-600">{getTranslation('elevator', language)}</span>
+                      <span className="font-semibold">
+                        {propertyData.elevator != null
+                          ? getBooleanText(propertyData.elevator, language)
+                          : language === 'sv' ? 'Ej angivet' : language === 'en' ? 'Not specified' : 'Ei ilmoitettu'
+                        }
+                      </span>
+                    </div>
                   </div>
                 </div>
               )}
@@ -1370,115 +1378,57 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                 {expandedSections.housingCompanyInfo && (
                   <div className="bg-white border border-gray-200 p-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {/* KRAVSPEC: Bolags- och fastighetsuppgifter för lägenheter */}
+                      {/* KRAVSPEC FRÅN KUNDEN 2025-10-24: Endast dessa fält för lägenheter */}
                       
-                      {/* Husbolagets namn */}
+                      {/* OBLIGATORISKA FÄLT */}
+                      {/* Bostadsbolagets namn - OBLIGATORISKT */}
                       <RowIf 
                         value={propertyData.housingCompanyName} 
                         label={getTranslation('housingCompanyName', language)}
                         language={language}
                       />
-                      {/* Hemort / Stad */}
+                      {/* Fastighetens ägarform (egen/arrendetomt) - OBLIGATORISKT */}
                       <RowIf 
-                        value={propertyData.housingCompanyHomeCity || propertyData.city} 
-                        label={getTranslation('city', language)}
+                        value={propertyData.siteOwnershipType || propertyData.plotOwnership} 
+                        label={getTranslation('siteOwnershipType', language)}
                         language={language}
                       />
-                      {/* Fastighetsskötsel */}
+                      {/* Beslutade reparationer - OBLIGATORISKT om känd */}
                       <RowIf 
-                        value={propertyData.propertyMaintenance} 
-                        label={getTranslation('propertyMaintenance', language)}
+                        value={propertyData.decidedRenovations} 
+                        label={getTranslation('decidedRenovations', language)}
                         language={language}
                       />
-                      {/* Långfristiga lån */}
+                      {/* Planerade reparationer - OBLIGATORISKT om känd */}
                       <RowIf 
-                        value={propertyData.companyLoans} 
-                        label={getTranslation('companyLoans', language)}
+                        value={propertyData.plannedRenovations || propertyData.housingCompanyUpcomingRenovations} 
+                        label={getTranslation('plannedRenovations', language)}
                         language={language}
-                      />
-                      {/* Tomtstorlek (m²/ha) */}
-                      <RowIf 
-                        value={propertyData.siteArea && propertyData.siteArea > 0 ? formatSiteArea(propertyData.siteArea) : null} 
-                        label={getTranslation('siteArea', language)}
-                        language={language}
-                      />
-                      {/* Byggnadsår */}
-                      <RowIf 
-                        value={propertyData.yearOfBuilding} 
-                        label={getTranslation('buildingYear', language)}
-                        language={language}
-                      />
+                        />
+                      
+                      {/* EXTRA FÄLT (kan gömmas senare enligt kunden) */}
                       {/* Byggnadsmaterial */}
                       <RowIf 
                         value={propertyData.buildingMaterial} 
                         label={getTranslation('buildingMaterial', language)}
                         language={language}
                       />
-                      {/* Taktyp / Takmaterial */}
-                      <RowIf 
-                        value={propertyData.roofType} 
-                        label={getTranslation('roofType', language)}
-                        language={language}
-                      />
-                      {/* Uppvärmning */}
+                      {/* Uppvärmningssätt */}
                       <RowIf 
                         value={propertyData.heatingType || propertyData.heatingSystem} 
                         label={getTranslation('heatingSystem', language)}
                         language={language}
                       />
-                      {/* Antenn / Kabel */}
+                      {/* Antal bostäder */}
                       <RowIf 
-                        value={propertyData.antennaSystem || propertyData.antennaOrCable} 
-                        label={getTranslation('antennaSystem', language)}
+                        value={propertyData.housingCompanyApartmentCount && propertyData.housingCompanyApartmentCount > 0 ? propertyData.housingCompanyApartmentCount : null} 
+                        label={getTranslation('housingCompanyApartmentCount', language)}
                         language={language}
                       />
-                      
-                      {/* Aktienummer */}
+                      {/* Disponent (Isännöitsijä) */}
                       <RowIf 
-                        value={propertyData.numberOfShares} 
-                        label={getTranslation('numberOfShares', language)}
-                        language={language}
-                      />
-                      {/* Balkong */}
-                      <RowIf 
-                        value={propertyData.balcony} 
-                        label={getTranslation('balcony', language)}
-                        language={language}
-                      />
-                      {/* Egen bastu */}
-                      <RowIf 
-                        value={propertyData.sauna || propertyData.ownSauna} 
-                        label={getTranslation('ownSauna', language)}
-                        language={language}
-                      />
-                      {/* Inlösenklausul (lägenheter) */}
-                      <RowIf 
-                        value={propertyData.redemptionClauseFlats} 
-                        label={getTranslation('redemptionClauseFlats', language)}
-                        language={language}
-                      />
-                      {/* 🆕 Fastighetens ägarform (Ägande) - OBLIGATORISKT för lägenheter */}
-                      <RowIf 
-                        value={propertyData.siteOwnershipType || propertyData.plotOwnership} 
-                        label={getTranslation('siteOwnershipType', language)}
-                        language={language}
-                      />
-                      {/* 🆕 Beslutade reparationer - OBLIGATORISKT för lägenheter */}
-                      <RowIf 
-                        value={propertyData.decidedRenovations} 
-                        label={getTranslation('decidedRenovations', language)}
-                        language={language}
-                      />
-                      {/* 🆕 Planerade reparationer - OBLIGATORISKT för lägenheter */}
-                      <RowIf 
-                        value={propertyData.plannedRenovations || propertyData.housingCompanyUpcomingRenovations} 
-                        label={getTranslation('plannedRenovations', language)}
-                        language={language}
-                      />
-                      {/* 🆕 Bolagets ekonomiska ställning - OBLIGATORISKT för lägenheter */}
-                      <RowIf 
-                        value={propertyData.companyFinancialStatus} 
-                        label={getTranslation('companyFinancialStatus', language)}
+                        value={propertyData.managerName} 
+                        label={getTranslation('managerName', language)}
                         language={language}
                       />
                     </div>
