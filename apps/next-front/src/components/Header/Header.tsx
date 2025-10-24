@@ -236,12 +236,10 @@ export default function Header({ menuItems }: HeaderProps) {
         </div>
       </div>
 
-      {/* MAIN HEADER BAR - RAD 2 (Logo + Navigation) - Komprimera på mobil när scrollad ELLER landscape */}
+      {/* MAIN HEADER BAR - RAD 2 (Logo + Navigation) - Statisk storlek */}
       <div className="max-w-[1400px] mx-auto px-6">
-        <div className={`flex items-center justify-between transition-all duration-300 ${
-          isLandscape ? 'py-0.5' : isScrolled ? 'py-1 md:py-4' : 'py-4'
-        }`}>
-          {/* Logo - Mycket mindre på mobil landscape */}
+        <div className="flex items-center justify-between py-4">
+          {/* Logo - Statisk storlek */}
           <LocaleLink 
             href="/" 
             className="flex items-center flex-shrink-0"
@@ -250,9 +248,9 @@ export default function Header({ menuItems }: HeaderProps) {
             <Image
               src="/images/logos/logo-white.png"
               alt="Snellman Sotheby's International Realty"
-              width={isLandscape ? 150 : isScrolled ? 400 : 550}
-              height={isLandscape ? 45 : isScrolled ? 120 : 165}
-              className={isLandscape ? 'h-10 w-auto' : isScrolled ? 'h-18 w-auto' : 'h-24 w-auto'}
+              width={550}
+              height={165}
+              className="h-24 w-auto"
               priority
               quality={100}
             />
@@ -274,10 +272,8 @@ export default function Header({ menuItems }: HeaderProps) {
                   >
                     <LocaleLink
                       href={item.path || item.url}
-                      className={`flex items-center py-2 text-sm font-bold uppercase
+                      className={`flex items-center py-2 px-5 text-sm font-bold uppercase tracking-[0.2em]
                                  transition-all duration-200 [font-family:'freight-sans-pro',sans-serif] ${
-                                   isLandscape ? 'px-2 text-xs tracking-[0.1em]' : 'px-5 tracking-[0.2em]'
-                                 } ${
                                    isActive 
                                      ? 'text-[var(--color-gold)]' 
                                      : 'text-white hover:text-[var(--color-gold)]'
@@ -311,14 +307,14 @@ export default function Header({ menuItems }: HeaderProps) {
             </ul>
           </nav>
 
-          {/* Mobile Menu Button - Mindre i landscape */}
+          {/* Mobile Menu Button - Statisk storlek */}
           <button 
-            className={`lg:hidden text-white ${isLandscape ? 'p-1' : 'p-2'}`}
+            className="lg:hidden text-white p-2"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
             <svg 
-              className={isLandscape ? 'w-5 h-5' : 'w-6 h-6'}
+              className="w-6 h-6"
               fill="none" 
               stroke="currentColor" 
               viewBox="0 0 24 24"
@@ -333,12 +329,10 @@ export default function Header({ menuItems }: HeaderProps) {
         </div>
       </div>
 
-      {/* Mobile Menu - Max-höjd och scroll i landscape */}
+      {/* Mobile Menu - Statisk storlek */}
       {isMobileMenuOpen && (
-        <div className={`lg:hidden bg-[var(--color-primary)] border-t border-white/10 ${
-          isLandscape ? 'max-h-[50vh] overflow-y-auto' : ''
-        }`}>
-          <nav className={`max-w-[1400px] mx-auto px-6 ${isLandscape ? 'py-2' : 'py-4'}`}>
+        <div className="lg:hidden bg-[var(--color-primary)] border-t border-white/10">
+          <nav className="max-w-[1400px] mx-auto px-6 py-4">
             {/* Mobile Navigation */}
             {items.map((item) => {
               const isActive = pathname === item.path;

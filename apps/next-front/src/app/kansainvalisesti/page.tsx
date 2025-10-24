@@ -22,8 +22,8 @@ export default function InternationalPage() {
               Kansainvälinen välittäjäsi<br />
               paikallisesti
             </h1>
-            <p className="text-lg md:text-xl font-light mb-12">
-              26 100 välittäjää 1 000 välitystoimistossa 84 maassa ja alueella
+            <p className="text-lg md:text-xl font-light mb-12 tracking-wide">
+              26 100 välittäjää • 1 000 välitystoimistossa • 84 maassa ja alueella
             </p>
             <Link 
               href="/kansainvalisesti"

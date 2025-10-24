@@ -158,11 +158,19 @@ export interface MultilingualPropertyListing {
 
   /**
    * Type of ownership
-   * FI: Omistusmuoto (esim. "Oma", "Vuokra")
-   * EN: Ownership type (e.g., "Owned", "Rented")
-   * SV: Ägandeform (t.ex. "Egen", "Hyra")
+   * FI: Omistusmuoto (esim. "Omistusasunto", "Osaomistus", "Asumisoikeus")
+   * EN: Ownership type (e.g., "Owner-occupied", "Part ownership", "Right of occupancy")
+   * SV: Ägandeform (t.ex. "Ägarlägenhet", "Delägarskap", "Boenderätt")
    */
   ownershipType: LocalizedString;
+
+  /**
+   * Housing tenure / Management form
+   * FI: Hallintamuoto (esim. "Asunto-osakeyhtiö", "Kiinteistöosakeyhtiö", "Osaomistus")
+   * EN: Housing tenure (e.g., "Housing cooperative", "Real estate company", "Part ownership")
+   * SV: Besittningsform (t.ex. "Bostadsaktiebolag", "Fastighetsaktiebolag", "Delägarskap")
+   */
+  housingTenure: LocalizedString;
 
   /**
    * Floor location
@@ -268,6 +276,15 @@ export interface MultilingualPropertyListing {
    * SV: Energicertifikat finns
    */
   energyCertificate: boolean;
+
+  /**
+   * Energy certificate status (for properties/houses only)
+   * Possible values:
+   * - "Kyllä" (Yes, has certificate)
+   * - "Ei lain edellyttämää energiatodistusta" (Not legally required)
+   * - "Kohteella ei energiatodistuslain nojalla tarvitse olla energiatodistusta" (Not required by law)
+   */
+  energyCertificateStatus?: string;
 
   /**
    * Energy certificate URL

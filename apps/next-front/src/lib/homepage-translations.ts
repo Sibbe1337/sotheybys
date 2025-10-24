@@ -163,9 +163,9 @@ export const HOMEPAGE_TRANSLATIONS: HomepageTranslations = {
     en: 'Your International Agent Locally'
   },
   hero1Subtitle: {
-    fi: '26 100 välittäjää 1100 välitystoimistossa 84 maassa ja alueella',
-    sv: '26 100 mäklare i 1100 kontor i 84 länder och regioner',
-    en: '26,100 agents in 1,100 offices across 84 countries and territories'
+    fi: '26 100 välittäjää • 1100 välitystoimistossa • 84 maassa ja alueella',
+    sv: '26 100 mäklare • 1100 kontor • 84 länder och regioner',
+    en: '26,100 agents • 1,100 offices • 84 countries and territories'
   },
   hero1Button: {
     fi: 'Avaamme uusia ovia',

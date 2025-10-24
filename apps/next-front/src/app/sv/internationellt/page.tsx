@@ -22,8 +22,8 @@ export default function InternationalPage() {
               Din internationella mäklare<br />
               lokalt
             </h1>
-            <p className="text-lg md:text-xl font-light mb-12">
-              26 100 mäklare i 1 000 kontor i 84 länder och territorier
+            <p className="text-lg md:text-xl font-light mb-12 tracking-wide">
+              26 100 mäklare • 1 000 kontor • 84 länder och territorier
             </p>
             <Link 
               href="/sv/internationellt"

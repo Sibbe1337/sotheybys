@@ -10,6 +10,9 @@ interface PropertyPageProps {
   params: {
     slug: string;
   };
+  searchParams: {
+    lang?: string;
+  };
 }
 
 // Define the property interface with ACF fields
@@ -315,8 +318,9 @@ function generateStructuredData(property: PropertyWithACF, propertyData: any, ag
   };
 }
 
-export default async function PropertyDetailPage({ params }: PropertyPageProps) {
+export default async function PropertyDetailPage({ params, searchParams }: PropertyPageProps) {
   const { slug } = params;
+  const language = searchParams?.lang || 'fi';
   
   // Use shared function to fetch property data
   const property = await fetchPropertyData(slug);
@@ -346,6 +350,7 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
           propertyData={propertyData}
           agentData={agentData}
           images={images}
+          language={language as 'fi' | 'sv' | 'en'}
         />
       </ErrorBoundary>
     </>

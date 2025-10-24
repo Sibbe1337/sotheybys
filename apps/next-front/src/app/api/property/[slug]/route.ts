@@ -173,6 +173,37 @@ export async function GET(
     try {
       const mapped = mapLinearAPIToProperty(raw);
       
+      // Debug: Check critical fields from Linear API
+      console.log('🔍 Linear API Fields (Dennis debug):', {
+        // Omistusmuoto (Ownership type)
+        ownershipType_fi: raw.ownershipType?.fi?.value,
+        ownershipType_obj: raw.ownershipType,
+        
+        // Hallintamuoto (Housing tenure)
+        housingTenure_fi: raw.housingTenure?.fi?.value,
+        housingTenure_obj: raw.housingTenure,
+        
+        // Tontin omistus (Site ownership)
+        plotOwnership_fi: raw.plotOwnership?.fi?.value,
+        plotOwnership_obj: raw.plotOwnership,
+        lotOwnership_fi: (raw as any).lotOwnership?.fi?.value,
+        siteOwnershipType_fi: (raw as any).siteOwnershipType?.fi?.value,
+        
+        // Vesijohto (Water connection)
+        waterSystem_fi: raw.waterSystem?.fi?.value,
+        waterSystem_obj: raw.waterSystem,
+        waterConnection_fi: (raw as any).waterConnection?.fi?.value,
+        waterConnection_obj: (raw as any).waterConnection,
+        
+        // Other rental/property fields
+        petsAllowed: raw.nonLocalizedValues?.petsAllowed,
+        smokingAllowed: raw.nonLocalizedValues?.smokingAllowed,
+        rent: raw.nonLocalizedValues?.rent
+      });
+      
+      // Debug: Show ALL keys from raw data to find missing fields
+      console.log('🔑 All Linear API keys:', Object.keys(raw).sort());
+      
       // Debug: Check if agent exists in mapped data BEFORE flatten
       console.log('🔍 Mapped Agent (before flatten):', {
         address: mapped.streetAddress?.fi || mapped.streetAddress,

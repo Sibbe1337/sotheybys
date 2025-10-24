@@ -158,7 +158,7 @@ export default function PropertyMap({ properties, language }: PropertyMapProps) 
           return (
             <a
               key={property.id}
-              href={`/${language}/property/${property.slug}`}
+              href={`/kohde/${property.slug}?lang=${language}`}
               className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-shadow border border-gray-200"
               onClick={() => {
                 const lat = property.acfRealEstate?.property?.location?.latitude;

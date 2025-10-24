@@ -203,6 +203,7 @@ export interface LinearAPIListing {
   // Property details
   propertyType: LinearLocalizedField;
   ownershipType: LinearLocalizedField;
+  housingTenure: LinearLocalizedField;
   floor: LinearLocalizedField;
   totalFloors: LinearLocalizedField;
   windowDirection: LinearLocalizedField;
@@ -440,6 +441,7 @@ export function mapLinearAPIToProperty(
       : new Date(),
     availableFrom: extractLocalizedString(data.availableFrom),  // No need for manual fallback
     ownershipType: extractLocalizedString(data.ownershipType),
+    housingTenure: extractLocalizedString(data.housingTenure),
     floorLocation: nv.floor || extractLocalizedString(data.floor),
     numberOfFloors: nv.totalFloors?.toString() || data.floorCount?.fi?.value || ('totalFloors' in linearData ? data.totalFloors?.fi?.value : null) || '',
     windowDirection: extractLocalizedString(data.windowDirection),  // No need for manual fallback
@@ -467,6 +469,7 @@ export function mapLinearAPIToProperty(
     buildingMaterial: extractLocalizedString(data.constructionMaterial || data.buildingMaterialFacade),
     energyClass: (nv as any)?.energyClass || data.energyClass?.fi?.value || '',
     energyCertificate: (nv as any)?.listingHasEnergyCertificate ?? false,
+    energyCertificateStatus: data.listingHasEnergyCertificate?.fi?.value || '',
     energyCertificateUrl: data.energyCertificateUrl || '',
 
     // ========================================================================
@@ -534,7 +537,7 @@ export function mapLinearAPIToProperty(
       
       return plotAreaValue;
     })(),
-    siteOwnershipType: extractLocalizedString(data.housingTenure || data.plotOwnership),
+    siteOwnershipType: extractLocalizedString(data.lotOwnership || data.plotOwnership),
     zoningSituation: extractLocalizedString(data.zoningStatus || data.zoningSituation),
     zoningDetails: {}, // Not directly available
     propertyBuildingRights: extractLocalizedString(data.propertyBuildingRights || data.buildingRights),

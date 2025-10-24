@@ -87,14 +87,9 @@ export default function PropertyCard({
     });
   }
 
-  // Generate correct property URL based on language
+  // Generate correct property URL - use /kohde/ route with language parameter for all languages
   const getPropertyUrl = () => {
-    if (language === 'sv') {
-      return `/sv/objekt/${slug}`;
-    } else if (language === 'en') {
-      return `/en/properties/${slug}`;
-    }
-    return `/kohde/${slug}`; // Finnish default
+    return `/kohde/${slug}?lang=${language}`;
   };
 
   return (

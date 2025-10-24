@@ -100,7 +100,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                     }`}
                   >
                     <p 
-                      className={`text-white/90 text-lg md:text-xl font-light tracking-wider uppercase transform transition-all duration-1000 ${
+                      className={`text-white/90 text-lg md:text-xl font-light tracking-wide transform transition-all duration-1000 ${
                         index === currentSlide 
                           ? 'translate-y-0 opacity-100' 
                           : 'translate-y-full opacity-0'

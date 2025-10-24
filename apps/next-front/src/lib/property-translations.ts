@@ -472,6 +472,56 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     sv: 'Kontakta',
     en: 'Contact'
   },
+  contactAgentTitle: {
+    fi: 'Ota yhteyttä',
+    sv: 'Ta kontakt',
+    en: 'Contact Us'
+  },
+  realEstateAgent: {
+    fi: 'Kiinteistönvälittäjä',
+    sv: 'Fastighetsmäklare',
+    en: 'Real Estate Agent'
+  },
+  basicInfo: {
+    fi: 'Perustiedot',
+    sv: 'Grunduppgifter',
+    en: 'Basic Information'
+  },
+  propertyNumber: {
+    fi: 'Kohdenumero',
+    sv: 'Objektnummer',
+    en: 'Property Number'
+  },
+  presentationText: {
+    fi: 'Esittelyteksti',
+    sv: 'Presentationstext',
+    en: 'Description'
+  },
+  highlights: {
+    fi: 'Kohokohdat',
+    sv: 'Höjdpunkter',
+    en: 'Highlights'
+  },
+  sellingPoints: {
+    fi: 'Myyntivaltteja',
+    sv: 'Försäljningsfördelar',
+    en: 'Selling Points'
+  },
+  propertyFeatures: {
+    fi: 'Kohteen ominaisuudet',
+    sv: 'Objektets egenskaper',
+    en: 'Property Features'
+  },
+  additionalMaterials: {
+    fi: 'Lisämateriaali',
+    sv: 'Ytterligare material',
+    en: 'Additional Materials'
+  },
+  virtualTour: {
+    fi: 'Virtuaaliesittely',
+    sv: 'Virtuell visning',
+    en: 'Virtual Tour'
+  },
   share: {
     fi: 'Jaa',
     sv: 'Dela',
@@ -717,6 +767,13 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     fi: 'Lisämaksut',
     sv: 'Tilläggsavgifter',
     en: 'Additional Fees'
+  },
+  
+  // Disclaimer
+  listingDisclaimer: {
+    fi: 'Tämä ilmoitus ei ole virallinen myyntiesite. Lisätiedot saat välittäjältä.',
+    sv: 'Denna annons är inte ett officiellt försäljningbrochyr. Mer information fås av mäklaren.',
+    en: 'This listing is not an official sales brochure. For more information, please contact the agent.'
   }
 };
 

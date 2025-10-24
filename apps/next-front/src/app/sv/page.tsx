@@ -15,7 +15,7 @@ const defaultSlides = [
     id: '1',
     image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/57809e7b-2fe2-430d-a7d7-aff39337d0c1/ead27130-4e08-465e-af6d-500d593ae0db.jpg',
     title: 'Din internationella mäklare lokalt',
-    subtitle: '26 100 mäklare i 1100 kontor i 84 länder och regioner',
+    subtitle: '26 100 mäklare • 1100 kontor • 84 länder och regioner',
     buttonText: 'Vi öppnar nya dörrar',
     buttonLink: '#vi-oppnar-nya-dorrar'
   },
