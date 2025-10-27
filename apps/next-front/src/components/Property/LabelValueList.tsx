@@ -28,7 +28,7 @@ export function LabelValueList({ items, placeholder = '—', className, rowClass
   const rows = (items || []).filter((item): item is LabelValueItem => Boolean(item));
 
   return (
-    <div className={clsx('space-y-2', className)}>
+    <div className={clsx('space-y-2 sm:space-y-2.5', className)}>
       {rows.map(({ label, value, valueClassName, hideIfEmpty, secondary }) => {
         const displayValue = value == null || (typeof value === 'string' && value.trim().length === 0)
           ? placeholder
@@ -41,14 +41,14 @@ export function LabelValueList({ items, placeholder = '—', className, rowClass
         const isPlaceholder = isEmpty(displayValue, placeholder);
 
         return (
-          <div key={String(label)} className={clsx('flex flex-col gap-1', rowClassName)}>
-            <div className="flex justify-between gap-4">
-              <span className="text-gray-600">{label}</span>
-              <span className={clsx('text-right', valueClassName, isPlaceholder && 'text-gray-400 italic')}>
+          <div key={String(label)} className={clsx('flex flex-col gap-0.5 sm:gap-1', rowClassName)}>
+            <div className="flex justify-between gap-2 sm:gap-3 md:gap-4">
+              <span className="text-sm sm:text-base text-gray-600">{label}</span>
+              <span className={clsx('text-sm sm:text-base text-right font-medium', valueClassName, isPlaceholder && 'text-gray-400 italic font-normal')}>
                 {displayValue}
               </span>
             </div>
-            {secondary ? <div className="text-right text-sm text-gray-600">{secondary}</div> : null}
+            {secondary ? <div className="text-right text-xs sm:text-sm text-gray-600">{secondary}</div> : null}
           </div>
         );
       })}

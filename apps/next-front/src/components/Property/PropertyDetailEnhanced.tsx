@@ -1218,19 +1218,8 @@ export default function PropertyDetailEnhanced({
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* DEBUG: Property Type Indicator - Remove in production */}
-      <div className="fixed top-4 right-4 z-50 bg-white shadow-lg rounded-lg p-3 border-2" style={{
-        borderColor: isRental ? '#FF9800' : (isApartment ? '#4CAF50' : '#2196F3')
-      }}>
-        <div className="text-xs font-bold mb-1">
-          {isRental ? '🔑 HYRESOBJEKT' : (isApartment ? '🏢 LÄGENHET' : '🏠 FASTIGHET')}
-        </div>
-        <div className="text-xs text-gray-600">
-          {address}
-        </div>
-      </div>
-      {/* Hero Section with Image Carousel */}
-      <section className="relative h-[70vh] bg-black">
+      {/* Hero Section with Image Carousel - Optimized for mobile */}
+      <section className="relative h-[50vh] sm:h-[60vh] lg:h-[70vh] bg-black">
         {images.length > 0 && (
           <>
             <div 
@@ -1249,52 +1238,52 @@ export default function PropertyDetailEnhanced({
                 draggable={false}
               />
               
-              {/* Gallery Controls */}
-              <div className="absolute top-4 right-4 flex gap-2">
+              {/* Gallery Controls - Mobile optimized */}
+              <div className="absolute top-2 sm:top-4 right-2 sm:right-4 flex gap-1.5 sm:gap-2">
                 {getVirtualTourInfo() && (
                   <button
                     onClick={() => setShowVirtualTour(true)}
-                    className="bg-white/80 hover:bg-white p-2 rounded-lg shadow-md transition-all flex items-center gap-2"
+                    className="bg-white/90 hover:bg-white p-2.5 sm:p-2 rounded-lg shadow-md transition-all flex items-center gap-2 touch-manipulation"
                     title="Virtuaalikierros"
                   >
-                    <CubeIcon className="w-5 h-5" />
-                    <span className="text-sm font-medium">360° Kierros</span>
+                    <CubeIcon className="w-5 h-5 sm:w-5 sm:h-5" />
+                    <span className="text-xs sm:text-sm font-medium hidden sm:inline">360° Kierros</span>
                   </button>
                 )}
                 <button
                   onClick={() => setIsFullscreen(true)}
-                  className="bg-white/80 hover:bg-white p-2 rounded-lg shadow-md transition-all"
+                  className="bg-white/90 hover:bg-white p-2.5 sm:p-2 rounded-lg shadow-md transition-all touch-manipulation"
                   title="Koko näyttö"
                 >
-                  <ArrowsPointingOutIcon className="w-5 h-5" />
+                  <ArrowsPointingOutIcon className="w-5 h-5 sm:w-5 sm:h-5" />
                 </button>
               </div>
             </div>
-            
-            {/* Image Navigation */}
-            <div className="absolute inset-0 flex items-center justify-between px-4 pointer-events-none">
+
+            {/* Image Navigation - Larger touch targets on mobile */}
+            <div className="absolute inset-0 flex items-center justify-between px-2 sm:px-4 pointer-events-none">
               <button
                 onClick={prevImage}
-                className="p-3 bg-white/90 hover:bg-white rounded-full shadow-lg transition-all pointer-events-auto"
+                className="p-3 sm:p-3 md:p-3 bg-white/90 hover:bg-white rounded-full shadow-lg transition-all pointer-events-auto touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
                 aria-label="Previous image"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
               </button>
               <button
                 onClick={nextImage}
-                className="p-3 bg-white/90 hover:bg-white rounded-full shadow-lg transition-all pointer-events-auto"
+                className="p-3 sm:p-3 md:p-3 bg-white/90 hover:bg-white rounded-full shadow-lg transition-all pointer-events-auto touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
                 aria-label="Next image"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </button>
             </div>
 
-            {/* Image Counter */}
-            <div className="absolute bottom-4 right-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
+            {/* Image Counter - Mobile optimized */}
+            <div className="absolute bottom-2 sm:bottom-4 right-2 sm:right-4 bg-black/70 text-white px-2.5 py-1.5 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium">
               {currentImageIndex + 1} / {images.length}
             </div>
           </>
@@ -1561,30 +1550,30 @@ export default function PropertyDetailEnhanced({
         </div>
       )}
 
-      {/* Property Header */}
+      {/* Property Header - Mobile optimized */}
       <section className="bg-white shadow-sm sticky top-0 z-40">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-            <div>
-              <Heading as="h1">
+        <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6">
+          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-3 sm:gap-4">
+            <div className="flex-1">
+              <Heading as="h1" className="text-xl sm:text-2xl lg:text-3xl leading-tight">
                 {removeEmojis(
-                  getLocalizedText(heading, language) || 
-                  getLocalizedText(marketingTitle, language) || 
-                  getLocalizedText(freeTextTitle, language) || 
+                  getLocalizedText(heading, language) ||
+                  getLocalizedText(marketingTitle, language) ||
+                  getLocalizedText(freeTextTitle, language) ||
                   address || ''
                 )}
               </Heading>
               {marketingSubtitle && (
-                <p className="text-xl text-gray-700 mt-2 font-light">
+                <p className="text-base sm:text-xl text-gray-700 mt-1.5 sm:mt-2 font-light leading-snug">
                   {removeEmojis(getLocalizedText(marketingSubtitle, language))}
                 </p>
               )}
-              <p className="text-lg text-gray-600 mt-1">
+              <p className="text-sm sm:text-base lg:text-lg text-gray-600 mt-1 leading-relaxed">
                 {removeEmojis(address || '')} • {postalCode} {city} {province && `, ${province}`}
               </p>
-              <div className="flex items-center gap-3 mt-3">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-2 sm:mt-3">
                 {typeOfApartment && <PropertyTypeChip type={removeEmojis(typeOfApartment)} />}
-                <MetaRow 
+                <MetaRow
                   items={[
                     { value: area ? (String(area).includes('m²') || String(area).includes('m2') ? area : `${area} m²`) : '' },
                     { label: 'Rakennettu', value: yearBuilt || '' }
@@ -1592,22 +1581,23 @@ export default function PropertyDetailEnhanced({
                 />
               </div>
             </div>
-            <div className="text-right">
-              <Price className="text-3xl lg:text-4xl whitespace-nowrap" block>
+            <div className="lg:text-right flex-shrink-0">
+              <Price className="text-2xl sm:text-3xl lg:text-4xl whitespace-nowrap font-bold" block>
                 {askPrice ? `${parseInt(askPrice).toLocaleString('fi-FI')} €` : 'Kysy hintaa'}
               </Price>
               {area && askPrice && (
-                <div className="text-sm text-gray-600 mt-1">
+                <div className="text-xs sm:text-sm text-gray-600 mt-0.5 sm:mt-1">
                   {Math.round(parseInt(askPrice) / parseInt(area)).toLocaleString('fi-FI')} €/m²
                 </div>
               )}
             </div>
-            
-            {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-2 md:gap-3 mt-4">
+          </div>
+
+          {/* Action Buttons - Full width on mobile, better spacing */}
+          <div className="flex flex-wrap items-center gap-2 justify-start sm:justify-end mt-3 sm:mt-4">
               <button
                 onClick={handleSaveProperty}
-                className="flex items-center gap-2 px-3 md:px-4 py-2.5 md:py-2 rounded-lg border border-gray-300 hover:border-gray-400 transition-colors touch-manipulation"
+                className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2.5 rounded-lg border border-gray-300 hover:border-gray-400 active:border-gray-500 transition-colors touch-manipulation min-h-[44px]"
                 title={isSaved ? "Poista tallennetuista" : "Tallenna kohde"}
               >
                 {isSaved ? (
@@ -1615,29 +1605,29 @@ export default function PropertyDetailEnhanced({
                 ) : (
                   <HeartIcon className="h-5 w-5 text-gray-600" />
                 )}
-                <span className="text-sm hidden sm:inline">{isSaved ? "Tallennettu" : "Tallenna"}</span>
+                <span className="text-sm font-medium">{isSaved ? "Tallennettu" : "Tallenna"}</span>
               </button>
-              
+
               <button
                 onClick={handleComparisonToggle}
-                className={`flex items-center gap-2 px-3 md:px-4 py-2.5 md:py-2 rounded-lg border transition-colors touch-manipulation ${
-                  isInComparison 
-                    ? 'border-[#002349] bg-[#002349] text-white' 
-                    : 'border-gray-300 hover:border-gray-400'
+                className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2.5 rounded-lg border transition-colors touch-manipulation min-h-[44px] ${
+                  isInComparison
+                    ? 'border-[#002349] bg-[#002349] text-white'
+                    : 'border-gray-300 hover:border-gray-400 active:border-gray-500'
                 }`}
                 title={isInComparison ? "Poista vertailusta" : "Lisää vertailuun"}
               >
                 <ScaleIcon className={`h-5 w-5 ${isInComparison ? 'text-white' : 'text-gray-600'}`} />
-                <span className="text-sm hidden sm:inline">{isInComparison ? "Vertailussa" : "Vertaile"}</span>
+                <span className="text-sm font-medium">{isInComparison ? "Vertailussa" : "Vertaile"}</span>
               </button>
-              
+
               <div className="relative share-menu-container">
                 <button
                   onClick={() => setShowShareMenu(!showShareMenu)}
-                  className="flex items-center gap-2 px-3 md:px-4 py-2.5 md:py-2 rounded-lg border border-gray-300 hover:border-gray-400 transition-colors touch-manipulation"
+                  className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2.5 rounded-lg border border-gray-300 hover:border-gray-400 active:border-gray-500 transition-colors touch-manipulation min-h-[44px]"
                 >
                   <ShareIcon className="h-5 w-5 text-gray-600" />
-                  <span className="text-sm hidden sm:inline">Jaa</span>
+                  <span className="text-sm font-medium">Jaa</span>
                 </button>
                 
                 {showShareMenu && (
@@ -1680,49 +1670,50 @@ export default function PropertyDetailEnhanced({
                   </div>
                 )}
               </div>
-              
+
+
               <button
                 onClick={() => window.print()}
-                className="flex items-center gap-2 px-3 md:px-4 py-2.5 md:py-2 rounded-lg border border-gray-300 hover:border-gray-400 transition-colors touch-manipulation"
+                className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2.5 rounded-lg border border-gray-300 hover:border-gray-400 active:border-gray-500 transition-colors touch-manipulation min-h-[44px]"
               >
                 <PrinterIcon className="h-5 w-5 text-gray-600" />
-                <span className="text-sm hidden sm:inline">Tulosta</span>
+                <span className="text-sm font-medium">Tulosta</span>
               </button>
             </div>
-          </div>
         </div>
       </section>
 
       {/* Description Section - REMOVED: Now shown in Overview tab via ApartmentView/FastighetView */}
 
-      {/* Tab Navigation */}
-      <section className="bg-white border-b sticky top-0 md:top-[104px] z-30">
-        <div className="container mx-auto px-0 md:px-4">
+      {/* Tab Navigation - Mobile optimized with better touch targets */}
+      <section className="bg-white border-b sticky top-0 md:top-[104px] z-30 shadow-sm">
+        <div className="container mx-auto px-0 sm:px-2 md:px-4">
           <div className="relative">
-            <div className="flex overflow-x-auto scrollbar-hide snap-x snap-mandatory">
+            <div className="flex overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-px">
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-4 md:px-6 py-4 border-b-2 transition-all whitespace-nowrap snap-start min-w-fit ${
+                  className={`flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-5 md:px-6 py-3.5 sm:py-4 border-b-3 transition-all whitespace-nowrap snap-start min-w-fit touch-manipulation ${
                     activeTab === tab.id
-                      ? 'border-[#002349] text-[#002349] font-medium'
-                      : 'border-transparent text-gray-600 hover:text-gray-900'
+                      ? 'border-[#002349] text-[#002349] font-semibold bg-blue-50/30'
+                      : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50 active:bg-gray-100'
                   }`}
                 >
-                  <span className="text-sm md:text-base">{tab.label}</span>
+                  <span className="text-sm sm:text-base leading-tight">{tab.label}</span>
                 </button>
               ))}
             </div>
-            {/* Scroll indicators for mobile */}
-            <div className="absolute right-0 top-0 h-full w-8 bg-gradient-to-l from-white via-white to-transparent pointer-events-none md:hidden" />
+            {/* Scroll indicators for mobile with better visibility */}
+            <div className="absolute left-0 top-0 h-full w-6 sm:w-8 bg-gradient-to-r from-white via-white/80 to-transparent pointer-events-none md:hidden" />
+            <div className="absolute right-0 top-0 h-full w-6 sm:w-8 bg-gradient-to-l from-white via-white/80 to-transparent pointer-events-none md:hidden" />
           </div>
         </div>
       </section>
 
-      {/* Tab Content */}
-      <section className="container mx-auto px-4 py-8">
-        <div className="grid lg:grid-cols-3 gap-8">
+      {/* Tab Content - Mobile optimized spacing */}
+      <section className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 lg:py-8">
+        <div className="grid lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           <div className="lg:col-span-2">
             {/* ================================================================ */}
             {/* LÄGENHET (APARTMENT) LAYOUT - Refactored to use ApartmentView */}

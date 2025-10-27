@@ -16,9 +16,9 @@ export function SectionCard({ title, children, className, bodyClassName }: Secti
   );
 
   return (
-    <div className={clsx('bg-white rounded-lg shadow-sm p-6', className)}>
+    <div className={clsx('bg-white rounded-lg shadow-sm p-4 sm:p-5 lg:p-6', className)}>
       {title ? (
-        <h3 className="text-xl font-light mb-4">{title}</h3>
+        <h3 className="text-lg sm:text-xl font-light mb-3 sm:mb-4">{title}</h3>
       ) : null}
       {content}
     </div>
