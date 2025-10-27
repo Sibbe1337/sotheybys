@@ -210,8 +210,6 @@ export default function PropertyDetailEnhanced({
   const shouldShowDebtPart = debtPartValue != null && debtPartValue > 0;
   const debtPartDisplay = shouldShowDebtPart ? formatEuroLabel(debtPartValue) : null;
 
-  const apartmentDescriptionHeading = getTranslation('apartmentDescription', language);
-
   const rawApartmentDescription = removeEmojis(
     getLocalizedText(marketingDescription, language) ||
     getLocalizedText(freeText, language) ||
@@ -223,7 +221,6 @@ export default function PropertyDetailEnhanced({
     .split('\n')
     .map((paragraph: string) => paragraph.trim())
     .filter((paragraph: string) => paragraph.length > 0);
-  const hasApartmentDescription = apartmentDescriptionParagraphs.length > 0;
   const showAutoTranslationNotice = language !== 'fi' && typeof (freeText || description) === 'string';
   const yesLabel = getTranslation('yes', language);
   const notProvidedText = getTranslation('notSpecified', language);
@@ -1617,32 +1614,7 @@ export default function PropertyDetailEnhanced({
         </div>
       </section>
 
-      {(isApartment || isFastighet) && hasApartmentDescription && (
-        <section className="bg-white border-b">
-          <div className="container mx-auto px-4 py-6">
-            <h2 className="text-2xl font-light mb-4">{apartmentDescriptionHeading}</h2>
-            {showAutoTranslationNotice && (
-              <div className="mb-4 p-3 bg-blue-50 border-l-4 border-blue-400 text-sm text-blue-700">
-                <p className="font-medium">
-                  {language === 'sv' ? '📝 Automatisk översättning' : '📝 Automatic translation'}
-                </p>
-                <p className="text-xs mt-1">
-                  {language === 'sv'
-                    ? 'Vissa termer har översatts automatiskt från finska. Kontakta mäklaren för fullständig översättning.'
-                    : 'Some terms have been automatically translated from Finnish. Contact the agent for a complete translation.'}
-                </p>
-              </div>
-            )}
-            <div className="prose prose-gray max-w-none">
-              {apartmentDescriptionParagraphs.map((paragraph: string, idx: number) => (
-                <p key={idx} className="mb-4 text-gray-700 leading-relaxed">
-                  {paragraph}
-                </p>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+      {/* Description Section - REMOVED: Now shown in Overview tab via ApartmentView/FastighetView */}
 
       {/* Tab Navigation */}
       <section className="bg-white border-b sticky top-0 md:top-[104px] z-30">
