@@ -407,7 +407,7 @@ export const PROPERTY_TRANSLATIONS: Translations = {
   
   // Housing Company Fields
   housingCompanyName: {
-    fi: 'Yhtiön nimi',
+    fi: 'Taloyhtiön nimi',
     sv: 'Bolagets namn',
     en: 'Company Name'
   },
@@ -999,9 +999,9 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     en: 'Encumbrances & Rights'
   },
   siteOwnershipType: {
-    fi: 'Tontin omistusmuoto',
-    sv: 'Ägande',
-    en: 'Site Ownership Type'
+    fi: 'Tontin omistus',
+    sv: 'Tomtägande',
+    en: 'Site Ownership'
   },
   ventilation: {
     fi: 'Ilmanvaihto',
