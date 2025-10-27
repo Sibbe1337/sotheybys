@@ -417,7 +417,8 @@ export default function PropertyDetailEnhanced({
     pickFirstNonEmpty(
       propertyData?.housingTenure,
       propertyData?.tenure,
-      propertyData?.hallintamuoto
+      propertyData?.hallintamuoto,
+      propertyData?.ownershipStatus
     )
   );
 
