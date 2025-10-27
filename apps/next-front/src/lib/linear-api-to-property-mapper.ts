@@ -314,12 +314,18 @@ export interface LinearAPIListing {
 
 /**
  * Extract localized string from Linear API field
+ * Also handles plain strings by converting them to LocalizedString
  */
-function extractLocalizedString(field: LinearLocalizedField | undefined): LocalizedString {
+function extractLocalizedString(field: LinearLocalizedField | string | undefined): LocalizedString {
   if (!field) {
     return { fi: '', en: '', sv: '' };
   }
-  
+
+  // Handle plain strings (e.g., "housingCompanyName": "Bostadsaktiebolaget Hafnia")
+  if (typeof field === 'string') {
+    return { fi: field, en: field, sv: field };
+  }
+
   return {
     fi: field.fi?.value || '',
     en: field.en?.value || '',
@@ -604,7 +610,15 @@ export function mapLinearAPIToProperty(
     // ========================================================================
     // 4. COMPANY / MANAGEMENT
     // ========================================================================
-    housingCompanyName: data.housingCooperativeName?.fi?.value || data.housingCompanyName?.fi?.value || '',
+    housingCompanyName: (() => {
+      // Try localized fields first
+      const localized = extractLocalizedString(data.housingCooperativeName || data.housingCompanyName);
+      if (localized.fi) return localized.fi;
+      // Fallback to plain string if exists
+      if (typeof data.housingCompanyName === 'string') return data.housingCompanyName;
+      if (typeof data.housingCooperativeName === 'string') return data.housingCooperativeName;
+      return '';
+    })(),
     housingCompanyHomeCity: extractLocalizedString(data.housingCompanyHomeCity),
     businessId: data.businessId?.fi?.value || '',
     managementCompany: data.managementCompany?.fi?.value || '',
