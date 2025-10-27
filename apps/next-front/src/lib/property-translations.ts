@@ -989,7 +989,7 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     en: 'Site Area'
   },
   propertyLotSize: {
-    fi: 'Kiinteistön koko',
+    fi: 'Tontin pinta-ala',
     sv: 'Tomtstorlek',
     en: 'Lot Size'
   },

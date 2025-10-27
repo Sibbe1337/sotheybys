@@ -18,7 +18,7 @@ type FlattenedProperty = {
 const NUMERIC_FIELDS = [
   'salesPrice', 'debtPart', 'unencumberedSalesPrice', 'maintenanceFee',
   'financingFee', 'totalFee', 'waterFee', 'electricityCost', 'heatingCost',
-  'propertyTax', 'livingArea', 'totalArea', 'volume', 'siteArea',
+  'propertyTax', 'livingArea', 'totalArea', 'volume', 'siteArea', 'lotArea',
   'yearOfBuilding', 'constructionYear', 'numberOfFloors', 'floorCount',
   'rentIncome', 'cleaningCost', 'companyLoans', 'companyIncome',
   'totalApartments', 'totalBusinessSpaces', 'annualLease'
