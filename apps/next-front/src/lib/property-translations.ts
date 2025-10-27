@@ -1099,7 +1099,8 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     sv: 'Tilläggsavgifter',
     en: 'Additional Fees'
   },
-  
+
+
   // Disclaimer
   listingDisclaimer: {
     fi: 'Tämä ilmoitus ei ole virallinen myyntiesite. Lisätiedot saat välittäjältä.',
