@@ -1185,32 +1185,31 @@ export default function PropertyDetailEnhanced({
 
   // ============================================================================
   // TAB DEFINITIONS - Different tabs for LÄGENHET vs FASTIGHET vs HYRESOBJEKT
+  // Translated dynamically based on selected language
   // ============================================================================
   const apartmentTabs = [
-    { id: 'overview', label: 'Yleiskatsaus' },
-    { id: 'details', label: 'Huoneistotiedot' },
-    { id: 'building', label: 'Rakennus & Yhtiö' },
-    { id: 'costs', label: 'Kustannukset' },
-    { id: 'location', label: 'Muut tiedot' },
-    { id: 'documents', label: 'Asiakirjat & Linkit' }
+    { id: 'overview', label: getTranslation('overview', language) },
+    { id: 'details', label: getTranslation('apartmentDetails', language) },
+    { id: 'building', label: getTranslation('buildingAndCompany', language) },
+    { id: 'costs', label: getTranslation('costs', language) },
+    { id: 'location', label: getTranslation('otherInformation', language) },
+    { id: 'documents', label: getTranslation('documentsAndLinks', language) }
   ];
-  
+
   const fastighetTabs = [
-    { id: 'overview', label: 'Yleiskatsaus' },
-    { id: 'property-details', label: 'Kiinteistötiedot' },
-    { id: 'building', label: 'Rakennustiedot' },
-    { id: 'costs', label: 'Kustannukset' },
-    { id: 'documents', label: 'Asiakirjat' }
+    { id: 'overview', label: getTranslation('overview', language) },
+    { id: 'property-details', label: getTranslation('propertyDetailsTab', language) },
+    { id: 'building', label: getTranslation('buildingDetailsTab', language) },
+    { id: 'costs', label: getTranslation('costs', language) },
+    { id: 'documents', label: getTranslation('documents', language) }
   ];
-  
+
   const rentalTabs = [
-    { id: 'overview', label: 'Yleiskatsaus' },
-    { id: 'details', label: 'Huoneistotiedot' },
-    { id: 'rental-period', label: 'Vuokra-aika' },
-    { id: 'building', label: 'Rakennus & Yhtiö' },
-    { id: 'costs', label: 'Kustannukset' },
-    { id: 'location', label: 'Sijainti' },
-    { id: 'documents', label: 'Asiakirjat' }
+    { id: 'overview', label: getTranslation('overview', language) },
+    { id: 'details', label: getTranslation('apartmentDetails', language) },
+    { id: 'building', label: getTranslation('buildingAndCompany', language) },
+    { id: 'costs', label: getTranslation('costs', language) },
+    { id: 'documents', label: getTranslation('documentsAndLinks', language) }
   ];
   
   // Use different tabs based on property type

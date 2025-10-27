@@ -138,6 +138,16 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     sv: 'Andra kostnader',
     en: 'Other Costs'
   },
+  propertyDetailsTab: {
+    fi: 'Kiinteistötiedot',
+    sv: 'Fastighetsuppgifter',
+    en: 'Property Details'
+  },
+  buildingDetailsTab: {
+    fi: 'Rakennustiedot',
+    sv: 'Byggfakta',
+    en: 'Building Details'
+  },
   otherInformation: {
     fi: 'Muut tiedot',
     sv: 'Övriga uppgifter',
