@@ -511,7 +511,23 @@ export function mapLinearAPIToProperty(
     heatingSystem: extractLocalizedString(data.heatingType || data.heatingSystem),
     ventilationSystem: extractLocalizedString(data.ventilationType || data.ventilationSystem),
     buildingMaterial: extractLocalizedString(data.constructionMaterial || data.buildingMaterialFacade),
-    energyClass: (nv as any)?.energyClass || data.energyClass?.fi?.value || '',
+    energyClass: (() => {
+      // Try multiple field names and formats for energy class
+      const value = (nv as any)?.energyClass ||
+                    data.energyClass?.fi?.value ||
+                    data.energyRating?.fi?.value ||
+                    data.energyPerformanceClass?.fi?.value ||
+                    data.energialuokka?.fi?.value;
+
+      // Check if it's a plain string (some properties return direct string values)
+      if (!value) {
+        if (typeof data.energyClass === 'string') return data.energyClass;
+        if (typeof data.energyRating === 'string') return data.energyRating;
+        if (typeof data.energyPerformanceClass === 'string') return data.energyPerformanceClass;
+      }
+
+      return value || '';
+    })(),
     energyCertificate: (nv as any)?.listingHasEnergyCertificate ?? false,
     energyCertificateStatus: data.listingHasEnergyCertificate?.fi?.value || '',
     energyCertificateUrl: data.energyCertificateUrl || '',
@@ -681,8 +697,35 @@ export function mapLinearAPIToProperty(
     soilAndVegetation: {}, // Not directly available
     buildingRights: {}, // Not directly available
     easementsAndRights: {}, // Not directly available
-    propertyId: data.propertyId?.fi?.value || '',
-    landRegisterNumber: '', // Not directly available
+    propertyId: (() => {
+      // Try multiple field names for property identifier/designation
+      const value = data.propertyId?.fi?.value ||
+                    data.propertyIdentifier?.fi?.value ||
+                    data.propertyDesignation?.fi?.value ||
+                    data.kiinteistotunnus?.fi?.value;
+
+      // Also check if it's a plain string
+      if (!value) {
+        if (typeof data.propertyId === 'string') return data.propertyId;
+        if (typeof data.propertyIdentifier === 'string') return data.propertyIdentifier;
+        if (typeof data.propertyDesignation === 'string') return data.propertyDesignation;
+      }
+
+      return value || '';
+    })(),
+    landRegisterNumber: (() => {
+      const value = data.landRegisterNumber?.fi?.value ||
+                    data.registerNumber?.fi?.value ||
+                    data.kiinteistorekisterinumero?.fi?.value;
+
+      // Check plain strings
+      if (!value) {
+        if (typeof data.landRegisterNumber === 'string') return data.landRegisterNumber;
+        if (typeof data.registerNumber === 'string') return data.registerNumber;
+      }
+
+      return value || '';
+    })(),
     municipality: extractLocalizedString(data.municipality),
     villageOrDistrict: extractLocalizedString(data.region),
     blockNumber: '', // Not directly available

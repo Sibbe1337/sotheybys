@@ -698,7 +698,13 @@ export default function PropertyDetailEnhanced({
     // ALLTID FINNAS (always visible with fallback)
     {
       label: getTranslation('propertyId', language),
-      value: withPlaceholder(formatTextValue(propertyData?.propertyIdentifier))
+      value: withPlaceholder(formatTextValue(
+        pickFirstNonEmpty(
+          propertyData?.propertyId,
+          propertyData?.propertyIdentifier,
+          propertyData?.propertyDesignation
+        )
+      ))
     },
     {
       label: getTranslation('propertyLotSize', language),
