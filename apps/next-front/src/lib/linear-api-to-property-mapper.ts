@@ -446,21 +446,25 @@ export function mapLinearAPIToProperty(
       ? new Date(data.releaseDate.fi.value) 
       : new Date(),
     availableFrom: (() => {
-      // DEBUG: Log ALL fields from Linear API to find the real field name
+      // DEBUG: Log ALL 281 fields from Linear API to find availability field
       const addr = extractLocalizedString(data.address).fi;
-      if (addr) {
+      if (addr && (addr.includes('Mailatie') || addr.includes('Bernhardinkatu'))) {
         const allKeys = Object.keys(data);
-        const relevantKeys = allKeys.filter(k =>
-          k.toLowerCase().includes('available') ||
-          k.toLowerCase().includes('vapaut') ||
-          k.toLowerCase().includes('tillträd') ||
-          k.toLowerCase().includes('move') ||
-          k.toLowerCase().includes('access') ||
-          k.toLowerCase().includes('date') ||
-          k.toLowerCase().includes('free')
-        );
-        console.log('🔍 [availableFrom] Property:', addr);
-        console.log('🔍 [availableFrom] Relevant fields:', relevantKeys.map(k => `${k}=${JSON.stringify(data[k])}`).join('\n'));
+        console.log('🔍🔍🔍 [COMPLETE API DUMP] Property:', addr);
+        console.log('🔍🔍🔍 Total fields:', allKeys.length);
+        console.log('🔍🔍🔍 ALL FIELDS WITH VALUES:');
+        allKeys.forEach(key => {
+          const val = data[key];
+          // Only log fields with actual values (not null/undefined/empty)
+          if (val !== null && val !== undefined && val !== '') {
+            // For objects, show structure
+            if (typeof val === 'object' && !Array.isArray(val)) {
+              console.log(`  ${key}: ${JSON.stringify(val).substring(0, 200)}`);
+            } else {
+              console.log(`  ${key}: ${JSON.stringify(val).substring(0, 200)}`);
+            }
+          }
+        });
       }
 
       // Try multiple field names for availability/move-in date
