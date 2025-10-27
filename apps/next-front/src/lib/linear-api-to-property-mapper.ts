@@ -466,15 +466,21 @@ export function mapLinearAPIToProperty(
       // Try multiple field names for availability/move-in date
       const localized = extractLocalizedString(
         data.availableFrom ||
+        data.freeOnText ||  // CRITICAL: "Lisätietoja vapautumisesta" from Linear
         data.availability ||
         data.moveInDate ||
-        data.possessionDate
+        data.possessionDate ||
+        data.accessibleFrom ||
+        data.freeFrom
       );
       if (localized.fi) return localized;
 
       // Fallback to plain string if it exists
       if (typeof data.availableFrom === 'string' && data.availableFrom) {
         return { fi: data.availableFrom, en: data.availableFrom, sv: data.availableFrom };
+      }
+      if (typeof data.freeOnText === 'string' && data.freeOnText) {
+        return { fi: data.freeOnText, en: data.freeOnText, sv: data.freeOnText };
       }
 
       if (addr) {
