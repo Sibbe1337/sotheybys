@@ -573,13 +573,14 @@ export function mapLinearAPIToProperty(
     siteArea: (() => {
       // CRITICAL: Handle plot area with unit conversion (ha → m²)
       // Linear API sends plotArea/lotArea/siteArea in either m² or ha, with lotAreaUnit specifying the unit
+      // PRIORITIZE localized fields FIRST (data.lotArea?.fi?.value) before checking nv fields
       const plotAreaValue = parseEuroNumber(
+        data.lotArea?.fi?.value ||      // PRIMARY: Localized "Tontin kokonaispinta-ala" (e.g. "200 m²")
+        data.plotArea?.fi?.value ||     // Secondary localized field
         nv.plotArea ||
         nv.lotArea ||
         nv.siteArea ||
-        data.siteArea ||  // CRITICAL: Also check root-level siteArea
-        data.plotArea?.fi?.value ||
-        data.lotArea?.fi?.value
+        data.siteArea                   // Root-level siteArea
       );
       const unit = (nv as any)?.lotAreaUnit || '';
 
