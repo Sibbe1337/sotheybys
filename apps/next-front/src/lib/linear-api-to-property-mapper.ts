@@ -446,6 +446,23 @@ export function mapLinearAPIToProperty(
       ? new Date(data.releaseDate.fi.value) 
       : new Date(),
     availableFrom: (() => {
+      // DEBUG: Log ALL fields from Linear API to find the real field name
+      const addr = extractLocalizedString(data.address).fi;
+      if (addr) {
+        const allKeys = Object.keys(data);
+        const relevantKeys = allKeys.filter(k =>
+          k.toLowerCase().includes('available') ||
+          k.toLowerCase().includes('vapaut') ||
+          k.toLowerCase().includes('tillträd') ||
+          k.toLowerCase().includes('move') ||
+          k.toLowerCase().includes('access') ||
+          k.toLowerCase().includes('date') ||
+          k.toLowerCase().includes('free')
+        );
+        console.log('🔍 [availableFrom] Property:', addr);
+        console.log('🔍 [availableFrom] Relevant fields:', relevantKeys.map(k => `${k}=${JSON.stringify(data[k])}`).join('\n'));
+      }
+
       // Try multiple field names for availability/move-in date
       const localized = extractLocalizedString(
         data.availableFrom ||
@@ -460,6 +477,9 @@ export function mapLinearAPIToProperty(
         return { fi: data.availableFrom, en: data.availableFrom, sv: data.availableFrom };
       }
 
+      if (addr) {
+        console.log('⚠️  [availableFrom] No data found for', addr);
+      }
       return localized;
     })(),
     ownershipType: (() => {
