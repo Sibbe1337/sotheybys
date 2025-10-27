@@ -446,31 +446,11 @@ export function mapLinearAPIToProperty(
       ? new Date(data.releaseDate.fi.value) 
       : new Date(),
     availableFrom: (() => {
-      // DEBUG: Log ALL 281 fields from Linear API to find availability field
-      const addr = extractLocalizedString(data.address).fi;
-      if (addr && (addr.includes('Mailatie') || addr.includes('Bernhardinkatu'))) {
-        const allKeys = Object.keys(data);
-        console.log('🔍🔍🔍 [COMPLETE API DUMP] Property:', addr);
-        console.log('🔍🔍🔍 Total fields:', allKeys.length);
-        console.log('🔍🔍🔍 ALL FIELDS WITH VALUES:');
-        allKeys.forEach(key => {
-          const val = data[key];
-          // Only log fields with actual values (not null/undefined/empty)
-          if (val !== null && val !== undefined && val !== '') {
-            // For objects, show structure
-            if (typeof val === 'object' && !Array.isArray(val)) {
-              console.log(`  ${key}: ${JSON.stringify(val).substring(0, 200)}`);
-            } else {
-              console.log(`  ${key}: ${JSON.stringify(val).substring(0, 200)}`);
-            }
-          }
-        });
-      }
-
       // Try multiple field names for availability/move-in date
       const localized = extractLocalizedString(
+        data.release ||        // PRIMARY: "Kohde vapautuu" / "Fastigheten är frigiven" (Heti/Omedelbart/Immediately)
         data.availableFrom ||
-        data.freeOnText ||  // CRITICAL: "Lisätietoja vapautumisesta" from Linear
+        data.freeOnText ||     // SECONDARY: "Lisätietoja vapautumisesta" - additional info
         data.availability ||
         data.moveInDate ||
         data.possessionDate ||
@@ -480,6 +460,9 @@ export function mapLinearAPIToProperty(
       if (localized.fi) return localized;
 
       // Fallback to plain string if it exists
+      if (typeof data.release === 'string' && data.release) {
+        return { fi: data.release, en: data.release, sv: data.release };
+      }
       if (typeof data.availableFrom === 'string' && data.availableFrom) {
         return { fi: data.availableFrom, en: data.availableFrom, sv: data.availableFrom };
       }
@@ -487,9 +470,6 @@ export function mapLinearAPIToProperty(
         return { fi: data.freeOnText, en: data.freeOnText, sv: data.freeOnText };
       }
 
-      if (addr) {
-        console.log('⚠️  [availableFrom] No data found for', addr);
-      }
       return localized;
     })(),
     ownershipType: (() => {
