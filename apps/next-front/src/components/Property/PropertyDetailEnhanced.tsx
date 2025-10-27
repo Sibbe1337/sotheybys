@@ -476,11 +476,15 @@ export default function PropertyDetailEnhanced({
     ...(shouldShowDebtPart && debtPartDisplay ? [{ key: 'debtPart', value: debtPartDisplay, alwaysShow: false }] : [])
   ];
 
-  // Price rows for FASTIGHET: same as apartments, but can also include mortgageEncumbrances
+  // Price rows for FASTIGHET: according to requirements
+  // ALLTID FINNAS: debtFreePrice, propertyTax
+  // IFALL DET FINNS: mortgageEncumbrances
+  const propertyTaxDisplay = formatChargeValue(propertyTax);
   const fastighetPriceRowsRaw = [
     { key: 'debtFreePrice', value: debtFreePriceDisplay, alwaysShow: true },
-    { key: 'salesPrice', value: askPriceDisplay, alwaysShow: true },
-    ...(mortgageEncumbranceValue !== '—' ? [{ key: 'mortgageEncumbrances', value: mortgageEncumbranceValue, alwaysShow: false }] : [])
+    { key: 'propertyTax', value: propertyTaxDisplay, alwaysShow: true },  // ALWAYS show for fastigheter
+    ...(mortgageEncumbranceValue !== '—' && mortgageEncumbranceValue ?
+      [{ key: 'mortgageEncumbrances', value: mortgageEncumbranceValue, alwaysShow: false }] : [])
   ];
 
   // Create label-value items for apartments (keep all rows, even with '—')
@@ -502,8 +506,10 @@ export default function PropertyDetailEnhanced({
 
   const livingCostRows: Array<{ label: string; value: string }> = [];
   const pushLivingCost = (labelKey: string, value: any) => {
+    // For living costs: 0 or null means "does not exist", so don't show it
+    if (value == null || value === '' || value === 0) return;
     const display = formatChargeValue(value);
-    if (display === '—') return;
+    if (display === '—' || display === '0 €') return;
     livingCostRows.push({ label: getTranslation(labelKey, language), value: display });
   };
   pushLivingCost('maintenanceCharge', pickFirstNonEmpty(maintenanceCharge, (propertyFinancials as any)?.maintenanceFee));
@@ -516,13 +522,16 @@ export default function PropertyDetailEnhanced({
 
   const otherCostRows: Array<{ label: string; value: string }> = [];
   const pushOtherCost = (labelKey: string, value: any, formatter: (val: any) => string = formatChargeValue) => {
+    // For other costs: 0 or null means "does not exist", so don't show it
+    if (value == null || value === '' || value === 0) return;
     const display = formatter(value);
-    if (display === '—') return;
+    if (display === '—' || display === '0 €') return;
     otherCostRows.push({ label: getTranslation(labelKey, language), value: display });
   };
-  // IMPORTANT: propertyTax should NEVER be shown for apartments (isApartment will be defined later)
-  // We'll filter it conditionally based on property type
-  pushOtherCost('propertyTax', propertyTax);
+  // NOTE: propertyTax is now handled separately:
+  // - For apartments: never shown (filtered out by otherCostListItemsFiltered)
+  // - For fastigheter: shown in fastighetPriceItems under "Hintatiedot"
+  // So we don't add it to otherCostRows at all
   pushOtherCost('cableTv', cableCharge);
   pushOtherCost('internet', internetCharge);
   pushOtherCost('roadTollFee', propertyData?.roadTolls);
@@ -649,64 +658,62 @@ export default function PropertyDetailEnhanced({
     return String(value);
   };
 
-  const fastighetEstateItems = (
-    [
-      propertyData?.propertyIdentifier
-        ? {
-            label: getTranslation('propertyId', language),
-            value: withPlaceholder(formatTextValue(propertyData?.propertyIdentifier)),
-            hideIfEmpty: true
-          }
-        : undefined,
-      {
-        label: getTranslation('propertyLotSize', language),
-        value: withPlaceholder(lotAreaDisplay),
-        hideIfEmpty: true
-      },
-      {
-        label: getTranslation('ownershipType', language),
-        value: withPlaceholder(siteOwnershipValue),
-        hideIfEmpty: true
-      },
-      {
-        label: getTranslation('zoningSituation', language),
-        value: withPlaceholder(zoningSummary)
-      },
-      // waterConnection/vesijohto removed per customer requirement
-      {
-        label: getTranslation('propertyBuildingRights', language),
-        value: withPlaceholder(formatTextValue(propertyData?.propertyBuildingRights)),
-        hideIfEmpty: true
-      },
-      {
-        label: getTranslation('energyClass', language),
-        value: withPlaceholder(energyClassValue)
-      },
-      {
-        label: getTranslation('energyCertificate', language),
-        value: normalizedEnergyCertificateUrl
-          ? (
-              <a href={normalizedEnergyCertificateUrl} target="_blank" rel="noopener noreferrer" className="text-[#002349] hover:underline">
-                {getTranslation('energyCertificateUrl', language)}
-              </a>
-            )
-          : withPlaceholder(energyCertificateMessage || '—')
-      },
-      {
-        label: getTranslation('availableFrom', language),
-        value: withPlaceholder(formatDateValue(propertyData?.availableFrom ?? releaseSource))
-      }
-    ]
-  ).filter(Boolean) as LabelValueItem[];
+  // FASTIGHET Estate Items: "ALLTID FINNAS" means always show (even if empty), "IFALL DET FINNS" means show only if exists
+  const fastighetEstateItems: LabelValueItem[] = [
+    // ALLTID FINNAS (always visible with fallback)
+    {
+      label: getTranslation('propertyId', language),
+      value: withPlaceholder(formatTextValue(propertyData?.propertyIdentifier))
+    },
+    {
+      label: getTranslation('propertyLotSize', language),
+      value: withPlaceholder(lotAreaDisplay)
+    },
+    {
+      label: getTranslation('ownershipType', language),
+      value: withPlaceholder(siteOwnershipValue)
+    },
+    {
+      label: getTranslation('zoningSituation', language),
+      value: withPlaceholder(zoningSummary)
+    },
+    // waterConnection/vesijohto removed per customer requirement
+    {
+      label: getTranslation('energyClass', language),
+      value: withPlaceholder(energyClassValue)
+    },
+    {
+      label: getTranslation('energyCertificate', language),
+      value: normalizedEnergyCertificateUrl
+        ? (
+            <a href={normalizedEnergyCertificateUrl} target="_blank" rel="noopener noreferrer" className="text-[#002349] hover:underline">
+              {getTranslation('energyCertificateUrl', language)}
+            </a>
+          )
+        : withPlaceholder(energyCertificateMessage || '—')
+    },
+    {
+      label: getTranslation('availableFrom', language),
+      value: withPlaceholder(formatDateValue(propertyData?.availableFrom ?? releaseSource))
+    },
+    // IFALL DET FINNS (show only if exists) - add conditionally after array creation
+  ];
 
+  // Add "Rakennusoikeus" (Building Rights) only if it exists
+  const buildingRights = formatTextValue(propertyData?.propertyBuildingRights);
+  if (buildingRights && buildingRights !== '—') {
+    fastighetEstateItems.push({
+      label: getTranslation('propertyBuildingRights', language),
+      value: buildingRights
+    });
+  }
+
+  // FASTIGHET Building Items: "ALLTID FINNAS" vs "IFALL DET FINNS"
   const fastighetBuildingItems: LabelValueItem[] = [
+    // ALLTID FINNAS (always visible)
     {
       label: getTranslation('constructionYear', language),
       value: withPlaceholder(constructionYearValue)
-    },
-    {
-      label: getTranslation('numberOfFloors', language),
-      value: withPlaceholder(floorCountValue)
     },
     {
       label: getTranslation('heatingSystem', language),
@@ -717,6 +724,14 @@ export default function PropertyDetailEnhanced({
       value: withPlaceholder(ventilationValue)
     }
   ];
+
+  // Add "Kerrosten määrä" (Number of Floors) only if it exists
+  if (floorCountValue && floorCountValue !== '—') {
+    fastighetBuildingItems.push({
+      label: getTranslation('numberOfFloors', language),
+      value: floorCountValue
+    });
+  }
 
   // fastighetPriceItems now defined earlier (line ~493) with proper always-show logic
   const fastighetRightsText = rightsText && rightsText !== '—' && rightsText !== notProvidedText ? rightsText : undefined;
