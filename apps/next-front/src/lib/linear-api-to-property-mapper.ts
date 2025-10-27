@@ -530,10 +530,17 @@ export function mapLinearAPIToProperty(
     businessSpaces: {}, // Not directly available
     siteArea: (() => {
       // CRITICAL: Handle plot area with unit conversion (ha → m²)
-      // Linear API sends plotArea in either m² or ha, with lotAreaUnit specifying the unit
-      const plotAreaValue = parseEuroNumber(nv.plotArea || nv.lotArea || data.plotArea?.fi?.value || data.lotArea?.fi?.value);
+      // Linear API sends plotArea/lotArea/siteArea in either m² or ha, with lotAreaUnit specifying the unit
+      const plotAreaValue = parseEuroNumber(
+        nv.plotArea ||
+        nv.lotArea ||
+        nv.siteArea ||
+        data.siteArea ||  // CRITICAL: Also check root-level siteArea
+        data.plotArea?.fi?.value ||
+        data.lotArea?.fi?.value
+      );
       const unit = (nv as any)?.lotAreaUnit || '';
-      
+
       // Debug logging for ALL properties (temporarily)
       const addr = extractLocalizedString(data.address).fi;
       if (addr) {
@@ -541,6 +548,8 @@ export function mapLinearAPIToProperty(
           address: addr,
           'nv.plotArea': nv.plotArea,
           'nv.lotArea': nv.lotArea,
+          'nv.siteArea': nv.siteArea,
+          'data.siteArea': data.siteArea,
           'nv.lotAreaUnit': (nv as any)?.lotAreaUnit,
           'data.plotArea': data.plotArea,
           'data.lotArea': data.lotArea,
@@ -548,12 +557,12 @@ export function mapLinearAPIToProperty(
           'unit': unit
         });
       }
-      
+
       // If unit is 'ha' or 'HECTARE', convert to m² (1 ha = 10,000 m²)
       const unitLower = unit.toLowerCase();
       if ((unitLower === 'ha' || unitLower === 'hectare') && plotAreaValue > 0) {
         const convertedArea = plotAreaValue * 10000;
-        console.log('✅ Converted plot area from hectares to m²:', { 
+        console.log('✅ Converted plot area from hectares to m²:', {
           address: addr,
           originalValue: plotAreaValue,
           unit: unit,
@@ -562,7 +571,7 @@ export function mapLinearAPIToProperty(
         });
         return convertedArea;
       }
-      
+
       return plotAreaValue;
     })(),
     siteOwnershipType: (() => {
