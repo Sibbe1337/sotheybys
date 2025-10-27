@@ -256,6 +256,14 @@ export interface MultilingualPropertyListing {
   ventilationSystem: LocalizedString;
 
   /**
+   * Ventilation type (alias for ventilationSystem for component compatibility)
+   * FI: Ilmanvaihtotyyppi
+   * EN: Ventilation type
+   * SV: Ventilationstyp
+   */
+  ventilationType: LocalizedString;
+
+  /**
    * Building material
    * FI: Rakennusaine (esim. "Tiili", "Betoni", "Puu")
    * EN: Building material (e.g., "Brick", "Concrete", "Wood")

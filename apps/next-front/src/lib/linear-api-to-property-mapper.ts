@@ -520,6 +520,7 @@ export function mapLinearAPIToProperty(
     roofType: extractLocalizedString(data.roofType),
     heatingSystem: extractLocalizedString(data.heatingType || data.heatingSystem),
     ventilationSystem: extractLocalizedString(data.ventilationType || data.ventilationSystem),
+    ventilationType: extractLocalizedString(data.ventilationType || data.ventilationSystem), // ALIAS: for component compatibility
     buildingMaterial: extractLocalizedString(data.constructionMaterial || data.buildingMaterialFacade),
     energyClass: (() => {
       // Try multiple field names and formats for energy class
