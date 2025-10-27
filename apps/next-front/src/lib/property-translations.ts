@@ -42,7 +42,22 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     sv: 'Bostadsuppgifter',
     en: 'Apartment Information'
   },
-  housingCompanyInfo: {
+  estateInfo: {
+    fi: 'Kiinteistötiedot',
+    sv: 'Fastighetsuppgifter',
+    en: 'Estate Information'
+  },
+  apartmentTypeLabel: {
+    fi: 'Huoneistotyyppi',
+    sv: 'Lägenhetstyp',
+    en: 'Apartment Type'
+  },
+  floorLabel: {
+    fi: 'Kerros',
+    sv: 'Våning',
+    en: 'Floor'
+  },
+  housingCompanyAndEstateInfo: {
     fi: 'Yhtiö- ja kiinteistötiedot',
     sv: 'Bolags- och fastighetsuppgifter',
     en: 'Company and Property Information'
@@ -51,6 +66,11 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     fi: 'Rakennustiedot',
     sv: 'Byggnadsinformation',
     en: 'Building Information'
+  },
+  housingCompanyDetails: {
+    fi: 'Taloyhtiön tiedot',
+    sv: 'Bostadsbolagets uppgifter',
+    en: 'Housing Company Details'
   },
   equipmentSpaces: {
     fi: 'Varusteet ja tilat',
@@ -72,6 +92,62 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     sv: 'Andra uppgifter',
     en: 'Other Information'
   },
+  // NEW: Apartment-specific section headers
+  overview: {
+    fi: 'Yleiskatsaus',
+    sv: 'Översikt',
+    en: 'Overview'
+  },
+  apartmentDetails: {
+    fi: 'Huoneistotiedot',
+    sv: 'Lägenhetsinformation',
+    en: 'Apartment Details'
+  },
+  buildingAndCompany: {
+    fi: 'Rakennus & yhtiö',
+    sv: 'Byggnad & Bolag',
+    en: 'Building & Company'
+  },
+  buildingFacts: {
+    fi: 'Rakennustiedot',
+    sv: 'Byggfakta',
+    en: 'Building Facts'
+  },
+  housingCompanyInfo: {
+    fi: 'Taloyhtiön tiedot',
+    sv: 'Bolagsinformation',
+    en: 'Housing Company Information'
+  },
+  costs: {
+    fi: 'Kustannukset',
+    sv: 'Kostnader',
+    en: 'Costs'
+  },
+  priceInformation: {
+    fi: 'Hintatiedot',
+    sv: 'Prisuppgifter',
+    en: 'Price Information'
+  },
+  livingCosts: {
+    fi: 'Asumiskustannukset',
+    sv: 'Boendekostnader',
+    en: 'Living Costs'
+  },
+  otherCostsSection: {
+    fi: 'Muut kustannukset',
+    sv: 'Andra kostnader',
+    en: 'Other Costs'
+  },
+  otherInformation: {
+    fi: 'Muut tiedot',
+    sv: 'Övriga uppgifter',
+    en: 'Other Information'
+  },
+  documentsAndLinks: {
+    fi: 'Asiakirjat & Linkit',
+    sv: 'Dokument & Länkar',
+    en: 'Documents & Links'
+  },
   
   // Price Fields
   salesPrice: {
@@ -84,10 +160,20 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     sv: 'Skuldandel',
     en: 'Debt Portion'
   },
+  debtShare: {
+    fi: 'Velkaosuus',
+    sv: 'Skuldandel',
+    en: 'Debt Share'
+  },
   debtFreePrice: {
     fi: 'Velaton hinta',
     sv: 'Skuldfritt pris',
     en: 'Debt-Free Price'
+  },
+  priceDetails: {
+    fi: 'Hintatiedot',
+    sv: 'Prisuppgifter',
+    en: 'Price Details'
   },
   maintenanceFee: {
     fi: 'Hoitovastike',
@@ -139,10 +225,80 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     sv: 'Vattenavgift',
     en: 'Water Charge'
   },
+  housingCosts: {
+    fi: 'Asumiskustannukset',
+    sv: 'Boendekostnader',
+    en: 'Housing Costs'
+  },
+  otherCosts: {
+    fi: 'Muut kustannukset',
+    sv: 'Övriga kostnader',
+    en: 'Other Costs'
+  },
+  costSummary: {
+    fi: 'Kustannusyhteenveto',
+    sv: 'Kostnadssammanställning',
+    en: 'Cost Summary'
+  },
+  plotRentFee: {
+    fi: 'Tontin vuokravastike',
+    sv: 'Tomthyra',
+    en: 'Land Lease Fee'
+  },
+  heatingCosts: {
+    fi: 'Lämmityskustannukset',
+    sv: 'Uppvärmningskostnader',
+    en: 'Heating Costs'
+  },
+  electricHeating: {
+    fi: 'Sähkölämmitys',
+    sv: 'Eluppvärmning',
+    en: 'Electric Heating'
+  },
+  otherFee: {
+    fi: 'Muu vastike',
+    sv: 'Övrigt vederlag',
+    en: 'Other Fee'
+  },
+  otherFees: {
+    fi: 'Muut vastikkeet',
+    sv: 'Övriga vederlag',
+    en: 'Other Fees'
+  },
+  roadTollFee: {
+    fi: 'Tiehoitomaksu',
+    sv: 'Vägavgift',
+    en: 'Road Maintenance Fee'
+  },
   propertyTax: {
     fi: 'Kiinteistövero',
     sv: 'Fastighetsskatt',
     en: 'Property Tax'
+  },
+  cableTv: {
+    fi: 'Kaapeli-TV',
+    sv: 'Kabel-TV',
+    en: 'Cable TV'
+  },
+  internet: {
+    fi: 'Internet',
+    sv: 'Internet',
+    en: 'Internet'
+  },
+  insurance: {
+    fi: 'Vakuutus',
+    sv: 'Försäkring',
+    en: 'Insurance'
+  },
+  totalMonthlyCosts: {
+    fi: 'Kuukausikustannukset yhteensä',
+    sv: 'Totala månadskostnader',
+    en: 'Total Monthly Costs'
+  },
+  totalYearlyCosts: {
+    fi: 'Vuosikustannukset yhteensä',
+    sv: 'Totala årskostnader',
+    en: 'Total Yearly Costs'
   },
   
   // 🏠 Rental Fields (Vuokrakohteet / Hyresobjekt / Rentals)
@@ -315,6 +471,16 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     sv: 'Äganderätt',
     en: 'Ownership Type'
   },
+  housingTenure: {
+    fi: 'Hallintamuoto',
+    sv: 'Förvaltningsform',
+    en: 'Tenure'
+  },
+  tenure: {
+    fi: 'Hallintamuoto',
+    sv: 'Förvaltningsform',
+    en: 'Tenure'
+  },
   
   // Building Fields
   buildingMaterial: {
@@ -326,6 +492,11 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     fi: 'Kattotyyppi',
     sv: 'Taktyp',
     en: 'Roof Type'
+  },
+  constructionYear: {
+    fi: 'Rakennusvuosi',
+    sv: 'Byggnadsår',
+    en: 'Year Built'
   },
   condition: {
     fi: 'Kunto',
@@ -341,6 +512,11 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     fi: 'Oma sauna',
     sv: 'Egen bastu',
     en: 'Own Sauna'
+  },
+  privateSauna: {
+    fi: 'Oma sauna',
+    sv: 'Egen bastu',
+    en: 'Private Sauna'
   },
   balcony: {
     fi: 'Parveke',
@@ -381,6 +557,61 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     sv: 'Tjänster',
     en: 'Services'
   },
+  address: {
+    fi: 'Osoite',
+    sv: 'Adress',
+    en: 'Address'
+  },
+  parking: {
+    fi: 'Pysäköinti',
+    sv: 'Parkering',
+    en: 'Parking'
+  },
+  parkingInfo: {
+    fi: 'Pysäköintitiedot',
+    sv: 'Parkeringsinformation',
+    en: 'Parking Information'
+  },
+  parkingFree: {
+    fi: 'Ilmainen pysäköinti',
+    sv: 'Gratis parkering',
+    en: 'Free parking'
+  },
+  parkingPaid: {
+    fi: 'Maksullinen pysäköinti',
+    sv: 'Avgiftsbelagd parkering',
+    en: 'Paid parking'
+  },
+  locationTagCenter: {
+    fi: 'Keskustassa',
+    sv: 'I centrum',
+    en: 'In the city centre'
+  },
+  locationTagUrban: {
+    fi: 'Kaupunkialueella',
+    sv: 'I stadsområde',
+    en: 'In urban area'
+  },
+  locationTagSuburban: {
+    fi: 'Esikaupunkialueella',
+    sv: 'I förortsområde',
+    en: 'In suburban area'
+  },
+  locationTagRural: {
+    fi: 'Maaseudulla',
+    sv: 'På landsbygden',
+    en: 'In rural area'
+  },
+  nearbyBuildingsLabel: {
+    fi: 'Lähirakennukset',
+    sv: 'Närliggande byggnader',
+    en: 'Nearby buildings'
+  },
+  neighborsLabel: {
+    fi: 'Naapurit',
+    sv: 'Grannar',
+    en: 'Neighbours'
+  },
   beachRights: {
     fi: 'Ranta / Rannan omistus',
     sv: 'Strand / Strandägande',
@@ -398,6 +629,31 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     sv: 'Video / Virtuell rundtur',
     en: 'Video / Virtual Tour'
   },
+  buildingPermit: {
+    fi: 'Rakennuslupa',
+    sv: 'Bygglov',
+    en: 'Building Permit'
+  },
+  maintenancePlan: {
+    fi: 'Huoltosuunnitelma',
+    sv: 'Underhållsplan',
+    en: 'Maintenance Plan'
+  },
+  asbestosSurveyReport: {
+    fi: 'Asbestikartoitusraportti',
+    sv: 'Asbestkartläggningsrapport',
+    en: 'Asbestos Survey Report'
+  },
+  conditionReport: {
+    fi: 'Kuntotarkastusraportti',
+    sv: 'Konditionsrapport',
+    en: 'Condition Report'
+  },
+  moistureReport: {
+    fi: 'Kosteusmittausraportti',
+    sv: 'Fuktmätningsrapport',
+    en: 'Moisture Report'
+  },
   openBrochure: {
     fi: 'Avaa esite →',
     sv: 'Öppna broschyr →',
@@ -412,8 +668,13 @@ export const PROPERTY_TRANSLATIONS: Translations = {
   // Other Fields
   zoningSituation: {
     fi: 'Kaavatilanne',
-    sv: 'Generalplan',
+    sv: 'Detaljplan',
     en: 'Zoning Situation'
+  },
+  zoning: {
+    fi: 'Kaavatilanne',
+    sv: 'Detaljplan',
+    en: 'Zoning'
   },
   buildingRights: {
     fi: 'Rakennusoikeus',
@@ -441,6 +702,11 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     fi: 'Pohjakuva',
     sv: 'Planritning',
     en: 'Floor Plan'
+  },
+  plotPlan: {
+    fi: 'Tonttijako',
+    sv: 'Tomtindelning',
+    en: 'Plot Plan'
   },
   viewOnMap: {
     fi: 'Kohde kartalla',
@@ -574,6 +840,11 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     sv: 'Ej angivet',
     en: 'Not specified'
   },
+  missing: {
+    fi: 'Tieto puuttuu',
+    sv: 'Uppgift saknas',
+    en: 'Information unavailable'
+  },
   
   // Unit Suffixes
   perMonth: {
@@ -626,10 +897,30 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     sv: 'Bolagslån',
     en: 'Company Mortgage'
   },
+  housingCompanyEncumbrances: {
+    fi: 'Taloyhtiön kiinnitykset',
+    sv: 'Bolagets inteckningar',
+    en: 'Housing Company Mortgages'
+  },
+  companyMortgages: {
+    fi: 'Taloyhtiön kiinnitykset',
+    sv: 'Bolagets inteckningar',
+    en: 'Company Mortgages'
+  },
+  mortgageEncumbrances: {
+    fi: 'Kiinnitykset / panttaukset',
+    sv: 'Inteckningar / pantsättningar',
+    en: 'Mortgages / Encumbrances'
+  },
   companyLoans: {
     fi: 'Yhtiölainat',
     sv: 'Långfristiga lån',
     en: 'Company Loans'
+  },
+  housingCompanyLoans: {
+    fi: 'Taloyhtiön lainat',
+    sv: 'Bolagets lån',
+    en: 'Housing Company Loans'
   },
   housingCompanyMortgageDate: {
     fi: 'Yhtiölainan päivämäärä',
@@ -687,15 +978,35 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     sv: 'Tomtstorlek',
     en: 'Site Area'
   },
+  propertyLotSize: {
+    fi: 'Kiinteistön koko',
+    sv: 'Tomtstorlek',
+    en: 'Lot Size'
+  },
   propertyBuildingRights: {
     fi: 'Rakennusoikeus',
     sv: 'Byggnadsrätt',
     en: 'Building Rights'
   },
+  waterConnection: {
+    fi: 'Vesijohto',
+    sv: 'Vattenanslutning',
+    en: 'Water Connection'
+  },
+  rightsAndEncumbrances: {
+    fi: 'Rasitteet ja oikeudet',
+    sv: 'Belastningar och rättigheter',
+    en: 'Encumbrances & Rights'
+  },
   siteOwnershipType: {
     fi: 'Tontin omistusmuoto',
     sv: 'Ägande',
     en: 'Site Ownership Type'
+  },
+  ventilation: {
+    fi: 'Ilmanvaihto',
+    sv: 'Ventilation',
+    en: 'Ventilation'
   },
   
   // International
@@ -763,6 +1074,26 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     sv: 'Övriga avgifter',
     en: 'Other Charges'
   },
+  additionalInfo: {
+    fi: 'Lisätiedot',
+    sv: 'Mer information',
+    en: 'Additional Information'
+  },
+  includedInSale: {
+    fi: 'Kauppaan kuuluu',
+    sv: 'Ingår i köpet',
+    en: 'Included in sale'
+  },
+  excludedFromSale: {
+    fi: 'Kauppaan ei kuulu',
+    sv: 'Ingår inte i köpet',
+    en: 'Excluded from sale'
+  },
+  documents: {
+    fi: 'Asiakirjat',
+    sv: 'Handlingar',
+    en: 'Documents'
+  },
   additionalFees: {
     fi: 'Lisämaksut',
     sv: 'Tilläggsavgifter',
@@ -813,4 +1144,3 @@ export function getUnitSuffix(
 ): string {
   return getTranslation(unit, language);
 }
-

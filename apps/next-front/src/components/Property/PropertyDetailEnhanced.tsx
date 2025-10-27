@@ -13,190 +13,25 @@ import { Button } from '@/components/ui/Button';
 import { PropertyTypeChip } from '@/components/ui/PropertyTypeChip';
 import { removeEmojis } from '@/lib/utils';
 import { getTranslation, type SupportedLanguage } from '@/lib/property-translations';
-
-/**
- * Simple synchronous translation for common real estate terms
- */
-function quickTranslate(text: string, targetLang: SupportedLanguage): string {
-  if (!text || targetLang === 'fi') return text;
-  
-  // Common Finnish → Swedish/English terms
-  const terms: Record<string, { sv: string; en: string }> = {
-    // Property types
-    'asunto': { sv: 'lägenhet', en: 'apartment' },
-    'huoneisto': { sv: 'lägenhet', en: 'apartment' },
-    'kattohuoneisto': { sv: 'takvåning', en: 'penthouse' },
-    'perheasunto': { sv: 'familjelägenhet', en: 'family apartment' },
-    'koti': { sv: 'hem', en: 'home' },
-    'talo': { sv: 'hus', en: 'house' },
-    'omakotitalo': { sv: 'villa', en: 'detached house' },
-    'rivitalo': { sv: 'radhus', en: 'townhouse' },
-    'kerrostalo': { sv: 'flerbostadshus', en: 'apartment building' },
-    
-    // Rooms & spaces
-    'keittiö': { sv: 'kök', en: 'kitchen' },
-    'makuuhuone': { sv: 'sovrum', en: 'bedroom' },
-    'olohuone': { sv: 'vardagsrum', en: 'living room' },
-    'ruokasali': { sv: 'matsal', en: 'dining room' },
-    'kylpyhuone': { sv: 'badrum', en: 'bathroom' },
-    'sauna': { sv: 'bastu', en: 'sauna' },
-    'parveke': { sv: 'balkong', en: 'balcony' },
-    'terassi': { sv: 'terrass', en: 'terrace' },
-    'takkahuone': { sv: 'rum med öppen spis', en: 'fireplace room' },
-    'työhuone': { sv: 'arbetsrum', en: 'office' },
-    'viherhuone': { sv: 'växthus', en: 'conservatory' },
-    'aula': { sv: 'hall', en: 'hallway' },
-    
-    // Building features
-    'hissi': { sv: 'hiss', en: 'elevator' },
-    'kerros': { sv: 'våning', en: 'floor' },
-    'huonekorkeus': { sv: 'takhöjd', en: 'ceiling height' },
-    'piha': { sv: 'gård', en: 'yard' },
-    'autohalli': { sv: 'garage', en: 'garage' },
-    'autopaikka': { sv: 'parkeringsplats', en: 'parking space' },
-    'porrashuone': { sv: 'trapphus', en: 'stairwell' },
-    'taloyhtiö': { sv: 'bostadsrättsförening', en: 'housing company' },
-    
-    // Descriptive terms
-    'valoisa': { sv: 'ljus', en: 'bright' },
-    'tilava': { sv: 'rymlig', en: 'spacious' },
-    'avara': { sv: 'rymlig', en: 'spacious' },
-    'väljä': { sv: 'rymlig', en: 'spacious' },
-    'moderni': { sv: 'modern', en: 'modern' },
-    'kaunis': { sv: 'vacker', en: 'beautiful' },
-    'upea': { sv: 'underbar', en: 'wonderful' },
-    'ylellinen': { sv: 'lyxig', en: 'luxurious' },
-    'laadukas': { sv: 'högkvalitativ', en: 'high-quality' },
-    'loistava': { sv: 'fantastisk', en: 'great' },
-    'erinomainen': { sv: 'utmärkt', en: 'excellent' },
-    'näyttävä': { sv: 'imponerande', en: 'impressive' },
-    'viihtyisä': { sv: 'trivsam', en: 'cozy' },
-    'rauhallinen': { sv: 'lugn', en: 'peaceful' },
-    'keskeinen': { sv: 'central', en: 'central' },
-    'uniikki': { sv: 'unik', en: 'unique' },
-    'ainutlaatuinen': { sv: 'unik', en: 'unique' },
-    'poikkeuksellinen': { sv: 'exceptionell', en: 'exceptional' },
-    
-    // Common words
-    'vuonna': { sv: 'år', en: 'in' },
-    'valmistunut': { sv: 'byggd', en: 'built' },
-    'rakennettu': { sv: 'byggd', en: 'built' },
-    'uusi': { sv: 'ny', en: 'new' },
-    'vanha': { sv: 'gammal', en: 'old' },
-    'suuri': { sv: 'stor', en: 'large' },
-    'pieni': { sv: 'liten', en: 'small' },
-    'sydämessä': { sv: 'hjärtat', en: 'heart' },
-    'läheisyydessä': { sv: 'närhet', en: 'vicinity' },
-    'tuntumassa': { sv: 'närhet', en: 'proximity' },
-    
-    // Location & amenities
-    'sijainti': { sv: 'läge', en: 'location' },
-    'keskusta': { sv: 'centrum', en: 'city center' },
-    'palvelut': { sv: 'service', en: 'amenities' },
-    'liikenneyhteydet': { sv: 'trafikförbindelser', en: 'transport connections' },
-    'kaupat': { sv: 'affärer', en: 'shops' },
-    'koulu': { sv: 'skola', en: 'school' },
-    'meri': { sv: 'havet', en: 'sea' },
-    'puisto': { sv: 'park', en: 'park' },
-    
-    // Actions & features
-    'tarjoaa': { sv: 'erbjuder', en: 'offers' },
-    'mahdollistaa': { sv: 'möjliggör', en: 'enables' },
-    'toimii': { sv: 'fungerar', en: 'works' },
-    'sijaitsee': { sv: 'ligger', en: 'is located' },
-    'palvelee': { sv: 'betjänar', en: 'serves' },
-    
-    // Materials & features
-    'materiaali': { sv: 'material', en: 'material' },
-    'ikkunat': { sv: 'fönster', en: 'windows' },
-    'lattia': { sv: 'golv', en: 'floor' },
-    'seinä': { sv: 'vägg', en: 'wall' },
-    'katto': { sv: 'tak', en: 'ceiling/roof' },
-    'takka': { sv: 'öppen spis', en: 'fireplace' },
-    'ilmanvaihto': { sv: 'ventilation', en: 'ventilation' },
-    'lämmitys': { sv: 'uppvärmning', en: 'heating' },
-  };
-  
-  let translated = text;
-  for (const [fi, translations] of Object.entries(terms)) {
-    const target = targetLang === 'sv' ? translations.sv : translations.en;
-    const regex = new RegExp(`\\b${fi}\\b`, 'gi');
-    translated = translated.replace(regex, (match) => {
-      // Preserve capitalization
-      if (match[0] === match[0].toUpperCase()) {
-        return target.charAt(0).toUpperCase() + target.slice(1);
-      }
-      return target;
-    });
-  }
-  
-  return translated;
-}
-
-/**
- * Helper function to extract localized string based on current language
- * Handles both LocalizedString objects and plain strings
- * Automatically translates if target language is missing
- */
-function getLocalizedText(value: any, language: SupportedLanguage): string {
-  if (!value) return '';
-  
-  // If it's already a string, it's probably Finnish - translate common terms
-  if (typeof value === 'string') {
-    return quickTranslate(value, language);
-  }
-  
-  // If it's a LocalizedString object, extract the correct language
-  if (typeof value === 'object') {
-    // Try to get the requested language
-    if (value[language]) {
-      return value[language];
-    }
-    
-    // If Swedish/English is missing but Finnish exists, translate it
-    if (value.fi) {
-      return quickTranslate(value.fi, language);
-    }
-    
-    // Fallback to any available language and translate
-    const fallbackText = value.en || value.sv || '';
-    if (fallbackText) {
-      // Assume it's in one of the other languages, return as-is
-      return fallbackText;
-    }
-  }
-  
-  return '';
-}
-
-/**
- * Get energy certificate message based on status
- * For properties/houses only (not apartments)
- */
-function getEnergyCertificateMessage(status: string | undefined, language: SupportedLanguage): string {
-  if (!status) return '';
-  
-  const messages: Record<string, { fi: string; sv: string; en: string }> = {
-    'Ei lain edellyttämää energiatodistusta': {
-      fi: 'Ei lain edellyttämää energiatodistusta',
-      sv: 'Inte lagstadgad energicertifikat',
-      en: 'Not legally required energy certificate'
-    },
-    'Kohteella ei energiatodistuslain nojalla tarvitse olla energiatodistusta': {
-      fi: 'Kohteella ei energiatodistuslain nojalla tarvitse olla energiatodistusta',
-      sv: 'Objektet behöver inte ha energicertifikat enligt lagen',
-      en: 'Property does not require an energy certificate by law'
-    }
-  };
-  
-  // Check if status matches one of the known messages
-  if (messages[status]) {
-    return messages[status][language];
-  }
-  
-  // If status is "Kyllä" or unknown, return empty (will show link or placeholder)
-  return '';
-}
+import { SectionCard } from '@/components/Property/SectionCard';
+import { LabelValueList, type LabelValueItem } from '@/components/Property/LabelValueList';
+import FastighetView from '@/components/Property/FastighetView';
+import ApartmentView from '@/components/Property/ApartmentView';
+import type { AdditionalMaterialLink, DocumentLink } from '@/components/Property/types';
+import {
+  getEnergyCertificateMessage,
+  getLocalizedText,
+  isTruthyFlag,
+  parseEuroAmount,
+  formatBooleanLabel,
+  formatEuroLabel,
+  pickFirstNonEmpty,
+  pick,
+  yn,
+  missing,
+  YES_VALUES,
+  NO_VALUES,
+} from '@/lib/property-display';
 
 interface PropertyDetailEnhancedProps {
   property: any;
@@ -350,6 +185,578 @@ export default function PropertyDetailEnhanced({
   
   // Handle both field names for price (for backward compatibility)
   const askPrice = propertyData?.askPrice || price || null;
+  const propertyFinancials = property?.financials || propertyData?.financials || {};
+
+  const numericAskPrice = parseEuroAmount(askPrice);
+  const numericDebtFreePrice = parseEuroAmount(debtFreePrice);
+  const directDebtPart = parseEuroAmount(
+    pickFirstNonEmpty(
+      (propertyFinancials as any)?.debtPart,
+      (propertyFinancials as any)?.debtShare,
+      (propertyFinancials as any)?.debt,
+      propertyData?.debtPart,
+      propertyData?.debtShare
+    )
+  );
+  const computedDebtPart = (numericDebtFreePrice != null && numericAskPrice != null)
+    ? Number((numericDebtFreePrice - numericAskPrice).toFixed(2))
+    : null;
+  const debtPartValue = directDebtPart != null
+    ? Math.max(0, directDebtPart)
+    : (computedDebtPart != null ? Math.max(0, computedDebtPart) : null);
+
+  const askPriceDisplay = numericAskPrice != null ? formatEuroLabel(numericAskPrice) : formatTextValue(askPrice);
+  const debtFreePriceDisplay = numericDebtFreePrice != null ? formatEuroLabel(numericDebtFreePrice) : formatTextValue(debtFreePrice);
+  const shouldShowDebtPart = debtPartValue != null && debtPartValue > 0;
+  const debtPartDisplay = shouldShowDebtPart ? formatEuroLabel(debtPartValue) : null;
+
+  const apartmentDescriptionHeading = getTranslation('apartmentDescription', language);
+
+  const rawApartmentDescription = removeEmojis(
+    getLocalizedText(marketingDescription, language) ||
+    getLocalizedText(freeText, language) ||
+    getLocalizedText(description, language) ||
+    ''
+  );
+
+  const apartmentDescriptionParagraphs = rawApartmentDescription
+    .split('\n')
+    .map((paragraph: string) => paragraph.trim())
+    .filter((paragraph: string) => paragraph.length > 0);
+  const hasApartmentDescription = apartmentDescriptionParagraphs.length > 0;
+  const showAutoTranslationNotice = language !== 'fi' && typeof (freeText || description) === 'string';
+  const yesLabel = getTranslation('yes', language);
+  const notProvidedText = getTranslation('notSpecified', language);
+
+  const floorDisplay = pickFirstNonEmpty(
+    floor,
+    propertyData?.floor,
+    propertyData?.floorNumber
+  );
+
+  const elevatorDisplay = pickFirstNonEmpty(
+    elevator,
+    housingCooperativeElevator,
+    propertyData?.elevator
+  );
+
+  const balconySource = pickFirstNonEmpty(
+    balcony,
+    propertyData?.balcony,
+    propertyData?.hasBalcony
+  );
+
+  const saunaSource = pickFirstNonEmpty(
+    sauna,
+    propertyData?.sauna,
+    propertyData?.hasSauna
+  );
+
+  const releaseSource = pickFirstNonEmpty(
+    release,
+    propertyData?.availableFrom,
+    propertyData?.earliestTerminateDate,
+    propertyData?.availability
+  );
+
+  const showBalcony = (() => {
+    if (balconySource == null) return Boolean(balconyArea || balconyTypes);
+    if (typeof balconySource === 'string') {
+      const normalized = balconySource.trim().toLowerCase();
+      if (normalized === '') return Boolean(balconyArea || balconyTypes);
+      if (NO_VALUES.has(normalized)) return false;
+      return true;
+    }
+    return isTruthyFlag(balconySource);
+  })();
+
+  const showSauna = (() => {
+    if (saunaSource == null) return false;
+    if (typeof saunaSource === 'string') {
+      const normalized = saunaSource.trim().toLowerCase();
+      if (normalized === '') return false;
+      if (NO_VALUES.has(normalized)) return false;
+      return true;
+    }
+    return isTruthyFlag(saunaSource);
+  })();
+
+  const balconyLabel = (() => {
+    if (!showBalcony) return '';
+    const label = formatBooleanLabel(balconySource, language);
+    if (label === '—' && isTruthyFlag(balconySource)) {
+      return yesLabel;
+    }
+    return label;
+  })();
+
+  const balconySupplement = [balconyArea, balconyTypes, balconyCompassPoint]
+    .map((item: any) => {
+      if (!item) return '';
+      if (typeof item === 'object' && 'fi' in item) {
+        return getLocalizedText(item, language);
+      }
+      return String(item);
+    })
+    .filter((text: string) => text && text.trim().length > 0);
+
+  const saunaLabel = (() => {
+    if (!showSauna) return '';
+    const label = formatBooleanLabel(saunaSource, language);
+    if (label === '—' && isTruthyFlag(saunaSource)) {
+      return yesLabel;
+    }
+    return label;
+  })();
+
+  const saunaSupplement = [saunaDescription, saunaStoveType]
+    .map((item: any) => {
+      if (!item) return '';
+      if (typeof item === 'object' && 'fi' in item) {
+        return getLocalizedText(item, language);
+      }
+      return String(item);
+    })
+    .filter((text: string) => text && text.trim().length > 0);
+
+  function formatTextValue(value: any): string {
+    if (value == null || value === '') return '—';
+
+    if (typeof value === 'boolean') {
+      return formatBooleanLabel(value, language);
+    }
+
+    if (typeof value === 'number') {
+      return Number.isFinite(value) ? value.toString() : '—';
+    }
+
+    if (typeof value === 'string') {
+      return value.trim();
+    }
+
+    if (Array.isArray(value)) {
+      const parts = value.map((item) => formatTextValue(item)).filter((part) => part && part !== '—');
+      return parts.length > 0 ? parts.join(', ') : '—';
+    }
+
+    if (typeof value === 'object') {
+      const localized = getLocalizedText(value, language);
+      if (localized) {
+        return localized;
+      }
+    }
+
+    return '—';
+  }
+
+  function formatAreaValue(value: any): string {
+    if (value == null || value === '') return '—';
+    if (typeof value === 'number') {
+      return `${value.toLocaleString('fi-FI')} m²`;
+    }
+    if (typeof value === 'string') {
+      const trimmed = value.trim();
+      if (trimmed === '') return '—';
+      if (/m2|m²|ha|ares?/i.test(trimmed)) {
+        return trimmed;
+      }
+      const numeric = parseFloat(trimmed.replace(/[^0-9,\.]/g, '').replace(',', '.'));
+      if (Number.isFinite(numeric)) {
+        return `${numeric.toLocaleString('fi-FI')} m²`;
+      }
+      return trimmed;
+    }
+    return String(value);
+  }
+
+  const valueClassName = (value: string) => (value === '—' || value === notProvidedText ? 'text-gray-400 italic' : 'font-medium');
+
+  const withPlaceholder = (value: string) => (value === '—' ? notProvidedText : value);
+
+  const renderRow = (label: string, value: string) => (
+    <div className="flex justify-between">
+      <span className="text-gray-600">{label}:</span>
+      <span className={valueClassName(value)}>{value}</span>
+    </div>
+  );
+
+  const formatChargeValue = (value: any): string => {
+    if (value == null || value === '') return '—';
+    if (typeof value === 'object' && 'fi' in value) {
+      return formatChargeValue(getLocalizedText(value, language));
+    }
+    if (typeof value === 'number') {
+      return formatEuroLabel(value);
+    }
+    if (typeof value === 'string') {
+      const trimmed = value.trim();
+      const numeric = parseEuroAmount(trimmed);
+      if (numeric != null && !/[a-zA-Z]/.test(trimmed)) {
+        return formatEuroLabel(numeric);
+      }
+      return trimmed;
+    }
+    return String(value);
+  };
+
+  const constructionYearValue = formatTextValue(pickFirstNonEmpty(constructionYear, yearBuilt, completeYear));
+  const energyClassValue = formatTextValue(energyClass);
+  const heatingSystemValue = formatTextValue(heatingSystem);
+  const ownershipValue = formatTextValue(propertyData?.ownershipType);
+
+  const siteOwnershipValue = formatTextValue(propertyData?.siteOwnershipType);
+  const housingTenureValue = formatTextValue(propertyData?.housingTenure);
+  const housingCompanyNameValue = formatTextValue(housingCooperativeName);
+  const floorCountValue = formatTextValue(floorCount);
+  const lotAreaDisplay = formatAreaValue(lotArea);
+  // waterConnection/vesijohto removed per customer requirement
+  const ventilationValue = formatTextValue(propertyData?.ventilationType || propertyData?.ventilationSystem);
+  const energyCertificateMessage = getEnergyCertificateMessage(energyCertificateStatus, language);
+  const mortgageEncumbranceSource = pickFirstNonEmpty(
+    housingCooperativeMortgage,
+    propertyData?.propertyMortgage,
+    propertyData?.mortgageAmount,
+    propertyData?.mortgage,
+    propertyData?.encumbranceAmount
+  );
+  const mortgageEncumbranceLocalized = typeof mortgageEncumbranceSource === 'object' && mortgageEncumbranceSource
+    ? getLocalizedText(mortgageEncumbranceSource, language)
+    : mortgageEncumbranceSource;
+  const mortgageEncumbranceNumeric = parseEuroAmount(mortgageEncumbranceLocalized);
+  const mortgageEncumbranceDisplay = mortgageEncumbranceNumeric != null
+    ? formatEuroLabel(mortgageEncumbranceNumeric)
+    : formatTextValue(mortgageEncumbranceLocalized);
+  const rightsText = formatTextValue(propertyData?.easements || propertyData?.restrictions);
+  const mortgageEncumbranceValue = mortgageEncumbranceDisplay === '—' ? null : mortgageEncumbranceDisplay;
+
+  const housingCompanyMortgageAmount = parseEuroAmount(housingCooperativeMortgage);
+  const housingCompanyMortgageDisplay = housingCompanyMortgageAmount != null
+    ? formatEuroLabel(housingCompanyMortgageAmount)
+    : formatTextValue(housingCooperativeMortgage);
+
+  const housingCompanyLoansAmount = parseEuroAmount(
+    pickFirstNonEmpty(
+      (propertyFinancials as any)?.companyLoans,
+      propertyData?.companyLoans,
+      propertyData?.taloyhtionLainat
+    )
+  );
+  const housingCompanyLoansDisplay = housingCompanyLoansAmount != null
+    ? formatEuroLabel(housingCompanyLoansAmount)
+    : formatTextValue(pickFirstNonEmpty(propertyData?.companyLoans, propertyData?.taloyhtionLainat));
+
+  const showHousingCompanyCard = [
+    housingCompanyNameValue,
+    housingCompanyMortgageDisplay,
+    housingCompanyLoansDisplay,
+    siteOwnershipValue,
+    housingTenureValue
+  ].some((value) => value !== '—');
+
+  const apartmentBuildingItems = [
+    { label: getTranslation('constructionYear', language), value: withPlaceholder(constructionYearValue) },
+    { label: getTranslation('energyClass', language), value: withPlaceholder(energyClassValue) },
+    { label: getTranslation('heatingSystem', language), value: withPlaceholder(heatingSystemValue) },
+    { label: getTranslation('ownershipType', language), value: withPlaceholder(ownershipValue) }
+  ];
+
+  const apartmentHousingItems = [
+    { label: getTranslation('housingCompanyName', language), value: withPlaceholder(housingCompanyNameValue) },
+    { label: getTranslation('housingCompanyEncumbrances', language), value: withPlaceholder(housingCompanyMortgageDisplay) },
+    { label: getTranslation('housingCompanyLoans', language), value: withPlaceholder(housingCompanyLoansDisplay) },
+    { label: getTranslation('siteOwnershipType', language), value: withPlaceholder(siteOwnershipValue) },
+    { label: getTranslation('housingTenure', language), value: withPlaceholder(housingTenureValue) }
+  ];
+
+  // Price rows for APARTMENTS: debtFreePrice and salesPrice ALWAYS visible (with fallback)
+  // debtPart (velkaosuus) only shown if it exists
+  const apartmentPriceRows = [
+    { key: 'debtFreePrice', value: debtFreePriceDisplay, alwaysShow: true },
+    { key: 'salesPrice', value: askPriceDisplay, alwaysShow: true },
+    ...(shouldShowDebtPart && debtPartDisplay ? [{ key: 'debtPart', value: debtPartDisplay, alwaysShow: false }] : [])
+  ];
+
+  // Price rows for FASTIGHET: same as apartments, but can also include mortgageEncumbrances
+  const fastighetPriceRowsRaw = [
+    { key: 'debtFreePrice', value: debtFreePriceDisplay, alwaysShow: true },
+    { key: 'salesPrice', value: askPriceDisplay, alwaysShow: true },
+    ...(mortgageEncumbranceValue !== '—' ? [{ key: 'mortgageEncumbrances', value: mortgageEncumbranceValue, alwaysShow: false }] : [])
+  ];
+
+  // Create label-value items for apartments (keep all rows, even with '—')
+  const apartmentPriceListItems = apartmentPriceRows.map((row) => ({
+    label: getTranslation(row.key, language),
+    value: row.alwaysShow && row.value === '—' ? notProvidedText : row.value
+  }));
+
+  // Create label-value items for fastighet (filter out '—' for optional fields)
+  const fastighetPriceItems = fastighetPriceRowsRaw
+    .filter((row) => row.alwaysShow || row.value !== '—')
+    .map((row) => ({
+      label: getTranslation(row.key, language),
+      value: row.alwaysShow && row.value === '—' ? notProvidedText : row.value
+    }));
+
+  // Legacy priceListItems for backwards compatibility (used by apartments in current code)
+  const priceListItems = apartmentPriceListItems;
+
+  const livingCostRows: Array<{ label: string; value: string }> = [];
+  const pushLivingCost = (labelKey: string, value: any) => {
+    const display = formatChargeValue(value);
+    if (display === '—') return;
+    livingCostRows.push({ label: getTranslation(labelKey, language), value: display });
+  };
+  pushLivingCost('maintenanceCharge', pickFirstNonEmpty(maintenanceCharge, (propertyFinancials as any)?.maintenanceFee));
+  pushLivingCost('financingFee', pickFirstNonEmpty(propertyData?.financingCharge, propertyData?.financingFee, (propertyFinancials as any)?.financingFee, (propertyFinancials as any)?.fundingCharge));
+  pushLivingCost('waterCharge', waterCharge);
+  pushLivingCost('plotRentFee', plotRentCharge);
+  pushLivingCost('heatingCosts', heatingCharge);
+  pushLivingCost('electricHeating', electricHeatingCharge);
+  pushLivingCost('otherFee', otherCharge);
+
+  const otherCostRows: Array<{ label: string; value: string }> = [];
+  const pushOtherCost = (labelKey: string, value: any, formatter: (val: any) => string = formatChargeValue) => {
+    const display = formatter(value);
+    if (display === '—') return;
+    otherCostRows.push({ label: getTranslation(labelKey, language), value: display });
+  };
+  // IMPORTANT: propertyTax should NEVER be shown for apartments (isApartment will be defined later)
+  // We'll filter it conditionally based on property type
+  pushOtherCost('propertyTax', propertyTax);
+  pushOtherCost('cableTv', cableCharge);
+  pushOtherCost('internet', internetCharge);
+  pushOtherCost('roadTollFee', propertyData?.roadTolls);
+  const insuranceDisplay = insuranceRequired != null ? formatBooleanLabel(insuranceRequired, language) : '—';
+  if (insuranceDisplay !== '—') {
+    otherCostRows.push({ label: getTranslation('insurance', language), value: insuranceDisplay });
+  }
+
+  const livingCostListItems = livingCostRows.map((row) => ({ label: row.label, value: row.value }));
+  const otherCostListItems = otherCostRows.map((row) => ({ label: row.label, value: row.value }));
+
+  const costSummaryTotals = {
+    monthly: monthlyTotalCost ? `${monthlyTotalCost} €/kk` : undefined,
+    yearly: yearlyTotalCost ? `${yearlyTotalCost} €/v` : undefined
+  };
+
+  const toUrlString = (input: any): string | null => {
+    if (!input) return null;
+    if (typeof input === 'string') return input;
+    if (typeof input === 'object') {
+      if (typeof input.url === 'string') return input.url;
+      if (typeof input.value === 'string') return input.value;
+    }
+    return null;
+  };
+
+  const normalizedHighlights = Array.isArray(marketingHighlights)
+    ? marketingHighlights.map((item: any) => removeEmojis(String(item)))
+    : [];
+
+  const normalizedSellingPoints = Array.isArray(marketingSellingPoints)
+    ? marketingSellingPoints.map((item: any) => removeEmojis(String(item)))
+    : [];
+
+  const agentNotesText = marketingAgentNotes ? removeEmojis(marketingAgentNotes) : undefined;
+
+  const externalLinkEntries: DocumentLink[] = [];
+  if (Array.isArray(externalLinks)) {
+    externalLinks.forEach((link: any, idx: number) => {
+      const url = toUrlString(link?.url ?? link?.value ?? link);
+      if (!url) return;
+      const label = removeEmojis(String(link?.label ?? `${getTranslation('additionalInfo', language)} ${idx + 1}`));
+      externalLinkEntries.push({ label, href: url });
+    });
+  } else if (typeof externalLinks === 'string') {
+    externalLinks
+      .split('\n')
+      .map((entry) => entry.trim())
+      .filter(Boolean)
+      .forEach((entry, idx) => {
+        externalLinkEntries.push({
+          label: `${getTranslation('additionalInfo', language)} ${idx + 1}`,
+          href: entry
+        });
+      });
+  }
+
+  const fastighetAdditionalMaterials: AdditionalMaterialLink[] = [];
+  const normalizedVideoUrl = toUrlString(videoUrl);
+  if (normalizedVideoUrl) {
+    fastighetAdditionalMaterials.push({
+      label: getTranslation('video', language),
+      href: normalizedVideoUrl,
+      type: 'video'
+    });
+  }
+
+  const normalizedVirtualTourUrl = toUrlString(propertyData?.virtualTourUrl);
+  if (normalizedVirtualTourUrl) {
+    fastighetAdditionalMaterials.push({
+      label: getTranslation('virtualTour', language),
+      href: normalizedVirtualTourUrl,
+      type: 'virtualTour'
+    });
+  }
+
+  externalLinkEntries.forEach((link) => {
+    fastighetAdditionalMaterials.push({
+      label: link.label,
+      href: link.href,
+      type: 'link'
+    });
+  });
+
+  const normalizedFloorPlanUrl = toUrlString(floorPlanUrl);
+  const normalizedEnergyCertificateUrl = toUrlString(energyCertificateUrl);
+  const normalizedPropertyPlanUrl = toUrlString(propertyPlanUrl);
+  const normalizedBuildingPermitUrl = toUrlString(buildingPermitUrl);
+  const normalizedMaintenancePlanUrl = toUrlString(maintenancePlanUrl);
+  const normalizedAsbestosReportUrl = toUrlString(asbestosSurveyReport);
+  const normalizedConditionReportUrl = toUrlString(conditionReport);
+  const normalizedMoistureReportUrl = toUrlString(moistureReport);
+
+  const fastighetDocuments: DocumentLink[] = (
+    [
+      normalizedFloorPlanUrl ? { label: getTranslation('floorPlan', language), href: normalizedFloorPlanUrl } : null,
+      normalizedEnergyCertificateUrl ? { label: getTranslation('energyCertificate', language), href: normalizedEnergyCertificateUrl } : null,
+      normalizedPropertyPlanUrl ? { label: getTranslation('plotPlan', language), href: normalizedPropertyPlanUrl } : null,
+      normalizedBuildingPermitUrl ? { label: getTranslation('buildingPermit', language), href: normalizedBuildingPermitUrl } : null,
+      normalizedMaintenancePlanUrl ? { label: getTranslation('maintenancePlan', language), href: normalizedMaintenancePlanUrl } : null,
+      normalizedAsbestosReportUrl ? { label: getTranslation('asbestosSurveyReport', language), href: normalizedAsbestosReportUrl } : null,
+      normalizedConditionReportUrl ? { label: getTranslation('conditionReport', language), href: normalizedConditionReportUrl } : null,
+      normalizedMoistureReportUrl ? { label: getTranslation('moistureReport', language), href: normalizedMoistureReportUrl } : null
+    ]
+  ).filter(Boolean) as DocumentLink[];
+
+  const zoningSummary = formatTextValue(pickFirstNonEmpty(zoningStatus, propertyData?.zoningSituation));
+  const zoningInfoParagraphs = typeof zoningInfo === 'string'
+    ? zoningInfo
+        .split('\n')
+        .map((paragraph: string) => paragraph.trim())
+        .filter((paragraph: string) => paragraph.length > 0)
+    : [];
+
+  // Helper function for formatting dates - must be defined before fastighetEstateItems
+  const formatDateValue = (value: any): string => {
+    if (!value) return '—';
+    if (value instanceof Date) {
+      return value.toLocaleDateString('fi-FI');
+    }
+    if (typeof value === 'object' && 'fi' in value) {
+      return getLocalizedText(value, language) || '—';
+    }
+    return String(value);
+  };
+
+  const fastighetEstateItems = (
+    [
+      propertyData?.propertyIdentifier
+        ? {
+            label: getTranslation('propertyId', language),
+            value: withPlaceholder(formatTextValue(propertyData?.propertyIdentifier)),
+            hideIfEmpty: true
+          }
+        : undefined,
+      {
+        label: getTranslation('propertyLotSize', language),
+        value: withPlaceholder(lotAreaDisplay),
+        hideIfEmpty: true
+      },
+      {
+        label: getTranslation('ownershipType', language),
+        value: withPlaceholder(siteOwnershipValue),
+        hideIfEmpty: true
+      },
+      {
+        label: getTranslation('zoningSituation', language),
+        value: withPlaceholder(zoningSummary)
+      },
+      // waterConnection/vesijohto removed per customer requirement
+      {
+        label: getTranslation('propertyBuildingRights', language),
+        value: withPlaceholder(formatTextValue(propertyData?.propertyBuildingRights)),
+        hideIfEmpty: true
+      },
+      {
+        label: getTranslation('energyClass', language),
+        value: withPlaceholder(energyClassValue)
+      },
+      {
+        label: getTranslation('energyCertificate', language),
+        value: normalizedEnergyCertificateUrl
+          ? (
+              <a href={normalizedEnergyCertificateUrl} target="_blank" rel="noopener noreferrer" className="text-[#002349] hover:underline">
+                {getTranslation('energyCertificateUrl', language)}
+              </a>
+            )
+          : withPlaceholder(energyCertificateMessage || '—')
+      },
+      {
+        label: getTranslation('availableFrom', language),
+        value: withPlaceholder(formatDateValue(propertyData?.availableFrom ?? releaseSource))
+      }
+    ]
+  ).filter(Boolean) as LabelValueItem[];
+
+  const fastighetBuildingItems: LabelValueItem[] = [
+    {
+      label: getTranslation('constructionYear', language),
+      value: withPlaceholder(constructionYearValue)
+    },
+    {
+      label: getTranslation('numberOfFloors', language),
+      value: withPlaceholder(floorCountValue)
+    },
+    {
+      label: getTranslation('heatingSystem', language),
+      value: withPlaceholder(heatingSystemValue)
+    },
+    {
+      label: getTranslation('ventilation', language),
+      value: withPlaceholder(ventilationValue)
+    }
+  ];
+
+  // fastighetPriceItems now defined earlier (line ~493) with proper always-show logic
+  const fastighetRightsText = rightsText && rightsText !== '—' && rightsText !== notProvidedText ? rightsText : undefined;
+
+  // formatDateValue now defined earlier (before fastighetEstateItems) to avoid hoisting issues
+
+  const apartmentDetailsItems = [
+    typeOfApartment
+      ? {
+          label: getTranslation('apartmentTypeLabel', language),
+          value: withPlaceholder(formatTextValue(typeOfApartment))
+        }
+      : undefined,
+    {
+      label: getTranslation('floorLabel', language),
+      value: withPlaceholder(formatTextValue(floorDisplay))
+    },
+    {
+      label: getTranslation('elevator', language),
+      value: withPlaceholder(formatBooleanLabel(elevatorDisplay, language))
+    },
+    {
+      label: getTranslation('availableFrom', language),
+      value: withPlaceholder(formatDateValue(releaseSource))
+    },
+    showBalcony
+      ? {
+          label: getTranslation('balcony', language),
+          value: withPlaceholder(balconyLabel || yesLabel),
+          secondary: balconySupplement.length > 0 ? balconySupplement.join(' • ') : undefined
+        }
+      : undefined,
+    showSauna
+      ? {
+          label: getTranslation('sauna', language),
+          value: withPlaceholder(saunaLabel || yesLabel),
+          secondary: saunaSupplement.length > 0 ? saunaSupplement.join(' • ') : undefined
+        }
+      : undefined
+  ].filter(Boolean) as LabelValueItem[];
   
   // Get property ID from property or propertyData or use address as fallback
   const propertyId = property?.id || propertyData?.id || address;
@@ -410,7 +817,19 @@ export default function PropertyDetailEnhanced({
     hasPlot ||
     hasPropertyRoadName
   );
-  
+
+  // ============================================================================
+  // FILTER propertyTax FOR APARTMENTS
+  // ============================================================================
+  // CRITICAL: Apartments (lägenheter) should NEVER show propertyTax (kiinteistövero)
+  // Create filtered list for apartments that excludes propertyTax
+  const otherCostListItemsFiltered = isApartment
+    ? otherCostListItems.filter(item => {
+        const propertyTaxLabel = getTranslation('propertyTax', language);
+        return item.label !== propertyTaxLabel;
+      })
+    : otherCostListItems;
+
   // Debug log for development
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -681,7 +1100,7 @@ export default function PropertyDetailEnhanced({
     { id: 'details', label: 'Huoneistotiedot' },
     { id: 'building', label: 'Rakennus & Yhtiö' },
     { id: 'costs', label: 'Kustannukset' },
-    { id: 'location', label: 'Sijainti & Palvelut' },
+    { id: 'location', label: 'Muut tiedot' },
     { id: 'documents', label: 'Asiakirjat & Linkit' }
   ];
   
@@ -690,7 +1109,6 @@ export default function PropertyDetailEnhanced({
     { id: 'property-details', label: 'Kiinteistötiedot' },
     { id: 'building', label: 'Rakennustiedot' },
     { id: 'costs', label: 'Kustannukset' },
-    { id: 'location', label: 'Sijainti' },
     { id: 'documents', label: 'Asiakirjat' }
   ];
   
@@ -1184,6 +1602,33 @@ export default function PropertyDetailEnhanced({
         </div>
       </section>
 
+      {(isApartment || isFastighet) && hasApartmentDescription && (
+        <section className="bg-white border-b">
+          <div className="container mx-auto px-4 py-6">
+            <h2 className="text-2xl font-light mb-4">{apartmentDescriptionHeading}</h2>
+            {showAutoTranslationNotice && (
+              <div className="mb-4 p-3 bg-blue-50 border-l-4 border-blue-400 text-sm text-blue-700">
+                <p className="font-medium">
+                  {language === 'sv' ? '📝 Automatisk översättning' : '📝 Automatic translation'}
+                </p>
+                <p className="text-xs mt-1">
+                  {language === 'sv'
+                    ? 'Vissa termer har översatts automatiskt från finska. Kontakta mäklaren för fullständig översättning.'
+                    : 'Some terms have been automatically translated from Finnish. Contact the agent for a complete translation.'}
+                </p>
+              </div>
+            )}
+            <div className="prose prose-gray max-w-none">
+              {apartmentDescriptionParagraphs.map((paragraph: string, idx: number) => (
+                <p key={idx} className="mb-4 text-gray-700 leading-relaxed">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Tab Navigation */}
       <section className="bg-white border-b sticky top-0 md:top-[104px] z-30">
         <div className="container mx-auto px-0 md:px-4">
@@ -1214,1152 +1659,55 @@ export default function PropertyDetailEnhanced({
         <div className="grid lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
             {/* ================================================================ */}
-            {/* LÄGENHET (APARTMENT) LAYOUT - Customer approved design */}
+            {/* LÄGENHET (APARTMENT) LAYOUT - Refactored to use ApartmentView */}
             {/* ================================================================ */}
             {isApartment && (
-              <>
-            {/* Overview Tab */}
-            {activeTab === 'overview' && (
-              <div className="space-y-8">
-                {/* Main Description */}
-                {(marketingDescription || freeText || description) && (
-                  <div className="bg-white rounded-lg shadow-sm p-6">
-                    <h2 className="text-2xl font-light mb-4">{getTranslation('presentationText', language)}</h2>
-                    {language !== 'fi' && typeof (freeText || description) === 'string' && (
-                      <div className="mb-4 p-3 bg-blue-50 border-l-4 border-blue-400 text-sm text-blue-700">
-                        <p className="font-medium">
-                          {language === 'sv' ? '📝 Automatisk översättning' : '📝 Automatic translation'}
-                        </p>
-                        <p className="text-xs mt-1">
-                          {language === 'sv' 
-                            ? 'Vissa termer har översatts automatiskt från finska. Kontakta mäklaren för fullständig översättning.'
-                            : 'Some terms have been automatically translated from Finnish. Contact the agent for a complete translation.'}
-                        </p>
-                      </div>
-                    )}
-                    <div className="prose prose-gray max-w-none">
-                      {removeEmojis(
-                        getLocalizedText(marketingDescription, language) || 
-                        getLocalizedText(freeText, language) || 
-                        getLocalizedText(description, language) || ''
-                      ).split('\n').map((paragraph: string, idx: number) => (
-                        <p key={idx} className="mb-4 text-gray-700 leading-relaxed">
-                          {paragraph}
-                        </p>
-                      ))}
-                    </div>
-                    
-                    {/* Marketing Highlights */}
-                    {marketingHighlights && marketingHighlights.length > 0 && (
-                      <div className="mt-8 border-t pt-6">
-                        <h3 className="text-lg font-medium mb-4">{getTranslation('highlights', language)}</h3>
-                        <ul className="space-y-2">
-                          {marketingHighlights.map((highlight: string, idx: number) => (
-                            <li key={idx} className="flex items-start gap-3">
-                              <span className="text-[#002349] mt-1">•</span>
-                              <span className="text-gray-700">{removeEmojis(highlight)}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    
-                    {/* Marketing Selling Points */}
-                    {marketingSellingPoints && marketingSellingPoints.length > 0 && (
-                      <div className="mt-6">
-                        <h3 className="text-lg font-medium mb-4">{getTranslation('sellingPoints', language)}</h3>
-                        <div className="grid gap-2">
-                          {marketingSellingPoints.map((point: string, idx: number) => (
-                            <div key={idx} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                              <svg className="w-5 h-5 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                              </svg>
-                              <span className="text-gray-700">{removeEmojis(point)}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    
-                    {/* Agent Notes */}
-                    {marketingAgentNotes && (
-                      <div className="mt-8 p-4 bg-[#002349]/5 rounded-lg border-l-4 border-[#002349]">
-                        <p className="text-gray-700 italic">{removeEmojis(marketingAgentNotes)}</p>
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {/* External Links */}
-                {(externalLinks?.length > 0 || videoUrl || virtualShowing) && (
-                  <div className="bg-white rounded-lg shadow-sm p-6">
-                    <h3 className="text-xl font-light mb-4">{getTranslation('additionalMaterials', language)}</h3>
-                    <div className="grid gap-3">
-                      {virtualShowing && (
-                        <a
-                          href={virtualShowing}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
-                        >
-                          <span className="flex items-center gap-3">
-                            <span className="font-medium">{getTranslation('virtualTour', language)}</span>
-                          </span>
-                          <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                          </svg>
-                        </a>
-                      )}
-                      {videoUrl && (
-                        <a
-                          href={videoUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
-                        >
-                          <span className="flex items-center gap-3">
-                            <span className="font-medium">Video</span>
-                          </span>
-                          <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                          </svg>
-                        </a>
-                      )}
-                      {externalLinks?.map((link: {url: string; label: string}, idx: number) => (
-                        <a
-                          key={idx}
-                          href={link.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
-                        >
-                          <span className="flex items-center gap-3">
-                            <span className="font-medium">{removeEmojis(link.label)}</span>
-                          </span>
-                          <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                          </svg>
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Details Tab */}
-            {activeTab === 'details' && (
-              <div className="space-y-8">
-                {/* Room Details - Commented out per customer request
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h3 className="text-xl font-light mb-6">Huonetiedot</h3>
-                  <div className="space-y-6">
-                    {livingRoomDescription && (
-                      <div className="border-l-4 border-gray-200 pl-4">
-                        <h4 className="font-medium mb-2">Olohuone</h4>
-                        <p className="text-gray-700">{livingRoomDescription}</p>
-                        {(livingRoomFloorMaterial || livingRoomWallMaterial) && (
-                          <div className="mt-2 text-sm text-gray-600">
-                            {livingRoomFloorMaterial && <span>Lattia: {livingRoomFloorMaterial}</span>}
-                            {livingRoomFloorMaterial && livingRoomWallMaterial && <span> | </span>}
-                            {livingRoomWallMaterial && <span>Seinät: {livingRoomWallMaterial}</span>}
-                          </div>
-                        )}
-                      </div>
-                    )}
-                    // Commented out remaining room details
-                    /*
-                    {kitchenDescription && (
-                      <div className="border-l-4 border-gray-200 pl-4">
-                        <h4 className="font-medium mb-2">Keittiö</h4>
-                        <p className="text-gray-700">{kitchenDescription}</p>
-                        {kitchenEquipment && (
-                          <p className="text-sm text-gray-600 mt-2">Varusteet: {kitchenEquipment}</p>
-                        )}
-                        {(kitchenFloorMaterial || kitchenWallMaterial) && (
-                          <div className="mt-2 text-sm text-gray-600">
-                            {kitchenFloorMaterial && <span>Lattia: {kitchenFloorMaterial}</span>}
-                            {kitchenFloorMaterial && kitchenWallMaterial && <span> | </span>}
-                            {kitchenWallMaterial && <span>Seinät: {kitchenWallMaterial}</span>}
-                          </div>
-                        )}
-                      </div>
-                    )}
-                    
-                    {bedroomDescription && (
-                      <div className="border-l-4 border-gray-200 pl-4">
-                        <h4 className="font-medium mb-2">Makuuhuoneet ({bedroomCount || '?'} kpl)</h4>
-                        <p className="text-gray-700">{bedroomDescription}</p>
-                        {(bedroomFloorMaterial || bedroomWallMaterial) && (
-                          <div className="mt-2 text-sm text-gray-600">
-                            {bedroomFloorMaterial && <span>Lattia: {bedroomFloorMaterial}</span>}
-                            {bedroomFloorMaterial && bedroomWallMaterial && <span> | </span>}
-                            {bedroomWallMaterial && <span>Seinät: {bedroomWallMaterial}</span>}
-                          </div>
-                        )}
-                      </div>
-                    )}
-                    
-                    {bathroomDescription && (
-                      <div className="border-l-4 border-gray-200 pl-4">
-                        <h4 className="font-medium mb-2">Kylpyhuone</h4>
-                        <p className="text-gray-700">{bathroomDescription}</p>
-                        {bathroomEquipment && (
-                          <p className="text-sm text-gray-600 mt-2">Varusteet: {bathroomEquipment}</p>
-                        )}
-                        {(bathroomFloorMaterial || bathroomWallMaterial) && (
-                          <div className="mt-2 text-sm text-gray-600">
-                            {bathroomFloorMaterial && <span>Lattia: {bathroomFloorMaterial}</span>}
-                            {bathroomFloorMaterial && bathroomWallMaterial && <span> | </span>}
-                            {bathroomWallMaterial && <span>Seinät: {bathroomWallMaterial}</span>}
-                          </div>
-                        )}
-                      </div>
-                    )}
-                    
-                    {saunaDescription && (
-                      <div className="border-l-4 border-gray-200 pl-4">
-                        <h4 className="font-medium mb-2">Sauna</h4>
-                        <p className="text-gray-700">{saunaDescription}</p>
-                        {saunaStoveType && (
-                          <p className="text-sm text-gray-600 mt-2">Kiuas: {saunaStoveType}</p>
-                        )}
-                        {(saunaFloorMaterial || saunaWallMaterial) && (
-                          <div className="mt-2 text-sm text-gray-600">
-                            {saunaFloorMaterial && <span>Lattia: {saunaFloorMaterial}</span>}
-                            {saunaFloorMaterial && saunaWallMaterial && <span> | </span>}
-                            {saunaWallMaterial && <span>Seinät: {saunaWallMaterial}</span>}
-                          </div>
-                        )}
-                      </div>
-                    )}
-                    
-                    {wcDescription && wcCount && parseInt(wcCount) > 0 && (
-                      <div className="border-l-4 border-gray-200 pl-4">
-                        <h4 className="font-medium mb-2">WC ({wcCount} kpl)</h4>
-                        <p className="text-gray-700">{wcDescription}</p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-                */}
-
-                {/* Balcony and Sauna - Only show if they exist */}
-                {(balcony === 'Kyllä' || sauna === 'Kyllä') && (
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                    <h3 className="text-xl font-light mb-4">Huoneistotiedot</h3>
-                    <div className="space-y-4">
-                      {balcony === 'Kyllä' && (
-                      <div>
-                          <h4 className="font-medium mb-2">Parveke</h4>
-                          {balconyArea && (
-                            <p className="text-gray-700">Pinta-ala: {balconyArea}</p>
-                          )}
-                      </div>
-                    )}
-                      {sauna === 'Kyllä' && (
-                      <div>
-                          <h4 className="font-medium mb-2">Sauna</h4>
-                          {saunaDescription && (
-                            <p className="text-gray-700">{saunaDescription}</p>
-                          )}
-                          {saunaStoveType && (
-                            <p className="text-gray-700">Kiuas: {saunaStoveType}</p>
-                          )}
-                      </div>
-                    )}
-                  </div>
-                </div>
-                )}
-
-                {/* Vapautuminen */}
-                {release && (
-                  <div className="bg-white rounded-lg shadow-sm p-6">
-                    <h3 className="text-xl font-light mb-4">Vapautuminen</h3>
-                    <p className="text-gray-700">{release}</p>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Building & Company Tab */}
-            {activeTab === 'building' && (
-              <div className="space-y-8">
-                {/* Building Information */}
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h3 className="text-xl font-light mb-4">Rakennustiedot</h3>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      {constructionYear && (
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Rakennusvuosi:</span>
-                          <span className="font-medium">{constructionYear}</span>
-                        </div>
-                      )}
-                      {energyClass && (
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Energialuokka:</span>
-                          <span className="font-medium">{energyClass}</span>
-                        </div>
-                      )}
-                      {heatingSystem && (
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Lämmitysjärjestelmä:</span>
-                          <span className="font-medium">{heatingSystem}</span>
-                        </div>
-                      )}
-                      {floorCount && (
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Kerroksia:</span>
-                          <span className="font-medium">{floorCount}</span>
-                        </div>
-                      )}
-                    </div>
-                    <div className="space-y-2">
-                      {propertyData?.siteOwnershipType && (
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Tontin omistus:</span>
-                          <span className="font-medium">{getLocalizedText(propertyData.siteOwnershipType, language)}</span>
-                        </div>
-                      )}
-                      {propertyData?.ownershipType && (
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Omistusmuoto:</span>
-                          <span className="font-medium">{getLocalizedText(propertyData.ownershipType, language)}</span>
-                        </div>
-                      )}
-                      {propertyData?.housingTenure && (
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Hallintamuoto:</span>
-                          <span className="font-medium">{getLocalizedText(propertyData.housingTenure, language)}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Housing Company */}
-                {housingCooperativeName && (
-                  <div className="bg-white rounded-lg shadow-sm p-6">
-                    <h3 className="text-xl font-light mb-4">Taloyhtiön tiedot</h3>
-                    <div className="space-y-4">
-                      <div>
-                        <h4 className="font-medium">{housingCooperativeName}</h4>
-                      </div>
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <div className="flex items-center gap-2">
-                            <span className={housingCooperativeElevator === 'Kyllä' ? 'text-green-600' : 'text-gray-400'}>
-                              {housingCooperativeElevator === 'Kyllä' ? '✓' : '✗'}
-                            </span>
-                            <span>Hissi</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <span className={housingCooperativeSauna === 'Kyllä' ? 'text-green-600' : 'text-gray-400'}>
-                              {housingCooperativeSauna === 'Kyllä' ? '✓' : '✗'}
-                            </span>
-                            <span>Taloyhtiön sauna</span>
-                          </div>
-                        </div>
-                        <div className="space-y-2">
-                          {propertyData?.taloyhtionLainat && (
-                            <div>
-                              <span className="text-gray-600">Taloyhtiön lainat:</span>
-                              <p className="font-medium">{propertyData.taloyhtionLainat}</p>
-                            </div>
-                          )}
-                        {housingCooperativeMortgage && (
-                          <div>
-                              <span className="text-gray-600">Taloyhtiön kiinnitykset:</span>
-                            <p className="font-medium">{housingCooperativeMortgage}</p>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                        </div>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Costs Tab */}
-            {activeTab === 'costs' && (
-              <div className="space-y-8">
-                {/* Price Information */}
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h3 className="text-xl font-light mb-4">Hintatiedot</h3>
-                  <div className="space-y-3">
-                    {debtFreePrice && (
-                      <div className="flex justify-between items-center py-2 border-b">
-                        <span className="text-gray-600">Velaton hinta</span>
-                        <span className="text-xl font-medium">{parseInt(debtFreePrice).toLocaleString('fi-FI')} €</span>
-                      </div>
-                    )}
-                    {askPrice && (
-                      <div className="flex justify-between items-center py-2 border-b">
-                        <span className="text-gray-600">Myyntihinta</span>
-                        <span className="text-xl font-medium">{parseInt(askPrice).toLocaleString('fi-FI')} €</span>
-                      </div>
-                    )}
-                    {area && askPrice && (
-                      <div className="flex justify-between items-center py-2">
-                        <span className="text-gray-600">Neliöhinta</span>
-                        <span className="font-medium">
-                          {Math.round(parseInt(askPrice) / parseInt(area)).toLocaleString('fi-FI')} €/m²
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Monthly Costs */}
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h3 className="text-xl font-light mb-4">Asumiskustannukset</h3>
-                  <div className="space-y-3">
-                    {maintenanceCharge && (
-                      <div className="flex justify-between items-center py-2">
-                        <span className="text-gray-600">Hoitovastike</span>
-                        <span className="font-medium">{maintenanceCharge}</span>
-                      </div>
-                    )}
-                    {waterCharge && (
-                      <div className="flex justify-between items-center py-2">
-                        <span className="text-gray-600">Vesimaksu</span>
-                        <span className="font-medium">{waterCharge}</span>
-                      </div>
-                    )}
-                    {heatingCharge && (
-                      <div className="flex justify-between items-center py-2">
-                        <span className="text-gray-600">Lämmityskustannukset</span>
-                        <span className="font-medium">{heatingCharge}</span>
-                      </div>
-                    )}
-                    {electricHeatingCharge && (
-                      <div className="flex justify-between items-center py-2">
-                        <span className="text-gray-600">Sähkölämmitys</span>
-                        <span className="font-medium">{electricHeatingCharge}</span>
-                      </div>
-                    )}
-                    {otherCharge && (
-                      <div className="flex justify-between items-center py-2">
-                        <span className="text-gray-600">Muut maksut</span>
-                        <span className="font-medium">{otherCharge}</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Other Costs */}
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h3 className="text-xl font-light mb-4">Muut kustannukset</h3>
-                  <div className="space-y-3">
-                    {propertyTax && (
-                      <div className="flex justify-between items-center py-2 border-b">
-                        <span className="text-gray-600">Kiinteistövero</span>
-                        <span className="font-medium">{propertyTax}</span>
-                      </div>
-                    )}
-                    {cableCharge && (
-                      <div className="flex justify-between items-center py-2 border-b">
-                        <span className="text-gray-600">Kaapeli-TV</span>
-                        <span className="font-medium">{cableCharge}</span>
-                      </div>
-                    )}
-                    {internetCharge && (
-                      <div className="flex justify-between items-center py-2 border-b">
-                        <span className="text-gray-600">Internet</span>
-                        <span className="font-medium">{internetCharge}</span>
-                      </div>
-                    )}
-                    {insuranceRequired && (
-                      <div className="flex justify-between items-center py-2">
-                        <span className="text-gray-600">Vakuutus vaaditaan</span>
-                        <span className="font-medium">{insuranceRequired}</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Total Costs Summary */}
-                {(monthlyTotalCost || yearlyTotalCost) && (
-                  <div className="bg-[#002349] text-white rounded-lg shadow-sm p-6">
-                    <h3 className="text-xl font-light mb-4">Yhteenveto kustannuksista</h3>
-                    <div className="space-y-3">
-                      {monthlyTotalCost && (
-                        <div className="flex justify-between items-center py-2 border-b border-white/20">
-                          <span className="text-white/80">Kuukausikustannukset yhteensä</span>
-                          <span className="font-medium text-xl">{monthlyTotalCost} €/kk</span>
-                        </div>
-                      )}
-                      {yearlyTotalCost && (
-                        <div className="flex justify-between items-center py-2">
-                          <span className="text-white/80">Vuosikustannukset yhteensä</span>
-                          <span className="font-medium text-xl">{yearlyTotalCost} €/v</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Location Tab */}
-            {activeTab === 'location' && (
-              <div className="space-y-8">
-                {/* Location Details */}
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h3 className="text-xl font-light mb-4">Sijainti</h3>
-                  <div className="space-y-4">
-                    {marketingLocationDescription && (
-                      <div className="mb-6 p-4 bg-blue-50 rounded-lg">
-                        <p className="text-gray-700 leading-relaxed">{marketingLocationDescription}</p>
-                      </div>
-                    )}
-                    {(address || city) && (
-                      <div>
-                        <h4 className="font-medium mb-2">Osoite</h4>
-                        <p className="text-gray-700">
-                          {address}<br />
-                          {postalCode} {city}<br />
-                          {province && `${province}, `}{country}
-                        </p>
-                      </div>
-                    )}
-                    </div>
-                  </div>
-
-                {/* Parking */}
-                {(parkingFree || parkingPaid || parking) && (
-                  <div className="bg-white rounded-lg shadow-sm p-6">
-                    <h3 className="text-xl font-light mb-4">Pysäköinti</h3>
-                    <div className="space-y-3">
-                      {parkingFree && (
-                        <div className="flex items-center gap-2">
-                          <span className="text-green-600">✓</span>
-                          <span>Ilmainen pysäköinti</span>
-                        </div>
-                      )}
-                      {parkingPaid && (
-                        <div className="flex items-center gap-2">
-                          <span className="text-blue-600"></span>
-                          <span>Maksullinen pysäköinti</span>
-                        </div>
-                      )}
-                      {parking && (
-                        <div>
-                          <h4 className="font-medium mb-2">Pysäköintitiedot</h4>
-                          <p className="text-gray-700">{parking}</p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-
-                {/* Nearby Buildings & Location Type */}
-                {(locationCenterCity || locationUrbanArea || locationSuburban || locationRural || nearbyBuildings) && (
-                  <div className="bg-white rounded-lg shadow-sm p-6">
-                    <h3 className="text-xl font-light mb-4">Sijainti</h3>
-                    <div className="space-y-3">
-                      <div className="flex flex-wrap gap-2">
-                        {locationCenterCity && (
-                          <span className="px-3 py-1 bg-[#002349] text-white rounded-full text-sm">Keskustassa</span>
-                        )}
-                        {locationUrbanArea && (
-                          <span className="px-3 py-1 bg-blue-600 text-white rounded-full text-sm">Kaupunkialueella</span>
-                        )}
-                        {locationSuburban && (
-                          <span className="px-3 py-1 bg-green-600 text-white rounded-full text-sm">Esikaupunkialueella</span>
-                        )}
-                        {locationRural && (
-                          <span className="px-3 py-1 bg-yellow-600 text-white rounded-full text-sm">Maaseudulla</span>
-                        )}
-                      </div>
-                      {nearbyBuildings && (
-                        <div>
-                          <h4 className="font-medium mb-2">Lähirakennukset</h4>
-                          <p className="text-gray-700">{nearbyBuildings}</p>
-                        </div>
-                      )}
-                      {neighborsSurrounding && (
-                        <div>
-                          <h4 className="font-medium mb-2">Naapurit</h4>
-                          <p className="text-gray-700">{neighborsSurrounding}</p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-
-                {/* Zoning */}
-                {(zoningStatus || zoningInfo) && (
-                  <div className="bg-white rounded-lg shadow-sm p-6">
-                    <h3 className="text-xl font-light mb-4">Kaavoitus</h3>
-                    <div className="space-y-3">
-                    {zoningStatus && (
-                      <p className="font-medium mb-2">{zoningStatus}</p>
-                    )}
-                    {zoningInfo && (
-                      <div className="prose prose-sm max-w-none text-gray-700">
-                        {zoningInfo.split('\n').map((paragraph: string, idx: number) => (
-                          <p key={idx} className="mb-2">{paragraph}</p>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-              </div>
-            )}
-              </div>
-            )}
-
-            {/* Documents Tab */}
-            {activeTab === 'documents' && (
-              <div className="space-y-8">
-                {/* Property Information */}
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h3 className="text-xl font-light mb-4">Kiinteistötiedot</h3>
-                  <div className="space-y-3">
-                    {propertyIdentifier && (
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Kiinteistötunnus:</span>
-                        <span className="font-medium">{propertyIdentifier}</span>
-                      </div>
-                    )}
-                    {lotArea && (
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Tontin pinta-ala:</span>
-                        <span className="font-medium">{lotArea}</span>
-                      </div>
-                    )}
-                    {propertyData?.siteOwnershipType && (
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Tontin omistus:</span>
-                        <span className="font-medium">{getLocalizedText(propertyData.siteOwnershipType, language)}</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Management */}
-                {(propertyManagerName || propertyManagerOffice) && (
-                  <div className="bg-white rounded-lg shadow-sm p-6">
-                    <h3 className="text-xl font-light mb-4">Isännöinti</h3>
-                    <div className="space-y-2">
-                      {propertyManagerName && <p className="font-medium">{propertyManagerName}</p>}
-                      {propertyManagerOffice && <p>{propertyManagerOffice}</p>}
-                      {propertyManagerPhone && <p>Puh: {propertyManagerPhone}</p>}
-                      {propertyManagerEmail && <p>Email: {propertyManagerEmail}</p>}
-                    </div>
-                  </div>
-                )}
-
-                {/* Condition Reports */}
-                {(condition || asbestosSurvey || asbestosSurveyInfo) && (
-                  <div className="bg-white rounded-lg shadow-sm p-6">
-                    <h3 className="text-xl font-light mb-4">Kuntotiedot</h3>
-                    <div className="space-y-4">
-                      {condition && (
-                        <div>
-                          <span className="text-gray-600">Yleiskunto:</span>
-                          <span className="ml-2 font-medium">{condition}</span>
-                        </div>
-                      )}
-                      {asbestosSurvey && (
-                        <div>
-                          <span className="text-gray-600">Asbestikartoitus:</span>
-                          <span className="ml-2 font-medium">{asbestosSurvey}</span>
-                          {asbestosSurveyInfo && (
-                            <p className="mt-2 text-sm text-gray-700">{asbestosSurveyInfo}</p>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-
-                {/* Additional Information */}
-                {(dealIncludes || dealDoesNotInclude || release) && (
-                  <div className="bg-white rounded-lg shadow-sm p-6">
-                    <h3 className="text-xl font-light mb-4">Lisätiedot</h3>
-                    <div className="space-y-4">
-                      {dealIncludes && (
-                        <div>
-                          <h4 className="font-medium mb-1">Kauppaan kuuluu</h4>
-                          <p className="text-gray-700">{dealIncludes}</p>
-                        </div>
-                      )}
-                      {dealDoesNotInclude && (
-                        <div>
-                          <h4 className="font-medium mb-1">Kauppaan ei kuulu</h4>
-                          <p className="text-gray-700">{dealDoesNotInclude}</p>
-                        </div>
-                      )}
-                      {release && (
-                        <div>
-                          <h4 className="font-medium mb-1">Vapautuminen</h4>
-                          <p className="text-gray-700">{release}</p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-
-                {/* Property Documents */}
-                {(floorPlanUrl || energyCertificateUrl || propertyPlanUrl || buildingPermitUrl || maintenancePlanUrl || asbestosSurveyReport) && (
-                  <div className="bg-white rounded-lg shadow-sm p-6">
-                    <h3 className="text-xl font-light mb-4">Asiakirjat</h3>
-                    <div className="space-y-3">
-                      {floorPlanUrl && (
-                        <a
-                          href={floorPlanUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-[#002349] hover:bg-gray-50 transition-colors"
-                        >
-                          <span className="text-2xl"></span>
-                          <span className="text-gray-700">Pohjapiirros</span>
-                        </a>
-                      )}
-                      {energyCertificateUrl && (
-                        <a
-                          href={energyCertificateUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-[#002349] hover:bg-gray-50 transition-colors"
-                        >
-                          <span className="text-2xl">⚡</span>
-                          <span className="text-gray-700">Energiatodistus</span>
-                        </a>
-                      )}
-                      {propertyPlanUrl && (
-                        <a
-                          href={propertyPlanUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-[#002349] hover:bg-gray-50 transition-colors"
-                        >
-                          <span className="text-2xl"></span>
-                          <span className="text-gray-700">Tonttijako</span>
-                        </a>
-                      )}
-                      {buildingPermitUrl && (
-                        <a
-                          href={buildingPermitUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-[#002349] hover:bg-gray-50 transition-colors"
-                        >
-                          <span className="text-2xl"></span>
-                          <span className="text-gray-700">Rakennuslupa</span>
-                        </a>
-                      )}
-                      {maintenancePlanUrl && (
-                        <a
-                          href={maintenancePlanUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-[#002349] hover:bg-gray-50 transition-colors"
-                        >
-                          <span className="text-2xl"></span>
-                          <span className="text-gray-700">Huoltosuunnitelma</span>
-                        </a>
-                      )}
-                      {asbestosSurveyReport && (
-                        <a
-                          href={asbestosSurveyReport}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-[#002349] hover:bg-gray-50 transition-colors"
-                        >
-                          <span className="text-2xl"></span>
-                          <span className="text-gray-700">Asbestikartoitusraportti</span>
-                        </a>
-                      )}
-                      {conditionReport && (
-                        <a
-                          href={conditionReport}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-[#002349] hover:bg-gray-50 transition-colors"
-                        >
-                          <span className="text-2xl">🔍</span>
-                          <span className="text-gray-700">Kuntotarkastusraportti</span>
-                        </a>
-                      )}
-                      {moistureReport && (
-                        <a
-                          href={moistureReport}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-[#002349] hover:bg-gray-50 transition-colors"
-                        >
-                          <span className="text-2xl">💧</span>
-                          <span className="text-gray-700">Kosteusmittausraportti</span>
-                        </a>
-                      )}
-                      {drivingInstructions && (
-                        <a
-                          href={drivingInstructions}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-[#002349] hover:bg-gray-50 transition-colors"
-                        >
-                          <span className="text-2xl"></span>
-                          <span className="text-gray-700">Ajo-ohjeet</span>
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                )}
-
-                {/* Media Section */}
-                <DetailMedia
-                  youtubeUrl={youtubeUrl}
-                  virtualTourUrl={virtualShowing}
-                  brochureUrl={propertyBrochureUrl || virtualShowing}
-                  floorPlanUrl={floorPlanUrl}
-                  className="mb-8"
-                />
-
-                {/* External Links */}
-                {externalLinks && (
-                  <div className="bg-white rounded-lg shadow-sm p-6">
-                    <h3 className="text-xl font-light mb-4">Lisälinkit</h3>
-                    <div className="space-y-3">
-                      {externalLinks.split('\n').map((link: string, idx: number) => (
-                        <a
-                          key={idx}
-                          href={link.trim()}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-[#002349] hover:bg-gray-50 transition-colors"
-                        >
-                          <span className="text-2xl"></span>
-                          <span className="text-gray-700">Lisätiedot {idx + 1}</span>
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-              </>
+              <ApartmentView
+                activeTab={activeTab}
+                language={language}
+                descriptionParagraphs={apartmentDescriptionParagraphs}
+                showAutoTranslationNotice={showAutoTranslationNotice}
+                highlights={normalizedHighlights}
+                sellingPoints={normalizedSellingPoints}
+                agentNotes={agentNotesText}
+                additionalMaterials={fastighetAdditionalMaterials}
+                apartmentDetailsItems={apartmentDetailsItems}
+                buildingFactsItems={apartmentBuildingItems}
+                housingCompanyItems={apartmentHousingItems}
+                priceItems={priceListItems}
+                livingCostItems={livingCostListItems}
+                otherCostItems={otherCostListItemsFiltered}
+                costSummary={costSummaryTotals}
+                zoningText={zoningSummary !== '—' ? zoningSummary : undefined}
+                documents={fastighetDocuments}
+                notProvidedText={notProvidedText}
+              />
             )}
             {/* END LÄGENHET LAYOUT */}
 
             {/* ================================================================ */}
-            {/* FASTIGHET (HOUSE/VILLA) LAYOUT - Awaiting customer requirements */}
-            {/* ================================================================ */}
             {/* FASTIGHET (HOUSE/VILLA) LAYOUT */}
             {/* ================================================================ */}
             {isFastighet && (
-              <>
-                {activeTab === 'overview' && (
-                  <div className="space-y-8">
-                    {/* Description */}
-                    {(marketingDescription || freeText || description) && (
-                      <div className="bg-white rounded-lg shadow-sm p-6">
-                        {language !== 'fi' && typeof (freeText || description) === 'string' && (
-                          <div className="mb-4 p-3 bg-blue-50 border-l-4 border-blue-400 text-sm text-blue-700">
-                            <p className="font-medium">
-                              {language === 'sv' ? '📝 Automatisk översättning' : '📝 Automatic translation'}
-                            </p>
-                            <p className="text-xs mt-1">
-                              {language === 'sv' 
-                                ? 'Vissa termer har översatts automatiskt från finska. Kontakta mäklaren för fullständig översättning.'
-                                : 'Some terms have been automatically translated from Finnish. Contact the agent for a complete translation.'}
-                            </p>
-          </div>
-                        )}
-                        <div className="prose prose-lg max-w-none text-gray-700">
-                          {removeEmojis(
-                            getLocalizedText(marketingDescription, language) || 
-                            getLocalizedText(freeText, language) || 
-                            getLocalizedText(description, language) || ''
-                          ).split('\n').map((paragraph: string, idx: number) => (
-                            <p key={idx} className={idx > 0 ? 'mt-4' : ''}>
-                              {paragraph}
-                            </p>
-                          ))}
-          </div>
-                      </div>
-                    )}
-
-                    {/* Additional Materials & Links */}
-                    {(videoUrl || externalLinks?.length > 0 || propertyData?.virtualTourUrl) && (
-                      <div className="bg-white rounded-lg shadow-sm p-6">
-                        <h3 className="text-xl font-light mb-4">Lisämateriaali</h3>
-                        <div className="space-y-3">
-                          {videoUrl && (
-                            <a
-                              href={videoUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-[#002349] hover:bg-gray-50 transition-colors"
-                            >
-                              <span className="text-gray-700">Video</span>
-                            </a>
-                          )}
-                          {propertyData?.virtualTourUrl && (
-                            <a
-                              href={propertyData.virtualTourUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-[#002349] hover:bg-gray-50 transition-colors"
-                            >
-                              <span className="text-gray-700">Virtuaaliesittely</span>
-                            </a>
-                          )}
-                          {externalLinks && externalLinks.length > 0 && externalLinks.map((link: any, idx: number) => (
-                            <a
-                              key={idx}
-                              href={link.url || link.value}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-[#002349] hover:bg-gray-50 transition-colors"
-                            >
-                              <span className="text-gray-700">{link.label}</span>
-                            </a>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {activeTab === 'property-details' && (
-                  <div className="space-y-8">
-                    {/* Property Information (Kiinteistötiedot) */}
-                    <div className="bg-white rounded-lg shadow-sm p-6">
-                      <h3 className="text-xl font-light mb-4">Kiinteistötiedot</h3>
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          {propertyData?.propertyIdentifier && (
-                            <div className="flex justify-between">
-                              <span className="text-gray-600">Kiinteistötunnus:</span>
-                              <span className="font-medium">{propertyData.propertyIdentifier}</span>
-                            </div>
-                          )}
-                          {lotArea && (
-                            <div className="flex justify-between">
-                              <span className="text-gray-600">Kiinteistön koko:</span>
-                              <span className="font-medium">{parseFloat(lotArea.toString().replace(/[^\d.]/g, '')).toLocaleString('fi-FI', { minimumFractionDigits: 0, maximumFractionDigits: 2 })} m²</span>
-                            </div>
-                          )}
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">Tontin omistus:</span>
-                            <span className={propertyData?.siteOwnershipType ? "font-medium" : "text-gray-400 italic"}>
-                              {propertyData?.siteOwnershipType ? getLocalizedText(propertyData.siteOwnershipType, language) : '(Täydennetään)'}
-                            </span>
-                          </div>
-                          {(zoningStatus || propertyData?.zoningSituation) && (
-                            <div className="flex justify-between">
-                              <span className="text-gray-600">Kaavatilanne:</span>
-                              <span className="font-medium">{zoningStatus || propertyData?.zoningSituation}</span>
-                            </div>
-                          )}
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">Vesijohto:</span>
-                            <span className={propertyData?.waterConnection ? "font-medium" : "text-gray-400 italic"}>{propertyData?.waterConnection || '(Täydennetään)'}</span>
-                          </div>
-                        </div>
-                        <div className="space-y-2">
-                          {propertyData?.propertyBuildingRights && (
-                            <div className="flex justify-between">
-                              <span className="text-gray-600">Rakennusoikeus:</span>
-                              <span className="font-medium">{propertyData.propertyBuildingRights}</span>
-                            </div>
-                          )}
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">Energialuokka:</span>
-                            <span className={energyClass ? "font-medium" : "text-gray-400 italic"}>{energyClass || '(Täydennetään)'}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">Energitodistus:</span>
-                            {energyCertificateUrl ? (
-                              <a href={energyCertificateUrl} target="_blank" rel="noopener noreferrer" className="text-[#002349] hover:underline">
-                                Lataa energiatodistus
-                              </a>
-                            ) : getEnergyCertificateMessage(energyCertificateStatus, language) ? (
-                              <span className="font-medium text-gray-700 text-right max-w-xs">
-                                {getEnergyCertificateMessage(energyCertificateStatus, language)}
-                              </span>
-                            ) : (
-                              <span className="text-gray-400 italic">(Täydennetään)</span>
-                            )}
-                          </div>
-                          {propertyData?.availableFrom && (
-                            <div className="flex justify-between">
-                              <span className="text-gray-600">Vapautuminen:</span>
-                              <span className="font-medium">{typeof propertyData.availableFrom === 'string' ? propertyData.availableFrom : propertyData.availableFrom instanceof Date ? propertyData.availableFrom.toLocaleDateString('fi-FI') : propertyData.availableFrom}</span>
-                            </div>
-                          )}
-                          {(propertyData?.easements || propertyData?.restrictions) && (
-                            <div className="flex flex-col">
-                              <span className="text-gray-600 mb-1">Rasitteet ja oikeudet:</span>
-                              <span className="font-medium text-sm">{propertyData?.easements || propertyData?.restrictions}</span>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {activeTab === 'building' && (
-                  <div className="space-y-8">
-                    {/* Building Information (Rakennustiedot) */}
-                    <div className="bg-white rounded-lg shadow-sm p-6">
-                      <h3 className="text-xl font-light mb-4">Rakennustiedot</h3>
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          {constructionYear && (
-                            <div className="flex justify-between">
-                              <span className="text-gray-600">Rakennusvuosi:</span>
-                              <span className="font-medium">{constructionYear}</span>
-                            </div>
-                          )}
-                          {floorCount && (
-                            <div className="flex justify-between">
-                              <span className="text-gray-600">Kerrosten määrä:</span>
-                              <span className="font-medium">{floorCount}</span>
-                            </div>
-                          )}
-                        </div>
-                        <div className="space-y-2">
-                          {heatingSystem && (
-                            <div className="flex justify-between">
-                              <span className="text-gray-600">Lämmitys:</span>
-                              <span className="font-medium">{heatingSystem}</span>
-                            </div>
-                          )}
-                          {propertyData?.ventilationType && (
-                            <div className="flex justify-between">
-                              <span className="text-gray-600">Ilmanvaihto:</span>
-                              <span className="font-medium">{propertyData.ventilationType}</span>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {activeTab === 'costs' && (
-                  <div className="space-y-8">
-                    {/* Costs (Kustannukset) */}
-                    <div className="bg-white rounded-lg shadow-sm p-6">
-                      <h3 className="text-xl font-light mb-4">Kustannukset</h3>
-                      <div className="space-y-4">
-                        {debtFreePrice && (
-                          <div className="flex justify-between items-center py-2 border-b">
-                            <span className="text-gray-600">Velaton hinta:</span>
-                            <Price>{parseInt(debtFreePrice).toLocaleString('fi-FI')} €</Price>
-                          </div>
-                        )}
-                        {propertyData?.housingCooperativeMortgage && (
-                          <div className="flex justify-between items-center py-2 border-b">
-                            <span className="text-gray-600">Kiinnitykset / panttaukset:</span>
-                            <Price>{parseInt(propertyData.housingCooperativeMortgage).toLocaleString('fi-FI')} €</Price>
-                          </div>
-                        )}
-                        {propertyTax && (
-                          <div className="flex justify-between items-center py-2 border-b">
-                            <span className="text-gray-600">Kiinteistövero:</span>
-                            <Price>{parseInt(propertyTax).toLocaleString('fi-FI')} €</Price>
-                          </div>
-                        )}
-                        {(propertyData?.roadTolls || propertyData?.otherCharge) && (
-                          <div className="py-2 border-b">
-                            <span className="text-gray-600 block mb-2">Muut maksut:</span>
-                            <div className="space-y-1 ml-4">
-                              {propertyData?.roadTolls && (
-                                <div className="flex justify-between text-sm">
-                                  <span className="text-gray-600">Tiehoitomaksu:</span>
-                                  <Price>{parseInt(propertyData.roadTolls).toLocaleString('fi-FI')} €</Price>
-                                </div>
-                              )}
-                              {propertyData?.otherCharge && (
-                                <div className="flex justify-between text-sm">
-                                  <span className="text-gray-600">Muu maksu:</span>
-                                  <Price>{parseInt(propertyData.otherCharge).toLocaleString('fi-FI')} €</Price>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {activeTab === 'location' && (
-                  <div className="space-y-8">
-                    {/* Location (Sijainti) */}
-                    <div className="bg-white rounded-lg shadow-sm p-6">
-                      <h3 className="text-xl font-light mb-4">Sijainti</h3>
-                      <div className="space-y-4">
-                        <div>
-                          <p className="font-medium text-lg">{address}</p>
-                          <p className="text-gray-600">{postalCode} {city}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {activeTab === 'documents' && (
-                  <div className="space-y-8">
-                    {/* Documents */}
-                    {(floorPlanUrl || energyCertificateUrl || propertyPlanUrl || buildingPermitUrl) && (
-                      <div className="bg-white rounded-lg shadow-sm p-6">
-                        <h3 className="text-xl font-light mb-4">Asiakirjat</h3>
-                        <div className="space-y-3">
-                          {floorPlanUrl && (
-                            <a
-                              href={floorPlanUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-[#002349] hover:bg-gray-50 transition-colors"
-                            >
-                              <span className="text-gray-700">Pohjapiirros</span>
-                            </a>
-                          )}
-                          {energyCertificateUrl && (
-                            <a
-                              href={energyCertificateUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-[#002349] hover:bg-gray-50 transition-colors"
-                            >
-                              <span className="text-gray-700">Energiatodistus</span>
-                            </a>
-                          )}
-                          {propertyPlanUrl && (
-                            <a
-                              href={propertyPlanUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-[#002349] hover:bg-gray-50 transition-colors"
-                            >
-                              <span className="text-gray-700">Tonttijako</span>
-                            </a>
-                          )}
-                          {buildingPermitUrl && (
-                            <a
-                              href={buildingPermitUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-[#002349] hover:bg-gray-50 transition-colors"
-                            >
-                              <span className="text-gray-700">Rakennuslupa</span>
-                            </a>
-                          )}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </>
+              <FastighetView
+                activeTab={activeTab}
+                language={language}
+                descriptionParagraphs={apartmentDescriptionParagraphs}
+                showAutoTranslationNotice={showAutoTranslationNotice}
+                highlights={normalizedHighlights}
+                sellingPoints={normalizedSellingPoints}
+                agentNotes={agentNotesText}
+                additionalMaterials={fastighetAdditionalMaterials}
+                estateItems={fastighetEstateItems}
+                rightsText={fastighetRightsText}
+                buildingItems={fastighetBuildingItems}
+                priceItems={fastighetPriceItems}
+                livingCostItems={livingCostListItems}
+                otherCostItems={otherCostListItems}
+                costSummary={costSummaryTotals}
+                documents={fastighetDocuments}
+                notProvidedText={notProvidedText}
+              />
             )}
             {/* END FASTIGHET LAYOUT */}
 
