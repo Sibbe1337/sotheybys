@@ -445,7 +445,23 @@ export function mapLinearAPIToProperty(
     releaseDate: 'releaseDate' in linearData && data.releaseDate?.fi?.value
       ? new Date(data.releaseDate.fi.value) 
       : new Date(),
-    availableFrom: extractLocalizedString(data.availableFrom),  // No need for manual fallback
+    availableFrom: (() => {
+      // Try multiple field names for availability/move-in date
+      const localized = extractLocalizedString(
+        data.availableFrom ||
+        data.availability ||
+        data.moveInDate ||
+        data.possessionDate
+      );
+      if (localized.fi) return localized;
+
+      // Fallback to plain string if it exists
+      if (typeof data.availableFrom === 'string' && data.availableFrom) {
+        return { fi: data.availableFrom, en: data.availableFrom, sv: data.availableFrom };
+      }
+
+      return localized;
+    })(),
     ownershipType: (() => {
       // Try localized field first
       const localized = extractLocalizedString(data.ownershipType);
