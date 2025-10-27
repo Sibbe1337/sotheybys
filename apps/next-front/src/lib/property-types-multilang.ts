@@ -340,6 +340,13 @@ export interface MultilingualPropertyListing {
   siteArea: number;
 
   /**
+   * Lot area (alias for siteArea for component compatibility)
+   * FI: Tontin kokonaispinta-ala neliömetreinä
+   * SV: Tomtens totala yta i kvadratmeter
+   */
+  lotArea: number;
+
+  /**
    * Site/plot ownership type
    * FI: Tontin omistusmuoto (esim. "Oma", "Vuokra")
    * EN: Plot ownership (e.g., "Owned", "Leased")

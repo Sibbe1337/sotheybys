@@ -617,6 +617,28 @@ export function mapLinearAPIToProperty(
 
       return plotAreaValue;
     })(),
+    lotArea: (() => {
+      // ALIAS: lotArea is the same as siteArea (for component compatibility)
+      // Some components use lotArea, others use siteArea
+      const plotAreaValue = parseEuroNumber(
+        data.lotArea?.fi?.value ||      // PRIMARY: Localized "Tontin kokonaispinta-ala" (e.g. "200 m²")
+        data.plotArea?.fi?.value ||     // Secondary localized field
+        nv.plotArea ||
+        nv.lotArea ||
+        nv.siteArea ||
+        data.siteArea                   // Root-level siteArea
+      );
+      const unit = (nv as any)?.lotAreaUnit || '';
+
+      // Convert hectares to m² if needed
+      const unitLower = unit.toLowerCase();
+      if ((unitLower === 'ha' || unitLower === 'hectare') && plotAreaValue > 0) {
+        const convertedArea = plotAreaValue * 10000;
+        return convertedArea;
+      }
+
+      return plotAreaValue;
+    })(),
     siteOwnershipType: (() => {
       // Try lotOwnership/plotOwnership first (localized fields)
       const localized = extractLocalizedString(data.lotOwnership || data.plotOwnership);
