@@ -460,6 +460,7 @@ export default function PropertyDetailEnhanced({
     housingCooperativeMortgage,
     propertyData?.companyMortgages,
     propertyData?.housingCompanyMortgages,
+    propertyData?.companyLoans,  // CRITICAL: companyLoans from mapper
     propertyData?.taloyhtiönKiinnitykset,
     propertyData?.taloyhtionKiinnitykset
   );
