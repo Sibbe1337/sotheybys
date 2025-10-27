@@ -401,9 +401,36 @@ export default function PropertyDetailEnhanced({
   const heatingSystemValue = formatTextValue(heatingSystem);
   const ownershipValue = formatTextValue(propertyData?.ownershipType);
 
-  const siteOwnershipValue = formatTextValue(propertyData?.siteOwnershipType);
-  const housingTenureValue = formatTextValue(propertyData?.housingTenure);
-  const housingCompanyNameValue = formatTextValue(housingCooperativeName);
+  // Try multiple field names for site ownership
+  const siteOwnershipValue = formatTextValue(
+    pickFirstNonEmpty(
+      propertyData?.siteOwnershipType,
+      propertyData?.plotOwnership,
+      propertyData?.tontinOmistus,
+      propertyData?.landOwnership
+    )
+  );
+
+  // Try multiple field names for housing tenure
+  const housingTenureValue = formatTextValue(
+    pickFirstNonEmpty(
+      propertyData?.housingTenure,
+      propertyData?.tenure,
+      propertyData?.hallintamuoto
+    )
+  );
+
+  // Try multiple field names for housing company name
+  const housingCompanyNameValue = formatTextValue(
+    pickFirstNonEmpty(
+      housingCooperativeName,
+      propertyData?.companyName,
+      propertyData?.housingCompanyName,
+      propertyData?.taloyhtionNimi,
+      propertyData?.taloyhtiönNimi
+    )
+  );
+
   const floorCountValue = formatTextValue(floorCount);
   const lotAreaDisplay = formatAreaValue(lotArea);
   // waterConnection/vesijohto removed per customer requirement
@@ -426,10 +453,18 @@ export default function PropertyDetailEnhanced({
   const rightsText = formatTextValue(propertyData?.easements || propertyData?.restrictions);
   const mortgageEncumbranceValue = mortgageEncumbranceDisplay === '—' ? null : mortgageEncumbranceDisplay;
 
-  const housingCompanyMortgageAmount = parseEuroAmount(housingCooperativeMortgage);
+  // Try multiple field names for housing company mortgages
+  const housingCompanyMortgageSource = pickFirstNonEmpty(
+    housingCooperativeMortgage,
+    propertyData?.companyMortgages,
+    propertyData?.housingCompanyMortgages,
+    propertyData?.taloyhtiönKiinnitykset,
+    propertyData?.taloyhtionKiinnitykset
+  );
+  const housingCompanyMortgageAmount = parseEuroAmount(housingCompanyMortgageSource);
   const housingCompanyMortgageDisplay = housingCompanyMortgageAmount != null
     ? formatEuroLabel(housingCompanyMortgageAmount)
-    : formatTextValue(housingCooperativeMortgage);
+    : formatTextValue(housingCompanyMortgageSource);
 
   const housingCompanyLoansAmount = parseEuroAmount(
     pickFirstNonEmpty(
