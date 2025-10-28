@@ -913,6 +913,24 @@ export default function PropertyDetailEnhanced({
   if (cableCharge && cableCharge > 0) {
     rentalAdditionalCostItems.push({ label: getTranslation('cableTv', language), value: formatChargeValue(cableCharge) });
   }
+
+  // PHASE 5: Add electricity fields for rentals per Dennis's requirements
+  const electricityContract = formatTextValue(propertyData?.electricityContract);
+  if (electricityContract && electricityContract !== '—') {
+    rentalAdditionalCostItems.push({ label: getTranslation('electricityContract', language), value: electricityContract });
+  }
+
+  const electricityCost = propertyData?.electricHeatingCharge || propertyData?.electricCost;
+  const electricityCostAmount = electricityCost ? parseEuroAmount(electricityCost) : null;
+  if (electricityCostAmount && electricityCostAmount > 0) {
+    rentalAdditionalCostItems.push({ label: getTranslation('electricityCostPerMonth', language), value: formatChargeValue(electricityCost) });
+  }
+
+  const electricityConsumption = formatTextValue(propertyData?.electricHeatingPowerUsage || propertyData?.electricityConsumption);
+  if (electricityConsumption && electricityConsumption !== '—') {
+    rentalAdditionalCostItems.push({ label: getTranslation('electricityConsumptionPerYear', language), value: electricityConsumption });
+  }
+
   // Add "Lisätietoja maksuista" if exists
   const chargeInfo = formatTextValue(propertyData?.chargeInfo);
   if (chargeInfo && chargeInfo !== '—') {

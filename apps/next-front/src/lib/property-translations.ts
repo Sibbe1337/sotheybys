@@ -285,6 +285,22 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     sv: 'Eluppvärmning',
     en: 'Electric Heating'
   },
+  // Rental electricity fields (Phase 5)
+  electricityContract: {
+    fi: 'Sähkösopimus',
+    sv: 'Elavtal',
+    en: 'Electricity Contract'
+  },
+  electricityCostPerMonth: {
+    fi: 'Sähkön hinta €/kk',
+    sv: 'El €/mån',
+    en: 'Electricity Cost €/month'
+  },
+  electricityConsumptionPerYear: {
+    fi: 'Sähkönkulutus kWh/v',
+    sv: 'Elförbrukning kWh/år',
+    en: 'Electricity Consumption kWh/year'
+  },
   otherFee: {
     fi: 'Muu vastike',
     sv: 'Övrigt vederlag',
