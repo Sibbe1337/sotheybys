@@ -470,7 +470,7 @@ export default function PropertyDetailEnhanced({
   const floorCountValue = formatTextValue(floorCount);
   const lotAreaDisplay = formatAreaValue(lotArea);
   // waterConnection/vesijohto removed per customer requirement
-  const ventilationValue = formatTextValue(propertyData?.ventilationType || propertyData?.ventilationSystem);
+  // ventilationValue removed per Dennis request - field not populated by Linear API
   const energyCertificateMessage = getEnergyCertificateMessage(energyCertificateStatus, language);
   const mortgageEncumbranceSource = pickFirstNonEmpty(
     housingCooperativeMortgage,
@@ -791,11 +791,8 @@ export default function PropertyDetailEnhanced({
     {
       label: getTranslation('heatingSystem', language),
       value: withPlaceholder(heatingSystemValue)
-    },
-    {
-      label: getTranslation('ventilation', language),
-      value: withPlaceholder(ventilationValue)
     }
+    // Ventilation removed per Dennis request - field not populated by Linear API
   ];
 
   // Add "Kerrosten määrä" (Number of Floors) only if it exists
@@ -1692,7 +1689,7 @@ export default function PropertyDetailEnhanced({
                   )}
                   {propertyData?.propertyType && typeOfApartment && <span className="mx-2">|</span>}
                   {typeOfApartment && (
-                    <span>{removeEmojis(getLocalizedText(typeOfApartment, language))}</span>
+                    <span>{removeEmojis(getLocalizedText(typeOfApartment, language) || typeOfApartment)}</span>
                   )}
                 </p>
               )}
