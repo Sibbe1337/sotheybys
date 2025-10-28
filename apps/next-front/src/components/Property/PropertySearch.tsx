@@ -161,8 +161,8 @@ export default function PropertySearch({ properties, language }: PropertySearchP
 
   return (
     <div>
-      {/* Advanced Search Filters */}
-      <section className="py-8 bg-white border-y border-gray-200 sticky top-0 z-40">
+      {/* Advanced Search Filters - NOT sticky per Dennis's feedback */}
+      <section className="py-8 bg-white border-y border-gray-200">
         <div className="max-w-[1400px] mx-auto px-6">
           {/* Mobile: Collapsible header */}
           <div className="flex items-center justify-between mb-6">
