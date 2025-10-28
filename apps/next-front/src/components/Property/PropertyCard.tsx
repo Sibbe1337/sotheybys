@@ -114,21 +114,21 @@ export default function PropertyCard({
   return (
     <LocaleLink
       href={getPropertyUrl()}
-      className="block bg-white rounded-none shadow-md overflow-hidden card-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2"
+      className="block bg-white rounded-none shadow-sm border border-gray-200 overflow-hidden card-hover hover:shadow-lg transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2"
     >
       {/* Property Image Carousel */}
       {carouselImages.length > 0 && (
         <ImageCarousel images={carouselImages} />
       )}
 
-      <div className="p-5">
+      <div className="p-6">
         {/* Title - Large serif font matching old site */}
-        <h3 className="text-xl font-serif mb-3 text-gray-900 leading-tight">
+        <h3 className="text-2xl font-serif mb-4 text-gray-900 leading-tight">
           {title}
         </h3>
 
         {/* Prices - Show both Vh and Mh for sale properties */}
-        <div className="mb-2">
+        <div className="mb-3">
           {(() => {
             // Check if it's a rental property
             if (property?.rent) {
@@ -138,7 +138,7 @@ export default function PropertyCard({
 
               if (rentAmount > 0) {
                 return (
-                  <p className="text-base font-normal text-gray-900">
+                  <p className="text-lg font-normal text-gray-900">
                     {formatPrice(rentAmount)} / {getHomepageTranslation('month', language)}
                   </p>
                 );
@@ -152,15 +152,15 @@ export default function PropertyCard({
             if (debtFree && salePrice && debtFree !== salePrice) {
               // Show both: "Vh X € Mh Y €"
               return (
-                <p className="text-base font-normal text-gray-900">
+                <p className="text-lg font-normal text-gray-900">
                   <span>Vh {formatPrice(debtFree)}</span>
-                  <span className="ml-3">Mh {formatPrice(salePrice)}</span>
+                  <span className="ml-4">Mh {formatPrice(salePrice)}</span>
                 </p>
               );
             } else if (salePrice) {
               // Show only Myyntihinta: "Mh X €"
               return (
-                <p className="text-base font-normal text-gray-900">
+                <p className="text-lg font-normal text-gray-900">
                   Mh {formatPrice(salePrice)}
                 </p>
               );
@@ -172,14 +172,14 @@ export default function PropertyCard({
 
         {/* TypeOfApartment / Huoneistoselitelmä - Room description */}
         {property?.typeOfApartment && (
-          <p className="text-sm text-gray-700 mb-2 leading-relaxed">
+          <p className="text-sm text-gray-700 mb-3 leading-relaxed">
             {property.typeOfApartment}
           </p>
         )}
 
         {/* Size - Simple text format matching old site */}
         {property?.area && (
-          <p className="text-sm text-gray-700 mb-3">
+          <p className="text-sm text-gray-700 mb-4">
             {(() => {
               // Detect if property is an estate (Fastighet) vs apartment (Lägenhet)
               const propertyTypeStr = property.propertyType?.toLowerCase() || '';
@@ -224,9 +224,9 @@ export default function PropertyCard({
 
         {/* Agent Info - Horizontal layout with photo */}
         {agent && agent.name && (
-          <div className="flex items-center gap-3 mb-4 pb-4 border-b border-gray-200">
+          <div className="flex items-center gap-3 mb-5 pb-5 border-b border-gray-200">
             {agent.photo?.sourceUrl && (
-              <div className="relative w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
+              <div className="relative w-14 h-14 rounded-full overflow-hidden flex-shrink-0">
                 <Image
                   src={agent.photo.sourceUrl}
                   alt={agent.name}
@@ -237,9 +237,9 @@ export default function PropertyCard({
               </div>
             )}
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-gray-900 truncate">{agent.name}</p>
+              <p className="text-sm font-semibold text-gray-900 truncate">{agent.name}</p>
               {agent.phone && (
-                <p className="text-sm text-gray-600">{agent.phone}</p>
+                <p className="text-sm text-gray-600 mt-0.5">{agent.phone}</p>
               )}
             </div>
           </div>
@@ -248,7 +248,7 @@ export default function PropertyCard({
         {/* View Property Button - Dark blue matching old site */}
         <Button
           variant="primary"
-          className="w-full py-3 text-base font-normal bg-[#002349] hover:bg-[#001a35]"
+          className="w-full py-3.5 text-base font-medium bg-[#002349] hover:bg-[#001a35] transition-colors"
         >
           Katso kohde »
         </Button>
