@@ -8,6 +8,7 @@ import { MetaRow } from '@/components/ui/MetaRow';
 import { Button } from '@/components/ui/Button';
 import { PropertyTypeChip } from '@/components/ui/PropertyTypeChip';
 import { getHomepageTranslation, type SupportedLanguage } from '@/lib/homepage-translations';
+import ImageCarousel, { type CarouselImage } from './ImageCarousel';
 
 // ============================================================================
 // IMAGE RESOLVER - Prevents 400 errors from missing/malformed image paths
@@ -92,25 +93,32 @@ export default function PropertyCard({
     return `/kohde/${slug}?lang=${language}`;
   };
 
+  // Prepare images for carousel - use gallery if available, otherwise use featuredImage
+  const carouselImages: CarouselImage[] = [];
+  if (property?.gallery && property.gallery.length > 0) {
+    // Use gallery images
+    property.gallery.forEach((img) => {
+      carouselImages.push({
+        sourceUrl: resolveLocalImage(img.sourceUrl),
+        altText: img.altText || `${title} - ${property?.address || ''}`
+      });
+    });
+  } else if (featuredImage) {
+    // Fallback to featured image
+    carouselImages.push({
+      sourceUrl: resolveLocalImage(featuredImage.node.sourceUrl),
+      altText: featuredImage.node.altText || `${title} - ${property?.address || ''} ${property?.city || ''} - Snellman Sotheby's International Realty`.trim()
+    });
+  }
+
   return (
     <LocaleLink
       href={getPropertyUrl()}
       className="block bg-white rounded-none shadow-md overflow-hidden card-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2"
     >
-      {/* Property Image */}
-      {featuredImage && (
-        <div className="relative h-48 w-full group">
-          <Image
-            src={resolveLocalImage(featuredImage.node.sourceUrl)}
-            alt={`${title} - ${property?.address || ''} ${property?.city || ''} - Snellman Sotheby's International Realty`.trim()}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            onError={(e: any) => { 
-              e.currentTarget.src = FALLBACK_IMG; 
-            }}
-          />
-        </div>
+      {/* Property Image Carousel */}
+      {carouselImages.length > 0 && (
+        <ImageCarousel images={carouselImages} />
       )}
 
       <div className="p-4">
