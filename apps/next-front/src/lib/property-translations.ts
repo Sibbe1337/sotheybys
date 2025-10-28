@@ -250,6 +250,11 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     sv: 'Parkeringsavgift',
     en: 'Parking Fee'
   },
+  additionalChargeInfo: {
+    fi: 'Lisätietoja maksuista',
+    sv: 'Tillägsinformation om kostnaderna',
+    en: 'Additional Charge Information'
+  },
   housingCosts: {
     fi: 'Asumiskustannukset',
     sv: 'Boendekostnader',
