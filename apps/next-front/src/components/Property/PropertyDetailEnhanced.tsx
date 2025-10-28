@@ -1793,6 +1793,27 @@ export default function PropertyDetailEnhanced({
         </div>
       </section>
 
+      {/* Description Section - Always visible under tabs */}
+      {apartmentDescriptionParagraphs && apartmentDescriptionParagraphs.length > 0 && (
+        <section className="bg-gray-50 py-6 sm:py-8">
+          <div className="container mx-auto px-4">
+            <h2 className="text-xl sm:text-2xl font-bold text-[#002349] mb-4">
+              {isRental
+                ? getTranslation('rentalDescription', language)
+                : getTranslation('apartmentDescription', language)
+              }
+            </h2>
+            <div className="prose prose-sm sm:prose max-w-none">
+              {apartmentDescriptionParagraphs.map((paragraph: string, idx: number) => (
+                <p key={idx} className="mb-3 text-gray-700 leading-relaxed">
+                  {removeEmojis(paragraph)}
+                </p>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Tab Content - Mobile optimized spacing */}
       <section className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 lg:py-8">
         <div className="grid lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">

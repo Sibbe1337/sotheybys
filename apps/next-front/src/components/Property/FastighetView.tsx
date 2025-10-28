@@ -84,19 +84,6 @@ export default function FastighetView({
     <>
       {activeTab === 'overview' && (
         <div className="space-y-8">
-          {/* Description section */}
-          {descriptionParagraphs.length > 0 && (
-            <SectionCard title={getTranslation('apartmentDescription', language)}>
-              <div className="prose prose-sm sm:prose max-w-none">
-                {descriptionParagraphs.map((paragraph: string, idx: number) => (
-                  <p key={idx} className="mb-3 text-gray-700 leading-relaxed">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-            </SectionCard>
-          )}
-
           {additionalMaterials.length > 0 && (
             <SectionCard title={getTranslation('additionalMaterials', language)}>
               <div className="flex flex-wrap gap-3">
