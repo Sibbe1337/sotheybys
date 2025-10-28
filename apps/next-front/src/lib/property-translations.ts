@@ -48,9 +48,9 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     en: 'Estate Information'
   },
   apartmentTypeLabel: {
-    fi: 'Huoneistotyyppi',
-    sv: 'Lägenhetstyp',
-    en: 'Apartment Type'
+    fi: 'Huoneistoselitelmä',
+    sv: 'Lägenhetsbeskrivning',
+    en: 'Apartment Description'
   },
   floorLabel: {
     fi: 'Kerros',

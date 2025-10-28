@@ -802,13 +802,8 @@ export default function PropertyDetailEnhanced({
   // formatDateValue now defined earlier (before fastighetEstateItems) to avoid hoisting issues
 
   // Apartment details - Per Dennis: Remove "Hissi" (moved to companyAndBuildingItems) and "Vapautuminen" (moved to otherInfoItems)
+  // typeOfApartment removed - now shown as standalone section under gallery (not in details list)
   const apartmentDetailsItems = [
-    typeOfApartment
-      ? {
-          label: getTranslation('apartmentTypeLabel', language),
-          value: withPlaceholder(formatTextValue(typeOfApartment))
-        }
-      : undefined,
     {
       label: getTranslation('floorLabel', language),
       value: withPlaceholder(formatTextValue(floorDisplay))
@@ -1650,6 +1645,26 @@ export default function PropertyDetailEnhanced({
           </div>
         </div>
       )}
+
+      {/* Huoneistoselitelmä Section - Apartment Type Description */}
+      {typeOfApartment && (() => {
+        const typeOfApartmentLocalized = getLocalizedText(typeOfApartment, language);
+        const apartmentTypeHeading = getTranslation('apartmentTypeLabel', language);
+
+        // Only show if we have localized content (strict i18n - no fi-fallback)
+        if (!typeOfApartmentLocalized) return null;
+
+        return (
+          <section className="bg-white border-b">
+            <div className="container mx-auto px-4 py-4">
+              <h2 className="sr-only">{apartmentTypeHeading}</h2>
+              <p className="text-lg text-gray-800 leading-relaxed">
+                {removeEmojis(typeOfApartmentLocalized)}
+              </p>
+            </div>
+          </section>
+        );
+      })()}
 
       {/* Property Header - Mobile optimized */}
       <section className="bg-white shadow-sm sticky top-0 z-40">
