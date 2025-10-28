@@ -77,12 +77,12 @@ export default function ImageCarousel({
   if (images.length === 0) return null;
   if (images.length === 1) {
     return (
-      <div className={`relative h-48 w-full ${className}`}>
+      <div className={`relative h-48 w-full rounded-none ${className}`}>
         <Image
           src={images[0].sourceUrl}
           alt={images[0].altText || 'Property image'}
           fill
-          className="object-cover"
+          className="object-cover rounded-none"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </div>
@@ -92,7 +92,7 @@ export default function ImageCarousel({
   // Multiple images - show carousel
   return (
     <div
-      className={`relative h-48 w-full group ${className}`}
+      className={`relative h-48 w-full group rounded-none ${className}`}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onTouchStart={handleTouchStart}
@@ -104,7 +104,7 @@ export default function ImageCarousel({
         src={images[currentIndex].sourceUrl}
         alt={images[currentIndex].altText || `Property image ${currentIndex + 1}`}
         fill
-        className="object-cover transition-opacity duration-500"
+        className="object-cover transition-opacity duration-500 rounded-none"
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
       />
 
