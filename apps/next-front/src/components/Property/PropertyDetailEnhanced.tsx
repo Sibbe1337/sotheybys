@@ -1684,9 +1684,13 @@ export default function PropertyDetailEnhanced({
               {/* Property type | Apartment type line */}
               {(propertyData?.propertyType || typeOfApartment) && (
                 <p className="text-sm sm:text-base text-gray-700 mt-1">
-                  {propertyData?.propertyType && (
-                    <span className="font-medium">{getLocalizedText(propertyData.propertyType, language) || propertyData.propertyType}</span>
-                  )}
+                  {propertyData?.propertyType && (() => {
+                    const propertyTypeText = getLocalizedText(propertyData.propertyType, language) ||
+                                            (typeof propertyData.propertyType === 'string' ? propertyData.propertyType : '');
+                    return propertyTypeText && (
+                      <span className="font-medium">{propertyTypeText}</span>
+                    );
+                  })()}
                   {propertyData?.propertyType && typeOfApartment && <span className="mx-2">|</span>}
                   {typeOfApartment && (
                     <span>{removeEmojis(getLocalizedText(typeOfApartment, language) || typeOfApartment)}</span>
