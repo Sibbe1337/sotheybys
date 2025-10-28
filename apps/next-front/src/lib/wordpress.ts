@@ -56,6 +56,7 @@ export interface Property {
   bedrooms?: number;
   bathrooms?: number;
   area?: number;
+  otherArea?: number;  // Additional area (balcony, storage, etc.) - for "141 m² + 31 m²" display
   propertyType?: string;
   status?: string;
   description?: string;
