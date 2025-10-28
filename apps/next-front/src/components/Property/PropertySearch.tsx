@@ -15,7 +15,12 @@ const PROPERTY_TYPES = [
     id: 'all',
     label: { fi: 'Kaikki kohteet', sv: 'Alla objekt', en: 'All properties' },
     image: '/images/property-types/all.svg',
-    filter: () => true
+    filter: (p: any) => {
+      // "Kaikki kohteet" shows all SALE properties, but NOT rentals
+      // Exclude properties with rent > 0
+      const rent = p.rent || p.acfRealEstate?.property?.rent;
+      return !(rent && parseInt(rent) > 0);
+    }
   },
   {
     id: 'apartment',
@@ -208,7 +213,8 @@ export default function PropertySearch({ properties, language }: PropertySearchP
               <div className="text-xs text-gray-600 mb-3">
                 {priceRange[0].toLocaleString('fi-FI')} - {priceRange[1].toLocaleString('fi-FI')} €
               </div>
-              <div className="relative">
+              <div className="relative h-5 flex items-center">
+                <div className="absolute w-full h-1 bg-gray-300 rounded-full"></div>
                 <input
                   type="range"
                   min={priceMinMax.min}
@@ -221,8 +227,7 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                       setPriceRange([newMin, priceRange[1]]);
                     }
                   }}
-                  className="absolute w-full h-1 bg-transparent appearance-none cursor-pointer pointer-events-auto [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:relative [&::-webkit-slider-thumb]:z-20 accent-[var(--color-primary)]"
-                  style={{ zIndex: priceRange[0] > (priceMinMax.max - priceMinMax.min) * 0.5 ? 5 : 3 }}
+                  className="absolute w-full h-1 bg-transparent appearance-none cursor-pointer accent-[var(--color-primary)] z-10"
                 />
                 <input
                   type="range"
@@ -236,10 +241,8 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                       setPriceRange([priceRange[0], newMax]);
                     }
                   }}
-                  className="absolute w-full h-1 bg-transparent appearance-none cursor-pointer pointer-events-auto [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:relative [&::-webkit-slider-thumb]:z-20 accent-[var(--color-primary)]"
-                  style={{ zIndex: priceRange[1] <= (priceMinMax.max - priceMinMax.min) * 0.5 ? 5 : 3 }}
+                  className="absolute w-full h-1 bg-transparent appearance-none cursor-pointer accent-[var(--color-primary)] z-10"
                 />
-                <div className="w-full h-1 bg-gray-300 rounded-full"></div>
               </div>
             </div>
 
@@ -248,7 +251,8 @@ export default function PropertySearch({ properties, language }: PropertySearchP
               <div className="text-xs text-gray-600 mb-3">
                 {areaRange[0]} - {areaRange[1]} m²
               </div>
-              <div className="relative">
+              <div className="relative h-5 flex items-center">
+                <div className="absolute w-full h-1 bg-gray-300 rounded-full"></div>
                 <input
                   type="range"
                   min={areaMinMax.min}
@@ -261,8 +265,7 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                       setAreaRange([newMin, areaRange[1]]);
                     }
                   }}
-                  className="absolute w-full h-1 bg-transparent appearance-none cursor-pointer pointer-events-auto [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:relative [&::-webkit-slider-thumb]:z-20 accent-[var(--color-primary)]"
-                  style={{ zIndex: areaRange[0] > (areaMinMax.max - areaMinMax.min) * 0.5 ? 5 : 3 }}
+                  className="absolute w-full h-1 bg-transparent appearance-none cursor-pointer accent-[var(--color-primary)] z-10"
                 />
                 <input
                   type="range"
@@ -276,10 +279,8 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                       setAreaRange([areaRange[0], newMax]);
                     }
                   }}
-                  className="absolute w-full h-1 bg-transparent appearance-none cursor-pointer pointer-events-auto [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:relative [&::-webkit-slider-thumb]:z-20 accent-[var(--color-primary)]"
-                  style={{ zIndex: areaRange[1] <= (areaMinMax.max - areaMinMax.min) * 0.5 ? 5 : 3 }}
+                  className="absolute w-full h-1 bg-transparent appearance-none cursor-pointer accent-[var(--color-primary)] z-10"
                 />
-                <div className="w-full h-1 bg-gray-300 rounded-full"></div>
               </div>
             </div>
           </div>
