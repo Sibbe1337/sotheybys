@@ -521,10 +521,11 @@ export default function PropertyDetailEnhanced({
 
   // Price rows for APARTMENTS: debtFreePrice and salesPrice ALWAYS visible (with fallback)
   // debtPart (velkaosuus) only shown if it exists
+  // Order per Dennis: 1) Velaton hinta, 2) Velkaosuus (if exists), 3) Myyntihinta
   const apartmentPriceRows = [
     { key: 'debtFreePrice', value: debtFreePriceDisplay, alwaysShow: true },
-    { key: 'salesPrice', value: askPriceDisplay, alwaysShow: true },
-    ...(shouldShowDebtPart && debtPartDisplay ? [{ key: 'debtPart', value: debtPartDisplay, alwaysShow: false }] : [])
+    ...(shouldShowDebtPart && debtPartDisplay ? [{ key: 'debtPart', value: debtPartDisplay, alwaysShow: false }] : []),
+    { key: 'salesPrice', value: askPriceDisplay, alwaysShow: true }
   ];
 
   // Price rows for FASTIGHET: according to requirements

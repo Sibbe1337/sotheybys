@@ -176,9 +176,9 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     en: 'Debt Share'
   },
   debtFreePrice: {
-    fi: 'Myyntihinta',  // Phase 6: Changed from 'Velaton hinta' for estates
-    sv: 'Försäljningspris',  // Changed from 'Skuldfritt pris'
-    en: 'Sales Price'  // Changed from 'Debt-Free Price'
+    fi: 'Velaton hinta',  // Restored: Debt-free price (distinct from Myyntihinta)
+    sv: 'Skuldfritt pris',  // Restored: Debt-free price (distinct from Försäljningspris)
+    en: 'Debt-Free Price'  // Restored: Debt-free price (distinct from Sales Price)
   },
   priceDetails: {
     fi: 'Hintatiedot',
