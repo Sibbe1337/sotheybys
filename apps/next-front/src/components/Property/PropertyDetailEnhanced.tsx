@@ -26,7 +26,6 @@ import {
   parseEuroAmount,
   formatBooleanLabel,
   formatEuroLabel,
-  formatDateFiLike,
   pickFirstNonEmpty,
   pick,
   yn,
@@ -115,7 +114,6 @@ export default function PropertyDetailEnhanced({
     
     // Housing company
     housingCooperativeName, shareNumbers, housingCooperativeMortgage,
-    companyLoansDate,
     housingCooperativeElevator, housingCooperativeSauna,
     housingCooperativeHas, housingCooperativeUpcomingRenovations,
     
@@ -492,39 +490,12 @@ export default function PropertyDetailEnhanced({
   const mortgageEncumbranceValue = mortgageEncumbranceDisplay === '—' ? null : mortgageEncumbranceDisplay;
 
   // Try multiple field names for housing company mortgages
-  // FIX: Separate Encumbrances (Kiinnitykset) from Loans (Lainat)
-  // Encumbrances = housingCooperativeMortgage / housingCompanyMortgages (NOT companyLoans!)
-  const housingCompanyMortgageSource = pickFirstNonEmpty(
-    housingCooperativeMortgage,
-    propertyData?.housingCompanyMortgages,
-    propertyData?.companyMortgages,
-    propertyData?.taloyhtiönKiinnitykset,
-    propertyData?.taloyhtionKiinnitykset
-  );
-  const housingCompanyMortgageAmount = parseEuroAmount(housingCompanyMortgageSource);
-  const housingCompanyMortgageDisplay = housingCompanyMortgageAmount != null
-    ? formatEuroLabel(housingCompanyMortgageAmount)
-    : formatTextValue(housingCompanyMortgageSource);
-
-  // Loans = companyLoans / taloyhtionLainat (separate from encumbrances!)
-  const housingCompanyLoansSource = pickFirstNonEmpty(
-    (propertyFinancials as any)?.companyLoans,
-    propertyData?.companyLoans,
-    propertyData?.taloyhtionLainat
-  );
-  const housingCompanyLoansAmount = parseEuroAmount(housingCompanyLoansSource);
-  const housingCompanyLoansDisplay = housingCompanyLoansAmount != null
-    ? formatEuroLabel(housingCompanyLoansAmount)
-    : formatTextValue(housingCompanyLoansSource);
-
-  // Company loans date (Taloyhtiön lainan päivämäärä)
-  const companyLoansDateRaw = getLocalizedText(companyLoansDate, language);
-  const companyLoansDateFormatted = companyLoansDateRaw ? formatDateFiLike(companyLoansDateRaw) : '';
+  // REMOVED: Company Loans and Mortgages display per Dennis request
+  // Previously calculated: housingCompanyMortgageDisplay, housingCompanyLoansDisplay, companyLoansDateFormatted
+  // These fields (Kiinnitykset, Lainat) are no longer shown in the UI
 
   const showHousingCompanyCard = [
     housingCompanyNameValue,
-    housingCompanyMortgageDisplay,
-    housingCompanyLoansDisplay,
     siteOwnershipValue,
     housingTenureValue
   ].some((value) => value !== '—');
@@ -541,10 +512,9 @@ export default function PropertyDetailEnhanced({
     { label: getTranslation('elevator', language), value: withPlaceholder(elevatorDisplay) },
     // From housing company items
     { label: getTranslation('housingCompanyName', language), value: withPlaceholder(housingCompanyNameValue) },
-    { label: getTranslation('housingCompanyEncumbrances', language), value: withPlaceholder(housingCompanyMortgageDisplay) },
-    { label: getTranslation('housingCompanyLoans', language), value: withPlaceholder(housingCompanyLoansDisplay) },
-    // Only show loans date if it exists
-    ...(companyLoansDateFormatted ? [{ label: getTranslation('companyLoansDate', language), value: companyLoansDateFormatted }] : []),
+    // REMOVED: housingCompanyEncumbrances (Kiinnitykset) per Dennis request
+    // REMOVED: housingCompanyLoans (Lainat) per Dennis request
+    // REMOVED: companyLoansDate per Dennis request
     { label: getTranslation('siteOwnershipType', language), value: withPlaceholder(siteOwnershipValue) },
     { label: getTranslation('housingTenure', language), value: withPlaceholder(housingTenureValue) }
   ];
