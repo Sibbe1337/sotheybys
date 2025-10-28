@@ -710,9 +710,14 @@ export function mapLinearAPIToProperty(
     redemptionClauseFlats: data.housingCompanyRedemptionRight?.fi?.value === 'true' || false,
     partnerRedemptionRight: extractLocalizedString(data.partnerRedemptionRight),
     redemptionClauseParking: false, // Not directly available
-    companyLoans: parseEuroNumber(data.housingCompanyMortgage?.fi?.value),
+    companyLoans: parseEuroNumber(data.housingCompanyMortgage?.fi?.value || data.housingCooperativeMortgage?.fi?.value),
     housingCompanyMortgageDate: extractLocalizedString(data.housingCompanyMortgageDate),
-    companyIncome: parseEuroNumber(data.housingCompanyRevenue?.fi?.value),
+    companyIncome: parseEuroNumber(
+      nv.housingCooperativeRevenue ||
+      nv.housingCompanyRevenue ||
+      data.housingCooperativeRevenue?.fi?.value ||
+      data.housingCompanyRevenue?.fi?.value
+    ),
     constructionYear: nv.completeYear || parseEuroNumber(data.completeYear?.fi?.value),
     totalApartments: parseEuroNumber(data.housingCompanyApartmentCount?.fi?.value),
     totalBusinessSpaces: parseEuroNumber(data.housingCompanyBusinessSpaceCount?.fi?.value),
