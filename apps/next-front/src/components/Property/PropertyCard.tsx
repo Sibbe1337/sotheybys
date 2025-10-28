@@ -121,200 +121,137 @@ export default function PropertyCard({
         <ImageCarousel images={carouselImages} />
       )}
 
-      <div className="p-4">
-        {/* Price or Rent */}
-        {(() => {
-          // Check if it's a rental property
-          if (property?.rent) {
-            // Extract ALL digits from rent string, removing spaces and non-digit chars
-            // Examples:
-            // "3 840 €/kk" -> "3840" -> 3840
-            // "3840" -> "3840" -> 3840
-            // "1 500 €/mån" -> "1500" -> 1500
-            const rentStr = property.rent.toString();
-            const digitsOnly = rentStr.replace(/[^\d]/g, ''); // Remove everything except digits
-            const rentAmount = digitsOnly ? parseInt(digitsOnly) : 0;
-            
-            // Show rent if it's a valid amount (> 0)
-            if (rentAmount > 0) {
-              return (
-                <Price className="text-2xl mb-2" block>
-                  {formatPrice(rentAmount)} / {getHomepageTranslation('month', language)}
-                </Price>
-              );
-            }
-          }
-          
-          // Sale property - show DEBT-FREE price (skuldfritt pris) - PRIORITET
-          if (property?.debtFreePrice) {
-            return (
-              <Price className="text-2xl mb-2" block>
-                {formatPrice(property.debtFreePrice)}
-              </Price>
-            );
-          }
-          
-          // Fallback to regular price if debtFreePrice is missing
-          if (property?.price) {
-            return (
-              <Price className="text-2xl mb-2" block>
-                {formatPrice(property.price)}
-              </Price>
-            );
-          }
-          
-          return null;
-        })()}
-
-        {/* Title */}
-        <h3 className="text-lg font-semibold text-[var(--color-primary)] mb-2">
-          <span className="hover:underline">
-            {title}
-          </span>
+      <div className="p-5">
+        {/* Title - Large serif font matching old site */}
+        <h3 className="text-xl font-serif mb-3 text-gray-900 leading-tight">
+          {title}
         </h3>
 
-        {/* Address and Property Type */}
-        <div className="flex items-start justify-between mb-2">
-          {property?.address && (
-            <p className="text-gray-600">
-              {property.address}
-              {property.location?.postCode && property.city && `, ${property.location.postCode} ${property.city}`}
-              {!property.location?.postCode && property.city && `, ${property.city}`}
-            </p>
-          )}
-          {property?.propertyType && (
-            <PropertyTypeChip type={property.propertyType} language={language} />
-          )}
+        {/* Prices - Show both Vh and Mh for sale properties */}
+        <div className="mb-2">
+          {(() => {
+            // Check if it's a rental property
+            if (property?.rent) {
+              const rentStr = property.rent.toString();
+              const digitsOnly = rentStr.replace(/[^\d]/g, '');
+              const rentAmount = digitsOnly ? parseInt(digitsOnly) : 0;
+
+              if (rentAmount > 0) {
+                return (
+                  <p className="text-base font-normal text-gray-900">
+                    {formatPrice(rentAmount)} / {getHomepageTranslation('month', language)}
+                  </p>
+                );
+              }
+            }
+
+            // Sale property - show BOTH Velaton hinta AND Myyntihinta
+            const debtFree = property?.debtFreePrice;
+            const salePrice = property?.price;
+
+            if (debtFree && salePrice && debtFree !== salePrice) {
+              // Show both: "Vh X € Mh Y €"
+              return (
+                <p className="text-base font-normal text-gray-900">
+                  <span>Vh {formatPrice(debtFree)}</span>
+                  <span className="ml-3">Mh {formatPrice(salePrice)}</span>
+                </p>
+              );
+            } else if (salePrice) {
+              // Show only Myyntihinta: "Mh X €"
+              return (
+                <p className="text-base font-normal text-gray-900">
+                  Mh {formatPrice(salePrice)}
+                </p>
+              );
+            }
+
+            return null;
+          })()}
         </div>
 
-        {/* Property Details - More comprehensive info with better mobile layout */}
-        <div className="space-y-3 mb-4">
-          {/* Row 1: Living Area & Rooms - Always visible */}
-          <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-            {property?.area && (() => {
+        {/* TypeOfApartment / Huoneistoselitelmä - Room description */}
+        {property?.typeOfApartment && (
+          <p className="text-sm text-gray-700 mb-2 leading-relaxed">
+            {property.typeOfApartment}
+          </p>
+        )}
+
+        {/* Size - Simple text format matching old site */}
+        {property?.area && (
+          <p className="text-sm text-gray-700 mb-3">
+            {(() => {
               // Detect if property is an estate (Fastighet) vs apartment (Lägenhet)
               const propertyTypeStr = property.propertyType?.toLowerCase() || '';
               const isEstate = propertyTypeStr.includes('fastighet') ||
                                propertyTypeStr.includes('villa') ||
                                propertyTypeStr.includes('rakennus') ||
                                propertyTypeStr.includes('talo') ||
-                               propertyTypeStr.includes('hus');
+                               propertyTypeStr.includes('hus') ||
+                               propertyTypeStr.includes('mökki');
 
               // For ESTATES: Show "185 m² / 215 m² | 0,1299 ha" format
               if (isEstate) {
-                return (
-                  <div className="flex items-center gap-1.5 bg-gray-50 px-3 py-1.5 rounded-md">
-                    <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
-                    </svg>
-                    <span className="font-semibold text-gray-900">
-                      {property.area} m²
-                      {property.totalArea && ` / ${property.totalArea} m²`}
-                      {property.plotArea && ` | ${property.plotArea}`}
-                    </span>
-                  </div>
-                );
+                return `${property.area} m²${property.totalArea ? ` / ${property.totalArea} m²` : ''}${property.plotArea ? ` | ${property.plotArea}` : ''}`;
               }
 
-              // For APARTMENTS: Show "141 m² + 31 m²" format (current format)
-              return (
-                <div className="flex items-center gap-1.5 bg-gray-50 px-3 py-1.5 rounded-md">
-                  <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
-                  </svg>
-                  <span className="font-semibold text-gray-900">
-                    {property.area}{property.otherArea ? ` + ${property.otherArea}` : ''}
-                  </span>
-                  <span className="text-gray-600 text-sm">m²</span>
-                </div>
-              );
+              // For APARTMENTS: Show "141 m² + 31 m²" format
+              return `${property.area}${property.otherArea ? ` + ${property.otherArea}` : ''} m²`;
             })()}
-            {property?.bedrooms && (
-              <div className="flex items-center gap-1.5 bg-gray-50 px-3 py-1.5 rounded-md">
-                <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                </svg>
-                <span className="font-semibold text-gray-900">{property.bedrooms}</span>
-                <span className="text-gray-600 text-sm">{getHomepageTranslation('rooms', language)}</span>
-              </div>
-            )}
-          </div>
-
-          {/* Row 2: Property Type & District - Per Dennis requirement */}
-          <div className="flex flex-wrap items-center gap-2 text-sm">
-            {property?.propertyType && (
-              <span className="inline-flex items-center px-2.5 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-medium">
-                {property.propertyType}
-              </span>
-            )}
-            {/* Show district (districtFree or district) with location icon */}
-            {(property?.districtFree || property?.district) && (
-              <span className="inline-flex items-center gap-1 text-gray-600">
-                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                {property.districtFree || property.district}
-              </span>
-            )}
-          </div>
-        </div>
-
-        {/* Excerpt */}
-        {excerpt && (
-          <p className="text-gray-700 text-sm mb-3 line-clamp-2">
-            {excerpt.replace(/<[^>]*>/g, '')}
           </p>
         )}
 
-        {/* Agent Info */}
+        {/* Property Type & District with icons */}
+        <div className="flex items-center gap-3 mb-4 text-sm text-gray-600">
+          {property?.propertyType && (
+            <span className="inline-flex items-center gap-1.5">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+              {property.propertyType}
+            </span>
+          )}
+          {(property?.districtFree || property?.district) && (
+            <span className="inline-flex items-center gap-1.5">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              {property.districtFree || property.district}
+            </span>
+          )}
+        </div>
+
+        {/* Agent Info - Horizontal layout with photo */}
         {agent && agent.name && (
-          <div className="flex items-center gap-2 pt-3 border-t border-gray-100">
+          <div className="flex items-center gap-3 mb-4 pb-4 border-b border-gray-200">
             {agent.photo?.sourceUrl && (
-              <div className="relative w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
+              <div className="relative w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
                 <Image
                   src={agent.photo.sourceUrl}
-                  alt={`${agent.name} - Fastighetsmäklare / Kiinteistönvälittäjä - Snellman Sotheby's International Realty`}
+                  alt={agent.name}
                   fill
                   className="object-cover"
                   unoptimized
-                  onError={(e) => {
-                    console.error('❌ Agent photo failed to load:', agent.photo?.sourceUrl);
-                  }}
-                  onLoad={() => {
-                    console.log('✅ Agent photo loaded successfully:', agent.photo?.sourceUrl);
-                  }}
                 />
               </div>
             )}
-            <div className="flex-1">
-              <p className="text-sm font-medium text-gray-900">{agent.name}</p>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-gray-900 truncate">{agent.name}</p>
               {agent.phone && (
-                <p className="text-xs text-gray-600">{agent.phone}</p>
+                <p className="text-sm text-gray-600">{agent.phone}</p>
               )}
             </div>
-            {agent.email && (
-              <a 
-                href={`mailto:${agent.email}`}
-                onClick={(e) => e.stopPropagation()}
-                className="text-xs text-[var(--color-primary)] hover:underline font-medium"
-                title={getHomepageTranslation('contactAgent', language)}
-              >
-                {getHomepageTranslation('contact', language)}
-              </a>
-            )}
           </div>
         )}
 
-        {/* View Property Button - Smaller on mobile */}
-        <div className="mt-4">
-          <Button 
-            variant="primary" 
-            className="w-full py-2 sm:py-3 text-sm sm:text-base"
-          >
-            {getHomepageTranslation('viewProperty', language)}
-          </Button>
-        </div>
+        {/* View Property Button - Dark blue matching old site */}
+        <Button
+          variant="primary"
+          className="w-full py-3 text-base font-normal bg-[#002349] hover:bg-[#001a35]"
+        >
+          Katso kohde »
+        </Button>
       </div>
     </LocaleLink>
   );
