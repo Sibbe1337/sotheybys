@@ -1754,8 +1754,8 @@ export default function PropertyDetailEnhanced({
             </div>
           </div>
 
-          {/* Action Buttons - Full width on mobile, better spacing */}
-          <div className="flex flex-wrap items-center gap-2 justify-start sm:justify-end mt-3 sm:mt-4">
+          {/* Action Buttons - Hidden on mobile to prevent covering content when scrolling */}
+          <div className="hidden md:flex flex-wrap items-center gap-2 justify-start sm:justify-end mt-3 sm:mt-4">
               <button
                 onClick={handleSaveProperty}
                 className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2.5 rounded-lg border border-gray-300 hover:border-gray-400 active:border-gray-500 transition-colors touch-manipulation min-h-[44px]"
