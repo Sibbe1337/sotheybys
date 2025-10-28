@@ -1686,26 +1686,6 @@ export default function PropertyDetailEnhanced({
         </div>
       )}
 
-      {/* Huoneistoselitelmä Section - Apartment Type Description */}
-      {typeOfApartment && (() => {
-        const typeOfApartmentLocalized = getLocalizedText(typeOfApartment, language);
-        const apartmentTypeHeading = getTranslation('apartmentTypeLabel', language);
-
-        // Only show if we have localized content (strict i18n - no fi-fallback)
-        if (!typeOfApartmentLocalized) return null;
-
-        return (
-          <section className="bg-white border-b">
-            <div className="container mx-auto px-4 py-4">
-              <h2 className="sr-only">{apartmentTypeHeading}</h2>
-              <p className="text-lg text-gray-800 leading-relaxed">
-                {removeEmojis(typeOfApartmentLocalized)}
-              </p>
-            </div>
-          </section>
-        );
-      })()}
-
       {/* Property Header - Mobile optimized */}
       <section className="bg-white shadow-sm sticky top-0 z-40">
         <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6">
@@ -1724,18 +1704,22 @@ export default function PropertyDetailEnhanced({
                   {removeEmojis(getLocalizedText(marketingSubtitle, language))}
                 </p>
               )}
-              <p className="text-sm sm:text-base lg:text-lg text-gray-600 mt-1 leading-relaxed">
-                {removeEmojis(address || '')} • {postalCode} {city} {province && `, ${province}`}
+              {/* Full address line */}
+              <p className="text-sm sm:text-base text-gray-600 mt-2">
+                {removeEmojis(address || '')}, {postalCode} {city}
               </p>
-              <div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-2 sm:mt-3">
-                {typeOfApartment && <PropertyTypeChip type={removeEmojis(typeOfApartment)} />}
-                <MetaRow
-                  items={[
-                    { value: area ? (String(area).includes('m²') || String(area).includes('m2') ? area : `${area} m²`) : '' },
-                    { label: 'Rakennettu', value: yearBuilt || '' }
-                  ]}
-                />
-              </div>
+              {/* Property type | Apartment type line */}
+              {(propertyData?.propertyType || typeOfApartment) && (
+                <p className="text-sm sm:text-base text-gray-700 mt-1">
+                  {propertyData?.propertyType && (
+                    <span className="font-medium">{getLocalizedText(propertyData.propertyType, language) || propertyData.propertyType}</span>
+                  )}
+                  {propertyData?.propertyType && typeOfApartment && <span className="mx-2">|</span>}
+                  {typeOfApartment && (
+                    <span>{removeEmojis(getLocalizedText(typeOfApartment, language))}</span>
+                  )}
+                </p>
+              )}
             </div>
             <div className="lg:text-right flex-shrink-0">
               {isRental ? (
