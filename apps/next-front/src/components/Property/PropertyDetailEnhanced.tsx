@@ -1684,17 +1684,37 @@ export default function PropertyDetailEnhanced({
               {/* Property type | Apartment type line */}
               {(propertyData?.propertyType || typeOfApartment) && (
                 <p className="text-sm sm:text-base text-gray-700 mt-1">
-                  {propertyData?.propertyType && (() => {
-                    const propertyTypeText = getLocalizedText(propertyData.propertyType, language) ||
-                                            (typeof propertyData.propertyType === 'string' ? propertyData.propertyType : '');
-                    return propertyTypeText && (
-                      <span className="font-medium">{propertyTypeText}</span>
+                  {(() => {
+                    // Extract propertyType with fallback for all languages
+                    const propertyTypeValue = propertyData?.propertyType;
+                    let propertyTypeText = '';
+
+                    if (propertyTypeValue) {
+                      // Try getLocalizedText first
+                      propertyTypeText = getLocalizedText(propertyTypeValue, language);
+
+                      // Fallback to raw string if getLocalizedText returns empty (for sv/en)
+                      if (!propertyTypeText && typeof propertyTypeValue === 'string') {
+                        propertyTypeText = propertyTypeValue;
+                      }
+                      // Fallback to fi value if object
+                      if (!propertyTypeText && typeof propertyTypeValue === 'object' && propertyTypeValue !== null) {
+                        propertyTypeText = (propertyTypeValue as any).fi || '';
+                      }
+                    }
+
+                    return (
+                      <>
+                        {propertyTypeText && (
+                          <span className="font-medium">{propertyTypeText}</span>
+                        )}
+                        {propertyTypeText && typeOfApartment && <span className="mx-2">|</span>}
+                        {typeOfApartment && (
+                          <span>{removeEmojis(getLocalizedText(typeOfApartment, language) || typeOfApartment)}</span>
+                        )}
+                      </>
                     );
                   })()}
-                  {propertyData?.propertyType && typeOfApartment && <span className="mx-2">|</span>}
-                  {typeOfApartment && (
-                    <span>{removeEmojis(getLocalizedText(typeOfApartment, language) || typeOfApartment)}</span>
-                  )}
                 </p>
               )}
             </div>
