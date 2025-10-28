@@ -284,8 +284,8 @@ export default function PropertySearch({ properties, language }: PropertySearchP
             </div>
           </div>
 
-          {/* View Mode Selector - Simple and clean */}
-          <div className="flex justify-end">
+          {/* View Mode Selector - Centered */}
+          <div className="flex justify-center">
             <div className="flex gap-1">
               <button
                 onClick={() => setViewMode('grid')}
