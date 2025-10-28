@@ -21,7 +21,8 @@ const NUMERIC_FIELDS = [
   'propertyTax', 'livingArea', 'totalArea', 'volume', 'siteArea', 'lotArea',
   'yearOfBuilding', 'constructionYear', 'numberOfFloors', 'floorCount',
   'rentIncome', 'cleaningCost', 'companyLoans', 'companyIncome',
-  'totalApartments', 'totalBusinessSpaces', 'annualLease'
+  'totalApartments', 'totalBusinessSpaces', 'annualLease',
+  'mandatoryCharges', 'fundingCharge', 'renovationCharge', 'saunaCharge', 'parkingCharge'
 ];
 
 /**

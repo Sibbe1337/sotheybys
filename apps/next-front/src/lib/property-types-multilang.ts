@@ -466,6 +466,27 @@ export interface MultilingualPropertyListing {
   fundingCharge?: number;
 
   /**
+   * Renovation charge in EUR
+   * FI: Korjausvastike euroina
+   * SV: Renoveringsavgift i euro
+   */
+  renovationCharge?: number;
+
+  /**
+   * Sauna charge in EUR
+   * FI: Saunamaksu euroina
+   * SV: Bastuavgift i euro
+   */
+  saunaCharge?: number;
+
+  /**
+   * Parking charge in EUR
+   * FI: Autopaikkamaksu euroina
+   * SV: Parkeringsavgift i euro
+   */
+  parkingCharge?: number;
+
+  /**
    * Electricity cost in EUR
    * FI: Sähkökustannus euroina
    * SV: Elkostnad i euro

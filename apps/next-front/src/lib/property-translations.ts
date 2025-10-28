@@ -235,6 +235,21 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     sv: 'Vattenavgift',
     en: 'Water Charge'
   },
+  renovationCharge: {
+    fi: 'Korjausvastike',
+    sv: 'Renoveringsavgift',
+    en: 'Renovation Charge'
+  },
+  saunaCharge: {
+    fi: 'Saunamaksu',
+    sv: 'Bastuavgift',
+    en: 'Sauna Fee'
+  },
+  parkingCharge: {
+    fi: 'Autopaikkamaksu',
+    sv: 'Parkeringsavgift',
+    en: 'Parking Fee'
+  },
   housingCosts: {
     fi: 'Asumiskustannukset',
     sv: 'Boendekostnader',

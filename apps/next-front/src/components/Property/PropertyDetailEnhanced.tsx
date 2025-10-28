@@ -547,9 +547,12 @@ export default function PropertyDetailEnhanced({
     if (display === '—' || display === '0 €') return;
     livingCostRows.push({ label: getTranslation(labelKey, language), value: display });
   };
-  pushLivingCost('maintenanceCharge', pickFirstNonEmpty(maintenanceCharge, (propertyFinancials as any)?.maintenanceFee));
+  pushLivingCost('maintenanceCharge', pickFirstNonEmpty(maintenanceCharge, (propertyFinancials as any)?.maintenanceFee, (propertyData as any)?.mandatoryCharges));
   pushLivingCost('financingFee', pickFirstNonEmpty(propertyData?.financingCharge, propertyData?.financingFee, (propertyFinancials as any)?.financingFee, (propertyFinancials as any)?.fundingCharge));
+  pushLivingCost('renovationCharge', (propertyData as any)?.renovationCharge);
   pushLivingCost('waterCharge', waterCharge);
+  pushLivingCost('saunaCharge', (propertyData as any)?.saunaCharge);
+  pushLivingCost('parkingCharge', (propertyData as any)?.parkingCharge);
   pushLivingCost('plotRentFee', plotRentCharge);
   pushLivingCost('heatingCosts', heatingCharge);
   pushLivingCost('electricHeating', electricHeatingCharge);

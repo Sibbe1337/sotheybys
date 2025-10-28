@@ -675,6 +675,9 @@ export function mapLinearAPIToProperty(
     waterFee: parseEuroNumber(nv.waterCharge || data.waterCharge?.fi?.value),
     mandatoryCharges: parseEuroNumber(nv.mandatoryCharges || data.mandatoryCharges?.fi?.value),
     fundingCharge: parseEuroNumber(nv.fundingCharge || data.fundingCharge?.fi?.value),
+    renovationCharge: parseEuroNumber(nv.renovationCharge || data.renovationCharge?.fi?.value),
+    saunaCharge: parseEuroNumber(nv.saunaCharge || data.saunaCharge?.fi?.value),
+    parkingCharge: parseEuroNumber(nv.parkingCharge || data.parkingCharge?.fi?.value),
     electricityCost: parseEuroNumber(nv.electricHeatingCharge),
     heatingCost: parseEuroNumber(nv.averageTotalHeatingCharge),
     cleaningCost: 0, // Not directly available
