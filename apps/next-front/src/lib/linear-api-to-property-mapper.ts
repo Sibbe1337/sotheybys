@@ -154,7 +154,7 @@ interface LinearAPINonLocalizedValues {
   listingHasEnergyCertificate?: boolean;
   
   // Condition
-  condition?: 'GOOD' | 'EXCELLENT' | 'SATISFACTORY' | 'NEEDS_RENOVATION';
+  condition?: 'NEW' | 'EXCELLENT' | 'GOOD' | 'SATISFACTORY' | 'MEDIOCRE' | 'NEEDS_RENOVATION';
   
   // Energy
   energyClass?: string;
@@ -346,20 +346,30 @@ function parseNumericValue(value: string | number | undefined): number {
  */
 function mapCondition(condition: string | undefined): LocalizedString {
   const conditionMap: Record<string, LocalizedString> = {
-    GOOD: {
-      fi: 'Hyvä',
-      en: 'Good',
-      sv: 'Bra',
+    NEW: {
+      fi: 'Uusi',
+      en: 'New',
+      sv: 'Ny',
     },
     EXCELLENT: {
       fi: 'Erinomainen',
       en: 'Excellent',
       sv: 'Utmärkt',
     },
+    GOOD: {
+      fi: 'Hyvä',
+      en: 'Good',
+      sv: 'Bra',
+    },
     SATISFACTORY: {
       fi: 'Tyydyttävä',
       en: 'Satisfactory',
       sv: 'Tillfredsställande',
+    },
+    MEDIOCRE: {
+      fi: 'Välttävä',
+      en: 'Mediocre',
+      sv: 'Medelmåttig',
     },
     NEEDS_RENOVATION: {
       fi: 'Remontoitava',
@@ -367,7 +377,7 @@ function mapCondition(condition: string | undefined): LocalizedString {
       sv: 'Kräver renovering',
     },
   };
-  
+
   return condition ? conditionMap[condition] || {} : {};
 }
 
