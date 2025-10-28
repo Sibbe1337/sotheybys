@@ -575,6 +575,9 @@ export default function PropertyDetailEnhanced({
   pushLivingCost('electricHeating', electricHeatingCharge);
   pushLivingCost('otherFee', otherCharge);
 
+  // Count how many living costs exist to determine if we should show total
+  const livingCostCount = livingCostRows.length;
+
   const otherCostRows: Array<{ label: string; value: string }> = [];
   const pushOtherCost = (labelKey: string, value: any, formatter: (val: any) => string = formatChargeValue) => {
     // For other costs: 0 or null means "does not exist", so don't show it
@@ -598,9 +601,15 @@ export default function PropertyDetailEnhanced({
   const livingCostListItems = livingCostRows.map((row) => ({ label: row.label, value: row.value }));
   const otherCostListItems = otherCostRows.map((row) => ({ label: row.label, value: row.value }));
 
-  const costSummaryTotals = {
+  // Only show cost summary (total) if there are 2 or more living costs
+  // Per Dennis: If only 1 charge exists, show ONLY that charge (not the total)
+  // If 2+ charges exist, show ALL charges separately AND the total
+  const costSummaryTotals = livingCostCount >= 2 ? {
     monthly: monthlyTotalCost ? `${monthlyTotalCost} €/kk` : undefined,
     yearly: yearlyTotalCost ? `${yearlyTotalCost} €/v` : undefined
+  } : {
+    monthly: undefined,
+    yearly: undefined
   };
 
   const toUrlString = (input: any): string | null => {
