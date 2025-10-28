@@ -238,6 +238,24 @@ export async function GET(
         nv_companyMortgages: raw.nonLocalizedValues?.companyMortgages
       });
 
+      // DIAGNOSTIC: Show ALL ventilation-related fields from Linear API
+      console.log('🌬️ VENTILATION DIAGNOSTIC (all ventilation/ilmanvaihto fields):', {
+        // Check all possible ventilation field names
+        ventilationType: raw.ventilationType,
+        ventilationSystem: raw.ventilationSystem,
+        ilmanvaihto: (raw as any).ilmanvaihto,
+        ventilation: (raw as any).ventilation,
+        ventilationMethod: (raw as any).ventilationMethod,
+        airConditioning: (raw as any).airConditioning,
+
+        // Check nonLocalizedValues
+        nv_ventilationType: raw.nonLocalizedValues?.ventilationType,
+        nv_ventilationSystem: raw.nonLocalizedValues?.ventilationSystem,
+
+        // Check if any field contains 'ventil' in key name
+        fieldsWithVentil: Object.keys(raw).filter(k => k.toLowerCase().includes('ventil'))
+      });
+
       // Debug: Check if agent exists in mapped data BEFORE flatten
       console.log('🔍 Mapped Agent (before flatten):', {
         address: mapped.streetAddress?.fi || mapped.streetAddress,
