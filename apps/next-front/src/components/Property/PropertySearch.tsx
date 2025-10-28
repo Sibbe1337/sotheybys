@@ -161,36 +161,16 @@ export default function PropertySearch({ properties, language }: PropertySearchP
 
   return (
     <div>
-      {/* Advanced Search Filters - NOT sticky per Dennis's feedback */}
-      <section className="py-8 bg-white border-y border-gray-200">
+      {/* Simplified Search Filters - Matching old website design */}
+      <section className="py-6 bg-white border-y border-gray-200">
         <div className="max-w-[1400px] mx-auto px-6">
-          {/* Mobile: Collapsible header */}
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-light text-gray-900">{translations.searchTitle[language]}</h2>
-            <button
-              onClick={() => setIsFilterOpen(!isFilterOpen)}
-              className="lg:hidden p-2 text-gray-600 hover:text-gray-900 transition-colors"
-              aria-label="Toggle filters"
-            >
-              <svg
-                className={`w-6 h-6 transition-transform ${isFilterOpen ? 'rotate-180' : ''}`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-          </div>
-
-          {/* Filters - Collapsible on mobile */}
-          <div className={`${isFilterOpen ? 'block' : 'hidden lg:block'}`}>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-            {/* Area Dropdown - DYNAMIC FACETS */}
+          {/* Simple inline filters */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+            {/* Area Dropdown */}
             <div>
-              <label className="block text-sm text-gray-600 mb-2 font-light tracking-wider">{translations.area[language]}</label>
+              <label className="block text-xs text-gray-600 mb-1 tracking-wider uppercase">{translations.area[language]}</label>
               <select
-                className="w-full px-4 py-3 border border-gray-300 rounded font-light focus:outline-none focus:border-[var(--color-primary)]"
+                className="w-full px-3 py-2 border border-gray-300 rounded-none text-sm focus:outline-none focus:border-[var(--color-primary)]"
                 value={selectedArea}
                 onChange={(e) => setSelectedArea(e.target.value)}
               >
@@ -201,11 +181,11 @@ export default function PropertySearch({ properties, language }: PropertySearchP
               </select>
             </div>
 
-            {/* Property Type Dropdown - DYNAMIC FACETS WITH COUNTS */}
+            {/* Property Type Dropdown */}
             <div>
-              <label className="block text-sm text-gray-600 mb-2 font-light tracking-wider">{translations.propertyType[language]}</label>
+              <label className="block text-xs text-gray-600 mb-1 tracking-wider uppercase">{translations.propertyType[language]}</label>
               <select
-                className="w-full px-4 py-3 border border-gray-300 rounded font-light focus:outline-none focus:border-[var(--color-primary)]"
+                className="w-full px-3 py-2 border border-gray-300 rounded-none text-sm focus:outline-none focus:border-[var(--color-primary)]"
                 value={selectedType}
                 onChange={(e) => setSelectedType(e.target.value)}
               >
@@ -220,58 +200,49 @@ export default function PropertySearch({ properties, language }: PropertySearchP
               </select>
             </div>
 
-            {/* Price Range - DUAL SLIDER (MIN + MAX) */}
-            <div className="lg:col-span-2">
-              <label className="block text-sm text-gray-600 mb-2 font-light tracking-wider">
-                {translations.priceRange[language]}: {priceRange[0].toLocaleString('fi-FI')} € - {priceRange[1].toLocaleString('fi-FI')} €
+            {/* Price Range Slider */}
+            <div>
+              <label className="block text-xs text-gray-600 mb-1">
+                {priceRange[0].toLocaleString('fi-FI')} € - {priceRange[1].toLocaleString('fi-FI')} €
               </label>
-              <div className="space-y-2">
-                <div className="flex items-center gap-3">
-                  <span className="text-xs text-gray-500 min-w-[40px]">Min:</span>
-                  <input
-                    type="range"
-                    min={priceMinMax.min}
-                    max={priceMinMax.max}
-                    step="50000"
-                    value={priceRange[0]}
-                    onChange={(e) => {
-                      const newMin = parseInt(e.target.value);
-                      if (newMin <= priceRange[1]) {
-                        setPriceRange([newMin, priceRange[1]]);
-                      }
-                    }}
-                    className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[var(--color-primary)]"
-                  />
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-xs text-gray-500 min-w-[40px]">Max:</span>
-                  <input
-                    type="range"
-                    min={priceMinMax.min}
-                    max={priceMinMax.max}
-                    step="50000"
-                    value={priceRange[1]}
-                    onChange={(e) => {
-                      const newMax = parseInt(e.target.value);
-                      if (newMax >= priceRange[0]) {
-                        setPriceRange([priceRange[0], newMax]);
-                      }
-                    }}
-                    className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[var(--color-primary)]"
-                  />
-                </div>
+              <div className="flex items-center gap-2">
+                <input
+                  type="range"
+                  min={priceMinMax.min}
+                  max={priceMinMax.max}
+                  step="50000"
+                  value={priceRange[0]}
+                  onChange={(e) => {
+                    const newMin = parseInt(e.target.value);
+                    if (newMin <= priceRange[1]) {
+                      setPriceRange([newMin, priceRange[1]]);
+                    }
+                  }}
+                  className="flex-1 h-1 bg-gray-300 appearance-none cursor-pointer accent-[var(--color-primary)]"
+                />
+                <input
+                  type="range"
+                  min={priceMinMax.min}
+                  max={priceMinMax.max}
+                  step="50000"
+                  value={priceRange[1]}
+                  onChange={(e) => {
+                    const newMax = parseInt(e.target.value);
+                    if (newMax >= priceRange[0]) {
+                      setPriceRange([priceRange[0], newMax]);
+                    }
+                  }}
+                  className="flex-1 h-1 bg-gray-300 appearance-none cursor-pointer accent-[var(--color-primary)]"
+                />
               </div>
             </div>
-          </div>
 
-          {/* Area Range - DUAL SLIDER (MIN + MAX) */}
-          <div className="mb-6">
-            <label className="block text-sm text-gray-600 mb-2 font-light tracking-wider">
-              {translations.areaRange[language]}: {areaRange[0]} m² - {areaRange[1]} m²
-            </label>
-            <div className="space-y-2">
-              <div className="flex items-center gap-3">
-                <span className="text-xs text-gray-500 min-w-[40px]">Min:</span>
+            {/* Area Range Slider */}
+            <div>
+              <label className="block text-xs text-gray-600 mb-1">
+                {areaRange[0]} m² - {areaRange[1]} m²
+              </label>
+              <div className="flex items-center gap-2">
                 <input
                   type="range"
                   min={areaMinMax.min}
@@ -284,11 +255,8 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                       setAreaRange([newMin, areaRange[1]]);
                     }
                   }}
-                  className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[var(--color-primary)]"
+                  className="flex-1 h-1 bg-gray-300 appearance-none cursor-pointer accent-[var(--color-primary)]"
                 />
-              </div>
-              <div className="flex items-center gap-3">
-                <span className="text-xs text-gray-500 min-w-[40px]">Max:</span>
                 <input
                   type="range"
                   min={areaMinMax.min}
@@ -301,25 +269,21 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                       setAreaRange([areaRange[0], newMax]);
                     }
                   }}
-                  className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[var(--color-primary)]"
+                  className="flex-1 h-1 bg-gray-300 appearance-none cursor-pointer accent-[var(--color-primary)]"
                 />
               </div>
             </div>
           </div>
-          </div>
 
-          {/* View Mode Selector & Results Count */}
-          <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-            <p className="text-gray-700 font-light">
-              <span className="font-semibold text-[var(--color-primary)]">{filteredProperties.length}</span> {translations.resultsFound[language]}
-            </p>
-            <div className="flex gap-2">
+          {/* View Mode Selector - Simple and clean */}
+          <div className="flex justify-end">
+            <div className="flex gap-1">
               <button
                 onClick={() => setViewMode('grid')}
-                className={`p-3 border rounded transition-colors ${
-                  viewMode === 'grid' 
-                    ? 'bg-[var(--color-primary)] text-white border-[var(--color-primary)]' 
-                    : 'bg-white text-gray-600 border-gray-300 hover:border-[var(--color-primary)]'
+                className={`p-2.5 border-none rounded-none transition-colors ${
+                  viewMode === 'grid'
+                    ? 'bg-[var(--color-primary)] text-white'
+                    : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
                 }`}
                 aria-label="Grid view"
               >
@@ -329,10 +293,10 @@ export default function PropertySearch({ properties, language }: PropertySearchP
               </button>
               <button
                 onClick={() => setViewMode('list')}
-                className={`p-3 border rounded transition-colors ${
-                  viewMode === 'list' 
-                    ? 'bg-[var(--color-primary)] text-white border-[var(--color-primary)]' 
-                    : 'bg-white text-gray-600 border-gray-300 hover:border-[var(--color-primary)]'
+                className={`p-2.5 border-none rounded-none transition-colors ${
+                  viewMode === 'list'
+                    ? 'bg-[var(--color-primary)] text-white'
+                    : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
                 }`}
                 aria-label="List view"
               >
@@ -342,10 +306,10 @@ export default function PropertySearch({ properties, language }: PropertySearchP
               </button>
               <button
                 onClick={() => setViewMode('map')}
-                className={`p-3 border rounded transition-colors ${
-                  viewMode === 'map' 
-                    ? 'bg-[var(--color-primary)] text-white border-[var(--color-primary)]' 
-                    : 'bg-white text-gray-600 border-gray-300 hover:border-[var(--color-primary)]'
+                className={`p-2.5 border-none rounded-none transition-colors ${
+                  viewMode === 'map'
+                    ? 'bg-[var(--color-primary)] text-white'
+                    : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
                 }`}
                 aria-label="Map view"
               >
