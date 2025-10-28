@@ -126,7 +126,7 @@ export default function PropertySearch({ properties, language }: PropertySearchP
   }, [properties]);
 
   const filteredProperties = useMemo(() => {
-    return properties.filter(property => {
+    const filtered = properties.filter(property => {
       // Type filter (visa alla om "all" är valt)
       if (selectedType !== 'all') {
         const typeFilter = PROPERTY_TYPES.find(t => t.id === selectedType);
@@ -134,13 +134,13 @@ export default function PropertySearch({ properties, language }: PropertySearchP
       }
 
       // Price filter - kolla båda format
-      const price = property.debtFreePrice || property.price || 
-                    property.acfRealEstate?.property?.debtFreePrice || 
+      const price = property.debtFreePrice || property.price ||
+                    property.acfRealEstate?.property?.debtFreePrice ||
                     property.acfRealEstate?.property?.price || 0;
       if (price > 0 && (price < priceRange[0] || price > priceRange[1])) return false;
 
       // Area filter - kolla båda format
-      const area = parseInt(String(property.livingArea || property.area || 
+      const area = parseInt(String(property.livingArea || property.area ||
                                     property.acfRealEstate?.property?.area || '0'));
       if (area > 0 && (area < areaRange[0] || area > areaRange[1])) return false;
 
@@ -151,6 +151,19 @@ export default function PropertySearch({ properties, language }: PropertySearchP
       }
 
       return true;
+    });
+
+    // Sort: Rental properties FIRST, then sale properties
+    return filtered.sort((a, b) => {
+      const aRent = a.rent || a.acfRealEstate?.property?.rent;
+      const bRent = b.rent || b.acfRealEstate?.property?.rent;
+      const aIsRental = aRent && parseInt(aRent) > 0;
+      const bIsRental = bRent && parseInt(bRent) > 0;
+
+      // Rentals first (1 = rental, 0 = sale)
+      if (aIsRental && !bIsRental) return -1;
+      if (!aIsRental && bIsRental) return 1;
+      return 0;
     });
   }, [properties, selectedType, priceRange, areaRange, selectedArea]);
 

@@ -18,13 +18,27 @@ export default function PropertyMap({ properties, language }: PropertyMapProps) 
   // Default center (Helsinki)
   const defaultCenter = { lat: 60.1699, lng: 24.9384 };
 
-  // Hitta center baserat på properties
-  const center = properties.length > 0 && properties[0].acfRealEstate?.property?.location?.latitude
-    ? {
-        lat: parseFloat(properties[0].acfRealEstate.property.location.latitude),
-        lng: parseFloat(properties[0].acfRealEstate.property.location.longitude)
-      }
-    : defaultCenter;
+  // Hitta center baserat på properties - support både Linear API och WordPress format
+  const getLatLng = (property: any) => {
+    // Try Linear API format first
+    if (property.latitude && property.longitude) {
+      return {
+        lat: parseFloat(property.latitude),
+        lng: parseFloat(property.longitude)
+      };
+    }
+    // Try WordPress ACF format
+    if (property.acfRealEstate?.property?.location?.latitude) {
+      return {
+        lat: parseFloat(property.acfRealEstate.property.location.latitude),
+        lng: parseFloat(property.acfRealEstate.property.location.longitude)
+      };
+    }
+    return null;
+  };
+
+  const firstPropertyCoords = properties.length > 0 ? getLatLng(properties[0]) : null;
+  const center = firstPropertyCoords || defaultCenter;
 
   if (!apiKey) {
     return (
@@ -66,15 +80,9 @@ export default function PropertyMap({ properties, language }: PropertyMapProps) 
             gestureHandling="greedy"
           >
             {properties.map((property) => {
-              const lat = property.acfRealEstate?.property?.location?.latitude;
-              const lng = property.acfRealEstate?.property?.location?.longitude;
-              
-              if (!lat || !lng) return null;
+              const position = getLatLng(property);
 
-              const position = {
-                lat: parseFloat(lat),
-                lng: parseFloat(lng)
-              };
+              if (!position) return null;
 
               const address = property.address || property.acfRealEstate?.property?.address || '';
               const city = property.city || property.acfRealEstate?.property?.city || '';
@@ -98,12 +106,9 @@ export default function PropertyMap({ properties, language }: PropertyMapProps) 
               );
             })}
 
-            {selectedProperty && (
+            {selectedProperty && getLatLng(selectedProperty) && (
               <InfoWindow
-                position={{
-                  lat: parseFloat(selectedProperty.acfRealEstate?.property?.location?.latitude),
-                  lng: parseFloat(selectedProperty.acfRealEstate?.property?.location?.longitude)
-                }}
+                position={getLatLng(selectedProperty)!}
                 onCloseClick={() => setSelectedProperty(null)}
               >
                 <div className="p-2 max-w-xs">
@@ -161,9 +166,8 @@ export default function PropertyMap({ properties, language }: PropertyMapProps) 
               href={`/kohde/${property.slug}?lang=${language}`}
               className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-shadow border border-gray-200"
               onClick={() => {
-                const lat = property.acfRealEstate?.property?.location?.latitude;
-                const lng = property.acfRealEstate?.property?.location?.longitude;
-                if (lat && lng) {
+                const coords = getLatLng(property);
+                if (coords) {
                   setSelectedProperty(property);
                 }
               }}
