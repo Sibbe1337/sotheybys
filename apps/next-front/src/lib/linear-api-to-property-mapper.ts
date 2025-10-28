@@ -642,6 +642,37 @@ export function mapLinearAPIToProperty(
 
       return plotAreaValue;
     })(),
+    plotArea: (() => {
+      // FORMATTED plot area with unit for property cards: "0,1299 ha" or "1299 m²"
+      // This field preserves the original unit from Linear API for display purposes
+      const plotAreaValue = parseEuroNumber(
+        data.lotArea?.fi?.value ||
+        data.plotArea?.fi?.value ||
+        nv.plotArea ||
+        nv.lotArea ||
+        nv.siteArea ||
+        data.siteArea
+      );
+      const unit = (nv as any)?.lotAreaUnit || '';
+
+      // If no value, return empty string
+      if (!plotAreaValue || plotAreaValue === 0) return '';
+
+      // Format the number with European comma notation
+      const formatted = plotAreaValue.toLocaleString('fi-FI', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 4
+      });
+
+      // Return with original unit (preserve ha for estates, m² for others)
+      const unitLower = unit.toLowerCase();
+      if (unitLower === 'ha' || unitLower === 'hectare') {
+        return `${formatted} ha`;
+      }
+
+      // Default to m² if no unit or unit is m²
+      return `${formatted} m²`;
+    })(),
     siteOwnershipType: (() => {
       // Try lotOwnership/plotOwnership first (localized fields)
       const localized = extractLocalizedString(data.lotOwnership || data.plotOwnership);

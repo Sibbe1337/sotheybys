@@ -362,6 +362,14 @@ export interface MultilingualPropertyListing {
   lotArea: number;
 
   /**
+   * Formatted plot area with unit (for property card display)
+   * FI: Tontin pinta-ala muotoiltuna yksikön kanssa (esim. "0,1299 ha" tai "1299 m²")
+   * EN: Formatted plot area with unit (e.g., "0.1299 ha" or "1299 m²")
+   * SV: Formaterad tomtyta med enhet (t.ex. "0,1299 ha" eller "1299 m²")
+   */
+  plotArea: string;
+
+  /**
    * Site/plot ownership type
    * FI: Tontin omistusmuoto (esim. "Oma", "Vuokra")
    * EN: Plot ownership (e.g., "Owned", "Leased")

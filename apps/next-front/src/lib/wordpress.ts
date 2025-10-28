@@ -57,6 +57,8 @@ export interface Property {
   bathrooms?: number;
   area?: number;
   otherArea?: number;  // Additional area (balcony, storage, etc.) - for "141 m² + 31 m²" display
+  totalArea?: number;  // Total area (Kokonaispinta-ala) - for estates "185 m² / 215 m²" display
+  plotArea?: string;  // Plot area (Tontin pinta-ala) - for estates "0,1299 ha" display
   propertyType?: string;
   status?: string;
   description?: string;

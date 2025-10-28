@@ -191,17 +191,44 @@ export default function PropertyCard({
         <div className="space-y-3 mb-4">
           {/* Row 1: Living Area & Rooms - Always visible */}
           <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-            {property?.area && (
-              <div className="flex items-center gap-1.5 bg-gray-50 px-3 py-1.5 rounded-md">
-                <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
-                </svg>
-                <span className="font-semibold text-gray-900">
-                  {property.area}{property.otherArea ? ` + ${property.otherArea}` : ''}
-                </span>
-                <span className="text-gray-600 text-sm">m²</span>
-              </div>
-            )}
+            {property?.area && (() => {
+              // Detect if property is an estate (Fastighet) vs apartment (Lägenhet)
+              const propertyTypeStr = property.propertyType?.toLowerCase() || '';
+              const isEstate = propertyTypeStr.includes('fastighet') ||
+                               propertyTypeStr.includes('villa') ||
+                               propertyTypeStr.includes('rakennus') ||
+                               propertyTypeStr.includes('talo') ||
+                               propertyTypeStr.includes('hus');
+
+              // For ESTATES: Show "185 m² / 215 m² | 0,1299 ha" format
+              if (isEstate) {
+                return (
+                  <div className="flex items-center gap-1.5 bg-gray-50 px-3 py-1.5 rounded-md">
+                    <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                    </svg>
+                    <span className="font-semibold text-gray-900">
+                      {property.area} m²
+                      {property.totalArea && ` / ${property.totalArea} m²`}
+                      {property.plotArea && ` | ${property.plotArea}`}
+                    </span>
+                  </div>
+                );
+              }
+
+              // For APARTMENTS: Show "141 m² + 31 m²" format (current format)
+              return (
+                <div className="flex items-center gap-1.5 bg-gray-50 px-3 py-1.5 rounded-md">
+                  <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                  </svg>
+                  <span className="font-semibold text-gray-900">
+                    {property.area}{property.otherArea ? ` + ${property.otherArea}` : ''}
+                  </span>
+                  <span className="text-gray-600 text-sm">m²</span>
+                </div>
+              );
+            })()}
             {property?.bedrooms && (
               <div className="flex items-center gap-1.5 bg-gray-50 px-3 py-1.5 rounded-md">
                 <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
