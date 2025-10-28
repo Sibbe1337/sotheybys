@@ -213,6 +213,8 @@ export interface CompleteLinearAPIListing {
   // Housing company information
   housingCooperativeName: LocalizedField;
   shareNumbers: LocalizedField;
+  housingCooperativeLoans: LocalizedField;
+  housingCooperativeLoansDate: LocalizedField;
   housingCooperativeMortgage: LocalizedField;
   housingCooperativeMortgageDate: LocalizedField;
   housingCooperativeRevenue: LocalizedField;

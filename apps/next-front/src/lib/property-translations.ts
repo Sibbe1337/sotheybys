@@ -988,6 +988,11 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     sv: 'Bolagets lån',
     en: 'Housing Company Loans'
   },
+  companyLoansDate: {
+    fi: 'Taloyhtiön lainan päivämäärä',
+    sv: 'Bolagslånets datum',
+    en: 'Company Loans Date'
+  },
   housingCompanyMortgageDate: {
     fi: 'Yhtiölainan päivämäärä',
     sv: 'Bolagslånets datum',

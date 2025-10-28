@@ -712,8 +712,18 @@ export function mapLinearAPIToProperty(
     redemptionClauseFlats: data.housingCompanyRedemptionRight?.fi?.value === 'true' || false,
     partnerRedemptionRight: extractLocalizedString(data.partnerRedemptionRight),
     redemptionClauseParking: false, // Not directly available
-    companyLoans: parseEuroNumber(data.housingCompanyMortgage?.fi?.value || data.housingCooperativeMortgage?.fi?.value),
-    // FIX: Add proper mortgage mappings from Linear API for "Taloyhtiön kiinnitykset"
+
+    // FIX: Separate company LOANS from MORTGAGES (encumbrances)
+    // "Taloyhtiön lainat" = company loans (NOT mortgages!)
+    companyLoans: parseEuroNumber(
+      nv.companyLoans ||
+      data.housingCooperativeLoans?.fi?.value ||
+      data.housingCooperativeLoans?.sv?.value ||
+      data.housingCooperativeLoans?.en?.value
+    ),
+    companyLoansDate: extractLocalizedString(data.housingCooperativeLoansDate),
+
+    // "Taloyhtiön kiinnitykset" = company mortgages/encumbrances (separate from loans!)
     // These can be either euro amounts or text, so we store the raw localized value
     housingCompanyMortgages: data.housingCompanyMortgages?.fi?.value || data.housingCompanyMortgages?.sv?.value || data.housingCompanyMortgages?.en?.value || '',
     companyMortgages: data.companyMortgages?.fi?.value || data.companyMortgages?.sv?.value || data.companyMortgages?.en?.value || '',

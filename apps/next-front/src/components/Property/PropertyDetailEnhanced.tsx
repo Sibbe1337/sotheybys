@@ -26,6 +26,7 @@ import {
   parseEuroAmount,
   formatBooleanLabel,
   formatEuroLabel,
+  formatDateFiLike,
   pickFirstNonEmpty,
   pick,
   yn,
@@ -114,6 +115,7 @@ export default function PropertyDetailEnhanced({
     
     // Housing company
     housingCooperativeName, shareNumbers, housingCooperativeMortgage,
+    companyLoansDate,
     housingCooperativeElevator, housingCooperativeSauna,
     housingCooperativeHas, housingCooperativeUpcomingRenovations,
     
@@ -515,6 +517,10 @@ export default function PropertyDetailEnhanced({
     ? formatEuroLabel(housingCompanyLoansAmount)
     : formatTextValue(housingCompanyLoansSource);
 
+  // Company loans date (Taloyhtiön lainan päivämäärä)
+  const companyLoansDateRaw = getLocalizedText(companyLoansDate, language);
+  const companyLoansDateFormatted = companyLoansDateRaw ? formatDateFiLike(companyLoansDateRaw) : '';
+
   const showHousingCompanyCard = [
     housingCompanyNameValue,
     housingCompanyMortgageDisplay,
@@ -537,6 +543,8 @@ export default function PropertyDetailEnhanced({
     { label: getTranslation('housingCompanyName', language), value: withPlaceholder(housingCompanyNameValue) },
     { label: getTranslation('housingCompanyEncumbrances', language), value: withPlaceholder(housingCompanyMortgageDisplay) },
     { label: getTranslation('housingCompanyLoans', language), value: withPlaceholder(housingCompanyLoansDisplay) },
+    // Only show loans date if it exists
+    ...(companyLoansDateFormatted ? [{ label: getTranslation('companyLoansDate', language), value: companyLoansDateFormatted }] : []),
     { label: getTranslation('siteOwnershipType', language), value: withPlaceholder(siteOwnershipValue) },
     { label: getTranslation('housingTenure', language), value: withPlaceholder(housingTenureValue) }
   ];

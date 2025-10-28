@@ -187,6 +187,39 @@ export function formatEuroLabel(value: number | null): string {
   })} €`;
 }
 
+/**
+ * Format date in Finnish format (DD.MM.YYYY)
+ * Handles Date objects, ISO strings, and already formatted strings
+ *
+ * @example
+ * formatDateFiLike('2025-05-04') // '4.5.2025'
+ * formatDateFiLike('04.05.2025') // '04.05.2025' (already Finnish format)
+ * formatDateFiLike(new Date(2025, 4, 4)) // '4.5.2025'
+ */
+export function formatDateFiLike(src: any): string {
+  if (!src) return '';
+
+  // If it's already a Date object
+  if (src instanceof Date) {
+    return src.toLocaleDateString('fi-FI');
+  }
+
+  const s = String(src).trim();
+  if (!s) return '';
+
+  // Check if it's an ISO date (YYYY-MM-DD format)
+  const isoMatch = /^(\d{4})-(\d{2})-(\d{2})/.exec(s);
+  if (isoMatch) {
+    const date = new Date(s);
+    if (!isNaN(date.getTime())) {
+      return date.toLocaleDateString('fi-FI');
+    }
+  }
+
+  // If it's already in Finnish format (DD.MM.YYYY) or other format, return as-is
+  return s;
+}
+
 export function pickFirstNonEmpty<T>(...values: T[]): T | null {
   for (const value of values) {
     if (value == null) continue;

@@ -747,6 +747,14 @@ export interface MultilingualPropertyListing {
   companyLoans: number;
 
   /**
+   * Company loans date (Taloyhtiön lainan päivämäärä)
+   * FI: Taloyhtiön lainan päivämäärä
+   * SV: Bolagslånets datum
+   * EN: Company loans date
+   */
+  companyLoansDate?: LocalizedString;
+
+  /**
    * Housing company mortgages (from Linear API)
    * FI: Taloyhtiön kiinnitykset
    * SV: Bostadsbolagets inteckningar
