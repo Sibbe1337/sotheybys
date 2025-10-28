@@ -746,10 +746,7 @@ export default function PropertyDetailEnhanced({
       value: withPlaceholder(zoningSummary)
     },
     // waterConnection/vesijohto removed per customer requirement
-    {
-      label: getTranslation('energyClass', language),
-      value: withPlaceholder(energyClassValue)
-    },
+    // energyClass moved to IFALL DET FINNS section below
     {
       label: getTranslation('energyCertificate', language),
       value: normalizedEnergyCertificateUrl
@@ -766,6 +763,14 @@ export default function PropertyDetailEnhanced({
     },
     // IFALL DET FINNS (show only if exists) - add conditionally after array creation
   ];
+
+  // Add "Energiklass" (Energy Class) only if it exists - IFALL DET FINNS
+  if (energyClassValue && energyClassValue !== '—') {
+    fastighetEstateItems.push({
+      label: getTranslation('energyClass', language),
+      value: energyClassValue
+    });
+  }
 
   // Add "Rakennusoikeus" (Building Rights) only if it exists
   const buildingRights = formatTextValue(propertyData?.propertyBuildingRights);
