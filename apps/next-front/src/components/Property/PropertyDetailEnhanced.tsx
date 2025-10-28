@@ -1974,34 +1974,7 @@ export default function PropertyDetailEnhanced({
                 </p>
               </div>
 
-              {/* Image Gallery Thumbnail */}
-              {images.length > 1 && (
-                <div className="bg-white rounded-lg shadow-sm p-4">
-                  <div className="grid grid-cols-3 gap-2">
-                    {images.slice(0, 6).map((image, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => setCurrentImageIndex(idx)}
-                        className={`relative aspect-square rounded overflow-hidden ${
-                          currentImageIndex === idx ? 'ring-2 ring-[#002349]' : ''
-                        }`}
-                      >
-                        <Image
-                          src={image.thumbnail || image.url || image}
-                          alt={`Thumbnail ${idx + 1}`}
-                          fill
-                          className="object-cover"
-                        />
-                      </button>
-                    ))}
-                  </div>
-                  {images.length > 6 && (
-                    <p className="text-center text-sm text-gray-600 mt-2">
-                      +{images.length - 6} kuvaa lisää
-                    </p>
-                  )}
-                </div>
-              )}
+              {/* Image Gallery Thumbnail - Removed per Dennis request */}
             </div>
           </div>
         </div>
