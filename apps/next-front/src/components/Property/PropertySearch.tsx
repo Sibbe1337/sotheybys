@@ -161,16 +161,16 @@ export default function PropertySearch({ properties, language }: PropertySearchP
 
   return (
     <div>
-      {/* Simplified Search Filters - Matching old website design */}
-      <section className="py-6 bg-white border-y border-gray-200">
+      {/* Simplified Search Filters - Exact 1:1 match with old website */}
+      <section className="py-8 bg-white border-y border-gray-200">
         <div className="max-w-[1400px] mx-auto px-6">
-          {/* Simple inline filters */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+          {/* Row 1: Dropdowns */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             {/* Area Dropdown */}
             <div>
-              <label className="block text-xs text-gray-600 mb-1 tracking-wider uppercase">{translations.area[language]}</label>
+              <label className="block text-xs text-gray-600 mb-2 tracking-wider uppercase">{translations.area[language]}</label>
               <select
-                className="w-full px-3 py-2 border border-gray-300 rounded-none text-sm focus:outline-none focus:border-[var(--color-primary)]"
+                className="w-full px-4 py-3 border border-gray-300 rounded-none text-sm focus:outline-none focus:border-[var(--color-primary)]"
                 value={selectedArea}
                 onChange={(e) => setSelectedArea(e.target.value)}
               >
@@ -183,9 +183,9 @@ export default function PropertySearch({ properties, language }: PropertySearchP
 
             {/* Property Type Dropdown */}
             <div>
-              <label className="block text-xs text-gray-600 mb-1 tracking-wider uppercase">{translations.propertyType[language]}</label>
+              <label className="block text-xs text-gray-600 mb-2 tracking-wider uppercase">{translations.propertyType[language]}</label>
               <select
-                className="w-full px-3 py-2 border border-gray-300 rounded-none text-sm focus:outline-none focus:border-[var(--color-primary)]"
+                className="w-full px-4 py-3 border border-gray-300 rounded-none text-sm focus:outline-none focus:border-[var(--color-primary)]"
                 value={selectedType}
                 onChange={(e) => setSelectedType(e.target.value)}
               >
@@ -199,13 +199,16 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                 })}
               </select>
             </div>
+          </div>
 
+          {/* Row 2: Price and Area Sliders */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             {/* Price Range Slider */}
             <div>
-              <label className="block text-xs text-gray-600 mb-1">
-                {priceRange[0].toLocaleString('fi-FI')} € - {priceRange[1].toLocaleString('fi-FI')} €
-              </label>
-              <div className="flex items-center gap-2">
+              <div className="text-xs text-gray-600 mb-3">
+                {priceRange[0].toLocaleString('fi-FI')} - {priceRange[1].toLocaleString('fi-FI')} €
+              </div>
+              <div className="relative">
                 <input
                   type="range"
                   min={priceMinMax.min}
@@ -218,7 +221,8 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                       setPriceRange([newMin, priceRange[1]]);
                     }
                   }}
-                  className="flex-1 h-1 bg-gray-300 appearance-none cursor-pointer accent-[var(--color-primary)]"
+                  className="absolute w-full h-1 bg-transparent appearance-none cursor-pointer pointer-events-auto [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:relative [&::-webkit-slider-thumb]:z-20 accent-[var(--color-primary)]"
+                  style={{ zIndex: priceRange[0] > (priceMinMax.max - priceMinMax.min) * 0.5 ? 5 : 3 }}
                 />
                 <input
                   type="range"
@@ -232,17 +236,19 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                       setPriceRange([priceRange[0], newMax]);
                     }
                   }}
-                  className="flex-1 h-1 bg-gray-300 appearance-none cursor-pointer accent-[var(--color-primary)]"
+                  className="absolute w-full h-1 bg-transparent appearance-none cursor-pointer pointer-events-auto [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:relative [&::-webkit-slider-thumb]:z-20 accent-[var(--color-primary)]"
+                  style={{ zIndex: priceRange[1] <= (priceMinMax.max - priceMinMax.min) * 0.5 ? 5 : 3 }}
                 />
+                <div className="w-full h-1 bg-gray-300 rounded-full"></div>
               </div>
             </div>
 
             {/* Area Range Slider */}
             <div>
-              <label className="block text-xs text-gray-600 mb-1">
-                {areaRange[0]} m² - {areaRange[1]} m²
-              </label>
-              <div className="flex items-center gap-2">
+              <div className="text-xs text-gray-600 mb-3">
+                {areaRange[0]} - {areaRange[1]} m²
+              </div>
+              <div className="relative">
                 <input
                   type="range"
                   min={areaMinMax.min}
@@ -255,7 +261,8 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                       setAreaRange([newMin, areaRange[1]]);
                     }
                   }}
-                  className="flex-1 h-1 bg-gray-300 appearance-none cursor-pointer accent-[var(--color-primary)]"
+                  className="absolute w-full h-1 bg-transparent appearance-none cursor-pointer pointer-events-auto [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:relative [&::-webkit-slider-thumb]:z-20 accent-[var(--color-primary)]"
+                  style={{ zIndex: areaRange[0] > (areaMinMax.max - areaMinMax.min) * 0.5 ? 5 : 3 }}
                 />
                 <input
                   type="range"
@@ -269,8 +276,10 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                       setAreaRange([areaRange[0], newMax]);
                     }
                   }}
-                  className="flex-1 h-1 bg-gray-300 appearance-none cursor-pointer accent-[var(--color-primary)]"
+                  className="absolute w-full h-1 bg-transparent appearance-none cursor-pointer pointer-events-auto [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:relative [&::-webkit-slider-thumb]:z-20 accent-[var(--color-primary)]"
+                  style={{ zIndex: areaRange[1] <= (areaMinMax.max - areaMinMax.min) * 0.5 ? 5 : 3 }}
                 />
+                <div className="w-full h-1 bg-gray-300 rounded-full"></div>
               </div>
             </div>
           </div>
