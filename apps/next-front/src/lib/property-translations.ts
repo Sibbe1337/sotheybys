@@ -584,7 +584,12 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     sv: 'Balkong',
     en: 'Balcony'
   },
-  
+  terrace: {
+    fi: 'Terassi',
+    sv: 'Terrass',
+    en: 'Terrace'
+  },
+
   // Equipment Fields
   kitchen: {
     fi: 'Keittiö',

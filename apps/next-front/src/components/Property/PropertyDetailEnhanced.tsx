@@ -258,6 +258,12 @@ export default function PropertyDetailEnhanced({
     propertyData?.hasSauna
   );
 
+  const terraceSource = pickFirstNonEmpty(
+    terrace,
+    propertyData?.terrace,
+    propertyData?.hasTerrace
+  );
+
   const releaseSource = pickFirstNonEmpty(
     release,
     propertyData?.availableFrom,
@@ -285,6 +291,17 @@ export default function PropertyDetailEnhanced({
       return true;
     }
     return isTruthyFlag(saunaSource);
+  })();
+
+  const showTerrace = (() => {
+    if (terraceSource == null) return false;
+    if (typeof terraceSource === 'string') {
+      const normalized = terraceSource.trim().toLowerCase();
+      if (normalized === '') return false;
+      if (NO_VALUES.has(normalized)) return false;
+      return true;
+    }
+    return isTruthyFlag(terraceSource);
   })();
 
   const balconyLabel = (() => {
@@ -324,6 +341,15 @@ export default function PropertyDetailEnhanced({
       return String(item);
     })
     .filter((text: string) => text && text.trim().length > 0);
+
+  const terraceLabel = (() => {
+    if (!showTerrace) return '';
+    const label = formatBooleanLabel(terraceSource, language);
+    if (label === '—' && isTruthyFlag(terraceSource)) {
+      return yesLabel;
+    }
+    return label;
+  })();
 
   function formatTextValue(value: any): string {
     if (value == null || value === '') return '—';
@@ -815,6 +841,12 @@ export default function PropertyDetailEnhanced({
           label: getTranslation('balcony', language),
           value: withPlaceholder(balconyLabel || yesLabel),
           secondary: balconySupplement.length > 0 ? balconySupplement.join(' • ') : undefined
+        }
+      : undefined,
+    showTerrace
+      ? {
+          label: getTranslation('terrace', language),
+          value: withPlaceholder(terraceLabel || yesLabel)
         }
       : undefined,
     showSauna
