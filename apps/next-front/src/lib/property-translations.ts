@@ -104,9 +104,9 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     en: 'Apartment Details'
   },
   buildingAndCompany: {
-    fi: 'Rakennus & yhtiö',
-    sv: 'Byggnad & Bolag',
-    en: 'Building & Company'
+    fi: 'Yhtiö- ja Rakennustiedot',
+    sv: 'Bolag och byggnadsinformation',
+    en: 'Company and Building Information'
   },
   buildingFacts: {
     fi: 'Rakennustiedot',

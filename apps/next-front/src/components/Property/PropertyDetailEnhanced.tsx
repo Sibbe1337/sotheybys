@@ -30,6 +30,8 @@ import {
   pick,
   yn,
   missing,
+  toBool,
+  formatEuroMaybe,
   YES_VALUES,
   NO_VALUES,
 } from '@/lib/property-display';
@@ -232,11 +234,17 @@ export default function PropertyDetailEnhanced({
     propertyData?.floorNumber
   );
 
-  const elevatorDisplay = pickFirstNonEmpty(
+  // Fix elevator bug: housingCooperativeElevator should be checked FIRST
+  // Use toBool() for robust boolean parsing ('Kyllä', 'ja', 'Nej', etc.)
+  const elevatorRaw = pickFirstNonEmpty(
+    housingCooperativeElevator,  // Check housing cooperative first
     elevator,
-    housingCooperativeElevator,
     propertyData?.elevator
   );
+  const elevatorBool = toBool(elevatorRaw);
+  const elevatorDisplay = elevatorBool === undefined
+    ? '—'
+    : (elevatorBool ? getTranslation('yes', language) : getTranslation('no', language));
 
   const balconySource = pickFirstNonEmpty(
     balcony,
@@ -456,11 +464,12 @@ export default function PropertyDetailEnhanced({
   const mortgageEncumbranceValue = mortgageEncumbranceDisplay === '—' ? null : mortgageEncumbranceDisplay;
 
   // Try multiple field names for housing company mortgages
+  // FIX: Separate Encumbrances (Kiinnitykset) from Loans (Lainat)
+  // Encumbrances = housingCooperativeMortgage / housingCompanyMortgages (NOT companyLoans!)
   const housingCompanyMortgageSource = pickFirstNonEmpty(
     housingCooperativeMortgage,
-    propertyData?.companyMortgages,
     propertyData?.housingCompanyMortgages,
-    propertyData?.companyLoans,  // CRITICAL: companyLoans from mapper
+    propertyData?.companyMortgages,
     propertyData?.taloyhtiönKiinnitykset,
     propertyData?.taloyhtionKiinnitykset
   );
@@ -469,16 +478,16 @@ export default function PropertyDetailEnhanced({
     ? formatEuroLabel(housingCompanyMortgageAmount)
     : formatTextValue(housingCompanyMortgageSource);
 
-  const housingCompanyLoansAmount = parseEuroAmount(
-    pickFirstNonEmpty(
-      (propertyFinancials as any)?.companyLoans,
-      propertyData?.companyLoans,
-      propertyData?.taloyhtionLainat
-    )
+  // Loans = companyLoans / taloyhtionLainat (separate from encumbrances!)
+  const housingCompanyLoansSource = pickFirstNonEmpty(
+    (propertyFinancials as any)?.companyLoans,
+    propertyData?.companyLoans,
+    propertyData?.taloyhtionLainat
   );
+  const housingCompanyLoansAmount = parseEuroAmount(housingCompanyLoansSource);
   const housingCompanyLoansDisplay = housingCompanyLoansAmount != null
     ? formatEuroLabel(housingCompanyLoansAmount)
-    : formatTextValue(pickFirstNonEmpty(propertyData?.companyLoans, propertyData?.taloyhtionLainat));
+    : formatTextValue(housingCompanyLoansSource);
 
   const showHousingCompanyCard = [
     housingCompanyNameValue,
@@ -488,14 +497,17 @@ export default function PropertyDetailEnhanced({
     housingTenureValue
   ].some((value) => value !== '—');
 
-  const apartmentBuildingItems = [
+  // MERGED: Company and Building items (Yhtiö- ja Rakennustiedot)
+  // Per Dennis: Merge Rakennustiedot + Taloyhtiön tiedot + Hissi into ONE section
+  // Move ownershipType to otherInfoItems
+  const companyAndBuildingItems = [
+    // From building items (excluding ownershipType)
     { label: getTranslation('constructionYear', language), value: withPlaceholder(constructionYearValue) },
     { label: getTranslation('energyClass', language), value: withPlaceholder(energyClassValue) },
     { label: getTranslation('heatingSystem', language), value: withPlaceholder(heatingSystemValue) },
-    { label: getTranslation('ownershipType', language), value: withPlaceholder(ownershipValue) }
-  ];
-
-  const apartmentHousingItems = [
+    // Elevator field moved here from apartmentDetailsItems
+    { label: getTranslation('elevator', language), value: withPlaceholder(elevatorDisplay) },
+    // From housing company items
     { label: getTranslation('housingCompanyName', language), value: withPlaceholder(housingCompanyNameValue) },
     { label: getTranslation('housingCompanyEncumbrances', language), value: withPlaceholder(housingCompanyMortgageDisplay) },
     { label: getTranslation('housingCompanyLoans', language), value: withPlaceholder(housingCompanyLoansDisplay) },
@@ -696,6 +708,13 @@ export default function PropertyDetailEnhanced({
     return String(value);
   };
 
+  // Other Info items (Muut tiedot) - includes fields moved from other sections
+  // Per Dennis: Move "Omistusmuoto" and "Vapautuminen" to Muut tiedot
+  const otherInfoItems = [
+    { label: getTranslation('ownershipType', language), value: withPlaceholder(ownershipValue) },
+    { label: getTranslation('availableFrom', language), value: withPlaceholder(formatDateValue(releaseSource)) }
+  ];
+
   // FASTIGHET Estate Items: "ALLTID FINNAS" means always show (even if empty), "IFALL DET FINNS" means show only if exists
   const fastighetEstateItems: LabelValueItem[] = [
     // ALLTID FINNAS (always visible with fallback)
@@ -782,6 +801,7 @@ export default function PropertyDetailEnhanced({
 
   // formatDateValue now defined earlier (before fastighetEstateItems) to avoid hoisting issues
 
+  // Apartment details - Per Dennis: Remove "Hissi" (moved to companyAndBuildingItems) and "Vapautuminen" (moved to otherInfoItems)
   const apartmentDetailsItems = [
     typeOfApartment
       ? {
@@ -793,14 +813,8 @@ export default function PropertyDetailEnhanced({
       label: getTranslation('floorLabel', language),
       value: withPlaceholder(formatTextValue(floorDisplay))
     },
-    {
-      label: getTranslation('elevator', language),
-      value: withPlaceholder(formatBooleanLabel(elevatorDisplay, language))
-    },
-    {
-      label: getTranslation('availableFrom', language),
-      value: withPlaceholder(formatDateValue(releaseSource))
-    },
+    // Elevator removed - now in companyAndBuildingItems
+    // availableFrom removed - now in otherInfoItems
     showBalcony
       ? {
           label: getTranslation('balcony', language),
@@ -1811,12 +1825,12 @@ export default function PropertyDetailEnhanced({
                 agentNotes={agentNotesText}
                 additionalMaterials={fastighetAdditionalMaterials}
                 apartmentDetailsItems={apartmentDetailsItems}
-                buildingFactsItems={apartmentBuildingItems}
-                housingCompanyItems={apartmentHousingItems}
+                companyAndBuildingItems={companyAndBuildingItems}
                 priceItems={priceListItems}
                 livingCostItems={livingCostListItems}
                 otherCostItems={otherCostListItemsFiltered}
                 costSummary={costSummaryTotals}
+                otherInfoItems={otherInfoItems}
                 zoningText={zoningSummary !== '—' ? zoningSummary : undefined}
                 documents={fastighetDocuments}
                 notProvidedText={notProvidedText}

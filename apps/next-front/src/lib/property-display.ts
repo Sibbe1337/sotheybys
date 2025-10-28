@@ -2,9 +2,10 @@ import { getTranslation, type SupportedLanguage } from './property-translations'
 
 /**
  * Common yes/no synonyms used across listing data sources
+ * Updated to include 'ja', true, 1, etc. for better elevator/boolean detection
  */
-export const YES_VALUES = new Set(['kyllä', 'on', 'yes', 'y', 'true', '1', 'available', 'exists']);
-export const NO_VALUES = new Set(['ei', 'no', 'false', '0', 'none']);
+export const YES_VALUES = new Set(['kyllä', 'ja', 'yes', 'on', 'y', 'true', '1', 'available', 'exists', true, 1]);
+export const NO_VALUES = new Set(['ei', 'nej', 'no', 'off', 'false', '0', 'none', false, 0]);
 
 /**
  * Simple synchronous translation for common real estate terms.
@@ -62,6 +63,63 @@ export function quickTranslate(text: string, targetLang: SupportedLanguage): str
   }
 
   return translated;
+}
+
+/**
+ * Robust boolean converter with comprehensive YES/NO detection.
+ * Returns undefined if value cannot be determined as boolean.
+ *
+ * @example
+ * toBool('Kyllä') // true
+ * toBool('ja') // true
+ * toBool(1) // true
+ * toBool('Ei') // false
+ * toBool(null) // undefined
+ */
+export function toBool(v: any): boolean | undefined {
+  if (v === null || v === undefined) return undefined;
+
+  // Direct boolean/number check
+  if (typeof v === 'boolean') return v;
+  if (typeof v === 'number') {
+    if (v === 1) return true;
+    if (v === 0) return false;
+    return undefined;
+  }
+
+  // String check
+  if (typeof v === 'string') {
+    const normalized = v.trim().toLowerCase();
+    if (YES_VALUES.has(normalized) || YES_VALUES.has(v)) return true;
+    if (NO_VALUES.has(normalized) || NO_VALUES.has(v)) return false;
+  }
+
+  // Check if the value itself is in the sets (handles true/false/1/0)
+  if (YES_VALUES.has(v)) return true;
+  if (NO_VALUES.has(v)) return false;
+
+  return undefined;
+}
+
+/**
+ * Format a value as Euro if it's numeric, otherwise return as text.
+ * Useful for fields that can be either amount or description.
+ *
+ * @example
+ * formatEuroMaybe('2 kuukauden vuokra') // '2 kuukauden vuokra'
+ * formatEuroMaybe(1000) // '1 000 €'
+ * formatEuroMaybe('1000') // '1 000 €'
+ */
+export function formatEuroMaybe(v: any): string {
+  const numericValue = parseEuroAmount(v);
+  if (numericValue != null) {
+    return formatEuroLabel(numericValue);
+  }
+  // Return as text if not numeric
+  if (v != null && typeof v === 'string' && v.trim()) {
+    return v.trim();
+  }
+  return '—';
 }
 
 export function isTruthyFlag(value: unknown): boolean {
@@ -195,7 +253,9 @@ export function getLocalizedText(value: unknown, language: SupportedLanguage): s
   }
 
   if (typeof value === 'string') {
-    return language === 'fi' ? value : quickTranslate(value, language);
+    // For plain strings, only translate if language is fi
+    // sv/en should NOT get fi content translated
+    return language === 'fi' ? value : '';
   }
 
   if (typeof value === 'number') {
@@ -211,30 +271,22 @@ export function getLocalizedText(value: unknown, language: SupportedLanguage): s
   }
 
   if (typeof value === 'object') {
+    // ONLY return the requested language, NO fi-fallback for sv/en
     const localizedCandidate = extractLocalizedString((value as Record<string, unknown>)[language]);
     if (localizedCandidate) {
       return localizedCandidate;
     }
 
-    const finnishCandidate = extractLocalizedString((value as Record<string, unknown>).fi);
-    if (finnishCandidate) {
-      return language === 'fi' ? finnishCandidate : quickTranslate(finnishCandidate, language);
+    // If we're looking for fi and it exists, return it
+    if (language === 'fi') {
+      const finnishCandidate = extractLocalizedString((value as Record<string, unknown>).fi);
+      if (finnishCandidate) {
+        return finnishCandidate;
+      }
     }
 
-    const englishCandidate = extractLocalizedString((value as Record<string, unknown>).en);
-    if (englishCandidate) {
-      return englishCandidate;
-    }
-
-    const swedishCandidate = extractLocalizedString((value as Record<string, unknown>).sv);
-    if (swedishCandidate) {
-      return swedishCandidate;
-    }
-
-    const fallback = extractLocalizedString(value);
-    if (fallback) {
-      return language === 'fi' ? fallback : quickTranslate(fallback, language);
-    }
+    // No fallback - return empty if requested language is missing
+    // UI will handle this with "Uppgift saknas" or auto-translate banner
   }
 
   return '';

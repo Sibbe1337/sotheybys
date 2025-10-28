@@ -19,11 +19,8 @@ export interface ApartmentViewProps {
   // Apartment details (Huoneistotiedot)
   apartmentDetailsItems: LabelValueItem[];
 
-  // Building facts (Rakennustiedot)
-  buildingFactsItems: LabelValueItem[];
-
-  // Housing company info (Taloyhtiön tiedot)
-  housingCompanyItems: LabelValueItem[];
+  // Company and Building info (Yhtiö- ja Rakennustiedot) - MERGED section
+  companyAndBuildingItems: LabelValueItem[];
 
   // Costs - Price info (Hintatiedot)
   priceItems: LabelValueItem[];
@@ -40,7 +37,8 @@ export interface ApartmentViewProps {
     yearly?: string;
   };
 
-  // Other info (Muut tiedot)
+  // Other info (Muut tiedot) - includes ownershipType and availableFrom
+  otherInfoItems?: LabelValueItem[];
   zoningText?: string;
 
   // Documents
@@ -96,12 +94,12 @@ export default function ApartmentView({
   agentNotes,
   additionalMaterials,
   apartmentDetailsItems,
-  buildingFactsItems,
-  housingCompanyItems,
+  companyAndBuildingItems,
   priceItems,
   livingCostItems,
   otherCostItems,
   costSummary,
+  otherInfoItems,
   zoningText,
   documents,
   notProvidedText
@@ -161,22 +159,13 @@ export default function ApartmentView({
         </div>
       )}
 
-      {/* BUILDING TAB - Rakennus & yhtiö */}
+      {/* BUILDING TAB - Yhtiö- ja Rakennustiedot (merged section) */}
       {activeTab === 'building' && (
         <div className="space-y-8">
-          {/* Building Facts - Rakennustiedot */}
-          <SectionCard title={getTranslation('buildingFacts', language)}>
-            {buildingFactsItems.length > 0 ? (
-              <LabelValueList items={buildingFactsItems} placeholder={notProvidedText} />
-            ) : (
-              <p className="text-sm text-gray-500 italic">{notProvidedText}</p>
-            )}
-          </SectionCard>
-
-          {/* Housing Company Info - Taloyhtiön tiedot */}
-          <SectionCard title={getTranslation('housingCompanyInfo', language)}>
-            {housingCompanyItems.length > 0 ? (
-              <LabelValueList items={housingCompanyItems} placeholder={notProvidedText} />
+          {/* Company and Building Info - NO subsection titles per Dennis requirement */}
+          <SectionCard title={getTranslation('buildingAndCompany', language)}>
+            {companyAndBuildingItems.length > 0 ? (
+              <LabelValueList items={companyAndBuildingItems} placeholder={notProvidedText} />
             ) : (
               <p className="text-sm text-gray-500 italic">{notProvidedText}</p>
             )}
@@ -238,6 +227,14 @@ export default function ApartmentView({
       {activeTab === 'location' && (
         <div className="space-y-8">
           <SectionCard title={getTranslation('otherInformation', language)}>
+            {/* Other info items (Omistusmuoto, Vapautuminen) */}
+            {otherInfoItems && otherInfoItems.length > 0 && (
+              <div className="mb-6">
+                <LabelValueList items={otherInfoItems} placeholder={notProvidedText} />
+              </div>
+            )}
+
+            {/* Zoning information */}
             {zoningText ? (
               <div>
                 <h4 className="text-sm font-medium text-gray-600 mb-1">
@@ -245,9 +242,9 @@ export default function ApartmentView({
                 </h4>
                 <p className="text-gray-700 text-sm whitespace-pre-line">{zoningText}</p>
               </div>
-            ) : (
+            ) : !otherInfoItems || otherInfoItems.length === 0 ? (
               <p className="text-sm text-gray-500 italic">{notProvidedText}</p>
-            )}
+            ) : null}
           </SectionCard>
         </div>
       )}
