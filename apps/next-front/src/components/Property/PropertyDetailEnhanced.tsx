@@ -1592,13 +1592,28 @@ export default function PropertyDetailEnhanced({
               </div>
             </div>
             <div className="lg:text-right flex-shrink-0">
-              <Price className="text-2xl sm:text-3xl lg:text-4xl whitespace-nowrap font-bold" block>
-                {askPrice ? `${parseInt(askPrice).toLocaleString('fi-FI')} €` : 'Kysy hintaa'}
-              </Price>
-              {area && askPrice && (
-                <div className="text-xs sm:text-sm text-gray-600 mt-0.5 sm:mt-1">
-                  {Math.round(parseInt(askPrice) / parseInt(area)).toLocaleString('fi-FI')} €/m²
-                </div>
+              {isRental ? (
+                <>
+                  <Price className="text-2xl sm:text-3xl lg:text-4xl whitespace-nowrap font-bold" block>
+                    {propertyData?.rent ? `${propertyData.rent.toLocaleString('fi-FI')} €/${getTranslation('perMonth', language)}` : getTranslation('askForPrice', language)}
+                  </Price>
+                  {area && propertyData?.rent && (
+                    <div className="text-xs sm:text-sm text-gray-600 mt-0.5 sm:mt-1">
+                      {Math.round(propertyData.rent / parseInt(area)).toLocaleString('fi-FI')} €/m²
+                    </div>
+                  )}
+                </>
+              ) : (
+                <>
+                  <Price className="text-2xl sm:text-3xl lg:text-4xl whitespace-nowrap font-bold" block>
+                    {askPrice ? `${parseInt(askPrice).toLocaleString('fi-FI')} €` : 'Kysy hintaa'}
+                  </Price>
+                  {area && askPrice && (
+                    <div className="text-xs sm:text-sm text-gray-600 mt-0.5 sm:mt-1">
+                      {Math.round(parseInt(askPrice) / parseInt(area)).toLocaleString('fi-FI')} €/m²
+                    </div>
+                  )}
+                </>
               )}
             </div>
           </div>
