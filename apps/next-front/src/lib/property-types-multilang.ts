@@ -217,6 +217,13 @@ export interface MultilingualPropertyListing {
   elevator: boolean;
 
   /**
+   * Housing cooperative elevator (from Linear API)
+   * FI: Taloyhtiön hissi (esim. "Kyllä", "Ei")
+   * SV: Bostadsbolagets hiss (t.ex. "Ja", "Nej")
+   */
+  housingCooperativeElevator?: string;
+
+  /**
    * Property condition
    * FI: Kunto (esim. "Hyvä", "Erinomainen", "Remontoitu")
    * EN: Condition (e.g., "Good", "Excellent", "Renovated")
@@ -738,6 +745,27 @@ export interface MultilingualPropertyListing {
    * SV: Bolagslån totalt i euro
    */
   companyLoans: number;
+
+  /**
+   * Housing company mortgages (from Linear API)
+   * FI: Taloyhtiön kiinnitykset
+   * SV: Bostadsbolagets inteckningar
+   */
+  housingCompanyMortgages?: string;
+
+  /**
+   * Company mortgages (from Linear API)
+   * FI: Yhtiön kiinnitykset
+   * SV: Bolagets inteckningar
+   */
+  companyMortgages?: string;
+
+  /**
+   * Housing cooperative mortgage (from Linear API)
+   * FI: Osuuskunnan kiinnitys
+   * SV: Andelslagets inteckning
+   */
+  housingCooperativeMortgage?: string;
 
   /**
    * Company income in EUR

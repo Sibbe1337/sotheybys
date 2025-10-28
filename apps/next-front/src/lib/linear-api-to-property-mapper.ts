@@ -513,6 +513,8 @@ export function mapLinearAPIToProperty(
       }
       return false;
     })(),
+    // FIX: Add housingCooperativeElevator mapping from Linear API
+    housingCooperativeElevator: data.housingCooperativeElevator?.fi?.value || data.housingCooperativeElevator?.sv?.value || data.housingCooperativeElevator?.en?.value || '',
     condition: nv.condition 
       ? mapCondition(nv.condition)
       : extractLocalizedString(data.condition),
@@ -711,6 +713,11 @@ export function mapLinearAPIToProperty(
     partnerRedemptionRight: extractLocalizedString(data.partnerRedemptionRight),
     redemptionClauseParking: false, // Not directly available
     companyLoans: parseEuroNumber(data.housingCompanyMortgage?.fi?.value || data.housingCooperativeMortgage?.fi?.value),
+    // FIX: Add proper mortgage mappings from Linear API for "Taloyhtiön kiinnitykset"
+    // These can be either euro amounts or text, so we store the raw localized value
+    housingCompanyMortgages: data.housingCompanyMortgages?.fi?.value || data.housingCompanyMortgages?.sv?.value || data.housingCompanyMortgages?.en?.value || '',
+    companyMortgages: data.companyMortgages?.fi?.value || data.companyMortgages?.sv?.value || data.companyMortgages?.en?.value || '',
+    housingCooperativeMortgage: data.housingCooperativeMortgage?.fi?.value || data.housingCooperativeMortgage?.sv?.value || data.housingCooperativeMortgage?.en?.value || '',
     housingCompanyMortgageDate: extractLocalizedString(data.housingCompanyMortgageDate),
     companyIncome: parseEuroNumber(
       nv.housingCooperativeRevenue ||
