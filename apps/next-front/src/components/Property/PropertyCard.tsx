@@ -122,9 +122,11 @@ export default function PropertyCard({
       )}
 
       <div className="p-6">
-        {/* Title - Large serif font matching old site */}
+        {/* Title - Large serif font matching old site - Full address with postal code and city */}
         <h3 className="text-2xl font-serif mb-4 text-gray-900 leading-tight">
-          {title}
+          {property?.address || title}
+          {property?.address && property?.postalCode && `, ${property.postalCode}`}
+          {property?.address && property?.city && ` ${property.city}`}
         </h3>
 
         {/* Prices - Show both Vh and Mh for sale properties */}
@@ -138,7 +140,7 @@ export default function PropertyCard({
 
               if (rentAmount > 0) {
                 return (
-                  <p className="text-lg font-normal text-gray-900">
+                  <p className="text-lg font-bold text-gray-900">
                     {formatPrice(rentAmount)} / {getHomepageTranslation('month', language)}
                   </p>
                 );
@@ -152,7 +154,7 @@ export default function PropertyCard({
             if (debtFree && salePrice && debtFree !== salePrice) {
               // Show both: "Vh X € Mh Y €"
               return (
-                <p className="text-lg font-normal text-gray-900">
+                <p className="text-lg font-bold text-gray-900">
                   <span>Vh {formatPrice(debtFree)}</span>
                   <span className="ml-4">Mh {formatPrice(salePrice)}</span>
                 </p>
@@ -160,7 +162,7 @@ export default function PropertyCard({
             } else if (salePrice) {
               // Show only Myyntihinta: "Mh X €"
               return (
-                <p className="text-lg font-normal text-gray-900">
+                <p className="text-lg font-bold text-gray-900">
                   Mh {formatPrice(salePrice)}
                 </p>
               );

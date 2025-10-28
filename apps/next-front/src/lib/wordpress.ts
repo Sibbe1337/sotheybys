@@ -52,6 +52,7 @@ export interface Property {
   debtFreePrice?: number;  // Velaton hinta / Skuldfritt pris / Debt-free price
   debtPart?: number;  // Velkaosuus / Skulddel / Debt part
   address?: string;
+  postalCode?: string;  // Postal code for full address display
   city?: string;
   bedrooms?: number;
   bathrooms?: number;
