@@ -342,6 +342,11 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     sv: 'Månadshyra',
     en: 'Monthly Rent'
   },
+  rentPerMonth: {
+    fi: 'Vuokra kuukaudessa',
+    sv: 'Hyra per månad',
+    en: 'Rent Per Month'
+  },
   securityDeposit: {
     fi: 'Vakuus',
     sv: 'Deposition',
@@ -355,6 +360,11 @@ export const PROPERTY_TRANSLATIONS: Translations = {
   rentalContractType: {
     fi: 'Vuokrasopimuksen tyyppi',
     sv: 'Typ av hyresavtal',
+    en: 'Contract Type'
+  },
+  contractType: {
+    fi: 'Sopimustyyppi',
+    sv: 'Avtalstyp',
     en: 'Contract Type'
   },
   rentUpdateDate: {
@@ -376,6 +386,11 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     fi: 'Aikaisin irtisanomispäivä',
     sv: 'Tidigaste uppsägningsdatum',
     en: 'Earliest Termination Date'
+  },
+  terminationPeriod: {
+    fi: 'Irtisanomisaika',
+    sv: 'Uppsägningstid',
+    en: 'Termination Period'
   },
   subleasing: {
     fi: 'Jatkuvuokraus',
@@ -1061,6 +1076,11 @@ export const PROPERTY_TRANSLATIONS: Translations = {
     fi: 'Huoneistoselitys',
     sv: 'Lägenhetsbeskrivning',
     en: 'Apartment Description'
+  },
+  rentalDescription: {
+    fi: 'Vuokrakohteen kuvaus',
+    sv: 'Hyresobjektets beskrivning',
+    en: 'Rental Property Description'
   },
   totalArea: {
     fi: 'Kokonaispinta-ala',
