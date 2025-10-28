@@ -432,7 +432,7 @@ export function mapLinearAPIToProperty(
     // ========================================================================
     // 1. GENERAL PROPERTY INFO
     // ========================================================================
-    apartmentType: extractLocalizedString(data.typeOfApartment || data.rooms),  // Linear API uses typeOfApartment (e.g., "2h+k")
+    typeOfApartment: extractLocalizedString(data.typeOfApartment || data.rooms),  // Linear API uses typeOfApartment (e.g., "2h+k", "Paritalohuoneisto...")
     streetAddress: extractLocalizedString(data.address),
     postalCode: data.postalCode?.fi?.value || '',
     city: extractLocalizedString(data.city),

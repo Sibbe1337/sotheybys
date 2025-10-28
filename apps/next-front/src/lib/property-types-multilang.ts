@@ -71,12 +71,12 @@ export interface MultilingualPropertyListing {
   // ============================================================================
 
   /**
-   * Type of apartment/property
-   * FI: Asunnon/kiinteistön tyyppi (esim. "Osake", "Kiinteistö")
-   * EN: Type of apartment/property (e.g., "Share", "Real estate")
-   * SV: Typ av lägenhet/fastighet (t.ex. "Andel", "Fastighet")
+   * Apartment type description (Huoneistoselitelmä)
+   * FI: Huoneistoselitelmä (esim. "2h+k", "Paritalohuoneisto; 4mh, 2oh, rt, k, s, 2kph")
+   * EN: Apartment description (e.g., "2 rooms + kitchen", "Semi-detached apartment...")
+   * SV: Lägenhetsbeskrivning (t.ex. "2 rum + kök", "Parhus...")
    */
-  apartmentType: LocalizedString;
+  typeOfApartment: LocalizedString;
 
   /**
    * Street address
@@ -1190,10 +1190,10 @@ export function generatePropertySlugMultilang(
  * Översättningsnycklar för UI-etiketter
  */
 export const PROPERTY_LABELS = {
-  apartmentType: {
-    fi: 'Asuntotyyppi',
-    en: 'Property Type',
-    sv: 'Fastighetstyp',
+  typeOfApartment: {
+    fi: 'Huoneistoselitelmä',
+    en: 'Apartment Description',
+    sv: 'Lägenhetsbeskrivning',
   },
   livingArea: {
     fi: 'Asuinpinta-ala',
