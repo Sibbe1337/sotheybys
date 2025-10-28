@@ -46,6 +46,25 @@ export default async function RentalPropertiesPage() {
 
   return (
     <main className="flex-1 bg-white">
+      {/* Latest Rental Listings - MOVED TO TOP */}
+      <section id="vuokrakohteet" className="py-20 bg-white">
+        <div className="max-w-[1400px] mx-auto px-6">
+          <h1 className="text-4xl lg:text-5xl font-light text-gray-900 mb-12 text-center">
+            Vuokrakohteet
+          </h1>
+
+          {rentalProperties.length > 0 ? (
+            <PropertyGrid properties={rentalProperties} language="fi" />
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-xl text-gray-600 font-light">
+                Ei vuokrakohteita saatavilla tällä hetkellä.
+              </p>
+            </div>
+          )}
+        </div>
+      </section>
+
       {/* Hero Section */}
       <section className="py-20 lg:py-32 bg-gray-50">
         <div className="max-w-[1400px] mx-auto px-6 text-center">
@@ -175,25 +194,6 @@ export default async function RentalPropertiesPage() {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Latest Rental Listings */}
-      <section id="vuokrakohteet" className="py-20 bg-white">
-        <div className="max-w-[1400px] mx-auto px-6">
-          <h2 className="text-3xl lg:text-4xl font-light text-gray-900 mb-12 text-center">
-            Viimeisimmät vuokrakohteemme
-          </h2>
-          
-          {rentalProperties.length > 0 ? (
-            <PropertyGrid properties={rentalProperties} language="fi" />
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-xl text-gray-600 font-light">
-                Ei vuokrakohteita saatavilla tällä hetkellä.
-              </p>
-            </div>
-          )}
         </div>
       </section>
 

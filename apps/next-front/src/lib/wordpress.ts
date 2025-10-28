@@ -60,6 +60,7 @@ export interface Property {
   totalArea?: number;  // Total area (Kokonaispinta-ala) - for estates "185 m² / 215 m²" display
   plotArea?: string;  // Plot area (Tontin pinta-ala) - for estates "0,1299 ha" display
   propertyType?: string;
+  typeOfApartment?: string;  // Huoneistoselitelmä / Lägenhetsbeskrivning - e.g., "5-6h, k, kph, wc, vh"
   status?: string;
   description?: string;
   
