@@ -75,6 +75,50 @@ export default function PropertySearch({ properties, language }: PropertySearchP
   const [areaRange, setAreaRange] = useState([0, 1500]);
   const [viewMode, setViewMode] = useState<'grid' | 'list' | 'map'>('grid');
   const [selectedArea, setSelectedArea] = useState('all');
+  const [isFilterOpen, setIsFilterOpen] = useState(true); // Mobile collapsible state
+
+  // DYNAMIC FACETS: Extract unique areas/cities and property types from properties
+  const dynamicAreas = useMemo(() => {
+    const areasSet = new Set<string>();
+    properties.forEach(property => {
+      const city = (property.city || property.acfRealEstate?.property?.city || '').trim();
+      const district = (property.districtFree || property.district || property.acfRealEstate?.property?.district || '').trim();
+      if (city) areasSet.add(city);
+      if (district && district !== city) areasSet.add(district);
+    });
+    return Array.from(areasSet).sort();
+  }, [properties]);
+
+  const dynamicPropertyTypes = useMemo(() => {
+    const typesMap = new Map<string, number>();
+    properties.forEach(property => {
+      PROPERTY_TYPES.forEach(typeConfig => {
+        if (typeConfig.id !== 'all' && typeConfig.filter(property)) {
+          typesMap.set(typeConfig.id, (typesMap.get(typeConfig.id) || 0) + 1);
+        }
+      });
+    });
+    return typesMap;
+  }, [properties]);
+
+  // Calculate min/max values for sliders from actual property data
+  const priceMinMax = useMemo(() => {
+    const prices = properties
+      .map(p => p.debtFreePrice || p.price || p.acfRealEstate?.property?.debtFreePrice || p.acfRealEstate?.property?.price || 0)
+      .filter(price => price > 0);
+    return prices.length > 0
+      ? { min: Math.floor(Math.min(...prices) / 10000) * 10000, max: Math.ceil(Math.max(...prices) / 10000) * 10000 }
+      : { min: 0, max: 5000000 };
+  }, [properties]);
+
+  const areaMinMax = useMemo(() => {
+    const areas = properties
+      .map(p => parseInt(String(p.livingArea || p.area || p.acfRealEstate?.property?.area || '0')))
+      .filter(area => area > 0);
+    return areas.length > 0
+      ? { min: Math.floor(Math.min(...areas) / 10) * 10, max: Math.ceil(Math.max(...areas) / 10) * 10 }
+      : { min: 0, max: 1500 };
+  }, [properties]);
 
   const filteredProperties = useMemo(() => {
     return properties.filter(property => {
@@ -120,75 +164,148 @@ export default function PropertySearch({ properties, language }: PropertySearchP
       {/* Advanced Search Filters */}
       <section className="py-8 bg-white border-y border-gray-200 sticky top-0 z-40">
         <div className="max-w-[1400px] mx-auto px-6">
-          <h2 className="text-2xl font-light mb-6 text-gray-900">{translations.searchTitle[language]}</h2>
-          
+          {/* Mobile: Collapsible header */}
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-light text-gray-900">{translations.searchTitle[language]}</h2>
+            <button
+              onClick={() => setIsFilterOpen(!isFilterOpen)}
+              className="lg:hidden p-2 text-gray-600 hover:text-gray-900 transition-colors"
+              aria-label="Toggle filters"
+            >
+              <svg
+                className={`w-6 h-6 transition-transform ${isFilterOpen ? 'rotate-180' : ''}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Filters - Collapsible on mobile */}
+          <div className={`${isFilterOpen ? 'block' : 'hidden lg:block'}`}>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-            {/* Area Dropdown */}
+            {/* Area Dropdown - DYNAMIC FACETS */}
             <div>
               <label className="block text-sm text-gray-600 mb-2 font-light tracking-wider">{translations.area[language]}</label>
-              <select 
+              <select
                 className="w-full px-4 py-3 border border-gray-300 rounded font-light focus:outline-none focus:border-[var(--color-primary)]"
                 value={selectedArea}
                 onChange={(e) => setSelectedArea(e.target.value)}
               >
                 <option value="all">{translations.allAreas[language]}</option>
-                <option value="helsinki">Helsinki</option>
-                <option value="espoo">Espoo</option>
-                <option value="vantaa">Vantaa</option>
-                <option value="tampere">Tampere</option>
-                <option value="turku">Turku</option>
-              </select>
-            </div>
-
-            {/* Property Type Dropdown */}
-            <div>
-              <label className="block text-sm text-gray-600 mb-2 font-light tracking-wider">{translations.propertyType[language]}</label>
-              <select 
-                className="w-full px-4 py-3 border border-gray-300 rounded font-light focus:outline-none focus:border-[var(--color-primary)]"
-                value={selectedType}
-                onChange={(e) => setSelectedType(e.target.value)}
-              >
-                {PROPERTY_TYPES.map(type => (
-                  <option key={type.id} value={type.id}>
-                    {type.label[language]}
-                  </option>
+                {dynamicAreas.map(area => (
+                  <option key={area} value={area}>{area}</option>
                 ))}
               </select>
             </div>
 
-            {/* Price Range */}
+            {/* Property Type Dropdown - DYNAMIC FACETS WITH COUNTS */}
+            <div>
+              <label className="block text-sm text-gray-600 mb-2 font-light tracking-wider">{translations.propertyType[language]}</label>
+              <select
+                className="w-full px-4 py-3 border border-gray-300 rounded font-light focus:outline-none focus:border-[var(--color-primary)]"
+                value={selectedType}
+                onChange={(e) => setSelectedType(e.target.value)}
+              >
+                {PROPERTY_TYPES.map(type => {
+                  const count = type.id === 'all' ? properties.length : (dynamicPropertyTypes.get(type.id) || 0);
+                  return (
+                    <option key={type.id} value={type.id}>
+                      {type.label[language]} ({count})
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+
+            {/* Price Range - DUAL SLIDER (MIN + MAX) */}
             <div className="lg:col-span-2">
               <label className="block text-sm text-gray-600 mb-2 font-light tracking-wider">
                 {translations.priceRange[language]}: {priceRange[0].toLocaleString('fi-FI')} € - {priceRange[1].toLocaleString('fi-FI')} €
               </label>
-              <div className="flex items-center gap-4">
-                <input
-                  type="range"
-                  min="0"
-                  max="5000000"
-                  step="50000"
-                  value={priceRange[1]}
-                  onChange={(e) => setPriceRange([0, parseInt(e.target.value)])}
-                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[var(--color-primary)]"
-                />
+              <div className="space-y-2">
+                <div className="flex items-center gap-3">
+                  <span className="text-xs text-gray-500 min-w-[40px]">Min:</span>
+                  <input
+                    type="range"
+                    min={priceMinMax.min}
+                    max={priceMinMax.max}
+                    step="50000"
+                    value={priceRange[0]}
+                    onChange={(e) => {
+                      const newMin = parseInt(e.target.value);
+                      if (newMin <= priceRange[1]) {
+                        setPriceRange([newMin, priceRange[1]]);
+                      }
+                    }}
+                    className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[var(--color-primary)]"
+                  />
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="text-xs text-gray-500 min-w-[40px]">Max:</span>
+                  <input
+                    type="range"
+                    min={priceMinMax.min}
+                    max={priceMinMax.max}
+                    step="50000"
+                    value={priceRange[1]}
+                    onChange={(e) => {
+                      const newMax = parseInt(e.target.value);
+                      if (newMax >= priceRange[0]) {
+                        setPriceRange([priceRange[0], newMax]);
+                      }
+                    }}
+                    className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[var(--color-primary)]"
+                  />
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Area Range */}
+          {/* Area Range - DUAL SLIDER (MIN + MAX) */}
           <div className="mb-6">
             <label className="block text-sm text-gray-600 mb-2 font-light tracking-wider">
               {translations.areaRange[language]}: {areaRange[0]} m² - {areaRange[1]} m²
             </label>
-            <input
-              type="range"
-              min="0"
-              max="1500"
-              step="10"
-              value={areaRange[1]}
-              onChange={(e) => setAreaRange([0, parseInt(e.target.value)])}
-              className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[var(--color-primary)]"
-            />
+            <div className="space-y-2">
+              <div className="flex items-center gap-3">
+                <span className="text-xs text-gray-500 min-w-[40px]">Min:</span>
+                <input
+                  type="range"
+                  min={areaMinMax.min}
+                  max={areaMinMax.max}
+                  step="10"
+                  value={areaRange[0]}
+                  onChange={(e) => {
+                    const newMin = parseInt(e.target.value);
+                    if (newMin <= areaRange[1]) {
+                      setAreaRange([newMin, areaRange[1]]);
+                    }
+                  }}
+                  className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[var(--color-primary)]"
+                />
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="text-xs text-gray-500 min-w-[40px]">Max:</span>
+                <input
+                  type="range"
+                  min={areaMinMax.min}
+                  max={areaMinMax.max}
+                  step="10"
+                  value={areaRange[1]}
+                  onChange={(e) => {
+                    const newMax = parseInt(e.target.value);
+                    if (newMax >= areaRange[0]) {
+                      setAreaRange([areaRange[0], newMax]);
+                    }
+                  }}
+                  className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[var(--color-primary)]"
+                />
+              </div>
+            </div>
+          </div>
           </div>
 
           {/* View Mode Selector & Results Count */}
