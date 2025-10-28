@@ -1186,6 +1186,134 @@ export const PROPERTY_TRANSLATIONS: Translations = {
 };
 
 /**
+ * Property Field Value Translations
+ * Translations for common field values like property types, ownership types, conditions, etc.
+ */
+export const PROPERTY_VALUE_TRANSLATIONS: Record<string, Record<string, {fi: string; sv: string; en: string}>> = {
+  // Property Types (Talon tyyppi / Objekttyp / Property Type)
+  propertyType: {
+    'Lägenhet': { fi: 'Asunto', sv: 'Lägenhet', en: 'Apartment' },
+    'Asunto': { fi: 'Asunto', sv: 'Lägenhet', en: 'Apartment' },
+    'Fastighet': { fi: 'Kiinteistö', sv: 'Fastighet', en: 'Estate' },
+    'Kiinteistö': { fi: 'Kiinteistö', sv: 'Fastighet', en: 'Estate' },
+    'Villa': { fi: 'Omakotitalo', sv: 'Villa', en: 'Villa' },
+    'Omakotitalo': { fi: 'Omakotitalo', sv: 'Villa', en: 'Detached House' },
+    'Radhus': { fi: 'Rivitalo', sv: 'Radhus', en: 'Townhouse' },
+    'Rivitalo': { fi: 'Rivitalo', sv: 'Radhus', en: 'Townhouse' },
+    'Parhus': { fi: 'Paritalo', sv: 'Parhus', en: 'Semi-detached House' },
+    'Paritalo': { fi: 'Paritalo', sv: 'Parhus', en: 'Semi-detached House' },
+    'Kerrosta': { fi: 'Kerrostalo', sv: 'Våningshus', en: 'Apartment Building' },
+    'Kerrostalo': { fi: 'Kerrostalo', sv: 'Våningshus', en: 'Apartment Building' },
+    'Fritidshus': { fi: 'Vapaa-ajan asunto', sv: 'Fritidshus', en: 'Holiday Home' },
+    'Mökki': { fi: 'Mökki', sv: 'Stuga', en: 'Cottage' },
+    'Tomt': { fi: 'Tontti', sv: 'Tomt', en: 'Plot' },
+  },
+
+  // Ownership Types (Omistusmuoto / Ägandeform / Ownership Type)
+  ownershipType: {
+    'Oma': { fi: 'Oma', sv: 'Egen', en: 'Own' },
+    'Egen': { fi: 'Oma', sv: 'Egen', en: 'Own' },
+    'Vuokra': { fi: 'Vuokra', sv: 'Hyra', en: 'Rental' },
+    'Hyra': { fi: 'Vuokra', sv: 'Hyra', en: 'Rental' },
+    'Asumisoikeus': { fi: 'Asumisoikeus', sv: 'Boenderätt', en: 'Right of Occupancy' },
+    'Boenderätt': { fi: 'Asumisoikeus', sv: 'Boenderätt', en: 'Right of Occupancy' },
+    'Osaomistus': { fi: 'Osaomistus', sv: 'Delägarskap', en: 'Part Ownership' },
+    'Delägarskap': { fi: 'Osaomistus', sv: 'Delägarskap', en: 'Part Ownership' },
+  },
+
+  // Housing Tenure (Hallintamuoto / Förvaltningsform / Tenure)
+  housingTenure: {
+    'Asunto-osakeyhtiö': { fi: 'Asunto-osakeyhtiö', sv: 'Bostadsaktiebolag', en: 'Housing Cooperative' },
+    'Bostadsaktiebolag': { fi: 'Asunto-osakeyhtiö', sv: 'Bostadsaktiebolag', en: 'Housing Cooperative' },
+    'Kiinteistöosakeyhtiö': { fi: 'Kiinteistöosakeyhtiö', sv: 'Fastighetsaktiebolag', en: 'Real Estate Company' },
+    'Fastighetsaktiebolag': { fi: 'Kiinteistöosakeyhtiö', sv: 'Fastighetsaktiebolag', en: 'Real Estate Company' },
+    'Oma': { fi: 'Oma', sv: 'Egen', en: 'Own' },
+    'Egen': { fi: 'Oma', sv: 'Egen', en: 'Own' },
+  },
+
+  // Condition (Kunto / Skick / Condition)
+  condition: {
+    'Hyvä': { fi: 'Hyvä', sv: 'Bra', en: 'Good' },
+    'Bra': { fi: 'Hyvä', sv: 'Bra', en: 'Good' },
+    'Erinomainen': { fi: 'Erinomainen', sv: 'Utmärkt', en: 'Excellent' },
+    'Utmärkt': { fi: 'Erinomainen', sv: 'Utmärkt', en: 'Excellent' },
+    'Tyydyttävä': { fi: 'Tyydyttävä', sv: 'Tillfredsställande', en: 'Satisfactory' },
+    'Tillfredsställande': { fi: 'Tyydyttävä', sv: 'Tillfredsställande', en: 'Satisfactory' },
+    'Välttävä': { fi: 'Välttävä', sv: 'Godtagbar', en: 'Fair' },
+    'Godtagbar': { fi: 'Välttävä', sv: 'Godtagbar', en: 'Fair' },
+    'Uudistunut': { fi: 'Uudistunut', sv: 'Renoverad', en: 'Renovated' },
+    'Renoverad': { fi: 'Uudistunut', sv: 'Renoverad', en: 'Renovated' },
+    'Peruskuntoinen': { fi: 'Peruskuntoinen', sv: 'Grundskick', en: 'Basic Condition' },
+    'Grundskick': { fi: 'Peruskuntoinen', sv: 'Grundskick', en: 'Basic Condition' },
+  },
+
+  // Heating Systems (Lämmitysjärjestelmä / Värmesystem / Heating System)
+  heatingSystem: {
+    'Kaukolämpö': { fi: 'Kaukolämpö', sv: 'Fjärrvärme', en: 'District Heating' },
+    'Fjärrvärme': { fi: 'Kaukolämpö', sv: 'Fjärrvärme', en: 'District Heating' },
+    'Maalämpö': { fi: 'Maalämpö', sv: 'Jordvärme', en: 'Geothermal' },
+    'Jordvärme': { fi: 'Maalämpö', sv: 'Jordvärme', en: 'Geothermal' },
+    'Ilmalämpöpumppu': { fi: 'Ilmalämpöpumppu', sv: 'Luftvärmepump', en: 'Air Source Heat Pump' },
+    'Luftvärmepump': { fi: 'Ilmalämpöpumppu', sv: 'Luftvärmepump', en: 'Air Source Heat Pump' },
+    'Öljylämmitys': { fi: 'Öljylämmitys', sv: 'Oljeuppvärmning', en: 'Oil Heating' },
+    'Oljeuppvärmning': { fi: 'Öljylämmitys', sv: 'Oljeuppvärmning', en: 'Oil Heating' },
+    'Sähkölämmitys': { fi: 'Sähkölämmitys', sv: 'Eluppvärmning', en: 'Electric Heating' },
+    'Eluppvärmning': { fi: 'Sähkölämmitys', sv: 'Eluppvärmning', en: 'Electric Heating' },
+    'Puulämmitys': { fi: 'Puulämmitys', sv: 'Vedeldning', en: 'Wood Heating' },
+    'Vedeldning': { fi: 'Puulämmitys', sv: 'Vedeldning', en: 'Wood Heating' },
+    'Pelletti': { fi: 'Pelletti', sv: 'Pellets', en: 'Pellet' },
+    'Pellets': { fi: 'Pelletti', sv: 'Pellets', en: 'Pellet' },
+  },
+
+  // Building Materials (Rakennusaine / Byggnadsmaterial / Building Material)
+  buildingMaterial: {
+    'Kivi': { fi: 'Kivi', sv: 'Sten', en: 'Stone' },
+    'Sten': { fi: 'Kivi', sv: 'Sten', en: 'Stone' },
+    'Tiili': { fi: 'Tiili', sv: 'Tegel', en: 'Brick' },
+    'Tegel': { fi: 'Tiili', sv: 'Tegel', en: 'Brick' },
+    'Betoni': { fi: 'Betoni', sv: 'Betong', en: 'Concrete' },
+    'Betong': { fi: 'Betoni', sv: 'Betong', en: 'Concrete' },
+    'Puu': { fi: 'Puu', sv: 'Trä', en: 'Wood' },
+    'Trä': { fi: 'Puu', sv: 'Trä', en: 'Wood' },
+    'Hirsi': { fi: 'Hirsi', sv: 'Timmer', en: 'Log' },
+    'Timmer': { fi: 'Hirsi', sv: 'Timmer', en: 'Log' },
+    'Kevyt': { fi: 'Kevyt', sv: 'Lätt', en: 'Light' },
+    'Lätt': { fi: 'Kevyt', sv: 'Lätt', en: 'Light' },
+  },
+
+  // Roof Types (Kattotyyppi / Taktyp / Roof Type)
+  roofType: {
+    'Harjakatto': { fi: 'Harjakatto', sv: 'Sadeltak', en: 'Gable Roof' },
+    'Sadeltak': { fi: 'Harjakatto', sv: 'Sadeltak', en: 'Gable Roof' },
+    'Tasakatto': { fi: 'Tasakatto', sv: 'Platt tak', en: 'Flat Roof' },
+    'Platt tak': { fi: 'Tasakatto', sv: 'Platt tak', en: 'Flat Roof' },
+    'Aumakatto': { fi: 'Aumakatto', sv: 'Valmat tak', en: 'Hip Roof' },
+    'Valmat tak': { fi: 'Aumakatto', sv: 'Valmat tak', en: 'Hip Roof' },
+    'Mansardikatto': { fi: 'Mansardikatto', sv: 'Mansardtak', en: 'Mansard Roof' },
+    'Mansardtak': { fi: 'Mansardikatto', sv: 'Mansardtak', en: 'Mansard Roof' },
+  },
+
+  // Plot Ownership (Tontin omistus / Tomtägande / Site Ownership)
+  plotOwnership: {
+    'Oma': { fi: 'Oma', sv: 'Egen', en: 'Owned' },
+    'Egen': { fi: 'Oma', sv: 'Egen', en: 'Owned' },
+    'Vuokra': { fi: 'Vuokra', sv: 'Hyra', en: 'Leased' },
+    'Hyra': { fi: 'Vuokra', sv: 'Hyra', en: 'Leased' },
+  },
+
+  // Energy Classes (Energialuokka / Energiklass / Energy Class)
+  energyClass: {
+    'A': { fi: 'A', sv: 'A', en: 'A' },
+    'B': { fi: 'B', sv: 'B', en: 'B' },
+    'C': { fi: 'C', sv: 'C', en: 'C' },
+    'D': { fi: 'D', sv: 'D', en: 'D' },
+    'E': { fi: 'E', sv: 'E', en: 'E' },
+    'F': { fi: 'F', sv: 'F', en: 'F' },
+    'G': { fi: 'G', sv: 'G', en: 'G' },
+  },
+};
+
+/**
  * Get translated label for a field
  */
 export function getTranslation(
@@ -1220,4 +1348,94 @@ export function getUnitSuffix(
   language: SupportedLanguage = 'fi'
 ): string {
   return getTranslation(unit, language);
+}
+
+/**
+ * Translate property field values
+ *
+ * This function translates common property field values like:
+ * - Property types: "Lägenhet" → "Apartment" (en), "Asunto" (fi)
+ * - Ownership types: "Oma" → "Own" (en), "Egen" (sv)
+ * - Conditions: "Hyvä" → "Good" (en), "Bra" (sv)
+ * - Heating systems: "Kaukolämpö" → "District Heating" (en), "Fjärrvärme" (sv)
+ * - Building materials: "Kivi" → "Stone" (en), "Sten" (sv)
+ * - etc.
+ *
+ * @param fieldName - The field name (e.g., 'propertyType', 'condition', 'heatingSystem')
+ * @param value - The value to translate (e.g., 'Hyvä', 'Kivi', 'Lägenhet')
+ * @param language - Target language ('fi' | 'sv' | 'en')
+ * @returns Translated value, or original value if no translation found
+ *
+ * @example
+ * translateValue('condition', 'Hyvä', 'en') // Returns: "Good"
+ * translateValue('condition', 'Hyvä', 'sv') // Returns: "Bra"
+ * translateValue('buildingMaterial', 'Kivi', 'en') // Returns: "Stone"
+ * translateValue('heatingSystem', 'Kaukolämpö ja ilmalämpöpumppu', 'sv') // Returns: "Fjärrvärme och Luftvärmepump"
+ */
+export function translateValue(
+  fieldName: string,
+  value: string | null | undefined,
+  language: SupportedLanguage = 'fi'
+): string {
+  if (!value) return '';
+
+  // Get the translations for this field
+  const fieldTranslations = PROPERTY_VALUE_TRANSLATIONS[fieldName];
+  if (!fieldTranslations) {
+    // No translations available for this field, return original value
+    return value;
+  }
+
+  // Handle compound values (e.g., "Kaukolämpö ja ilmalämpöpumppu")
+  // Split by common separators: ", ", " ja ", " och ", " and ", "/", " + "
+  const separators = [', ', ' ja ', ' och ', ' and ', ' / ', ' + '];
+  let parts = [value];
+
+  for (const sep of separators) {
+    if (value.includes(sep)) {
+      parts = value.split(sep);
+      break;
+    }
+  }
+
+  // Translate each part
+  const translatedParts = parts.map(part => {
+    const trimmed = part.trim();
+    const translation = fieldTranslations[trimmed];
+
+    if (translation) {
+      return translation[language] || translation['fi'] || trimmed;
+    }
+
+    // Try case-insensitive match
+    const lowerTrimmed = trimmed.toLowerCase();
+    for (const [key, trans] of Object.entries(fieldTranslations)) {
+      if (key.toLowerCase() === lowerTrimmed) {
+        return trans[language] || trans['fi'] || trimmed;
+      }
+    }
+
+    return trimmed;
+  });
+
+  // Rejoin with appropriate separator for target language
+  const separator = language === 'sv' ? ' och ' : language === 'en' ? ' and ' : ' ja ';
+  return translatedParts.length > 1 ? translatedParts.join(separator) : translatedParts[0];
+}
+
+/**
+ * Translate multiple field values at once
+ * Useful for batch translations
+ */
+export function translateValues(
+  fields: Array<{ fieldName: string; value: string | null | undefined }>,
+  language: SupportedLanguage = 'fi'
+): Record<string, string> {
+  const result: Record<string, string> = {};
+
+  for (const { fieldName, value } of fields) {
+    result[fieldName] = translateValue(fieldName, value, language);
+  }
+
+  return result;
 }
