@@ -1767,27 +1767,6 @@ export default function PropertyDetailEnhanced({
         </div>
       </section>
 
-      {/* Description Section - Huoneistoselostus (Apartment/Estate Description) */}
-      {apartmentDescriptionParagraphs && apartmentDescriptionParagraphs.length > 0 && (
-        <section className="bg-gray-50 py-6 sm:py-8">
-          <div className="container mx-auto px-4">
-            <h2 className="text-xl sm:text-2xl font-bold text-[#002349] mb-4">
-              {isRental
-                ? getTranslation('rentalDescription', language)
-                : getTranslation('apartmentDescription', language)
-              }
-            </h2>
-            <div className="prose prose-sm sm:prose max-w-none">
-              {apartmentDescriptionParagraphs.map((paragraph: string, idx: number) => (
-                <p key={idx} className="mb-3 text-gray-700 leading-relaxed">
-                  {removeEmojis(paragraph)}
-                </p>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* Tab Navigation - Mobile optimized with better touch targets */}
       <section className="bg-white border-b sticky top-0 md:top-[104px] z-30 shadow-sm">
         <div className="container mx-auto px-0 sm:px-2 md:px-4">
