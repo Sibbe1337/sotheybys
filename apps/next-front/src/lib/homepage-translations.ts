@@ -239,7 +239,7 @@ export const HOMEPAGE_TRANSLATIONS: HomepageTranslations = {
     en: 'Contact'
   },
   contactAgent: {
-    fi: 'Ota yhteyttä meklaariin',
+    fi: 'Ota yhteyttä välittäjään',  // Phase 7: Fixed from 'meklaariin'
     sv: 'Kontakta mäklaren',
     en: 'Contact agent'
   },
