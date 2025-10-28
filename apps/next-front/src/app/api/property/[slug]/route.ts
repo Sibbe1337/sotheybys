@@ -209,7 +209,35 @@ export async function GET(
       
       // Debug: Show ALL keys from raw data to find missing fields
       console.log('🔑 All Linear API keys:', Object.keys(raw).sort());
-      
+
+      // DIAGNOSTIC: Show ALL loan/mortgage/company related fields from Linear API
+      console.log('💰 LOAN/MORTGAGE DIAGNOSTIC (all company/loan/mortgage fields):', {
+        // Check all possible loan field names
+        companyLoans: raw.companyLoans,
+        housingCooperativeLoans: raw.housingCooperativeLoans,
+        housingCompanyLoans: raw.housingCompanyLoans,
+        taloyhtionLainat: raw.taloyhtionLainat,
+        taloyhtiönLainat: raw.taloyhtiönLainat,
+
+        // Check all possible loan date field names
+        companyLoansDate: raw.companyLoansDate,
+        housingCooperativeLoansDate: raw.housingCooperativeLoansDate,
+        housingCompanyLoansDate: raw.housingCompanyLoansDate,
+        taloyhtionLainanPaivamaara: raw.taloyhtionLainanPaivamaara,
+
+        // Check all mortgage field names
+        companyMortgages: raw.companyMortgages,
+        housingCooperativeMortgage: raw.housingCooperativeMortgage,
+        housingCompanyMortgages: raw.housingCompanyMortgages,
+        housingCompanyMortgageDate: raw.housingCompanyMortgageDate,
+        taloyhtionKiinnitykset: raw.taloyhtionKiinnitykset,
+
+        // Check nonLocalizedValues too
+        nv_companyLoans: raw.nonLocalizedValues?.companyLoans,
+        nv_housingCooperativeLoans: raw.nonLocalizedValues?.housingCooperativeLoans,
+        nv_companyMortgages: raw.nonLocalizedValues?.companyMortgages
+      });
+
       // Debug: Check if agent exists in mapped data BEFORE flatten
       console.log('🔍 Mapped Agent (before flatten):', {
         address: mapped.streetAddress?.fi || mapped.streetAddress,
