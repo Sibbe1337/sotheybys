@@ -113,65 +113,6 @@ export default function ApartmentView({
       {/* OVERVIEW TAB - Yleiskatsaus / Översikt */}
       {activeTab === 'overview' && (
         <div className="space-y-8">
-          {/* Description section - placed under gallery and address */}
-          {(descriptionParagraphs.length > 0 || showAutoTranslationNotice || agentNotes) && (
-            <SectionCard title={getTranslation('presentationText', language)}>
-              {showAutoTranslationNotice && (
-                <div className="mb-4 p-3 bg-blue-50 border-l-4 border-blue-400 text-sm text-blue-700">
-                  <p className="font-medium">{notice.title}</p>
-                  <p className="text-xs mt-1">{notice.body}</p>
-                </div>
-              )}
-
-              <div className="prose prose-lg max-w-none text-gray-700">
-                {descriptionParagraphs.map((paragraph, idx) => (
-                  <p key={idx} className={idx > 0 ? 'mt-4' : ''}>
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-
-              {/* Highlights */}
-              {highlights.length > 0 && (
-                <div className="mt-8 border-t pt-6">
-                  <h3 className="text-lg font-medium mb-4">{getTranslation('highlights', language)}</h3>
-                  <ul className="space-y-2">
-                    {highlights.map((highlight, idx) => (
-                      <li key={idx} className="flex items-start gap-3">
-                        <span className="text-[#002349] mt-1">•</span>
-                        <span className="text-gray-700">{highlight}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* Selling Points */}
-              {sellingPoints.length > 0 && (
-                <div className="mt-6">
-                  <h3 className="text-lg font-medium mb-4">{getTranslation('sellingPoints', language)}</h3>
-                  <div className="grid gap-2">
-                    {sellingPoints.map((point, idx) => (
-                      <div key={idx} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                        <svg className="w-5 h-5 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        <span className="text-gray-700">{point}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Agent Notes */}
-              {agentNotes && (
-                <div className="mt-8 p-4 bg-[#002349]/5 rounded-lg border-l-4 border-[#002349]">
-                  <p className="text-gray-700 italic">{agentNotes}</p>
-                </div>
-              )}
-            </SectionCard>
-          )}
-
           {/* Additional Materials */}
           {additionalMaterials.length > 0 && (
             <SectionCard title={getTranslation('additionalMaterials', language)}>
