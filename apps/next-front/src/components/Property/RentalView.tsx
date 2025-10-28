@@ -38,9 +38,18 @@ export default function RentalView({
       {/* OVERVIEW TAB - Yleiskatsaus */}
       {activeTab === 'overview' && (
         <div className="space-y-8">
-          <p className="text-gray-500 text-center py-8 italic">
-            Katso kuvaus yllä / Se beskrivningen ovan
-          </p>
+          {/* Description section */}
+          {descriptionParagraphs.length > 0 && (
+            <SectionCard title={getTranslation('rentalDescription', language)}>
+              <div className="prose prose-sm sm:prose max-w-none">
+                {descriptionParagraphs.map((paragraph: string, idx: number) => (
+                  <p key={idx} className="mb-3 text-gray-700 leading-relaxed">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+            </SectionCard>
+          )}
         </div>
       )}
 
