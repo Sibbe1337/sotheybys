@@ -71,12 +71,14 @@ export default function RentalView({
       {/* BUILDING TAB - Rakennus & Yhtiö */}
       {activeTab === 'building' && (
         <div className="space-y-8">
-          {/* Building facts section - ALWAYS visible */}
-          <SectionCard title={getTranslation('buildingFacts', language)}>
-            <LabelValueList items={buildingFactsItems} placeholder={notProvidedText} />
-          </SectionCard>
+          {/* Building facts section - Only shown if items exist (hidden for rentals) */}
+          {buildingFactsItems.length > 0 && (
+            <SectionCard title={getTranslation('buildingFacts', language)}>
+              <LabelValueList items={buildingFactsItems} placeholder={notProvidedText} />
+            </SectionCard>
+          )}
 
-          {/* Housing company section - ALWAYS visible */}
+          {/* Housing company section - ALWAYS visible (for rentals, this is the combined section) */}
           <SectionCard title={getTranslation('housingCompanyInfo', language)}>
             <LabelValueList items={housingCompanyItems} placeholder={notProvidedText} />
           </SectionCard>

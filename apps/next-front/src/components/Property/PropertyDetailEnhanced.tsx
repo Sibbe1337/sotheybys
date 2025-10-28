@@ -822,22 +822,64 @@ export default function PropertyDetailEnhanced({
   // ============================================================================
   const rentAmount = propertyData?.rent || 0;
   const rentDisplay = rentAmount > 0 ? formatEuroLabel(rentAmount) : '—';
-  const securityDepositAmount = parseEuroAmount(propertyData?.securityDeposit);
-  const securityDepositDisplay = securityDepositAmount != null && securityDepositAmount > 0
-    ? formatEuroLabel(securityDepositAmount)
-    : '—';
 
-  // Rental information items - ALWAYS visible for rentals
-  const rentalInfoItems: LabelValueItem[] = [
-    { label: getTranslation('availableFrom', language), value: withPlaceholder(formatDateValue(releaseSource)) },
-    { label: getTranslation('condition', language), value: withPlaceholder(formatTextValue(condition || generalCondition)) },
-    { label: getTranslation('contractType', language), value: withPlaceholder(formatTextValue(propertyData?.rentalContractType)) },
-    { label: getTranslation('terminationPeriod', language), value: withPlaceholder(formatTextValue(propertyData?.earliestTerminateDate)) },
-    { label: getTranslation('petsAllowed', language), value: withPlaceholder(formatBooleanLabel(propertyData?.petsAllowed, language)) },
-    { label: getTranslation('smokingAllowed', language), value: withPlaceholder(formatBooleanLabel(propertyData?.smokingAllowed, language)) }
+  // Security deposit - can be text (e.g. "2 kuukauden vuokra") or amount
+  const securityDepositValue = formatTextValue(propertyData?.securityDepositType) || formatEuroLabel(parseEuroAmount(propertyData?.securityDeposit) || 0);
+  const securityDepositDisplay = securityDepositValue && securityDepositValue !== '—' ? securityDepositValue : '—';
+
+  // Rental apartment details items - CONDITIONAL DISPLAY per Dennis requirements
+  const rentalApartmentDetailsItems: LabelValueItem[] = [
+    // ALLTID SYNLIGA (Always visible)
+    {
+      label: getTranslation('floorLabel', language),
+      value: withPlaceholder(formatTextValue(floorDisplay))
+    },
+    {
+      label: getTranslation('condition', language),
+      value: withPlaceholder(formatTextValue(condition || generalCondition))
+    },
+    // SYNLIGT ENDAST IFALL "JA" (Only if YES - hide if "Ei"/false or null)
+    ...(balcony === true || balcony === 'true' || (typeof balcony === 'string' && balcony.toLowerCase() === 'kyllä')
+      ? [{
+          label: getTranslation('balcony', language),
+          value: yesLabel
+        }]
+      : []),
+    ...(sauna === true || sauna === 'true' || (typeof sauna === 'string' && sauna.toLowerCase() === 'kyllä')
+      ? [{
+          label: getTranslation('sauna', language),
+          value: yesLabel
+        }]
+      : []),
+    ...(terrace === true || terrace === 'true'
+      ? [{
+          label: getTranslation('terrace', language),
+          value: yesLabel
+        }]
+      : []),
+    // SYNLIGA IFALL JA/NEJ IFYLLD (Visible if YES or NO filled - hide if null/empty)
+    ...(propertyData?.petsAllowed != null
+      ? [{
+          label: getTranslation('petsAllowed', language),
+          value: formatBooleanLabel(propertyData.petsAllowed, language)
+        }]
+      : []),
+    ...(propertyData?.smokingAllowed != null
+      ? [{
+          label: getTranslation('smokingAllowed', language),
+          value: formatBooleanLabel(propertyData.smokingAllowed, language)
+        }]
+      : [])
   ];
 
-  // Rent items - ALWAYS visible for rentals
+  // Rental information items - ALWAYS visible for rentals (Vuokratiedot)
+  const rentalInfoItems: LabelValueItem[] = [
+    { label: getTranslation('contractType', language), value: withPlaceholder(formatTextValue(propertyData?.rentalContractType)) },
+    { label: getTranslation('availableFrom', language), value: withPlaceholder(formatDateValue(releaseSource)) },
+    { label: getTranslation('terminationPeriod', language), value: withPlaceholder(formatTextValue(propertyData?.earliestTerminateDate)) }
+  ];
+
+  // Rent items - ALWAYS visible for rentals (Kustannukset)
   const rentItems: LabelValueItem[] = [
     { label: getTranslation('rentPerMonth', language), value: withPlaceholder(rentDisplay) },
     { label: getTranslation('securityDeposit', language), value: withPlaceholder(securityDepositDisplay) }
@@ -857,8 +899,25 @@ export default function PropertyDetailEnhanced({
   if (cableCharge && cableCharge > 0) {
     rentalAdditionalCostItems.push({ label: getTranslation('cableTv', language), value: formatChargeValue(cableCharge) });
   }
+  // Add "Lisätietoja maksuista" if exists
+  const chargeInfo = formatTextValue(propertyData?.chargeInfo);
+  if (chargeInfo && chargeInfo !== '—') {
+    rentalAdditionalCostItems.push({ label: getTranslation('additionalChargeInfo', language), value: chargeInfo });
+  }
 
   const includedInRentText = propertyData?.rentIncludes || propertyData?.rentalNotes || undefined;
+
+  // Rental housing+building items - Combined "Taloyhtiötiedot" for rentals
+  // Remove: Kiinnitykset, Lainat, Tontin omistus, Hallintamuoto
+  // Keep: Yhtiön nimi, Rakennusvuosi, Lämmitysjärjestelmä, Energialuokka, Energiatodistus, Hissi
+  const rentalHousingItems: LabelValueItem[] = [
+    { label: getTranslation('housingCompanyName', language), value: withPlaceholder(housingCompanyNameValue) },
+    { label: getTranslation('constructionYear', language), value: withPlaceholder(constructionYearValue) },
+    { label: getTranslation('heatingSystem', language), value: withPlaceholder(heatingSystemValue) },
+    { label: getTranslation('energyClass', language), value: withPlaceholder(energyClassValue) },
+    { label: getTranslation('energyCertificate', language), value: withPlaceholder(energyCertificateMessage) },
+    { label: getTranslation('elevator', language), value: withPlaceholder(formatBooleanLabel(elevatorDisplay, language)) }
+  ];
 
   // Get property ID from property or propertyData or use address as fallback
   const propertyId = property?.id || propertyData?.id || address;
@@ -1820,10 +1879,10 @@ export default function PropertyDetailEnhanced({
                 activeTab={activeTab}
                 language={language}
                 descriptionParagraphs={apartmentDescriptionParagraphs}
-                apartmentDetailsItems={apartmentDetailsItems}
+                apartmentDetailsItems={rentalApartmentDetailsItems}
                 rentalInfoItems={rentalInfoItems}
-                buildingFactsItems={apartmentBuildingItems}
-                housingCompanyItems={apartmentHousingItems}
+                buildingFactsItems={[]}
+                housingCompanyItems={rentalHousingItems}
                 rentItems={rentItems}
                 additionalCostItems={rentalAdditionalCostItems}
                 includedInRentText={includedInRentText}
