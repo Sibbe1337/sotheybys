@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { LocaleLink } from '@/components/LocaleLink';
+import { Link } from '@/lib/navigation';
 import { Property, Agent } from '@/lib/wordpress';
 import { Price } from '@/components/ui/Price';
 import { MetaRow } from '@/components/ui/MetaRow';
@@ -88,9 +88,9 @@ export default function PropertyCard({
     });
   }
 
-  // Generate correct property URL - use /kohde/ route with language parameter for all languages
+  // Generate correct property URL - next-intl will handle locale automatically
   const getPropertyUrl = () => {
-    return `/kohde/${slug}?lang=${language}`;
+    return `/kohde/${slug}`;
   };
 
   // Prepare images for carousel - use gallery if available, otherwise use featuredImage
@@ -112,7 +112,7 @@ export default function PropertyCard({
   }
 
   return (
-    <LocaleLink
+    <Link
       href={getPropertyUrl()}
       className="block bg-white rounded-none shadow-sm border border-gray-200 overflow-hidden card-hover hover:shadow-lg transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2"
     >
@@ -255,6 +255,6 @@ export default function PropertyCard({
           Katso kohde »
         </Button>
       </div>
-    </LocaleLink>
+    </Link>
   );
 } 
