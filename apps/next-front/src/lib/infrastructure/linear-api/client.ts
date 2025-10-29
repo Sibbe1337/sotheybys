@@ -26,12 +26,30 @@ export class LinearAPIClient {
       }
 
       const data = await response.json();
-      const listings = Array.isArray(data) ? data : [];
+      
+      // Linear API returns: { success: true, data: [{ listings: [...] }] }
+      // OR just an array: [...]
+      // Handle both formats
+      let listings: LinearListing[] = [];
+      
+      if (Array.isArray(data)) {
+        // Direct array format
+        listings = data;
+      } else if (data?.data?.[0]?.listings) {
+        // Nested format: { data: [{ listings: [...] }] }
+        listings = data.data[0].listings;
+      } else if (data?.listings) {
+        // Alternative: { listings: [...] }
+        listings = data.listings;
+      } else if (data?.data && Array.isArray(data.data)) {
+        // Another alternative: { data: [...] }
+        listings = data.data;
+      }
       
       // Build slug index for faster lookup
       this.buildSlugIndex(listings);
       
-      log(`Fetched ${listings.length} listings`);
+      log(`Fetched ${listings.length} listings from Linear API`);
       
       return listings;
     } catch (error) {
