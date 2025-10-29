@@ -819,34 +819,34 @@ export default function PropertyDetailEnhanced({
 
   // Apartment details - Per Dennis: Remove "Hissi" (moved to companyAndBuildingItems) and "Vapautuminen" (moved to otherInfoItems)
   // typeOfApartment removed - now shown as standalone section under gallery (not in details list)
-  const apartmentDetailsItems = [
+  const apartmentDetailsItems: LabelValueItem[] = [
     {
       label: getTranslation('floorLabel', language),
       value: withPlaceholder(formatTextValue(floorDisplay))
     },
     // Elevator removed - now in companyAndBuildingItems
     // availableFrom removed - now in otherInfoItems
-    showBalcony
-      ? {
+    ...(showBalcony
+      ? [{
           label: getTranslation('balcony', language),
           value: withPlaceholder(balconyLabel || yesLabel),
           secondary: balconySupplement.length > 0 ? balconySupplement.join(' • ') : undefined
-        }
-      : undefined,
-    showTerrace
-      ? {
+        } as LabelValueItem]
+      : []),
+    ...(showTerrace
+      ? [{
           label: getTranslation('terrace', language),
           value: withPlaceholder(terraceLabel || yesLabel)
-        }
-      : undefined,
-    showSauna
-      ? {
+        } as LabelValueItem]
+      : []),
+    ...(showSauna
+      ? [{
           label: getTranslation('sauna', language),
           value: withPlaceholder(saunaLabel || yesLabel),
           secondary: saunaSupplement.length > 0 ? saunaSupplement.join(' • ') : undefined
-        }
-      : undefined
-  ].filter(Boolean) as LabelValueItem[];
+        } as LabelValueItem]
+      : [])
+  ];
 
   // ============================================================================
   // RENTAL (HYRESOBJEKT) DATA PREPARATION
