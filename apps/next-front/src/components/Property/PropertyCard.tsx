@@ -252,7 +252,7 @@ export default function PropertyCard({
           variant="primary"
           className="w-full py-3.5 text-base font-medium bg-[#002349] hover:bg-[#001a35] transition-colors"
         >
-          Katso kohde »
+          {language === 'sv' ? 'Se objekt »' : language === 'en' ? 'View property »' : 'Katso kohde »'}
         </Button>
       </div>
     </Link>

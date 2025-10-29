@@ -24,7 +24,24 @@ export default function Header({ menuItems }: HeaderProps) {
   const pathname = usePathname();
   const router = useRouter();
   const locale = useLocale();
-  const currentLang = locale || 'fi';
+  
+  // ✅ FIX: Extract locale from URL as fallback (for client-side hydration)
+  // pathname from next-intl's usePathname() doesn't include locale prefix
+  // so we need to check if we're on /sv or /en routes via window.location
+  const [currentLang, setCurrentLang] = useState(locale || 'fi');
+  
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const path = window.location.pathname;
+      if (path.startsWith('/sv')) {
+        setCurrentLang('sv');
+      } else if (path.startsWith('/en')) {
+        setCurrentLang('en');
+      } else {
+        setCurrentLang(locale || 'fi');
+      }
+    }
+  }, [locale]);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);

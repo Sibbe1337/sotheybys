@@ -100,7 +100,7 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
           </h1>
 
           {rentalProperties.length > 0 ? (
-            <PropertyGrid properties={rentalProperties} language="fi" />
+            <PropertyGrid properties={rentalProperties} language={locale as 'fi' | 'sv' | 'en'} />
           ) : (
             <div className="text-center py-12">
               <p className="text-xl text-gray-600 font-light">
