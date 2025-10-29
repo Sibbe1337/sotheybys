@@ -5,15 +5,38 @@
     "contactUs": "Contact Us",
     "search": "Search",
     "month": "month",
-    "noPropertiesFound": "No properties found"
+    "noPropertiesFound": "No properties found",
+    "loading": "Loading...",
+    "error": "Error",
+    "backToHome": "Back to Home",
+    "viewAll": "View All",
+    "learnMore": "Learn More",
+    "sendMessage": "Send Message",
+    "close": "Close",
+    "next": "Next",
+    "previous": "Previous",
+    "filter": "Filter",
+    "sort": "Sort",
+    "apply": "Apply",
+    "reset": "Reset",
+    "save": "Save",
+    "cancel": "Cancel",
+    "submit": "Submit"
   },
   "navigation": {
     "home": "Home",
     "properties": "Properties",
     "forSale": "For Sale",
     "forRent": "For Rent",
+    "rentals": "Rentals",
+    "references": "References",
+    "purchaseAssignments": "Purchase Assignments",
     "about": "About Us",
     "contact": "Contact",
+    "staff": "Staff",
+    "international": "International",
+    "sellWithUs": "Sell With Us",
+    "workWithUs": "Work With Us",
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service"
   },
@@ -21,7 +44,11 @@
     "apartment": "Apartment",
     "villa": "Villa",
     "estate": "Estate",
-    "rental": "Rental"
+    "rental": "Rental",
+    "house": "House",
+    "townhouse": "Townhouse",
+    "land": "Land",
+    "commercial": "Commercial"
   },
   "propertyDetails": {
     "price": "Price",
@@ -29,6 +56,9 @@
     "salePrice": "Sale Price",
     "rent": "Rent",
     "area": "Area",
+    "livingArea": "Living Area",
+    "totalArea": "Total Area",
+    "plotArea": "Plot Area",
     "rooms": "Rooms",
     "bedrooms": "Bedrooms",
     "bathrooms": "Bathrooms",
@@ -39,24 +69,187 @@
     "address": "Address",
     "city": "City",
     "postalCode": "Postal Code",
-    "district": "District"
+    "district": "District",
+    "features": "Features",
+    "amenities": "Amenities",
+    "gallery": "Gallery",
+    "contactAgent": "Contact Agent",
+    "scheduleViewing": "Schedule Viewing",
+    "shareProperty": "Share Property",
+    "printDetails": "Print Details",
+    "energyClass": "Energy Class",
+    "heatingType": "Heating Type",
+    "parkingSpaces": "Parking Spaces",
+    "balcony": "Balcony",
+    "terrace": "Terrace",
+    "sauna": "Sauna",
+    "elevator": "Elevator",
+    "furnished": "Furnished",
+    "petFriendly": "Pet Friendly",
+    "monthlyRent": "Monthly Rent",
+    "securityDeposit": "Security Deposit",
+    "maintenanceFee": "Maintenance Fee",
+    "available": "Available",
+    "sold": "Sold",
+    "rented": "Rented"
   },
   "homepage": {
     "hero": {
       "title": "Snellman Sotheby's International Realty",
-      "subtitle": "Luxury Real Estate in Finland"
+      "subtitle": "Luxury Real Estate in Finland",
+      "description": "International expertise with local experience"
     },
     "featured": {
       "title": "Featured",
+      "subtitle": "A selection of our most exclusive properties",
       "viewAll": "View All"
     },
     "forSale": {
       "title": "For Sale",
+      "subtitle": "Browse our comprehensive selection of properties for sale",
       "viewAll": "View All For Sale"
     },
     "forRent": {
       "title": "For Rent",
+      "subtitle": "Find the perfect rental home",
       "viewAll": "View All Rentals"
+    },
+    "whyChooseUs": {
+      "title": "Why Choose Us",
+      "expertise": "Expertise",
+      "expertiseDesc": "Over 10 years of luxury real estate experience",
+      "network": "Network",
+      "networkDesc": "Global network, local expertise",
+      "service": "Service",
+      "serviceDesc": "Personal service for every client"
     }
+  },
+  "pages": {
+    "properties": {
+      "title": "Properties",
+      "subtitle": "Browse our exclusive selection",
+      "filters": "Filters",
+      "priceRange": "Price Range",
+      "areaRange": "Area Range",
+      "propertyType": "Property Type",
+      "location": "Location",
+      "noResults": "No results for your filters",
+      "tryAdjusting": "Try adjusting your filters"
+    },
+    "references": {
+      "title": "References",
+      "subtitle": "Recently sold properties",
+      "soldIn": "Sold in",
+      "noReferences": "No references at this time"
+    },
+    "rentals": {
+      "title": "Rentals",
+      "subtitle": "Quality rental properties",
+      "availableFrom": "Available from",
+      "noRentals": "No rentals at this time"
+    },
+    "about": {
+      "title": "Snellman Sotheby's International Realty",
+      "subtitle": "Opening new doors since 2015",
+      "mission": "Our Mission",
+      "missionText": "We combine the Sotheby's brand's 280-year history and international network with local expertise.",
+      "values": "Our Values",
+      "trust": "Trust",
+      "trustDesc": "We build long-term client relationships based on trust",
+      "passion": "Passion",
+      "passionDesc": "We are passionate about our work and committed to results",
+      "international": "International",
+      "internationalDesc": "We leverage our global network locally"
+    },
+    "contact": {
+      "title": "Contact Us",
+      "subtitle": "We're here for you",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "message": "Message",
+      "send": "Send Message",
+      "office": "Office",
+      "visitUs": "Visit Us",
+      "callUs": "Call Us",
+      "emailUs": "Email Us",
+      "successMessage": "Thank you for your message! We'll contact you soon.",
+      "errorMessage": "Failed to send message. Please try again."
+    },
+    "staff": {
+      "title": "Staff",
+      "subtitle": "Meet our experts",
+      "meetTeam": "Meet our team",
+      "contactAgent": "Contact"
+    },
+    "sellWithUs": {
+      "title": "Sell With Us",
+      "subtitle": "Get the best result for your property",
+      "whySellWithUs": "Why Sell With Us",
+      "globalReach": "Global Reach",
+      "globalReachDesc": "We reach buyers worldwide through the Sotheby's network",
+      "expertMarketing": "Expert Marketing",
+      "expertMarketingDesc": "Professional photography and marketing for every property",
+      "personalService": "Personal Service",
+      "personalServiceDesc": "Dedicated agent and tailored sales strategy",
+      "requestValuation": "Request Valuation",
+      "getStarted": "Get Started"
+    },
+    "international": {
+      "title": "International",
+      "subtitle": "The Sotheby's International Realty Network",
+      "globalNetwork": "Global Network",
+      "globalNetworkDesc": "Over 1,100 offices in 84 countries and territories",
+      "luxuryMarket": "Luxury Market",
+      "luxuryMarketDesc": "Specialized in luxury and unique properties"
+    },
+    "workWithUs": {
+      "title": "Work With Us",
+      "subtitle": "Join our team",
+      "careers": "Career Opportunities",
+      "careersDesc": "We're looking for motivated real estate professionals",
+      "benefits": "Benefits",
+      "sendApplication": "Send Application"
+    }
+  },
+  "forms": {
+    "required": "Required field",
+    "invalidEmail": "Invalid email address",
+    "invalidPhone": "Invalid phone number",
+    "messageTooShort": "Message is too short",
+    "messageTooLong": "Message is too long",
+    "pleaseEnter": "Please enter",
+    "selectOption": "Select option"
+  },
+  "footer": {
+    "aboutUs": "About Us",
+    "aboutUsText": "Snellman Sotheby's International Realty is part of the world's leading luxury real estate network.",
+    "quickLinks": "Quick Links",
+    "followUs": "Follow Us",
+    "newsletter": "Newsletter",
+    "newsletterText": "Subscribe to our newsletter to receive information about new properties",
+    "subscribe": "Subscribe",
+    "emailAddress": "Email Address",
+    "allRightsReserved": "All Rights Reserved",
+    "privacy": "Privacy",
+    "terms": "Terms of Service"
+  },
+  "errors": {
+    "pageNotFound": "Page Not Found",
+    "pageNotFoundDesc": "Sorry, the page you were looking for could not be found.",
+    "somethingWentWrong": "Something Went Wrong",
+    "somethingWentWrongDesc": "Sorry, an unexpected error occurred.",
+    "tryAgain": "Try Again",
+    "goHome": "Go to Home"
+  },
+  "meta": {
+    "defaultTitle": "Snellman Sotheby's International Realty",
+    "defaultDescription": "International real estate brokerage locally - Premium real estate services in Finland",
+    "homeTitle": "Home | Snellman Sotheby's International Realty",
+    "propertiesTitle": "Properties | Snellman Sotheby's International Realty",
+    "rentalsTitle": "Rentals | Snellman Sotheby's International Realty",
+    "referencesTitle": "References | Snellman Sotheby's International Realty",
+    "aboutTitle": "About Us | Snellman Sotheby's International Realty",
+    "contactTitle": "Contact | Snellman Sotheby's International Realty"
   }
 }

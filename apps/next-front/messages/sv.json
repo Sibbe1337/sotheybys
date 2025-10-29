@@ -5,15 +5,38 @@
     "contactUs": "Kontakta oss",
     "search": "Sök",
     "month": "mån",
-    "noPropertiesFound": "Inga objekt hittades"
+    "noPropertiesFound": "Inga objekt hittades",
+    "loading": "Laddar...",
+    "error": "Fel",
+    "backToHome": "Tillbaka till startsidan",
+    "viewAll": "Visa alla",
+    "learnMore": "Läs mer",
+    "sendMessage": "Skicka meddelande",
+    "close": "Stäng",
+    "next": "Nästa",
+    "previous": "Föregående",
+    "filter": "Filtrera",
+    "sort": "Sortera",
+    "apply": "Tillämpa",
+    "reset": "Återställ",
+    "save": "Spara",
+    "cancel": "Avbryt",
+    "submit": "Skicka"
   },
   "navigation": {
     "home": "Hem",
     "properties": "Objekt",
     "forSale": "Till salu",
     "forRent": "Hyresobjekt",
+    "rentals": "Hyresobjekt",
+    "references": "Referenser",
+    "purchaseAssignments": "Köpuppdrag",
     "about": "Om oss",
-    "contact": "Kontakt",
+    "contact": "Kontakta oss",
+    "staff": "Personal",
+    "international": "Internationellt",
+    "sellWithUs": "Sälj med oss",
+    "workWithUs": "Jobba hos oss",
     "privacyPolicy": "Integritetspolicy",
     "termsOfService": "Användarvillkor"
   },
@@ -21,7 +44,11 @@
     "apartment": "Lägenhet",
     "villa": "Villa",
     "estate": "Fastighet",
-    "rental": "Hyresobjekt"
+    "rental": "Hyresobjekt",
+    "house": "Hus",
+    "townhouse": "Radhus",
+    "land": "Tomt",
+    "commercial": "Kommersiell"
   },
   "propertyDetails": {
     "price": "Pris",
@@ -29,6 +56,9 @@
     "salePrice": "Försäljningspris",
     "rent": "Hyra",
     "area": "Yta",
+    "livingArea": "Bostadsyta",
+    "totalArea": "Total yta",
+    "plotArea": "Tomtarea",
     "rooms": "Rum",
     "bedrooms": "Sovrum",
     "bathrooms": "Badrum",
@@ -39,24 +69,187 @@
     "address": "Adress",
     "city": "Stad",
     "postalCode": "Postnummer",
-    "district": "Stadsdel"
+    "district": "Stadsdel",
+    "features": "Egenskaper",
+    "amenities": "Bekvämligheter",
+    "gallery": "Galleri",
+    "contactAgent": "Kontakta mäklare",
+    "scheduleViewing": "Boka visning",
+    "shareProperty": "Dela objekt",
+    "printDetails": "Skriv ut detaljer",
+    "energyClass": "Energiklass",
+    "heatingType": "Uppvärmning",
+    "parkingSpaces": "Parkeringsplatser",
+    "balcony": "Balkong",
+    "terrace": "Terrass",
+    "sauna": "Bastu",
+    "elevator": "Hiss",
+    "furnished": "Möblerad",
+    "petFriendly": "Husdjursvänlig",
+    "monthlyRent": "Månadshyra",
+    "securityDeposit": "Deposition",
+    "maintenanceFee": "Underhållsavgift",
+    "available": "Tillgänglig",
+    "sold": "Såld",
+    "rented": "Uthyrd"
   },
   "homepage": {
     "hero": {
       "title": "Snellman Sotheby's International Realty",
-      "subtitle": "Lyxfastigheter i Finland"
+      "subtitle": "Lyxfastigheter i Finland",
+      "description": "Internationell kompetens med lokal erfarenhet"
     },
     "featured": {
       "title": "Utvalda",
+      "subtitle": "Ett urval av våra mest exklusiva objekt",
       "viewAll": "Visa alla"
     },
     "forSale": {
       "title": "Till salu",
+      "subtitle": "Bläddra i vårt omfattande utbud av fastigheter till salu",
       "viewAll": "Se alla till salu"
     },
     "forRent": {
       "title": "Hyresobjekt",
+      "subtitle": "Hitta det perfekta hyresbostaden",
       "viewAll": "Se alla hyresobjekt"
+    },
+    "whyChooseUs": {
+      "title": "Varför välja oss",
+      "expertise": "Expertis",
+      "expertiseDesc": "Över 10 års erfarenhet av lyxfastigheter",
+      "network": "Nätverk",
+      "networkDesc": "Globalt nätverk, lokal expertis",
+      "service": "Service",
+      "serviceDesc": "Personlig service till varje kund"
     }
+  },
+  "pages": {
+    "properties": {
+      "title": "Objekt",
+      "subtitle": "Bläddra i vårt exklusiva urval",
+      "filters": "Filter",
+      "priceRange": "Prisintervall",
+      "areaRange": "Ytintervall",
+      "propertyType": "Objekttyp",
+      "location": "Plats",
+      "noResults": "Inga resultat för dina filter",
+      "tryAdjusting": "Försök justera dina filter"
+    },
+    "references": {
+      "title": "Referenser",
+      "subtitle": "Nyligen sålda objekt",
+      "soldIn": "Såld i",
+      "noReferences": "Inga referenser just nu"
+    },
+    "rentals": {
+      "title": "Hyresobjekt",
+      "subtitle": "Kvalitetsbostäder till uthyrning",
+      "availableFrom": "Tillgänglig från",
+      "noRentals": "Inga hyresobjekt just nu"
+    },
+    "about": {
+      "title": "Snellman Sotheby's International Realty",
+      "subtitle": "Öppnar nya dörrar sedan 2015",
+      "mission": "Vårt uppdrag",
+      "missionText": "Vi kombinerar Sotheby's-varumärkets 280 år långa historia och internationella nätverk med lokal expertis.",
+      "values": "Våra värderingar",
+      "trust": "Förtroende",
+      "trustDesc": "Vi bygger långsiktiga kundrelationer baserade på förtroende",
+      "passion": "Passion",
+      "passionDesc": "Vi brinner för vårt arbete och är engagerade i resultat",
+      "international": "Internationell",
+      "internationalDesc": "Vi utnyttjar vårt globala nätverk lokalt"
+    },
+    "contact": {
+      "title": "Kontakta oss",
+      "subtitle": "Vi är här för dig",
+      "name": "Namn",
+      "email": "E-post",
+      "phone": "Telefon",
+      "message": "Meddelande",
+      "send": "Skicka meddelande",
+      "office": "Kontor",
+      "visitUs": "Besök oss",
+      "callUs": "Ring oss",
+      "emailUs": "Maila oss",
+      "successMessage": "Tack för ditt meddelande! Vi kontaktar dig snart.",
+      "errorMessage": "Det gick inte att skicka meddelandet. Försök igen."
+    },
+    "staff": {
+      "title": "Personal",
+      "subtitle": "Möt våra experter",
+      "meetTeam": "Möt vårt team",
+      "contactAgent": "Kontakta"
+    },
+    "sellWithUs": {
+      "title": "Sälj med oss",
+      "subtitle": "Få bästa möjliga resultat för din fastighet",
+      "whySellWithUs": "Varför sälja med oss",
+      "globalReach": "Global räckvidd",
+      "globalReachDesc": "Vi når köpare över hela världen genom Sotheby's-nätverket",
+      "expertMarketing": "Expertmarknadsföring",
+      "expertMarketingDesc": "Professionell fotografering och marknadsföring för varje objekt",
+      "personalService": "Personlig service",
+      "personalServiceDesc": "Dedikerad mäklare och skräddarsydd försäljningsstrategi",
+      "requestValuation": "Begär värdering",
+      "getStarted": "Kom igång"
+    },
+    "international": {
+      "title": "Internationellt",
+      "subtitle": "Sotheby's International Realty-nätverket",
+      "globalNetwork": "Globalt nätverk",
+      "globalNetworkDesc": "Över 1100 kontor i 84 länder och territorier",
+      "luxuryMarket": "Lyxmarknad",
+      "luxuryMarketDesc": "Specialiserade på lyxiga och unika fastigheter"
+    },
+    "workWithUs": {
+      "title": "Jobba hos oss",
+      "subtitle": "Gå med i vårt team",
+      "careers": "Karriärmöjligheter",
+      "careersDesc": "Vi söker motiverade fastighetsproffs",
+      "benefits": "Fördelar",
+      "sendApplication": "Skicka ansökan"
+    }
+  },
+  "forms": {
+    "required": "Obligatoriskt fält",
+    "invalidEmail": "Ogiltig e-postadress",
+    "invalidPhone": "Ogiltigt telefonnummer",
+    "messageTooShort": "Meddelandet är för kort",
+    "messageTooLong": "Meddelandet är för långt",
+    "pleaseEnter": "Ange",
+    "selectOption": "Välj alternativ"
+  },
+  "footer": {
+    "aboutUs": "Om oss",
+    "aboutUsText": "Snellman Sotheby's International Realty är en del av världens ledande lyxfastighetsnätverk.",
+    "quickLinks": "Snabblänkar",
+    "followUs": "Följ oss",
+    "newsletter": "Nyhetsbrev",
+    "newsletterText": "Prenumerera på vårt nyhetsbrev för att få information om nya objekt",
+    "subscribe": "Prenumerera",
+    "emailAddress": "E-postadress",
+    "allRightsReserved": "Alla rättigheter förbehållna",
+    "privacy": "Integritet",
+    "terms": "Användarvillkor"
+  },
+  "errors": {
+    "pageNotFound": "Sidan hittades inte",
+    "pageNotFoundDesc": "Tyvärr, sidan du letade efter hittades inte.",
+    "somethingWentWrong": "Något gick fel",
+    "somethingWentWrongDesc": "Tyvärr, ett oväntat fel inträffade.",
+    "tryAgain": "Försök igen",
+    "goHome": "Gå till startsidan"
+  },
+  "meta": {
+    "defaultTitle": "Snellman Sotheby's International Realty",
+    "defaultDescription": "Internationell fastighetsmäkling lokalt - Premium fastighets tjänster i Finland",
+    "homeTitle": "Hem | Snellman Sotheby's International Realty",
+    "propertiesTitle": "Objekt | Snellman Sotheby's International Realty",
+    "rentalsTitle": "Hyresobjekt | Snellman Sotheby's International Realty",
+    "referencesTitle": "Referenser | Snellman Sotheby's International Realty",
+    "aboutTitle": "Om oss | Snellman Sotheby's International Realty",
+    "contactTitle": "Kontakt | Snellman Sotheby's International Realty"
   }
 }
