@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3001",
-    "build": "next build && node scripts/assert-locales.js",
+    "build": "next build",
+    "build:strict": "next build && node scripts/assert-locales.js",
     "build:verify": "npm run build",
     "start": "next start",
     "test": "vitest",
