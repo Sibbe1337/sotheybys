@@ -576,6 +576,14 @@ export interface MultilingualPropertyListing {
   earliestTerminateDate?: LocalizedString;
 
   /**
+   * Water charge description
+   * FI: Vesimaksun kuvaus (esim. "Vesimaksu sisältyy vuokraan")
+   * SV: Vattenavgiftsbeskrivning (t.ex. "Vattenavgift ingår i hyran")
+   * EN: Water charge description (e.g. "Water charge is included in the rent")
+   */
+  waterChargeText?: LocalizedString;
+
+  /**
    * Pets allowed
    * FI: Lemmikit sallittu
    * SV: Husdjur tillåtna

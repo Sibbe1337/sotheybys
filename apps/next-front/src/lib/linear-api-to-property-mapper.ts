@@ -884,6 +884,7 @@ export function mapLinearAPIToProperty(
     securityDepositType: extractLocalizedString(data.securityDepositType),
     rentalContractType: extractLocalizedString(data.rentalContractType),
     earliestTerminateDate: extractLocalizedString(data.earliestTerminateDate),
+    waterChargeText: extractLocalizedString(data.waterCharge),
     petsAllowed: nv.petsAllowed ?? false,
     smokingAllowed: nv.smokingAllowed ?? false,
 

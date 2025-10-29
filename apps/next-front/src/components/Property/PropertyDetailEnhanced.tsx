@@ -118,7 +118,7 @@ export default function PropertyDetailEnhanced({
     housingCooperativeHas, housingCooperativeUpcomingRenovations,
     
     // Charges
-    maintenanceCharge, waterCharge, propertyTax, heatingCharge,
+    maintenanceCharge, waterCharge, waterChargeText, propertyTax, heatingCharge,
     electricHeatingCharge, plotRentCharge, otherCharge,
     
     // Management
@@ -918,7 +918,10 @@ export default function PropertyDetailEnhanced({
 
   // Additional costs for rentals - ONLY if they exist
   const rentalAdditionalCostItems: LabelValueItem[] = [];
-  if (waterCharge && waterCharge > 0) {
+  // Water charge: Show text description if available, otherwise show numeric value
+  if (waterChargeText) {
+    rentalAdditionalCostItems.push({ label: getTranslation('waterCharge', language), value: getLocalizedText(waterChargeText, language) || '-' });
+  } else if (waterCharge && waterCharge > 0) {
     rentalAdditionalCostItems.push({ label: getTranslation('waterCharge', language), value: formatChargeValue(waterCharge) });
   }
   if (heatingCharge && heatingCharge > 0) {

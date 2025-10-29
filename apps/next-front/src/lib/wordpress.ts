@@ -99,6 +99,7 @@ export interface Property {
   rentalContractType?: string;
   subleasing?: string;
   subleasingDetails?: string;
+  waterChargeText?: string;  // Water charge description (e.g., "Vesimaksu sisältyy vuokraan" / "Ingår i hyran" / "Included in rent")
   housingTenure?: string;
   petsAllowed?: string;
   smokingAllowed?: string;
