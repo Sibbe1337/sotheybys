@@ -17,8 +17,9 @@
 import { createNavigation } from 'next-intl/navigation';
 import { locales, defaultLocale } from '@/i18n/config';
 
+// ✅ FIX: Must match middleware localePrefix setting (always)
 export const { Link, redirect, usePathname, useRouter, getPathname } =
-  createNavigation({ locales, localePrefix: 'as-needed' });
+  createNavigation({ locales, localePrefix: 'always' });
 
 /**
  * Backward compatibility helper

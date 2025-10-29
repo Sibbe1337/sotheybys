@@ -315,11 +315,11 @@ function generateStructuredData(property: PropertyWithACF, propertyData: any, ag
       }
     }),
     
-    // Price information
+    // Price information - ✅ SPEC FIX: Use numeric price (not string)
     ...(propertyData.price || propertyData.debtFreePrice) && {
       offers: {
         '@type': 'Offer',
-        price: propertyData.price || propertyData.debtFreePrice,
+        price: parseInt(propertyData.price || propertyData.debtFreePrice) || 0,
         priceCurrency: 'EUR',
         availability: 'https://schema.org/InStock'
       }

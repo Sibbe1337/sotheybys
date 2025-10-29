@@ -61,17 +61,8 @@ const PROPERTY_TYPES = [
       const allTypes = `${type} ${aptType}`;
       return allTypes.includes('rivi') || allTypes.includes('radhus') || allTypes.includes('townhouse');
     }
-  },
-  {
-    id: 'rental',
-    label: { fi: 'Vuokrakohteet', sv: 'Hyresobjekt', en: 'Rentals' },
-    image: '/images/property-types/rental.svg',
-    filter: (p: any) => {
-      // Kolla båda format: root-nivå OCH acfRealEstate.property
-      const rent = p.rent || p.acfRealEstate?.property?.rent;
-      return rent && parseInt(rent) > 0;
-    }
   }
+  // ✅ SPEC FIX: 'rental' type removed from filter - rentals have dedicated page (/kohteet/vuokrakohteet)
 ];
 
 export default function PropertySearch({ properties, language }: PropertySearchProps) {

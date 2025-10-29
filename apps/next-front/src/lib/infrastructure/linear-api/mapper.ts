@@ -5,6 +5,7 @@ import { buildSlug } from '@/lib/domain/slug';
 import { cleanAgentData } from '@/lib/domain/agent-utils';
 import { validateProperty } from '@/lib/domain/property.schema';
 import { log, warn } from '@/lib/logger';
+import { localizeListingType } from './listing-type-localizer';
 import { LinearListing, LinearLocalized } from './types';
 
 const YES = new Set(['kyllä', 'ja', 'yes', 'on', '1', 'true', true, 1]);
@@ -27,9 +28,23 @@ function lv(src: LinearLocalized | undefined): LocalizedValue {
 }
 
 function toBool(v: any): boolean | undefined {
-  const s = String(v ?? '').trim().toLowerCase();
-  if (YES.has(s) || YES.has(v)) return true;
-  if (NO.has(s) || NO.has(v)) return false;
+  // ✅ FIX: Extract value from localized object structure
+  let rawValue = v;
+  
+  // Handle localized object: { fi: { key: '...', value: 'Kyllä', category: '...' } }
+  if (v && typeof v === 'object' && v.fi?.value !== undefined) {
+    rawValue = v.fi.value;
+  }
+  // Handle LinearLocalized: { fi: 'Kyllä', sv: 'Ja', en: 'Yes' }
+  else if (v && typeof v === 'object' && v.fi !== undefined && typeof v.fi === 'string') {
+    rawValue = v.fi;
+  }
+  
+  if (rawValue === null || rawValue === undefined) return undefined;
+  
+  const s = String(rawValue).trim().toLowerCase();
+  if (YES.has(s) || YES.has(rawValue)) return true;
+  if (NO.has(s) || NO.has(rawValue)) return false;
   
   log('⚠️ Unrecognized boolean value:', v);
   return undefined;
@@ -257,6 +272,7 @@ export class LinearToPropertyMapper {
       meta: {
         status,
         typeCode: String(nv.listingType ?? src.listingType ?? '').toUpperCase(),
+        listingTypeLabel: localizeListingType(String(nv.listingType ?? src.listingType ?? '')), // ✅ SPEC: Localized listing type
         apartmentType: lv(src.typeOfApartment),
         energyClass: lget(src.energyClass!, locale) || undefined,
         energyCertStatus: normalizeEnergyStatus(lget(src.listingHasEnergyCertificate!, locale)),

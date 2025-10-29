@@ -62,7 +62,8 @@ export interface Property {
   // Metadata
   meta: {
     status?: 'ACTIVE' | 'SOLD' | 'RESERVED';  // NEW for filtering
-    typeCode?: string;               // KERROSTALO, MÖKKI_TAI_HUVILA, ...
+    typeCode?: string;               // KERROSTALO, MÖKKI_TAI_HUVILA, ... (raw code)
+    listingTypeLabel?: LocalizedValue; // Localized listing type (Kerrostalo/Höghus/Apartment Building)
     apartmentType?: LocalizedValue;  // Huoneistoselitelmä
     energyClass?: string;            // C2018, ...
     energyCertStatus?: 'HAS_CERTIFICATE' | 'NOT_REQUIRED_BY_LAW' | 'EXEMPT_BY_ACT' | null;

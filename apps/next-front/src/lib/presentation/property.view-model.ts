@@ -2,7 +2,8 @@ import { Property, Locale } from '@/lib/domain/property.types';
 import { fmtCurrency } from './formatters/currency';
 import { fmtArea } from './formatters/area';
 import { fmtFee, fmtFeeWithoutSuffix, calculateTotalFees } from './formatters/fees';
-import { lpick } from '@/lib/domain/locale-utils';
+import { formatDate } from './formatters/date';
+import { lpick, lpickWithFallback } from '@/lib/domain/locale-utils';
 
 export interface PropertyCardVM {
   id: string;
@@ -116,7 +117,8 @@ export interface PropertyDetailVM extends PropertyCardVM {
 export class PropertyVM {
   static toCard(p: Property, l: Locale): PropertyCardVM {
     const title = p.address[l] || p.address.fi;
-    const type = (p.meta.typeCode || '').replace(/_/g, ' ');
+    // ✅ SPEC: Use localized listing type label instead of raw code
+    const type = lpick(p.meta.listingTypeLabel, l) || (p.meta.typeCode || '').replace(/_/g, ' ');
     const district = p.city[l] || p.city.fi;
     const localeStr = l === 'sv' ? 'sv-SE' : l === 'en' ? 'en-GB' : 'fi-FI';
     
@@ -153,8 +155,9 @@ export class PropertyVM {
       city: p.city[l] || p.city.fi,
       
       // Rich content (NEW Phase 3)
-      description: lpick(p.description, l),
-      descriptionTitle: lpick(p.descriptionTitle, l),
+      // ✅ SPEC: Allow FI fallback for descriptions (user-friendly), but strict for other fields
+      description: lpickWithFallback(p.description, l, true), // Allow FI fallback
+      descriptionTitle: lpickWithFallback(p.descriptionTitle, l, true),
 
       // Dimensions (NEW Phase 3)
       rooms: p.dimensions.rooms,
@@ -200,7 +203,7 @@ export class PropertyVM {
       housingCompanyName: lpick(p.meta.housingCompany.name, l),
       companyLoans: p.meta.housingCompany.loans || undefined,
       companyEncumbrances: p.meta.housingCompany.encumbrances || undefined,
-      companyLoansDate: p.meta.housingCompany.loansDate,
+      companyLoansDate: p.meta.housingCompany.loansDate ? formatDate(p.meta.housingCompany.loansDate, l) : undefined,
 
       // Media
       images: p.media.images,

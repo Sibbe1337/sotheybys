@@ -101,7 +101,8 @@ export async function generateMetadata({ params, searchParams }: PropertyPagePro
 }
 
 // Generate structured data for SEO
-function generateStructuredData(vm: ReturnType<typeof PropertyVM.toDetail>, slug: string) {
+// ✅ SPEC FIX: Extract numeric price from formatted string
+function generateStructuredData(vm: ReturnType<typeof PropertyVM.toDetail>, domain: any, slug: string) {
   return {
     '@context': 'https://schema.org',
     '@type': 'RealEstateListing',
@@ -119,10 +120,10 @@ function generateStructuredData(vm: ReturnType<typeof PropertyVM.toDetail>, slug
       addressCountry: 'FI'
     },
     
-    // Price information
+    // Price information - ✅ SPEC: Use numeric price (not formatted string)
     offers: {
       '@type': 'Offer',
-      price: vm.price,
+      price: domain?.pricing?.sales || domain?.pricing?.debtFree || 0,
       priceCurrency: 'EUR',
       availability: 'https://schema.org/InStock'
     },
@@ -182,8 +183,8 @@ export default async function PropertyDetailPage({ params, searchParams }: Prope
 
   const vm = PropertyVM.toDetail(domain, lang);
   
-  // Generate structured data
-  const structuredData = generateStructuredData(vm, slug);
+  // Generate structured data (pass domain for numeric price)
+  const structuredData = generateStructuredData(vm, domain, slug);
 
   return (
     <>
