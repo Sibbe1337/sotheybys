@@ -8,10 +8,10 @@ import { GetProperties } from '@/lib/application/get-properties.usecase';
 import { PropertyVM } from '@/lib/presentation/property.view-model';
 import { getLinearAPIUrl, getLinearAPIKey } from '@/lib/config/linear-api.config';
 
-// Force static generation for all locales
-export const dynamic = 'force-static';
+// Use ISR (Incremental Static Regeneration) instead of force-static
+// This allows data fetching at runtime, not just build time
+export const revalidate = 300; // Regenerate every 5 minutes
 export const dynamicParams = false;
-export const revalidate = 300;
 
 /**
  * Generate static params for all locales
@@ -35,6 +35,10 @@ export default async function HomePage({ params: { locale } }: { params: { local
     const apiUrl = getLinearAPIUrl();
     const apiKey = getLinearAPIKey();
     
+    console.log('🔧 [Homepage SSR] API URL:', apiUrl);
+    console.log('🔧 [Homepage SSR] API Key exists:', !!apiKey);
+    console.log('🔧 [Homepage SSR] Locale:', locale);
+    
     const client = new LinearAPIClient(apiUrl, apiKey);
     const mapper = new LinearToPropertyMapper();
     const getPropertiesUseCase = new GetProperties(client, mapper);
@@ -42,8 +46,12 @@ export default async function HomePage({ params: { locale } }: { params: { local
     const domainProperties = await getPropertiesUseCase.execute(locale as Locale);
     const cardVMs = domainProperties.map(p => PropertyVM.toCard(p, locale as Locale));
     
+    console.log(`✅ [Homepage SSR] Fetched ${domainProperties.length} total properties`);
+    
     // Filter out rentals, only show sales on homepage
     const saleProperties = cardVMs.filter(vm => !vm.isRental);
+    
+    console.log(`✅ [Homepage SSR] Filtered ${saleProperties.length} sale properties for homepage`);
     
     // Transform to legacy format for PropertyCard compatibility
     properties = saleProperties.map(vm => ({
