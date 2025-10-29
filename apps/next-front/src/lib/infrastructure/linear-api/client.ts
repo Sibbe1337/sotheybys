@@ -27,6 +27,12 @@ export class LinearAPIClient {
 
       const data = await response.json();
       
+      // Debug: Log what we actually received
+      log('Linear API response type:', typeof data);
+      log('Is array?', Array.isArray(data));
+      log('Has data property?', !!data?.data);
+      log('Sample structure:', JSON.stringify(data).substring(0, 200));
+      
       // Linear API returns: { success: true, data: [{ listings: [...] }] }
       // OR just an array: [...]
       // Handle both formats
@@ -34,16 +40,22 @@ export class LinearAPIClient {
       
       if (Array.isArray(data)) {
         // Direct array format
+        log('✅ Using direct array format');
         listings = data;
       } else if (data?.data?.[0]?.listings) {
         // Nested format: { data: [{ listings: [...] }] }
+        log('✅ Using nested format: data[0].listings');
         listings = data.data[0].listings;
       } else if (data?.listings) {
         // Alternative: { listings: [...] }
+        log('✅ Using wrapped format: data.listings');
         listings = data.listings;
       } else if (data?.data && Array.isArray(data.data)) {
         // Another alternative: { data: [...] }
+        log('✅ Using semi-wrapped format: data.data');
         listings = data.data;
+      } else {
+        warn('❌ Unknown Linear API response format!', typeof data);
       }
       
       // Build slug index for faster lookup
