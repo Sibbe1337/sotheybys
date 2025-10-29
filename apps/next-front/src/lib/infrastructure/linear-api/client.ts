@@ -41,7 +41,7 @@ export class LinearAPIClient {
       
       const response = await fetch(endpoint, {
         headers,
-        next: { revalidate: 300 } // Cache for 5 minutes
+        cache: 'no-store' // TEMPORARILY: Same as debug endpoint that works!
       });
 
       if (!response.ok) {
