@@ -16,13 +16,22 @@ const DEFAULT_LINEAR_API_URL = 'https://linear-external-api.azurewebsites.net';
 /**
  * Get Linear API URL with fallback
  * Priority: NEXT_PUBLIC_LINEAR_API_URL > LINEAR_API_URL > DEFAULT
+ * 
+ * IMPORTANT: Strips /api suffix if present (client adds /v2/listings)
  */
 export function getLinearAPIUrl(): string {
-  return (
+  let url = (
     process.env.NEXT_PUBLIC_LINEAR_API_URL ||
     process.env.LINEAR_API_URL ||
     DEFAULT_LINEAR_API_URL
   );
+  
+  // Remove /api suffix if present (common mistake in env vars)
+  if (url.endsWith('/api')) {
+    url = url.slice(0, -4);
+  }
+  
+  return url;
 }
 
 /**
