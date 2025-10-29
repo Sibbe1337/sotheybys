@@ -102,7 +102,7 @@ interface PropertyWithACF {
   };
 }
 
-export const revalidate = 60;
+export const revalidate = 10; // Temporarily set to 10 seconds for testing
 
 // Helper function to fetch property data using new architecture
 async function fetchPropertyData(slug: string, locale: 'fi' | 'sv' | 'en' = 'fi'): Promise<PropertyWithACF | null> {
