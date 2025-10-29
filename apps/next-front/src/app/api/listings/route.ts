@@ -3,6 +3,7 @@ import { LinearAPIClient } from '@/lib/infrastructure/linear-api/client';
 import { LinearToPropertyMapper } from '@/lib/infrastructure/linear-api/mapper';
 import { GetProperties } from '@/lib/application/get-properties.usecase';
 import { PropertyVM } from '@/lib/presentation/property.view-model';
+import { getLinearAPIUrl, getLinearAPIKey, getLinearCompanyId } from '@/lib/config/linear-api.config';
 import { log } from '@/lib/logger';
 
 // Force dynamic rendering as this route uses request.url
@@ -24,10 +25,14 @@ export async function GET(request: Request) {
     const language = (searchParams.get('lang') || 'fi') as 'fi' | 'sv' | 'en';
     const format = searchParams.get('format') || 'card';
 
-    // 🏗️ NEW ARCHITECTURE: Use clean architecture layers
-    const apiUrl = process.env.NEXT_PUBLIC_LINEAR_API_URL || process.env.LINEAR_API_URL || '';
-    const apiKey = process.env.LINEAR_API_KEY;
-    const companyId = process.env.COMPANY_ID || process.env.LINEAR_COMPANY_ID;
+    // 🏗️ NEW ARCHITECTURE: Use clean architecture layers with fallback config
+    const apiUrl = getLinearAPIUrl();
+    const apiKey = getLinearAPIKey();
+    const companyId = getLinearCompanyId();
+    
+    log('🔥 API /listings - URL:', apiUrl);
+    log('🔥 API /listings - Has key:', !!apiKey);
+    log('🔥 API /listings - Has company ID:', !!companyId);
     
     const client = new LinearAPIClient(apiUrl, apiKey, companyId);
     const mapper = new LinearToPropertyMapper();

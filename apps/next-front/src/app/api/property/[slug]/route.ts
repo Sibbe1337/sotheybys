@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { LinearAPIClient } from '@/lib/infrastructure/linear-api/client';
 import { LinearToPropertyMapper } from '@/lib/infrastructure/linear-api/mapper';
 import { GetPropertyBySlug } from '@/lib/application/get-property-by-slug.usecase';
+import { getLinearAPIUrl, getLinearAPIKey, getLinearCompanyId } from '@/lib/config/linear-api.config';
 import { log } from '@/lib/logger';
 
 // Force dynamic rendering as this route uses request.url
@@ -26,10 +27,10 @@ export async function GET(
   const lang = (u.searchParams.get("lang") ?? "fi") as 'fi' | 'sv' | 'en';
 
   try {
-    // 🏗️ NEW ARCHITECTURE: Use Clean Architecture use case
-    const apiUrl = process.env.NEXT_PUBLIC_LINEAR_API_URL || process.env.LINEAR_API_URL || '';
-    const apiKey = process.env.LINEAR_API_KEY;
-    const companyId = process.env.COMPANY_ID || process.env.LINEAR_COMPANY_ID;
+    // 🏗️ NEW ARCHITECTURE: Use Clean Architecture use case with fallback config
+    const apiUrl = getLinearAPIUrl();
+    const apiKey = getLinearAPIKey();
+    const companyId = getLinearCompanyId();
     
     const client = new LinearAPIClient(apiUrl, apiKey, companyId);
     const mapper = new LinearToPropertyMapper();
