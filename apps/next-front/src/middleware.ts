@@ -20,17 +20,10 @@ export default createMiddleware({
   // Locale detection strategy
   localeDetection: true,
 
-  // Prefix for default locale
-  // Set to 'as-needed' so /fi/ is optional (root path can be Finnish)
-  // Or use 'always' to require /fi/ prefix for Finnish pages too
-  localePrefix: 'as-needed'
+  // Prefix for default locale - ALWAYS to force Vercel to generate all /fi, /sv, /en routes
+  localePrefix: 'always'
 });
 
 export const config = {
-  // Match all routes except:
-  // - API routes
-  // - Static files (_next/static)
-  // - Image optimization (_next/image)
-  // - Favicon and other public files
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)']
-};
+  // Match all routes except static files and Next.js internals
+  matcher: ['/', '/((?!_next|.*\\..*).*)']}
