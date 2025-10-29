@@ -5,15 +5,38 @@
     "contactUs": "Ota yhteyttä",
     "search": "Hae",
     "month": "kk",
-    "noPropertiesFound": "Kohteita ei löytynyt"
+    "noPropertiesFound": "Kohteita ei löytynyt",
+    "loading": "Ladataan...",
+    "error": "Virhe",
+    "backToHome": "Takaisin etusivulle",
+    "viewAll": "Näytä kaikki",
+    "learnMore": "Lue lisää",
+    "sendMessage": "Lähetä viesti",
+    "close": "Sulje",
+    "next": "Seuraava",
+    "previous": "Edellinen",
+    "filter": "Suodata",
+    "sort": "Järjestä",
+    "apply": "Käytä",
+    "reset": "Tyhjennä",
+    "save": "Tallenna",
+    "cancel": "Peruuta",
+    "submit": "Lähetä"
   },
   "navigation": {
-    "home": "Etusivu",
+    "home": "Koti",
     "properties": "Kohteet",
     "forSale": "Myytävät",
     "forRent": "Vuokralle",
-    "about": "Tietoa meistä",
-    "contact": "Yhteystiedot",
+    "rentals": "Vuokrakohteet",
+    "references": "Referenssit",
+    "purchaseAssignments": "Ostotoimeksiannot",
+    "about": "Yritys",
+    "contact": "Ota yhteyttä",
+    "staff": "Henkilöstö",
+    "international": "Kansainvälisesti",
+    "sellWithUs": "Myymässä",
+    "workWithUs": "Meille töihin",
     "privacyPolicy": "Tietosuoja",
     "termsOfService": "Käyttöehdot"
   },
@@ -21,7 +44,11 @@
     "apartment": "Asunto",
     "villa": "Omakotitalo",
     "estate": "Kiinteistö",
-    "rental": "Vuokrakohde"
+    "rental": "Vuokrakohde",
+    "house": "Talo",
+    "townhouse": "Rivitalo",
+    "land": "Tontti",
+    "commercial": "Liiketila"
   },
   "propertyDetails": {
     "price": "Hinta",
@@ -29,6 +56,9 @@
     "salePrice": "Myyntihinta",
     "rent": "Vuokra",
     "area": "Pinta-ala",
+    "livingArea": "Asuinpinta-ala",
+    "totalArea": "Kokonaispinta-ala",
+    "plotArea": "Tontin pinta-ala",
     "rooms": "Huoneet",
     "bedrooms": "Makuuhuoneet",
     "bathrooms": "Kylpyhuoneet",
@@ -39,24 +69,187 @@
     "address": "Osoite",
     "city": "Kaupunki",
     "postalCode": "Postinumero",
-    "district": "Kaupunginosa"
+    "district": "Kaupunginosa",
+    "features": "Ominaisuudet",
+    "amenities": "Mukavuudet",
+    "gallery": "Galleria",
+    "contactAgent": "Ota yhteyttä välittäjään",
+    "scheduleViewing": "Varaa esittely",
+    "shareProperty": "Jaa kohde",
+    "printDetails": "Tulosta tiedot",
+    "energyClass": "Energialuokka",
+    "heatingType": "Lämmitysmuoto",
+    "parkingSpaces": "Pysäköintipaikkoja",
+    "balcony": "Parveke",
+    "terrace": "Terassi",
+    "sauna": "Sauna",
+    "elevator": "Hissi",
+    "furnished": "Kalustettu",
+    "petFriendly": "Lemmikkiystävällinen",
+    "monthlyRent": "Kuukausivuokra",
+    "securityDeposit": "Vakuus",
+    "maintenanceFee": "Hoitovastike",
+    "available": "Saatavilla",
+    "sold": "Myyty",
+    "rented": "Vuokrattu"
   },
   "homepage": {
     "hero": {
       "title": "Snellman Sotheby's International Realty",
-      "subtitle": "Luksuskiinteistöjä Suomessa"
+      "subtitle": "Luksuskiinteistöjä Suomessa",
+      "description": "Kansainvälinen osaaminen paikallisella kokemuksella"
     },
     "featured": {
       "title": "Esittelyssä",
+      "subtitle": "Valikoima eksklusiivisimpia kohteitamme",
       "viewAll": "Näytä kaikki"
     },
     "forSale": {
       "title": "Myytävät kohteet",
+      "subtitle": "Selaa kattavaa valikoimaamme myytäviä kiinteistöjä",
       "viewAll": "Katso kaikki myytävät"
     },
     "forRent": {
       "title": "Vuokrakohteet",
+      "subtitle": "Löydä täydellinen vuokrakoti",
       "viewAll": "Katso kaikki vuokrakohteet"
+    },
+    "whyChooseUs": {
+      "title": "Miksi valita meidät",
+      "expertise": "Asiantuntemus",
+      "expertiseDesc": "Yli 10 vuoden kokemus luksuskiinteistöistä",
+      "network": "Verkosto",
+      "networkDesc": "Globaali verkosto, paikallinen asiantuntemus",
+      "service": "Palvelu",
+      "serviceDesc": "Henkilökohtaista palvelua jokaiselle asiakkaalle"
     }
+  },
+  "pages": {
+    "properties": {
+      "title": "Kohteet",
+      "subtitle": "Selaa eksklusiivista valikoimaamme",
+      "filters": "Suodattimet",
+      "priceRange": "Hintaluokka",
+      "areaRange": "Pinta-ala",
+      "propertyType": "Kohdetyyppi",
+      "location": "Sijainti",
+      "noResults": "Ei tuloksia suodattimillesi",
+      "tryAdjusting": "Kokeile muuttaa suodattimiasi"
+    },
+    "references": {
+      "title": "Referenssit",
+      "subtitle": "Äskettäin myydyt kohteet",
+      "soldIn": "Myyty",
+      "noReferences": "Ei referenssejä tällä hetkellä"
+    },
+    "rentals": {
+      "title": "Vuokrakohteet",
+      "subtitle": "Laadukkaita vuokra-asuntoja",
+      "availableFrom": "Saatavilla alkaen",
+      "noRentals": "Ei vuokrakohteita tällä hetkellä"
+    },
+    "about": {
+      "title": "Snellman Sotheby's International Realty",
+      "subtitle": "Avaamme uusia ovia vuodesta 2015",
+      "mission": "Tehtävämme",
+      "missionText": "Yhdistämme Sotheby's-brändin 280 vuoden historian ja kansainvälisen verkoston voiman paikalliseen asiantuntemukseen.",
+      "values": "Arvomme",
+      "trust": "Luottamus",
+      "trustDesc": "Rakennamme pitkäaikaisia asiakassuhteita luottamuksen pohjalta",
+      "passion": "Intohimo",
+      "passionDesc": "Olemme intohimoisia työstämme ja sitoutuneita tuloksiin",
+      "international": "Kansainvälisyys",
+      "internationalDesc": "Hyödynnämme globaalia verkostoamme paikallisesti"
+    },
+    "contact": {
+      "title": "Ota yhteyttä",
+      "subtitle": "Olemme täällä sinua varten",
+      "name": "Nimi",
+      "email": "Sähköposti",
+      "phone": "Puhelin",
+      "message": "Viesti",
+      "send": "Lähetä viesti",
+      "office": "Toimisto",
+      "visitUs": "Vieraile luonamme",
+      "callUs": "Soita meille",
+      "emailUs": "Lähetä sähköpostia",
+      "successMessage": "Kiitos viestistäsi! Otamme sinuun yhteyttä pian.",
+      "errorMessage": "Viestin lähetys epäonnistui. Yritä uudelleen."
+    },
+    "staff": {
+      "title": "Henkilöstö",
+      "subtitle": "Tapaa asiantuntijamme",
+      "meetTeam": "Tapaa tiimimme",
+      "contactAgent": "Ota yhteyttä"
+    },
+    "sellWithUs": {
+      "title": "Myy kanssamme",
+      "subtitle": "Saat parhaan tuloksen kiinteistöllesi",
+      "whySellWithUs": "Miksi myydä kanssamme",
+      "globalReach": "Globaali näkyvyys",
+      "globalReachDesc": "Tavoitamme ostajat ympäri maailman Sotheby's-verkoston kautta",
+      "expertMarketing": "Asiantunteva markkinointi",
+      "expertMarketingDesc": "Professionaalista kuvausta ja markkinointia jokaiselle kohteelle",
+      "personalService": "Henkilökohtainen palvelu",
+      "personalServiceDesc": "Omistautunut välittäjä ja räätälöity myyntistrategia",
+      "requestValuation": "Pyydä arvio",
+      "getStarted": "Aloita tästä"
+    },
+    "international": {
+      "title": "Kansainvälisesti",
+      "subtitle": "Sotheby's International Realty -verkosto",
+      "globalNetwork": "Globaali verkosto",
+      "globalNetworkDesc": "Yli 1100 toimistoa 84 maassa ja alueella",
+      "luxuryMarket": "Luksusmarkkinat",
+      "luxuryMarketDesc": "Erikoistuneet ylellisiin ja ainutlaatuisiin kiinteistöihin"
+    },
+    "workWithUs": {
+      "title": "Meille töihin",
+      "subtitle": "Liity tiimimme",
+      "careers": "Uramahdollisuudet",
+      "careersDesc": "Etsimme motivoituneita kiinteistöalan ammattilaisia",
+      "benefits": "Edut",
+      "sendApplication": "Lähetä hakemus"
+    }
+  },
+  "forms": {
+    "required": "Pakollinen kenttä",
+    "invalidEmail": "Virheellinen sähköpostiosoite",
+    "invalidPhone": "Virheellinen puhelinnumero",
+    "messageTooShort": "Viesti on liian lyhyt",
+    "messageTooLong": "Viesti on liian pitkä",
+    "pleaseEnter": "Syötä",
+    "selectOption": "Valitse vaihtoehto"
+  },
+  "footer": {
+    "aboutUs": "Tietoa meistä",
+    "aboutUsText": "Snellman Sotheby's International Realty on osa maailman johtavaa luksuskiinteistöjen välitysketjua.",
+    "quickLinks": "Pikavalinnat",
+    "followUs": "Seuraa meitä",
+    "newsletter": "Uutiskirje",
+    "newsletterText": "Tilaa uutiskirje saadaksesi tietoa uusista kohteista",
+    "subscribe": "Tilaa",
+    "emailAddress": "Sähköpostiosoite",
+    "allRightsReserved": "Kaikki oikeudet pidätetään",
+    "privacy": "Tietosuoja",
+    "terms": "Käyttöehdot"
+  },
+  "errors": {
+    "pageNotFound": "Sivua ei löytynyt",
+    "pageNotFoundDesc": "Anteeksi, etsimääsi sivua ei löytynyt.",
+    "somethingWentWrong": "Jotain meni pieleen",
+    "somethingWentWrongDesc": "Anteeksi, tapahtui odottamaton virhe.",
+    "tryAgain": "Yritä uudelleen",
+    "goHome": "Siirry etusivulle"
+  },
+  "meta": {
+    "defaultTitle": "Snellman Sotheby's International Realty",
+    "defaultDescription": "Kansainvälinen kiinteistönvälitys paikallisesti - Premium real estate services in Finland",
+    "homeTitle": "Etusivu | Snellman Sotheby's International Realty",
+    "propertiesTitle": "Kohteet | Snellman Sotheby's International Realty",
+    "rentalsTitle": "Vuokrakohteet | Snellman Sotheby's International Realty",
+    "referencesTitle": "Referenssit | Snellman Sotheby's International Realty",
+    "aboutTitle": "Tietoa meistä | Snellman Sotheby's International Realty",
+    "contactTitle": "Yhteystiedot | Snellman Sotheby's International Realty"
   }
 }
