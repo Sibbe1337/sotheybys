@@ -14,11 +14,11 @@
  *   // Automatically becomes /sv/kohteet when locale is 'sv'
  */
 
-import { createSharedPathnamesNavigation } from 'next-intl/navigation';
+import { createNavigation } from 'next-intl/navigation';
 import { locales, defaultLocale } from '@/i18n/config';
 
-export const { Link, redirect, usePathname, useRouter } =
-  createSharedPathnamesNavigation({ locales, localePrefix: 'as-needed' });
+export const { Link, redirect, usePathname, useRouter, getPathname } =
+  createNavigation({ locales, localePrefix: 'as-needed' });
 
 /**
  * Backward compatibility helper
