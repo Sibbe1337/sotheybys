@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter, Link } from '@/lib/navigation';
+import { useLocale } from 'next-intl';
 import Image from 'next/image';
-import { LocaleLink } from '@/components/LocaleLink';
 
 interface MenuItem {
   id: string;
@@ -22,10 +22,13 @@ interface HeaderProps {
 
 export default function Header({ menuItems }: HeaderProps) {
   const pathname = usePathname();
+  const router = useRouter();
+  const locale = useLocale();
+  const currentLang = locale || 'fi';
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [expandedMobileMenu, setExpandedMobileMenu] = useState<string | null>(null);
-  const [currentLang, setCurrentLang] = useState<string>('fi');
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLandscape, setIsLandscape] = useState(false);
 
@@ -137,14 +140,6 @@ export default function Header({ menuItems }: HeaderProps) {
   const items = menuItems || getMenuItemsForLanguage(currentLang);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const lang = params.get('lang');
-    if (lang) {
-      setCurrentLang(lang);
-    }
-  }, []);
-
-  useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [pathname]);
 
@@ -192,38 +187,29 @@ export default function Header({ menuItems }: HeaderProps) {
           <div className="flex items-center justify-end gap-6 py-2">
             {/* Language Switcher */}
             <div className="hidden md:flex items-center gap-3 text-xs [font-family:'freight-sans-pro',sans-serif]">
-              <button 
-                onClick={() => {
-                  const url = new URL(window.location.href);
-                  url.searchParams.set('lang', 'fi');
-                  window.location.href = url.toString();
-                }}
+              <Link
+                href={pathname}
+                locale="fi"
                 className={`transition-opacity ${currentLang === 'fi' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
               >
                 Suomi
-              </button>
+              </Link>
               <span className="text-white/40">|</span>
-              <button 
-                onClick={() => {
-                  const url = new URL(window.location.href);
-                  url.searchParams.set('lang', 'sv');
-                  window.location.href = url.toString();
-                }}
+              <Link
+                href={pathname}
+                locale="sv"
                 className={`transition-opacity ${currentLang === 'sv' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
               >
                 Svenska
-              </button>
+              </Link>
               <span className="text-white/40">|</span>
-              <button 
-                onClick={() => {
-                  const url = new URL(window.location.href);
-                  url.searchParams.set('lang', 'en');
-                  window.location.href = url.toString();
-                }}
+              <Link
+                href={pathname}
+                locale="en"
                 className={`transition-opacity ${currentLang === 'en' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
               >
                 English
-              </button>
+              </Link>
             </div>
             
             {/* Search Box */}
@@ -240,7 +226,7 @@ export default function Header({ menuItems }: HeaderProps) {
       <div className="max-w-[1400px] mx-auto px-6">
         <div className="flex items-center justify-between py-4">
           {/* Logo - Statisk storlek */}
-          <LocaleLink 
+          <Link 
             href="/" 
             className="flex items-center flex-shrink-0"
             onClick={() => setIsMobileMenuOpen(false)}
@@ -254,7 +240,7 @@ export default function Header({ menuItems }: HeaderProps) {
               priority
               quality={100}
             />
-          </LocaleLink>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center">
@@ -270,7 +256,7 @@ export default function Header({ menuItems }: HeaderProps) {
                     onMouseEnter={() => setActiveDropdown(item.id)}
                     onMouseLeave={() => setActiveDropdown(null)}
                   >
-                    <LocaleLink
+                    <Link
                       href={item.path || item.url}
                       className={`flex items-center py-2 px-5 text-sm font-bold uppercase tracking-[0.2em]
                                  transition-all duration-200 [font-family:'freight-sans-pro',sans-serif] ${
@@ -281,7 +267,7 @@ export default function Header({ menuItems }: HeaderProps) {
                       target={item.target}
                     >
                       {item.label}
-                    </LocaleLink>
+                    </Link>
                     
                     {/* Dropdown menu */}
                     {item.childItems && item.childItems.nodes.length > 0 && activeDropdown === item.id && (
@@ -289,13 +275,13 @@ export default function Header({ menuItems }: HeaderProps) {
                         <ul className="py-2">
                           {item.childItems.nodes.map((childItem) => (
                             <li key={childItem.id}>
-                              <LocaleLink
+                              <Link
                                 href={childItem.path || childItem.url}
                                 className="block px-4 py-3 text-sm text-gray-700 hover:text-[var(--color-gold)] hover:bg-gray-50 transition-colors [font-family:'freight-sans-pro',sans-serif]"
                                 target={childItem.target}
                               >
                                 {childItem.label}
-                              </LocaleLink>
+                              </Link>
                             </li>
                           ))}
                         </ul>
@@ -342,7 +328,7 @@ export default function Header({ menuItems }: HeaderProps) {
               return (
                 <div key={item.id}>
                   <div className="flex items-center justify-between">
-                    <LocaleLink
+                    <Link
                       href={item.path || item.url}
                       className={`block py-3 text-sm font-bold tracking-[0.15em] uppercase border-b border-white/10 flex-1
                                [font-family:'freight-sans-pro',sans-serif] ${isActive 
@@ -357,7 +343,7 @@ export default function Header({ menuItems }: HeaderProps) {
                       }}
                     >
                       {item.label}
-                    </LocaleLink>
+                    </Link>
                     {hasChildren && (
                       <button
                         onClick={() => setExpandedMobileMenu(isExpanded ? null : item.id)}
@@ -379,7 +365,7 @@ export default function Header({ menuItems }: HeaderProps) {
                   {hasChildren && isExpanded && item.childItems && (
                     <div className="pl-4 bg-white/5">
                       {item.childItems.nodes.map((childItem) => (
-                        <LocaleLink
+                        <Link
                           key={childItem.id}
                           href={childItem.path || childItem.url}
                           className="block py-2 text-sm text-white/80 hover:text-[var(--color-gold)] border-b border-white/5 [font-family:'freight-sans-pro',sans-serif]"
@@ -387,7 +373,7 @@ export default function Header({ menuItems }: HeaderProps) {
                           onClick={() => setIsMobileMenuOpen(false)}
                         >
                           {childItem.label}
-                        </LocaleLink>
+                        </Link>
                       ))}
                     </div>
                   )}
@@ -398,38 +384,32 @@ export default function Header({ menuItems }: HeaderProps) {
             {/* Mobile Language Switcher */}
             <div className="mt-4 pt-4 border-t border-white/20">
               <div className="flex items-center justify-center gap-4 text-xs">
-                <button 
-                  onClick={() => {
-                    const url = new URL(window.location.href);
-                    url.searchParams.set('lang', 'fi');
-                    window.location.href = url.toString();
-                  }}
+                <Link
+                  href={pathname}
+                  locale="fi"
                   className={`transition-opacity [font-family:'freight-sans-pro',sans-serif] ${currentLang === 'fi' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
+                  onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Suomi
-                </button>
+                </Link>
                 <span className="text-white/40">|</span>
-                <button 
-                  onClick={() => {
-                    const url = new URL(window.location.href);
-                    url.searchParams.set('lang', 'sv');
-                    window.location.href = url.toString();
-                  }}
+                <Link
+                  href={pathname}
+                  locale="sv"
                   className={`transition-opacity [font-family:'freight-sans-pro',sans-serif] ${currentLang === 'sv' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
+                  onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Svenska
-                </button>
+                </Link>
                 <span className="text-white/40">|</span>
-                <button 
-                  onClick={() => {
-                    const url = new URL(window.location.href);
-                    url.searchParams.set('lang', 'en');
-                    window.location.href = url.toString();
-                  }}
+                <Link
+                  href={pathname}
+                  locale="en"
                   className={`transition-opacity [font-family:'freight-sans-pro',sans-serif] ${currentLang === 'en' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
+                  onClick={() => setIsMobileMenuOpen(false)}
                 >
                   English
-                </button>
+                </Link>
               </div>
             </div>
           </nav>
