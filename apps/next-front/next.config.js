@@ -33,6 +33,38 @@ const nextConfig = {
     }
     return [];
   },
+  async redirects() {
+    return [
+      // Redirect old /property/ routes to /kohde/
+      {
+        source: '/property/:slug',
+        destination: '/kohde/:slug',
+        permanent: true,
+      },
+      // Redirect Swedish /objekt/ to /kohteet/
+      {
+        source: '/sv/objekt',
+        destination: '/sv/kohteet',
+        permanent: true,
+      },
+      {
+        source: '/sv/objekt/:path*',
+        destination: '/sv/kohteet/:path*',
+        permanent: true,
+      },
+      // Redirect English /properties/ to /kohteet/
+      {
+        source: '/en/properties',
+        destination: '/en/kohteet',
+        permanent: true,
+      },
+      {
+        source: '/en/properties/:path*',
+        destination: '/en/kohteet/:path*',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 module.exports = withNextIntl(nextConfig); 
