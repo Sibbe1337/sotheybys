@@ -24,11 +24,12 @@ export default async function PropertiesPage({ params }: PropertiesPageProps) {
   
   try {
     // 🏗️ NEW ARCHITECTURE: Use clean architecture layers
-    const { getLinearAPIUrl, getLinearAPIKey } = await import('@/lib/config/linear-api.config');
+    const { getLinearAPIUrl, getLinearAPIKey, getLinearCompanyId } = await import('@/lib/config/linear-api.config');
     const apiUrl = getLinearAPIUrl();
     const apiKey = getLinearAPIKey();
+    const companyId = getLinearCompanyId();
     
-    const client = new LinearAPIClient(apiUrl, apiKey);
+    const client = new LinearAPIClient(apiUrl, apiKey, companyId);
     const mapper = new LinearToPropertyMapper();
     const getPropertiesUseCase = new GetProperties(client, mapper);
     

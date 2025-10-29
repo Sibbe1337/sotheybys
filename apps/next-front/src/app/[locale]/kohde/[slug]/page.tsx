@@ -108,11 +108,12 @@ export const revalidate = 60;
 async function fetchPropertyData(slug: string, locale: 'fi' | 'sv' | 'en' = 'fi'): Promise<PropertyWithACF | null> {
   try {
     // 🏗️ NEW ARCHITECTURE: Use clean architecture layers
-    const { getLinearAPIUrl, getLinearAPIKey } = await import('@/lib/config/linear-api.config');
-    const apiUrl = getLinearAPIUrl();
-    const apiKey = getLinearAPIKey();
-    
-    const client = new LinearAPIClient(apiUrl, apiKey);
+    const { getLinearAPIUrl, getLinearAPIKey, getLinearCompanyId } = await import('@/lib/config/linear-api.config');
+      const apiUrl = getLinearAPIUrl();
+      const apiKey = getLinearAPIKey();
+      const companyId = getLinearCompanyId();
+      
+      const client = new LinearAPIClient(apiUrl, apiKey, companyId);
     const mapper = new LinearToPropertyMapper();
     const getPropertyUseCase = new GetPropertyBySlug(client, mapper);
     

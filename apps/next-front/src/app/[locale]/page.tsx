@@ -6,7 +6,7 @@ import { LinearAPIClient } from '@/lib/infrastructure/linear-api/client';
 import { LinearToPropertyMapper } from '@/lib/infrastructure/linear-api/mapper';
 import { GetProperties } from '@/lib/application/get-properties.usecase';
 import { PropertyVM } from '@/lib/presentation/property.view-model';
-import { getLinearAPIUrl, getLinearAPIKey } from '@/lib/config/linear-api.config';
+import { getLinearAPIUrl, getLinearAPIKey, getLinearCompanyId } from '@/lib/config/linear-api.config';
 
 // Use ISR (Incremental Static Regeneration) instead of force-static
 // This allows data fetching at runtime, not just build time
@@ -34,12 +34,14 @@ export default async function HomePage({ params: { locale } }: { params: { local
   try {
     const apiUrl = getLinearAPIUrl();
     const apiKey = getLinearAPIKey();
+    const companyId = getLinearCompanyId();
     
     console.log('🔧 [Homepage SSR] API URL:', apiUrl);
     console.log('🔧 [Homepage SSR] API Key exists:', !!apiKey);
+    console.log('🔧 [Homepage SSR] Company ID exists:', !!companyId);
     console.log('🔧 [Homepage SSR] Locale:', locale);
     
-    const client = new LinearAPIClient(apiUrl, apiKey);
+    const client = new LinearAPIClient(apiUrl, apiKey, companyId);
     const mapper = new LinearToPropertyMapper();
     const getPropertiesUseCase = new GetProperties(client, mapper);
     

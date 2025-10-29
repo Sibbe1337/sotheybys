@@ -33,9 +33,17 @@ export function getLinearAPIKey(): string | undefined {
 }
 
 /**
+ * Get Linear Company ID
+ * Note: This MUST be set in Vercel environment variables
+ */
+export function getLinearCompanyId(): string | undefined {
+  return process.env.NEXT_PUBLIC_COMPANY_ID || process.env.COMPANY_ID || process.env.LINEAR_COMPANY_ID;
+}
+
+/**
  * Check if Linear API is configured
  */
 export function isLinearAPIConfigured(): boolean {
-  return !!(getLinearAPIKey());
+  return !!(getLinearAPIKey() && getLinearCompanyId());
 }
 

@@ -4,7 +4,11 @@ import { LinearListing } from './types';
 export class LinearAPIClient {
   private slugIndex: Map<string, string> = new Map(); // slug → id mapping
 
-  constructor(private baseUrl: string, private apiKey?: string) {}
+  constructor(
+    private baseUrl: string, 
+    private apiKey?: string,
+    private companyId?: string
+  ) {}
 
   async fetchListings(): Promise<LinearListing[]> {
     try {
@@ -12,11 +16,28 @@ export class LinearAPIClient {
       
       log('Fetching listings from:', endpoint);
       
+      // Format API key properly
+      const formattedApiKey = this.apiKey?.startsWith('LINEAR-API-KEY ') 
+        ? this.apiKey 
+        : `LINEAR-API-KEY ${this.apiKey}`;
+      
+      const headers: Record<string, string> = {
+        'Authorization': formattedApiKey,
+        'accept': 'application/json'
+      };
+      
+      // Add company ID if provided
+      if (this.companyId) {
+        headers['x-company-id'] = this.companyId;
+      }
+      
+      log('Fetching with headers:', { 
+        Authorization: formattedApiKey.substring(0, 25) + '...',
+        'x-company-id': this.companyId ? `${this.companyId.substring(0, 4)}****` : 'NOT SET'
+      });
+      
       const response = await fetch(endpoint, {
-        headers: {
-          'authorization': this.apiKey || '',
-          'Accept': 'application/json'
-        },
+        headers,
         next: { revalidate: 300 } // Cache for 5 minutes
       });
 

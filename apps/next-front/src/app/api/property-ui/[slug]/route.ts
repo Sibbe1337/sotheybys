@@ -28,11 +28,12 @@ export async function GET(
     const language = (searchParams.get('lang') || 'fi') as 'fi' | 'sv' | 'en';
     const format = searchParams.get('format') || 'detail';
     
-    // 🏗️ NEW ARCHITECTURE: Use clean architecture layers
-    const apiUrl = process.env.NEXT_PUBLIC_LINEAR_API_URL || process.env.LINEAR_API_URL || '';
-    const apiKey = process.env.LINEAR_API_KEY;
-    
-    const client = new LinearAPIClient(apiUrl, apiKey);
+      // 🏗️ NEW ARCHITECTURE: Use clean architecture layers
+      const apiUrl = process.env.NEXT_PUBLIC_LINEAR_API_URL || process.env.LINEAR_API_URL || '';
+      const apiKey = process.env.LINEAR_API_KEY;
+      const companyId = process.env.COMPANY_ID || process.env.LINEAR_COMPANY_ID;
+      
+      const client = new LinearAPIClient(apiUrl, apiKey, companyId);
     const mapper = new LinearToPropertyMapper();
     const getPropertyUseCase = new GetPropertyBySlug(client, mapper);
     
