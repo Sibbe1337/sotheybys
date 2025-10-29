@@ -197,88 +197,26 @@ const sampleProperties = [
  * Client component for homepage
  * Accepts locale as prop from server component parent
  */
-export default function HomePageClient({ locale }: { locale: Locale }) {
+export default function HomePageClient({ 
+  locale, 
+  initialProperties = [] 
+}: { 
+  locale: Locale;
+  initialProperties?: any[];
+}) {
   const language = locale as SupportedLanguage;
-  const [properties, setProperties] = useState<any[]>(sampleProperties);
-  const [loading, setLoading] = useState(true);
+  const [properties, setProperties] = useState<any[]>(initialProperties.length > 0 ? initialProperties : sampleProperties);
+  const [loading, setLoading] = useState(false);
 
-  // 🏗️ NEW ARCHITECTURE: Fetch properties using use cases directly (better for SSR)
+  // 🏗️ SERVER-SIDE RENDERING: Properties are now fetched on server (no CORS!)
   useEffect(() => {
-    async function loadProperties() {
-      try {
-        // Import use cases dynamically to avoid SSR issues
-        const { LinearAPIClient } = await import('@/lib/infrastructure/linear-api/client');
-        const { LinearToPropertyMapper } = await import('@/lib/infrastructure/linear-api/mapper');
-        const { GetProperties } = await import('@/lib/application/get-properties.usecase');
-        const { PropertyVM } = await import('@/lib/presentation/property.view-model');
-        const { getLinearAPIUrl, getLinearAPIKey } = await import('@/lib/config/linear-api.config');
-        
-        const apiUrl = getLinearAPIUrl();
-        const apiKey = getLinearAPIKey();
-        
-        const client = new LinearAPIClient(apiUrl, apiKey);
-        const mapper = new LinearToPropertyMapper();
-        const getPropertiesUseCase = new GetProperties(client, mapper);
-        
-        const domainProperties = await getPropertiesUseCase.execute(language);
-        const cardVMs = domainProperties.map(p => PropertyVM.toCard(p, language));
-        
-        const result = { success: true, data: cardVMs };
-
-        if (result.success && result.data && result.data.length > 0) {
-          const properties = result.data;
-          console.log('✅ Using new architecture API:', properties.length);
-
-          // 🏠 FILTER OUT RENTAL PROPERTIES - Only show sale properties on homepage
-          const saleProperties = properties.filter((prop: any) => !prop.isRental);
-          
-          console.log(`✅ Filtered ${saleProperties.length} sale properties for homepage`);
-
-          // 💎 Already sorted by price (most expensive first) from backend
-          // Properties come pre-sorted from the new architecture
-
-          // Transform PropertyCardVM to WordPress format for PropertyCard compatibility
-          const transformedProperties = saleProperties.map((vm: any) => ({
-            slug: vm.slug,
-            title: vm.title,
-            featuredImage: vm.image ? {
-              node: {
-                sourceUrl: vm.image,
-                altText: vm.title
-              }
-            } : {
-              node: {
-                sourceUrl: '/images/defaults/placeholder-property.jpg',
-                altText: vm.title
-              }
-            },
-            acfRealEstate: {
-              property: {
-                address: vm.address,
-                city: vm.city,
-                price: vm.price,
-                debtFreePrice: vm.priceDebtFree,
-                area: vm.area,
-                rooms: vm.rooms,
-                propertyType: vm.type,
-                status: vm.status,
-              }
-            }
-          }));
-          setProperties(transformedProperties);
-        } else {
-          console.warn('⚠️ No Linear properties found, using sample data');
-        }
-      } catch (error) {
-        console.error('Error loading properties:', error);
-        console.warn('⚠️ Using sample properties as fallback');
-      } finally {
-        setLoading(false);
-      }
+    if (initialProperties.length > 0) {
+      console.log('✅ Using server-fetched properties:', initialProperties.length);
+      setProperties(initialProperties);
+    } else {
+      console.warn('⚠️ No server properties, using sample data');
     }
-
-    loadProperties();
-  }, []);
+  }, [initialProperties]);
 
   // Get translated slides
   const heroSlides = getTranslatedSlides(language);
