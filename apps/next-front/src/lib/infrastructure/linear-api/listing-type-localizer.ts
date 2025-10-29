@@ -9,8 +9,10 @@ import type { Locale, LocalizedValue } from '@/lib/domain/property.types';
 
 /**
  * Mapping of Linear API listing type codes to localized labels
+ * Supports both Finnish (KERROSTALO) and English (FLAT) codes from Linear API
  */
 const LISTING_TYPE_LABELS: Record<string, LocalizedValue> = {
+  // ====== FINNISH CODES (original) ======
   'KERROSTALO': {
     fi: 'Kerrostalo',
     sv: 'Höghus',
@@ -77,6 +79,88 @@ const LISTING_TYPE_LABELS: Record<string, LocalizedValue> = {
     en: 'Rental Apartment'
   },
   'VUOKRATALO': {
+    fi: 'Vuokratalo',
+    sv: 'Hyreshus',
+    en: 'Rental House'
+  },
+  
+  // ====== ENGLISH CODES (Linear API aliases) ======
+  'FLAT': {
+    fi: 'Kerrostalo',
+    sv: 'Höghus',
+    en: 'Apartment Building'
+  },
+  'DETACHED_HOUSE': {
+    fi: 'Omakotitalo',
+    sv: 'Villa',
+    en: 'Detached House'
+  },
+  'DETACHEDHOUSE': {
+    fi: 'Omakotitalo',
+    sv: 'Villa',
+    en: 'Detached House'
+  },
+  'TOWNHOUSE': {
+    fi: 'Rivitalo',
+    sv: 'Radhus',
+    en: 'Townhouse'
+  },
+  'SEMI_DETACHED_HOUSE': {
+    fi: 'Paritalo',
+    sv: 'Parhus',
+    en: 'Semi-detached House'
+  },
+  'TERRACED_HOUSE': {
+    fi: 'Luhtitalo',
+    sv: 'Kedjehus',
+    en: 'Terraced House'
+  },
+  'COTTAGE_OR_VILLA': {
+    fi: 'Mökki tai huvila',
+    sv: 'Stuga eller villa',
+    en: 'Cottage or Villa'
+  },
+  'PLOT': {
+    fi: 'Tontti',
+    sv: 'Tomt',
+    en: 'Plot'
+  },
+  'FARM': {
+    fi: 'Maatila',
+    sv: 'Lantgård',
+    en: 'Farm'
+  },
+  'COMMERCIAL_PROPERTY': {
+    fi: 'Liikehuoneisto',
+    sv: 'Affärslokal',
+    en: 'Commercial Property'
+  },
+  'OFFICE': {
+    fi: 'Toimisto',
+    sv: 'Kontor',
+    en: 'Office'
+  },
+  'OFFICE_SPACE': {
+    fi: 'Toimistotila',
+    sv: 'Kontorslokal',
+    en: 'Office Space'
+  },
+  'INDUSTRIAL_PROPERTY': {
+    fi: 'Teollisuuskiinteistö',
+    sv: 'Industriegendom',
+    en: 'Industrial Property'
+  },
+  'WAREHOUSE': {
+    fi: 'Varasto',
+    sv: 'Lager',
+    en: 'Warehouse'
+  },
+  'RENTAL_APARTMENT': {
+    fi: 'Vuokrahuoneisto',
+    sv: 'Hyreslägenhet',
+    en: 'Rental Apartment'
+  },
+  'RENTAL_HOUSE': {
     fi: 'Vuokratalo',
     sv: 'Hyreshus',
     en: 'Rental House'
