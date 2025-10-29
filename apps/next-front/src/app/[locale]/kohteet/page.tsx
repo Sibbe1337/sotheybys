@@ -8,7 +8,7 @@ import { log } from '@/lib/logger';
 
 export const dynamic = 'force-static';
 export const dynamicParams = false;
-export const revalidate = 10; // Temporarily set to 10 seconds for testing
+export const revalidate = 300; // Regenerate every 5 minutes
 
 export function generateStaticParams() {
   return (locales as readonly Locale[]).map((locale) => ({ locale }));

@@ -10,7 +10,7 @@ import { getLinearAPIUrl, getLinearAPIKey, getLinearCompanyId } from '@/lib/conf
 
 // Use ISR (Incremental Static Regeneration) instead of force-static
 // This allows data fetching at runtime, not just build time
-export const revalidate = 10; // Temporarily set to 10 seconds for testing
+export const revalidate = 300; // Regenerate every 5 minutes
 export const dynamicParams = false;
 
 /**
