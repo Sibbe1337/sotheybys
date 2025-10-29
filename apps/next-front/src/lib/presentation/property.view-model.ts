@@ -48,6 +48,9 @@ export interface PropertyDetailVM extends PropertyCardVM {
     sauna?: string;
   };
   
+  // Property tax (ONLY for properties, NOT apartments)
+  propertyTax?: number;
+  
   // Features (NEW Phase 3)
   features: {
     label: string;             // Localized
@@ -177,6 +180,9 @@ export class PropertyVM {
         parking: fmtFee(p.fees.parking, localeStr),
         sauna: fmtFee(p.fees.sauna, localeStr)
       },
+
+      // Property tax (ONLY for properties, NOT apartments)
+      propertyTax: p.pricing.propertyTax || undefined,
 
       // Features (NEW Phase 3)
       features: this.getFeaturesList(p, l),

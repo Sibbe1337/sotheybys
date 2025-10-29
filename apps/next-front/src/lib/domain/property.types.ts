@@ -24,6 +24,7 @@ export interface Property {
     sales: number;      // Myyntihinta
     debtFree: number;   // Velaton hinta
     debt: number;       // debtFree - sales (>=0)
+    propertyTax?: number; // Kiinteistövero (ONLY for properties, NOT apartments)
   };
 
   // Dimensions (expanded in Phase 3)

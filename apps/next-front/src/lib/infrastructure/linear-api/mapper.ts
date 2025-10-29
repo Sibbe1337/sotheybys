@@ -118,6 +118,13 @@ export class LinearToPropertyMapper {
     const sales = parseEuro(pickNV(nv, 'askPrice') ?? (src.askPrice && lget(src.askPrice, locale)));
     const debtFree = parseEuro(pickNV(nv, 'debtFreePrice') ?? (src.debtFreePrice && lget(src.debtFreePrice, locale)));
     const debt = Math.max(0, debtFree - sales);
+    
+    // Property tax (Kiinteistövero) - ONLY for properties, not apartments
+    const propertyTax = parseEuro(
+      pickNV(nv, 'propertyTax', 'realEstateTax') ?? 
+      (src.propertyTax && lget(src.propertyTax, locale)) ?? 
+      (src.realEstateTax && lget(src.realEstateTax, locale))
+    ) || undefined;
 
     // ========== DIMENSIONS (EXPANDED) ==========
     const living = parseNum(pickNV(nv, 'area') ?? lget(src.area!, 'fi')) || 0;
@@ -242,7 +249,7 @@ export class LinearToPropertyMapper {
       description: description.fi || description.sv || description.en ? description : undefined,
       descriptionTitle: descriptionTitle.fi || descriptionTitle.sv || descriptionTitle.en ? descriptionTitle : undefined,
 
-      pricing: { sales, debtFree, debt },
+      pricing: { sales, debtFree, debt, propertyTax },
 
       dimensions: { 
         living, 

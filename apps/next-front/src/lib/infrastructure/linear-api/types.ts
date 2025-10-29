@@ -24,6 +24,8 @@ export interface LinearListing {
   // pricing
   askPrice?: LinearLocalized;
   debtFreePrice?: LinearLocalized;
+  propertyTax?: LinearLocalized;         // Kiinteistövero (ONLY for properties)
+  realEstateTax?: LinearLocalized;       // Alternative field name
 
   // dimensions
   area?: LinearLocalized;
