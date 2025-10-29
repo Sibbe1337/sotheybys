@@ -3,7 +3,7 @@ import { LinearAPIClient } from '@/lib/infrastructure/linear-api/client';
 import { LinearToPropertyMapper } from '@/lib/infrastructure/linear-api/mapper';
 import { GetPropertyBySlug } from '@/lib/application/get-property-by-slug.usecase';
 import { PropertyVM } from '@/lib/presentation/property.view-model';
-import { DetailView } from '@/components/property/DetailView';
+import { DetailView } from '@/components/Property/DetailView';
 import { EmptyState } from '@/components/EmptyState';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import type { Metadata } from 'next';
@@ -280,7 +280,7 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
   
   if (!domain) {
     // ✅ SPEC: Show empty state instead of 404 for missing property
-    return <EmptyState locale={locale} messageKey="propertyNotFound" />;
+    return <EmptyState locale={locale} type="property-not-found" />;
   }
 
   // ✅ NEW: Transform domain model to ViewModel for presentation
