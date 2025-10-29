@@ -38,7 +38,7 @@ export class LinearAPIClient {
       
       const response = await fetch(endpoint, {
         headers,
-        next: { revalidate: 0 } // TEMPORARILY: Always fresh for debugging
+        next: { revalidate: 300 } // Cache for 5 minutes
       });
 
       if (!response.ok) {

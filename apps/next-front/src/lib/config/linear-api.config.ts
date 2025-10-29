@@ -7,7 +7,8 @@
 
 // Default Linear API URL (production)
 // This is the actual Linear External API endpoint
-const DEFAULT_LINEAR_API_URL = 'https://linear-external-api.azurewebsites.net/api';
+// NOTE: Do NOT include /api suffix - client adds /v2/listings
+const DEFAULT_LINEAR_API_URL = 'https://linear-external-api.azurewebsites.net';
 
 // Alternative test endpoint (if needed)
 // const TEST_LINEAR_API_URL = 'https://ca-externalapi-test-weu-001.livelyrock-4a193af6.westeurope.azurecontainerapps.io';
