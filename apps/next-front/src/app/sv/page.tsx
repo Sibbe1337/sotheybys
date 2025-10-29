@@ -3,7 +3,7 @@ import PropertyGrid from '@/components/Property/PropertyGrid';
 import { getClient } from '@/lib/wordpress';
 import { GET_HOMEPAGE_DATA } from '@/graphql/homepage-queries';
 import { fetchLinearListings, fetchTestLinearListings } from '@/lib/linear-api-adapter';
-import Link from 'next/link';
+import { Link } from '@/lib/navigation';
 import Image from 'next/image';
 import { getImageUrl } from '@/config/images';
 

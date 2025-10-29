@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
+import { Link } from '@/lib/navigation';
 import { Agent } from '@/lib/wordpress';
 import { Button } from '@/components/ui/Button';
 import { Heading } from '@/components/ui/Heading';

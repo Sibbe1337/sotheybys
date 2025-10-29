@@ -1,7 +1,7 @@
 'use client';
 
 import React, { Component, ReactNode } from 'react';
-import Link from 'next/link';
+import { Link } from '@/lib/navigation';
 
 interface ErrorBoundaryProps {
   children: ReactNode;

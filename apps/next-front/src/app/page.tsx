@@ -4,7 +4,7 @@ import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import HeroCarousel from '@/components/Homepage/HeroCarousel';
 import PropertyGrid from '@/components/Property/PropertyGrid';
-import Link from 'next/link';
+import { Link } from '@/lib/navigation';
 import Image from 'next/image';
 import { getHomepageTranslation, type SupportedLanguage } from '@/lib/homepage-translations';
 import { listingsCache, ensureCacheInitialized } from '@/lib/listings-cache';

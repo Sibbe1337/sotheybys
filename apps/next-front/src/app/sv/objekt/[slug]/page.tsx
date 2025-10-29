@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import Link from 'next/link';
+import { Link } from '@/lib/navigation';
 import { ChevronLeft, ChevronRight, Facebook, Linkedin, Mail } from 'lucide-react';
 import { getYouTubeEmbedUrl, isValidYouTubeUrl } from '@/lib/utils';
 import { 

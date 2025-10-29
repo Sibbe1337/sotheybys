@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { notFound, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
-import Link from 'next/link';
+import { Link } from '@/lib/navigation';
 import { LocaleLink } from '@/components/LocaleLink';
 import { ChevronLeft, ChevronRight, Facebook, Linkedin, Mail, Phone, MapPin, Home, Bath, Maximize, FileText } from 'lucide-react';
 import { getVideoEmbedUrl, isValidVideoUrl, isValidYouTubeUrl, isValidVimeoUrl, removeEmojis } from '@/lib/utils';

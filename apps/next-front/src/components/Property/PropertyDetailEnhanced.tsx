@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
+import { Link } from '@/lib/navigation';
 import { HeartIcon, ShareIcon, PrinterIcon, ArrowsPointingOutIcon, MagnifyingGlassPlusIcon, XMarkIcon, CalculatorIcon, VideoCameraIcon, CubeIcon, ScaleIcon } from '@heroicons/react/24/outline';
 import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid';
 import { DetailMedia } from '@/components/listings/DetailMedia';
