@@ -202,13 +202,27 @@ export default function HomePageClient({ locale }: { locale: Locale }) {
   const [properties, setProperties] = useState<any[]>(sampleProperties);
   const [loading, setLoading] = useState(true);
 
-  // 🏗️ NEW ARCHITECTURE: Fetch properties from API endpoint
+  // 🏗️ NEW ARCHITECTURE: Fetch properties using use cases directly (better for SSR)
   useEffect(() => {
     async function loadProperties() {
       try {
-        // Fetch from new API endpoint (returns PropertyCardVM format)
-        const response = await fetch(`/api/listings?lang=${language}&format=card`);
-        const result = await response.json();
+        // Import use cases dynamically to avoid SSR issues
+        const { LinearAPIClient } = await import('@/lib/infrastructure/linear-api/client');
+        const { LinearToPropertyMapper } = await import('@/lib/infrastructure/linear-api/mapper');
+        const { GetProperties } = await import('@/lib/application/get-properties.usecase');
+        const { PropertyVM } = await import('@/lib/presentation/property.view-model');
+        
+        const apiUrl = process.env.NEXT_PUBLIC_LINEAR_API_URL || '';
+        const apiKey = process.env.NEXT_PUBLIC_LINEAR_API_KEY;
+        
+        const client = new LinearAPIClient(apiUrl, apiKey);
+        const mapper = new LinearToPropertyMapper();
+        const getPropertiesUseCase = new GetProperties(client, mapper);
+        
+        const domainProperties = await getPropertiesUseCase.execute(language);
+        const cardVMs = domainProperties.map(p => PropertyVM.toCard(p, language));
+        
+        const result = { success: true, data: cardVMs };
 
         if (result.success && result.data && result.data.length > 0) {
           const properties = result.data;
