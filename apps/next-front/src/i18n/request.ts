@@ -2,6 +2,17 @@ import { getRequestConfig } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales, type Locale } from './config';
 
+// Static imports for messages - more reliable on Vercel
+import fiMessages from '../../messages/fi.json';
+import svMessages from '../../messages/sv.json';
+import enMessages from '../../messages/en.json';
+
+const messages = {
+  fi: fiMessages,
+  sv: svMessages,
+  en: enMessages
+};
+
 /**
  * Request configuration for next-intl
  *
@@ -17,6 +28,6 @@ export default getRequestConfig(async ({ locale }) => {
 
   return {
     locale,
-    messages: (await import(`../../messages/${locale}.json`)).default
-  } as any; // Type assertion needed due to notFound() not being recognized as never-returning
+    messages: messages[locale as Locale]
+  };
 });
