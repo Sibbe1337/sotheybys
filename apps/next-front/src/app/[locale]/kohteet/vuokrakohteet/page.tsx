@@ -1,47 +1,91 @@
 import PropertyGrid from '@/components/Property/PropertyGrid';
-import { fetchLinearListings } from '@/lib/linear-api-adapter';
 import { Link } from '@/lib/navigation';
+import { locales, type Locale } from '@/i18n/config';
+import { LinearAPIClient } from '@/lib/infrastructure/linear-api/client';
+import { LinearToPropertyMapper } from '@/lib/infrastructure/linear-api/mapper';
+import { GetProperties } from '@/lib/application/get-properties.usecase';
+import { PropertyVM } from '@/lib/presentation/property.view-model';
+import { log } from '@/lib/logger';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const dynamic = 'force-static';
+export const dynamicParams = false;
+export const revalidate = 300;
 
-export default async function RentalPropertiesPage() {
-  let rentalProperties = [];
+export function generateStaticParams() {
+  return (locales as readonly Locale[]).map((locale) => ({ locale }));
+}
+
+interface RentalPropertiesPageProps {
+  params: { locale: Locale };
+}
+
+export default async function RentalPropertiesPage({ params }: RentalPropertiesPageProps) {
+  const { locale } = params;
+  let rentalProperties: any[] = [];
   
   try {
-    const allListings = await fetchLinearListings('fi');
+    // 🏗️ NEW ARCHITECTURE: Use clean architecture layers
+    const apiUrl = process.env.NEXT_PUBLIC_LINEAR_API_URL || process.env.LINEAR_API_URL || '';
+    const apiKey = process.env.LINEAR_API_KEY;
     
-    // Filter for rental properties (vuokrakohteet)
-    // ✅ PRIMARY CHECK: Has rent field from Linear API
-    rentalProperties = allListings.filter(listing => {
-      // Check if rent field exists and has a non-null value
-      const rentValue = listing.acfRealEstate?.property?.rent;
-      const hasRent = rentValue && 
-                      rentValue.trim().length > 0 && 
-                      rentValue !== '0' &&
-                      rentValue !== 'null' &&
-                      !rentValue.toLowerCase().includes('null');
-      
-      const type = listing.acfRealEstate?.property?.saleType?.toLowerCase() || '';
-      const status = listing.acfRealEstate?.property?.status?.toLowerCase() || '';
-      
-      if (hasRent) {
-        console.log(`🏠 RENTAL FOUND: ${listing.title} | Rent: "${rentValue}" | INCLUDING in rental listings`);
+    const client = new LinearAPIClient(apiUrl, apiKey);
+    const mapper = new LinearToPropertyMapper();
+    const getPropertiesUseCase = new GetProperties(client, mapper);
+    
+    // Fetch all properties using the new use case
+    const domainProperties = await getPropertiesUseCase.execute(locale);
+    
+    log(`✅ Fetched ${domainProperties.length} properties via new use case`);
+    
+    // ✅ FILTER FOR RENTAL PROPERTIES - Only show properties with rent
+    const rentalDomainProperties = domainProperties.filter(property => {
+      const isRental = PropertyVM.isRental(property);
+      if (isRental) {
+        log(`🏠 RENTAL FOUND: ${property.address.fi} | Rent: ${property.meta.rent} | INCLUDING in rental listings`);
       }
-      
-      return hasRent || (
-        type.includes('vuokra') || 
-        type.includes('rent') || 
-        type.includes('hyra') || 
-        status.includes('vuokra') ||
-        status.includes('rent')
-      );
+      return isRental;
     });
     
-    console.log(`✅ Found ${rentalProperties.length} rental properties (Vuokrakohteet)`);
+    log(`✅ Found ${rentalDomainProperties.length} rental properties (Vuokrakohteet)`);
+    
+    // 💎 SORT BY RENT: Most expensive first (Premium branding)
+    rentalDomainProperties.sort((a, b) => {
+      return (b.meta.rent || 0) - (a.meta.rent || 0); // Descending order (highest first)
+    });
+    
+    log(`💎 Sorted ${rentalDomainProperties.length} rental properties by rent (highest first)`);
+    
+    // 🎨 TRANSFORM TO VIEW MODELS for backward compatibility with PropertyGrid
+    // TODO Phase 4: Refactor PropertyGrid to use PropertyCardVM directly
+    rentalProperties = rentalDomainProperties.map(property => ({
+      id: property.id,
+      slug: property.slug,
+      title: property.address[locale] || property.address.fi,
+      city: property.city[locale] || property.city.fi,
+      price: property.meta.rent,
+      area: property.dimensions.living,
+      propertyType: property.meta.typeCode,
+      featuredImage: {
+        node: {
+          sourceUrl: property.media.images.find(img => !img.floorPlan)?.url || property.media.images[0]?.url || '',
+          altText: property.address[locale] || property.address.fi
+        }
+      },
+      images: property.media.images,
+      // Keep ACF structure for backward compatibility
+      acfRealEstate: {
+        property: {
+          address: property.address[locale] || property.address.fi,
+          city: property.city[locale] || property.city.fi,
+          rent: property.meta.rent?.toString() || null,
+          area: property.dimensions.living.toString(),
+          propertyType: property.meta.apartmentType?.[locale] || property.meta.apartmentType?.fi || property.meta.typeCode,
+        }
+      }
+    }));
+    
   } catch (error) {
-    console.error('Error fetching rental properties from Linear:', error);
-    rentalProperties = [];
+    console.error('Error fetching rental properties:', error);
   }
 
   return (

@@ -1,33 +1,98 @@
 import PropertyGrid from '@/components/Property/PropertyGrid';
-import { fetchLinearListings } from '@/lib/linear-api-adapter';
 import { Link } from '@/lib/navigation';
+import { locales, type Locale } from '@/i18n/config';
+import { LinearAPIClient } from '@/lib/infrastructure/linear-api/client';
+import { LinearToPropertyMapper } from '@/lib/infrastructure/linear-api/mapper';
+import { GetProperties } from '@/lib/application/get-properties.usecase';
+import { log } from '@/lib/logger';
 
-export const revalidate = 60;
+export const dynamic = 'force-static';
+export const dynamicParams = false;
+export const revalidate = 300;
 
-export default async function ReferencesPage() {
-  let referenceProperties = [];
+export function generateStaticParams() {
+  return (locales as readonly Locale[]).map((locale) => ({ locale }));
+}
+
+interface ReferencesPageProps {
+  params: { locale: Locale };
+}
+
+export default async function ReferencesPage({ params }: ReferencesPageProps) {
+  const { locale } = params;
+  let referenceProperties: any[] = [];
   
   // Fetch sold properties from Linear API
   try {
-    const allListings = await fetchLinearListings('fi');
+    // 🏗️ NEW ARCHITECTURE: Use clean architecture layers
+    const apiUrl = process.env.NEXT_PUBLIC_LINEAR_API_URL || process.env.LINEAR_API_URL || '';
+    const apiKey = process.env.LINEAR_API_KEY;
     
-    // Filter for sold properties (status: 'Myyty')
-    referenceProperties = allListings.filter(listing => {
-      const status = listing.property?.status?.toLowerCase();
-      return status === 'myyty' || status === 'såld' || status === 'sold';
+    const client = new LinearAPIClient(apiUrl, apiKey);
+    const mapper = new LinearToPropertyMapper();
+    const getPropertiesUseCase = new GetProperties(client, mapper);
+    
+    // Fetch all properties using the new use case
+    const domainProperties = await getPropertiesUseCase.execute(locale);
+    
+    log(`✅ Fetched ${domainProperties.length} properties via new use case`);
+    
+    // ✅ FILTER FOR SOLD PROPERTIES - status === 'SOLD'
+    const soldDomainProperties = domainProperties.filter(property => {
+      const isSold = property.meta.status === 'SOLD';
+      if (isSold) {
+        log(`🏆 SOLD PROPERTY FOUND: ${property.address.fi}`);
+      }
+      return isSold;
     });
     
-    // Sort by most recent first (if date available)
-    referenceProperties.sort((a, b) => {
-      const dateA = a.date ? new Date(a.date).getTime() : 0;
-      const dateB = b.date ? new Date(b.date).getTime() : 0;
-      return dateB - dateA;
+    log(`✅ Found ${soldDomainProperties.length} sold properties (Referenser)`);
+    
+    // 💎 SORT BY PRICE: Most expensive first (Premium branding)
+    // Show most prestigious sales first
+    soldDomainProperties.sort((a, b) => {
+      return b.pricing.debtFree - a.pricing.debtFree; // Descending order (highest first)
     });
     
-    console.log(`✅ Found ${referenceProperties.length} sold properties (Referenser)`);
+    log(`💎 Sorted ${soldDomainProperties.length} sold properties by price (highest first)`);
+    
+    // 🎨 TRANSFORM TO VIEW MODELS for backward compatibility with PropertyGrid
+    // TODO Phase 4: Refactor PropertyGrid to use PropertyCardVM directly
+    referenceProperties = soldDomainProperties.map(property => ({
+      id: property.id,
+      slug: property.slug,
+      title: property.address[locale] || property.address.fi,
+      city: property.city[locale] || property.city.fi,
+      price: property.pricing.sales,
+      debtFreePrice: property.pricing.debtFree,
+      area: property.dimensions.living,
+      propertyType: property.meta.typeCode,
+      featuredImage: {
+        node: {
+          sourceUrl: property.media.images.find(img => !img.floorPlan)?.url || property.media.images[0]?.url || '',
+          altText: property.address[locale] || property.address.fi
+        }
+      },
+      images: property.media.images,
+      // Keep ACF structure for backward compatibility
+      acfRealEstate: {
+        property: {
+          address: property.address[locale] || property.address.fi,
+          city: property.city[locale] || property.city.fi,
+          price: property.pricing.sales.toString(),
+          debtFreePrice: property.pricing.debtFree.toString(),
+          area: property.dimensions.living.toString(),
+          propertyType: property.meta.apartmentType?.[locale] || property.meta.apartmentType?.fi || property.meta.typeCode,
+          status: 'SOLD',
+        }
+      },
+      property: {
+        status: 'SOLD'
+      }
+    }));
+    
   } catch (error) {
-    console.error('Error fetching sold properties from Linear:', error);
-    referenceProperties = [];
+    console.error('Error fetching sold properties:', error);
   }
 
   return (

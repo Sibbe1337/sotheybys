@@ -1,9 +1,8 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
-import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
-import { locales } from '@/i18n/config';
+import { locales, defaultLocale } from '@/i18n/config';
 import type { Locale } from '@/i18n/config';
 import Header from '@/components/Header/Header';
 import FooterWithTeam from '@/components/Footer/FooterWithTeam';
@@ -77,9 +76,11 @@ export default async function LocaleLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
-  // Validate that the incoming `locale` parameter is valid
+  // Never throw notFound() for unsupported locale - render with fallback instead
+  let validLocale: Locale = locale as Locale;
   if (!locales.includes(locale as Locale)) {
-    notFound();
+    console.warn(`Unsupported locale requested: ${locale}, falling back to ${defaultLocale}`);
+    validLocale = defaultLocale;
   }
 
   // Fetch messages for the locale

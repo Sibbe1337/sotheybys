@@ -1,7 +1,14 @@
 import { Link } from '@/lib/navigation';
 import Image from 'next/image';
+import { locales, type Locale } from '@/i18n/config';
 
-export const revalidate = 60;
+export const dynamic = 'force-static';
+export const dynamicParams = false;
+export const revalidate = 300;
+
+export function generateStaticParams() {
+  return (locales as readonly Locale[]).map((locale) => ({ locale }));
+}
 
 // Actual staff data from Sotheby's website
 const staffMembers = [

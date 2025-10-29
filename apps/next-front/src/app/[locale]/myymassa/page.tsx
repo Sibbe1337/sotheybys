@@ -1,8 +1,15 @@
 import { Link } from '@/lib/navigation';
 import Image from 'next/image';
 import { VideoSection } from '@/components/ui/VideoSection';
+import { locales, type Locale } from '@/i18n/config';
 
-export const revalidate = 60;
+export const dynamic = 'force-static';
+export const dynamicParams = false;
+export const revalidate = 300;
+
+export function generateStaticParams() {
+  return (locales as readonly Locale[]).map((locale) => ({ locale }));
+}
 
 export default function SellingPage() {
   return (
