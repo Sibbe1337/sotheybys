@@ -6,8 +6,7 @@ import PropertyGrid from '@/components/Property/PropertyGrid';
 import { Link } from '@/lib/navigation';
 import Image from 'next/image';
 import { getHomepageTranslation, type SupportedLanguage } from '@/lib/homepage-translations';
-import { listingsCache, ensureCacheInitialized } from '@/lib/listings-cache';
-import { convertCompleteLinearToWordPressFormat } from '@/lib/linear-api-complete-converter';
+// Legacy imports removed - now using new API endpoints
 import type { Locale } from '@/i18n/config';
 
 // Function to get translated hero slides
@@ -203,66 +202,54 @@ export default function HomePageClient({ locale }: { locale: Locale }) {
   const [properties, setProperties] = useState<any[]>(sampleProperties);
   const [loading, setLoading] = useState(true);
 
-  // Fetch real properties from Linear API cache
+  // 🏗️ NEW ARCHITECTURE: Fetch properties from API endpoint
   useEffect(() => {
     async function loadProperties() {
       try {
-        await ensureCacheInitialized();
-        const linearProperties = listingsCache.getListings();
+        // Fetch from new API endpoint (returns PropertyCardVM format)
+        const response = await fetch(`/api/listings?lang=${language}&format=card`);
+        const result = await response.json();
 
-        if (linearProperties && linearProperties.length > 0) {
-          console.log('✅ Using real Linear API properties:', linearProperties.length);
+        if (result.success && result.data && result.data.length > 0) {
+          const properties = result.data;
+          console.log('✅ Using new architecture API:', properties.length);
 
           // 🏠 FILTER OUT RENTAL PROPERTIES - Only show sale properties on homepage
-          const saleProperties = linearProperties.filter(listing => {
-            // listingsCache.getListings() returns CompleteLinearAPIListing[]
-            // Access rent from listing.rent.fi.value structure
-            const rentValue = listing.rent?.fi?.value;
-            const hasRent = rentValue &&
-                            String(rentValue).trim().length > 0 &&
-                            String(rentValue) !== '0' &&
-                            String(rentValue) !== 'null' &&
-                            !String(rentValue).toLowerCase().includes('null');
+          const saleProperties = properties.filter((prop: any) => !prop.isRental);
+          
+          console.log(`✅ Filtered ${saleProperties.length} sale properties for homepage`);
 
-            if (hasRent) {
-              const address = listing.address?.fi?.value || 'Unknown';
-              console.log(`🏠 HOMEPAGE: RENTAL FOUND: ${address} | Rent: "${rentValue}" | EXCLUDING from homepage`);
-            }
-            return !hasRent; // Exclude properties with rent field
-          });
+          // 💎 Already sorted by price (most expensive first) from backend
+          // Properties come pre-sorted from the new architecture
 
-          console.log(`✅ Filtered ${saleProperties.length} sale properties for homepage (excluded ${linearProperties.length - saleProperties.length} rentals)`);
-
-          // 💎 SORT BY PRICE: Most expensive first (Premium branding)
-          // VIKTIGT: Använd SKULDFRITT PRIS (debtFreePrice) som primär sortering
-          saleProperties.sort((a, b) => {
-            // Prioritera debtFreePrice, fallback till askPrice
-            const priceA = parseFloat(a.nonLocalizedValues?.debtFreePrice || a.nonLocalizedValues?.askPrice || '0') || 0;
-            const priceB = parseFloat(b.nonLocalizedValues?.debtFreePrice || b.nonLocalizedValues?.askPrice || '0') || 0;
-            return priceB - priceA; // Descending order (highest first)
-          });
-
-          console.log(`💎 Sorted ${saleProperties.length} properties by price (highest first)`);
-
-          // Transform Linear API format to WordPress format for PropertyCard compatibility
-          const transformedProperties = saleProperties.map(listing => {
-            const converted = convertCompleteLinearToWordPressFormat(listing);
-            // Ensure featuredImage is in the correct nested format for PropertyCard
-            return {
-              ...converted,
-              featuredImage: converted.featuredImage ? {
-                node: {
-                  sourceUrl: converted.featuredImage,
-                  altText: converted.title || converted.acfRealEstate?.property?.address || ''
-                }
-              } : {
-                node: {
-                  sourceUrl: '/images/defaults/placeholder-property.jpg',
-                  altText: converted.title || 'Property'
-                }
+          // Transform PropertyCardVM to WordPress format for PropertyCard compatibility
+          const transformedProperties = saleProperties.map((vm: any) => ({
+            slug: vm.slug,
+            title: vm.title,
+            featuredImage: vm.image ? {
+              node: {
+                sourceUrl: vm.image,
+                altText: vm.title
               }
-            };
-          });
+            } : {
+              node: {
+                sourceUrl: '/images/defaults/placeholder-property.jpg',
+                altText: vm.title
+              }
+            },
+            acfRealEstate: {
+              property: {
+                address: vm.address,
+                city: vm.city,
+                price: vm.price,
+                debtFreePrice: vm.priceDebtFree,
+                area: vm.area,
+                rooms: vm.rooms,
+                propertyType: vm.type,
+                status: vm.status,
+              }
+            }
+          }));
           setProperties(transformedProperties);
         } else {
           console.warn('⚠️ No Linear properties found, using sample data');

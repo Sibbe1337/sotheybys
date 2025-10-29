@@ -1,11 +1,23 @@
 import { NextResponse } from 'next/server';
-import { fetchLinearListingsAsUi, fetchTestLinearListingsAsUi } from '@/lib/linear-api-adapter';
-import { listingsCache, ensureCacheInitialized } from '@/lib/listings-cache';
-import { getPropertyBySlug } from '@/lib/wordpress';
+import { LinearAPIClient } from '@/lib/infrastructure/linear-api/client';
+import { LinearToPropertyMapper } from '@/lib/infrastructure/linear-api/mapper';
+import { GetPropertyBySlug } from '@/lib/application/get-property-by-slug.usecase';
+import { PropertyVM } from '@/lib/presentation/property.view-model';
+import { log } from '@/lib/logger';
 
 // Force dynamic rendering as this route uses request.url
 export const dynamic = 'force-dynamic';
 
+/**
+ * GET /api/property-ui/[slug]
+ * 
+ * 🏗️ NEW ARCHITECTURE API
+ * Returns a single property using Clean Architecture use case
+ * 
+ * Query params:
+ * - lang: 'fi' | 'sv' | 'en' (default: 'fi')
+ * - format: 'domain' | 'card' | 'detail' (default: 'detail')
+ */
 export async function GET(
   request: Request,
   { params }: { params: { slug: string } }
@@ -13,32 +25,22 @@ export async function GET(
   try {
     const { slug } = params;
     const { searchParams } = new URL(request.url);
-    const source = searchParams.get('source') || 'test';
     const language = (searchParams.get('lang') || 'fi') as 'fi' | 'sv' | 'en';
+    const format = searchParams.get('format') || 'detail';
     
-    let foundProperty: any = null;
+    // 🏗️ NEW ARCHITECTURE: Use clean architecture layers
+    const apiUrl = process.env.NEXT_PUBLIC_LINEAR_API_URL || process.env.LINEAR_API_URL || '';
+    const apiKey = process.env.LINEAR_API_KEY;
     
-    if (source === 'test') {
-      const listings = await fetchTestLinearListingsAsUi();
-      foundProperty = listings.find(listing => listing.slug === slug);
-    } else if (source === 'linear') {
-      const listings = await fetchLinearListingsAsUi();
-      foundProperty = listings.find(listing => listing.slug === slug);
-    } else if (source === 'cache') {
-      // Try cache first
-      await ensureCacheInitialized();
-      foundProperty = listingsCache.getConvertedListingBySlug(slug, language);
-    }
+    const client = new LinearAPIClient(apiUrl, apiKey);
+    const mapper = new LinearToPropertyMapper();
+    const getPropertyUseCase = new GetPropertyBySlug(client, mapper);
     
-    // If not found in Linear/cache, try WordPress
-    if (!foundProperty && source === 'cache') {
-      const wpProperty = await getPropertyBySlug(slug);
-      if (wpProperty) {
-        foundProperty = wpProperty;
-      }
-    }
+    // Fetch property using the new use case
+    const domainProperty = await getPropertyUseCase.execute(slug, language);
     
-    if (!foundProperty) {
+    if (!domainProperty) {
+      log(`Property not found: ${slug}`);
       return NextResponse.json(
         {
           success: false,
@@ -48,10 +50,26 @@ export async function GET(
       );
     }
     
+    log(`✅ API: Fetched property via new use case: ${domainProperty.address.fi}`);
+    
+    // Transform based on requested format
+    let data;
+    
+    if (format === 'domain') {
+      data = domainProperty;
+    } else if (format === 'card') {
+      data = PropertyVM.toCard(domainProperty, language);
+    } else {
+      // Default: Return detailed view model
+      data = PropertyVM.toDetail(domainProperty, language);
+    }
+    
     return NextResponse.json({
       success: true,
-      data: foundProperty,
-      format: foundProperty.location ? 'ui' : 'wordpress'
+      slug,
+      language,
+      format,
+      data
     });
   } catch (error) {
     console.error('Error fetching property:', error);

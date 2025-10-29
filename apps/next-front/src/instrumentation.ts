@@ -1,29 +1,13 @@
 /**
  * Next.js Instrumentation
- * This file runs when the Next.js server starts
- * Perfect for initializing background tasks like our listings sync
+ * 
+ * 🏗️ NEW ARCHITECTURE: No cache initialization needed
+ * Properties are now fetched on-demand using Clean Architecture use cases
  */
 
 export async function register() {
   if (process.env.NEXT_RUNTIME === 'nodejs') {
-    // Only run on server-side
-    console.log('[Instrumentation] Initializing server...');
-    
-    try {
-      // Dynamic import to avoid issues with edge runtime
-      const { listingsCache } = await import('./lib/listings-cache');
-      
-      // Start auto-sync
-      listingsCache.startAutoSync();
-      
-      console.log('[Instrumentation] Listings auto-sync initialized');
-      
-      // Log initial status
-      const status = listingsCache.getStatus();
-      console.log('[Instrumentation] Initial cache status:', status);
-      
-    } catch (error) {
-      console.error('[Instrumentation] Failed to initialize listings sync:', error);
-    }
+    console.log('[Instrumentation] ✅ Server initialized with Clean Architecture');
+    console.log('[Instrumentation] Properties will be fetched on-demand via use cases');
   }
 }

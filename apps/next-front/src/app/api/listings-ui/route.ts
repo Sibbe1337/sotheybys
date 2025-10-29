@@ -1,53 +1,53 @@
 import { NextResponse } from 'next/server';
-import { fetchLinearListingsAsUi, fetchTestLinearListingsAsUi } from '@/lib/linear-api-adapter';
-import { listingsCache, ensureCacheInitialized } from '@/lib/listings-cache';
-import { flattenPropertyForLanguage } from '@/lib/flatten-localized-data';
+import { LinearAPIClient } from '@/lib/infrastructure/linear-api/client';
+import { LinearToPropertyMapper } from '@/lib/infrastructure/linear-api/mapper';
+import { GetProperties } from '@/lib/application/get-properties.usecase';
+import { PropertyVM } from '@/lib/presentation/property.view-model';
+import { log } from '@/lib/logger';
 
 // Force dynamic rendering as this route uses request.url
 export const dynamic = 'force-dynamic';
 
+/**
+ * GET /api/listings-ui
+ * 
+ * 🏗️ NEW ARCHITECTURE API
+ * Returns properties as card view models (UI-friendly format)
+ * 
+ * Query params:
+ * - lang: 'fi' | 'sv' | 'en' (default: 'fi')
+ * 
+ * ⚠️ NOTE: This endpoint is equivalent to GET /api/listings?format=card
+ * Consider using that instead for consistency
+ */
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const source = searchParams.get('source') || 'cache'; // Default to cache (multilingual)
     const language = (searchParams.get('lang') || 'fi') as 'fi' | 'sv' | 'en';
     
-    let listings;
+    // 🏗️ NEW ARCHITECTURE: Use clean architecture layers
+    const apiUrl = process.env.NEXT_PUBLIC_LINEAR_API_URL || process.env.LINEAR_API_URL || '';
+    const apiKey = process.env.LINEAR_API_KEY;
     
-    if (source === 'cache') {
-      // Use cached multilingual format with proper price parsing
-      await ensureCacheInitialized();
-      const multilingualListings = listingsCache.getMultilingualListings();
-      
-      // Flatten each listing to the requested language
-      listings = multilingualListings.map(listing => 
-        flattenPropertyForLanguage(listing, language)
-      );
-      
-      console.log(`✅ Flattened ${listings.length} UI listings for language: ${language}`);
-      
-      return NextResponse.json({
-        success: true,
-        data: listings,
-        count: listings.length,
-        source: 'cache-multilingual',
-        format: 'flattened',
-        language
-      });
-    } else if (source === 'test') {
-      listings = await fetchTestLinearListingsAsUi();
-    } else if (source === 'linear') {
-      listings = await fetchLinearListingsAsUi();
-    } else {
-      listings = await fetchTestLinearListingsAsUi();
-    }
+    const client = new LinearAPIClient(apiUrl, apiKey);
+    const mapper = new LinearToPropertyMapper();
+    const getPropertiesUseCase = new GetProperties(client, mapper);
+    
+    // Fetch properties using the new use case
+    const domainProperties = await getPropertiesUseCase.execute(language);
+    
+    log(`✅ API: Fetched ${domainProperties.length} UI listings via new use case`);
+    
+    // Transform to card view models (UI-friendly format)
+    const listings = domainProperties.map(p => PropertyVM.toCard(p, language));
     
     return NextResponse.json({
       success: true,
       data: listings,
       count: listings.length,
-      source,
-      format: 'ui'
+      language,
+      format: 'card',
+      source: 'clean-architecture'
     });
   } catch (error) {
     console.error('Error fetching UI listings:', error);

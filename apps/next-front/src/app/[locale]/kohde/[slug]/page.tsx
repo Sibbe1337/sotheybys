@@ -1,14 +1,16 @@
 import { notFound } from 'next/navigation';
-import { getPostBySlug } from '@/lib/wordpress';
-import { fetchLinearListings, fetchTestLinearListings } from '@/lib/linear-api-adapter';
-import { listingsCache, ensureCacheInitialized } from '@/lib/listings-cache';
+import { LinearAPIClient } from '@/lib/infrastructure/linear-api/client';
+import { LinearToPropertyMapper } from '@/lib/infrastructure/linear-api/mapper';
+import { GetPropertyBySlug } from '@/lib/application/get-property-by-slug.usecase';
 import PropertyDetailEnhanced from '@/components/Property/PropertyDetailEnhanced';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import type { Metadata } from 'next';
+import { log } from '@/lib/logger';
 
 interface PropertyPageProps {
   params: {
     slug: string;
+    locale: 'fi' | 'sv' | 'en';
   };
   searchParams: {
     lang?: string;
@@ -102,37 +104,96 @@ interface PropertyWithACF {
 
 export const revalidate = 60;
 
-// Helper function to fetch property data
-async function fetchPropertyData(slug: string, lang: string = 'fi'): Promise<PropertyWithACF | null> {
-  // CRITICAL: Use the API route which properly maps all fields
-  // This ensures siteOwnershipType, ownershipType, housingTenure are correctly mapped
+// Helper function to fetch property data using new architecture
+async function fetchPropertyData(slug: string, locale: 'fi' | 'sv' | 'en' = 'fi'): Promise<PropertyWithACF | null> {
   try {
-    // Determine the base URL for server-side fetching
-    const baseUrl = process.env.VERCEL_URL 
-      ? `https://${process.env.VERCEL_URL}`
-      : (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000');
+    // 🏗️ NEW ARCHITECTURE: Use clean architecture layers
+    const apiUrl = process.env.NEXT_PUBLIC_LINEAR_API_URL || process.env.LINEAR_API_URL || '';
+    const apiKey = process.env.LINEAR_API_KEY;
     
-    const response = await fetch(`${baseUrl}/api/property/${slug}?lang=${lang}`, {
-      next: { revalidate: 60 }
-    });
+    const client = new LinearAPIClient(apiUrl, apiKey);
+    const mapper = new LinearToPropertyMapper();
+    const getPropertyUseCase = new GetPropertyBySlug(client, mapper);
     
-    if (response.ok) {
-      const result = await response.json();
-      if (result.success && result.data) {
-        return result.data as PropertyWithACF;
-      }
+    // Fetch property using the new use case
+    const domainProperty = await getPropertyUseCase.execute(slug, locale);
+    
+    if (!domainProperty) {
+      log(`Property not found: ${slug}`);
+      return null;
     }
+    
+    log(`✅ Fetched property via new use case: ${domainProperty.address.fi}`);
+    
+    // Transform domain model to legacy format for backward compatibility with PropertyDetailEnhanced
+    // TODO Phase 5: Refactor PropertyDetailEnhanced to use PropertyDetailVM directly
+    const property: PropertyWithACF = {
+      title: domainProperty.address[locale] || domainProperty.address.fi,
+      slug: domainProperty.slug,
+      content: domainProperty.description?.[locale] || domainProperty.description?.fi || '',
+      featuredImage: domainProperty.media.images[0] ? {
+        node: {
+          sourceUrl: domainProperty.media.images[0].url,
+          altText: domainProperty.address[locale] || domainProperty.address.fi
+        }
+      } : undefined,
+      images: domainProperty.media.images.map(img => ({
+        url: img.url,
+        title: domainProperty.address[locale] || domainProperty.address.fi,
+        isMain: false
+      })),
+      acfRealEstate: {
+        property: {
+          address: domainProperty.address[locale] || domainProperty.address.fi,
+          city: domainProperty.city[locale] || domainProperty.city.fi,
+          price: domainProperty.pricing.sales.toString(),
+          debtFreePrice: domainProperty.pricing.debtFree.toString(),
+          area: domainProperty.dimensions.living.toString(),
+          rooms: domainProperty.dimensions.rooms,
+          bedrooms: domainProperty.dimensions.bedrooms?.toString(),
+          bathrooms: domainProperty.dimensions.bathrooms?.toString(),
+          propertyType: domainProperty.meta.apartmentType?.[locale] || domainProperty.meta.apartmentType?.fi || domainProperty.meta.typeCode,
+          status: domainProperty.meta.status,
+          description: domainProperty.description?.[locale] || domainProperty.description?.fi,
+          freeText: domainProperty.description?.[locale] || domainProperty.description?.fi,
+          freeTextTitle: domainProperty.descriptionTitle?.[locale] || domainProperty.descriptionTitle?.fi,
+          videoUrl: domainProperty.documents.video || null,
+          maintenanceCharge: domainProperty.fees.maintenance?.toString(),
+          waterCharge: domainProperty.fees.water?.toString(),
+          floor: domainProperty.meta.floor,
+          floorCount: domainProperty.meta.floorsTotal?.toString(),
+          energyClass: domainProperty.meta.energyClass,
+          housingCooperativeName: domainProperty.meta.housingCompany.name?.[locale] || domainProperty.meta.housingCompany.name?.fi,
+          heatingSystem: domainProperty.meta.heatingSystem?.[locale] || domainProperty.meta.heatingSystem?.fi,
+          constructionYear: domainProperty.meta.yearBuilt?.toString(),
+          lotOwnership: domainProperty.meta.plotOwnership?.[locale] || domainProperty.meta.plotOwnership?.fi,
+          balcony: domainProperty.features.balcony ? 'Kyllä' : 'Ei',
+          terrace: domainProperty.features.terrace ? 'Kyllä' : 'Ei',
+          sauna: domainProperty.features.sauna ? 'Kyllä' : 'Ei',
+          elevator: domainProperty.meta.elevator ? 'Kyllä' : 'Ei',
+          parkingSpaces: domainProperty.features.parkingSpace ? '1' : '0',
+          lotArea: domainProperty.dimensions.plot?.toString(),
+          hasMarketingContent: !!(domainProperty.description?.fi || domainProperty.descriptionTitle?.fi),
+        },
+        agent: domainProperty.agent ? {
+          name: domainProperty.agent.name,
+          phone: domainProperty.agent.phone,
+          email: domainProperty.agent.email,
+        } : undefined
+      }
+    };
+    
+    return property;
   } catch (error) {
-    console.error('Error fetching property from API:', error);
+    console.error('Error fetching property:', error);
+    return null;
   }
-  
-  // Fallback: Try WordPress
-  return await getPostBySlug(slug) as PropertyWithACF;
 }
 
 // Generate metadata for SEO and social sharing
 export async function generateMetadata({ params }: PropertyPageProps): Promise<Metadata> {
-  const property = await fetchPropertyData(params.slug);
+  const locale = params.locale || 'fi';
+  const property = await fetchPropertyData(params.slug, locale);
   
   if (!property) {
     return {
@@ -307,10 +368,10 @@ function generateStructuredData(property: PropertyWithACF, propertyData: any, ag
 }
 
 export default async function PropertyDetailPage({ params, searchParams }: PropertyPageProps) {
-  const { slug } = params;
-  const language = searchParams?.lang || 'fi';
+  const { slug, locale } = params;
+  const language = (searchParams?.lang || locale || 'fi') as 'fi' | 'sv' | 'en';
   
-  // Use shared function to fetch property data
+  // Use shared function to fetch property data via new architecture
   const property = await fetchPropertyData(slug, language);
   
   if (!property) {

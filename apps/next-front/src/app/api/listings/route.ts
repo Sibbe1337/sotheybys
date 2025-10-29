@@ -1,69 +1,66 @@
 import { NextResponse } from 'next/server';
-import { listingsCache } from '@/lib/listings-cache';
-import { fetchLinearListings, fetchTestLinearListings } from '@/lib/linear-api-adapter';
-import { flattenPropertyForLanguage } from '@/lib/flatten-localized-data';
+import { LinearAPIClient } from '@/lib/infrastructure/linear-api/client';
+import { LinearToPropertyMapper } from '@/lib/infrastructure/linear-api/mapper';
+import { GetProperties } from '@/lib/application/get-properties.usecase';
+import { PropertyVM } from '@/lib/presentation/property.view-model';
+import { log } from '@/lib/logger';
 
 // Force dynamic rendering as this route uses request.url
 export const dynamic = 'force-dynamic';
 
+/**
+ * GET /api/listings
+ * 
+ * 🏗️ NEW ARCHITECTURE API
+ * Returns properties using Clean Architecture use cases
+ * 
+ * Query params:
+ * - lang: 'fi' | 'sv' | 'en' (default: 'fi')
+ * - format: 'domain' | 'card' | 'detail' (default: 'card')
+ */
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const format = searchParams.get('format') || 'multilingual'; // Default to multilingual
     const language = (searchParams.get('lang') || 'fi') as 'fi' | 'sv' | 'en';
-    const source = searchParams.get('source') || 'cache';
+    const format = searchParams.get('format') || 'card';
 
-    let listings;
+    // 🏗️ NEW ARCHITECTURE: Use clean architecture layers
+    const apiUrl = process.env.NEXT_PUBLIC_LINEAR_API_URL || process.env.LINEAR_API_URL || '';
+    const apiKey = process.env.LINEAR_API_KEY;
+    
+    const client = new LinearAPIClient(apiUrl, apiKey);
+    const mapper = new LinearToPropertyMapper();
+    const getPropertiesUseCase = new GetProperties(client, mapper);
+    
+    // Fetch properties using the new use case
+    const domainProperties = await getPropertiesUseCase.execute(language);
+    
+    log(`✅ API: Fetched ${domainProperties.length} properties via new use case`);
 
-    if (source === 'cache') {
-      // Get from cache
-      const status = listingsCache.getStatus();
-      
-      // Ensure cache is initialized
-      if (status.listingsCount === 0 || status.needsRefresh) {
-        await listingsCache.syncListings();
-      }
-      
-      if (format === 'multilingual') {
-        // NEW: Get multilingual format and flatten for requested language
-        const multilingualListings = listingsCache.getMultilingualListings();
-        
-        // Flatten each listing to the requested language
-        listings = multilingualListings.map(listing => {
-          const flattened: any = flattenPropertyForLanguage(listing, language);
-          
-          // IMAGE PIPELINE HARDENING: Always default to arrays to prevent 500 errors
-          if (!Array.isArray(flattened.images)) flattened.images = [];
-          if (!Array.isArray(flattened.photoUrls)) flattened.photoUrls = [];
-          
-          return flattened;
-        });
-        
-        console.log(`✅ Flattened ${listings.length} listings for language: ${language}`);
-      } else if (format === 'wordpress') {
-        listings = listingsCache.getWordPressFormattedListings(language);
-      } else {
-        listings = listingsCache.getListings();
-      }
-    } else if (source === 'test') {
-      // Get from test API directly
-      listings = await fetchTestLinearListings();
+    // Transform based on requested format
+    let data;
+    
+    if (format === 'domain') {
+      // Return raw domain models
+      data = domainProperties;
+    } else if (format === 'detail') {
+      // Return detailed view models
+      data = domainProperties.map(p => PropertyVM.toDetail(p, language));
     } else {
-      // Get from production API directly
-      listings = await fetchLinearListings();
+      // Default: Return card view models
+      data = domainProperties.map(p => PropertyVM.toCard(p, language));
     }
 
     const response = NextResponse.json({
       success: true,
-      count: listings.length,
-      source,
-      format,
+      count: data.length,
       language,
-      data: listings
+      format,
+      data
     });
     
-    // Prevent aggressive caching that can hide image updates
-    response.headers.set('Cache-Control', 'no-store, max-age=0');
+    // Cache for 5 minutes
+    response.headers.set('Cache-Control', 'public, max-age=300, stale-while-revalidate=600');
     
     return response;
   } catch (error) {
@@ -79,26 +76,16 @@ export async function GET(request: Request) {
   }
 }
 
-// Trigger a manual sync
+/**
+ * POST /api/listings
+ * 
+ * ⚠️ DEPRECATED: Cache sync no longer needed with new architecture
+ * Returns success for backward compatibility
+ */
 export async function POST() {
-  try {
-    await listingsCache.syncListings();
-    const status = listingsCache.getStatus();
-    
-    return NextResponse.json({
-      success: true,
-      message: 'Sync completed',
-      status
-    });
-  } catch (error) {
-    console.error('Error syncing listings:', error);
-    return NextResponse.json(
-      { 
-        success: false, 
-        error: 'Failed to sync listings',
-        details: error instanceof Error ? error.message : 'Unknown error'
-      },
-      { status: 500 }
-    );
-  }
+  return NextResponse.json({
+    success: true,
+    message: 'Cache sync deprecated - new architecture fetches directly',
+    deprecated: true
+  });
 }
