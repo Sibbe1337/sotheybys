@@ -2,10 +2,13 @@ import { notFound } from 'next/navigation';
 import { LinearAPIClient } from '@/lib/infrastructure/linear-api/client';
 import { LinearToPropertyMapper } from '@/lib/infrastructure/linear-api/mapper';
 import { GetPropertyBySlug } from '@/lib/application/get-property-by-slug.usecase';
-import PropertyDetailEnhanced from '@/components/Property/PropertyDetailEnhanced';
+import { PropertyVM } from '@/lib/presentation/property.view-model';
+import { DetailView } from '@/components/property/DetailView';
+import { EmptyState } from '@/components/EmptyState';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import type { Metadata } from 'next';
 import { log } from '@/lib/logger';
+import type { Locale } from '@/i18n/config';
 
 interface PropertyPageProps {
   params: {
@@ -104,88 +107,23 @@ interface PropertyWithACF {
 
 export const revalidate = 60; // Regenerate every minute
 
-// Helper function to fetch property data using new architecture
-async function fetchPropertyData(slug: string, locale: 'fi' | 'sv' | 'en' = 'fi'): Promise<PropertyWithACF | null> {
+// ✅ NEW: Simplified fetch using clean architecture
+async function fetchProperty(slug: string, locale: Locale) {
   try {
-    // 🏗️ NEW ARCHITECTURE: Use clean architecture layers
     const { getLinearAPIUrl, getLinearAPIKey, getLinearCompanyId } = await import('@/lib/config/linear-api.config');
-      const apiUrl = getLinearAPIUrl();
-      const apiKey = getLinearAPIKey();
-      const companyId = getLinearCompanyId();
-      
-      const client = new LinearAPIClient(apiUrl, apiKey, companyId);
+    const apiUrl = getLinearAPIUrl();
+    const apiKey = getLinearAPIKey();
+    const companyId = getLinearCompanyId();
+    
+    const client = new LinearAPIClient(apiUrl, apiKey, companyId);
     const mapper = new LinearToPropertyMapper();
-    const getPropertyUseCase = new GetPropertyBySlug(client, mapper);
+    const useCase = new GetPropertyBySlug(client, mapper);
     
-    // Fetch property using the new use case
-    const domainProperty = await getPropertyUseCase.execute(slug, locale);
+    const domain = await useCase.execute(slug, locale);
+    if (!domain) return null;
     
-    if (!domainProperty) {
-      log(`Property not found: ${slug}`);
-      return null;
-    }
-    
-    log(`✅ Fetched property via new use case: ${domainProperty.address.fi}`);
-    
-    // Transform domain model to legacy format for backward compatibility with PropertyDetailEnhanced
-    // TODO Phase 5: Refactor PropertyDetailEnhanced to use PropertyDetailVM directly
-    const property: PropertyWithACF = {
-      title: domainProperty.address[locale] || domainProperty.address.fi,
-      slug: domainProperty.slug,
-      content: domainProperty.description?.[locale] || domainProperty.description?.fi || '',
-      featuredImage: domainProperty.media.images[0] ? {
-        node: {
-          sourceUrl: domainProperty.media.images[0].url,
-          altText: domainProperty.address[locale] || domainProperty.address.fi
-        }
-      } : undefined,
-      images: domainProperty.media.images.map(img => ({
-        url: img.url,
-        title: domainProperty.address[locale] || domainProperty.address.fi,
-        isMain: false
-      })),
-      acfRealEstate: {
-        property: {
-          address: domainProperty.address[locale] || domainProperty.address.fi,
-          city: domainProperty.city[locale] || domainProperty.city.fi,
-          price: domainProperty.pricing.sales.toString(),
-          debtFreePrice: domainProperty.pricing.debtFree.toString(),
-          area: domainProperty.dimensions.living.toString(),
-          rooms: domainProperty.dimensions.rooms,
-          bedrooms: domainProperty.dimensions.bedrooms?.toString(),
-          bathrooms: domainProperty.dimensions.bathrooms?.toString(),
-          propertyType: domainProperty.meta.apartmentType?.[locale] || domainProperty.meta.apartmentType?.fi || domainProperty.meta.typeCode,
-          status: domainProperty.meta.status,
-          description: domainProperty.description?.[locale] || domainProperty.description?.fi,
-          freeText: domainProperty.description?.[locale] || domainProperty.description?.fi,
-          freeTextTitle: domainProperty.descriptionTitle?.[locale] || domainProperty.descriptionTitle?.fi,
-          videoUrl: domainProperty.documents.video || null,
-          maintenanceCharge: domainProperty.fees.maintenance?.toString(),
-          waterCharge: domainProperty.fees.water?.toString(),
-          floor: domainProperty.meta.floor,
-          floorCount: domainProperty.meta.floorsTotal?.toString(),
-          energyClass: domainProperty.meta.energyClass,
-          housingCooperativeName: domainProperty.meta.housingCompany.name?.[locale] || domainProperty.meta.housingCompany.name?.fi,
-          heatingSystem: domainProperty.meta.heatingSystem?.[locale] || domainProperty.meta.heatingSystem?.fi,
-          constructionYear: domainProperty.meta.yearBuilt?.toString(),
-          lotOwnership: domainProperty.meta.plotOwnership?.[locale] || domainProperty.meta.plotOwnership?.fi,
-          balcony: domainProperty.features.balcony ? 'Kyllä' : 'Ei',
-          terrace: domainProperty.features.terrace ? 'Kyllä' : 'Ei',
-          sauna: domainProperty.features.sauna ? 'Kyllä' : 'Ei',
-          elevator: domainProperty.meta.elevator ? 'Kyllä' : 'Ei',
-          parkingSpaces: domainProperty.features.parkingSpace ? '1' : '0',
-          lotArea: domainProperty.dimensions.plot?.toString(),
-          hasMarketingContent: !!(domainProperty.description?.fi || domainProperty.descriptionTitle?.fi),
-        },
-        agent: domainProperty.agent ? {
-          name: domainProperty.agent.name,
-          phone: domainProperty.agent.phone,
-          email: domainProperty.agent.email,
-        } : undefined
-      }
-    };
-    
-    return property;
+    log(`✅ Property fetched: ${domain.address.fi} (locale: ${locale})`);
+    return domain;
   } catch (error) {
     console.error('Error fetching property:', error);
     return null;
@@ -195,86 +133,51 @@ async function fetchPropertyData(slug: string, locale: 'fi' | 'sv' | 'en' = 'fi'
 // Generate metadata for SEO and social sharing
 export async function generateMetadata({ params }: PropertyPageProps): Promise<Metadata> {
   const locale = params.locale || 'fi';
-  const property = await fetchPropertyData(params.slug, locale);
+  const domain = await fetchProperty(params.slug, locale);
   
-  if (!property) {
+  if (!domain) {
+    const titles = {
+      fi: 'Kohde ei löytynyt | Snellman Sotheby\'s International Realty',
+      sv: 'Objekt hittades inte | Snellman Sotheby\'s International Realty',
+      en: 'Property not found | Snellman Sotheby\'s International Realty'
+    };
     return {
-      title: 'Kohde ei löytynyt | Snellman Sotheby\'s International Realty',
-      description: 'Valitettavasti etsimääsi kohdetta ei löytynyt.',
+      title: titles[locale],
+      description: locale === 'sv' ? 'Objektet du letade efter hittades inte.' : 
+                   locale === 'en' ? 'The property you were looking for was not found.' :
+                   'Valitettavasti etsimääsi kohdetta ei löytynyt.',
     };
   }
 
-  const propertyData = property?.acfRealEstate?.property || {};
-  const {
-    address,
-    city,
-    price,
-    debtFreePrice,
-    area,
-    rooms,
-    propertyType,
-    freeTextTitle,
-    description,
-    marketingSubtitle,
-  } = propertyData;
-
-  // Create title with key information
-  const title = freeTextTitle || `${address || property.title} - ${city || 'Suomi'}`;
-  const fullTitle = `${title} | Snellman Sotheby\'s International Realty`;
-
-  // Create comprehensive description
-  let metaDescription = marketingSubtitle || description || property.content || '';
+  // Use ViewModel for consistent formatting
+  const vm = PropertyVM.toDetail(domain, locale);
   
-  // Add key property details to description if not already included
-  const details = [];
-  if (area) {
-    details.push(`${area} m²`);
-  }
-  if (rooms) {
-    details.push(`${rooms} huonetta`);
-  }
-  if (price || debtFreePrice) {
-    const displayPrice = price || debtFreePrice || '';
-    if (displayPrice) {
-      details.push(`${new Intl.NumberFormat('fi-FI').format(parseInt(displayPrice))} €`);
-    }
-  }
-  
-  if (details.length > 0 && metaDescription.length < 120) {
-    metaDescription = `${metaDescription} | ${details.join(' • ')}`;
-  }
-
-  // Truncate description to appropriate length for meta description
-  if (metaDescription.length > 160) {
-    metaDescription = metaDescription.substring(0, 157) + '...';
-  }
-
-  // Get the first image for Open Graph
-  const mainImage = property.images?.find(img => img.isMain) || property.images?.[0];
-  const ogImage = mainImage?.url || property.featuredImage?.node?.sourceUrl;
+  const title = `${vm.title} - ${vm.city} | Snellman Sotheby's International Realty`;
+  const description = vm.subtitle || `${vm.area} • ${vm.price}`;
+  const ogImage = vm.images[0]?.url;
 
   return {
-    title: fullTitle,
-    description: metaDescription,
+    title,
+    description,
     openGraph: {
-      title: fullTitle,
-      description: metaDescription,
+      title,
+      description,
       type: 'website',
       siteName: 'Snellman Sotheby\'s International Realty',
-      locale: 'fi_FI',
+      locale: locale === 'sv' ? 'sv_SE' : locale === 'en' ? 'en_GB' : 'fi_FI',
       ...(ogImage && {
         images: [{
           url: ogImage,
           width: 1200,
           height: 630,
-          alt: `${address || property.title} - ${city || 'Suomi'}`,
+          alt: vm.title,
         }],
       }),
     },
     twitter: {
       card: 'summary_large_image',
-      title: fullTitle,
-      description: metaDescription,
+      title,
+      description,
       ...(ogImage && { images: [ogImage] }),
     },
     robots: {
@@ -369,25 +272,47 @@ function generateStructuredData(property: PropertyWithACF, propertyData: any, ag
   };
 }
 
-export default async function PropertyDetailPage({ params, searchParams }: PropertyPageProps) {
+export default async function PropertyDetailPage({ params }: PropertyPageProps) {
   const { slug, locale } = params;
-  const language = (searchParams?.lang || locale || 'fi') as 'fi' | 'sv' | 'en';
   
-  // Use shared function to fetch property data via new architecture
-  const property = await fetchPropertyData(slug, language);
+  // ✅ NEW ARCHITECTURE: Fetch property using clean architecture
+  const domain = await fetchProperty(slug, locale);
   
-  if (!property) {
-    notFound();
+  if (!domain) {
+    // ✅ SPEC: Show empty state instead of 404 for missing property
+    return <EmptyState locale={locale} messageKey="propertyNotFound" />;
   }
 
-  // Extract property data and agent data
-  // For Linear API data, the property details might be at the root level
-  const propertyData = property?.acfRealEstate?.property || property || {};
-  const agentData = property?.acfRealEstate?.agent || null;
-  const images = property?.images || [];
+  // ✅ NEW: Transform domain model to ViewModel for presentation
+  const vm = PropertyVM.toDetail(domain, locale);
   
-  // Generate structured data
-  const structuredData = generateStructuredData(property, propertyData, agentData);
+  // JSON-LD for SEO
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'RealEstateListing',
+    name: vm.title,
+    description: vm.subtitle || vm.description || '',
+    image: vm.images.map(img => img.url),
+    url: `https://sothebysrealty.fi/${locale}/kohde/${slug}`,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: vm.title,
+      addressLocality: vm.city,
+      postalCode: vm.postalCode,
+      addressCountry: 'FI'
+    },
+    offers: {
+      '@type': 'Offer',
+      price: domain.pricing.sales, // ✅ Numeric value for JSON-LD
+      priceCurrency: 'EUR',
+      availability: 'https://schema.org/InStock'
+    },
+    floorSize: { '@type': 'QuantitativeValue', value: domain.dimensions.living, unitText: 'MTK' },
+    numberOfRooms: domain.dimensions.rooms,
+    ...(domain.dimensions.bedrooms && { numberOfBedrooms: domain.dimensions.bedrooms }),
+    ...(domain.dimensions.bathrooms && { numberOfBathrooms: domain.dimensions.bathrooms }),
+    ...(domain.meta.yearBuilt && { yearBuilt: domain.meta.yearBuilt }),
+  };
 
   return (
     <>
@@ -396,13 +321,7 @@ export default async function PropertyDetailPage({ params, searchParams }: Prope
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       <ErrorBoundary>
-        <PropertyDetailEnhanced 
-          property={property}
-          propertyData={propertyData}
-          agentData={agentData}
-          images={images}
-          language={language as 'fi' | 'sv' | 'en'}
-        />
+        <DetailView vm={vm} locale={locale} />
       </ErrorBoundary>
     </>
   );

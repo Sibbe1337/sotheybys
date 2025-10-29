@@ -25,6 +25,12 @@ export default function Header({ menuItems }: HeaderProps) {
   const router = useRouter();
   const locale = useLocale();
   
+  // ✅ CRITICAL FIX: Strip any locale prefix from pathname as safeguard
+  // This prevents double locale prefixes like /en/sv/kohde/...
+  const cleanPathname = pathname
+    .replace(/^\/(fi|sv|en)/, '') // Remove leading locale
+    .replace(/^$/, '/');          // Ensure at least /
+  
   // ✅ FIX: Extract locale from URL as fallback (for client-side hydration)
   // pathname from next-intl's usePathname() doesn't include locale prefix
   // so we need to check if we're on /sv or /en routes via window.location
@@ -205,7 +211,7 @@ export default function Header({ menuItems }: HeaderProps) {
             {/* Language Switcher */}
             <div className="hidden md:flex items-center gap-3 text-xs [font-family:'freight-sans-pro',sans-serif]">
               <Link
-                href={pathname}
+                href={cleanPathname}
                 locale="fi"
                 className={`transition-opacity ${currentLang === 'fi' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
               >
@@ -213,7 +219,7 @@ export default function Header({ menuItems }: HeaderProps) {
               </Link>
               <span className="text-white/40">|</span>
               <Link
-                href={pathname}
+                href={cleanPathname}
                 locale="sv"
                 className={`transition-opacity ${currentLang === 'sv' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
               >
@@ -221,7 +227,7 @@ export default function Header({ menuItems }: HeaderProps) {
               </Link>
               <span className="text-white/40">|</span>
               <Link
-                href={pathname}
+                href={cleanPathname}
                 locale="en"
                 className={`transition-opacity ${currentLang === 'en' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
               >
@@ -402,7 +408,7 @@ export default function Header({ menuItems }: HeaderProps) {
             <div className="mt-4 pt-4 border-t border-white/20">
               <div className="flex items-center justify-center gap-4 text-xs">
                 <Link
-                  href={pathname}
+                  href={cleanPathname}
                   locale="fi"
                   className={`transition-opacity [font-family:'freight-sans-pro',sans-serif] ${currentLang === 'fi' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
                   onClick={() => setIsMobileMenuOpen(false)}
@@ -411,7 +417,7 @@ export default function Header({ menuItems }: HeaderProps) {
                 </Link>
                 <span className="text-white/40">|</span>
                 <Link
-                  href={pathname}
+                  href={cleanPathname}
                   locale="sv"
                   className={`transition-opacity [font-family:'freight-sans-pro',sans-serif] ${currentLang === 'sv' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
                   onClick={() => setIsMobileMenuOpen(false)}
@@ -420,7 +426,7 @@ export default function Header({ menuItems }: HeaderProps) {
                 </Link>
                 <span className="text-white/40">|</span>
                 <Link
-                  href={pathname}
+                  href={cleanPathname}
                   locale="en"
                   className={`transition-opacity [font-family:'freight-sans-pro',sans-serif] ${currentLang === 'en' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
                   onClick={() => setIsMobileMenuOpen(false)}
