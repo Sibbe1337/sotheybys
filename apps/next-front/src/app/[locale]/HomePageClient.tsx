@@ -211,9 +211,10 @@ export default function HomePageClient({ locale }: { locale: Locale }) {
         const { LinearToPropertyMapper } = await import('@/lib/infrastructure/linear-api/mapper');
         const { GetProperties } = await import('@/lib/application/get-properties.usecase');
         const { PropertyVM } = await import('@/lib/presentation/property.view-model');
+        const { getLinearAPIUrl, getLinearAPIKey } = await import('@/lib/config/linear-api.config');
         
-        const apiUrl = process.env.NEXT_PUBLIC_LINEAR_API_URL || '';
-        const apiKey = process.env.NEXT_PUBLIC_LINEAR_API_KEY;
+        const apiUrl = getLinearAPIUrl();
+        const apiKey = getLinearAPIKey();
         
         const client = new LinearAPIClient(apiUrl, apiKey);
         const mapper = new LinearToPropertyMapper();

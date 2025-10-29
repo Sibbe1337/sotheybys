@@ -25,8 +25,9 @@ export default async function ReferencesPage({ params }: ReferencesPageProps) {
   // Fetch sold properties from Linear API
   try {
     // 🏗️ NEW ARCHITECTURE: Use clean architecture layers
-    const apiUrl = process.env.NEXT_PUBLIC_LINEAR_API_URL || process.env.LINEAR_API_URL || '';
-    const apiKey = process.env.LINEAR_API_KEY;
+    const { getLinearAPIUrl, getLinearAPIKey } = await import('@/lib/config/linear-api.config');
+    const apiUrl = getLinearAPIUrl();
+    const apiKey = getLinearAPIKey();
     
     const client = new LinearAPIClient(apiUrl, apiKey);
     const mapper = new LinearToPropertyMapper();

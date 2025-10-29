@@ -1,0 +1,41 @@
+/**
+ * Linear API Configuration
+ * 
+ * Provides fallback URLs if environment variables are not set
+ * This ensures the app works even without manual Vercel env configuration
+ */
+
+// Default Linear API URL (production)
+// This is the actual Linear External API endpoint
+const DEFAULT_LINEAR_API_URL = 'https://linear-external-api.azurewebsites.net/api';
+
+// Alternative test endpoint (if needed)
+// const TEST_LINEAR_API_URL = 'https://ca-externalapi-test-weu-001.livelyrock-4a193af6.westeurope.azurecontainerapps.io';
+
+/**
+ * Get Linear API URL with fallback
+ * Priority: NEXT_PUBLIC_LINEAR_API_URL > LINEAR_API_URL > DEFAULT
+ */
+export function getLinearAPIUrl(): string {
+  return (
+    process.env.NEXT_PUBLIC_LINEAR_API_URL ||
+    process.env.LINEAR_API_URL ||
+    DEFAULT_LINEAR_API_URL
+  );
+}
+
+/**
+ * Get Linear API Key
+ * Note: This MUST be set in Vercel environment variables
+ */
+export function getLinearAPIKey(): string | undefined {
+  return process.env.NEXT_PUBLIC_LINEAR_API_KEY || process.env.LINEAR_API_KEY;
+}
+
+/**
+ * Check if Linear API is configured
+ */
+export function isLinearAPIConfigured(): boolean {
+  return !!(getLinearAPIKey());
+}
+
