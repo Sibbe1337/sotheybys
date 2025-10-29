@@ -1,0 +1,62 @@
+{
+  "common": {
+    "viewProperty": "View Property",
+    "readMore": "Read More",
+    "contactUs": "Contact Us",
+    "search": "Search",
+    "month": "month",
+    "noPropertiesFound": "No properties found"
+  },
+  "navigation": {
+    "home": "Home",
+    "properties": "Properties",
+    "forSale": "For Sale",
+    "forRent": "For Rent",
+    "about": "About Us",
+    "contact": "Contact",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service"
+  },
+  "propertyTypes": {
+    "apartment": "Apartment",
+    "villa": "Villa",
+    "estate": "Estate",
+    "rental": "Rental"
+  },
+  "propertyDetails": {
+    "price": "Price",
+    "debtFreePrice": "Debt-free Price",
+    "salePrice": "Sale Price",
+    "rent": "Rent",
+    "area": "Area",
+    "rooms": "Rooms",
+    "bedrooms": "Bedrooms",
+    "bathrooms": "Bathrooms",
+    "floor": "Floor",
+    "buildingYear": "Year Built",
+    "condition": "Condition",
+    "description": "Description",
+    "address": "Address",
+    "city": "City",
+    "postalCode": "Postal Code",
+    "district": "District"
+  },
+  "homepage": {
+    "hero": {
+      "title": "Snellman Sotheby's International Realty",
+      "subtitle": "Luxury Real Estate in Finland"
+    },
+    "featured": {
+      "title": "Featured",
+      "viewAll": "View All"
+    },
+    "forSale": {
+      "title": "For Sale",
+      "viewAll": "View All For Sale"
+    },
+    "forRent": {
+      "title": "For Rent",
+      "viewAll": "View All Rentals"
+    }
+  }
+}

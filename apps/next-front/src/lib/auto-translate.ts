@@ -3,7 +3,10 @@
  * Provides fallback translations when content is only available in Finnish
  */
 
-export type SupportedLanguage = 'fi' | 'sv' | 'en';
+import type { Locale } from '@/i18n/config';
+
+// For backward compatibility
+export type SupportedLanguage = Locale;
 
 // Simple in-memory cache for translations
 const translationCache = new Map<string, string>();

@@ -1,0 +1,62 @@
+{
+  "common": {
+    "viewProperty": "Se objekt",
+    "readMore": "Läs mer",
+    "contactUs": "Kontakta oss",
+    "search": "Sök",
+    "month": "mån",
+    "noPropertiesFound": "Inga objekt hittades"
+  },
+  "navigation": {
+    "home": "Hem",
+    "properties": "Objekt",
+    "forSale": "Till salu",
+    "forRent": "Hyresobjekt",
+    "about": "Om oss",
+    "contact": "Kontakt",
+    "privacyPolicy": "Integritetspolicy",
+    "termsOfService": "Användarvillkor"
+  },
+  "propertyTypes": {
+    "apartment": "Lägenhet",
+    "villa": "Villa",
+    "estate": "Fastighet",
+    "rental": "Hyresobjekt"
+  },
+  "propertyDetails": {
+    "price": "Pris",
+    "debtFreePrice": "Skuldfritt pris",
+    "salePrice": "Försäljningspris",
+    "rent": "Hyra",
+    "area": "Yta",
+    "rooms": "Rum",
+    "bedrooms": "Sovrum",
+    "bathrooms": "Badrum",
+    "floor": "Våning",
+    "buildingYear": "Byggår",
+    "condition": "Skick",
+    "description": "Beskrivning",
+    "address": "Adress",
+    "city": "Stad",
+    "postalCode": "Postnummer",
+    "district": "Stadsdel"
+  },
+  "homepage": {
+    "hero": {
+      "title": "Snellman Sotheby's International Realty",
+      "subtitle": "Lyxfastigheter i Finland"
+    },
+    "featured": {
+      "title": "Utvalda",
+      "viewAll": "Visa alla"
+    },
+    "forSale": {
+      "title": "Till salu",
+      "viewAll": "Se alla till salu"
+    },
+    "forRent": {
+      "title": "Hyresobjekt",
+      "viewAll": "Se alla hyresobjekt"
+    }
+  }
+}

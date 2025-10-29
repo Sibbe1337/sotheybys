@@ -3,7 +3,10 @@
  * Supports Finnish (fi), Swedish (sv), and English (en)
  */
 
-export type SupportedLanguage = 'fi' | 'sv' | 'en';
+import type { Locale } from '@/i18n/config';
+
+// For backward compatibility
+export type SupportedLanguage = Locale;
 
 interface Translations {
   [key: string]: {

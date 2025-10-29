@@ -1,16 +1,19 @@
 /**
  * Multilingual Finnish Real Estate Listing Data Model
  * Sotheby's / Snellman Property Schema - Finnish, English, Swedish
- * 
+ *
  * This comprehensive type definition covers all fields from Linear.fi API
  * with support for Finnish (fi), English (en), and Swedish (sv) languages.
  */
+
+import type { Locale } from '@/i18n/config';
 
 // ============================================================================
 // LANGUAGE TYPES / SPRÅKTYPER / KIELITYYPIT
 // ============================================================================
 
-export type SupportedLanguage = 'fi' | 'en' | 'sv';
+// For backward compatibility
+export type SupportedLanguage = Locale;
 
 /**
  * Localized string value supporting multiple languages

@@ -1,0 +1,62 @@
+{
+  "common": {
+    "viewProperty": "Katso kohde",
+    "readMore": "Lue lisää",
+    "contactUs": "Ota yhteyttä",
+    "search": "Hae",
+    "month": "kk",
+    "noPropertiesFound": "Kohteita ei löytynyt"
+  },
+  "navigation": {
+    "home": "Etusivu",
+    "properties": "Kohteet",
+    "forSale": "Myytävät",
+    "forRent": "Vuokralle",
+    "about": "Tietoa meistä",
+    "contact": "Yhteystiedot",
+    "privacyPolicy": "Tietosuoja",
+    "termsOfService": "Käyttöehdot"
+  },
+  "propertyTypes": {
+    "apartment": "Asunto",
+    "villa": "Omakotitalo",
+    "estate": "Kiinteistö",
+    "rental": "Vuokrakohde"
+  },
+  "propertyDetails": {
+    "price": "Hinta",
+    "debtFreePrice": "Velaton hinta",
+    "salePrice": "Myyntihinta",
+    "rent": "Vuokra",
+    "area": "Pinta-ala",
+    "rooms": "Huoneet",
+    "bedrooms": "Makuuhuoneet",
+    "bathrooms": "Kylpyhuoneet",
+    "floor": "Kerros",
+    "buildingYear": "Rakennusvuosi",
+    "condition": "Kunto",
+    "description": "Kuvaus",
+    "address": "Osoite",
+    "city": "Kaupunki",
+    "postalCode": "Postinumero",
+    "district": "Kaupunginosa"
+  },
+  "homepage": {
+    "hero": {
+      "title": "Snellman Sotheby's International Realty",
+      "subtitle": "Luksuskiinteistöjä Suomessa"
+    },
+    "featured": {
+      "title": "Esittelyssä",
+      "viewAll": "Näytä kaikki"
+    },
+    "forSale": {
+      "title": "Myytävät kohteet",
+      "viewAll": "Katso kaikki myytävät"
+    },
+    "forRent": {
+      "title": "Vuokrakohteet",
+      "viewAll": "Katso kaikki vuokrakohteet"
+    }
+  }
+}
