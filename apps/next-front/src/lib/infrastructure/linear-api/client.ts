@@ -14,7 +14,10 @@ export class LinearAPIClient {
     try {
       const endpoint = `${this.baseUrl}/v2/listings?languages[]=fi`;
       
-      log('Fetching listings from:', endpoint);
+      log('🔥 LINEAR CLIENT: Starting fetch from:', endpoint);
+      log('🔥 BASE URL:', this.baseUrl);
+      log('🔥 API KEY exists:', !!this.apiKey);
+      log('🔥 COMPANY ID exists:', !!this.companyId);
       
       // Format API key properly
       const formattedApiKey = this.apiKey?.startsWith('LINEAR-API-KEY ') 
@@ -82,7 +85,8 @@ export class LinearAPIClient {
       // Build slug index for faster lookup
       this.buildSlugIndex(listings);
       
-      log(`Fetched ${listings.length} listings from Linear API`);
+      log(`🎉 FINAL RESULT: Fetched ${listings.length} listings from Linear API`);
+      log(`🎉 First listing ID:`, listings[0]?.id || listings[0]?.nonLocalizedValues?.id || 'NO ID');
       
       return listings;
     } catch (error) {
