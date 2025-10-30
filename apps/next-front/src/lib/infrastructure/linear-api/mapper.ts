@@ -309,8 +309,15 @@ export class LinearToPropertyMapper {
 
       meta: {
         status,
-        typeCode: (lget(src.listingType, 'en') || lget(src.listingType, 'fi') || '').toUpperCase().replace(/ /g, '_'),
-        listingTypeLabel: localizeListingType(lget(src.listingType, 'en') || lget(src.listingType, 'fi') || ''), // ✅ SPEC: Localized listing type
+        // ✅ Extract typeCode from listingType with multiple fallbacks
+        typeCode: (() => {
+          const enType = lget(src.listingType, 'en');
+          const fiType = lget(src.listingType, 'fi');
+          const svType = lget(src.listingType, 'sv');
+          const rawType = enType || fiType || svType || '';
+          return rawType.toUpperCase().replace(/ /g, '_');
+        })(),
+        listingTypeLabel: localizeListingType(lget(src.listingType, 'en') || lget(src.listingType, 'fi') || lget(src.listingType, 'sv') || ''), // ✅ SPEC: Localized listing type
         
         // Basic metadata (from blueprint)
         identifierFi,
