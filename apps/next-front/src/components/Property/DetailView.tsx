@@ -126,10 +126,20 @@ export function DetailView({ vm, locale }: Props) {
         <div className="grid lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-8">
             {tab === 'overview' && <Overview vm={vm} locale={locale} />}
-            {tab === 'apartment' && <ApartmentInfo vm={vm} locale={locale} />}
-            {tab === 'company' && <CompanyAndBuilding vm={vm} locale={locale} isApartment={isApartment} />}
-            {tab === 'costs' && <Costs vm={vm} locale={locale} isProperty={isProperty} />}
-            {tab === 'other' && <OtherInfo vm={vm} locale={locale} />}
+            
+            {/* 🔥 RENTAL-SPECIFIC TABS */}
+            {isRental && tab === 'apartment' && <RentalApartmentInfo vm={vm} locale={locale} />}
+            {isRental && tab === 'other' && <RentalTerms vm={vm} locale={locale} />}
+            {isRental && tab === 'company' && <RentalHousingCompany vm={vm} locale={locale} />}
+            {isRental && tab === 'costs' && <RentalCosts vm={vm} locale={locale} />}
+            
+            {/* STANDARD APARTMENT/PROPERTY TABS */}
+            {!isRental && tab === 'apartment' && <ApartmentInfo vm={vm} locale={locale} />}
+            {!isRental && tab === 'company' && <CompanyAndBuilding vm={vm} locale={locale} isApartment={isApartment} />}
+            {!isRental && tab === 'costs' && <Costs vm={vm} locale={locale} isProperty={isProperty} />}
+            {!isRental && tab === 'other' && <OtherInfo vm={vm} locale={locale} />}
+            
+            {/* COMMON TABS */}
             {tab === 'documents' && <Documents vm={vm} locale={locale} />}
             {tab === 'map' && <MapView vm={vm} />}
           </div>
@@ -800,4 +810,207 @@ function Documents({ vm, locale }: Props) {
   );
 }
 
+/* ------- RENTAL-SPECIFIC COMPONENTS ------- */
+
+function RentalApartmentInfo({ vm, locale }: Props) {
+  return (
+    <div className="bg-white rounded-none shadow-sm p-6">
+      <h3 className="text-xl font-light mb-4">
+        {locale === 'sv' ? 'Lägenhetsuppgifter' : locale === 'en' ? 'Apartment Information' : 'Huoneistotiedot'}
+      </h3>
+      <div className="space-y-2">
+        {/* Always visible */}
+        <Row 
+          label={locale === 'sv' ? 'Våning' : locale === 'en' ? 'Floor' : 'Kerros'} 
+          value={vm.floor} 
+          alwaysVisible
+          locale={locale}
+        />
+        <Row 
+          label={locale === 'sv' ? 'Skick' : locale === 'en' ? 'Condition' : 'Kunto'} 
+          value={vm.condition} 
+          alwaysVisible
+          locale={locale}
+        />
+        
+        {/* Show only if "Yes" (boolean true), not if false or undefined */}
+        {/* Features is an array of {label, value} - find balcony/terrace */}
+        {vm.features.find(f => f.label.toLowerCase().includes(locale === 'sv' ? 'balkong' : locale === 'en' ? 'balcony' : 'parveke') && f.value) && (
+          <Row 
+            label={locale === 'sv' ? 'Balkong / Terrass' : locale === 'en' ? 'Balcony / Terrace' : 'Parveke / Terassi'} 
+            value={locale === 'sv' ? 'Ja' : locale === 'en' ? 'Yes' : 'Kyllä'}
+            locale={locale}
+          />
+        )}
+        {vm.features.find(f => f.label.toLowerCase().includes(locale === 'sv' ? 'bastu' : locale === 'en' ? 'sauna' : 'sauna') && f.value) && (
+          <Row 
+            label={locale === 'sv' ? 'Bastu' : locale === 'en' ? 'Sauna' : 'Sauna'} 
+            value={locale === 'sv' ? 'Ja' : locale === 'en' ? 'Yes' : 'Kyllä'}
+            locale={locale}
+          />
+        )}
+      </div>
+    </div>
+  );
+}
+
+function RentalTerms({ vm, locale }: Props) {
+  if (!vm.rental) return null;
+  
+  return (
+    <div className="bg-white rounded-none shadow-sm p-6">
+      <h3 className="text-xl font-light mb-4">
+        {locale === 'sv' ? 'Hyresuppgifter' : locale === 'en' ? 'Rental Information' : 'Vuokratiedot'}
+      </h3>
+      <div className="space-y-2">
+        {/* Always visible */}
+        <Row 
+          label={locale === 'sv' ? 'Avtalstyp' : locale === 'en' ? 'Contract Type' : 'Sopimustyyppi'} 
+          value={vm.rental.contractType} 
+          alwaysVisible
+          locale={locale}
+        />
+        <Row 
+          label={locale === 'sv' ? 'Tillträde' : locale === 'en' ? 'Available From' : 'Vapautuminen'} 
+          value={vm.availableFrom} 
+          alwaysVisible
+          locale={locale}
+        />
+        
+        {/* Show only if filled */}
+        {vm.rental.noticePeriod && (
+          <Row 
+            label={locale === 'sv' ? 'Uppsägningstid' : locale === 'en' ? 'Notice Period' : 'Irtisanomisaika'} 
+            value={vm.rental.noticePeriod}
+            locale={locale}
+          />
+        )}
+        
+        {/* Show only if Yes/No is filled (not if undefined) */}
+        {vm.rental.petsAllowed !== undefined && (
+          <Row 
+            label={locale === 'sv' ? 'Husdjur tillåtna' : locale === 'en' ? 'Pets Allowed' : 'Lemmikit sallittu'} 
+            value={vm.rental.petsAllowed 
+              ? (locale === 'sv' ? 'Ja' : locale === 'en' ? 'Yes' : 'Kyllä')
+              : (locale === 'sv' ? 'Nej' : locale === 'en' ? 'No' : 'Ei')}
+            locale={locale}
+          />
+        )}
+        {vm.rental.smokingAllowed !== undefined && (
+          <Row 
+            label={locale === 'sv' ? 'Rökning tillåten' : locale === 'en' ? 'Smoking Allowed' : 'Tupakointi sallittu'} 
+            value={vm.rental.smokingAllowed 
+              ? (locale === 'sv' ? 'Ja' : locale === 'en' ? 'Yes' : 'Kyllä')
+              : (locale === 'sv' ? 'Nej' : locale === 'en' ? 'No' : 'Ei')}
+            locale={locale}
+          />
+        )}
+      </div>
+    </div>
+  );
+}
+
+function RentalHousingCompany({ vm, locale }: Props) {
+  return (
+    <div className="bg-white rounded-none shadow-sm p-6">
+      <h3 className="text-xl font-light mb-4">
+        {locale === 'sv' ? 'Husbolagsuppgifter' : locale === 'en' ? 'Housing Company Information' : 'Taloyhtiötiedot'}
+      </h3>
+      <div className="space-y-2">
+        {/* Always visible */}
+        <Row 
+          label={locale === 'sv' ? 'Bolagets namn' : locale === 'en' ? 'Company Name' : 'Yhtiön nimi'} 
+          value={vm.companyName} 
+          alwaysVisible
+          locale={locale}
+        />
+        <Row 
+          label={locale === 'sv' ? 'Byggnadsår' : locale === 'en' ? 'Year Built' : 'Rakennusvuosi'} 
+          value={vm.yearBuilt} 
+          alwaysVisible
+          locale={locale}
+        />
+        <Row 
+          label={locale === 'sv' ? 'Energiklass' : locale === 'en' ? 'Energy Class' : 'Energialuokka'} 
+          value={vm.energyClass} 
+          alwaysVisible
+          locale={locale}
+        />
+        <Row 
+          label={locale === 'sv' ? 'Energicertifikat' : locale === 'en' ? 'Energy Certificate' : 'Energiatodistus'} 
+          value={vm.energyCertStatus} 
+          alwaysVisible
+          locale={locale}
+        />
+        <Row 
+          label={locale === 'sv' ? 'Hiss' : locale === 'en' ? 'Elevator' : 'Hissi'} 
+          value={vm.hasElevator 
+            ? (locale === 'sv' ? 'Ja' : locale === 'en' ? 'Yes' : 'Kyllä')
+            : (locale === 'sv' ? 'Nej' : locale === 'en' ? 'No' : 'Ei')}
+          alwaysVisible
+          locale={locale}
+        />
+        
+        {/* Show only if filled */}
+        {vm.heatingSystem && (
+          <Row 
+            label={locale === 'sv' ? 'Värmesystem' : locale === 'en' ? 'Heating System' : 'Lämmitysjärjestelmä'} 
+            value={vm.heatingSystem}
+            locale={locale}
+          />
+        )}
+      </div>
+    </div>
+  );
+}
+
+function RentalCosts({ vm, locale }: Props) {
+  if (!vm.rental) return null;
+  
+  return (
+    <div className="bg-white rounded-none shadow-sm p-6">
+      <h3 className="text-xl font-light mb-4">
+        {locale === 'sv' ? 'Kostnader' : locale === 'en' ? 'Costs' : 'Kustannukset'}
+      </h3>
+      <div className="space-y-2">
+        {/* Always visible */}
+        <Row 
+          label={locale === 'sv' ? 'Hyra per månad' : locale === 'en' ? 'Monthly Rent' : 'Vuokra kuukaudessa'} 
+          value={vm.rental.monthlyRent} 
+          alwaysVisible
+          locale={locale}
+        />
+        <Row 
+          label={locale === 'sv' ? 'Deposition' : locale === 'en' ? 'Security Deposit' : 'Takuuvuokra (Vakuus)'} 
+          value={vm.rental.securityDeposit} 
+          alwaysVisible
+          locale={locale}
+        />
+        
+        {/* Show only if filled */}
+        {vm.fees?.water && (
+          <Row 
+            label={locale === 'sv' ? 'Vatten' : locale === 'en' ? 'Water' : 'Vesimaksu'} 
+            value={vm.fees.water}
+            locale={locale}
+          />
+        )}
+        {vm.fees?.electricity && (
+          <Row 
+            label={locale === 'sv' ? 'El' : locale === 'en' ? 'Electricity' : 'Sähkö'} 
+            value={vm.fees.electricity}
+            locale={locale}
+          />
+        )}
+        {vm.rental.additionalCostInfo && (
+          <Row 
+            label={locale === 'sv' ? 'Tilläggsinformation om kostnader' : locale === 'en' ? 'Additional Cost Information' : 'Lisätietoja maksuista'} 
+            value={vm.rental.additionalCostInfo}
+            locale={locale}
+          />
+        )}
+      </div>
+    </div>
+  );
+}
 
