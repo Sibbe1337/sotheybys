@@ -192,24 +192,24 @@ export class PropertyVM {
       // Meta
       status: p.meta.status,
       typeCode: p.meta.typeCode,
-      // ✅ SPEC: Use lpickStrict for metadata (no FI fallback)
-      apartmentType: lpickStrict(p.meta.apartmentType, l),
+      // ✅ SPEC: Use lpick for technical data (allows FI fallback for non-translated system values)
+      apartmentType: lpick(p.meta.apartmentType, l),
       energyClass: p.meta.energyClass,
       energyCertStatus: p.meta.energyCertStatus || undefined,
-      heatingSystem: lpickStrict(p.meta.heatingSystem, l),
-      ventilationSystem: lpickStrict(p.meta.ventilationSystem, l),
-      ownershipType: lpickStrict(p.meta.ownershipType, l),
-      plotOwnership: lpickStrict(p.meta.plotOwnership, l),
-      housingTenure: lpickStrict(p.meta.housingTenure, l),
-      availableFrom: lpickStrict(p.meta.availableFrom, l),
-      zoning: lpickStrict(p.meta.zoning, l),
+      heatingSystem: lpick(p.meta.heatingSystem, l),
+      ventilationSystem: lpick(p.meta.ventilationSystem, l),
+      ownershipType: lpick(p.meta.ownershipType, l),
+      plotOwnership: lpick(p.meta.plotOwnership, l),
+      housingTenure: lpick(p.meta.housingTenure, l),
+      availableFrom: lpick(p.meta.availableFrom, l),
+      zoning: lpick(p.meta.zoning, l),
       yearBuilt: p.meta.yearBuilt,
       floorsTotal: p.meta.floorsTotal,
       floor: p.meta.floor,
       hasElevator: p.meta.elevator === true,
 
-      // Housing company (strict locale)
-      housingCompanyName: lpickStrict(p.meta.housingCompany.name, l),
+      // Housing company (allow FI fallback for company names)
+      housingCompanyName: lpick(p.meta.housingCompany.name, l),
       companyLoans: p.meta.housingCompany.loans || undefined,
       companyEncumbrances: p.meta.housingCompany.encumbrances || undefined,
       companyLoansDate: p.meta.housingCompany.loansDate ? formatDate(p.meta.housingCompany.loansDate, l) : undefined,
@@ -227,10 +227,10 @@ export class PropertyVM {
       // Rental (NEW Phase 3)
       rental: p.rental ? {
         monthlyRent: fmtFee(p.rental.monthlyRent, localeStr),
-        // ✅ SPEC: Rental metadata with strict locale
-        securityDeposit: lpickStrict(p.rental.securityDeposit, l),
-        contractType: lpickStrict(p.rental.contractType, l),
-        earliestTermination: lpickStrict(p.rental.earliestTermination, l),
+        // ✅ SPEC: Rental metadata with FI fallback (technical data)
+        securityDeposit: lpick(p.rental.securityDeposit, l),
+        contractType: lpick(p.rental.contractType, l),
+        earliestTermination: lpick(p.rental.earliestTermination, l),
         petsAllowed: p.rental.petsAllowed,
         smokingAllowed: p.rental.smokingAllowed
       } : undefined

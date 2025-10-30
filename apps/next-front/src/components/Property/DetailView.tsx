@@ -350,36 +350,42 @@ function CompanyAndBuilding({ vm, locale, isApartment }: Props & { isApartment?:
           <h4 className="font-medium text-gray-900 mb-3">
             {getSectionLabel('buildingInfo', locale)}
           </h4>
-          {/* ✅ SPEC: Always-visible fields show placeholder if empty */}
-          <Row 
-            label={getFieldLabel('yearBuilt', locale)} 
-            value={vm.yearBuilt} 
-            alwaysVisible
-            locale={locale}
-          />
-          <Row 
-            label={getFieldLabel('energyClass', locale)} 
-            value={vm.energyClass} 
-            alwaysVisible
-            locale={locale}
-          />
-          <Row 
-            label={getFieldLabel('heatingSystem', locale)} 
-            value={vm.heatingSystem} 
-            alwaysVisible
-            locale={locale}
-          />
-          <Row 
-            label={getFieldLabel('ventilationSystem', locale)} 
-            value={vm.ventilationSystem} 
-            locale={locale}
-          />
-          <Row 
-            label={getFieldLabel('elevator', locale)} 
-            value={elevatorValue} 
-            alwaysVisible
-            locale={locale}
-          />
+          {/* ✅ B) Hide empty fields - only show fields with data */}
+          {vm.yearBuilt && (
+            <Row 
+              label={getFieldLabel('yearBuilt', locale)} 
+              value={vm.yearBuilt} 
+              locale={locale}
+            />
+          )}
+          {vm.energyClass && (
+            <Row 
+              label={getFieldLabel('energyClass', locale)} 
+              value={vm.energyClass} 
+              locale={locale}
+            />
+          )}
+          {vm.heatingSystem && (
+            <Row 
+              label={getFieldLabel('heatingSystem', locale)} 
+              value={vm.heatingSystem} 
+              locale={locale}
+            />
+          )}
+          {vm.ventilationSystem && (
+            <Row 
+              label={getFieldLabel('ventilationSystem', locale)} 
+              value={vm.ventilationSystem} 
+              locale={locale}
+            />
+          )}
+          {elevatorValue && (
+            <Row 
+              label={getFieldLabel('elevator', locale)} 
+              value={elevatorValue} 
+              locale={locale}
+            />
+          )}
           {vm.floorsTotal && (
             <Row 
               label={getFieldLabel('floorsTotal', locale)} 
@@ -395,25 +401,28 @@ function CompanyAndBuilding({ vm, locale, isApartment }: Props & { isApartment?:
             <h4 className="font-medium text-gray-900 mb-3">
               {getSectionLabel('companyInfo', locale)}
             </h4>
-            {/* ✅ SPEC: Company name, loans, encumbrances always visible */}
-            <Row 
-              label={getFieldLabel('companyName', locale)} 
-              value={vm.housingCompanyName} 
-              alwaysVisible
-              locale={locale}
-            />
-            <Row 
-              label={getFieldLabel('companyLoans', locale)} 
-              value={vm.companyLoans != null ? fmtCurrency(vm.companyLoans, localeStr) : undefined} 
-              alwaysVisible
-              locale={locale}
-            />
-            <Row 
-              label={getFieldLabel('companyEncumbrances', locale)} 
-              value={vm.companyEncumbrances != null ? fmtCurrency(vm.companyEncumbrances, localeStr) : undefined} 
-              alwaysVisible
-              locale={locale}
-            />
+            {/* ✅ B) Hide empty fields - only show fields with data */}
+            {vm.housingCompanyName && (
+              <Row 
+                label={getFieldLabel('companyName', locale)} 
+                value={vm.housingCompanyName} 
+                locale={locale}
+              />
+            )}
+            {vm.companyLoans != null && vm.companyLoans > 0 && (
+              <Row 
+                label={getFieldLabel('companyLoans', locale)} 
+                value={fmtCurrency(vm.companyLoans, localeStr)} 
+                locale={locale}
+              />
+            )}
+            {vm.companyEncumbrances != null && vm.companyEncumbrances > 0 && (
+              <Row 
+                label={getFieldLabel('companyEncumbrances', locale)} 
+                value={fmtCurrency(vm.companyEncumbrances, localeStr)} 
+                locale={locale}
+              />
+            )}
             {vm.companyLoansDate && (
               <Row 
                 label={getFieldLabel('companyLoansDate', locale)} 
@@ -585,37 +594,42 @@ function OtherInfo({ vm, locale }: Props) {
           {getSectionLabel('ownershipAndTerms', locale)}
         </h3>
         <div className="space-y-2">
-          <Row 
-            label={getFieldLabel('ownershipType', locale)} 
-            value={vm.ownershipType} 
-            locale={locale}
-          />
-          {/* ✅ SPEC: Lot ownership is always-visible */}
-          <Row 
-            label={getFieldLabel('lotOwnership', locale)} 
-            value={vm.plotOwnership} 
-            alwaysVisible
-            locale={locale}
-          />
-          {/* ✅ SPEC: Housing tenure is always-visible */}
-          <Row 
-            label={getFieldLabel('housingTenure', locale)} 
-            value={vm.housingTenure} 
-            alwaysVisible
-            locale={locale}
-          />
-          <Row 
-            label={getFieldLabel('availableFrom', locale)} 
-            value={vm.availableFrom} 
-            locale={locale}
-          />
-          {/* ✅ SPEC: Zoning is always-visible */}
-          <Row 
-            label={getFieldLabel('zoning', locale)} 
-            value={vm.zoning} 
-            alwaysVisible
-            locale={locale}
-          />
+          {/* ✅ B) Hide empty fields - only show fields with data */}
+          {vm.ownershipType && (
+            <Row 
+              label={getFieldLabel('ownershipType', locale)} 
+              value={vm.ownershipType} 
+              locale={locale}
+            />
+          )}
+          {vm.plotOwnership && (
+            <Row 
+              label={getFieldLabel('lotOwnership', locale)} 
+              value={vm.plotOwnership} 
+              locale={locale}
+            />
+          )}
+          {vm.housingTenure && (
+            <Row 
+              label={getFieldLabel('housingTenure', locale)} 
+              value={vm.housingTenure} 
+              locale={locale}
+            />
+          )}
+          {vm.availableFrom && (
+            <Row 
+              label={getFieldLabel('availableFrom', locale)} 
+              value={vm.availableFrom} 
+              locale={locale}
+            />
+          )}
+          {vm.zoning && (
+            <Row 
+              label={getFieldLabel('zoning', locale)} 
+              value={vm.zoning} 
+              locale={locale}
+            />
+          )}
         </div>
       </div>
       
