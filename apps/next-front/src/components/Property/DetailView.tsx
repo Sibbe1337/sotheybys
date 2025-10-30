@@ -48,7 +48,7 @@ export function DetailView({ vm, locale }: Props) {
     // vm.area already includes m² unit
     titleParts.push(vm.area);
   }
-  const titleLine = titleParts.filter(Boolean).join(', ').replace(', ', ' | ', 1); // First comma becomes |
+  const titleLine = titleParts.filter(Boolean).join(', ').replace(', ', ' | '); // First comma becomes |
 
   const agent = cleanAgentData(vm.agent || {});
   
