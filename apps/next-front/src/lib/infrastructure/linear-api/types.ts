@@ -56,7 +56,9 @@ export interface LinearListing {
 
   // meta
   status?: LinearLocalized;              // NEW Phase 3 (ACTIVE/SOLD/RESERVED)
-  listingType?: any;
+  listingType?: LinearLocalized;         // Primary type field
+  propertyType?: LinearLocalized;        // Fallback type field
+  type?: LinearLocalized;                // Alternative type field
   typeOfApartment?: LinearLocalized;
   energyClass?: LinearLocalized;
   energyClassInfo?: LinearLocalized;
