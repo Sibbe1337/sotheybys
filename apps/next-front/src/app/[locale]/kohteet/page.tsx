@@ -1,4 +1,4 @@
-import PropertySearch from '@/components/Property/PropertySearch';
+  import PropertySearch from '@/components/Property/PropertySearch';
 import PropertyHeroCarousel from '@/components/Property/PropertyHeroCarousel';
 import { locales, type Locale } from '@/i18n/config';
 import { fetchSaleProperties } from '@/lib/server/fetch-properties';

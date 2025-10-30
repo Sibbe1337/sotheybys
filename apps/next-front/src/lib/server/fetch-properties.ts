@@ -7,6 +7,13 @@
  * BEFORE: ~120 lines duplicated across 4 pages
  * AFTER: ~30 lines in one place
  * 
+ * FEATURES:
+ * - In-memory caching (5 min TTL)
+ * - Automatic cache invalidation
+ * - Filtering (sale, rental, sold)
+ * - Sorting (price, rent)
+ * - Comprehensive logging
+ * 
  * Usage:
  * ```typescript
  * import { fetchSaleProperties } from '@/lib/server/fetch-properties';
@@ -28,6 +35,47 @@ import type { Locale, Property } from '@/lib/domain/property.types';
 import { log } from '@/lib/logger';
 
 /**
+ * IN-MEMORY CACHE
+ * Simple caching layer to reduce API calls
+ * TTL: 5 minutes (matches revalidate time)
+ */
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes in milliseconds
+
+interface CacheEntry {
+  data: Property[];
+  timestamp: number;
+  locale: Locale;
+}
+
+let cache: CacheEntry | null = null;
+
+/**
+ * Check if cache is valid
+ */
+function isCacheValid(locale: Locale): boolean {
+  if (!cache) return false;
+  if (cache.locale !== locale) return false;
+  
+  const now = Date.now();
+  const age = now - cache.timestamp;
+  const isValid = age < CACHE_TTL;
+  
+  if (!isValid) {
+    log(`🗑️ [Cache] Expired (age: ${Math.round(age / 1000)}s)`);
+  }
+  
+  return isValid;
+}
+
+/**
+ * Invalidate cache (useful for manual cache busting)
+ */
+export async function invalidateCache() {
+  cache = null;
+  log('🗑️ [Cache] Manually invalidated');
+}
+
+/**
  * Initialize Linear API client and use case
  * Internal helper - not exported
  */
@@ -42,20 +90,47 @@ function createGetPropertiesUseCase() {
 }
 
 /**
- * Fetch all properties from Linear API
+ * Fetch all properties from Linear API (with caching)
  * Base function used by all other fetch functions
+ * 
+ * Cache strategy:
+ * - Check cache first
+ * - If valid and same locale, return cached data
+ * - Otherwise, fetch fresh data and update cache
  */
 export async function fetchAllProperties(locale: Locale): Promise<Property[]> {
+  // Check cache first
+  if (isCacheValid(locale)) {
+    log(`✅ [Cache HIT] Returning ${cache!.data.length} cached properties for locale: ${locale}`);
+    return cache!.data;
+  }
+  
+  log(`🔄 [Cache MISS] Fetching fresh data for locale: ${locale}`);
+  
   try {
     const useCase = createGetPropertiesUseCase();
     const properties = await useCase.execute(locale);
     
-    log(`✅ [fetchAllProperties] Fetched ${properties.length} properties for locale: ${locale}`);
+    // Update cache
+    cache = {
+      data: properties,
+      timestamp: Date.now(),
+      locale
+    };
+    
+    log(`✅ [fetchAllProperties] Fetched ${properties.length} properties and updated cache`);
     
     return properties;
   } catch (error) {
     log(`❌ [fetchAllProperties] Error:`, error);
     console.error('Error fetching properties:', error);
+    
+    // Return stale cache if available (fallback)
+    if (cache && cache.locale === locale) {
+      log(`⚠️ [Cache FALLBACK] Returning stale cache (${cache.data.length} properties)`);
+      return cache.data;
+    }
+    
     return [];
   }
 }
