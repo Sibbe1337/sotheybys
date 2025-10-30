@@ -5,18 +5,12 @@ const withNextIntl = require('next-intl/plugin')(
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // ✅ LINUS FIX: Ignore error page export errors (they're handled by Vercel)
-  eslint: {
-    ignoreDuringBuilds: false,
-  },
-  typescript: {
-    ignoreBuildErrors: false,
-  },
   experimental: {
     serverComponentsExternalPackages: ['@apollo/client'],
     instrumentationHook: true,
-    optimizeCss: true, // ✅ LINUS: Optimize CSS bundle
-    optimizePackageImports: ['lucide-react', '@vis.gl/react-google-maps'], // ✅ Tree-shaking
+    // 🔥 DISABLED: These cause "t is not a constructor" error on Vercel
+    // optimizeCss: true,
+    // optimizePackageImports: ['lucide-react', '@vis.gl/react-google-maps'],
   },
   images: {
     remotePatterns: [
