@@ -125,27 +125,54 @@
 
 ---
 
-## 🔄 IN PROGRESS ITEMS
+## ✅ COMPLETED ITEMS (continued)
 
-### **6. Printscreen Analysis - "Uppgift saknas" Issue** 🔄
+### **6. Printscreen Analysis - "Uppgift saknas" Fixed** ✅
 **Date:** 2025-10-30  
-**Status:** 🔄 ANALYZING
+**Status:** ✅ COMPLETE
 
 **Feedback:**
 > Dennis sent printscreen showing "Bolag & Byggnad" tab with many "Uppgift saknas" fields
 
-**Need to investigate:**
-- ❓ Why are so many fields showing "Uppgift saknas"?
-- ❓ Is this a data quality issue?
-- ❓ Is this a mapping issue?
-- ❓ Should empty fields be hidden instead?
-- ❓ Should layout change when data is missing?
+**Root Cause:**
+- Property had empty data from Linear API
+- Fields set to `alwaysVisible=true` showed "Uppgift saknas" placeholder
+- This created UI spam with 10+ "Uppgift saknas" messages
 
-**Next Steps:**
-1. Analyze the printscreen in detail
-2. Check Linear API data quality
-3. Review field mappings
-4. Propose solution to Dennis
+**Solution Implemented: B Strategy** ✅
+- Changed from "always show with placeholder" to "hide if empty"
+- Updated DetailView.tsx to conditionally render fields
+- Only show fields that have actual data
+
+**Code Change:**
+```typescript
+// BEFORE:
+<Row label="Byggår" value={vm.yearBuilt} alwaysVisible />
+// Shows: "Byggår: Uppgift saknas"
+
+// AFTER:
+{vm.yearBuilt && <Row label="Byggår" value={vm.yearBuilt} />}
+// Shows nothing if empty!
+```
+
+**Files Changed:**
+- `src/components/Property/DetailView.tsx` (already in commit a8b2a70)
+  * Building Info: Hide empty fields ✅
+  * Company Info: Hide empty fields ✅
+  * Ownership & Terms: Hide empty fields ✅
+
+**Documentation Created:**
+- `FIELD-MAPPING-BLUEPRINT.md` (commit 00458f5)
+  * Complete field mapping guide (500+ lines)
+  * All 8 field categories documented
+  * B+C Strategy fully explained
+  * Known issues & fixes documented
+
+**Result:**
+- ✅ No more "Uppgift saknas" spam
+- ✅ Clean UI with only relevant info
+- ✅ Better UX for users
+- ✅ Complete documentation for developers
 
 ---
 
@@ -184,12 +211,12 @@ Add Sentry for:
 
 | Category | Total | Completed | In Progress | Pending |
 |----------|-------|-----------|-------------|---------|
-| Features | 6 | 5 | 1 | 0 |
+| Features | 6 | 6 | 0 | 0 |
 | Bug Fixes | 0 | 0 | 0 | 0 |
 | Refactoring | 2 | 2 | 0 | 0 |
-| **TOTAL** | **8** | **7** | **1** | **0** |
+| **TOTAL** | **8** | **8** | **0** | **0** |
 
-**Completion Rate:** 87.5% ✅
+**Completion Rate:** 100% ✅🎉
 
 ---
 
