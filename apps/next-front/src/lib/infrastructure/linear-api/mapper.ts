@@ -309,8 +309,8 @@ export class LinearToPropertyMapper {
 
       meta: {
         status,
-        typeCode: String(nv.listingType ?? src.listingType ?? '').toUpperCase(),
-        listingTypeLabel: localizeListingType(String(nv.listingType ?? src.listingType ?? '')), // ✅ SPEC: Localized listing type
+        typeCode: (lget(src.listingType, 'en') || lget(src.listingType, 'fi') || '').toUpperCase().replace(/ /g, '_'),
+        listingTypeLabel: localizeListingType(lget(src.listingType, 'en') || lget(src.listingType, 'fi') || ''), // ✅ SPEC: Localized listing type
         
         // Basic metadata (from blueprint)
         identifierFi,
