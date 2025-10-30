@@ -477,7 +477,8 @@ async function analyzeDataQuality() {
       
       for (const property of properties) {
         // Determine property type based on listingType
-        const typeCode = (property.listingType || property.meta?.typeCode || '').toLowerCase();
+        const typeCodeRaw = property.listingType || property.meta?.typeCode || '';
+        const typeCode = String(typeCodeRaw).toLowerCase();
         let type = 'apartment'; // default
         
         // Check for rental
