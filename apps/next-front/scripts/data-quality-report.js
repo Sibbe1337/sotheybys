@@ -5,15 +5,40 @@
  * Analyzes Linear API data to identify properties with missing information
  * 
  * Usage: 
- *   node scripts/data-quality-report.js
+ *   node scripts/data-quality-report.js                    (summary mode - default)
+ *   node scripts/data-quality-report.js --mode=blueprint   (blueprint validation)
+ *   node scripts/data-quality-report.js --mode=full        (both modes)
+ * 
+ * Modes:
+ *   - summary: Basic missing field analysis (original behavior)
+ *   - blueprint: Validates against Dennis Implementation Blueprint schema
+ *   - full: Runs both summary and blueprint validation
  * 
  * Output:
  *   - Summary of missing fields by category
- *   - Top 5 properties with most missing data
- *   - Actionable recommendations
+ *   - Top properties with most missing data
+ *   - Blueprint compliance score (blueprint/full mode)
+ *   - JSON report export (blueprint/full mode)
  */
 
 const https = require('https');
+const fs = require('fs');
+const path = require('path');
+
+// ============================================================================
+// CLI MODE DETECTION
+// ============================================================================
+
+const args = process.argv.slice(2);
+const modeArg = args.find(arg => arg.startsWith('--mode='));
+const MODE = modeArg ? modeArg.split('=')[1] : 'summary';
+
+// Validate mode
+if (!['summary', 'blueprint', 'full'].includes(MODE)) {
+  console.error(`❌ Invalid mode: ${MODE}`);
+  console.error('Valid modes: summary, blueprint, full');
+  process.exit(1);
+}
 
 // ============================================================================
 // CONFIG
@@ -90,6 +115,35 @@ function getNestedValue(obj, path) {
   }, obj);
 }
 
+// Alias for blueprint validation (cleaner name)
+function get(obj, path) {
+  return getNestedValue(obj, path);
+}
+
+// Localized placeholder detection
+const PLACEHOLDERS = [
+  'Ei ilmoitettu',
+  'Ej angivet',
+  'Not specified',
+  'Uppgift saknas',
+  'Information missing',
+  '-',
+  '–',
+  '—',
+  ''
+];
+
+function isMissingOrPlaceholder(value) {
+  if (value === null || value === undefined) return true;
+  if (value === 0 || value === false) return false; // 0 and false are valid values
+  
+  const s = String(value).trim();
+  if (s === '') return true;
+  
+  // Check against known placeholders
+  return PLACEHOLDERS.includes(s);
+}
+
 function isEmpty(value) {
   return value === undefined || 
          value === null || 
@@ -161,6 +215,7 @@ function fetchFromLinear(url) {
 
 async function analyzeDataQuality() {
   console.log('\n🔍 DATA QUALITY ANALYSIS');
+  console.log(`🔧 Mode: ${MODE.toUpperCase()}`);
   console.log('═'.repeat(80));
   
   // Validate configuration
@@ -215,9 +270,16 @@ async function analyzeDataQuality() {
     console.log(`✅ Fetched ${properties.length} properties\n`);
     console.log('═'.repeat(80));
 
-    // Analyze each category
-    const categoryResults = {};
-    const propertyScores = properties.map(property => {
+    // ========================================================================
+    // SUMMARY MODE ANALYSIS (original behavior)
+    // ========================================================================
+    
+    if (MODE === 'summary' || MODE === 'full') {
+      console.log('\n📊 SUMMARY MODE: Missing Fields Analysis\n');
+    
+      // Analyze each category
+      const categoryResults = {};
+      const propertyScores = properties.map(property => {
       const problems = [];
       let totalMissingWeight = 0;
 
@@ -386,7 +448,173 @@ async function analyzeDataQuality() {
     console.log('');
 
     console.log('═'.repeat(80));
-    console.log('\n✅ ANALYS KLAR!\n');
+    console.log('\n✅ SUMMARY MODE COMPLETE!\n');
+    
+    } // End of summary mode
+    
+    // ========================================================================
+    // BLUEPRINT VALIDATION MODE (Dennis Implementation Blueprint)
+    // ========================================================================
+    
+    if (MODE === 'blueprint' || MODE === 'full') {
+      console.log('\n🧭 BLUEPRINT VALIDATION MODE');
+      console.log('═'.repeat(80));
+      console.log('Validating against Dennis Implementation Blueprint schema...\n');
+      
+      // Load blueprint schema
+      const schemaPath = path.join(__dirname, 'data-quality-schema.json');
+      let schema = {};
+      
+      try {
+        schema = JSON.parse(fs.readFileSync(schemaPath, 'utf-8'));
+      } catch (err) {
+        console.error(`❌ Failed to load schema from ${schemaPath}`);
+        console.error(err.message);
+        process.exit(1);
+      }
+      
+      const blueprintResults = [];
+      
+      for (const property of properties) {
+        // Determine property type based on listingType
+        const typeCode = (property.listingType || property.meta?.typeCode || '').toLowerCase();
+        let type = 'apartment'; // default
+        
+        // Check for rental
+        if (typeCode.includes('vuokra') || typeCode.includes('rental') || 
+            (property.rental && property.rental.monthlyRent > 0)) {
+          type = 'rental';
+        }
+        // Check for property (house/land)
+        else if (
+          typeCode.includes('kiinteist') || 
+          typeCode.includes('omakotitalo') ||
+          typeCode.includes('detached') ||
+          typeCode.includes('property') ||
+          typeCode.includes('rivitalo') ||
+          typeCode.includes('townhouse') ||
+          typeCode.includes('mökki') ||
+          typeCode.includes('cottage')
+        ) {
+          type = 'property';
+        }
+        
+        const requiredFields = schema[type]?.required || [];
+        const missing = [];
+        const fieldStatus = {};
+        
+        // Check each required field
+        for (const field of requiredFields) {
+          const value = get(property, field);
+          const isMissing = isMissingOrPlaceholder(value);
+          
+          if (isMissing) {
+            missing.push(field);
+          }
+          
+          fieldStatus[field] = {
+            value: isMissing ? null : value,
+            status: isMissing ? 'missing' : 'present'
+          };
+        }
+        
+        // Calculate completeness score
+        const totalRequired = requiredFields.length;
+        const filled = totalRequired - missing.length;
+        const score = totalRequired > 0 ? (filled / totalRequired) * 100 : 100;
+        
+        const address = get(property, 'address.fi') || 
+                       get(property, 'address.sv') || 
+                       get(property, 'address') ||
+                       'Unknown';
+        const city = get(property, 'city.fi') || 
+                    get(property, 'city.sv') ||
+                    get(property, 'city') ||
+                    '';
+        
+        blueprintResults.push({
+          id: property.id,
+          address,
+          city,
+          type,
+          requiredFields: totalRequired,
+          filledFields: filled,
+          missingFields: missing,
+          fieldStatus,
+          completeness: `${score.toFixed(1)}%`,
+          score: score
+        });
+      }
+      
+      // Calculate statistics
+      const avgScore = blueprintResults.reduce((sum, p) => sum + p.score, 0) / blueprintResults.length;
+      const byType = {};
+      
+      for (const type of ['apartment', 'property', 'rental']) {
+        const typed = blueprintResults.filter(p => p.type === type);
+        if (typed.length > 0) {
+          const typeAvg = typed.reduce((sum, p) => sum + p.score, 0) / typed.length;
+          byType[type] = {
+            count: typed.length,
+            avgScore: typeAvg.toFixed(1)
+          };
+        }
+      }
+      
+      // Print summary
+      console.log(`\n📊 BLUEPRINT COMPLIANCE SUMMARY\n`);
+      console.log(`Overall Average: ${avgScore.toFixed(1)}%`);
+      console.log(`Total Properties: ${blueprintResults.length}`);
+      console.log(`\nBy Property Type:`);
+      
+      for (const [type, stats] of Object.entries(byType)) {
+        const emoji = type === 'apartment' ? '🏢' : type === 'property' ? '🏡' : '🏠';
+        console.log(`  ${emoji} ${type.toUpperCase()}: ${stats.avgScore}% (${stats.count} properties)`);
+      }
+      
+      // Find properties needing attention (<80% complete)
+      const needsAttention = blueprintResults
+        .filter(p => p.score < 80)
+        .sort((a, b) => a.score - b.score)
+        .slice(0, 10);
+      
+      if (needsAttention.length > 0) {
+        console.log(`\n🔴 TOP ${needsAttention.length} PROPERTIES NEEDING ATTENTION (<80% complete)\n`);
+        needsAttention.forEach((prop, i) => {
+          console.log(`${i + 1}. ${prop.address}${prop.city ? ` (${prop.city})` : ''}`);
+          console.log(`   Type: ${prop.type}`);
+          console.log(`   Score: ${prop.completeness} (${prop.filledFields}/${prop.requiredFields} fields)`);
+          console.log(`   Missing: ${prop.missingFields.slice(0, 5).join(', ')}${prop.missingFields.length > 5 ? `... +${prop.missingFields.length - 5} more` : ''}`);
+          console.log('');
+        });
+      } else {
+        console.log(`\n✅ All properties have >80% completeness! Great job!\n`);
+      }
+      
+      // Save detailed report
+      const reportsDir = path.join(__dirname, '..', 'reports');
+      if (!fs.existsSync(reportsDir)) {
+        fs.mkdirSync(reportsDir, { recursive: true });
+      }
+      
+      const reportPath = path.join(reportsDir, 'data-quality-blueprint.json');
+      const report = {
+        generatedAt: new Date().toISOString(),
+        mode: MODE,
+        summary: {
+          totalProperties: blueprintResults.length,
+          averageScore: avgScore.toFixed(1),
+          byType: byType
+        },
+        properties: blueprintResults
+      };
+      
+      fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
+      
+      console.log('═'.repeat(80));
+      console.log(`\n📁 Detailed report saved to: reports/data-quality-blueprint.json`);
+      console.log(`✅ BLUEPRINT VALIDATION COMPLETE!\n`);
+    } // End of blueprint mode
 
   } catch (error) {
     console.error('\n❌ ERROR:', error.message);
