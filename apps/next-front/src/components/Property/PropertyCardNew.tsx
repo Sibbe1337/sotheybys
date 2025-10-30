@@ -38,6 +38,7 @@ export default function PropertyCardNew({ property, locale }: PropertyCardNewPro
     contact: locale === 'sv' ? 'Kontakta' : locale === 'en' ? 'Contact' : 'Ota yhteyttä',
     vh: locale === 'sv' ? 'Sf' : locale === 'en' ? 'Df' : 'Vh', // Velaton hinta / Skuldfri / Debt-free
     mh: locale === 'sv' ? 'Fp' : locale === 'en' ? 'Ap' : 'Mh', // Myyntihinta / Försäljningspris / Asking price
+    monthlyRent: locale === 'sv' ? 'Hyra/mån' : locale === 'en' ? 'Rent/month' : 'Vuokra/kk',
   };
 
   // Extract data
@@ -54,12 +55,14 @@ export default function PropertyCardNew({ property, locale }: PropertyCardNewPro
     : address;
   const fullAddress = `${streetAddress}, ${postalCode} ${city}`;
   
-  // Check if this is a property/estate (vs apartment)
+  // Check if this is a property/estate (vs apartment) or rental
   const isEstate = isProperty(property);
+  const isRental = !!property.rental;
   
-  // Prices - Properties show only Mh, Apartments show both Vh and Mh
+  // Prices - Rentals show monthly rent, Properties show only Mh, Apartments show both Vh and Mh
   const salesPrice = fmtCurrency(property.pricing.sales, localeStr);
   const debtFreePrice = fmtCurrency(property.pricing.debtFree, localeStr);
+  const monthlyRent = isRental ? fmtCurrency(property.rental!.monthlyRent, localeStr) : undefined;
   
   // Description
   // - For properties: show "Mökki tai huvila | 3 mh, oh, rt..."  (typeLabel | apartmentType)
@@ -136,9 +139,12 @@ export default function PropertyCardNew({ property, locale }: PropertyCardNewPro
           </h3>
         </Link>
 
-        {/* Price - Properties show only Mh, Apartments show both Vh and Mh */}
+        {/* Price - Rentals show monthly rent, Properties show only Mh, Apartments show both Vh and Mh */}
         <div className="text-lg font-bold text-gray-900">
-          {isEstate ? (
+          {isRental ? (
+            // Rental properties - monthly rent
+            <span>{t.monthlyRent} {monthlyRent}</span>
+          ) : isEstate ? (
             // Properties (estates) - only sales price
             <span>{t.mh} {salesPrice}</span>
           ) : (
