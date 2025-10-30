@@ -16,6 +16,7 @@ export interface Property {
   district?: LocalizedValue;  // Stadsdel (e.g., Lauttasaari)
   postalCode: string;
   apartmentIdentifier?: string;  // e.g., "C 47" (gate + apartment number)
+  gate?: string;                 // e.g., "C" (only staircase letter)
 
   // Rich content (NEW in Phase 3)
   description?: LocalizedValue;       // freeText / marketingDescription

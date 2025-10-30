@@ -260,9 +260,9 @@ export class LinearToPropertyMapper {
 
     // ========== APARTMENT IDENTIFIER ==========
     // Build apartment identifier from gate (rappu) + apartment number (e.g., "C 47")
-    const gate = lget(src.gate, 'fi')?.trim();
+    const gateStr = lget(src.gate, 'fi')?.trim();
     const aptNum = lget(src.apartmentNumber, 'fi')?.trim();
-    const apartmentIdentifier = gate && aptNum ? `${gate} ${aptNum}` : gate || aptNum || undefined;
+    const apartmentIdentifier = gateStr && aptNum ? `${gateStr} ${aptNum}` : gateStr || aptNum || undefined;
 
     // ========== BUILD PROPERTY ==========
     const property: Property = {
@@ -274,6 +274,7 @@ export class LinearToPropertyMapper {
       district: districtData.fi || districtData.sv || districtData.en ? districtData : undefined,
       postalCode,
       apartmentIdentifier,
+      gate: gateStr,  // Store gate letter separately for address display
 
       // NEW: Rich content
       description: description.fi || description.sv || description.en ? description : undefined,

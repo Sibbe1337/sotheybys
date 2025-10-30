@@ -24,6 +24,7 @@ export interface PropertyCardVM {
 export interface PropertyDetailVM extends PropertyCardVM {
   postalCode: string;
   city: string;
+  gate?: string;  // Staircase letter only (e.g., "C")
   
   // Rich content (NEW Phase 3)
   description?: string;        // Sanitized HTML
@@ -169,6 +170,7 @@ export class PropertyVM {
       ...card,
       postalCode: p.postalCode,
       city: p.city[l] || p.city.fi,
+      gate: p.gate,
       
       // Rich content (NEW Phase 3)
       // ✅ SPEC: Allow FI fallback for descriptions (user-friendly), but strict for other fields
