@@ -70,7 +70,7 @@ export function DetailView({ vm, locale }: Props) {
   
   // ✅ FIX: Tabs from i18n - force recalculate on locale change
   // This ensures translations are always correct for current locale
-  const tabs = getAllTabs(locale);
+  const tabs = getAllTabs(locale, isProperty, isRental);
 
   return (
     <div key={locale} className="min-h-screen bg-gray-50">
