@@ -22,13 +22,6 @@ export function DetailView({ vm, locale }: Props) {
   const tab = useActiveTab('overview');
   const setTab = useTabRouting();
 
-  // 🔍 DEBUG: Check if images exist
-  console.log('🖼️ DetailView DEBUG:');
-  console.log('  - vm.images:', vm.images);
-  console.log('  - vm.images.length:', vm.images?.length);
-  console.log('  - First image:', vm.images?.[0]);
-  console.log('  - vm.title:', vm.title);
-
   // ✅ SPEC: Type-specific layout detection
   const typeCode = (vm.typeCode || '').toUpperCase();
   const isApartment = ['KERROSTALO', 'FLAT', 'APARTMENT_BUILDING'].includes(typeCode);
@@ -52,11 +45,12 @@ export function DetailView({ vm, locale }: Props) {
 
   const agent = cleanAgentData(vm.agent || {});
   
-  // ✅ SPEC FIX: Tabs from i18n JSON files
+  // ✅ FIX: Tabs from i18n - force recalculate on locale change
+  // This ensures translations are always correct for current locale
   const tabs = getAllTabs(locale);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div key={locale} className="min-h-screen bg-gray-50">
       {/* Hero Carousel - Full width responsive */}
       {!!vm.images?.length && (
         <ImageCarousel images={vm.images} title={vm.title} />

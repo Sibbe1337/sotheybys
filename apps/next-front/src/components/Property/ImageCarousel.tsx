@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { ChevronLeft, ChevronRight, X, Maximize2 } from 'lucide-react';
 
@@ -20,6 +20,17 @@ interface ImageCarouselProps {
 export function ImageCarousel({ images, title }: ImageCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
+
+  // 🔥 LINUS FIX: Reset index when images change (new property loaded)
+  // Without this, we show wrong image index when navigating between properties
+  useEffect(() => {
+    console.log('🖼️ [ImageCarousel] Images changed:', {
+      count: images.length,
+      firstUrl: images[0]?.url,
+      title
+    });
+    setCurrentIndex(0);
+  }, [images, title]);
 
   if (!images || images.length === 0) return null;
 
