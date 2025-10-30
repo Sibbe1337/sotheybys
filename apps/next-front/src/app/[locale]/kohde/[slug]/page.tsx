@@ -105,7 +105,7 @@ interface PropertyWithACF {
   };
 }
 
-export const revalidate = 0; // Force regeneration on every request (temporary for address fix)
+export const revalidate = 0; // Force regeneration - clearing cache for property type detection fix
 
 // ✅ LINUS: Pre-generate all property pages at build time
 export async function generateStaticParams() {
