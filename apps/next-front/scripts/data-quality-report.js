@@ -115,9 +115,25 @@ function getNestedValue(obj, path) {
   }, obj);
 }
 
-// Alias for blueprint validation (cleaner name)
+// Enhanced getter for blueprint validation (handles .fi.value paths correctly)
 function get(obj, path) {
-  return getNestedValue(obj, path);
+  const parts = path.split('.');
+  let current = obj;
+  
+  for (let i = 0; i < parts.length; i++) {
+    const part = parts[i];
+    if (!current) return undefined;
+    
+    // If this is a locale key (fi/sv/en) and next part is 'value'
+    // Return the value from the localized object and skip the 'value' part
+    if ((part === 'fi' || part === 'sv' || part === 'en') && parts[i+1] === 'value') {
+      return current[part]?.value;
+    }
+    
+    current = current[part];
+  }
+  
+  return current;
 }
 
 // Localized placeholder detection
@@ -461,8 +477,8 @@ async function analyzeDataQuality() {
       console.log('═'.repeat(80));
       console.log('Validating against Dennis Implementation Blueprint schema...\n');
       
-      // Load blueprint schema
-      const schemaPath = path.join(__dirname, 'data-quality-schema.json');
+      // Load blueprint schema (raw API version)
+      const schemaPath = path.join(__dirname, 'data-quality-schema-raw.json');
       let schema = {};
       
       try {
@@ -524,12 +540,12 @@ async function analyzeDataQuality() {
         const filled = totalRequired - missing.length;
         const score = totalRequired > 0 ? (filled / totalRequired) * 100 : 100;
         
-        const address = get(property, 'address.fi') || 
-                       get(property, 'address.sv') || 
+        const address = get(property, 'address.fi.value') || 
+                       get(property, 'address.sv.value') || 
                        get(property, 'address') ||
                        'Unknown';
-        const city = get(property, 'city.fi') || 
-                    get(property, 'city.sv') ||
+        const city = get(property, 'city.fi.value') || 
+                    get(property, 'city.sv.value') ||
                     get(property, 'city') ||
                     '';
         

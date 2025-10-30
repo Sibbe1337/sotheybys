@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2025-10-30T12:21:49.927Z",
+  "generatedAt": "2025-10-30T12:24:41.405Z",
   "mode": "blueprint",
   "summary": {
     "totalProperties": 8,
-    "averageScore": "0.0",
+    "averageScore": "49.3",
     "byType": {
       "apartment": {
         "count": 8,
-        "avgScore": "0.0"
+        "avgScore": "49.3"
       }
     }
   },
@@ -23,104 +23,89 @@
       "address": "Bernhardinkatu 1",
       "city": "Helsinki",
       "type": "apartment",
-      "requiredFields": 18,
-      "filledFields": 0,
+      "requiredFields": 17,
+      "filledFields": 10,
       "missingFields": [
-        "pricing.debtFree",
-        "pricing.sales",
-        "fees.maintenance",
-        "fees.financing",
-        "fees.water",
-        "meta.yearBuilt",
-        "meta.heatingSystem",
-        "meta.energyClass",
-        "meta.housingCompany.name",
-        "meta.housingCompany.loans",
-        "meta.housingCompany.encumbrances",
-        "meta.plotOwnership",
-        "meta.housingTenure",
-        "meta.availableFrom",
-        "meta.zoning",
-        "features.balcony",
-        "features.sauna",
-        "meta.elevator"
+        "fundingCharge.fi.value",
+        "housingCooperativeMortgage.fi.value",
+        "siteOwnershipType.fi.value",
+        "housingTenure.fi.value",
+        "availableFrom.fi.value",
+        "hasBalcony.fi.value",
+        "elevator.fi.value"
       ],
       "fieldStatus": {
-        "pricing.debtFree": {
+        "debtFreePrice.fi.value": {
+          "value": "1 570 000 €",
+          "status": "present"
+        },
+        "askPrice.fi.value": {
+          "value": "1 570 000 €",
+          "status": "present"
+        },
+        "maintenanceCharge.fi.value": {
+          "value": "1 363,55 € / kk",
+          "status": "present"
+        },
+        "fundingCharge.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "pricing.sales": {
+        "waterCharge.fi.value": {
+          "value": "Sisältyy hoitovastikkeeseen",
+          "status": "present"
+        },
+        "completeYear.fi.value": {
+          "value": 1886,
+          "status": "present"
+        },
+        "heatingSystem.fi.value": {
+          "value": "Kaukolämpö ja ilmalämpöpumppu",
+          "status": "present"
+        },
+        "energyClass.fi.value": {
+          "value": "E2018",
+          "status": "present"
+        },
+        "housingCooperativeName.fi.value": {
+          "value": "Bostadsaktiebolaget Hafnia",
+          "status": "present"
+        },
+        "housingCooperativeMortgage.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "fees.maintenance": {
+        "siteOwnershipType.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "fees.financing": {
+        "housingTenure.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "fees.water": {
+        "availableFrom.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "meta.yearBuilt": {
+        "zoningStatus.fi.value": {
+          "value": "Asemakaava",
+          "status": "present"
+        },
+        "hasBalcony.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "meta.heatingSystem": {
-          "value": null,
-          "status": "missing"
+        "sauna.fi.value": {
+          "value": "Kyllä",
+          "status": "present"
         },
-        "meta.energyClass": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.housingCompany.name": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.housingCompany.loans": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.housingCompany.encumbrances": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.plotOwnership": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.housingTenure": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.availableFrom": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.zoning": {
-          "value": null,
-          "status": "missing"
-        },
-        "features.balcony": {
-          "value": null,
-          "status": "missing"
-        },
-        "features.sauna": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.elevator": {
+        "elevator.fi.value": {
           "value": null,
           "status": "missing"
         }
       },
-      "completeness": "0.0%",
-      "score": 0
+      "completeness": "58.8%",
+      "score": 58.82352941176471
     },
     {
       "id": {
@@ -133,104 +118,95 @@
       "address": "Keselmäjärventie 5",
       "city": "Salla",
       "type": "apartment",
-      "requiredFields": 18,
-      "filledFields": 0,
+      "requiredFields": 17,
+      "filledFields": 4,
       "missingFields": [
-        "pricing.debtFree",
-        "pricing.sales",
-        "fees.maintenance",
-        "fees.financing",
-        "fees.water",
-        "meta.yearBuilt",
-        "meta.heatingSystem",
-        "meta.energyClass",
-        "meta.housingCompany.name",
-        "meta.housingCompany.loans",
-        "meta.housingCompany.encumbrances",
-        "meta.plotOwnership",
-        "meta.housingTenure",
-        "meta.availableFrom",
-        "meta.zoning",
-        "features.balcony",
-        "features.sauna",
-        "meta.elevator"
+        "maintenanceCharge.fi.value",
+        "fundingCharge.fi.value",
+        "waterCharge.fi.value",
+        "completeYear.fi.value",
+        "energyClass.fi.value",
+        "housingCooperativeName.fi.value",
+        "housingCooperativeMortgage.fi.value",
+        "siteOwnershipType.fi.value",
+        "housingTenure.fi.value",
+        "availableFrom.fi.value",
+        "hasBalcony.fi.value",
+        "sauna.fi.value",
+        "elevator.fi.value"
       ],
       "fieldStatus": {
-        "pricing.debtFree": {
+        "debtFreePrice.fi.value": {
+          "value": "397 500 €",
+          "status": "present"
+        },
+        "askPrice.fi.value": {
+          "value": "397 500 €",
+          "status": "present"
+        },
+        "maintenanceCharge.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "pricing.sales": {
+        "fundingCharge.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "fees.maintenance": {
+        "waterCharge.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "fees.financing": {
+        "completeYear.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "fees.water": {
+        "heatingSystem.fi.value": {
+          "value": "Sähkö ja puu",
+          "status": "present"
+        },
+        "energyClass.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "meta.yearBuilt": {
+        "housingCooperativeName.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "meta.heatingSystem": {
+        "housingCooperativeMortgage.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "meta.energyClass": {
+        "siteOwnershipType.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "meta.housingCompany.name": {
+        "housingTenure.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "meta.housingCompany.loans": {
+        "availableFrom.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "meta.housingCompany.encumbrances": {
+        "zoningStatus.fi.value": {
+          "value": "Asemakaava",
+          "status": "present"
+        },
+        "hasBalcony.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "meta.plotOwnership": {
+        "sauna.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "meta.housingTenure": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.availableFrom": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.zoning": {
-          "value": null,
-          "status": "missing"
-        },
-        "features.balcony": {
-          "value": null,
-          "status": "missing"
-        },
-        "features.sauna": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.elevator": {
+        "elevator.fi.value": {
           "value": null,
           "status": "missing"
         }
       },
-      "completeness": "0.0%",
-      "score": 0
+      "completeness": "23.5%",
+      "score": 23.52941176470588
     },
     {
       "id": {
@@ -243,104 +219,87 @@
       "address": "Heikkiläntie 1",
       "city": "Helsinki",
       "type": "apartment",
-      "requiredFields": 18,
-      "filledFields": 0,
+      "requiredFields": 17,
+      "filledFields": 12,
       "missingFields": [
-        "pricing.debtFree",
-        "pricing.sales",
-        "fees.maintenance",
-        "fees.financing",
-        "fees.water",
-        "meta.yearBuilt",
-        "meta.heatingSystem",
-        "meta.energyClass",
-        "meta.housingCompany.name",
-        "meta.housingCompany.loans",
-        "meta.housingCompany.encumbrances",
-        "meta.plotOwnership",
-        "meta.housingTenure",
-        "meta.availableFrom",
-        "meta.zoning",
-        "features.balcony",
-        "features.sauna",
-        "meta.elevator"
+        "fundingCharge.fi.value",
+        "siteOwnershipType.fi.value",
+        "housingTenure.fi.value",
+        "availableFrom.fi.value",
+        "elevator.fi.value"
       ],
       "fieldStatus": {
-        "pricing.debtFree": {
+        "debtFreePrice.fi.value": {
+          "value": "1 190 000 €",
+          "status": "present"
+        },
+        "askPrice.fi.value": {
+          "value": "1 190 000 €",
+          "status": "present"
+        },
+        "maintenanceCharge.fi.value": {
+          "value": "690,90 € / kk",
+          "status": "present"
+        },
+        "fundingCharge.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "pricing.sales": {
+        "waterCharge.fi.value": {
+          "value": "22 € / kk",
+          "status": "present"
+        },
+        "completeYear.fi.value": {
+          "value": 2013,
+          "status": "present"
+        },
+        "heatingSystem.fi.value": {
+          "value": "Kaukolämpö",
+          "status": "present"
+        },
+        "energyClass.fi.value": {
+          "value": "C2018",
+          "status": "present"
+        },
+        "housingCooperativeName.fi.value": {
+          "value": "As. Oy Helsingin Lorenzo",
+          "status": "present"
+        },
+        "housingCooperativeMortgage.fi.value": {
+          "value": "1 625 002,18 €",
+          "status": "present"
+        },
+        "siteOwnershipType.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "fees.maintenance": {
+        "housingTenure.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "fees.financing": {
+        "availableFrom.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "fees.water": {
-          "value": null,
-          "status": "missing"
+        "zoningStatus.fi.value": {
+          "value": "Asemakaava",
+          "status": "present"
         },
-        "meta.yearBuilt": {
-          "value": null,
-          "status": "missing"
+        "hasBalcony.fi.value": {
+          "value": "Kyllä",
+          "status": "present"
         },
-        "meta.heatingSystem": {
-          "value": null,
-          "status": "missing"
+        "sauna.fi.value": {
+          "value": "Ei",
+          "status": "present"
         },
-        "meta.energyClass": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.housingCompany.name": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.housingCompany.loans": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.housingCompany.encumbrances": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.plotOwnership": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.housingTenure": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.availableFrom": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.zoning": {
-          "value": null,
-          "status": "missing"
-        },
-        "features.balcony": {
-          "value": null,
-          "status": "missing"
-        },
-        "features.sauna": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.elevator": {
+        "elevator.fi.value": {
           "value": null,
           "status": "missing"
         }
       },
-      "completeness": "0.0%",
-      "score": 0
+      "completeness": "70.6%",
+      "score": 70.58823529411765
     },
     {
       "id": {
@@ -353,104 +312,87 @@
       "address": "Kauppiaankatu 8-10",
       "city": "Helsinki",
       "type": "apartment",
-      "requiredFields": 18,
-      "filledFields": 0,
+      "requiredFields": 17,
+      "filledFields": 12,
       "missingFields": [
-        "pricing.debtFree",
-        "pricing.sales",
-        "fees.maintenance",
-        "fees.financing",
-        "fees.water",
-        "meta.yearBuilt",
-        "meta.heatingSystem",
-        "meta.energyClass",
-        "meta.housingCompany.name",
-        "meta.housingCompany.loans",
-        "meta.housingCompany.encumbrances",
-        "meta.plotOwnership",
-        "meta.housingTenure",
-        "meta.availableFrom",
-        "meta.zoning",
-        "features.balcony",
-        "features.sauna",
-        "meta.elevator"
+        "fundingCharge.fi.value",
+        "siteOwnershipType.fi.value",
+        "housingTenure.fi.value",
+        "availableFrom.fi.value",
+        "elevator.fi.value"
       ],
       "fieldStatus": {
-        "pricing.debtFree": {
+        "debtFreePrice.fi.value": {
+          "value": "179 000 €",
+          "status": "present"
+        },
+        "askPrice.fi.value": {
+          "value": "179 000 €",
+          "status": "present"
+        },
+        "maintenanceCharge.fi.value": {
+          "value": "119,70 € / kk",
+          "status": "present"
+        },
+        "fundingCharge.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "pricing.sales": {
+        "waterCharge.fi.value": {
+          "value": "28 € / hlö / kk",
+          "status": "present"
+        },
+        "completeYear.fi.value": {
+          "value": 1910,
+          "status": "present"
+        },
+        "heatingSystem.fi.value": {
+          "value": "Kaukolämpö",
+          "status": "present"
+        },
+        "energyClass.fi.value": {
+          "value": "E2018",
+          "status": "present"
+        },
+        "housingCooperativeName.fi.value": {
+          "value": "Asunto-osakeyhtiö Kauppiaankatu 8-10 Bostadsaktiebolag",
+          "status": "present"
+        },
+        "housingCooperativeMortgage.fi.value": {
+          "value": "1 119 400 €",
+          "status": "present"
+        },
+        "siteOwnershipType.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "fees.maintenance": {
+        "housingTenure.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "fees.financing": {
+        "availableFrom.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "fees.water": {
-          "value": null,
-          "status": "missing"
+        "zoningStatus.fi.value": {
+          "value": "Asemakaava",
+          "status": "present"
         },
-        "meta.yearBuilt": {
-          "value": null,
-          "status": "missing"
+        "hasBalcony.fi.value": {
+          "value": "Ei",
+          "status": "present"
         },
-        "meta.heatingSystem": {
-          "value": null,
-          "status": "missing"
+        "sauna.fi.value": {
+          "value": "Ei",
+          "status": "present"
         },
-        "meta.energyClass": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.housingCompany.name": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.housingCompany.loans": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.housingCompany.encumbrances": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.plotOwnership": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.housingTenure": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.availableFrom": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.zoning": {
-          "value": null,
-          "status": "missing"
-        },
-        "features.balcony": {
-          "value": null,
-          "status": "missing"
-        },
-        "features.sauna": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.elevator": {
+        "elevator.fi.value": {
           "value": null,
           "status": "missing"
         }
       },
-      "completeness": "0.0%",
-      "score": 0
+      "completeness": "70.6%",
+      "score": 70.58823529411765
     },
     {
       "id": {
@@ -463,104 +405,95 @@
       "address": "Korkeavuorenkatu 41",
       "city": "Helsinki",
       "type": "apartment",
-      "requiredFields": 18,
-      "filledFields": 0,
+      "requiredFields": 17,
+      "filledFields": 4,
       "missingFields": [
-        "pricing.debtFree",
-        "pricing.sales",
-        "fees.maintenance",
-        "fees.financing",
-        "fees.water",
-        "meta.yearBuilt",
-        "meta.heatingSystem",
-        "meta.energyClass",
-        "meta.housingCompany.name",
-        "meta.housingCompany.loans",
-        "meta.housingCompany.encumbrances",
-        "meta.plotOwnership",
-        "meta.housingTenure",
-        "meta.availableFrom",
-        "meta.zoning",
-        "features.balcony",
-        "features.sauna",
-        "meta.elevator"
+        "debtFreePrice.fi.value",
+        "askPrice.fi.value",
+        "maintenanceCharge.fi.value",
+        "fundingCharge.fi.value",
+        "energyClass.fi.value",
+        "housingCooperativeMortgage.fi.value",
+        "siteOwnershipType.fi.value",
+        "housingTenure.fi.value",
+        "availableFrom.fi.value",
+        "zoningStatus.fi.value",
+        "hasBalcony.fi.value",
+        "sauna.fi.value",
+        "elevator.fi.value"
       ],
       "fieldStatus": {
-        "pricing.debtFree": {
+        "debtFreePrice.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "pricing.sales": {
+        "askPrice.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "fees.maintenance": {
+        "maintenanceCharge.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "fees.financing": {
+        "fundingCharge.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "fees.water": {
+        "waterCharge.fi.value": {
+          "value": "Vesimaksu sisältyy vuokraan.",
+          "status": "present"
+        },
+        "completeYear.fi.value": {
+          "value": 1890,
+          "status": "present"
+        },
+        "heatingSystem.fi.value": {
+          "value": "Kaukolämpö",
+          "status": "present"
+        },
+        "energyClass.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "meta.yearBuilt": {
+        "housingCooperativeName.fi.value": {
+          "value": "Bostadsaktiebolaget Högbergsgatan 41",
+          "status": "present"
+        },
+        "housingCooperativeMortgage.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "meta.heatingSystem": {
+        "siteOwnershipType.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "meta.energyClass": {
+        "housingTenure.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "meta.housingCompany.name": {
+        "availableFrom.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "meta.housingCompany.loans": {
+        "zoningStatus.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "meta.housingCompany.encumbrances": {
+        "hasBalcony.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "meta.plotOwnership": {
+        "sauna.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "meta.housingTenure": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.availableFrom": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.zoning": {
-          "value": null,
-          "status": "missing"
-        },
-        "features.balcony": {
-          "value": null,
-          "status": "missing"
-        },
-        "features.sauna": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.elevator": {
+        "elevator.fi.value": {
           "value": null,
           "status": "missing"
         }
       },
-      "completeness": "0.0%",
-      "score": 0
+      "completeness": "23.5%",
+      "score": 23.52941176470588
     },
     {
       "id": {
@@ -573,104 +506,92 @@
       "address": "Helsingintie 99",
       "city": "Porvoo",
       "type": "apartment",
-      "requiredFields": 18,
-      "filledFields": 0,
+      "requiredFields": 17,
+      "filledFields": 7,
       "missingFields": [
-        "pricing.debtFree",
-        "pricing.sales",
-        "fees.maintenance",
-        "fees.financing",
-        "fees.water",
-        "meta.yearBuilt",
-        "meta.heatingSystem",
-        "meta.energyClass",
-        "meta.housingCompany.name",
-        "meta.housingCompany.loans",
-        "meta.housingCompany.encumbrances",
-        "meta.plotOwnership",
-        "meta.housingTenure",
-        "meta.availableFrom",
-        "meta.zoning",
-        "features.balcony",
-        "features.sauna",
-        "meta.elevator"
+        "maintenanceCharge.fi.value",
+        "fundingCharge.fi.value",
+        "waterCharge.fi.value",
+        "energyClass.fi.value",
+        "housingCooperativeName.fi.value",
+        "housingCooperativeMortgage.fi.value",
+        "siteOwnershipType.fi.value",
+        "housingTenure.fi.value",
+        "availableFrom.fi.value",
+        "elevator.fi.value"
       ],
       "fieldStatus": {
-        "pricing.debtFree": {
+        "debtFreePrice.fi.value": {
+          "value": "115 000 €",
+          "status": "present"
+        },
+        "askPrice.fi.value": {
+          "value": "115 000 €",
+          "status": "present"
+        },
+        "maintenanceCharge.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "pricing.sales": {
+        "fundingCharge.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "fees.maintenance": {
+        "waterCharge.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "fees.financing": {
+        "completeYear.fi.value": {
+          "value": 1937,
+          "status": "present"
+        },
+        "heatingSystem.fi.value": {
+          "value": "Sähkö",
+          "status": "present"
+        },
+        "energyClass.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "fees.water": {
+        "housingCooperativeName.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "meta.yearBuilt": {
+        "housingCooperativeMortgage.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "meta.heatingSystem": {
+        "siteOwnershipType.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "meta.energyClass": {
+        "housingTenure.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "meta.housingCompany.name": {
+        "availableFrom.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "meta.housingCompany.loans": {
-          "value": null,
-          "status": "missing"
+        "zoningStatus.fi.value": {
+          "value": "Suunnittelutarvealue",
+          "status": "present"
         },
-        "meta.housingCompany.encumbrances": {
-          "value": null,
-          "status": "missing"
+        "hasBalcony.fi.value": {
+          "value": "Kyllä",
+          "status": "present"
         },
-        "meta.plotOwnership": {
-          "value": null,
-          "status": "missing"
+        "sauna.fi.value": {
+          "value": "Kyllä",
+          "status": "present"
         },
-        "meta.housingTenure": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.availableFrom": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.zoning": {
-          "value": null,
-          "status": "missing"
-        },
-        "features.balcony": {
-          "value": null,
-          "status": "missing"
-        },
-        "features.sauna": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.elevator": {
+        "elevator.fi.value": {
           "value": null,
           "status": "missing"
         }
       },
-      "completeness": "0.0%",
-      "score": 0
+      "completeness": "41.2%",
+      "score": 41.17647058823529
     },
     {
       "id": {
@@ -683,104 +604,92 @@
       "address": "Mailatie 3",
       "city": "Kittilä",
       "type": "apartment",
-      "requiredFields": 18,
-      "filledFields": 0,
+      "requiredFields": 17,
+      "filledFields": 7,
       "missingFields": [
-        "pricing.debtFree",
-        "pricing.sales",
-        "fees.maintenance",
-        "fees.financing",
-        "fees.water",
-        "meta.yearBuilt",
-        "meta.heatingSystem",
-        "meta.energyClass",
-        "meta.housingCompany.name",
-        "meta.housingCompany.loans",
-        "meta.housingCompany.encumbrances",
-        "meta.plotOwnership",
-        "meta.housingTenure",
-        "meta.availableFrom",
-        "meta.zoning",
-        "features.balcony",
-        "features.sauna",
-        "meta.elevator"
+        "maintenanceCharge.fi.value",
+        "fundingCharge.fi.value",
+        "waterCharge.fi.value",
+        "energyClass.fi.value",
+        "housingCooperativeName.fi.value",
+        "housingCooperativeMortgage.fi.value",
+        "siteOwnershipType.fi.value",
+        "housingTenure.fi.value",
+        "availableFrom.fi.value",
+        "elevator.fi.value"
       ],
       "fieldStatus": {
-        "pricing.debtFree": {
+        "debtFreePrice.fi.value": {
+          "value": "855 000 €",
+          "status": "present"
+        },
+        "askPrice.fi.value": {
+          "value": "855 000 €",
+          "status": "present"
+        },
+        "maintenanceCharge.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "pricing.sales": {
+        "fundingCharge.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "fees.maintenance": {
+        "waterCharge.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "fees.financing": {
+        "completeYear.fi.value": {
+          "value": 2008,
+          "status": "present"
+        },
+        "heatingSystem.fi.value": {
+          "value": "Maalämpö ja lattialämmitys",
+          "status": "present"
+        },
+        "energyClass.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "fees.water": {
+        "housingCooperativeName.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "meta.yearBuilt": {
+        "housingCooperativeMortgage.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "meta.heatingSystem": {
+        "siteOwnershipType.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "meta.energyClass": {
+        "housingTenure.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "meta.housingCompany.name": {
+        "availableFrom.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "meta.housingCompany.loans": {
-          "value": null,
-          "status": "missing"
+        "zoningStatus.fi.value": {
+          "value": "Asemakaava",
+          "status": "present"
         },
-        "meta.housingCompany.encumbrances": {
-          "value": null,
-          "status": "missing"
+        "hasBalcony.fi.value": {
+          "value": "Kyllä",
+          "status": "present"
         },
-        "meta.plotOwnership": {
-          "value": null,
-          "status": "missing"
+        "sauna.fi.value": {
+          "value": "Kyllä",
+          "status": "present"
         },
-        "meta.housingTenure": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.availableFrom": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.zoning": {
-          "value": null,
-          "status": "missing"
-        },
-        "features.balcony": {
-          "value": null,
-          "status": "missing"
-        },
-        "features.sauna": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.elevator": {
+        "elevator.fi.value": {
           "value": null,
           "status": "missing"
         }
       },
-      "completeness": "0.0%",
-      "score": 0
+      "completeness": "41.2%",
+      "score": 41.17647058823529
     },
     {
       "id": {
@@ -793,104 +702,88 @@
       "address": "Albertinkatu 19",
       "city": "Helsinki",
       "type": "apartment",
-      "requiredFields": 18,
-      "filledFields": 0,
+      "requiredFields": 17,
+      "filledFields": 11,
       "missingFields": [
-        "pricing.debtFree",
-        "pricing.sales",
-        "fees.maintenance",
-        "fees.financing",
-        "fees.water",
-        "meta.yearBuilt",
-        "meta.heatingSystem",
-        "meta.energyClass",
-        "meta.housingCompany.name",
-        "meta.housingCompany.loans",
-        "meta.housingCompany.encumbrances",
-        "meta.plotOwnership",
-        "meta.housingTenure",
-        "meta.availableFrom",
-        "meta.zoning",
-        "features.balcony",
-        "features.sauna",
-        "meta.elevator"
+        "housingCooperativeMortgage.fi.value",
+        "siteOwnershipType.fi.value",
+        "housingTenure.fi.value",
+        "availableFrom.fi.value",
+        "hasBalcony.fi.value",
+        "elevator.fi.value"
       ],
       "fieldStatus": {
-        "pricing.debtFree": {
+        "debtFreePrice.fi.value": {
+          "value": "880 000 €",
+          "status": "present"
+        },
+        "askPrice.fi.value": {
+          "value": "877 535,28 €",
+          "status": "present"
+        },
+        "maintenanceCharge.fi.value": {
+          "value": "607,50 € / kk",
+          "status": "present"
+        },
+        "fundingCharge.fi.value": {
+          "value": "64,80 € / kk",
+          "status": "present"
+        },
+        "waterCharge.fi.value": {
+          "value": "20 € / hlö / kk",
+          "status": "present"
+        },
+        "completeYear.fi.value": {
+          "value": 1907,
+          "status": "present"
+        },
+        "heatingSystem.fi.value": {
+          "value": "Kaukolämpö",
+          "status": "present"
+        },
+        "energyClass.fi.value": {
+          "value": "D2018",
+          "status": "present"
+        },
+        "housingCooperativeName.fi.value": {
+          "value": "Asunto Oy Helsingin Albertinkatu 19",
+          "status": "present"
+        },
+        "housingCooperativeMortgage.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "pricing.sales": {
+        "siteOwnershipType.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "fees.maintenance": {
+        "housingTenure.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "fees.financing": {
+        "availableFrom.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "fees.water": {
+        "zoningStatus.fi.value": {
+          "value": "Asemakaava",
+          "status": "present"
+        },
+        "hasBalcony.fi.value": {
           "value": null,
           "status": "missing"
         },
-        "meta.yearBuilt": {
-          "value": null,
-          "status": "missing"
+        "sauna.fi.value": {
+          "value": "Ei",
+          "status": "present"
         },
-        "meta.heatingSystem": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.energyClass": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.housingCompany.name": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.housingCompany.loans": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.housingCompany.encumbrances": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.plotOwnership": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.housingTenure": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.availableFrom": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.zoning": {
-          "value": null,
-          "status": "missing"
-        },
-        "features.balcony": {
-          "value": null,
-          "status": "missing"
-        },
-        "features.sauna": {
-          "value": null,
-          "status": "missing"
-        },
-        "meta.elevator": {
+        "elevator.fi.value": {
           "value": null,
           "status": "missing"
         }
       },
-      "completeness": "0.0%",
-      "score": 0
+      "completeness": "64.7%",
+      "score": 64.70588235294117
     }
   ]
 }

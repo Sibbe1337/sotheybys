@@ -1,0 +1,55 @@
+{
+  "apartment": {
+    "required": [
+      "debtFreePrice.fi.value",
+      "askPrice.fi.value",
+      "maintenanceCharge.fi.value",
+      "fundingCharge.fi.value",
+      "waterCharge.fi.value",
+      "completeYear.fi.value",
+      "heatingSystem.fi.value",
+      "energyClass.fi.value",
+      "housingCooperativeName.fi.value",
+      "housingCooperativeMortgage.fi.value",
+      "siteOwnershipType.fi.value",
+      "housingTenure.fi.value",
+      "availableFrom.fi.value",
+      "zoningStatus.fi.value",
+      "hasBalcony.fi.value",
+      "sauna.fi.value",
+      "elevator.fi.value"
+    ],
+    "description": "Required fields for apartment listings (raw Linear API paths)"
+  },
+  "property": {
+    "required": [
+      "propertyIdentifier.fi.value",
+      "lotArea.fi.value",
+      "completeYear.fi.value",
+      "heatingSystem.fi.value",
+      "ventilationSystem.fi.value",
+      "energyClass.fi.value",
+      "debtFreePrice.fi.value",
+      "propertyTax.fi.value",
+      "zoningStatus.fi.value",
+      "availableFrom.fi.value"
+    ],
+    "description": "Required fields for property listings (raw Linear API paths)"
+  },
+  "rental": {
+    "required": [
+      "rent.fi.value",
+      "securityDepositType.fi.value",
+      "rentalContractType.fi.value",
+      "earliestTerminateDate.fi.value",
+      "availableFrom.fi.value",
+      "completeYear.fi.value",
+      "heatingSystem.fi.value",
+      "energyClass.fi.value",
+      "waterCharge.fi.value",
+      "electricityContract.fi.value"
+    ],
+    "description": "Required fields for rental listings (raw Linear API paths)"
+  }
+}
+
