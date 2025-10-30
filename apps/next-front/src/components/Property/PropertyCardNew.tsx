@@ -47,10 +47,10 @@ export default function PropertyCardNew({ property, locale }: PropertyCardNewPro
   const typeLabel = lpick(property.meta.listingTypeLabel, locale);
   const postalCode = property.postalCode;
   
-  // Build full address with apartment identifier, postal code and city
-  // Example: "Heikkiläntie 1 C 47, 00210 Helsinki"
-  const streetAddress = property.apartmentIdentifier 
-    ? `${address} ${property.apartmentIdentifier}`
+  // ✅ MÄKLARE SPEC: Build address with gate letter ONLY (NOT apartment number)
+  // Example: "Heikkiläntie 1 C, 00210 Helsinki" (not "Heikkiläntie 1 C 47")
+  const streetAddress = property.gate 
+    ? `${address} ${property.gate}`
     : address;
   const fullAddress = `${streetAddress}, ${postalCode} ${city}`;
   
