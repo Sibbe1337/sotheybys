@@ -1,4 +1,7 @@
-import { getTranslation, type SupportedLanguage } from './property-translations';
+/**
+ * Supported language types
+ */
+export type SupportedLanguage = 'fi' | 'sv' | 'en';
 
 /**
  * Common yes/no synonyms used across listing data sources
@@ -6,6 +9,21 @@ import { getTranslation, type SupportedLanguage } from './property-translations'
  */
 export const YES_VALUES = new Set(['kyllä', 'ja', 'yes', 'on', 'y', 'true', '1', 'available', 'exists', true, 1]);
 export const NO_VALUES = new Set(['ei', 'nej', 'no', 'off', 'false', '0', 'none', false, 0]);
+
+/**
+ * Simple translations for yes/no
+ */
+const YES_TRANSLATIONS: Record<SupportedLanguage, string> = {
+  fi: 'Kyllä',
+  sv: 'Ja',
+  en: 'Yes'
+};
+
+const NO_TRANSLATIONS: Record<SupportedLanguage, string> = {
+  fi: 'Ei',
+  sv: 'Nej',
+  en: 'No'
+};
 
 /**
  * Simple synchronous translation for common real estate terms.
@@ -152,8 +170,8 @@ export function parseEuroAmount(value: unknown): number | null {
 }
 
 export function formatBooleanLabel(value: unknown, language: SupportedLanguage): string {
-  const yesLabel = getTranslation('yes', language);
-  const noLabel = getTranslation('no', language);
+  const yesLabel = YES_TRANSLATIONS[language];
+  const noLabel = NO_TRANSLATIONS[language];
 
   if (value == null || (typeof value === 'string' && value.trim() === '')) {
     return '—';
