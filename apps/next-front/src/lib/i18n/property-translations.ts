@@ -60,17 +60,45 @@ export function getFieldLabel(fieldId: string, locale: Locale): string {
 }
 
 /**
- * Get all tab labels for a locale
+ * Get all tab labels for a locale - DIFFERENTIATED BY OBJECT TYPE
+ * ✅ DENNIS SPEC: Properties have different tab labels than apartments
  */
-export function getAllTabs(locale: Locale): Array<[string, string]> {
-  return [
-    ['overview', getTabLabel('overview', locale)],
-    ['apartment', getTabLabel('apartment', locale)],
-    ['company', getTabLabel('company', locale)],
-    ['costs', getTabLabel('costs', locale)],
-    ['other', getTabLabel('other', locale)],
-    ['documents', getTabLabel('documents', locale)],
-    ['map', getTabLabel('map', locale)]
-  ];
+export function getAllTabs(locale: Locale, isProperty: boolean = false, isRental: boolean = false): Array<[string, string]> {
+  if (isProperty) {
+    // ✅ DENNIS SPEC: Fastigheter (Properties/Estates)
+    // apartment tab = "Kiinteistötiedot" (Property Information)
+    // company tab = "Rakennustiedot" (Building Facts)
+    // NO "other" tab for properties
+    return [
+      ['overview', getTabLabel('overview', locale)],
+      ['apartment', locale === 'sv' ? 'Fastighetsinformation' : locale === 'en' ? 'Property Information' : 'Kiinteistötiedot'],
+      ['company', locale === 'sv' ? 'Byggfakta' : locale === 'en' ? 'Building Facts' : 'Rakennustiedot'],
+      ['costs', getTabLabel('costs', locale)],
+      ['documents', getTabLabel('documents', locale)],
+      ['map', getTabLabel('map', locale)]
+    ];
+  } else if (isRental) {
+    // ✅ DENNIS SPEC: Rental properties
+    return [
+      ['overview', getTabLabel('overview', locale)],
+      ['apartment', locale === 'sv' ? 'Lägenhetsuppgifter' : locale === 'en' ? 'Apartment Details' : 'Huoneistotiedot'],
+      ['company', locale === 'sv' ? 'Husbolagsuppgifter' : locale === 'en' ? 'Housing Company' : 'Taloyhtiötiedot'],
+      ['costs', getTabLabel('costs', locale)],
+      ['other', locale === 'sv' ? 'Hyresuppgifter' : locale === 'en' ? 'Rental Terms' : 'Vuokratiedot'],
+      ['documents', getTabLabel('documents', locale)],
+      ['map', getTabLabel('map', locale)]
+    ];
+  } else {
+    // ✅ DENNIS SPEC: Apartments
+    return [
+      ['overview', getTabLabel('overview', locale)],
+      ['apartment', getTabLabel('apartment', locale)],
+      ['company', getTabLabel('company', locale)],
+      ['costs', getTabLabel('costs', locale)],
+      ['other', getTabLabel('other', locale)],
+      ['documents', getTabLabel('documents', locale)],
+      ['map', getTabLabel('map', locale)]
+    ];
+  }
 }
 
