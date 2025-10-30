@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import Image from 'next/image';
+import { Link } from '@/lib/navigation';
 import PropertyGridNew from './PropertyGridNew';
 import PropertyMap from './PropertyMap';
 import type { Property, Locale } from '@/lib/domain/property.types';
@@ -188,14 +189,22 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                 value={selectedType}
                 onChange={(e) => setSelectedType(e.target.value)}
               >
-                {PROPERTY_TYPES.map(type => {
-                  const count = type.id === 'all' ? properties.length : (dynamicPropertyTypes.get(type.id) || 0);
-                  return (
-                    <option key={type.id} value={type.id}>
-                      {type.label[language]} ({count})
-                    </option>
-                  );
-                })}
+                {PROPERTY_TYPES
+                  .filter(type => {
+                    // Always show "all" type
+                    if (type.id === 'all') return true;
+                    // Only show types with at least 1 property
+                    const count = dynamicPropertyTypes.get(type.id) || 0;
+                    return count > 0;
+                  })
+                  .map(type => {
+                    const count = type.id === 'all' ? properties.length : (dynamicPropertyTypes.get(type.id) || 0);
+                    return (
+                      <option key={type.id} value={type.id}>
+                        {type.label[language]} ({count})
+                      </option>
+                    );
+                  })}
               </select>
             </div>
           </div>
@@ -446,12 +455,16 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                             <p className="text-3xl font-light text-[var(--color-primary)]">
                               {price > 0 ? `${price.toLocaleString('fi-FI')} €` : ''}
                             </p>
-                            <a
-                              href={`/kohde/${property.slug}`}
+                            <Link
+                              href={
+                                language === 'sv' ? `/objekt/${property.slug}` :
+                                language === 'en' ? `/properties/${property.slug}` :
+                                `/kohde/${property.slug}`
+                              }
                               className="px-6 py-3 bg-[var(--color-primary)] text-white rounded hover:bg-[var(--color-primary-dark)] transition-colors"
                             >
                               {language === 'fi' ? 'Katso kohde' : language === 'sv' ? 'Se objekt' : 'View property'}
-                            </a>
+                            </Link>
                           </div>
                         </div>
                       </div>
