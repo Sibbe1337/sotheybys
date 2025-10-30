@@ -62,7 +62,7 @@ export default function PropertyCardNew({ property, locale }: PropertyCardNewPro
   // Prices - Rentals show monthly rent, Properties show only Mh, Apartments show both Vh and Mh
   const salesPrice = fmtCurrency(property.pricing.sales, localeStr);
   const debtFreePrice = fmtCurrency(property.pricing.debtFree, localeStr);
-  const monthlyRent = isRental ? fmtCurrency(property.rental!.monthlyRent, localeStr) : undefined;
+  const monthlyRent = property.rental?.monthlyRent ? fmtCurrency(property.rental.monthlyRent, localeStr) : undefined;
   
   // Description
   // - For properties: show "Mökki tai huvila | 3 mh, oh, rt..."  (typeLabel | apartmentType)

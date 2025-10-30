@@ -835,14 +835,14 @@ function RentalApartmentInfo({ vm, locale }: Props) {
         
         {/* Show only if "Yes" (boolean true), not if false or undefined */}
         {/* Features is an array of {label, value} - find balcony/terrace */}
-        {vm.features.find(f => f.label.toLowerCase().includes(locale === 'sv' ? 'balkong' : locale === 'en' ? 'balcony' : 'parveke') && f.value) && (
+        {vm.features?.find(f => f.label.toLowerCase().includes(locale === 'sv' ? 'balkong' : locale === 'en' ? 'balcony' : 'parveke') && f.value) && (
           <Row 
             label={locale === 'sv' ? 'Balkong / Terrass' : locale === 'en' ? 'Balcony / Terrace' : 'Parveke / Terassi'} 
             value={locale === 'sv' ? 'Ja' : locale === 'en' ? 'Yes' : 'Kyllä'}
             locale={locale}
           />
         )}
-        {vm.features.find(f => f.label.toLowerCase().includes(locale === 'sv' ? 'bastu' : locale === 'en' ? 'sauna' : 'sauna') && f.value) && (
+        {vm.features?.find(f => f.label.toLowerCase().includes(locale === 'sv' ? 'bastu' : locale === 'en' ? 'sauna' : 'sauna') && f.value) && (
           <Row 
             label={locale === 'sv' ? 'Bastu' : locale === 'en' ? 'Sauna' : 'Sauna'} 
             value={locale === 'sv' ? 'Ja' : locale === 'en' ? 'Yes' : 'Kyllä'}
