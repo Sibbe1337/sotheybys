@@ -132,9 +132,10 @@ export interface PropertyDetailVM extends PropertyCardVM {
 
 export class PropertyVM {
   static toCard(p: Property, l: Locale): PropertyCardVM {
-    // Build full address with apartment identifier (e.g., "Heikkiläntie 1 C 47")
+    // ✅ MÄKLARE SPEC: Build address with gate letter ONLY (NOT apartment number)
+    // Example: "Heikkiläntie 1 C" (not "Heikkiläntie 1 C 47")
     const address = p.address[l] || p.address.fi;
-    const title = p.apartmentIdentifier ? `${address} ${p.apartmentIdentifier}` : address;
+    const title = p.gate ? `${address} ${p.gate}` : address;
     // ✅ SPEC: Use localized listing type label instead of raw code
     const type = lpick(p.meta.listingTypeLabel, l) || (p.meta.typeCode || '').replace(/_/g, ' ');
     const district = p.city[l] || p.city.fi;
