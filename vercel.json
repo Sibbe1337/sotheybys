@@ -1,8 +1,0 @@
-{
-  "buildCommand": "cd apps/next-front && pnpm run build",
-  "devCommand": "cd apps/next-front && pnpm run dev",
-  "installCommand": "pnpm install",
-  "framework": "nextjs",
-  "outputDirectory": "apps/next-front/.next"
-}
-
