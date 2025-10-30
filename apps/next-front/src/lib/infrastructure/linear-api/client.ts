@@ -105,10 +105,20 @@ export class LinearAPIClient {
       
       // Use slug index if available
       if (this.slugIndex.has(slug)) {
-        const id = this.slugIndex.get(slug);
-        const found = listings.find((l: any) => String(l.id || l.nonLocalizedValues?.id) === id);
+        const targetId = this.slugIndex.get(slug);
+        const found = listings.find((l: any) => {
+          // 🔥 LINUS FIX: Extract ID properly (can be object or string)
+          const idRaw = l.id || l.nonLocalizedValues?.id || '';
+          const id = typeof idRaw === 'string' ? idRaw : 
+                    (typeof idRaw?.fi === 'string' ? idRaw.fi : idRaw?.fi?.value || '');
+          return id === targetId;
+        });
+        
         if (found) {
-          log('Found listing by slug index:', slug);
+          const addressRaw = found.address;
+          const address = typeof addressRaw === 'string' ? addressRaw : 
+                         (typeof addressRaw?.fi === 'string' ? addressRaw.fi : addressRaw?.fi?.value || 'UNKNOWN');
+          log('🎯 Found listing by slug index:', slug, '→ Address:', address, '| ID:', targetId);
           return found;
         }
       }
@@ -136,18 +146,28 @@ export class LinearAPIClient {
   private buildSlugIndex(listings: LinearListing[]): void {
     this.slugIndex.clear();
     
-    listings.forEach((listing: any) => {
-      const id = String(listing.id || listing.nonLocalizedValues?.id || '');
-      const slug = listing.slug || this.generateSlug(
-        typeof listing.address === 'string' ? listing.address : listing.address?.fi?.value || ''
-      );
+    log('🏗️ Building slug index from', listings.length, 'listings...');
+    
+    listings.forEach((listing: any, idx) => {
+      // 🔥 LINUS FIX: ID can be an object {fi: {value: "xxx"}} or a string
+      const idRaw = listing.id || listing.nonLocalizedValues?.id || '';
+      const id = typeof idRaw === 'string' ? idRaw : 
+                (typeof idRaw?.fi === 'string' ? idRaw.fi : idRaw?.fi?.value || '');
+      
+      const addressRaw = listing.address;
+      const address = typeof addressRaw === 'string' ? addressRaw : 
+                     (typeof addressRaw?.fi === 'string' ? addressRaw.fi : addressRaw?.fi?.value || '');
+      const slug = listing.slug || this.generateSlug(address);
       
       if (id && slug) {
         this.slugIndex.set(slug, id);
+        if (idx < 5) { // Log first 5 for debugging
+          log(`  📍 [${idx + 1}] ${slug} → ${address} (ID: ${id.substring(0, 8)}...)`);
+        }
       }
     });
     
-    log('Built slug index with', this.slugIndex.size, 'entries');
+    log('✅ Built slug index with', this.slugIndex.size, 'entries');
   }
 
   private generateSlug(address: string): string {
