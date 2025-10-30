@@ -21,6 +21,11 @@ export function DetailView({ vm, locale }: Props) {
   const tab = useActiveTab('overview');
   const setTab = useTabRouting();
 
+  // ✅ SPEC: Type-specific layout detection
+  const typeCode = (vm.typeCode || '').toUpperCase();
+  const isApartment = ['KERROSTALO', 'FLAT', 'APARTMENT_BUILDING'].includes(typeCode);
+  const isProperty = ['OMAKOTITALO', 'DETACHED_HOUSE', 'DETACHEDHOUSE', 'RIVITALO', 'TOWNHOUSE', 'COTTAGE_OR_VILLA', 'MÖKKI_TAI_HUVILA'].includes(typeCode);
+  
   // Type | Huoneistoselitelmä under images/address
   // ✅ SPEC FIX: Use localized listing type label from ViewModel
   const typePrefix = vm.subtitle.split(' • ')[0] || ''; // Extract type from subtitle
@@ -54,9 +59,15 @@ export function DetailView({ vm, locale }: Props) {
           {aptLine && <p className="text-lg text-gray-900 mb-4">{aptLine}</p>}
           {/* Description (sanitized) */}
           {vm.description && (
-            <div className="prose prose-gray max-w-none">
-              <RichText html={vm.description} />
-            </div>
+            <>
+              {/* ✅ SPEC: Show auto-translate banner if description may be auto-translated */}
+              {locale !== 'fi' && vm.description && (
+                <AutoTranslateBanner locale={locale} className="mb-4" />
+              )}
+              <div className="prose prose-gray max-w-none">
+                <RichText html={vm.description} />
+              </div>
+            </>
           )}
         </div>
       </section>
@@ -88,8 +99,8 @@ export function DetailView({ vm, locale }: Props) {
           <div className="lg:col-span-2 space-y-8">
             {tab === 'overview' && <Overview vm={vm} locale={locale} />}
             {tab === 'apartment' && <ApartmentInfo vm={vm} locale={locale} />}
-            {tab === 'company' && <CompanyAndBuilding vm={vm} locale={locale} />}
-            {tab === 'costs' && <Costs vm={vm} locale={locale} />}
+            {tab === 'company' && <CompanyAndBuilding vm={vm} locale={locale} isApartment={isApartment} />}
+            {tab === 'costs' && <Costs vm={vm} locale={locale} isProperty={isProperty} />}
             {tab === 'other' && <OtherInfo vm={vm} locale={locale} />}
             {tab === 'documents' && <Documents vm={vm} locale={locale} />}
             {tab === 'map' && <MapView vm={vm} />}
@@ -321,7 +332,7 @@ function ApartmentInfo({ vm, locale }: Props) {
   );
 }
 
-function CompanyAndBuilding({ vm, locale }: Props) {
+function CompanyAndBuilding({ vm, locale, isApartment }: Props & { isApartment?: boolean }) {
   const localeStr = locale === 'sv' ? 'sv-SE' : locale === 'en' ? 'en-GB' : 'fi-FI';
   
   // ✅ SPEC: Elevator value formatting
@@ -377,45 +388,51 @@ function CompanyAndBuilding({ vm, locale }: Props) {
             />
           )}
         </div>
-        <div className="space-y-2">
-          <h4 className="font-medium text-gray-900 mb-3">
-            {getSectionLabel('companyInfo', locale)}
-          </h4>
-          {/* ✅ SPEC: Company name, loans, encumbrances always visible */}
-          <Row 
-            label={getFieldLabel('companyName', locale)} 
-            value={vm.housingCompanyName} 
-            alwaysVisible
-            locale={locale}
-          />
-          <Row 
-            label={getFieldLabel('companyLoans', locale)} 
-            value={vm.companyLoans != null ? fmtCurrency(vm.companyLoans, localeStr) : undefined} 
-            alwaysVisible
-            locale={locale}
-          />
-          <Row 
-            label={getFieldLabel('companyEncumbrances', locale)} 
-            value={vm.companyEncumbrances != null ? fmtCurrency(vm.companyEncumbrances, localeStr) : undefined} 
-            alwaysVisible
-            locale={locale}
-          />
-          {vm.companyLoansDate && (
+        
+        {/* ✅ SPEC: Company Info - ONLY for apartments, NOT for properties */}
+        {isApartment && (
+          <div className="space-y-2">
+            <h4 className="font-medium text-gray-900 mb-3">
+              {getSectionLabel('companyInfo', locale)}
+            </h4>
+            {/* ✅ SPEC: Company name, loans, encumbrances always visible */}
             <Row 
-              label={getFieldLabel('companyLoansDate', locale)} 
-              value={vm.companyLoansDate} 
+              label={getFieldLabel('companyName', locale)} 
+              value={vm.housingCompanyName} 
+              alwaysVisible
               locale={locale}
             />
-          )}
-        </div>
+            <Row 
+              label={getFieldLabel('companyLoans', locale)} 
+              value={vm.companyLoans != null ? fmtCurrency(vm.companyLoans, localeStr) : undefined} 
+              alwaysVisible
+              locale={locale}
+            />
+            <Row 
+              label={getFieldLabel('companyEncumbrances', locale)} 
+              value={vm.companyEncumbrances != null ? fmtCurrency(vm.companyEncumbrances, localeStr) : undefined} 
+              alwaysVisible
+              locale={locale}
+            />
+            {vm.companyLoansDate && (
+              <Row 
+                label={getFieldLabel('companyLoansDate', locale)} 
+                value={vm.companyLoansDate} 
+                locale={locale}
+              />
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
 }
 
-function Costs({ vm, locale }: Props) {
+function Costs({ vm, locale, isProperty }: Props & { isProperty?: boolean }) {
   const hasFees = vm.fees.maintenance || vm.fees.financing || vm.fees.water || 
                   vm.fees.heating || vm.fees.electricity || vm.fees.parking || vm.fees.sauna;
+  
+  const localeStr = locale === 'sv' ? 'sv-SE' : locale === 'en' ? 'en-GB' : 'fi-FI';
   
   return (
     <div className="bg-white rounded-none shadow-sm p-6">
@@ -436,6 +453,14 @@ function Costs({ vm, locale }: Props) {
           <Row 
             label={locale === 'sv' ? 'Skuldfritt pris' : locale === 'en' ? 'Debt-free Price' : 'Velaton hinta'} 
             value={vm.priceDebtFree} 
+          />
+        )}
+        
+        {/* ✅ SPEC: Property Tax - ONLY for properties, NOT apartments */}
+        {isProperty && vm.propertyTax != null && (
+          <Row 
+            label={locale === 'sv' ? 'Fastighetsskatt' : locale === 'en' ? 'Property Tax' : 'Kiinteistövero'} 
+            value={fmtCurrency(vm.propertyTax, localeStr)} 
           />
         )}
       </div>

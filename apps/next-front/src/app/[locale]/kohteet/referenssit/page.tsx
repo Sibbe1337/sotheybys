@@ -1,11 +1,7 @@
 import PropertyGridNew from '@/components/Property/PropertyGridNew';
 import { Link } from '@/lib/navigation';
 import { locales, type Locale } from '@/i18n/config';
-import type { Property } from '@/lib/domain/property.types';
-import { LinearAPIClient } from '@/lib/infrastructure/linear-api/client';
-import { LinearToPropertyMapper } from '@/lib/infrastructure/linear-api/mapper';
-import { GetProperties } from '@/lib/application/get-properties.usecase';
-import { log } from '@/lib/logger';
+import { fetchSoldProperties } from '@/lib/server/fetch-properties';
 
 export const dynamic = 'force-static';
 export const dynamicParams = false;
@@ -21,47 +17,9 @@ interface ReferencesPageProps {
 
 export default async function ReferencesPage({ params }: ReferencesPageProps) {
   const { locale } = params;
-  let referenceProperties: Property[] = []; // ✅ NEW ARCHITECTURE: Property domain objects
   
-  // Fetch sold properties from Linear API
-  try {
-    // 🏗️ NEW ARCHITECTURE: Use clean architecture layers
-    const { getLinearAPIUrl, getLinearAPIKey, getLinearCompanyId } = await import('@/lib/config/linear-api.config');
-    const apiUrl = getLinearAPIUrl();
-    const apiKey = getLinearAPIKey();
-    const companyId = getLinearCompanyId();
-    
-    const client = new LinearAPIClient(apiUrl, apiKey, companyId);
-    const mapper = new LinearToPropertyMapper();
-    const getPropertiesUseCase = new GetProperties(client, mapper);
-    
-    // Fetch all properties using the new use case
-    const domainProperties = await getPropertiesUseCase.execute(locale);
-    
-    log(`✅ Fetched ${domainProperties.length} properties via new use case`);
-    
-    // ✅ FILTER FOR SOLD PROPERTIES - status === 'SOLD'
-    referenceProperties = domainProperties.filter(property => {
-      const isSold = property.meta.status === 'SOLD';
-      if (isSold) {
-        log(`🏆 SOLD PROPERTY FOUND: ${property.address.fi}`);
-      }
-      return isSold;
-    });
-    
-    log(`✅ Found ${referenceProperties.length} sold properties (Referenser)`);
-    
-    // 💎 SORT BY PRICE: Most expensive first (Premium branding)
-    // Show most prestigious sales first
-    referenceProperties.sort((a, b) => {
-      return b.pricing.debtFree - a.pricing.debtFree; // Descending order (highest first)
-    });
-    
-    log(`💎 Sorted ${referenceProperties.length} sold properties by price (highest first)`);
-    
-  } catch (error) {
-    console.error('Error fetching sold properties:', error);
-  }
+  // ✅ SERVER ACTION: Fetch sold properties (no CORS, no duplication)
+  const referenceProperties = await fetchSoldProperties(locale);
 
   return (
     <main className="flex-1">

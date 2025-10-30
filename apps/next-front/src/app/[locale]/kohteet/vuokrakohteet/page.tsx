@@ -1,12 +1,7 @@
 import PropertyGridNew from '@/components/Property/PropertyGridNew';
 import { Link } from '@/lib/navigation';
 import { locales, type Locale } from '@/i18n/config';
-import type { Property } from '@/lib/domain/property.types';
-import { LinearAPIClient } from '@/lib/infrastructure/linear-api/client';
-import { LinearToPropertyMapper } from '@/lib/infrastructure/linear-api/mapper';
-import { GetProperties } from '@/lib/application/get-properties.usecase';
-import { PropertyVM } from '@/lib/presentation/property.view-model';
-import { log } from '@/lib/logger';
+import { fetchRentalProperties } from '@/lib/server/fetch-properties';
 
 export const dynamic = 'force-static';
 export const dynamicParams = false;
@@ -22,45 +17,9 @@ interface RentalPropertiesPageProps {
 
 export default async function RentalPropertiesPage({ params }: RentalPropertiesPageProps) {
   const { locale } = params;
-  let rentalProperties: Property[] = []; // ✅ NEW ARCHITECTURE: Property domain objects
   
-  try {
-    // 🏗️ NEW ARCHITECTURE: Use clean architecture layers
-    const { getLinearAPIUrl, getLinearAPIKey, getLinearCompanyId } = await import('@/lib/config/linear-api.config');
-    const apiUrl = getLinearAPIUrl();
-    const apiKey = getLinearAPIKey();
-    const companyId = getLinearCompanyId();
-    
-    const client = new LinearAPIClient(apiUrl, apiKey, companyId);
-    const mapper = new LinearToPropertyMapper();
-    const getPropertiesUseCase = new GetProperties(client, mapper);
-    
-    // Fetch all properties using the new use case
-    const domainProperties = await getPropertiesUseCase.execute(locale);
-    
-    log(`✅ Fetched ${domainProperties.length} properties via new use case`);
-    
-    // ✅ FILTER FOR RENTAL PROPERTIES - Only show properties with rent
-    rentalProperties = domainProperties.filter(property => {
-      const isRental = PropertyVM.isRental(property);
-      if (isRental) {
-        log(`🏠 RENTAL FOUND: ${property.address.fi} | Rent: ${property.meta.rent} | INCLUDING in rental listings`);
-      }
-      return isRental;
-    });
-    
-    log(`✅ Found ${rentalProperties.length} rental properties (Vuokrakohteet)`);
-    
-    // 💎 SORT BY RENT: Most expensive first (Premium branding)
-    rentalProperties.sort((a, b) => {
-      return (b.meta.rent || 0) - (a.meta.rent || 0); // Descending order (highest first)
-    });
-    
-    log(`💎 Sorted ${rentalProperties.length} rental properties by rent (highest first)`);
-    
-  } catch (error) {
-    console.error('Error fetching rental properties:', error);
-  }
+  // ✅ SERVER ACTION: Fetch rental properties (no CORS, no duplication)
+  const rentalProperties = await fetchRentalProperties(locale);
 
   return (
     <main className="flex-1 bg-white">

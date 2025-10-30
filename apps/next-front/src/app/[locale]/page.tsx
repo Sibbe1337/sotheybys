@@ -3,11 +3,7 @@ import type { Locale } from '@/i18n/config';
 import { locales } from '@/i18n/config';
 import type { Property } from '@/lib/domain/property.types';
 import HomePageClient from './HomePageClient';
-import { LinearAPIClient } from '@/lib/infrastructure/linear-api/client';
-import { LinearToPropertyMapper } from '@/lib/infrastructure/linear-api/mapper';
-import { GetProperties } from '@/lib/application/get-properties.usecase';
-import { PropertyVM } from '@/lib/presentation/property.view-model';
-import { getLinearAPIUrl, getLinearAPIKey, getLinearCompanyId } from '@/lib/config/linear-api.config';
+import { fetchSaleProperties } from '@/lib/server/fetch-properties';
 
 // Use ISR (Incremental Static Regeneration) instead of force-static
 // This allows data fetching at runtime, not just build time
@@ -29,38 +25,8 @@ export function generateStaticParams() {
  * Passes data as props to client component
  */
 export default async function HomePage({ params: { locale } }: { params: { locale: string } }) {
-  // 🏗️ SERVER-SIDE: Fetch properties here (no CORS issues)
-  let properties: Property[] = [];
-  
-  try {
-    const apiUrl = getLinearAPIUrl();
-    const apiKey = getLinearAPIKey();
-    const companyId = getLinearCompanyId();
-    
-    console.log('🔧 [Homepage SSR] API URL:', apiUrl);
-    console.log('🔧 [Homepage SSR] API Key exists:', !!apiKey);
-    console.log('🔧 [Homepage SSR] Company ID exists:', !!companyId);
-    console.log('🔧 [Homepage SSR] Locale:', locale);
-    
-    const client = new LinearAPIClient(apiUrl, apiKey, companyId);
-    const mapper = new LinearToPropertyMapper();
-    const getPropertiesUseCase = new GetProperties(client, mapper);
-    
-    const domainProperties = await getPropertiesUseCase.execute(locale as Locale);
-    
-    console.log(`✅ [Homepage SSR] Fetched ${domainProperties.length} total properties`);
-    
-    // Filter out rentals, only show sales on homepage
-    const saleProperties = domainProperties.filter(p => !PropertyVM.isRental(p));
-    
-    console.log(`✅ [Homepage SSR] Filtered ${saleProperties.length} sale properties for homepage`);
-    
-    // ✅ NEW ARCHITECTURE: Pass Property objects directly to PropertyGridNew (BILAGA 2)
-    properties = saleProperties;
-  } catch (error) {
-    console.error('Error fetching properties on server:', error);
-    // Properties will be empty array, HomePageClient will show empty state
-  }
+  // ✅ SERVER ACTION: Fetch sale properties (no CORS, no duplication)
+  const properties = await fetchSaleProperties(locale as Locale);
   
   return (
     <Suspense fallback={
