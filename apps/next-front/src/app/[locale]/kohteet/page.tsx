@@ -1,5 +1,6 @@
 import PropertySearch from '@/components/Property/PropertySearch';
 import { locales, type Locale } from '@/i18n/config';
+import type { Property } from '@/lib/domain/property.types';
 import { LinearAPIClient } from '@/lib/infrastructure/linear-api/client';
 import { LinearToPropertyMapper } from '@/lib/infrastructure/linear-api/mapper';
 import { GetProperties } from '@/lib/application/get-properties.usecase';
@@ -20,7 +21,7 @@ interface PropertiesPageProps {
 
 export default async function PropertiesPage({ params }: PropertiesPageProps) {
   const { locale } = params;
-  let allProperties: any[] = []; // Legacy format for backward compatibility with PropertySearch
+  let allProperties: Property[] = []; // ✅ NEW ARCHITECTURE: Property domain objects
   
   try {
     // 🏗️ NEW ARCHITECTURE: Use clean architecture layers
@@ -57,37 +58,8 @@ export default async function PropertiesPage({ params }: PropertiesPageProps) {
     
     log(`💎 Sorted ${saleProperties.length} properties by price (highest first)`);
     
-    // 🎨 TRANSFORM TO VIEW MODELS for backward compatibility with PropertySearch
-    // TODO Phase 2: Refactor PropertySearch to use PropertyCardVM directly
-    allProperties = saleProperties.map(property => ({
-      id: property.id,
-      slug: property.slug,
-      title: property.address[locale] || property.address.fi,
-      city: property.city[locale] || property.city.fi,
-      price: property.pricing.sales,
-      debtFreePrice: property.pricing.debtFree,
-      area: property.dimensions.living,
-      propertyType: property.meta.typeCode,
-      featuredImage: {
-        node: {
-          sourceUrl: property.media.images.find(img => !img.floorPlan)?.url || property.media.images[0]?.url || '',
-          altText: property.address[locale] || property.address.fi
-        }
-      },
-      images: property.media.images,
-      // Keep ACF structure for backward compatibility
-      acfRealEstate: {
-        property: {
-          address: property.address[locale] || property.address.fi,
-          city: property.city[locale] || property.city.fi,
-          price: property.pricing.sales.toString(),
-          debtFreePrice: property.pricing.debtFree.toString(),
-          area: property.dimensions.living.toString(),
-          propertyType: property.meta.apartmentType?.[locale] || property.meta.apartmentType?.fi || property.meta.typeCode,
-          rent: property.meta.rent?.toString() || null,
-        }
-      }
-    }));
+    // ✅ NEW ARCHITECTURE: Pass Property objects directly to PropertySearch (BILAGA 2)
+    allProperties = saleProperties;
     
   } catch (error) {
     console.error('Error fetching properties:', error);
@@ -126,19 +98,20 @@ export default async function PropertiesPage({ params }: PropertiesPageProps) {
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {latestSix.map((p) => {
-                const imageUrl = p.featuredImage?.node?.sourceUrl || p.images?.[0]?.url || '';
+                const imageUrl = p.media.images.find(img => !img.floorPlan)?.url || p.media.images[0]?.url || '';
                 const propertyUrl = `/${locale}/kohde/${p.slug}`;
+                const title = p.address[locale] || p.address.fi;
                 
                 return (
                   <a 
-                    key={p.id || p.slug} 
+                    key={p.id} 
                     href={propertyUrl}
                     className="relative group block aspect-[4/3] overflow-hidden bg-gray-100"
                   >
                     {imageUrl && (
                       <img 
                         src={imageUrl} 
-                        alt={p.title || ''} 
+                        alt={title} 
                         className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                       />
                     )}

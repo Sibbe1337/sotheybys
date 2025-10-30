@@ -2,11 +2,12 @@
 
 import { useState, useMemo } from 'react';
 import Image from 'next/image';
-import PropertyGrid from './PropertyGrid';
+import PropertyGridNew from './PropertyGridNew';
 import PropertyMap from './PropertyMap';
+import type { Property, Locale } from '@/lib/domain/property.types';
 
 interface PropertySearchProps {
-  properties: any[];
+  properties: Property[];
   language: 'fi' | 'sv' | 'en';
 }
 
@@ -15,51 +16,37 @@ const PROPERTY_TYPES = [
     id: 'all',
     label: { fi: 'Kaikki kohteet', sv: 'Alla objekt', en: 'All properties' },
     image: '/images/property-types/all.svg',
-    filter: (p: any) => {
+    filter: (p: Property) => {
       // "Kaikki kohteet" shows all SALE properties, but NOT rentals
-      // Exclude properties with rent > 0
-      const rent = p.rent || p.acfRealEstate?.property?.rent;
-      return !(rent && parseInt(rent) > 0);
+      const rent = p.meta.rent || 0;
+      return !(rent > 0);
     }
   },
   {
     id: 'apartment',
     label: { fi: 'Asunnot', sv: 'Lägenheter', en: 'Apartments' },
     image: '/images/property-types/apartment.svg',
-    filter: (p: any) => {
-      // Kolla båda format: root-nivå OCH acfRealEstate.property
-      const type = (p.propertyType || p.acfRealEstate?.property?.propertyType || '').toLowerCase();
-      const aptType = (p.apartmentType || p.acfRealEstate?.property?.apartmentType || '').toLowerCase();
-      const allTypes = `${type} ${aptType}`;
-      return allTypes.includes('asunto') || allTypes.includes('lägenhet') || allTypes.includes('apartment') || allTypes.includes('osake');
+    filter: (p: Property) => {
+      const type = (p.meta.typeCode || '').toLowerCase();
+      return type.includes('kerrostalo') || type.includes('flat') || type.includes('apartment');
     }
   },
   {
     id: 'house',
     label: { fi: 'Omakotitalot', sv: 'Villor', en: 'Houses' },
     image: '/images/property-types/house.svg',
-    filter: (p: any) => {
-      // Kolla båda format: root-nivå OCH acfRealEstate.property
-      const propertyType = (p.propertyType || p.acfRealEstate?.property?.propertyType || '').toLowerCase();
-      const apartmentType = (p.apartmentType || p.acfRealEstate?.property?.apartmentType || '').toLowerCase();
-      const estateType = (p.estateType || p.acfRealEstate?.property?.estateType || '').toLowerCase();
-      const allTypes = `${propertyType} ${apartmentType} ${estateType}`;
-      
-      return allTypes.includes('omakoti') || allTypes.includes('villa') || allTypes.includes('house') || 
-             allTypes.includes('kiinteistö') || allTypes.includes('egnahemshus') || 
-             allTypes.includes('egendom') || allTypes.includes('fastighet');
+    filter: (p: Property) => {
+      const type = (p.meta.typeCode || '').toLowerCase();
+      return type.includes('omakotitalo') || type.includes('detached') || type.includes('villa');
     }
   },
   {
     id: 'townhouse',
     label: { fi: 'Rivitalot', sv: 'Radhus', en: 'Townhouses' },
     image: '/images/property-types/townhouse.svg',
-    filter: (p: any) => {
-      // Kolla båda format: root-nivå OCH acfRealEstate.property
-      const type = (p.propertyType || p.acfRealEstate?.property?.propertyType || '').toLowerCase();
-      const aptType = (p.apartmentType || p.acfRealEstate?.property?.apartmentType || '').toLowerCase();
-      const allTypes = `${type} ${aptType}`;
-      return allTypes.includes('rivi') || allTypes.includes('radhus') || allTypes.includes('townhouse');
+    filter: (p: Property) => {
+      const type = (p.meta.typeCode || '').toLowerCase();
+      return type.includes('rivi') || type.includes('row') || type.includes('townhouse');
     }
   }
   // ✅ SPEC FIX: 'rental' type removed from filter - rentals have dedicated page (/kohteet/vuokrakohteet)
@@ -77,13 +64,11 @@ export default function PropertySearch({ properties, language }: PropertySearchP
   const dynamicAreas = useMemo(() => {
     const areasSet = new Set<string>();
     properties.forEach(property => {
-      const city = (property.city || property.acfRealEstate?.property?.city || '').trim();
-      const district = (property.districtFree || property.district || property.acfRealEstate?.property?.district || '').trim();
+      const city = (property.city[language] || property.city.fi || '').trim();
       if (city) areasSet.add(city);
-      if (district && district !== city) areasSet.add(district);
     });
     return Array.from(areasSet).sort();
-  }, [properties]);
+  }, [properties, language]);
 
   const dynamicPropertyTypes = useMemo(() => {
     const typesMap = new Map<string, number>();
@@ -100,7 +85,7 @@ export default function PropertySearch({ properties, language }: PropertySearchP
   // Calculate min/max values for sliders from actual property data
   const priceMinMax = useMemo(() => {
     const prices = properties
-      .map(p => p.debtFreePrice || p.price || p.acfRealEstate?.property?.debtFreePrice || p.acfRealEstate?.property?.price || 0)
+      .map(p => p.pricing.debtFree || p.pricing.sales || 0)
       .filter(price => price > 0);
     return prices.length > 0
       ? { min: Math.floor(Math.min(...prices) / 10000) * 10000, max: Math.ceil(Math.max(...prices) / 10000) * 10000 }
@@ -109,7 +94,7 @@ export default function PropertySearch({ properties, language }: PropertySearchP
 
   const areaMinMax = useMemo(() => {
     const areas = properties
-      .map(p => parseInt(String(p.livingArea || p.area || p.acfRealEstate?.property?.area || '0')))
+      .map(p => p.dimensions.living || 0)
       .filter(area => area > 0);
     return areas.length > 0
       ? { min: Math.floor(Math.min(...areas) / 10) * 10, max: Math.ceil(Math.max(...areas) / 10) * 10 }
@@ -124,39 +109,38 @@ export default function PropertySearch({ properties, language }: PropertySearchP
         if (!typeFilter?.filter(property)) return false;
       }
 
-      // Price filter - kolla båda format
-      const price = property.debtFreePrice || property.price ||
-                    property.acfRealEstate?.property?.debtFreePrice ||
-                    property.acfRealEstate?.property?.price || 0;
+      // Price filter
+      const price = property.pricing.debtFree || property.pricing.sales || 0;
       if (price > 0 && (price < priceRange[0] || price > priceRange[1])) return false;
 
-      // Area filter - kolla båda format
-      const area = parseInt(String(property.livingArea || property.area ||
-                                    property.acfRealEstate?.property?.area || '0'));
+      // Area filter
+      const area = property.dimensions.living || 0;
       if (area > 0 && (area < areaRange[0] || area > areaRange[1])) return false;
 
-      // Location filter - kolla båda format
+      // Location filter
       if (selectedArea !== 'all') {
-        const city = (property.city || property.acfRealEstate?.property?.city || '').toLowerCase();
+        const city = (property.city[language] || property.city.fi || '').toLowerCase();
         if (!city.includes(selectedArea.toLowerCase())) return false;
       }
 
       return true;
     });
 
-    // Sort: Rental properties FIRST, then sale properties
+    // Sort: Rental properties FIRST, then sale properties (by debt-free price descending)
     return filtered.sort((a, b) => {
-      const aRent = a.rent || a.acfRealEstate?.property?.rent;
-      const bRent = b.rent || b.acfRealEstate?.property?.rent;
-      const aIsRental = aRent && parseInt(aRent) > 0;
-      const bIsRental = bRent && parseInt(bRent) > 0;
+      const aRent = a.meta.rent || 0;
+      const bRent = b.meta.rent || 0;
+      const aIsRental = aRent > 0;
+      const bIsRental = bRent > 0;
 
-      // Rentals first (1 = rental, 0 = sale)
+      // Rentals first
       if (aIsRental && !bIsRental) return -1;
       if (!aIsRental && bIsRental) return 1;
-      return 0;
+      
+      // Both are same type, sort by price (descending)
+      return (b.pricing.debtFree || b.pricing.sales) - (a.pricing.debtFree || a.pricing.sales);
     });
-  }, [properties, selectedType, priceRange, areaRange, selectedArea]);
+  }, [properties, selectedType, priceRange, areaRange, selectedArea, language]);
 
   const translations = {
     searchTitle: { fi: 'Hae kohteita', sv: 'Sok objekt', en: 'Search properties' },
@@ -343,23 +327,20 @@ export default function PropertySearch({ properties, language }: PropertySearchP
             <>
               {/* Grid View */}
               {viewMode === 'grid' && (
-                <PropertyGrid properties={filteredProperties} language={language} />
+                <PropertyGridNew properties={filteredProperties} locale={language as Locale} />
               )}
 
               {/* List View */}
               {viewMode === 'list' && (
                 <div className="space-y-6">
-                  {filteredProperties.map((property: any) => {
-                    const price = property.debtFreePrice || property.price || 
-                                  property.acfRealEstate?.property?.debtFreePrice || 
-                                  property.acfRealEstate?.property?.price || 0;
-                    const area = property.livingArea || property.area || 
-                                 property.acfRealEstate?.property?.area || '';
-                    const address = property.address || property.acfRealEstate?.property?.address || '';
-                    const city = property.city || property.acfRealEstate?.property?.city || '';
-                    const propertyType = property.propertyType || property.acfRealEstate?.property?.propertyType || '';
-                    const image = property.featuredImage?.node?.sourceUrl || 
-                                  property.acfRealEstate?.property?.images?.[0]?.sourceUrl ||
+                  {filteredProperties.map((property) => {
+                    const price = property.pricing.debtFree || property.pricing.sales || 0;
+                    const area = property.dimensions.living || 0;
+                    const address = property.address[language] || property.address.fi;
+                    const city = property.city[language] || property.city.fi;
+                    const typeLabel = property.meta.listingTypeLabel?.[language] || property.meta.listingTypeLabel?.fi || property.meta.typeCode;
+                    const image = property.media.images.find(img => !img.floorPlan)?.url || 
+                                  property.media.images[0]?.url ||
                                   '/images/defaults/property-placeholder.jpg';
 
                     return (
@@ -370,6 +351,7 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                             alt={address}
                             fill
                             className="object-cover"
+                            unoptimized={image.startsWith('http')}
                           />
                         </div>
                         <div className="flex-1 p-6 flex flex-col justify-between">
@@ -377,8 +359,8 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                             <h3 className="text-2xl font-light text-gray-900 mb-2">{address}</h3>
                             <p className="text-gray-600 mb-4">{city}</p>
                             <div className="flex gap-6 text-sm text-gray-600 mb-4">
-                              {area && <span>{area} m²</span>}
-                              {propertyType && <span>{propertyType}</span>}
+                              {area > 0 && <span>{area} m²</span>}
+                              {typeLabel && <span>{typeLabel}</span>}
                             </div>
                           </div>
                           <div className="flex items-center justify-between">
@@ -386,7 +368,7 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                               {price > 0 ? `${price.toLocaleString('fi-FI')} €` : ''}
                             </p>
                             <a
-                              href={`/kohde/${property.slug}?lang=${language}`}
+                              href={`/kohde/${property.slug}`}
                               className="px-6 py-3 bg-[var(--color-primary)] text-white rounded hover:bg-[var(--color-primary-dark)] transition-colors"
                             >
                               {language === 'fi' ? 'Katso kohde' : language === 'sv' ? 'Se objekt' : 'View property'}
