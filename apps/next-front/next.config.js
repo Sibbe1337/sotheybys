@@ -8,6 +8,8 @@ const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ['@apollo/client'],
     instrumentationHook: true,
+    optimizeCss: true, // ✅ LINUS: Optimize CSS bundle
+    optimizePackageImports: ['lucide-react', '@vis.gl/react-google-maps'], // ✅ Tree-shaking
   },
   images: {
     remotePatterns: [
@@ -20,6 +22,10 @@ const nextConfig = {
         hostname: '**',
       },
     ],
+    formats: ['image/avif', 'image/webp'], // ✅ LINUS: Modern formats
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048], // ✅ Responsive breakpoints
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    minimumCacheTTL: 60 * 60 * 24 * 30, // ✅ Cache images for 30 days
   },
   async rewrites() {
     // Only add rewrites if WordPress URL is configured

@@ -107,6 +107,39 @@ interface PropertyWithACF {
 
 export const revalidate = 60; // Regenerate every minute
 
+// ✅ LINUS: Pre-generate all property pages at build time
+export async function generateStaticParams() {
+  try {
+    const { getLinearAPIUrl, getLinearAPIKey, getLinearCompanyId } = await import('@/lib/config/linear-api.config');
+    const apiUrl = getLinearAPIUrl();
+    const apiKey = getLinearAPIKey();
+    const companyId = getLinearCompanyId();
+    
+    const LinearAPIClient = (await import('@/lib/infrastructure/linear-api/client')).LinearAPIClient;
+    const LinearToPropertyMapper = (await import('@/lib/infrastructure/linear-api/mapper')).LinearToPropertyMapper;
+    const GetProperties = (await import('@/lib/application/get-properties.usecase')).GetProperties;
+    
+    const client = new LinearAPIClient(apiUrl, apiKey, companyId);
+    const mapper = new LinearToPropertyMapper();
+    const useCase = new GetProperties(client, mapper);
+    
+    const properties = await useCase.execute('fi'); // Use Finnish as base
+    
+    // Generate params for ALL locales
+    const params = properties.flatMap(property => [
+      { locale: 'fi', slug: property.slug },
+      { locale: 'sv', slug: property.slug },
+      { locale: 'en', slug: property.slug }
+    ]);
+    
+    log(`✅ generateStaticParams: Generated ${params.length} property pages (${properties.length} properties × 3 locales)`);
+    return params;
+  } catch (error) {
+    console.error('❌ generateStaticParams failed:', error);
+    return [];
+  }
+}
+
 // ✅ NEW: Simplified fetch using clean architecture
 async function fetchProperty(slug: string, locale: Locale) {
   try {

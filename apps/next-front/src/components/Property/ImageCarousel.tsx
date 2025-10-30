@@ -11,31 +11,30 @@ interface ImageCarouselProps {
     floorPlan?: boolean;
   }>;
   title: string;
+  propertyId?: string; // ✅ LINUS FIX: Force unique key per property
 }
 
 /**
  * Image carousel with user-friendly controls.
  * Clean, performant, intuitive.
  */
-export function ImageCarousel({ images, title }: ImageCarouselProps) {
+export function ImageCarousel({ images, title, propertyId }: ImageCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   // 🔥 LINUS FIX: Reset index when images change (new property loaded)
   // Without this, we show wrong image index when navigating between properties
   useEffect(() => {
-    console.log('🖼️ [ImageCarousel] Images changed:', {
-      count: images.length,
-      firstUrl: images[0]?.url,
-      title
-    });
     setCurrentIndex(0);
-  }, [images, title]);
+  }, [images, propertyId]);
 
   if (!images || images.length === 0) return null;
 
   const goToNext = () => setCurrentIndex((prev) => (prev + 1) % images.length);
   const goToPrev = () => setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+
+  // ✅ LINUS FIX: Unique key per property to force image reload
+  const imageKey = `${propertyId || 'default'}-${currentIndex}-${images[currentIndex].url.split('/').pop()}`;
 
   return (
     <>
@@ -43,13 +42,15 @@ export function ImageCarousel({ images, title }: ImageCarouselProps) {
       <section className="relative w-full bg-black">
         <div className="relative w-full aspect-[21/9] overflow-hidden">
           <Image
+            key={imageKey}
             src={images[currentIndex].url}
             alt={`${title} - Bild ${currentIndex + 1}`}
             fill
             className="object-cover"
             priority={currentIndex === 0}
-            quality={90}
+            quality={75}
             sizes="100vw"
+            unoptimized={false}
           />
           
           {/* Gradient overlay for better text visibility */}
@@ -139,11 +140,12 @@ export function ImageCarousel({ images, title }: ImageCarouselProps) {
           {/* Fullscreen Image */}
           <div className="relative w-full h-full p-4">
             <Image
+              key={imageKey}
               src={images[currentIndex].url}
               alt={`${title} - Bild ${currentIndex + 1}`}
               fill
               className="object-contain"
-              quality={100}
+              quality={90}
               sizes="100vw"
             />
           </div>

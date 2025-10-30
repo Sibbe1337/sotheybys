@@ -105,12 +105,14 @@ export default function PropertyCardNew({ property, locale }: PropertyCardNewPro
       {/* Property Image */}
       <Link href={propertyUrl} className="block relative aspect-[4/3] bg-gray-100">
         <Image
+          key={`card-${property.id || property.slug}-${imageUrl}`}
           src={imageUrl}
           alt={imageAlt}
           fill
           className="object-cover"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          unoptimized={imageUrl.startsWith('http')}
+          quality={75}
+          priority={false}
         />
       </Link>
 
