@@ -1,0 +1,7 @@
+legacy
+apps/web
+apps/studio
+packages
+scripts
+*.md
+
