@@ -34,7 +34,8 @@ export function ImageCarousel({ images, title, propertyId }: ImageCarouselProps)
   const goToPrev = () => setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
 
   // ✅ LINUS FIX: Unique key per property to force image reload
-  const imageKey = `${propertyId || 'default'}-${currentIndex}-${images[currentIndex].url.split('/').pop()}`;
+  // 🔥 NUCLEAR OPTION: Add URL itself to force browser to recognize different images
+  const imageKey = `img-${propertyId || 'default'}-${currentIndex}-${images[currentIndex].url}`;
 
   return (
     <>
