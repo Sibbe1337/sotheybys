@@ -22,10 +22,33 @@ export function DetailView({ vm, locale }: Props) {
   const tab = useActiveTab('overview');
   const setTab = useTabRouting();
 
-  // ✅ SPEC: Type-specific layout detection
+  // 🔥 LINUS ROOT FIX: Type-specific layout detection with subtitle fallback
   const typeCode = (vm.typeCode || '').toUpperCase();
-  const isApartment = ['KERROSTALO', 'FLAT', 'APARTMENT_BUILDING'].includes(typeCode);
-  const isProperty = ['OMAKOTITALO', 'DETACHED_HOUSE', 'DETACHEDHOUSE', 'RIVITALO', 'TOWNHOUSE', 'COTTAGE_OR_VILLA', 'MÖKKI_TAI_HUVILA'].includes(typeCode);
+  
+  // Extract property type from subtitle as fallback when typeCode is empty
+  // Example: "Mökki tai huvila • Kittilä" -> "mökki tai huvila"
+  const typeFromSubtitle = (vm.subtitle?.split(' • ')[0] || '').toLowerCase().trim();
+  
+  const isApartment = ['KERROSTALO', 'FLAT', 'APARTMENT_BUILDING'].includes(typeCode) ||
+                      typeFromSubtitle === 'kerrostalo';
+  
+  // First check typeCode, then fallback to subtitle keyword detection  
+  const isProperty = [
+    'OMAKOTITALO', 'DETACHED_HOUSE', 'DETACHEDHOUSE',
+    'RIVITALO', 'TOWNHOUSE',
+    'PARITALO', 'SEMI_DETACHED_HOUSE',
+    'LUHTITALO', 'TERRACED_HOUSE',
+    'COTTAGE_OR_VILLA', 'MÖKKI_TAI_HUVILA',
+    'TONTTI', 'PLOT',
+    'MAATILA', 'FARM',
+    'VUOKRATALO', 'RENTAL_HOUSE'
+  ].includes(typeCode) || 
+  // 🔥 ROOT FIX: When typeCode is missing, detect property from subtitle keywords
+  (!typeCode && ['mökki', 'huvila', 'omakotitalo', 'tontti', 'maatila', 'rivitalo', 'paritalo',
+                  'villa', 'cottage', 'detached', 'townhouse', 'plot', 'farm',
+                  'stuga', 'tomt', 'gård', 'radhus', 'parhus'].some(kw => typeFromSubtitle.includes(kw)));
+  
+  const isRental = !!vm.rental;
   
   // Type | Huoneistoselitelmä under images/address
   // ✅ SPEC FIX: Use localized listing type label from ViewModel
