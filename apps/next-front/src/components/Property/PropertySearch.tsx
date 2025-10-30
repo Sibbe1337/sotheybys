@@ -342,7 +342,8 @@ export default function PropertySearch({ properties, language }: PropertySearchP
               pointer-events: all;
               border: 2px solid white;
               box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-              margin-top: 0;
+              margin-top: -9px; /* Half of height (18px / 2) to center perfectly on line */
+              transform: translateY(0);
             }
 
             .dual-range-slider::-moz-range-thumb {
@@ -354,15 +355,16 @@ export default function PropertySearch({ properties, language }: PropertySearchP
               pointer-events: all;
               border: 2px solid white;
               box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-              margin-top: 0;
+              margin-top: -9px; /* Half of height (18px / 2) to center perfectly on line */
+              transform: translateY(0);
             }
 
             .dual-range-slider::-webkit-slider-thumb:hover {
-              transform: scale(1.1);
+              transform: translateY(0) scale(1.1);
             }
 
             .dual-range-slider::-moz-range-thumb:hover {
-              transform: scale(1.1);
+              transform: translateY(0) scale(1.1);
             }
 
             .dual-range-slider::-webkit-slider-runnable-track {
