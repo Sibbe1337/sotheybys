@@ -146,7 +146,9 @@ export default function Header({ menuItems }: HeaderProps) {
     }
   };
 
-  const items = menuItems || getMenuItemsForLanguage(currentLang);
+  // ✅ LINUS FIX: Always use dynamic menu items based on current language
+  // This ensures menu updates when language changes
+  const items = getMenuItemsForLanguage(currentLang);
 
   useEffect(() => {
     setIsMobileMenuOpen(false);
@@ -185,9 +187,12 @@ export default function Header({ menuItems }: HeaderProps) {
   }, [isMobileMenuOpen]);
 
   return (
-    <header className={`sticky top-0 z-50 bg-[var(--color-primary)] text-white transition-all duration-300 ${
-      isScrolled || isLandscape ? 'shadow-lg' : ''
-    }`}>
+    <header 
+      key={currentLang}
+      className={`sticky top-0 z-50 bg-[var(--color-primary)] text-white transition-all duration-300 ${
+        isScrolled || isLandscape ? 'shadow-lg' : ''
+      }`}
+    >
       {/* TOP BAR - RAD 1 (Language + Search) - Dölj på mobil när scrollad ELLER landscape */}
       <div className={`border-b border-white/10 transition-all duration-300 ${
         isScrolled || isLandscape ? 'hidden md:block md:py-1' : 'block'
