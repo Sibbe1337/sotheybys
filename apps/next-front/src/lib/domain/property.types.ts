@@ -144,6 +144,8 @@ export interface Property {
     securityDeposit?: LocalizedValue;
     contractType?: LocalizedValue;
     earliestTermination?: LocalizedValue;
+    noticePeriod?: LocalizedValue;         // Irtisanomisaika / Uppsägningstid
+    additionalCostInfo?: LocalizedValue;   // Lisätietoja maksuista / Tilläggsinformation om kostnader
     petsAllowed?: boolean;
     smokingAllowed?: boolean;
   };

@@ -69,6 +69,7 @@ export interface PropertyDetailVM extends PropertyCardVM {
   status?: 'ACTIVE' | 'SOLD' | 'RESERVED';  // NEW Phase 3
   typeCode?: string;
   apartmentType?: string;
+  condition?: string;          // Kunto / Skick (for rentals)
   energyClass?: string;
   energyCertStatus?: string;
   heatingSystem?: string;
@@ -120,6 +121,8 @@ export interface PropertyDetailVM extends PropertyCardVM {
     securityDeposit?: string;
     contractType?: string;
     earliestTermination?: string;
+    noticePeriod?: string;
+    additionalCostInfo?: string;
     petsAllowed?: boolean;
     smokingAllowed?: boolean;
   };
@@ -195,9 +198,9 @@ export class PropertyVM {
       propertyTax: p.pricing.propertyTax || undefined,
 
       // Property-specific fields (DENNIS SPEC)
-      propertyIdentifier: lpick(p.meta.propertyIdentifier, l),
+      propertyIdentifier: p.meta.propertyIdentifier,
       plotArea: p.dimensions.plot ? fmtArea(p.dimensions.plot, localeStr) : undefined,
-      propertyBuildingRights: lpick(p.meta.propertyBuildingRights, l),
+      propertyBuildingRights: p.meta.propertyBuildingRights,
       propertyRestrictions: lpick(p.meta.restrictions, l),
       propertyMortgages: undefined, // TODO: Add to Property type if needed
       propertyOtherFees: undefined, // TODO: Add to Property type if needed
@@ -210,6 +213,7 @@ export class PropertyVM {
       typeCode: p.meta.typeCode,
       // ✅ SPEC: Use lpick for technical data (allows FI fallback for non-translated system values)
       apartmentType: lpick(p.meta.apartmentType, l),
+      condition: lpick(p.meta.condition, l),
       energyClass: p.meta.energyClass,
       energyCertStatus: p.meta.energyCertStatus || undefined,
       heatingSystem: lpick(p.meta.heatingSystem, l),
@@ -247,6 +251,8 @@ export class PropertyVM {
         securityDeposit: lpick(p.rental.securityDeposit, l),
         contractType: lpick(p.rental.contractType, l),
         earliestTermination: lpick(p.rental.earliestTermination, l),
+        noticePeriod: lpick(p.rental.noticePeriod, l),
+        additionalCostInfo: lpick(p.rental.additionalCostInfo, l),
         petsAllowed: p.rental.petsAllowed,
         smokingAllowed: p.rental.smokingAllowed
       } : undefined
