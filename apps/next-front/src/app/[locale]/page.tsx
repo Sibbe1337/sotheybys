@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import type { Locale } from '@/i18n/config';
 import { locales } from '@/i18n/config';
+import type { Property } from '@/lib/domain/property.types';
 import HomePageClient from './HomePageClient';
 import { LinearAPIClient } from '@/lib/infrastructure/linear-api/client';
 import { LinearToPropertyMapper } from '@/lib/infrastructure/linear-api/mapper';
@@ -29,7 +30,7 @@ export function generateStaticParams() {
  */
 export default async function HomePage({ params: { locale } }: { params: { locale: string } }) {
   // 🏗️ SERVER-SIDE: Fetch properties here (no CORS issues)
-  let properties: any[] = [];
+  let properties: Property[] = [];
   
   try {
     const apiUrl = getLinearAPIUrl();
@@ -46,46 +47,19 @@ export default async function HomePage({ params: { locale } }: { params: { local
     const getPropertiesUseCase = new GetProperties(client, mapper);
     
     const domainProperties = await getPropertiesUseCase.execute(locale as Locale);
-    const cardVMs = domainProperties.map(p => PropertyVM.toCard(p, locale as Locale));
     
     console.log(`✅ [Homepage SSR] Fetched ${domainProperties.length} total properties`);
     
     // Filter out rentals, only show sales on homepage
-    const saleProperties = cardVMs.filter(vm => !vm.isRental);
+    const saleProperties = domainProperties.filter(p => !PropertyVM.isRental(p));
     
     console.log(`✅ [Homepage SSR] Filtered ${saleProperties.length} sale properties for homepage`);
     
-    // Transform to legacy format for PropertyCard compatibility
-    properties = saleProperties.map(vm => ({
-      slug: vm.slug,
-      title: vm.title,
-      featuredImage: vm.image ? {
-        node: {
-          sourceUrl: vm.image,
-          altText: vm.title
-        }
-      } : {
-        node: {
-          sourceUrl: '/images/defaults/placeholder-property.jpg',
-          altText: vm.title
-        }
-      },
-      acfRealEstate: {
-        property: {
-          address: vm.title, // PropertyCardVM title contains full address
-          city: vm.subtitle, // PropertyCardVM subtitle contains city
-          price: vm.price,
-          debtFreePrice: vm.priceDebtFree,
-          area: vm.area,
-          rooms: '', // PropertyCardVM doesn't have rooms field
-          propertyType: '', // PropertyCardVM doesn't have type field
-          status: vm.isSold ? 'sold' : 'available',
-        }
-      }
-    }));
+    // ✅ NEW ARCHITECTURE: Pass Property objects directly to PropertyGridNew (BILAGA 2)
+    properties = saleProperties;
   } catch (error) {
     console.error('Error fetching properties on server:', error);
-    // Properties will be empty array, HomePageClient will use sample data
+    // Properties will be empty array, HomePageClient will show empty state
   }
   
   return (

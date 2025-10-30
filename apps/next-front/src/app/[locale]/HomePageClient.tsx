@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import HeroCarousel from '@/components/Homepage/HeroCarousel';
-import PropertyGrid from '@/components/Property/PropertyGrid';
+import PropertyGridNew from '@/components/Property/PropertyGridNew';
 import { Link } from '@/lib/navigation';
 import Image from 'next/image';
 import { getHomepageTranslation, type SupportedLanguage } from '@/lib/homepage-translations';
@@ -197,15 +197,17 @@ const sampleProperties = [
  * Client component for homepage
  * Accepts locale as prop from server component parent
  */
+import type { Property } from '@/lib/domain/property.types';
+
 export default function HomePageClient({ 
   locale, 
   initialProperties = [] 
 }: { 
   locale: Locale;
-  initialProperties?: any[];
+  initialProperties?: Property[];
 }) {
   const language = locale as SupportedLanguage;
-  const [properties, setProperties] = useState<any[]>(initialProperties.length > 0 ? initialProperties : sampleProperties);
+  const [properties, setProperties] = useState<Property[]>(initialProperties);
   const [loading, setLoading] = useState(false);
 
   // 🏗️ SERVER-SIDE RENDERING: Properties are now fetched on server (no CORS!)
@@ -214,7 +216,7 @@ export default function HomePageClient({
       console.log('✅ Using server-fetched properties:', initialProperties.length);
       setProperties(initialProperties);
     } else {
-      console.warn('⚠️ No server properties, using sample data');
+      console.warn('⚠️ No server properties, showing empty state');
     }
   }, [initialProperties]);
 
@@ -254,7 +256,7 @@ export default function HomePageClient({
                 </p>
               </div>
             ) : (
-              <PropertyGrid properties={displayProperties} language={language} />
+              <PropertyGridNew properties={displayProperties} locale={locale} />
             )}
 
             {/* View All Button */}
