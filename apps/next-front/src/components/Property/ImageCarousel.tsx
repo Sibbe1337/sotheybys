@@ -1,166 +1,146 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
-
-export interface CarouselImage {
-  sourceUrl: string;
-  altText?: string;
-}
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface ImageCarouselProps {
-  images: CarouselImage[];
-  autoPlayInterval?: number; // milliseconds
-  className?: string;
+  images: Array<{
+    url: string;
+    thumb?: string;
+    floorPlan?: boolean;
+  }>;
+  title: string;
 }
 
-/**
- * Simple image carousel with auto-play and swipe support
- * Per Dennis's requirements for property cards Phase 3
- */
-export default function ImageCarousel({
-  images,
-  autoPlayInterval = 4000,
-  className = ''
-}: ImageCarouselProps) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const touchStartX = useRef(0);
-  const touchEndX = useRef(0);
+export function ImageCarousel({ images, title }: ImageCarouselProps) {
+  // Filter out floor plans and use them last
+  const regularImages = images.filter(img => !img.floorPlan);
+  const floorPlans = images.filter(img => img.floorPlan);
+  const allImages = [...regularImages, ...floorPlans];
 
-  // Auto-play functionality
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+
+  // Auto-play carousel
   useEffect(() => {
-    if (images.length <= 1 || isPaused) return;
+    if (!isAutoPlaying || allImages.length <= 1) return;
 
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, autoPlayInterval);
+      setCurrentIndex((prev) => (prev + 1) % allImages.length);
+    }, 5000); // Change image every 5 seconds
 
     return () => clearInterval(interval);
-  }, [images.length, autoPlayInterval, isPaused]);
-
-  const goToSlide = (index: number) => {
-    setCurrentIndex(index);
-  };
+  }, [isAutoPlaying, allImages.length]);
 
   const goToPrevious = () => {
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+    setIsAutoPlaying(false);
+    setCurrentIndex((prev) => (prev - 1 + allImages.length) % allImages.length);
   };
 
   const goToNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % images.length);
+    setIsAutoPlaying(false);
+    setCurrentIndex((prev) => (prev + 1) % allImages.length);
   };
 
-  // Touch/Swipe handlers
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
+  const goToSlide = (index: number) => {
+    setIsAutoPlaying(false);
+    setCurrentIndex(index);
   };
 
-  const handleTouchMove = (e: React.TouchEvent) => {
-    touchEndX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchEnd = () => {
-    const swipeThreshold = 50; // minimum distance for swipe
-    const diff = touchStartX.current - touchEndX.current;
-
-    if (Math.abs(diff) > swipeThreshold) {
-      if (diff > 0) {
-        goToNext();
-      } else {
-        goToPrevious();
-      }
-    }
-  };
-
-  // Single image - no carousel needed
-  if (images.length === 0) return null;
-  if (images.length === 1) {
-    return (
-      <div className={`relative h-48 w-full rounded-none ${className}`}>
-        <Image
-          src={images[0].sourceUrl}
-          alt={images[0].altText || 'Property image'}
-          fill
-          className="object-cover rounded-none"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        />
-      </div>
-    );
+  if (allImages.length === 0) {
+    return null;
   }
 
-  // Multiple images - show carousel
   return (
-    <div
-      className={`relative h-48 w-full group rounded-none ${className}`}
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-    >
-      {/* Current Image */}
-      <Image
-        src={images[currentIndex].sourceUrl}
-        alt={images[currentIndex].altText || `Property image ${currentIndex + 1}`}
-        fill
-        className="object-cover transition-opacity duration-500 rounded-none"
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-      />
+    <section className="relative w-full bg-black">
+      {/* Main Image Container - 16:9 aspect ratio */}
+      <div className="relative w-full aspect-[16/9] overflow-hidden">
+        <Image
+          src={allImages[currentIndex].url}
+          alt={`${title} - Bild ${currentIndex + 1}`}
+          fill
+          className="object-cover"
+          priority={currentIndex === 0}
+          quality={90}
+          sizes="100vw"
+        />
 
-      {/* Navigation Arrows - show on hover */}
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          goToPrevious();
-        }}
-        className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/70 z-10"
-        aria-label="Previous image"
-      >
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
-
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          goToNext();
-        }}
-        className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/70 z-10"
-        aria-label="Next image"
-      >
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
-
-      {/* Indicator Dots */}
-      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-        {images.map((_, index) => (
-          <button
-            key={index}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              goToSlide(index);
-            }}
-            className={`w-2 h-2 rounded-full transition-all ${
-              index === currentIndex
-                ? 'bg-white w-6'
-                : 'bg-white/50 hover:bg-white/75'
-            }`}
-            aria-label={`Go to image ${index + 1}`}
-          />
-        ))}
+        {/* Gradient overlay at bottom for better dot visibility */}
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
       </div>
+
+      {/* Navigation Arrows - Desktop only */}
+      {allImages.length > 1 && (
+        <>
+          <button
+            onClick={goToPrevious}
+            className="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 items-center justify-center bg-white/90 hover:bg-white text-gray-900 rounded-full shadow-lg transition-all hover:scale-110 z-10"
+            aria-label="Föregående bild"
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </button>
+          <button
+            onClick={goToNext}
+            className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 items-center justify-center bg-white/90 hover:bg-white text-gray-900 rounded-full shadow-lg transition-all hover:scale-110 z-10"
+            aria-label="Nästa bild"
+          >
+            <ChevronRight className="w-6 h-6" />
+          </button>
+        </>
+      )}
+
+      {/* Touch indicators for mobile */}
+      {allImages.length > 1 && (
+        <div className="md:hidden absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4 pointer-events-none z-10">
+          <div className="w-16 h-full bg-gradient-to-r from-black/20 to-transparent" />
+          <div className="w-16 h-full bg-gradient-to-l from-black/20 to-transparent" />
+        </div>
+      )}
+
+      {/* Dot Navigation */}
+      {allImages.length > 1 && (
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+          {allImages.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`transition-all ${
+                index === currentIndex
+                  ? 'w-8 h-2 bg-white'
+                  : 'w-2 h-2 bg-white/50 hover:bg-white/75'
+              } rounded-full`}
+              aria-label={`Gå till bild ${index + 1}`}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Image Counter */}
-      <div className="absolute top-2 right-2 bg-black/50 text-white text-xs px-2 py-1 rounded-full z-10">
-        {currentIndex + 1} / {images.length}
+      <div className="absolute top-4 right-4 bg-black/60 text-white px-3 py-1 rounded-full text-sm z-20">
+        {currentIndex + 1} / {allImages.length}
       </div>
-    </div>
+
+      {/* Swipe instruction for mobile - shows briefly on first load */}
+      {allImages.length > 1 && (
+        <div 
+          className="md:hidden absolute inset-0 bg-black/50 flex items-center justify-center z-30 animate-fade-out pointer-events-none"
+          style={{ animation: 'fadeOut 3s forwards' }}
+        >
+          <div className="text-white text-center">
+            <div className="text-2xl mb-2">←  →</div>
+            <div className="text-sm">Svep för att se fler bilder</div>
+          </div>
+        </div>
+      )}
+
+      <style jsx>{`
+        @keyframes fadeOut {
+          0% { opacity: 1; }
+          70% { opacity: 1; }
+          100% { opacity: 0; visibility: hidden; }
+        }
+      `}</style>
+    </section>
   );
 }
