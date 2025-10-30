@@ -660,7 +660,7 @@ function OtherInfo({ vm, locale }: Props) {
             {locale === 'sv' ? 'Egenskaper' : locale === 'en' ? 'Features' : 'Ominaisuudet'}
           </h3>
           <div className="grid md:grid-cols-2 gap-3">
-            {vm.features.map((feature, i) => (
+            {vm.features?.map((feature, i) => (
               <div 
                 key={i} 
                 className={`flex items-center space-x-2 ${feature.value ? 'text-gray-900' : 'text-gray-400'}`}
