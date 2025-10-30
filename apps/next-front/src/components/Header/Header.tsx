@@ -18,12 +18,16 @@ interface MenuItem {
 
 interface HeaderProps {
   menuItems?: MenuItem[];
+  locale?: 'fi' | 'sv' | 'en';
 }
 
-export default function Header({ menuItems }: HeaderProps) {
+export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const locale = useLocale() as 'fi' | 'sv' | 'en';
+  const localeFromHook = useLocale() as 'fi' | 'sv' | 'en';
+  
+  // 🔥 LINUS FIX: Use prop locale if provided (from server), fallback to hook
+  const locale = propLocale || localeFromHook;
   
   // ✅ CRITICAL FIX: Strip any locale prefix from pathname as safeguard
   // This prevents double locale prefixes like /en/sv/kohde/...
@@ -31,8 +35,7 @@ export default function Header({ menuItems }: HeaderProps) {
     .replace(/^\/(fi|sv|en)/, '') // Remove leading locale
     .replace(/^$/, '/');          // Ensure at least /
   
-  // ✅ FIX: Use locale directly from useLocale() - it's already correct from next-intl
-  // No need for useState/useEffect - useLocale() already reflects current route
+  // ✅ FIX: Use locale directly - now from prop or hook
   const currentLang = locale;
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

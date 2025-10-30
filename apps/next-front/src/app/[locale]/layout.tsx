@@ -89,7 +89,7 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider messages={messages}>
       <div className="min-h-screen flex flex-col">
-        <Header />
+        <Header locale={locale as 'fi' | 'sv' | 'en'} />
         {children}
         <FooterWithTeam />
       </div>
