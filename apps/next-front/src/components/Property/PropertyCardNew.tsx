@@ -71,26 +71,28 @@ export default function PropertyCardNew({ property, locale }: PropertyCardNewPro
   
   // Area formatting
   const livingArea = fmtArea(property.dimensions.living, localeStr);
-  let areaDisplay = livingArea;
   
-  // Check if property has plot (is estate/house vs apartment)
-  if (property.dimensions.plot && property.dimensions.plot > 0) {
-    // ESTATE: "185 m² / 215 m² | 0,1299 ha"
-    const totalArea = property.dimensions.total ? fmtArea(property.dimensions.total, localeStr) : undefined;
-    const plotArea = property.dimensions.plot >= 10000 
+  // For estates/properties: calculate detailed area breakdown
+  let otherAreas: string | undefined;
+  let totalArea: string | undefined;
+  let plotArea: string | undefined;
+  
+  if (isEstate && property.dimensions.plot && property.dimensions.plot > 0) {
+    // Property/Estate formatting
+    totalArea = property.dimensions.total ? fmtArea(property.dimensions.total, localeStr) : undefined;
+    
+    // Calculate "other areas" (yta för andra utrymmen = total - living)
+    if (property.dimensions.total && property.dimensions.living) {
+      const otherAreaValue = property.dimensions.total - property.dimensions.living;
+      if (otherAreaValue > 0) {
+        otherAreas = fmtArea(otherAreaValue, localeStr);
+      }
+    }
+    
+    // Plot area formatting
+    plotArea = property.dimensions.plot >= 10000 
       ? `${(property.dimensions.plot / 10000).toFixed(4).replace('.', ',')} ha`
       : fmtArea(property.dimensions.plot, localeStr);
-    
-    // Show format: living / total | plot (e.g., "185 m² / 215 m² | 0,1299 ha")
-    areaDisplay = totalArea 
-      ? `${livingArea} / ${totalArea} | ${plotArea}`
-      : `${livingArea} | ${plotArea}`;
-  } else if (property.dimensions.balcony || property.dimensions.terrace) {
-    // APARTMENT: "141 m² + 31 m²"
-    const extraArea = (property.dimensions.balcony || 0) + (property.dimensions.terrace || 0);
-    if (extraArea > 0) {
-      areaDisplay = `${livingArea} + ${fmtArea(extraArea, localeStr)}`;
-    }
   }
   
   // ✅ LINUS FIX: Language-specific URLs for SEO
@@ -155,10 +157,50 @@ export default function PropertyCardNew({ property, locale }: PropertyCardNewPro
           </p>
         )}
 
-        {/* Area */}
-        <p className="text-sm text-gray-700">
-          {areaDisplay}
-        </p>
+        {/* Area - Different display for properties vs apartments */}
+        {isEstate && (totalArea || plotArea) ? (
+          // Properties: Show detailed breakdown
+          <div className="text-sm text-gray-700 space-y-1">
+            <div className="flex justify-between">
+              <span className="text-gray-600">
+                {locale === 'sv' ? 'Boarea' : locale === 'en' ? 'Living Area' : 'Asuinpinta-ala'}:
+              </span>
+              <span className="font-medium">{livingArea}</span>
+            </div>
+            {otherAreas && (
+              <div className="flex justify-between">
+                <span className="text-gray-600">
+                  {locale === 'sv' ? 'Yta för andra utrymmen' : locale === 'en' ? 'Other Areas' : 'Muut tilat'}:
+                </span>
+                <span className="font-medium">{otherAreas}</span>
+              </div>
+            )}
+            {totalArea && (
+              <div className="flex justify-between">
+                <span className="text-gray-600">
+                  {locale === 'sv' ? 'Total yta' : locale === 'en' ? 'Total Area' : 'Kokonaispinta-ala'}:
+                </span>
+                <span className="font-medium">{totalArea}</span>
+              </div>
+            )}
+            {plotArea && (
+              <div className="flex justify-between">
+                <span className="text-gray-600">
+                  {locale === 'sv' ? 'Tomtstorlek' : locale === 'en' ? 'Plot Size' : 'Tontin pinta-ala'}:
+                </span>
+                <span className="font-medium">{plotArea}</span>
+              </div>
+            )}
+          </div>
+        ) : (
+          // Apartments: Simple single line with balcony/terrace
+          <p className="text-sm text-gray-700">
+            {livingArea}
+            {(property.dimensions.balcony || property.dimensions.terrace) && (
+              ` + ${fmtArea((property.dimensions.balcony || 0) + (property.dimensions.terrace || 0), localeStr)}`
+            )}
+          </p>
+        )}
 
         {/* Type + Location with emoji icons */}
         <div className="flex items-center gap-3 text-sm text-gray-600">
