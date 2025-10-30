@@ -458,8 +458,8 @@ function CompanyAndBuilding({ vm, locale, isApartment }: Props & { isApartment?:
 }
 
 function Costs({ vm, locale, isProperty }: Props & { isProperty?: boolean }) {
-  const hasFees = vm.fees.maintenance || vm.fees.financing || vm.fees.water || 
-                  vm.fees.heating || vm.fees.electricity || vm.fees.parking || vm.fees.sauna;
+  const hasFees = vm.fees?.maintenance || vm.fees?.financing || vm.fees?.water || 
+                  vm.fees?.heating || vm.fees?.electricity || vm.fees?.parking || vm.fees?.sauna;
   
   const localeStr = locale === 'sv' ? 'sv-SE' : locale === 'en' ? 'en-GB' : 'fi-FI';
   
@@ -500,52 +500,52 @@ function Costs({ vm, locale, isProperty }: Props & { isProperty?: boolean }) {
           <h4 className="font-medium text-gray-900 mb-3">
             {locale === 'sv' ? 'Månatliga avgifter' : locale === 'en' ? 'Monthly Fees' : 'Kuukausittaiset kulut'}
           </h4>
-          {vm.fees.maintenance && (
+          {vm.fees?.maintenance && (
             <Row 
               label={locale === 'sv' ? 'Underhållsavgift' : locale === 'en' ? 'Maintenance Fee' : 'Hoitovastike'} 
-              value={vm.fees.maintenance} 
+              value={vm.fees?.maintenance} 
             />
           )}
-          {vm.fees.financing && (
+          {vm.fees?.financing && (
             <Row 
               label={locale === 'sv' ? 'Finansieringsavgift' : locale === 'en' ? 'Financing Fee' : 'Rahoitusvastike'} 
-              value={vm.fees.financing} 
+              value={vm.fees?.financing} 
             />
           )}
-          {vm.fees.water && (
+          {vm.fees?.water && (
             <Row 
               label={locale === 'sv' ? 'Vattenavgift' : locale === 'en' ? 'Water Fee' : 'Vesimaksu'} 
-              value={vm.fees.water} 
+              value={vm.fees?.water} 
             />
           )}
-          {vm.fees.heating && (
+          {vm.fees?.heating && (
             <Row 
               label={locale === 'sv' ? 'Uppvärmningsavgift' : locale === 'en' ? 'Heating Fee' : 'Lämmitysmaksu'} 
-              value={vm.fees.heating} 
+              value={vm.fees?.heating} 
             />
           )}
-          {vm.fees.electricity && (
+          {vm.fees?.electricity && (
             <Row 
               label={locale === 'sv' ? 'Elavgift' : locale === 'en' ? 'Electricity Fee' : 'Sähkömaksu'} 
-              value={vm.fees.electricity} 
+              value={vm.fees?.electricity} 
             />
           )}
-          {vm.fees.parking && (
+          {vm.fees?.parking && (
             <Row 
               label={locale === 'sv' ? 'Parkeringsavgift' : locale === 'en' ? 'Parking Fee' : 'Autopaikkamaksu'} 
-              value={vm.fees.parking} 
+              value={vm.fees?.parking} 
             />
           )}
-          {vm.fees.sauna && (
+          {vm.fees?.sauna && (
             <Row 
               label={locale === 'sv' ? 'Bastuavgift' : locale === 'en' ? 'Sauna Fee' : 'Saunamaksu'} 
-              value={vm.fees.sauna} 
+              value={vm.fees?.sauna} 
             />
           )}
-          {vm.fees.total && (
+          {vm.fees?.total && (
             <Row 
               label={locale === 'sv' ? 'Totalt per månad' : locale === 'en' ? 'Total per Month' : 'Yhteensä / kk'} 
-              value={vm.fees.total} 
+              value={vm.fees?.total} 
             />
           )}
         </div>
@@ -604,7 +604,7 @@ function Costs({ vm, locale, isProperty }: Props & { isProperty?: boolean }) {
 }
 
 function OtherInfo({ vm, locale }: Props) {
-  const hasFeatures = vm.features && vm.features.some(f => f.value);
+  const hasFeatures = vm.features?.some(f => f.value);
   
   return (
     <div className="space-y-6">
@@ -991,14 +991,14 @@ function RentalCosts({ vm, locale }: Props) {
         {vm.fees?.water && (
           <Row 
             label={locale === 'sv' ? 'Vatten' : locale === 'en' ? 'Water' : 'Vesimaksu'} 
-            value={vm.fees.water}
+            value={vm.fees?.water}
             locale={locale}
           />
         )}
         {vm.fees?.electricity && (
           <Row 
             label={locale === 'sv' ? 'El' : locale === 'en' ? 'Electricity' : 'Sähkö'} 
-            value={vm.fees.electricity}
+            value={vm.fees?.electricity}
             locale={locale}
           />
         )}
