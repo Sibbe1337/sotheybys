@@ -105,7 +105,7 @@ interface PropertyWithACF {
   };
 }
 
-export const revalidate = 60; // Revalidate every 60 seconds (ISR)
+export const revalidate = 0; // Force server-side generation to clear cache
 
 // ✅ LINUS: Pre-generate all property pages at build time
 export async function generateStaticParams() {

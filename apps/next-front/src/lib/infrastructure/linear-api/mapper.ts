@@ -309,22 +309,24 @@ export class LinearToPropertyMapper {
 
       meta: {
         status,
-        // ✅ Extract typeCode from listingType with multiple fallbacks
+        // ✅ Extract typeCode with MULTIPLE fallbacks (listingType, propertyType, type)
         typeCode: (() => {
-          const enType = lget(src.listingType, 'en');
-          const fiType = lget(src.listingType, 'fi');
-          const svType = lget(src.listingType, 'sv');
-          const rawType = enType || fiType || svType || '';
+          // Try listingType first (preferred)
+          let rawType = lget(src.listingType, 'en') || lget(src.listingType, 'fi') || lget(src.listingType, 'sv');
           
-          // 🔍 DEBUG: Log typeCode extraction for debugging
+          // Fallback to propertyType if listingType is empty
+          if (!rawType) {
+            rawType = lget(src.propertyType, 'en') || lget(src.propertyType, 'fi') || lget(src.propertyType, 'sv');
+          }
+          
+          // Final fallback to type field
+          if (!rawType) {
+            rawType = lget(src.type, 'en') || lget(src.type, 'fi') || lget(src.type, 'sv');
+          }
+          
+          // DEBUG logging if still empty
           if (!rawType && addressFi) {
-            console.log(`⚠️  typeCode missing for ${addressFi}:`, {
-              hasListingType: !!src.listingType,
-              enType,
-              fiType,
-              svType,
-              listingTypeKeys: src.listingType ? Object.keys(src.listingType) : 'undefined'
-            });
+            console.log(`⚠️  ALL typeCode sources empty for ${addressFi}`);
           }
           
           return rawType.toUpperCase().replace(/ /g, '_');
