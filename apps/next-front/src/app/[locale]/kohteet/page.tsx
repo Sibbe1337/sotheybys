@@ -1,4 +1,5 @@
 import PropertySearch from '@/components/Property/PropertySearch';
+import PropertyHeroCarousel from '@/components/Property/PropertyHeroCarousel';
 import { locales, type Locale } from '@/i18n/config';
 import type { Property } from '@/lib/domain/property.types';
 import { LinearAPIClient } from '@/lib/infrastructure/linear-api/client';
@@ -71,60 +72,13 @@ export default async function PropertiesPage({ params }: PropertiesPageProps) {
   
   return (
     <main className="flex-1">
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-b from-gray-50 to-white py-20 lg:py-28">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-thin text-gray-900 mb-6">
-              {locale === 'sv' ? 'Alla objekt' : locale === 'en' ? 'All properties' : 'Kaikki kohteet'}
-            </h1>
-            <p className="text-lg lg:text-xl text-gray-600 font-light">
-              {locale === 'sv' 
-                ? 'Utforska vårt breda utbud av noggrant utvalda fastigheter' 
-                : locale === 'en' 
-                ? 'Explore our wide selection of carefully selected properties' 
-                : 'Tutustu laajaan valikoimaamme huolella valittuja kiinteistöjä'}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ✅ SPEC: 6-Latest Grid (image-only cards) */}
+      {/* ✅ HERO CAROUSEL: Show latest 6 properties one at a time (like current website) */}
       {latestSix.length > 0 && (
-        <section className="py-12 bg-white border-b">
-          <div className="container mx-auto px-4">
-            <h2 className="text-2xl font-light text-gray-900 mb-6">
-              {locale === 'sv' ? 'Senaste objekten' : locale === 'en' ? 'Latest Properties' : 'Uusimmat kohteet'}
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {latestSix.map((p) => {
-                const imageUrl = p.media.images.find(img => !img.floorPlan)?.url || p.media.images[0]?.url || '';
-                const propertyUrl = `/${locale}/kohde/${p.slug}`;
-                const title = p.address[locale] || p.address.fi;
-                
-                return (
-                  <a 
-                    key={p.id} 
-                    href={propertyUrl}
-                    className="relative group block aspect-[4/3] overflow-hidden bg-gray-100"
-                  >
-                    {imageUrl && (
-                      <img 
-                        src={imageUrl} 
-                        alt={title} 
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
-                    )}
-                    {/* Info chip bottom-left */}
-                    <div className="absolute bottom-2 left-2 bg-white/90 backdrop-blur-sm px-3 py-1 text-xs font-medium text-gray-900">
-                      {locale === 'sv' ? 'Info' : locale === 'en' ? 'Info' : 'Tiedot'}
-                    </div>
-                  </a>
-                );
-              })}
-            </div>
-          </div>
-        </section>
+        <PropertyHeroCarousel 
+          properties={latestSix} 
+          locale={locale}
+          autoPlayInterval={5000}
+        />
       )}
 
       {/* Property Search Component with Visual Filters */}
