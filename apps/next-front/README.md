@@ -36,6 +36,28 @@ pnpm dev
 
 The app will be available at `http://localhost:3001`
 
+## 📊 Data Quality Tools
+
+This project includes comprehensive data quality tools for validating Linear API data:
+
+### **Quick Start:**
+```bash
+# Run data quality validation:
+npm run data-quality:blueprint
+
+# See detailed guides:
+cat BLUEPRINT-VALIDATION-GUIDE.md
+cat FIELD-FIXING-GUIDE.md
+```
+
+### **Documentation:**
+- [Blueprint Validation Guide](./BLUEPRINT-VALIDATION-GUIDE.md) - How to use the validation tool
+- [Field Fixing Guide](./FIELD-FIXING-GUIDE.md) - Practical guide to fix missing fields
+- [Data Quality Guide](./DATA-QUALITY-GUIDE.md) - General data quality improvement
+- [Tracking Template](./DATA-QUALITY-TRACKER-TEMPLATE.md) - Track weekly progress
+
+**Current Baseline:** 49.3% → **Target:** 95%+
+
 ### WordPress Integration
 
 This app fetches content from WordPress via GraphQL:
