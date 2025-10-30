@@ -3,14 +3,17 @@
 import { APIProvider, Map, AdvancedMarker, InfoWindow } from '@vis.gl/react-google-maps';
 import { useState } from 'react';
 import Image from 'next/image';
+import type { Property, Locale } from '@/lib/domain/property.types';
+import { lpick } from '@/lib/domain/locale-utils';
+import PropertyCardNew from './PropertyCardNew';
 
 interface PropertyMapProps {
-  properties: any[];
+  properties: Property[];
   language: 'fi' | 'sv' | 'en';
 }
 
 export default function PropertyMap({ properties, language }: PropertyMapProps) {
-  const [selectedProperty, setSelectedProperty] = useState<any>(null);
+  const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
   
   // Google Maps API key från environment variable
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '';
@@ -18,20 +21,12 @@ export default function PropertyMap({ properties, language }: PropertyMapProps) 
   // Default center (Helsinki)
   const defaultCenter = { lat: 60.1699, lng: 24.9384 };
 
-  // Hitta center baserat på properties - support både Linear API och WordPress format
-  const getLatLng = (property: any) => {
-    // Try Linear API format first
-    if (property.latitude && property.longitude) {
+  // Get lat/lng from Property domain model
+  const getLatLng = (property: Property) => {
+    if (property.media.coordinates) {
       return {
-        lat: parseFloat(property.latitude),
-        lng: parseFloat(property.longitude)
-      };
-    }
-    // Try WordPress ACF format
-    if (property.acfRealEstate?.property?.location?.latitude) {
-      return {
-        lat: parseFloat(property.acfRealEstate.property.location.latitude),
-        lng: parseFloat(property.acfRealEstate.property.location.longitude)
+        lat: property.media.coordinates.lat,
+        lng: property.media.coordinates.lon
       };
     }
     return null;
@@ -84,14 +79,7 @@ export default function PropertyMap({ properties, language }: PropertyMapProps) 
 
               if (!position) return null;
 
-              const address = property.address || property.acfRealEstate?.property?.address || '';
-              const city = property.city || property.acfRealEstate?.property?.city || '';
-              const price = property.debtFreePrice || property.price || 
-                           property.acfRealEstate?.property?.debtFreePrice || 
-                           property.acfRealEstate?.property?.price || 0;
-              const image = property.featuredImage?.node?.sourceUrl || 
-                           property.acfRealEstate?.property?.images?.[0]?.sourceUrl ||
-                           '/images/defaults/property-placeholder.jpg';
+              const price = property.pricing.debtFree || property.pricing.sales || 0;
 
               return (
                 <AdvancedMarker
@@ -114,27 +102,26 @@ export default function PropertyMap({ properties, language }: PropertyMapProps) 
                 <div className="p-2 max-w-xs">
                   <div className="relative w-full h-40 mb-3">
                     <Image
-                      src={selectedProperty.featuredImage?.node?.sourceUrl || 
-                           selectedProperty.acfRealEstate?.property?.images?.[0]?.sourceUrl ||
+                      src={selectedProperty.media.images.find(img => !img.floorPlan)?.url || 
+                           selectedProperty.media.images[0]?.url ||
                            '/images/defaults/property-placeholder.jpg'}
-                      alt={selectedProperty.address || selectedProperty.acfRealEstate?.property?.address || ''}
+                      alt={lpick(selectedProperty.address, language as Locale)}
                       fill
                       className="object-cover rounded"
+                      unoptimized
                     />
                   </div>
                   <h3 className="font-semibold text-gray-900 mb-1">
-                    {selectedProperty.address || selectedProperty.acfRealEstate?.property?.address || ''}
+                    {lpick(selectedProperty.address, language as Locale)}
                   </h3>
                   <p className="text-sm text-gray-600 mb-2">
-                    {selectedProperty.city || selectedProperty.acfRealEstate?.property?.city || ''}
+                    {lpick(selectedProperty.city, language as Locale)}
                   </p>
                   <p className="text-lg font-semibold text-[var(--color-primary)] mb-3">
-                    {(selectedProperty.debtFreePrice || selectedProperty.price || 
-                      selectedProperty.acfRealEstate?.property?.debtFreePrice || 
-                      selectedProperty.acfRealEstate?.property?.price || 0).toLocaleString('fi-FI')} €
+                    {(selectedProperty.pricing.debtFree || selectedProperty.pricing.sales || 0).toLocaleString('fi-FI')} €
                   </p>
                   <a
-                    href={`/${language}/property/${selectedProperty.slug}`}
+                    href={`/kohde/${selectedProperty.slug}`}
                     className="block w-full text-center px-4 py-2 bg-[var(--color-primary)] text-white rounded hover:bg-[var(--color-primary-dark)] transition-colors text-sm"
                   >
                     {language === 'fi' ? 'Katso kohde' : language === 'sv' ? 'Se objekt' : 'View property'}
@@ -146,53 +133,15 @@ export default function PropertyMap({ properties, language }: PropertyMapProps) 
         </div>
       </APIProvider>
 
-      {/* Property list under map */}
+      {/* Property list under map - Use PropertyCardNew (BILAGA 2) */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {properties.map((property) => {
-          const price = property.debtFreePrice || property.price || 
-                       property.acfRealEstate?.property?.debtFreePrice || 
-                       property.acfRealEstate?.property?.price || 0;
-          const area = property.livingArea || property.area || 
-                      property.acfRealEstate?.property?.area || '';
-          const address = property.address || property.acfRealEstate?.property?.address || '';
-          const city = property.city || property.acfRealEstate?.property?.city || '';
-          const image = property.featuredImage?.node?.sourceUrl || 
-                       property.acfRealEstate?.property?.images?.[0]?.sourceUrl ||
-                       '/images/defaults/property-placeholder.jpg';
-
-          return (
-            <a
-              key={property.id}
-              href={`/kohde/${property.slug}?lang=${language}`}
-              className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-shadow border border-gray-200"
-              onClick={() => {
-                const coords = getLatLng(property);
-                if (coords) {
-                  setSelectedProperty(property);
-                }
-              }}
-            >
-              <div className="relative h-48">
-                <Image
-                  src={image}
-                  alt={address}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              <div className="p-4">
-                <h3 className="text-lg font-light text-gray-900 mb-1">{address}</h3>
-                <p className="text-sm text-gray-600 mb-3">{city}</p>
-                <div className="flex items-center justify-between">
-                  <p className="text-xl font-light text-[var(--color-primary)]">
-                    {price > 0 ? `${price.toLocaleString('fi-FI')} €` : ''}
-                  </p>
-                  {area && <p className="text-sm text-gray-600">{area} m²</p>}
-                </div>
-              </div>
-            </a>
-          );
-        })}
+        {properties.map((property) => (
+          <PropertyCardNew 
+            key={property.id} 
+            property={property} 
+            locale={language as Locale} 
+          />
+        ))}
       </div>
     </div>
   );
