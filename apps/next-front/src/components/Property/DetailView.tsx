@@ -920,7 +920,7 @@ function RentalHousingCompany({ vm, locale }: Props) {
         {/* Always visible */}
         <Row 
           label={locale === 'sv' ? 'Bolagets namn' : locale === 'en' ? 'Company Name' : 'Yhtiön nimi'} 
-          value={vm.companyName} 
+          value={vm.housingCompanyName} 
           alwaysVisible
           locale={locale}
         />
