@@ -27,7 +27,8 @@
     "pm2:stop": "pm2 stop sothebys-next-front",
     "pm2:restart": "pm2 restart sothebys-next-front",
     "pm2:logs": "pm2 logs sothebys-next-front",
-    "pm2:status": "pm2 list"
+    "pm2:status": "pm2 list",
+    "data-quality": "node scripts/data-quality-report.js"
   },
   "dependencies": {
     "@apollo/client": "^3.8.8",
