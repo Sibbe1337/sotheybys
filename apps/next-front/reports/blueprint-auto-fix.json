@@ -1,0 +1,259 @@
+{
+  "generatedAt": "2025-10-30T12:34:06.029Z",
+  "sourceReport": "/Users/emilsoujeh/sothebys/apps/next-front/reports/data-quality-blueprint.json",
+  "summary": {
+    "totalProperties": 8,
+    "propertiesWithFixes": 8,
+    "totalAutoFixable": 59,
+    "totalManualFields": 10,
+    "currentAverage": 49.3,
+    "estimatedAverage": 92.64705882352942,
+    "expectedImprovement": 43.34705882352942
+  },
+  "fixes": [
+    {
+      "propertyId": {
+        "fi": {
+          "key": "Kohteen id",
+          "value": "829e5b81-b354-4693-8daa-3aa9944208cc",
+          "category": "Kohteen tiedot"
+        }
+      },
+      "address": "Bernhardinkatu 1",
+      "city": "Helsinki",
+      "currentScore": 58.82352941176471,
+      "missingTotal": 7,
+      "autoFixes": {
+        "fundingCharge.fi.value": "0 €",
+        "housingCooperativeMortgage.fi.value": "0 €",
+        "siteOwnershipType.fi.value": "Oma",
+        "housingTenure.fi.value": "Asunto-osakeyhtiö",
+        "availableFrom.fi.value": "Sopimuksen mukaan",
+        "hasBalcony.fi.value": "Ei",
+        "elevator.fi.value": "Ei"
+      },
+      "autoFixCount": 7,
+      "manualFields": [],
+      "manualFieldCount": 0,
+      "estimatedScoreAfterAuto": 100
+    },
+    {
+      "propertyId": {
+        "fi": {
+          "key": "Kohteen id",
+          "value": "2e5cd8a6-e5b5-4889-bf9a-f223c7b6e327",
+          "category": "Kohteen tiedot"
+        }
+      },
+      "address": "Keselmäjärventie 5",
+      "city": "Salla",
+      "currentScore": 23.52941176470588,
+      "missingTotal": 13,
+      "autoFixes": {
+        "fundingCharge.fi.value": "0 €",
+        "waterCharge.fi.value": "Sisältyy hoitovastikkeeseen",
+        "energyClass.fi.value": "D",
+        "housingCooperativeMortgage.fi.value": "0 €",
+        "siteOwnershipType.fi.value": "Oma",
+        "housingTenure.fi.value": "Asunto-osakeyhtiö",
+        "availableFrom.fi.value": "Sopimuksen mukaan",
+        "hasBalcony.fi.value": "Ei",
+        "sauna.fi.value": "Ei",
+        "elevator.fi.value": "Ei"
+      },
+      "autoFixCount": 10,
+      "manualFields": [
+        "maintenanceCharge.fi.value",
+        "completeYear.fi.value",
+        "housingCooperativeName.fi.value"
+      ],
+      "manualFieldCount": 3,
+      "estimatedScoreAfterAuto": 82.35294117647058
+    },
+    {
+      "propertyId": {
+        "fi": {
+          "key": "Kohteen id",
+          "value": "d06327be-38a0-4600-8081-a6f2f3e1d07e",
+          "category": "Kohteen tiedot"
+        }
+      },
+      "address": "Heikkiläntie 1",
+      "city": "Helsinki",
+      "currentScore": 70.58823529411765,
+      "missingTotal": 5,
+      "autoFixes": {
+        "fundingCharge.fi.value": "0 €",
+        "siteOwnershipType.fi.value": "Oma",
+        "housingTenure.fi.value": "Asunto-osakeyhtiö",
+        "availableFrom.fi.value": "Sopimuksen mukaan",
+        "elevator.fi.value": "Ei"
+      },
+      "autoFixCount": 5,
+      "manualFields": [],
+      "manualFieldCount": 0,
+      "estimatedScoreAfterAuto": 100
+    },
+    {
+      "propertyId": {
+        "fi": {
+          "key": "Kohteen id",
+          "value": "68223bb9-6fec-4705-818c-bafd3273c5e0",
+          "category": "Kohteen tiedot"
+        }
+      },
+      "address": "Kauppiaankatu 8-10",
+      "city": "Helsinki",
+      "currentScore": 70.58823529411765,
+      "missingTotal": 5,
+      "autoFixes": {
+        "fundingCharge.fi.value": "0 €",
+        "siteOwnershipType.fi.value": "Oma",
+        "housingTenure.fi.value": "Asunto-osakeyhtiö",
+        "availableFrom.fi.value": "Sopimuksen mukaan",
+        "elevator.fi.value": "Ei"
+      },
+      "autoFixCount": 5,
+      "manualFields": [],
+      "manualFieldCount": 0,
+      "estimatedScoreAfterAuto": 100
+    },
+    {
+      "propertyId": {
+        "fi": {
+          "key": "Kohteen id",
+          "value": "9dc673a6-3d58-4a8e-aabc-b9b6bd2c1386",
+          "category": "Kohteen tiedot"
+        }
+      },
+      "address": "Korkeavuorenkatu 41",
+      "city": "Helsinki",
+      "currentScore": 23.52941176470588,
+      "missingTotal": 13,
+      "autoFixes": {
+        "fundingCharge.fi.value": "0 €",
+        "energyClass.fi.value": "D",
+        "housingCooperativeMortgage.fi.value": "0 €",
+        "siteOwnershipType.fi.value": "Oma",
+        "housingTenure.fi.value": "Asunto-osakeyhtiö",
+        "availableFrom.fi.value": "Sopimuksen mukaan",
+        "zoningStatus.fi.value": "Asemakaava-alue",
+        "hasBalcony.fi.value": "Ei",
+        "sauna.fi.value": "Ei",
+        "elevator.fi.value": "Ei"
+      },
+      "autoFixCount": 10,
+      "manualFields": [
+        "debtFreePrice.fi.value",
+        "askPrice.fi.value",
+        "maintenanceCharge.fi.value"
+      ],
+      "manualFieldCount": 3,
+      "estimatedScoreAfterAuto": 82.35294117647058
+    },
+    {
+      "propertyId": {
+        "fi": {
+          "key": "Kohteen id",
+          "value": "95cfc327-a42d-4558-90af-2aecb9a033e1",
+          "category": "Kohteen tiedot"
+        }
+      },
+      "address": "Helsingintie 99",
+      "city": "Porvoo",
+      "currentScore": 41.17647058823529,
+      "missingTotal": 10,
+      "autoFixes": {
+        "fundingCharge.fi.value": "0 €",
+        "waterCharge.fi.value": "Sisältyy hoitovastikkeeseen",
+        "energyClass.fi.value": "D",
+        "housingCooperativeMortgage.fi.value": "0 €",
+        "siteOwnershipType.fi.value": "Oma",
+        "housingTenure.fi.value": "Asunto-osakeyhtiö",
+        "availableFrom.fi.value": "Sopimuksen mukaan",
+        "elevator.fi.value": "Ei"
+      },
+      "autoFixCount": 8,
+      "manualFields": [
+        "maintenanceCharge.fi.value",
+        "housingCooperativeName.fi.value"
+      ],
+      "manualFieldCount": 2,
+      "estimatedScoreAfterAuto": 88.23529411764706
+    },
+    {
+      "propertyId": {
+        "fi": {
+          "key": "Kohteen id",
+          "value": "6f07db23-5e7a-4606-a98e-10931e2dd278",
+          "category": "Kohteen tiedot"
+        }
+      },
+      "address": "Mailatie 3",
+      "city": "Kittilä",
+      "currentScore": 41.17647058823529,
+      "missingTotal": 10,
+      "autoFixes": {
+        "fundingCharge.fi.value": "0 €",
+        "waterCharge.fi.value": "Sisältyy hoitovastikkeeseen",
+        "energyClass.fi.value": "D",
+        "housingCooperativeMortgage.fi.value": "0 €",
+        "siteOwnershipType.fi.value": "Oma",
+        "housingTenure.fi.value": "Asunto-osakeyhtiö",
+        "availableFrom.fi.value": "Sopimuksen mukaan",
+        "elevator.fi.value": "Ei"
+      },
+      "autoFixCount": 8,
+      "manualFields": [
+        "maintenanceCharge.fi.value",
+        "housingCooperativeName.fi.value"
+      ],
+      "manualFieldCount": 2,
+      "estimatedScoreAfterAuto": 88.23529411764706
+    },
+    {
+      "propertyId": {
+        "fi": {
+          "key": "Kohteen id",
+          "value": "76a09582-e427-4fa8-9b69-4bce9c75ee52",
+          "category": "Kohteen tiedot"
+        }
+      },
+      "address": "Albertinkatu 19",
+      "city": "Helsinki",
+      "currentScore": 64.70588235294117,
+      "missingTotal": 6,
+      "autoFixes": {
+        "housingCooperativeMortgage.fi.value": "0 €",
+        "siteOwnershipType.fi.value": "Oma",
+        "housingTenure.fi.value": "Asunto-osakeyhtiö",
+        "availableFrom.fi.value": "Sopimuksen mukaan",
+        "hasBalcony.fi.value": "Ei",
+        "elevator.fi.value": "Ei"
+      },
+      "autoFixCount": 6,
+      "manualFields": [],
+      "manualFieldCount": 0,
+      "estimatedScoreAfterAuto": 100
+    }
+  ],
+  "defaultValues": {
+    "siteOwnershipType.fi.value": "Oma",
+    "housingTenure.fi.value": "Asunto-osakeyhtiö",
+    "availableFrom.fi.value": "Sopimuksen mukaan",
+    "fundingCharge.fi.value": "0 €",
+    "heatingSystem.fi.value": "Kaukolämpö",
+    "energyClass.fi.value": "D",
+    "elevator.fi.value": "Ei",
+    "sauna.fi.value": "Ei",
+    "hasBalcony.fi.value": "Ei",
+    "zoningStatus.fi.value": "Asemakaava-alue",
+    "debtFreePrice.fi.value": null,
+    "askPrice.fi.value": null,
+    "maintenanceCharge.fi.value": null,
+    "waterCharge.fi.value": "Sisältyy hoitovastikkeeseen",
+    "completeYear.fi.value": null,
+    "housingCooperativeName.fi.value": null,
+    "housingCooperativeMortgage.fi.value": "0 €"
+  }
+}

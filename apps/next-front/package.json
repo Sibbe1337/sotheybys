@@ -30,7 +30,10 @@
     "pm2:status": "pm2 list",
     "data-quality": "node scripts/data-quality-report.js",
     "data-quality:blueprint": "node scripts/data-quality-report.js --mode=blueprint",
-    "data-quality:full": "node scripts/data-quality-report.js --mode=full"
+    "data-quality:full": "node scripts/data-quality-report.js --mode=full",
+    "data-quality:auto-fix": "node scripts/blueprint-auto-fix.js",
+    "data-quality:auto-apply": "node scripts/blueprint-auto-fix.js --apply",
+    "data-quality:dry-run": "node scripts/blueprint-auto-fix.js --apply --dry-run"
   },
   "dependencies": {
     "@apollo/client": "^3.8.8",
