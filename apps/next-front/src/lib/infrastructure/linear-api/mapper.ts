@@ -1,3 +1,14 @@
+/**
+ * LINEAR API TO DOMAIN MODEL MAPPER
+ * 
+ * This mapper transforms raw Linear API data into our Property domain model.
+ * 
+ * 📖 DOCUMENTATION: See field-mappings.ts for complete field mapping blueprint
+ *    showing all Linear API fields, their target domain fields, and transformation rules.
+ * 
+ * Based on: DENNIS_IMPLEMENTATIONSLISTA_DETALJERAD.md
+ */
+
 import { Property, LocalizedValue } from '@/lib/domain/property.types';
 import { parseEuro } from '@/lib/domain/property.value-objects';
 import { normalizeEnergyStatus } from '@/lib/domain/energy';
@@ -187,6 +198,13 @@ export class LinearToPropertyMapper {
 
     const loansDate = lget(src.housingCooperativeMortgageDate!, locale) || lget(src.propertyManagerCertificateDate!, locale) || undefined;
 
+    // ========== ADDITIONAL META (Blueprint completion) ==========
+    const identifierFi = pickNV(nv, 'identifier', 'propertyId') ?? lget((src as any).identifier!, 'fi') ?? undefined;
+    const condition = lv((src as any).condition);
+    const propertyIdentifier = pickNV(nv, 'propertyIdentifier', 'estateName') ?? lget((src as any).propertyIdentifier!, locale) ?? undefined;
+    const propertyBuildingRights = pickNV(nv, 'propertyBuildingRights', 'buildingRights') ?? lget((src as any).propertyBuildingRights!, locale) ?? undefined;
+    const restrictions = lv((src as any).restrictions);
+
     // ========== COORDINATES (NEW) ==========
     const coordinates = extractCoordinates(src, nv);
 
@@ -280,21 +298,42 @@ export class LinearToPropertyMapper {
         status,
         typeCode: String(nv.listingType ?? src.listingType ?? '').toUpperCase(),
         listingTypeLabel: localizeListingType(String(nv.listingType ?? src.listingType ?? '')), // ✅ SPEC: Localized listing type
+        
+        // Basic metadata (from blueprint)
+        identifierFi,
         apartmentType: lv(src.typeOfApartment),
+        condition: condition.fi || condition.sv || condition.en ? condition : undefined,
+        
+        // Energy & systems
         energyClass: lget(src.energyClass!, locale) || undefined,
         energyCertStatus: normalizeEnergyStatus(lget(src.listingHasEnergyCertificate!, locale)),
         heatingSystem: lv(src.heatingSystem),
         ventilationSystem: lv(src.ventilationSystem),
+        
+        // Ownership & tenure
         ownershipType: lv((src as any).ownershipType),
         plotOwnership: lv((src as any).siteOwnershipType),
         housingTenure: lv((src as any).housingTenure),
+        
+        // Property-specific
+        propertyIdentifier,
+        propertyBuildingRights,
+        restrictions: restrictions.fi || restrictions.sv || restrictions.en ? restrictions : undefined,
+        
+        // Dates & availability
         availableFrom: lv((src as any).availableFrom),
         zoning: lv((src as any).zoningStatus),
+        
+        // Building details
         yearBuilt: Number(nv.yearBuilt ?? (src as any).yearBuilt) || undefined,
         floorsTotal: Number(nv.floorCount ?? (src as any).floorCount) || undefined,
         floor,
         elevator: hasElevator,
+        
+        // Rental flag
         rent: rentValue,
+        
+        // Housing company info
         housingCompany: {
           name: lv((src as any).housingCooperativeName),
           loans: loansNum,

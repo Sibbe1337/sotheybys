@@ -65,21 +65,42 @@ export interface Property {
     status?: 'ACTIVE' | 'SOLD' | 'RESERVED';  // NEW for filtering
     typeCode?: string;               // KERROSTALO, MÖKKI_TAI_HUVILA, ... (raw code)
     listingTypeLabel?: LocalizedValue; // Localized listing type (Kerrostalo/Höghus/Apartment Building)
+    
+    // Basic metadata (NEW from blueprint)
+    identifierFi?: string;           // Kohdenumero (Finnish property identifier)
     apartmentType?: LocalizedValue;  // Huoneistoselitelmä
+    condition?: LocalizedValue;      // Skick (Hyvä, Uudehko, Tyydyttävä, etc.)
+    
+    // Energy & systems
     energyClass?: string;            // C2018, ...
     energyCertStatus?: 'HAS_CERTIFICATE' | 'NOT_REQUIRED_BY_LAW' | 'EXEMPT_BY_ACT' | null;
     heatingSystem?: LocalizedValue;
     ventilationSystem?: LocalizedValue;
+    
+    // Ownership & tenure
     ownershipType?: LocalizedValue;        // Omistusmuoto
     plotOwnership?: LocalizedValue;        // Tontin omistus
     housingTenure?: LocalizedValue;        // Hallintamuoto
+    
+    // Property-specific (for houses/plots)
+    propertyIdentifier?: string;           // Kiinteistötunnus
+    propertyBuildingRights?: string;       // Rakennusoikeus
+    restrictions?: LocalizedValue;         // Rasitteet (encumbrances/easements)
+    
+    // Dates & availability
     availableFrom?: LocalizedValue;        // Vapautuminen (text eller datum som text)
     zoning?: LocalizedValue;               // Kaavoitus
+    
+    // Building details
     yearBuilt?: number;
     floorsTotal?: number;
     floor?: string;                        // Kerros (e.g. "3" or "3/5")
     elevator?: boolean | undefined;
+    
+    // Rental flag
     rent?: number;  // For rental properties
+    
+    // Housing company info
     housingCompany: {
       name?: LocalizedValue;
       loans?: number | null;          // Taloyhtiön lainat
