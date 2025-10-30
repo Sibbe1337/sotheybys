@@ -315,6 +315,18 @@ export class LinearToPropertyMapper {
           const fiType = lget(src.listingType, 'fi');
           const svType = lget(src.listingType, 'sv');
           const rawType = enType || fiType || svType || '';
+          
+          // 🔍 DEBUG: Log typeCode extraction for debugging
+          if (!rawType && addressFi) {
+            console.log(`⚠️  typeCode missing for ${addressFi}:`, {
+              hasListingType: !!src.listingType,
+              enType,
+              fiType,
+              svType,
+              listingTypeKeys: src.listingType ? Object.keys(src.listingType) : 'undefined'
+            });
+          }
+          
           return rawType.toUpperCase().replace(/ /g, '_');
         })(),
         listingTypeLabel: localizeListingType(lget(src.listingType, 'en') || lget(src.listingType, 'fi') || lget(src.listingType, 'sv') || ''), // ✅ SPEC: Localized listing type
