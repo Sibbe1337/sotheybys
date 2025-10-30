@@ -23,7 +23,7 @@ interface HeaderProps {
 export default function Header({ menuItems }: HeaderProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const locale = useLocale();
+  const locale = useLocale() as 'fi' | 'sv' | 'en';
   
   // ✅ CRITICAL FIX: Strip any locale prefix from pathname as safeguard
   // This prevents double locale prefixes like /en/sv/kohde/...
@@ -31,23 +31,9 @@ export default function Header({ menuItems }: HeaderProps) {
     .replace(/^\/(fi|sv|en)/, '') // Remove leading locale
     .replace(/^$/, '/');          // Ensure at least /
   
-  // ✅ FIX: Extract locale from URL as fallback (for client-side hydration)
-  // pathname from next-intl's usePathname() doesn't include locale prefix
-  // so we need to check if we're on /sv or /en routes via window.location
-  const [currentLang, setCurrentLang] = useState(locale || 'fi');
-  
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const path = window.location.pathname;
-      if (path.startsWith('/sv')) {
-        setCurrentLang('sv');
-      } else if (path.startsWith('/en')) {
-        setCurrentLang('en');
-      } else {
-        setCurrentLang(locale || 'fi');
-      }
-    }
-  }, [locale]);
+  // ✅ FIX: Use locale directly from useLocale() - it's already correct from next-intl
+  // No need for useState/useEffect - useLocale() already reflects current route
+  const currentLang = locale;
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
