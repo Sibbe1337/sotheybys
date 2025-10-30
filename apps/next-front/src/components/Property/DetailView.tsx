@@ -10,6 +10,7 @@ import { fmtArea } from '@/lib/presentation/formatters/area';
 import { getAllTabs, getFieldLabel, getSectionLabel } from '@/lib/i18n/property-translations';
 import { getPlaceholder, lpickWithIndicator } from '@/lib/domain/locale-utils';
 import { AutoTranslateBanner } from '@/components/AutoTranslateBanner';
+import { ImageCarousel } from './ImageCarousel';
 
 type VM = import('@/lib/presentation/property.view-model').PropertyDetailVM;
 type Locale = 'fi' | 'sv' | 'en';
@@ -21,6 +22,13 @@ export function DetailView({ vm, locale }: Props) {
   const tab = useActiveTab('overview');
   const setTab = useTabRouting();
 
+  // 🔍 DEBUG: Check if images exist
+  console.log('🖼️ DetailView DEBUG:');
+  console.log('  - vm.images:', vm.images);
+  console.log('  - vm.images.length:', vm.images?.length);
+  console.log('  - First image:', vm.images?.[0]);
+  console.log('  - vm.title:', vm.title);
+
   // ✅ SPEC: Type-specific layout detection
   const typeCode = (vm.typeCode || '').toUpperCase();
   const isApartment = ['KERROSTALO', 'FLAT', 'APARTMENT_BUILDING'].includes(typeCode);
@@ -29,7 +37,18 @@ export function DetailView({ vm, locale }: Props) {
   // Type | Huoneistoselitelmä under images/address
   // ✅ SPEC FIX: Use localized listing type label from ViewModel
   const typePrefix = vm.subtitle.split(' • ')[0] || ''; // Extract type from subtitle
-  const aptLine = [typePrefix, vm.apartmentType].filter(Boolean).join(' | ');
+  
+  // ✅ NEW: Build title line: "Höghus | 4 rum, 115 m²"
+  const titleParts = [typePrefix];
+  if (vm.rooms) {
+    const roomLabel = locale === 'sv' ? 'rum' : locale === 'en' ? 'rooms' : 'huonetta';
+    titleParts.push(`${vm.rooms} ${roomLabel}`);
+  }
+  if (vm.area) {
+    // vm.area already includes m² unit
+    titleParts.push(vm.area);
+  }
+  const titleLine = titleParts.filter(Boolean).join(', ').replace(', ', ' | ', 1); // First comma becomes |
 
   const agent = cleanAgentData(vm.agent || {});
   
@@ -38,25 +57,17 @@ export function DetailView({ vm, locale }: Props) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero */}
+      {/* Hero Carousel - Full width responsive */}
       {!!vm.images?.length && (
-        <section className="relative h-[60vh] bg-black">
-          <Image 
-            src={vm.images[0].url} 
-            alt={vm.title} 
-            fill 
-            className="object-cover" 
-            priority 
-          />
-        </section>
+        <ImageCarousel images={vm.images} title={vm.title} />
       )}
 
-      {/* Under hero: address, type | huoneistoselitelmä */}
+      {/* Under hero: address, title line (type | rooms, area) */}
       <section className="bg-white border-b">
         <div className="container mx-auto px-4 py-6">
           <h1 className="text-3xl font-light text-gray-900 mb-2">{vm.title}</h1>
-          <p className="text-lg text-gray-600 mb-2">{vm.city}, {vm.postalCode}</p>
-          {aptLine && <p className="text-lg text-gray-900 mb-4">{aptLine}</p>}
+          <p className="text-lg text-gray-600 mb-2">{vm.city}{vm.postalCode ? `, ${vm.postalCode}` : ''}</p>
+          {titleLine && <p className="text-lg text-gray-900 mb-4">{titleLine}</p>}
           {/* Description (sanitized) */}
           {vm.description && (
             <>
@@ -205,15 +216,18 @@ function Row({
     return null;
   }
   
-  // Determine display value
+  // ✅ SPEC: Hide row entirely if value is missing (no "Uppgift saknas")
   const hasValue = value !== undefined && value !== null && value !== '';
-  const displayValue = hasValue ? String(value) : getPlaceholder(locale);
+  
+  if (!hasValue) {
+    return null; // Hide empty fields completely
+  }
   
   return (
     <div className="flex justify-between py-2 border-b border-gray-100">
       <span className="text-gray-600">{label}</span>
-      <span className={`font-medium ${hasValue ? 'text-gray-900' : 'text-gray-400 italic'}`}>
-        {displayValue}
+      <span className="font-medium text-gray-900 text-right">
+        {String(value)}
       </span>
     </div>
   );
@@ -224,27 +238,6 @@ function Row({
 function Overview({ vm, locale }: Props) {
   return (
     <div className="space-y-6">
-      {/* Gallery */}
-      {vm.images?.length > 0 && (
-        <div className="bg-white rounded-none shadow-sm p-6">
-          <h3 className="text-xl font-light mb-4">
-            {locale === 'sv' ? 'Bilder' : locale === 'en' ? 'Images' : 'Kuvat'}
-          </h3>
-          <div className="grid md:grid-cols-3 gap-2">
-            {vm.images.slice(0, 9).map((img, i) => (
-              <div key={i} className="relative aspect-[4/3] overflow-hidden rounded-none">
-                <Image 
-                  src={img.url} 
-                  alt={`${vm.title} - Image ${i + 1}`} 
-                  fill 
-                  className="object-cover hover:scale-105 transition-transform"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
       {/* Key Features */}
       <div className="bg-white rounded-none shadow-sm p-6">
         <h3 className="text-xl font-light mb-4">

@@ -15,10 +15,17 @@
       "meta.plotOwnership",
       "meta.housingTenure",
       "meta.availableFrom",
-      "meta.zoning",
       "features.balcony",
-      "features.sauna",
       "meta.elevator"
+    ],
+    "optional": [
+      "meta.energyCertStatus",
+      "documents.energyCert",
+      "documents.floorPlan"
+    ],
+    "ignored": [
+      "meta.propertyIdentifier",
+      "fees.propertyTax"
     ],
     "description": "Required fields for apartment listings (Kerrostalo)"
   },
@@ -28,12 +35,21 @@
       "dimensions.plot",
       "meta.yearBuilt",
       "meta.heatingSystem",
-      "meta.ventilationSystem",
       "meta.energyClass",
       "pricing.debtFree",
       "fees.propertyTax",
       "meta.zoning",
       "meta.availableFrom"
+    ],
+    "optional": [
+      "meta.energyCertStatus",
+      "meta.ventilationSystem"
+    ],
+    "ignored": [
+      "meta.housingCompany.name",
+      "meta.housingTenure",
+      "fees.financing",
+      "fees.maintenance"
     ],
     "description": "Required fields for property listings (Omakotitalo, Kiinteistö)"
   },
@@ -50,7 +66,13 @@
       "fees.water",
       "fees.electricity"
     ],
+    "optional": [],
+    "ignored": [
+      "fees.financing",
+      "meta.housingTenure",
+      "meta.plotOwnership",
+      "meta.housingCompany.loans"
+    ],
     "description": "Required fields for rental listings (Vuokrakohde)"
   }
 }
-

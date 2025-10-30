@@ -477,12 +477,16 @@ async function analyzeDataQuality() {
       console.log('═'.repeat(80));
       console.log('Validating against Dennis Implementation Blueprint schema...\n');
       
-      // Load blueprint schema (raw API version)
+      // Load blueprint schema (raw API paths with optional/ignored fields)
       const schemaPath = path.join(__dirname, 'data-quality-schema-raw.json');
       let schema = {};
       
       try {
         schema = JSON.parse(fs.readFileSync(schemaPath, 'utf-8'));
+        console.log('✅ Loaded type-specific validation schema');
+        console.log(`   🏢 APARTMENT: ${schema.apartment?.required.length} required, ${schema.apartment?.ignored.length} ignored`);
+        console.log(`   🏡 PROPERTY:  ${schema.property?.required.length} required, ${schema.property?.ignored.length} ignored`);
+        console.log(`   🏠 RENTAL:    ${schema.rental?.required.length} required, ${schema.rental?.ignored.length} ignored\n`);
       } catch (err) {
         console.error(`❌ Failed to load schema from ${schemaPath}`);
         console.error(err.message);
@@ -517,11 +521,25 @@ async function analyzeDataQuality() {
         }
         
         const requiredFields = schema[type]?.required || [];
+        const optionalFields = schema[type]?.optional || [];
+        const ignoredFields = schema[type]?.ignored || [];
+        
         const missing = [];
+        const ignored = [];
         const fieldStatus = {};
         
         // Check each required field
         for (const field of requiredFields) {
+          // Skip if this field should be ignored for this property type
+          if (ignoredFields.includes(field)) {
+            ignored.push(field);
+            fieldStatus[field] = {
+              value: null,
+              status: 'ignored'
+            };
+            continue;
+          }
+          
           const value = get(property, field);
           const isMissing = isMissingOrPlaceholder(value);
           
@@ -533,6 +551,25 @@ async function analyzeDataQuality() {
             value: isMissing ? null : value,
             status: isMissing ? 'missing' : 'present'
           };
+        }
+        
+        // ✅ Energy certificate special rule
+        // If energy cert is not required by law, don't count energyClass as missing
+        const energyCertStatus = get(property, 'meta.energyCertStatus') || 
+                                get(property, 'listingHasEnergyCertificate.fi.value');
+        
+        if (
+          energyCertStatus === 'NOT_REQUIRED_BY_LAW' ||
+          /energi(certi|todistus).*ei tarvitse/i.test(String(energyCertStatus || ''))
+        ) {
+          // Remove energyClass from missing if it's there
+          const idx = missing.findIndex(f => f.includes('meta.energyClass'));
+          if (idx !== -1) {
+            missing.splice(idx, 1);
+            if (fieldStatus['meta.energyClass']) {
+              fieldStatus['meta.energyClass'].status = 'optional';
+            }
+          }
         }
         
         // Calculate completeness score
@@ -557,9 +594,19 @@ async function analyzeDataQuality() {
           requiredFields: totalRequired,
           filledFields: filled,
           missingFields: missing,
+          ignoredFields: ignored,
+          optionalFields: optionalFields,
+          ignoredCount: ignored.length,
+          optionalCount: optionalFields.length,
           fieldStatus,
           completeness: `${score.toFixed(1)}%`,
-          score: score
+          score: score,
+          typeRules: {
+            ignoredFields: ignored,
+            ignoredCount: ignored.length,
+            optionalFields: optionalFields,
+            optionalCount: optionalFields.length
+          }
         });
       }
       
@@ -589,6 +636,24 @@ async function analyzeDataQuality() {
         console.log(`  ${emoji} ${type.toUpperCase()}: ${stats.avgScore}% (${stats.count} properties)`);
       }
       
+      // Calculate totals for both console and report
+      const totalIgnored = blueprintResults.reduce((sum, p) => sum + p.ignoredCount, 0);
+      const totalOptional = blueprintResults.reduce((sum, p) => sum + p.optionalCount, 0);
+      const totalValidated = blueprintResults.reduce((sum, p) => sum + p.filledFields, 0);
+      const totalMissing = blueprintResults.reduce((sum, p) => sum + p.missingFields.length, 0);
+      
+      // Show ignored fields per type
+      console.log(`\n🟦 Type-Specific Validation Rules:`);
+      console.log(`  🏢 APARTMENT → ${schema.apartment.ignored.length} ignored fields (${schema.apartment.ignored.join(', ')})`);
+      console.log(`  🏡 PROPERTY  → ${schema.property.ignored.length} ignored fields (${schema.property.ignored.join(', ')})`);
+      console.log(`  🏠 RENTAL    → ${schema.rental.ignored.length} ignored fields (${schema.rental.ignored.join(', ')})`);
+      
+      console.log(`\n📊 Field Status Summary:`);
+      console.log(`  ✅ Validated fields: ${totalValidated}`);
+      console.log(`  🔴 Missing fields: ${totalMissing}`);
+      console.log(`  🟦 Ignored fields (type-specific): ${totalIgnored}`);
+      console.log(`  🟡 Optional fields: ${totalOptional}`);
+      
       // Find properties needing attention (<80% complete)
       const needsAttention = blueprintResults
         .filter(p => p.score < 80)
@@ -615,13 +680,40 @@ async function analyzeDataQuality() {
       }
       
       const reportPath = path.join(reportsDir, 'data-quality-blueprint.json');
+      
       const report = {
         generatedAt: new Date().toISOString(),
         mode: MODE,
         summary: {
           totalProperties: blueprintResults.length,
           averageScore: avgScore.toFixed(1),
-          byType: byType
+          byType: byType,
+          fieldStatusSummary: {
+            validatedFields: totalValidated,
+            missingFields: totalMissing,
+            ignoredFields: totalIgnored,
+            optionalFields: totalOptional
+          },
+          typeRules: {
+            apartment: {
+              requiredCount: schema.apartment.required.length,
+              ignoredCount: schema.apartment.ignored.length,
+              ignoredFields: schema.apartment.ignored,
+              optionalFields: schema.apartment.optional
+            },
+            property: {
+              requiredCount: schema.property.required.length,
+              ignoredCount: schema.property.ignored.length,
+              ignoredFields: schema.property.ignored,
+              optionalFields: schema.property.optional
+            },
+            rental: {
+              requiredCount: schema.rental.required.length,
+              ignoredCount: schema.rental.ignored.length,
+              ignoredFields: schema.rental.ignored,
+              optionalFields: schema.rental.optional
+            }
+          }
         },
         properties: blueprintResults
       };

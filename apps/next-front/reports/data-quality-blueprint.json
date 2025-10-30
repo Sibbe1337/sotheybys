@@ -1,13 +1,59 @@
 {
-  "generatedAt": "2025-10-30T14:16:58.347Z",
+  "generatedAt": "2025-10-30T14:47:02.715Z",
   "mode": "blueprint",
   "summary": {
     "totalProperties": 8,
-    "averageScore": "66.2",
+    "averageScore": "64.8",
     "byType": {
       "apartment": {
         "count": 8,
-        "avgScore": "66.2"
+        "avgScore": "64.8"
+      }
+    },
+    "fieldStatusSummary": {
+      "validatedFields": 83,
+      "missingFields": 45,
+      "ignoredFields": 0,
+      "optionalFields": 24
+    },
+    "typeRules": {
+      "apartment": {
+        "requiredCount": 16,
+        "ignoredCount": 2,
+        "ignoredFields": [
+          "propertyIdentifier.fi.value",
+          "propertyTax.fi.value"
+        ],
+        "optionalFields": [
+          "listingHasEnergyCertificate.fi.value",
+          "energyCertificateUrl.fi.value",
+          "floorPlanUrl.fi.value"
+        ]
+      },
+      "property": {
+        "requiredCount": 9,
+        "ignoredCount": 4,
+        "ignoredFields": [
+          "housingCooperativeName.fi.value",
+          "housingTenure.fi.value",
+          "fundingCharge.fi.value",
+          "maintenanceCharge.fi.value"
+        ],
+        "optionalFields": [
+          "listingHasEnergyCertificate.fi.value",
+          "ventilationSystem.fi.value"
+        ]
+      },
+      "rental": {
+        "requiredCount": 10,
+        "ignoredCount": 4,
+        "ignoredFields": [
+          "fundingCharge.fi.value",
+          "housingTenure.fi.value",
+          "lotOwnership.fi.value",
+          "housingCooperativeMortgage.fi.value"
+        ],
+        "optionalFields": []
       }
     }
   },
@@ -23,14 +69,22 @@
       "address": "Bernhardinkatu 1",
       "city": "Helsinki",
       "type": "apartment",
-      "requiredFields": 17,
-      "filledFields": 13,
+      "requiredFields": 16,
+      "filledFields": 12,
       "missingFields": [
         "fundingCharge.fi.value",
         "housingCooperativeMortgage.fi.value",
         "housingTenure.fi.value",
         "hasBalcony.fi.value"
       ],
+      "ignoredFields": [],
+      "optionalFields": [
+        "listingHasEnergyCertificate.fi.value",
+        "energyCertificateUrl.fi.value",
+        "floorPlanUrl.fi.value"
+      ],
+      "ignoredCount": 0,
+      "optionalCount": 3,
       "fieldStatus": {
         "debtFreePrice.fi.value": {
           "value": "1 570 000 €",
@@ -90,10 +144,6 @@
           "value": "Sopimuksen mukaan",
           "status": "present"
         },
-        "zoningStatus.fi.value": {
-          "value": "Asemakaava",
-          "status": "present"
-        },
         "hasBalcony.fi.value": {
           "value": null,
           "status": "missing"
@@ -107,8 +157,18 @@
           "status": "present"
         }
       },
-      "completeness": "76.5%",
-      "score": 76.47058823529412
+      "completeness": "75.0%",
+      "score": 75,
+      "typeRules": {
+        "ignoredFields": [],
+        "ignoredCount": 0,
+        "optionalFields": [
+          "listingHasEnergyCertificate.fi.value",
+          "energyCertificateUrl.fi.value",
+          "floorPlanUrl.fi.value"
+        ],
+        "optionalCount": 3
+      }
     },
     {
       "id": {
@@ -121,8 +181,8 @@
       "address": "Keselmäjärventie 5",
       "city": "Salla",
       "type": "apartment",
-      "requiredFields": 17,
-      "filledFields": 7,
+      "requiredFields": 16,
+      "filledFields": 6,
       "missingFields": [
         "maintenanceCharge.fi.value",
         "fundingCharge.fi.value",
@@ -135,6 +195,14 @@
         "sauna.fi.value",
         "housingCooperativeElevator.fi.value"
       ],
+      "ignoredFields": [],
+      "optionalFields": [
+        "listingHasEnergyCertificate.fi.value",
+        "energyCertificateUrl.fi.value",
+        "floorPlanUrl.fi.value"
+      ],
+      "ignoredCount": 0,
+      "optionalCount": 3,
       "fieldStatus": {
         "debtFreePrice.fi.value": {
           "value": "397 500 €",
@@ -194,10 +262,6 @@
           "value": "Sopimuksen mukaan",
           "status": "present"
         },
-        "zoningStatus.fi.value": {
-          "value": "Asemakaava",
-          "status": "present"
-        },
         "hasBalcony.fi.value": {
           "value": null,
           "status": "missing"
@@ -211,8 +275,18 @@
           "status": "missing"
         }
       },
-      "completeness": "41.2%",
-      "score": 41.17647058823529
+      "completeness": "37.5%",
+      "score": 37.5,
+      "typeRules": {
+        "ignoredFields": [],
+        "ignoredCount": 0,
+        "optionalFields": [
+          "listingHasEnergyCertificate.fi.value",
+          "energyCertificateUrl.fi.value",
+          "floorPlanUrl.fi.value"
+        ],
+        "optionalCount": 3
+      }
     },
     {
       "id": {
@@ -225,12 +299,20 @@
       "address": "Heikkiläntie 1",
       "city": "Helsinki",
       "type": "apartment",
-      "requiredFields": 17,
-      "filledFields": 15,
+      "requiredFields": 16,
+      "filledFields": 14,
       "missingFields": [
         "fundingCharge.fi.value",
         "housingTenure.fi.value"
       ],
+      "ignoredFields": [],
+      "optionalFields": [
+        "listingHasEnergyCertificate.fi.value",
+        "energyCertificateUrl.fi.value",
+        "floorPlanUrl.fi.value"
+      ],
+      "ignoredCount": 0,
+      "optionalCount": 3,
       "fieldStatus": {
         "debtFreePrice.fi.value": {
           "value": "1 190 000 €",
@@ -290,10 +372,6 @@
           "value": "Sopimuksen mukaan",
           "status": "present"
         },
-        "zoningStatus.fi.value": {
-          "value": "Asemakaava",
-          "status": "present"
-        },
         "hasBalcony.fi.value": {
           "value": "Kyllä",
           "status": "present"
@@ -307,8 +385,18 @@
           "status": "present"
         }
       },
-      "completeness": "88.2%",
-      "score": 88.23529411764706
+      "completeness": "87.5%",
+      "score": 87.5,
+      "typeRules": {
+        "ignoredFields": [],
+        "ignoredCount": 0,
+        "optionalFields": [
+          "listingHasEnergyCertificate.fi.value",
+          "energyCertificateUrl.fi.value",
+          "floorPlanUrl.fi.value"
+        ],
+        "optionalCount": 3
+      }
     },
     {
       "id": {
@@ -321,12 +409,20 @@
       "address": "Kauppiaankatu 8-10",
       "city": "Helsinki",
       "type": "apartment",
-      "requiredFields": 17,
-      "filledFields": 15,
+      "requiredFields": 16,
+      "filledFields": 14,
       "missingFields": [
         "fundingCharge.fi.value",
         "housingTenure.fi.value"
       ],
+      "ignoredFields": [],
+      "optionalFields": [
+        "listingHasEnergyCertificate.fi.value",
+        "energyCertificateUrl.fi.value",
+        "floorPlanUrl.fi.value"
+      ],
+      "ignoredCount": 0,
+      "optionalCount": 3,
       "fieldStatus": {
         "debtFreePrice.fi.value": {
           "value": "179 000 €",
@@ -386,10 +482,6 @@
           "value": "Heti",
           "status": "present"
         },
-        "zoningStatus.fi.value": {
-          "value": "Asemakaava",
-          "status": "present"
-        },
         "hasBalcony.fi.value": {
           "value": "Ei",
           "status": "present"
@@ -403,8 +495,18 @@
           "status": "present"
         }
       },
-      "completeness": "88.2%",
-      "score": 88.23529411764706
+      "completeness": "87.5%",
+      "score": 87.5,
+      "typeRules": {
+        "ignoredFields": [],
+        "ignoredCount": 0,
+        "optionalFields": [
+          "listingHasEnergyCertificate.fi.value",
+          "energyCertificateUrl.fi.value",
+          "floorPlanUrl.fi.value"
+        ],
+        "optionalCount": 3
+      }
     },
     {
       "id": {
@@ -417,7 +519,7 @@
       "address": "Korkeavuorenkatu 41",
       "city": "Helsinki",
       "type": "apartment",
-      "requiredFields": 17,
+      "requiredFields": 16,
       "filledFields": 6,
       "missingFields": [
         "debtFreePrice.fi.value",
@@ -428,10 +530,17 @@
         "housingCooperativeMortgage.fi.value",
         "lotOwnership.fi.value",
         "housingTenure.fi.value",
-        "zoningStatus.fi.value",
         "hasBalcony.fi.value",
         "sauna.fi.value"
       ],
+      "ignoredFields": [],
+      "optionalFields": [
+        "listingHasEnergyCertificate.fi.value",
+        "energyCertificateUrl.fi.value",
+        "floorPlanUrl.fi.value"
+      ],
+      "ignoredCount": 0,
+      "optionalCount": 3,
       "fieldStatus": {
         "debtFreePrice.fi.value": {
           "value": null,
@@ -491,10 +600,6 @@
           "value": "31.10.2025",
           "status": "present"
         },
-        "zoningStatus.fi.value": {
-          "value": null,
-          "status": "missing"
-        },
         "hasBalcony.fi.value": {
           "value": null,
           "status": "missing"
@@ -508,8 +613,18 @@
           "status": "present"
         }
       },
-      "completeness": "35.3%",
-      "score": 35.294117647058826
+      "completeness": "37.5%",
+      "score": 37.5,
+      "typeRules": {
+        "ignoredFields": [],
+        "ignoredCount": 0,
+        "optionalFields": [
+          "listingHasEnergyCertificate.fi.value",
+          "energyCertificateUrl.fi.value",
+          "floorPlanUrl.fi.value"
+        ],
+        "optionalCount": 3
+      }
     },
     {
       "id": {
@@ -522,8 +637,8 @@
       "address": "Helsingintie 99",
       "city": "Porvoo",
       "type": "apartment",
-      "requiredFields": 17,
-      "filledFields": 10,
+      "requiredFields": 16,
+      "filledFields": 9,
       "missingFields": [
         "maintenanceCharge.fi.value",
         "fundingCharge.fi.value",
@@ -533,6 +648,14 @@
         "housingCooperativeMortgage.fi.value",
         "housingTenure.fi.value"
       ],
+      "ignoredFields": [],
+      "optionalFields": [
+        "listingHasEnergyCertificate.fi.value",
+        "energyCertificateUrl.fi.value",
+        "floorPlanUrl.fi.value"
+      ],
+      "ignoredCount": 0,
+      "optionalCount": 3,
       "fieldStatus": {
         "debtFreePrice.fi.value": {
           "value": "115 000 €",
@@ -592,10 +715,6 @@
           "value": "Heti",
           "status": "present"
         },
-        "zoningStatus.fi.value": {
-          "value": "Suunnittelutarvealue",
-          "status": "present"
-        },
         "hasBalcony.fi.value": {
           "value": "Kyllä",
           "status": "present"
@@ -609,8 +728,18 @@
           "status": "present"
         }
       },
-      "completeness": "58.8%",
-      "score": 58.82352941176471
+      "completeness": "56.3%",
+      "score": 56.25,
+      "typeRules": {
+        "ignoredFields": [],
+        "ignoredCount": 0,
+        "optionalFields": [
+          "listingHasEnergyCertificate.fi.value",
+          "energyCertificateUrl.fi.value",
+          "floorPlanUrl.fi.value"
+        ],
+        "optionalCount": 3
+      }
     },
     {
       "id": {
@@ -623,8 +752,8 @@
       "address": "Mailatie 3",
       "city": "Kittilä",
       "type": "apartment",
-      "requiredFields": 17,
-      "filledFields": 10,
+      "requiredFields": 16,
+      "filledFields": 9,
       "missingFields": [
         "maintenanceCharge.fi.value",
         "fundingCharge.fi.value",
@@ -634,6 +763,14 @@
         "housingCooperativeMortgage.fi.value",
         "housingTenure.fi.value"
       ],
+      "ignoredFields": [],
+      "optionalFields": [
+        "listingHasEnergyCertificate.fi.value",
+        "energyCertificateUrl.fi.value",
+        "floorPlanUrl.fi.value"
+      ],
+      "ignoredCount": 0,
+      "optionalCount": 3,
       "fieldStatus": {
         "debtFreePrice.fi.value": {
           "value": "855 000 €",
@@ -693,10 +830,6 @@
           "value": "Sopimuksen mukaan",
           "status": "present"
         },
-        "zoningStatus.fi.value": {
-          "value": "Asemakaava",
-          "status": "present"
-        },
         "hasBalcony.fi.value": {
           "value": "Kyllä",
           "status": "present"
@@ -710,8 +843,18 @@
           "status": "present"
         }
       },
-      "completeness": "58.8%",
-      "score": 58.82352941176471
+      "completeness": "56.3%",
+      "score": 56.25,
+      "typeRules": {
+        "ignoredFields": [],
+        "ignoredCount": 0,
+        "optionalFields": [
+          "listingHasEnergyCertificate.fi.value",
+          "energyCertificateUrl.fi.value",
+          "floorPlanUrl.fi.value"
+        ],
+        "optionalCount": 3
+      }
     },
     {
       "id": {
@@ -724,13 +867,21 @@
       "address": "Albertinkatu 19",
       "city": "Helsinki",
       "type": "apartment",
-      "requiredFields": 17,
-      "filledFields": 14,
+      "requiredFields": 16,
+      "filledFields": 13,
       "missingFields": [
         "housingCooperativeMortgage.fi.value",
         "housingTenure.fi.value",
         "hasBalcony.fi.value"
       ],
+      "ignoredFields": [],
+      "optionalFields": [
+        "listingHasEnergyCertificate.fi.value",
+        "energyCertificateUrl.fi.value",
+        "floorPlanUrl.fi.value"
+      ],
+      "ignoredCount": 0,
+      "optionalCount": 3,
       "fieldStatus": {
         "debtFreePrice.fi.value": {
           "value": "880 000 €",
@@ -790,10 +941,6 @@
           "value": "Sopimuksen mukaan",
           "status": "present"
         },
-        "zoningStatus.fi.value": {
-          "value": "Asemakaava",
-          "status": "present"
-        },
         "hasBalcony.fi.value": {
           "value": null,
           "status": "missing"
@@ -807,8 +954,18 @@
           "status": "present"
         }
       },
-      "completeness": "82.4%",
-      "score": 82.35294117647058
+      "completeness": "81.3%",
+      "score": 81.25,
+      "typeRules": {
+        "ignoredFields": [],
+        "ignoredCount": 0,
+        "optionalFields": [
+          "listingHasEnergyCertificate.fi.value",
+          "energyCertificateUrl.fi.value",
+          "floorPlanUrl.fi.value"
+        ],
+        "optionalCount": 3
+      }
     }
   ]
 }

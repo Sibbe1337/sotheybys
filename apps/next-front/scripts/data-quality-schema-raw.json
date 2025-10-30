@@ -14,10 +14,18 @@
       "lotOwnership.fi.value",
       "housingTenure.fi.value",
       "release.fi.value",
-      "zoningStatus.fi.value",
       "hasBalcony.fi.value",
       "sauna.fi.value",
       "housingCooperativeElevator.fi.value"
+    ],
+    "optional": [
+      "listingHasEnergyCertificate.fi.value",
+      "energyCertificateUrl.fi.value",
+      "floorPlanUrl.fi.value"
+    ],
+    "ignored": [
+      "propertyIdentifier.fi.value",
+      "propertyTax.fi.value"
     ],
     "description": "Required fields for apartment listings (raw Linear API paths)"
   },
@@ -25,14 +33,23 @@
     "required": [
       "propertyIdentifier.fi.value",
       "lotArea.fi.value",
-      "completeYear.fi.value",
+      "completeYear",
       "heatingSystem.fi.value",
-      "ventilationSystem.fi.value",
       "energyClass.fi.value",
       "debtFreePrice.fi.value",
       "propertyTax.fi.value",
       "zoningStatus.fi.value",
       "availableFrom.fi.value"
+    ],
+    "optional": [
+      "listingHasEnergyCertificate.fi.value",
+      "ventilationSystem.fi.value"
+    ],
+    "ignored": [
+      "housingCooperativeName.fi.value",
+      "housingTenure.fi.value",
+      "fundingCharge.fi.value",
+      "maintenanceCharge.fi.value"
     ],
     "description": "Required fields for property listings (raw Linear API paths)"
   },
@@ -43,13 +60,19 @@
       "rentalContractType.fi.value",
       "earliestTerminateDate.fi.value",
       "availableFrom.fi.value",
-      "completeYear.fi.value",
+      "completeYear",
       "heatingSystem.fi.value",
       "energyClass.fi.value",
       "waterCharge.fi.value",
       "electricityContract.fi.value"
     ],
+    "optional": [],
+    "ignored": [
+      "fundingCharge.fi.value",
+      "housingTenure.fi.value",
+      "lotOwnership.fi.value",
+      "housingCooperativeMortgage.fi.value"
+    ],
     "description": "Required fields for rental listings (raw Linear API paths)"
   }
 }
-
