@@ -29,16 +29,32 @@ const nextConfig = {
     minimumCacheTTL: 60 * 60 * 24 * 30, // ✅ Cache images for 30 days
   },
   async rewrites() {
-    // Only add rewrites if WordPress URL is configured
-    if (process.env.WORDPRESS_URL) {
-      return [
+    const rewrites = {
+      beforeFiles: [
+        // ✅ LINUS FIX: Language-specific URLs
+        // Swedish: /sv/objekt → /sv/kohde
         {
-          source: '/wp-admin/:path*',
-          destination: `${process.env.WORDPRESS_URL}/wp-admin/:path*`,
+          source: '/sv/objekt/:slug',
+          destination: '/sv/kohde/:slug',
         },
-      ];
+        // English: /en/properties → /en/kohde
+        {
+          source: '/en/properties/:slug',
+          destination: '/en/kohde/:slug',
+        },
+      ],
+      afterFiles: [],
+    };
+
+    // Add WordPress rewrites if configured
+    if (process.env.WORDPRESS_URL) {
+      rewrites.afterFiles.push({
+        source: '/wp-admin/:path*',
+        destination: `${process.env.WORDPRESS_URL}/wp-admin/:path*`,
+      });
     }
-    return [];
+
+    return rewrites;
   },
   async redirects() {
     return [
@@ -46,28 +62,6 @@ const nextConfig = {
       {
         source: '/property/:slug',
         destination: '/kohde/:slug',
-        permanent: true,
-      },
-      // Redirect Swedish /objekt/ to /kohteet/
-      {
-        source: '/sv/objekt',
-        destination: '/sv/kohteet',
-        permanent: true,
-      },
-      {
-        source: '/sv/objekt/:path*',
-        destination: '/sv/kohteet/:path*',
-        permanent: true,
-      },
-      // Redirect English /properties/ to /kohteet/
-      {
-        source: '/en/properties',
-        destination: '/en/kohteet',
-        permanent: true,
-      },
-      {
-        source: '/en/properties/:path*',
-        destination: '/en/kohteet/:path*',
         permanent: true,
       },
     ];

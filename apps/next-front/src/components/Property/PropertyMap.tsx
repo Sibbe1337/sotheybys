@@ -3,6 +3,7 @@
 import { APIProvider, Map, AdvancedMarker, InfoWindow } from '@vis.gl/react-google-maps';
 import { useState } from 'react';
 import Image from 'next/image';
+import { Link } from '@/lib/navigation';
 import type { Property, Locale } from '@/lib/domain/property.types';
 import { lpick } from '@/lib/domain/locale-utils';
 import PropertyCardNew from './PropertyCardNew';
@@ -161,12 +162,16 @@ export default function PropertyMap({ properties, language }: PropertyMapProps) 
                   <p className="text-lg font-semibold text-[var(--color-primary)] mb-3">
                     {(selectedProperty.pricing.debtFree || selectedProperty.pricing.sales || 0).toLocaleString('fi-FI')} €
                   </p>
-                  <a
-                    href={`/kohde/${selectedProperty.slug}`}
+                  <Link
+                    href={
+                      language === 'sv' ? `/objekt/${selectedProperty.slug}` :
+                      language === 'en' ? `/properties/${selectedProperty.slug}` :
+                      `/kohde/${selectedProperty.slug}`
+                    }
                     className="block w-full text-center px-4 py-2 bg-[var(--color-primary)] text-white rounded hover:bg-[var(--color-primary-dark)] transition-colors text-sm"
                   >
                     {language === 'fi' ? 'Katso kohde' : language === 'sv' ? 'Se objekt' : 'View property'}
-                  </a>
+                  </Link>
                 </div>
               </InfoWindow>
             )}

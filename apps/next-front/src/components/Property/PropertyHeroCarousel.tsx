@@ -66,6 +66,14 @@ export default function PropertyHeroCarousel({
                    currentProperty.media.images[0]?.url || 
                    '/images/defaults/placeholder-property.jpg';
 
+  // ✅ LINUS FIX: Language-specific URLs for SEO
+  const propertyPaths = {
+    fi: `/kohde/${currentProperty.slug}`,
+    sv: `/objekt/${currentProperty.slug}`,
+    en: `/properties/${currentProperty.slug}`,
+  };
+  const propertyUrl = propertyPaths[locale];
+
   return (
     <div 
       className="relative w-full h-[500px] lg:h-[600px] overflow-hidden"
@@ -92,7 +100,7 @@ export default function PropertyHeroCarousel({
           {/* Property Info */}
           <div className="max-w-4xl">
             <Link 
-              href={`/kohde/${currentProperty.slug}`}
+              href={propertyUrl}
               className="block group"
             >
               <h2 className="text-4xl lg:text-5xl font-light text-white mb-3 group-hover:text-gray-200 transition-colors">
