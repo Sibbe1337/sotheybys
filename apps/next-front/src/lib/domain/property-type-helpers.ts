@@ -39,7 +39,9 @@ const PROPERTY_CODES = new Set([
   'TONTTI',
   'PLOT',
   'MAATILA',
-  'FARM'
+  'FARM',
+  'VUOKRATALO',
+  'RENTAL_HOUSE'
 ]);
 
 /**
