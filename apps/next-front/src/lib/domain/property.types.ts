@@ -13,6 +13,7 @@ export interface Property {
   // Basic info
   address: LocalizedValue;
   city: LocalizedValue;
+  district?: LocalizedValue;  // Stadsdel (e.g., Lauttasaari)
   postalCode: string;
   apartmentIdentifier?: string;  // e.g., "C 47" (gate + apartment number)
 

@@ -110,6 +110,7 @@ export class LinearToPropertyMapper {
     const addressFi = lget(src.address!, 'fi');
     const postalCode = lget(src.postalCode!, locale);
     const cityFi = lget(src.city!, 'fi');
+    const districtData = lv(src.district ?? src.districtFree);
     
     const slug = src.slug 
       ? String(src.slug) 
@@ -270,6 +271,7 @@ export class LinearToPropertyMapper {
 
       address: lv(src.address),
       city: lv(src.city),
+      district: districtData.fi || districtData.sv || districtData.en ? districtData : undefined,
       postalCode,
       apartmentIdentifier,
 

@@ -1,14 +1,14 @@
 /**
- * PROPERTY CARD - BILAGA 2 SPECIFICATION
+ * PROPERTY CARD - DENNIS SPECIFICATION (Oct 2025)
  * 
- * This component renders property cards EXACTLY as specified in BILAGA 2:
- * 1. Image with "Ota yhteyttä" link (top right)
- * 2. Address with Type • City
- * 3. Price (Vh X € Mh Y € or just Mh X €)
- * 4. Description (huoneistoselitelmä)
+ * This component renders property cards EXACTLY as specified:
+ * 1. Image (clickable)
+ * 2. Full Address (street + apartment + postal code + city)
+ * 3. Price (ALWAYS both: Vh X € Mh Y €)
+ * 4. Description (huoneistoselitelmä only - NO objektstyp prefix)
  * 5. Area (141 m² + 31 m² or 185 m² / 215 m² | 0,1299 ha)
- * 6. Type 🏢 + Location 📍
- * 7. Agent (photo + name + phone)
+ * 6. Type 🏢 + District 📍 (stadsdel, NOT city)
+ * 7. Agent (photo + name + phone + "Ota yhteyttä" link)
  * 8. Button "Katso kohde »"
  */
 
@@ -20,6 +20,7 @@ import type { Property, Locale } from '@/lib/domain/property.types';
 import { lpick } from '@/lib/domain/locale-utils';
 import { fmtCurrency } from '@/lib/presentation/formatters/currency';
 import { fmtArea } from '@/lib/presentation/formatters/area';
+import { isProperty } from '@/lib/domain/property-type-helpers';
 
 interface PropertyCardNewProps {
   property: Property;
@@ -42,24 +43,31 @@ export default function PropertyCardNew({ property, locale }: PropertyCardNewPro
   // Extract data
   const address = lpick(property.address, locale);
   const city = lpick(property.city, locale);
+  const district = lpick(property.district, locale); // Stadsdel (e.g., Lauttasaari)
   const typeLabel = lpick(property.meta.listingTypeLabel, locale);
   const postalCode = property.postalCode;
   
-  // Build full address with apartment identifier (e.g., "Heikkiläntie 1 C 47")
-  const fullAddress = property.apartmentIdentifier 
+  // Build full address with apartment identifier, postal code and city
+  // Example: "Heikkiläntie 1 C 47, 00210 Helsinki"
+  const streetAddress = property.apartmentIdentifier 
     ? `${address} ${property.apartmentIdentifier}`
     : address;
+  const fullAddress = `${streetAddress}, ${postalCode} ${city}`;
   
-  // Prices
+  // Check if this is a property/estate (vs apartment)
+  const isEstate = isProperty(property);
+  
+  // Prices - Properties show only Mh, Apartments show both Vh and Mh
   const salesPrice = fmtCurrency(property.pricing.sales, localeStr);
-  const debtFreePrice = property.pricing.debt > 0 ? fmtCurrency(property.pricing.debtFree, localeStr) : undefined;
+  const debtFreePrice = fmtCurrency(property.pricing.debtFree, localeStr);
   
-  // Description (objekttyp | huoneistoselitelmä)
-  // Dennis requirement: "objekttypen saknas fortfarande före huoneistoselitelmän (ex ska det stå Höghus | 5h, kök, badrum..)"
+  // Description
+  // - For properties: show "Mökki tai huvila | 3 mh, oh, rt..."  (typeLabel | apartmentType)
+  // - For apartments: show ONLY "5-6h, k, kph..." (NO typeLabel prefix)
   const apartmentDesc = lpick(property.meta.apartmentType, locale) || property.dimensions.rooms;
-  const description = typeLabel && apartmentDesc 
+  const description = isEstate && typeLabel && apartmentDesc
     ? `${typeLabel} | ${apartmentDesc}`
-    : apartmentDesc || typeLabel;
+    : apartmentDesc;
   
   // Area formatting
   const livingArea = fmtArea(property.dimensions.living, localeStr);
@@ -71,9 +79,12 @@ export default function PropertyCardNew({ property, locale }: PropertyCardNewPro
     const totalArea = property.dimensions.total ? fmtArea(property.dimensions.total, localeStr) : undefined;
     const plotArea = property.dimensions.plot >= 10000 
       ? `${(property.dimensions.plot / 10000).toFixed(4).replace('.', ',')} ha`
-      : `${fmtArea(property.dimensions.plot, localeStr)}`;
+      : fmtArea(property.dimensions.plot, localeStr);
     
-    areaDisplay = `${livingArea}${totalArea ? ` / ${totalArea}` : ''} | ${plotArea}`;
+    // Show format: living / total | plot (e.g., "185 m² / 215 m² | 0,1299 ha")
+    areaDisplay = totalArea 
+      ? `${livingArea} / ${totalArea} | ${plotArea}`
+      : `${livingArea} | ${plotArea}`;
   } else if (property.dimensions.balcony || property.dimensions.terrace) {
     // APARTMENT: "141 m² + 31 m²"
     const extraArea = (property.dimensions.balcony || 0) + (property.dimensions.terrace || 0);
@@ -82,8 +93,14 @@ export default function PropertyCardNew({ property, locale }: PropertyCardNewPro
     }
   }
   
-  // Property URL
-  const propertyUrl = `/kohde/${property.slug}`;
+  // ✅ LINUS FIX: Language-specific URLs for SEO
+  // Rewrites in next.config.js map these to /kohde/ internally
+  const propertyPaths = {
+    fi: `/kohde/${property.slug}`,      // Finnish: /fi/kohde/slug
+    sv: `/objekt/${property.slug}`,     // Swedish: /sv/objekt/slug
+    en: `/properties/${property.slug}`, // English: /en/properties/slug
+  };
+  const propertyUrl = propertyPaths[locale];
   
   // Contact URL
   const contactUrl = `${propertyUrl}#contact`;
@@ -94,14 +111,6 @@ export default function PropertyCardNew({ property, locale }: PropertyCardNewPro
 
   return (
     <div className="bg-white border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow relative group">
-      {/* Contact Link - Top Right (positioned over image) */}
-      <Link
-        href={contactUrl}
-        className="absolute top-4 right-4 z-10 bg-white/90 backdrop-blur-sm px-4 py-2 text-sm font-medium text-gray-900 hover:bg-white transition-colors shadow-sm"
-      >
-        {t.contact}
-      </Link>
-
       {/* Property Image */}
       <Link href={propertyUrl} className="block relative aspect-[4/3] bg-gray-100">
         <Image
@@ -118,22 +127,24 @@ export default function PropertyCardNew({ property, locale }: PropertyCardNewPro
 
       {/* Property Details */}
       <div className="p-6 space-y-3">
-        {/* Title - Address Type • City */}
+        {/* Title - Full address with postal code and city */}
         <Link href={propertyUrl}>
           <h3 className="text-xl font-serif text-gray-900 leading-tight hover:text-gray-700 transition-colors">
-            {fullAddress} {typeLabel} • {city}
+            {fullAddress}
           </h3>
         </Link>
 
-        {/* Price - Show both Vh and Mh if debt exists, otherwise just Mh */}
+        {/* Price - Properties show only Mh, Apartments show both Vh and Mh */}
         <div className="text-lg font-bold text-gray-900">
-          {debtFreePrice ? (
+          {isEstate ? (
+            // Properties (estates) - only sales price
+            <span>{t.mh} {salesPrice}</span>
+          ) : (
+            // Apartments - both debt-free and sales price
             <>
               <span>{t.vh} {debtFreePrice}</span>
               <span className="ml-4">{t.mh} {salesPrice}</span>
             </>
-          ) : (
-            <span>{t.mh} {salesPrice}</span>
           )}
         </div>
 
@@ -156,14 +167,14 @@ export default function PropertyCardNew({ property, locale }: PropertyCardNewPro
               🏢 {typeLabel}
             </span>
           )}
-          {city && (
+          {district && (
             <span className="inline-flex items-center gap-1.5">
-              📍 {city}
+              📍 {district}
             </span>
           )}
         </div>
 
-        {/* Agent Info - Horizontal layout with photo */}
+        {/* Agent Info - Horizontal layout with photo and contact link */}
         {property.agent && property.agent.name && (
           <div className="flex items-center gap-3 pt-3 pb-3 border-t border-gray-200">
             {property.agent.photoUrl && (
@@ -183,6 +194,12 @@ export default function PropertyCardNew({ property, locale }: PropertyCardNewPro
                 <p className="text-sm text-gray-600 mt-0.5">{property.agent.phone}</p>
               )}
             </div>
+            <Link
+              href={contactUrl}
+              className="px-3 py-1.5 text-sm font-medium text-[#002349] border border-[#002349] hover:bg-[#002349] hover:text-white transition-colors"
+            >
+              {t.contact}
+            </Link>
           </div>
         )}
 

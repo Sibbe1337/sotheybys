@@ -12,6 +12,8 @@ export interface LinearListing {
   slug?: any;
   address?: LinearLocalized;
   city?: LinearLocalized;
+  district?: LinearLocalized;          // Stadsdel/District (e.g., Lauttasaari)
+  districtFree?: LinearLocalized;      // Alternative field name for district
   postalCode?: LinearLocalized;
   gate?: LinearLocalized;              // Rappu/Staircase (e.g., "C")
   apartmentNumber?: LinearLocalized;   // Huoneisto/Apartment number (e.g., "47")
