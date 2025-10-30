@@ -51,6 +51,14 @@ export interface PropertyDetailVM extends PropertyCardVM {
   // Property tax (ONLY for properties, NOT apartments)
   propertyTax?: number;
   
+  // Property-specific fields (DENNIS SPEC)
+  propertyIdentifier?: string;       // Kiinteistötunnus
+  plotArea?: string;                 // Tontin koko (formatted)
+  propertyBuildingRights?: string;   // Rakennusoikeus
+  propertyRestrictions?: string;     // Rasitteet ja oikeudet
+  propertyMortgages?: string;        // Kiinnitykset
+  propertyOtherFees?: string;        // Muut maksut
+  
   // Features (NEW Phase 3)
   features: {
     label: string;             // Localized
@@ -185,6 +193,14 @@ export class PropertyVM {
 
       // Property tax (ONLY for properties, NOT apartments)
       propertyTax: p.pricing.propertyTax || undefined,
+
+      // Property-specific fields (DENNIS SPEC)
+      propertyIdentifier: lpick(p.meta.propertyIdentifier, l),
+      plotArea: p.dimensions.plot ? fmtArea(p.dimensions.plot, localeStr) : undefined,
+      propertyBuildingRights: lpick(p.meta.propertyBuildingRights, l),
+      propertyRestrictions: lpick(p.meta.restrictions, l),
+      propertyMortgages: undefined, // TODO: Add to Property type if needed
+      propertyOtherFees: undefined, // TODO: Add to Property type if needed
 
       // Features (NEW Phase 3)
       features: this.getFeaturesList(p, l),
