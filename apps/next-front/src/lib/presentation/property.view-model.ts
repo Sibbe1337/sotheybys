@@ -22,6 +22,7 @@ export interface PropertyCardVM {
 }
 
 export interface PropertyDetailVM extends PropertyCardVM {
+  address: string;      // Street address only (e.g., "Heikkiläntie 1")
   postalCode: string;
   city: string;
   gate?: string;  // Staircase letter only (e.g., "C")
@@ -168,6 +169,7 @@ export class PropertyVM {
 
     return {
       ...card,
+      address: p.address[l] || p.address.fi,  // Street address only
       postalCode: p.postalCode,
       city: p.city[l] || p.city.fi,
       gate: p.gate,
