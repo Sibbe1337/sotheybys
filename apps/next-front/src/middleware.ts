@@ -14,11 +14,11 @@ export default createMiddleware({
   // All supported locales
   locales,
 
-  // Default locale (Finnish)
+  // Default locale (Finnish) - ALWAYS default to Finnish, ignore browser language
   defaultLocale,
 
-  // Locale detection strategy
-  localeDetection: true,
+  // Locale detection disabled - always use Finnish as default
+  localeDetection: false,
 
   // Prefix for default locale - ALWAYS to force Vercel to generate all /fi, /sv, /en routes
   localePrefix: 'always'
