@@ -27,6 +27,8 @@ const PROPERTY_TYPES = [
     label: { fi: 'Asunnot', sv: 'Lägenheter', en: 'Apartments' },
     image: '/images/property-types/apartment.svg',
     filter: (p: Property) => {
+      const rent = p.meta.rent || 0;
+      if (rent > 0) return false; // ✅ Dennis fix: exclude rentals from sale listings
       const type = (p.meta.typeCode || '').toLowerCase();
       return type.includes('kerrostalo') || type.includes('flat') || type.includes('apartment');
     }
@@ -36,6 +38,8 @@ const PROPERTY_TYPES = [
     label: { fi: 'Omakotitalot', sv: 'Villor', en: 'Houses' },
     image: '/images/property-types/house.svg',
     filter: (p: Property) => {
+      const rent = p.meta.rent || 0;
+      if (rent > 0) return false; // ✅ Dennis fix: exclude rentals from sale listings
       const type = (p.meta.typeCode || '').toLowerCase();
       return type.includes('omakotitalo') || type.includes('detached') || type.includes('villa');
     }
@@ -45,6 +49,8 @@ const PROPERTY_TYPES = [
     label: { fi: 'Rivitalot', sv: 'Radhus', en: 'Townhouses' },
     image: '/images/property-types/townhouse.svg',
     filter: (p: Property) => {
+      const rent = p.meta.rent || 0;
+      if (rent > 0) return false; // ✅ Dennis fix: exclude rentals from sale listings
       const type = (p.meta.typeCode || '').toLowerCase();
       return type.includes('rivi') || type.includes('row') || type.includes('townhouse');
     }
@@ -53,9 +59,28 @@ const PROPERTY_TYPES = [
 ];
 
 export default function PropertySearch({ properties, language }: PropertySearchProps) {
+  // Calculate min/max values FIRST before useState (Dennis fix: sliders must initialize with real data)
+  const priceMinMax = useMemo(() => {
+    const prices = properties
+      .map(p => p.pricing.debtFree || p.pricing.sales || 0)
+      .filter(price => price > 0);
+    return prices.length > 0
+      ? { min: Math.floor(Math.min(...prices) / 10000) * 10000, max: Math.ceil(Math.max(...prices) / 10000) * 10000 }
+      : { min: 0, max: 5000000 };
+  }, [properties]);
+
+  const areaMinMax = useMemo(() => {
+    const areas = properties
+      .map(p => p.dimensions.living || 0)
+      .filter(area => area > 0);
+    return areas.length > 0
+      ? { min: Math.floor(Math.min(...areas) / 10) * 10, max: Math.ceil(Math.max(...areas) / 10) * 10 }
+      : { min: 0, max: 1500 };
+  }, [properties]);
+
   const [selectedType, setSelectedType] = useState('all');
-  const [priceRange, setPriceRange] = useState([0, 5000000]);
-  const [areaRange, setAreaRange] = useState([0, 1500]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([priceMinMax.min, priceMinMax.max]);
+  const [areaRange, setAreaRange] = useState<[number, number]>([areaMinMax.min, areaMinMax.max]);
   const [viewMode, setViewMode] = useState<'grid' | 'list' | 'map'>('grid');
   const [selectedArea, setSelectedArea] = useState('all');
   const [isFilterOpen, setIsFilterOpen] = useState(true); // Mobile collapsible state
@@ -80,25 +105,6 @@ export default function PropertySearch({ properties, language }: PropertySearchP
       });
     });
     return typesMap;
-  }, [properties]);
-
-  // Calculate min/max values for sliders from actual property data
-  const priceMinMax = useMemo(() => {
-    const prices = properties
-      .map(p => p.pricing.debtFree || p.pricing.sales || 0)
-      .filter(price => price > 0);
-    return prices.length > 0
-      ? { min: Math.floor(Math.min(...prices) / 10000) * 10000, max: Math.ceil(Math.max(...prices) / 10000) * 10000 }
-      : { min: 0, max: 5000000 };
-  }, [properties]);
-
-  const areaMinMax = useMemo(() => {
-    const areas = properties
-      .map(p => p.dimensions.living || 0)
-      .filter(area => area > 0);
-    return areas.length > 0
-      ? { min: Math.floor(Math.min(...areas) / 10) * 10, max: Math.ceil(Math.max(...areas) / 10) * 10 }
-      : { min: 0, max: 1500 };
   }, [properties]);
 
   const filteredProperties = useMemo(() => {
@@ -198,11 +204,22 @@ export default function PropertySearch({ properties, language }: PropertySearchP
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             {/* Price Range Slider */}
             <div>
-              <div className="text-xs text-gray-600 mb-3">
-                {priceRange[0].toLocaleString('fi-FI')} - {priceRange[1].toLocaleString('fi-FI')} €
+              <label className="block text-xs text-gray-600 mb-2 tracking-wider uppercase">{translations.priceRange[language]}</label>
+              <div className="text-sm font-medium text-gray-900 mb-3">
+                {priceRange[0].toLocaleString('fi-FI')} € - {priceRange[1].toLocaleString('fi-FI')} €
               </div>
-              <div className="relative h-5 flex items-center">
-                <div className="absolute w-full h-1 bg-gray-300 rounded-full"></div>
+              <div className="relative pt-1">
+                {/* Background track */}
+                <div className="absolute w-full h-2 bg-gray-200 rounded-full top-1/2 -translate-y-1/2"></div>
+                {/* Active track (between thumbs) */}
+                <div 
+                  className="absolute h-2 bg-[var(--color-primary)] rounded-full top-1/2 -translate-y-1/2"
+                  style={{
+                    left: `${((priceRange[0] - priceMinMax.min) / (priceMinMax.max - priceMinMax.min)) * 100}%`,
+                    right: `${100 - ((priceRange[1] - priceMinMax.min) / (priceMinMax.max - priceMinMax.min)) * 100}%`
+                  }}
+                ></div>
+                {/* Min slider (z-index 2) */}
                 <input
                   type="range"
                   min={priceMinMax.min}
@@ -215,8 +232,10 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                       setPriceRange([newMin, priceRange[1]]);
                     }
                   }}
-                  className="absolute w-full h-1 bg-transparent appearance-none cursor-pointer accent-[var(--color-primary)] z-10"
+                  className="dual-range-slider dual-range-slider-min"
+                  style={{ zIndex: priceRange[0] > priceMinMax.max - 100000 ? 5 : 3 }}
                 />
+                {/* Max slider (z-index 4) */}
                 <input
                   type="range"
                   min={priceMinMax.min}
@@ -229,18 +248,30 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                       setPriceRange([priceRange[0], newMax]);
                     }
                   }}
-                  className="absolute w-full h-1 bg-transparent appearance-none cursor-pointer accent-[var(--color-primary)] z-10"
+                  className="dual-range-slider dual-range-slider-max"
+                  style={{ zIndex: 4 }}
                 />
               </div>
             </div>
 
             {/* Area Range Slider */}
             <div>
-              <div className="text-xs text-gray-600 mb-3">
-                {areaRange[0]} - {areaRange[1]} m²
+              <label className="block text-xs text-gray-600 mb-2 tracking-wider uppercase">{translations.areaRange[language]}</label>
+              <div className="text-sm font-medium text-gray-900 mb-3">
+                {areaRange[0]} m² - {areaRange[1]} m²
               </div>
-              <div className="relative h-5 flex items-center">
-                <div className="absolute w-full h-1 bg-gray-300 rounded-full"></div>
+              <div className="relative pt-1">
+                {/* Background track */}
+                <div className="absolute w-full h-2 bg-gray-200 rounded-full top-1/2 -translate-y-1/2"></div>
+                {/* Active track (between thumbs) */}
+                <div 
+                  className="absolute h-2 bg-[var(--color-primary)] rounded-full top-1/2 -translate-y-1/2"
+                  style={{
+                    left: `${((areaRange[0] - areaMinMax.min) / (areaMinMax.max - areaMinMax.min)) * 100}%`,
+                    right: `${100 - ((areaRange[1] - areaMinMax.min) / (areaMinMax.max - areaMinMax.min)) * 100}%`
+                  }}
+                ></div>
+                {/* Min slider (z-index 2) */}
                 <input
                   type="range"
                   min={areaMinMax.min}
@@ -253,8 +284,10 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                       setAreaRange([newMin, areaRange[1]]);
                     }
                   }}
-                  className="absolute w-full h-1 bg-transparent appearance-none cursor-pointer accent-[var(--color-primary)] z-10"
+                  className="dual-range-slider dual-range-slider-min"
+                  style={{ zIndex: areaRange[0] > areaMinMax.max - 100 ? 5 : 3 }}
                 />
+                {/* Max slider (z-index 4) */}
                 <input
                   type="range"
                   min={areaMinMax.min}
@@ -267,11 +300,57 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                       setAreaRange([areaRange[0], newMax]);
                     }
                   }}
-                  className="absolute w-full h-1 bg-transparent appearance-none cursor-pointer accent-[var(--color-primary)] z-10"
+                  className="dual-range-slider dual-range-slider-max"
+                  style={{ zIndex: 4 }}
                 />
               </div>
             </div>
           </div>
+
+          <style jsx>{`
+            .dual-range-slider {
+              position: absolute;
+              width: 100%;
+              height: 8px;
+              background: transparent;
+              outline: none;
+              pointer-events: none;
+              -webkit-appearance: none;
+              appearance: none;
+            }
+
+            .dual-range-slider::-webkit-slider-thumb {
+              -webkit-appearance: none;
+              appearance: none;
+              width: 18px;
+              height: 18px;
+              background: var(--color-primary, #002349);
+              cursor: pointer;
+              border-radius: 50%;
+              pointer-events: all;
+              border: 2px solid white;
+              box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            }
+
+            .dual-range-slider::-moz-range-thumb {
+              width: 18px;
+              height: 18px;
+              background: var(--color-primary, #002349);
+              cursor: pointer;
+              border-radius: 50%;
+              pointer-events: all;
+              border: 2px solid white;
+              box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            }
+
+            .dual-range-slider::-webkit-slider-thumb:hover {
+              transform: scale(1.1);
+            }
+
+            .dual-range-slider::-moz-range-thumb:hover {
+              transform: scale(1.1);
+            }
+          `}</style>
 
           {/* View Mode Selector - Centered */}
           <div className="flex justify-center">

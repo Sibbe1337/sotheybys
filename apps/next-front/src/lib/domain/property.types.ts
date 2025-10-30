@@ -14,6 +14,7 @@ export interface Property {
   address: LocalizedValue;
   city: LocalizedValue;
   postalCode: string;
+  apartmentIdentifier?: string;  // e.g., "C 47" (gate + apartment number)
 
   // Rich content (NEW in Phase 3)
   description?: LocalizedValue;       // freeText / marketingDescription

@@ -6,18 +6,18 @@
       "maintenanceCharge.fi.value",
       "fundingCharge.fi.value",
       "waterCharge.fi.value",
-      "completeYear.fi.value",
+      "completeYear",
       "heatingSystem.fi.value",
       "energyClass.fi.value",
       "housingCooperativeName.fi.value",
       "housingCooperativeMortgage.fi.value",
-      "siteOwnershipType.fi.value",
+      "lotOwnership.fi.value",
       "housingTenure.fi.value",
-      "availableFrom.fi.value",
+      "release.fi.value",
       "zoningStatus.fi.value",
       "hasBalcony.fi.value",
       "sauna.fi.value",
-      "elevator.fi.value"
+      "housingCooperativeElevator.fi.value"
     ],
     "description": "Required fields for apartment listings (raw Linear API paths)"
   },

@@ -13,6 +13,8 @@ export interface LinearListing {
   address?: LinearLocalized;
   city?: LinearLocalized;
   postalCode?: LinearLocalized;
+  gate?: LinearLocalized;              // Rappu/Staircase (e.g., "C")
+  apartmentNumber?: LinearLocalized;   // Huoneisto/Apartment number (e.g., "47")
 
   nonLocalizedValues?: LinearNV;
 
@@ -121,7 +123,7 @@ export interface LinearListing {
   videoUrl?: LinearLocalized;
   energyCertificateUrl?: LinearLocalized;
 
-  // agent
+  // agent / realtor (Linear API uses both field names)
   estateAgentName?: any;
   estateAgentPhone?: any;
   estateAgentEmail?: any;
@@ -133,5 +135,23 @@ export interface LinearListing {
     avatar?: string;
     jobTitle?: string;
   };
+  realtor?: {
+    id?: number;
+    name?: string;
+    email?: string;
+    jobTitle?: string;
+    avatar?: string;
+    tel?: string;
+    primaryCompany?: {
+      id?: number;
+      name?: string;
+      businessId?: string;
+      address?: string;
+      postNumber?: string;
+      postOffice?: string;
+      logo?: string;
+    };
+  };
+  realtorName?: string;
 }
 

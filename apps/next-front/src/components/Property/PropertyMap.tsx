@@ -32,7 +32,9 @@ export default function PropertyMap({ properties, language }: PropertyMapProps) 
     return null;
   };
 
-  const firstPropertyCoords = properties.length > 0 ? getLatLng(properties[0]) : null;
+  // Check how many properties have coordinates
+  const propertiesWithCoords = properties.filter(p => getLatLng(p) !== null);
+  const firstPropertyCoords = propertiesWithCoords.length > 0 ? getLatLng(propertiesWithCoords[0]) : null;
   const center = firstPropertyCoords || defaultCenter;
 
   if (!apiKey) {
@@ -60,6 +62,45 @@ export default function PropertyMap({ properties, language }: PropertyMapProps) 
         >
           {language === 'fi' ? 'Hanki API-nyckel' : language === 'sv' ? 'Skaffa API-nyckel' : 'Get API key'}
         </a>
+      </div>
+    );
+  }
+
+  // ✅ Dennis fix: Show warning if no properties have coordinates
+  if (propertiesWithCoords.length === 0) {
+    return (
+      <div className="space-y-6">
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-8 text-center">
+          <svg className="w-12 h-12 mx-auto mb-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <h3 className="text-lg font-semibold text-blue-900 mb-2">
+            {language === 'fi' ? 'Koordinaatit puuttuvat' : language === 'sv' ? 'Koordinater saknas' : 'Coordinates missing'}
+          </h3>
+          <p className="text-blue-800 mb-4">
+            {language === 'fi' 
+              ? 'Näillä kohteilla ei ole karttakoordinaatteja. Lisää koordinaatit Linear-järjestelmään nähdäksesi kohteet kartalla.' 
+              : language === 'sv'
+              ? 'Dessa objekt har inga kartkoordinater. Lägg till koordinater i Linear för att visa objekt på kartan.'
+              : 'These properties have no map coordinates. Add coordinates in Linear to display properties on the map.'}
+          </p>
+          <p className="text-sm text-blue-700">
+            {properties.length} {language === 'fi' ? 'kohdetta ilman koordinaatteja' : language === 'sv' ? 'objekt utan koordinater' : 'properties without coordinates'}
+          </p>
+        </div>
+
+        {/* Show property list anyway */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {properties.map((property) => (
+            <PropertyCardNew 
+              key={property.id} 
+              property={property} 
+              locale={language as Locale} 
+            />
+          ))}
+        </div>
       </div>
     );
   }

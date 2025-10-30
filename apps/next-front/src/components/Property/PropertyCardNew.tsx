@@ -45,12 +45,21 @@ export default function PropertyCardNew({ property, locale }: PropertyCardNewPro
   const typeLabel = lpick(property.meta.listingTypeLabel, locale);
   const postalCode = property.postalCode;
   
+  // Build full address with apartment identifier (e.g., "Heikkiläntie 1 C 47")
+  const fullAddress = property.apartmentIdentifier 
+    ? `${address} ${property.apartmentIdentifier}`
+    : address;
+  
   // Prices
   const salesPrice = fmtCurrency(property.pricing.sales, localeStr);
   const debtFreePrice = property.pricing.debt > 0 ? fmtCurrency(property.pricing.debtFree, localeStr) : undefined;
   
-  // Description (huoneistoselitelmä)
-  const description = lpick(property.meta.apartmentType, locale) || property.dimensions.rooms;
+  // Description (objekttyp | huoneistoselitelmä)
+  // Dennis requirement: "objekttypen saknas fortfarande före huoneistoselitelmän (ex ska det stå Höghus | 5h, kök, badrum..)"
+  const apartmentDesc = lpick(property.meta.apartmentType, locale) || property.dimensions.rooms;
+  const description = typeLabel && apartmentDesc 
+    ? `${typeLabel} | ${apartmentDesc}`
+    : apartmentDesc || typeLabel;
   
   // Area formatting
   const livingArea = fmtArea(property.dimensions.living, localeStr);
@@ -81,6 +90,7 @@ export default function PropertyCardNew({ property, locale }: PropertyCardNewPro
   
   // Image
   const imageUrl = property.media.images.find(img => !img.floorPlan)?.url || property.media.images[0]?.url || FALLBACK_IMG;
+  const imageAlt = fullAddress;
 
   return (
     <div className="bg-white border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow relative group">
@@ -96,7 +106,7 @@ export default function PropertyCardNew({ property, locale }: PropertyCardNewPro
       <Link href={propertyUrl} className="block relative aspect-[4/3] bg-gray-100">
         <Image
           src={imageUrl}
-          alt={address}
+          alt={imageAlt}
           fill
           className="object-cover"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -109,7 +119,7 @@ export default function PropertyCardNew({ property, locale }: PropertyCardNewPro
         {/* Title - Address Type • City */}
         <Link href={propertyUrl}>
           <h3 className="text-xl font-serif text-gray-900 leading-tight hover:text-gray-700 transition-colors">
-            {address} {typeLabel} • {city}
+            {fullAddress} {typeLabel} • {city}
           </h3>
         </Link>
 

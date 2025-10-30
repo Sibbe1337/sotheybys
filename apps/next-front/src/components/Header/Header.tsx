@@ -231,10 +231,12 @@ export default function Header({ menuItems }: HeaderProps) {
         </div>
       </div>
 
-      {/* MAIN HEADER BAR - RAD 2 (Logo + Navigation) - Statisk storlek */}
+      {/* MAIN HEADER BAR - RAD 2 (Logo + Navigation) - Compressed on mobile scroll */}
       <div className="max-w-[1400px] mx-auto px-6">
-        <div className="flex items-center justify-between py-4">
-          {/* Logo - Statisk storlek */}
+        <div className={`flex items-center justify-between transition-all duration-300 ${
+          isScrolled ? 'py-2 md:py-4' : 'py-4'
+        }`}>
+          {/* Logo - Smaller on mobile scroll (Dennis fix: save screen space) */}
           <Link 
             href="/" 
             className="flex items-center flex-shrink-0"
@@ -245,7 +247,9 @@ export default function Header({ menuItems }: HeaderProps) {
               alt="Snellman Sotheby's International Realty"
               width={550}
               height={165}
-              className="h-24 w-auto"
+              className={`transition-all duration-300 w-auto ${
+                isScrolled ? 'h-12 md:h-20' : 'h-16 md:h-24'
+              }`}
               priority
               quality={100}
             />

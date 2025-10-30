@@ -234,14 +234,17 @@ export class LinearToPropertyMapper {
       };
     }
 
-    // ========== AGENT ==========
-    const rawAgent: any = src.agent ? {
-      name: src.agent.name,
-      phone: src.agent.phone,
-      email: src.agent.email,
-      avatar: src.agent.avatar,
-      photoUrl: src.agent.photo?.sourceUrl,
-      jobTitle: src.agent.jobTitle
+    // ========== AGENT / REALTOR ==========
+    // Linear API uses both "agent" and "realtor" field names
+    const agentSource = src.agent || src.realtor;
+    const rawAgent: any = agentSource ? {
+      name: agentSource.name || src.realtorName,
+      phone: (src.agent as any)?.phone || (src.realtor as any)?.tel,
+      email: agentSource.email,
+      avatar: agentSource.avatar,
+      photoUrl: (src.agent as any)?.photo?.sourceUrl || agentSource.avatar,
+      jobTitle: agentSource.jobTitle,
+      companyName: (src.realtor as any)?.primaryCompany?.name
     } : {
       name: (src as any).estateAgentName,
       phone: (src as any).estateAgentPhone,
@@ -254,6 +257,12 @@ export class LinearToPropertyMapper {
       warn('Agent data warnings for', addressFi, agentWarnings);
     }
 
+    // ========== APARTMENT IDENTIFIER ==========
+    // Build apartment identifier from gate (rappu) + apartment number (e.g., "C 47")
+    const gate = lget(src.gate, 'fi')?.trim();
+    const aptNum = lget(src.apartmentNumber, 'fi')?.trim();
+    const apartmentIdentifier = gate && aptNum ? `${gate} ${aptNum}` : gate || aptNum || undefined;
+
     // ========== BUILD PROPERTY ==========
     const property: Property = {
       id: String(nv.id ?? src.id ?? ''),
@@ -262,6 +271,7 @@ export class LinearToPropertyMapper {
       address: lv(src.address),
       city: lv(src.city),
       postalCode,
+      apartmentIdentifier,
 
       // NEW: Rich content
       description: description.fi || description.sv || description.en ? description : undefined,
@@ -312,7 +322,7 @@ export class LinearToPropertyMapper {
         
         // Ownership & tenure
         ownershipType: lv((src as any).ownershipType),
-        plotOwnership: lv((src as any).siteOwnershipType),
+        plotOwnership: lv((src as any).siteOwnershipType ?? (src as any).lotOwnership),
         housingTenure: lv((src as any).housingTenure),
         
         // Property-specific
@@ -321,11 +331,17 @@ export class LinearToPropertyMapper {
         restrictions: restrictions.fi || restrictions.sv || restrictions.en ? restrictions : undefined,
         
         // Dates & availability
-        availableFrom: lv((src as any).availableFrom),
+        availableFrom: lv((src as any).availableFrom ?? (src as any).release ?? (src as any).freeOnText),
         zoning: lv((src as any).zoningStatus),
         
         // Building details
-        yearBuilt: Number(nv.yearBuilt ?? (src as any).yearBuilt) || undefined,
+        yearBuilt: Number(
+          nv.yearBuilt ?? 
+          nv.completeYear ?? 
+          (src as any).yearBuilt ?? 
+          (src as any).completeYear ?? 
+          lget((src as any).completeYear!, 'fi')
+        ) || undefined,
         floorsTotal: Number(nv.floorCount ?? (src as any).floorCount) || undefined,
         floor,
         elevator: hasElevator,
