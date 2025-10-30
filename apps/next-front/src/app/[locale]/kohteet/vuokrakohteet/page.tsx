@@ -1,6 +1,7 @@
-import PropertyGrid from '@/components/Property/PropertyGrid';
+import PropertyGridNew from '@/components/Property/PropertyGridNew';
 import { Link } from '@/lib/navigation';
 import { locales, type Locale } from '@/i18n/config';
+import type { Property } from '@/lib/domain/property.types';
 import { LinearAPIClient } from '@/lib/infrastructure/linear-api/client';
 import { LinearToPropertyMapper } from '@/lib/infrastructure/linear-api/mapper';
 import { GetProperties } from '@/lib/application/get-properties.usecase';
@@ -21,7 +22,7 @@ interface RentalPropertiesPageProps {
 
 export default async function RentalPropertiesPage({ params }: RentalPropertiesPageProps) {
   const { locale } = params;
-  let rentalProperties: any[] = [];
+  let rentalProperties: Property[] = []; // ✅ NEW ARCHITECTURE: Property domain objects
   
   try {
     // 🏗️ NEW ARCHITECTURE: Use clean architecture layers
@@ -40,7 +41,7 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
     log(`✅ Fetched ${domainProperties.length} properties via new use case`);
     
     // ✅ FILTER FOR RENTAL PROPERTIES - Only show properties with rent
-    const rentalDomainProperties = domainProperties.filter(property => {
+    rentalProperties = domainProperties.filter(property => {
       const isRental = PropertyVM.isRental(property);
       if (isRental) {
         log(`🏠 RENTAL FOUND: ${property.address.fi} | Rent: ${property.meta.rent} | INCLUDING in rental listings`);
@@ -48,43 +49,14 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
       return isRental;
     });
     
-    log(`✅ Found ${rentalDomainProperties.length} rental properties (Vuokrakohteet)`);
+    log(`✅ Found ${rentalProperties.length} rental properties (Vuokrakohteet)`);
     
     // 💎 SORT BY RENT: Most expensive first (Premium branding)
-    rentalDomainProperties.sort((a, b) => {
+    rentalProperties.sort((a, b) => {
       return (b.meta.rent || 0) - (a.meta.rent || 0); // Descending order (highest first)
     });
     
-    log(`💎 Sorted ${rentalDomainProperties.length} rental properties by rent (highest first)`);
-    
-    // 🎨 TRANSFORM TO VIEW MODELS for backward compatibility with PropertyGrid
-    // TODO Phase 4: Refactor PropertyGrid to use PropertyCardVM directly
-    rentalProperties = rentalDomainProperties.map(property => ({
-      id: property.id,
-      slug: property.slug,
-      title: property.address[locale] || property.address.fi,
-      city: property.city[locale] || property.city.fi,
-      price: property.meta.rent,
-      area: property.dimensions.living,
-      propertyType: property.meta.typeCode,
-      featuredImage: {
-        node: {
-          sourceUrl: property.media.images.find(img => !img.floorPlan)?.url || property.media.images[0]?.url || '',
-          altText: property.address[locale] || property.address.fi
-        }
-      },
-      images: property.media.images,
-      // Keep ACF structure for backward compatibility
-      acfRealEstate: {
-        property: {
-          address: property.address[locale] || property.address.fi,
-          city: property.city[locale] || property.city.fi,
-          rent: property.meta.rent?.toString() || null,
-          area: property.dimensions.living.toString(),
-          propertyType: property.meta.apartmentType?.[locale] || property.meta.apartmentType?.fi || property.meta.typeCode,
-        }
-      }
-    }));
+    log(`💎 Sorted ${rentalProperties.length} rental properties by rent (highest first)`);
     
   } catch (error) {
     console.error('Error fetching rental properties:', error);
@@ -100,7 +72,7 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
           </h1>
 
           {rentalProperties.length > 0 ? (
-            <PropertyGrid properties={rentalProperties} language={locale as 'fi' | 'sv' | 'en'} />
+            <PropertyGridNew properties={rentalProperties} locale={locale} />
           ) : (
             <div className="text-center py-12">
               <p className="text-xl text-gray-600 font-light">

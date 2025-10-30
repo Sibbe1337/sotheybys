@@ -1,6 +1,7 @@
-import PropertyGrid from '@/components/Property/PropertyGrid';
+import PropertyGridNew from '@/components/Property/PropertyGridNew';
 import { Link } from '@/lib/navigation';
 import { locales, type Locale } from '@/i18n/config';
+import type { Property } from '@/lib/domain/property.types';
 import { LinearAPIClient } from '@/lib/infrastructure/linear-api/client';
 import { LinearToPropertyMapper } from '@/lib/infrastructure/linear-api/mapper';
 import { GetProperties } from '@/lib/application/get-properties.usecase';
@@ -20,7 +21,7 @@ interface ReferencesPageProps {
 
 export default async function ReferencesPage({ params }: ReferencesPageProps) {
   const { locale } = params;
-  let referenceProperties: any[] = [];
+  let referenceProperties: Property[] = []; // ✅ NEW ARCHITECTURE: Property domain objects
   
   // Fetch sold properties from Linear API
   try {
@@ -40,7 +41,7 @@ export default async function ReferencesPage({ params }: ReferencesPageProps) {
     log(`✅ Fetched ${domainProperties.length} properties via new use case`);
     
     // ✅ FILTER FOR SOLD PROPERTIES - status === 'SOLD'
-    const soldDomainProperties = domainProperties.filter(property => {
+    referenceProperties = domainProperties.filter(property => {
       const isSold = property.meta.status === 'SOLD';
       if (isSold) {
         log(`🏆 SOLD PROPERTY FOUND: ${property.address.fi}`);
@@ -48,50 +49,15 @@ export default async function ReferencesPage({ params }: ReferencesPageProps) {
       return isSold;
     });
     
-    log(`✅ Found ${soldDomainProperties.length} sold properties (Referenser)`);
+    log(`✅ Found ${referenceProperties.length} sold properties (Referenser)`);
     
     // 💎 SORT BY PRICE: Most expensive first (Premium branding)
     // Show most prestigious sales first
-    soldDomainProperties.sort((a, b) => {
+    referenceProperties.sort((a, b) => {
       return b.pricing.debtFree - a.pricing.debtFree; // Descending order (highest first)
     });
     
-    log(`💎 Sorted ${soldDomainProperties.length} sold properties by price (highest first)`);
-    
-    // 🎨 TRANSFORM TO VIEW MODELS for backward compatibility with PropertyGrid
-    // TODO Phase 4: Refactor PropertyGrid to use PropertyCardVM directly
-    referenceProperties = soldDomainProperties.map(property => ({
-      id: property.id,
-      slug: property.slug,
-      title: property.address[locale] || property.address.fi,
-      city: property.city[locale] || property.city.fi,
-      price: property.pricing.sales,
-      debtFreePrice: property.pricing.debtFree,
-      area: property.dimensions.living,
-      propertyType: property.meta.typeCode,
-      featuredImage: {
-        node: {
-          sourceUrl: property.media.images.find(img => !img.floorPlan)?.url || property.media.images[0]?.url || '',
-          altText: property.address[locale] || property.address.fi
-        }
-      },
-      images: property.media.images,
-      // Keep ACF structure for backward compatibility
-      acfRealEstate: {
-        property: {
-          address: property.address[locale] || property.address.fi,
-          city: property.city[locale] || property.city.fi,
-          price: property.pricing.sales.toString(),
-          debtFreePrice: property.pricing.debtFree.toString(),
-          area: property.dimensions.living.toString(),
-          propertyType: property.meta.apartmentType?.[locale] || property.meta.apartmentType?.fi || property.meta.typeCode,
-          status: 'SOLD',
-        }
-      },
-      property: {
-        status: 'SOLD'
-      }
-    }));
+    log(`💎 Sorted ${referenceProperties.length} sold properties by price (highest first)`);
     
   } catch (error) {
     console.error('Error fetching sold properties:', error);
@@ -128,9 +94,9 @@ export default async function ReferencesPage({ params }: ReferencesPageProps) {
         {/* Properties Grid */}
         <section className="py-12 lg:py-20">
           <div className="container mx-auto px-4">
-            <PropertyGrid properties={referenceProperties} showStatus={true} language={locale as 'fi' | 'sv' | 'en'} />
-            
-            {referenceProperties.length === 0 && (
+            {referenceProperties.length > 0 ? (
+              <PropertyGridNew properties={referenceProperties} locale={locale} />
+            ) : (
               <div className="text-center py-20">
                 <p className="text-gray-600 font-light">
                   Referenssejä päivitetään säännöllisesti.
