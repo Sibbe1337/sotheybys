@@ -1,7 +1,7 @@
 {
   "framework": "nextjs",
-  "buildCommand": "cd ../.. && corepack enable && corepack prepare pnpm@8.15.1 --activate && pnpm install && cd apps/next-front && pnpm run build",
+  "buildCommand": "cd ../.. && pnpm install && cd apps/next-front && pnpm run build",
   "devCommand": "pnpm run dev",
-  "installCommand": "corepack enable && corepack prepare pnpm@8.15.1 --activate && cd ../.. && pnpm install",
+  "installCommand": "cd ../.. && pnpm install",
   "outputDirectory": ".next"
 }
