@@ -20,9 +20,16 @@ interface FieldProps {
 function Field({ label, value, alwaysShow = false, locale }: FieldProps) {
   if (!alwaysShow && (value === undefined || value === null || value === '')) return null;
   
-  const displayValue = typeof value === 'boolean' 
-    ? (value ? getFieldLabel('yes', locale) : getFieldLabel('no', locale))
-    : value;
+  // Handle boolean values and empty values
+  let displayValue: string | number | undefined;
+  if (typeof value === 'boolean') {
+    displayValue = value ? getFieldLabel('yes', locale) : getFieldLabel('no', locale);
+  } else if (value === undefined || value === null || value === '') {
+    // Show default text for alwaysShow fields with no data
+    displayValue = '—';
+  } else {
+    displayValue = value;
+  }
 
   return (
     <div className="flex justify-between py-3 border-b border-gray-100 last:border-0">

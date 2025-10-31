@@ -22,10 +22,16 @@ function Field({ label, value, sub, alwaysShow = false }: FieldProps) {
   // Hide if no value and not marked as "always show"
   if (!alwaysShow && (value === undefined || value === null || value === '')) return null;
   
-  // Handle boolean values
-  const displayValue = typeof value === 'boolean' 
-    ? (value ? getFieldLabel('yes', 'fi') : getFieldLabel('no', 'fi'))
-    : value;
+  // Handle boolean values and empty values
+  let displayValue: string | number | undefined;
+  if (typeof value === 'boolean') {
+    displayValue = value ? getFieldLabel('yes', 'fi') : getFieldLabel('no', 'fi');
+  } else if (value === undefined || value === null || value === '') {
+    // Show default text for alwaysShow fields with no data
+    displayValue = '—';
+  } else {
+    displayValue = value;
+  }
 
   return (
     <div className="flex justify-between py-3 border-b border-gray-100 last:border-0">
