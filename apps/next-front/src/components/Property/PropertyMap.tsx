@@ -108,7 +108,7 @@ export default function PropertyMap({ properties, language }: PropertyMapProps) 
             const title = addressParts.join(' ').trim();
             const images = (property.media.images || []).filter(img => !img.floorPlan).map(img => ({ url: img.url, alt: title }));
             const district = property.city[language] || property.city.fi;
-            const apartmentTypeText = property.meta.apartmentTypeText?.[language] || property.meta.apartmentTypeText?.fi;
+            const apartmentTypeText = property.meta.apartmentType?.[language] || property.meta.apartmentType?.fi;
             const listingTypeLabel = property.meta.listingTypeLabel?.[language] || property.meta.listingTypeLabel?.fi || property.meta.typeCode;
             
             return (
@@ -226,7 +226,7 @@ export default function PropertyMap({ properties, language }: PropertyMapProps) 
           const title = addressParts.join(' ').trim();
           const images = (property.media.images || []).filter(img => !img.floorPlan).map(img => ({ url: img.url, alt: title }));
           const district = property.city[language] || property.city.fi;
-          const apartmentTypeText = property.meta.apartmentTypeText?.[language] || property.meta.apartmentTypeText?.fi;
+          const apartmentTypeText = property.meta.apartmentType?.[language] || property.meta.apartmentType?.fi;
           const listingTypeLabel = property.meta.listingTypeLabel?.[language] || property.meta.listingTypeLabel?.fi || property.meta.typeCode;
           
           return (

@@ -477,7 +477,7 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                     const district = property.city[language] || property.city.fi;
                     
                     // Get apartment type (huoneistoselitelmä)
-                    const apartmentTypeText = property.meta.apartmentTypeText?.[language] || property.meta.apartmentTypeText?.fi;
+                    const apartmentTypeText = property.meta.apartmentType?.[language] || property.meta.apartmentType?.fi;
                     
                     // Get listing type label
                     const listingTypeLabel = property.meta.listingTypeLabel?.[language] || property.meta.listingTypeLabel?.fi || property.meta.typeCode;

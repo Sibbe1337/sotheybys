@@ -68,7 +68,7 @@ export default function PropertyGridNew({ properties, locale }: PropertyGridNewP
         const district = property.city[locale] || property.city.fi;
         
         // Get apartment type (huoneistoselitelmä)
-        const apartmentTypeText = property.meta.apartmentTypeText?.[locale] || property.meta.apartmentTypeText?.fi;
+        const apartmentTypeText = property.meta.apartmentType?.[locale] || property.meta.apartmentType?.fi;
         
         // Get listing type label
         const listingTypeLabel = property.meta.listingTypeLabel?.[locale] || property.meta.listingTypeLabel?.fi || property.meta.typeCode;
