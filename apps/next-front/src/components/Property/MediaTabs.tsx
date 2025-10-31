@@ -10,6 +10,8 @@ const MapView = dynamic(() => import('./MapView').then(m => m.MapView), { ssr: f
 
 interface MediaTabsProps {
   images: Array<{ url: string; thumb?: string; floorPlan?: boolean }>;
+  title: string;  // For ImageCarousel
+  propertyId?: string;  // For ImageCarousel key
   floorPlans?: string[];
   coordinates?: { lat: number; lon: number };
   brochureUrl?: string;
@@ -21,6 +23,8 @@ type TabId = 'photos' | 'floor' | 'map' | 'brochure' | 'video';
 
 export function MediaTabs({ 
   images, 
+  title,
+  propertyId,
   floorPlans, 
   coordinates, 
   brochureUrl, 
@@ -85,7 +89,7 @@ export function MediaTabs({
       {/* Content */}
       <div className="min-h-[400px] bg-gray-50 rounded-lg overflow-hidden">
         {activeTab === 'photos' && photoImages.length > 0 && (
-          <ImageCarousel images={photoImages} />
+          <ImageCarousel images={photoImages} title={title} propertyId={propertyId} />
         )}
         
         {activeTab === 'floor' && hasFloorPlan && (
