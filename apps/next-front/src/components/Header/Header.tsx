@@ -184,7 +184,7 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
             {/* Language Switcher */}
             <div className="hidden md:flex items-center gap-3 text-xs [font-family:'freight-sans-pro',sans-serif]">
               <Link
-                href={cleanPathname}
+                href={cleanPathname as any}
                 locale="fi"
                 className={`transition-opacity ${currentLang === 'fi' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
               >
@@ -192,7 +192,7 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
               </Link>
               <span className="text-white/40">|</span>
               <Link
-                href={cleanPathname}
+                href={cleanPathname as any}
                 locale="sv"
                 className={`transition-opacity ${currentLang === 'sv' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
               >
@@ -200,7 +200,7 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
               </Link>
               <span className="text-white/40">|</span>
               <Link
-                href={cleanPathname}
+                href={cleanPathname as any}
                 locale="en"
                 className={`transition-opacity ${currentLang === 'en' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
               >
@@ -385,7 +385,7 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
             <div className="mt-4 pt-4 border-t border-white/20">
               <div className="flex items-center justify-center gap-4 text-xs">
                 <Link
-                  href={cleanPathname}
+                  href={cleanPathname as any}
                   locale="fi"
                   className={`transition-opacity [font-family:'freight-sans-pro',sans-serif] ${currentLang === 'fi' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
                   onClick={() => setIsMobileMenuOpen(false)}
@@ -394,7 +394,7 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
                 </Link>
                 <span className="text-white/40">|</span>
                 <Link
-                  href={cleanPathname}
+                  href={cleanPathname as any}
                   locale="sv"
                   className={`transition-opacity [font-family:'freight-sans-pro',sans-serif] ${currentLang === 'sv' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
                   onClick={() => setIsMobileMenuOpen(false)}
@@ -403,7 +403,7 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
                 </Link>
                 <span className="text-white/40">|</span>
                 <Link
-                  href={cleanPathname}
+                  href={cleanPathname as any}
                   locale="en"
                   className={`transition-opacity [font-family:'freight-sans-pro',sans-serif] ${currentLang === 'en' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
                   onClick={() => setIsMobileMenuOpen(false)}
