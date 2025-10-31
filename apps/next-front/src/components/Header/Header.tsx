@@ -44,110 +44,88 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLandscape, setIsLandscape] = useState(false);
 
-  // 🔥 LINUS FIX: Use semantic path keys - next-intl handles locale translation!
-  // All paths are now semantic keys that map to localized URLs via pathnames.ts
+  // 🔥 LINUS FIX: Use filesystem paths (Finnish names) - App Router limitation
+  // App Router uses filesystem-based routes, cannot use pathname mappings
+  // All routes MUST match filesystem structure: kohteet, henkilosto, myymassa, etc.
   const getMenuItemsForLanguage = (lang: string): MenuItem[] => {
-    if (lang === 'sv') {
-      return [
-        { id: '1', label: 'HEM', path: '/', url: '/' },
-        { 
-          id: '2', 
-          label: 'OBJEKT', 
-          path: '/properties', 
-          url: '/properties',
-          childItems: {
-            nodes: [
-              { id: '2-1', label: 'Försäljningsobjekt', path: '/properties', url: '/properties' },
-              { id: '2-2', label: 'Hyresobjekt', path: '/properties/rentals', url: '/properties/rentals' },
-              { id: '2-3', label: 'Köpuppdrag', path: '/properties/purchase-assignments', url: '/properties/purchase-assignments' },
-              { id: '2-4', label: 'Referenser', path: '/properties/references', url: '/properties/references' },
-            ]
-          }
-        },
-        { id: '3', label: 'SÄLJA', path: '/sell', url: '/sell' },
-        { id: '4', label: 'INTERNATIONELLT', path: '/international', url: '/international' },
-        { id: '5', label: 'PERSONAL', path: '/staff', url: '/staff' },
-        { 
-          id: '6', 
-          label: 'KONTAKTA OSS', 
-          path: '/contact', 
-          url: '/contact',
-          childItems: {
-            nodes: [
-              { id: '6-1', label: 'Kontaktuppgifter', path: '/contact/info', url: '/contact/info' },
-              { id: '6-2', label: 'Företaget', path: '/about', url: '/about' },
-            ]
-          }
-        },
-      ];
-    } else if (lang === 'en') {
-      return [
-        { id: '1', label: 'HOME', path: '/', url: '/' },
-        { 
-          id: '2', 
-          label: 'PROPERTIES', 
-          path: '/properties', 
-          url: '/properties',
-          childItems: {
-            nodes: [
-              { id: '2-1', label: 'For Sale', path: '/properties', url: '/properties' },
-              { id: '2-2', label: 'For Rent', path: '/properties/rentals', url: '/properties/rentals' },
-              { id: '2-3', label: 'Purchase Assignments', path: '/properties/purchase-assignments', url: '/properties/purchase-assignments' },
-              { id: '2-4', label: 'References', path: '/properties/references', url: '/properties/references' },
-            ]
-          }
-        },
-        { id: '3', label: 'SELLING', path: '/sell', url: '/sell' },
-        { id: '4', label: 'INTERNATIONALLY', path: '/international', url: '/international' },
-        { id: '5', label: 'STAFF', path: '/staff', url: '/staff' },
-        { 
-          id: '6', 
-          label: 'CONTACT US', 
-          path: '/contact', 
-          url: '/contact',
-          childItems: {
-            nodes: [
-              { id: '6-1', label: 'Contact Info', path: '/contact/info', url: '/contact/info' },
-              { id: '6-2', label: 'About Us', path: '/about', url: '/about' },
-            ]
-          }
-        },
-      ];
-    } else {
-      // Finnish (default) - also uses semantic keys
-      return [
-        { id: '1', label: 'KOTI', path: '/', url: '/' },
-        { 
-          id: '2', 
-          label: 'KOHTEET', 
-          path: '/properties', 
-          url: '/properties',
-          childItems: {
-            nodes: [
-              { id: '2-1', label: 'Myyntikohteet', path: '/properties', url: '/properties' },
-              { id: '2-2', label: 'Vuokrakohteet', path: '/properties/rentals', url: '/properties/rentals' },
-              { id: '2-3', label: 'Ostotoimeksiannot', path: '/properties/purchase-assignments', url: '/properties/purchase-assignments' },
-              { id: '2-4', label: 'Referenssit', path: '/properties/references', url: '/properties/references' },
-            ]
-          }
-        },
-        { id: '3', label: 'MYYMÄSSÄ', path: '/sell', url: '/sell' },
-        { id: '4', label: 'KANSAINVÄLISESTI', path: '/international', url: '/international' },
-        { id: '5', label: 'HENKILÖSTÖ', path: '/staff', url: '/staff' },
-        { 
-          id: '6', 
-          label: 'OTA YHTEYTTÄ', 
-          path: '/contact', 
-          url: '/contact',
-          childItems: {
-            nodes: [
-              { id: '6-1', label: 'Yhteystiedot', path: '/contact/info', url: '/contact/info' },
-              { id: '6-2', label: 'Yritys', path: '/about', url: '/about' },
-            ]
-          }
-        },
-      ];
-    }
+    // ALL LOCALES use same Finnish filesystem paths
+    return [
+      { id: '1', label: lang === 'sv' ? 'HEM' : lang === 'en' ? 'HOME' : 'KOTI', path: '/', url: '/' },
+      { 
+        id: '2', 
+        label: lang === 'sv' ? 'OBJEKT' : lang === 'en' ? 'PROPERTIES' : 'KOHTEET', 
+        path: '/kohteet', 
+        url: '/kohteet',
+        childItems: {
+          nodes: [
+            { 
+              id: '2-1', 
+              label: lang === 'sv' ? 'Försäljningsobjekt' : lang === 'en' ? 'For Sale' : 'Myyntikohteet', 
+              path: '/kohteet', 
+              url: '/kohteet' 
+            },
+            { 
+              id: '2-2', 
+              label: lang === 'sv' ? 'Hyresobjekt' : lang === 'en' ? 'For Rent' : 'Vuokrakohteet', 
+              path: '/kohteet/vuokrakohteet', 
+              url: '/kohteet/vuokrakohteet' 
+            },
+            { 
+              id: '2-3', 
+              label: lang === 'sv' ? 'Köpuppdrag' : lang === 'en' ? 'Purchase Assignments' : 'Ostotoimeksiannot', 
+              path: '/kohteet/ostotoimeksiannot', 
+              url: '/kohteet/ostotoimeksiannot' 
+            },
+            { 
+              id: '2-4', 
+              label: lang === 'sv' ? 'Referenser' : lang === 'en' ? 'References' : 'Referenssit', 
+              path: '/kohteet/referenssit', 
+              url: '/kohteet/referenssit' 
+            },
+          ]
+        }
+      },
+      { 
+        id: '3', 
+        label: lang === 'sv' ? 'SÄLJA' : lang === 'en' ? 'SELLING' : 'MYYMÄSSÄ', 
+        path: '/myymassa', 
+        url: '/myymassa' 
+      },
+      { 
+        id: '4', 
+        label: lang === 'sv' ? 'INTERNATIONELLT' : lang === 'en' ? 'INTERNATIONALLY' : 'KANSAINVÄLISESTI', 
+        path: '/kansainvalisesti', 
+        url: '/kansainvalisesti' 
+      },
+      { 
+        id: '5', 
+        label: lang === 'sv' ? 'PERSONAL' : lang === 'en' ? 'STAFF' : 'HENKILÖSTÖ', 
+        path: '/henkilosto', 
+        url: '/henkilosto' 
+      },
+      { 
+        id: '6', 
+        label: lang === 'sv' ? 'KONTAKTA OSS' : lang === 'en' ? 'CONTACT US' : 'OTA YHTEYTTÄ', 
+        path: '/yhteystiedot', 
+        url: '/yhteystiedot',
+        childItems: {
+          nodes: [
+            { 
+              id: '6-1', 
+              label: lang === 'sv' ? 'Kontaktuppgifter' : lang === 'en' ? 'Contact Info' : 'Yhteystiedot', 
+              path: '/yhteystiedot', 
+              url: '/yhteystiedot' 
+            },
+            { 
+              id: '6-2', 
+              label: lang === 'sv' ? 'Företaget' : lang === 'en' ? 'About Us' : 'Yritys', 
+              path: '/yritys', 
+              url: '/yritys' 
+            },
+          ]
+        }
+      },
+    ];
   };
 
   // ✅ LINUS FIX: Always use dynamic menu items based on current language
