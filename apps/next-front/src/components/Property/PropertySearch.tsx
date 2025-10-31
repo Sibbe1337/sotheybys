@@ -4,8 +4,10 @@ import { useState, useMemo } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { Link } from '@/lib/navigation';
-import PropertyGridNew from './PropertyGridNew';
+import PropertyCard from './PropertyCard';
+import FilterToggle from '../Filters/FilterToggle';
 import type { Property, Locale } from '@/lib/domain/property.types';
+import type { CardVariant } from './PropertyCard';
 
 // Lazy load map for performance
 const ListingMap = dynamic(() => import('../Map/ListingMap').then(mod => ({ default: mod.ListingMap })), {
@@ -174,11 +176,12 @@ export default function PropertySearch({ properties, language }: PropertySearchP
 
   return (
     <div>
-      {/* Simplified Search Filters - Exact 1:1 match with old website */}
+      {/* Simplified Search Filters - NON-STICKY on mobile, static/optional sticky on desktop */}
       <section className="py-8 bg-white border-y border-gray-200">
         <div className="max-w-[1400px] mx-auto px-6">
-          {/* Row 1: Dropdowns */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <FilterToggle locale={language}>
+            {/* Row 1: Dropdowns */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             {/* Area Dropdown */}
             <div>
               <label className="block text-xs text-gray-600 mb-2 tracking-wider uppercase">{translations.area[language]}</label>
@@ -391,50 +394,51 @@ export default function PropertySearch({ properties, language }: PropertySearchP
             }
           `}</style>
 
-          {/* View Mode Selector - Centered */}
-          <div className="flex justify-center">
-            <div className="flex gap-1">
-              <button
-                onClick={() => setViewMode('grid')}
-                className={`p-2.5 border-none rounded-none transition-colors ${
-                  viewMode === 'grid'
-                    ? 'bg-[var(--color-primary)] text-white'
-                    : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
-                }`}
-                aria-label="Grid view"
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                </svg>
-              </button>
-              <button
-                onClick={() => setViewMode('list')}
-                className={`p-2.5 border-none rounded-none transition-colors ${
-                  viewMode === 'list'
-                    ? 'bg-[var(--color-primary)] text-white'
-                    : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
-                }`}
-                aria-label="List view"
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-                </svg>
-              </button>
-              <button
-                onClick={() => setViewMode('map')}
-                className={`p-2.5 border-none rounded-none transition-colors ${
-                  viewMode === 'map'
-                    ? 'bg-[var(--color-primary)] text-white'
-                    : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
-                }`}
-                aria-label="Map view"
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                </svg>
-              </button>
+            {/* View Mode Selector - Centered */}
+            <div className="flex justify-center">
+              <div className="flex gap-1">
+                <button
+                  onClick={() => setViewMode('grid')}
+                  className={`p-2.5 border-none rounded-none transition-colors ${
+                    viewMode === 'grid'
+                      ? 'bg-[var(--color-primary)] text-white'
+                      : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                  }`}
+                  aria-label="Grid view"
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                  </svg>
+                </button>
+                <button
+                  onClick={() => setViewMode('list')}
+                  className={`p-2.5 border-none rounded-none transition-colors ${
+                    viewMode === 'list'
+                      ? 'bg-[var(--color-primary)] text-white'
+                      : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                  }`}
+                  aria-label="List view"
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                  </svg>
+                </button>
+                <button
+                  onClick={() => setViewMode('map')}
+                  className={`p-2.5 border-none rounded-none transition-colors ${
+                    viewMode === 'map'
+                      ? 'bg-[var(--color-primary)] text-white'
+                      : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                  }`}
+                  aria-label="Map view"
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                  </svg>
+                </button>
+              </div>
             </div>
-          </div>
+          </FilterToggle>
         </div>
       </section>
 
@@ -443,9 +447,63 @@ export default function PropertySearch({ properties, language }: PropertySearchP
         <div className="max-w-[1400px] mx-auto px-6">
           {filteredProperties.length > 0 ? (
             <>
-              {/* Grid View */}
+              {/* Grid View - NEW PropertyCard with 3-column layout */}
               {viewMode === 'grid' && (
-                <PropertyGridNew properties={filteredProperties} locale={language as Locale} />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {filteredProperties.map((property, index) => {
+                    // Determine card variant
+                    const rent = property.meta.rent || property.rental?.monthlyRent || 0;
+                    const isRental = rent > 0;
+                    const typeCode = (property.meta.typeCode || '').toLowerCase();
+                    const isApartment = typeCode.includes('kerrostalo') || typeCode.includes('flat') || typeCode.includes('apartment');
+                    
+                    let variant: CardVariant = 'property';
+                    if (isRental) variant = 'rental';
+                    else if (isApartment) variant = 'apartment';
+                    
+                    // Map address (without apartment number)
+                    const addressParts = [
+                      property.address[language] || property.address.fi,
+                      property.gate || '',
+                    ].filter(Boolean);
+                    const title = addressParts.join(' ').trim();
+                    
+                    // Map images
+                    const images = (property.media.images || [])
+                      .filter(img => !img.floorPlan)
+                      .map(img => ({ url: img.url, alt: title }));
+                    
+                    // Get district from city
+                    const district = property.city[language] || property.city.fi;
+                    
+                    // Get apartment type (huoneistoselitelmä)
+                    const apartmentTypeText = property.meta.apartmentTypeText?.[language] || property.meta.apartmentTypeText?.fi;
+                    
+                    // Get listing type label
+                    const listingTypeLabel = property.meta.listingTypeLabel?.[language] || property.meta.listingTypeLabel?.fi || property.meta.typeCode;
+                    
+                    return (
+                      <PropertyCard
+                        key={property.id}
+                        href={`/${language}/kohde/${property.slug}`}
+                        locale={language}
+                        title={title}
+                        listingTypeLabel={listingTypeLabel}
+                        apartmentTypeText={apartmentTypeText}
+                        district={district}
+                        images={images}
+                        variant={variant}
+                        livingArea={property.dimensions.living}
+                        otherArea={property.dimensions.other}
+                        plotArea={property.dimensions.plot}
+                        askPrice={property.pricing.sales}
+                        debtFreePrice={property.pricing.debtFree}
+                        monthlyRent={rent}
+                        priorityFirstImage={index === 0}
+                      />
+                    );
+                  })}
+                </div>
               )}
 
               {/* List View */}

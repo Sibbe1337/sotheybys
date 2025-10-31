@@ -1,12 +1,13 @@
 /**
  * PROPERTY GRID - NEW ARCHITECTURE
  * 
- * Renders a grid of PropertyCardNew components.
+ * Renders a grid of PropertyCard components.
  * Uses Property domain objects directly.
  */
 
 import type { Property, Locale } from '@/lib/domain/property.types';
-import PropertyCardNew from './PropertyCardNew';
+import PropertyCard from './PropertyCard';
+import type { CardVariant } from './PropertyCard';
 
 interface PropertyGridNewProps {
   properties: Property[];
@@ -39,14 +40,60 @@ export default function PropertyGridNew({ properties, locale }: PropertyGridNewP
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-      {properties.map((property) => (
-        <PropertyCardNew 
-          key={property.id} 
-          property={property} 
-          locale={locale} 
-        />
-      ))}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {properties.map((property, index) => {
+        // Determine card variant
+        const rent = property.meta.rent || property.rental?.monthlyRent || 0;
+        const isRental = rent > 0;
+        const typeCode = (property.meta.typeCode || '').toLowerCase();
+        const isApartment = typeCode.includes('kerrostalo') || typeCode.includes('flat') || typeCode.includes('apartment');
+        
+        let variant: CardVariant = 'property';
+        if (isRental) variant = 'rental';
+        else if (isApartment) variant = 'apartment';
+        
+        // Map address (without apartment number - Finnish law requirement)
+        const addressParts = [
+          property.address[locale] || property.address.fi,
+          property.gate || '',
+        ].filter(Boolean);
+        const title = addressParts.join(' ').trim();
+        
+        // Map images (exclude floor plans)
+        const images = (property.media.images || [])
+          .filter(img => !img.floorPlan)
+          .map(img => ({ url: img.url, alt: title }));
+        
+        // Get district from city
+        const district = property.city[locale] || property.city.fi;
+        
+        // Get apartment type (huoneistoselitelmä)
+        const apartmentTypeText = property.meta.apartmentTypeText?.[locale] || property.meta.apartmentTypeText?.fi;
+        
+        // Get listing type label
+        const listingTypeLabel = property.meta.listingTypeLabel?.[locale] || property.meta.listingTypeLabel?.fi || property.meta.typeCode;
+        
+        return (
+          <PropertyCard
+            key={property.id}
+            href={`/${locale}/kohde/${property.slug}`}
+            locale={locale}
+            title={title}
+            listingTypeLabel={listingTypeLabel}
+            apartmentTypeText={apartmentTypeText}
+            district={district}
+            images={images}
+            variant={variant}
+            livingArea={property.dimensions.living}
+            otherArea={property.dimensions.other}
+            plotArea={property.dimensions.plot}
+            askPrice={property.pricing.sales}
+            debtFreePrice={property.pricing.debtFree}
+            monthlyRent={rent}
+            priorityFirstImage={index === 0}
+          />
+        );
+      })}
     </div>
   );
 }

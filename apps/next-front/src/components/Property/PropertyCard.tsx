@@ -35,6 +35,9 @@ export interface PropertyCardProps {
 
   // Frivillig etikett (t.ex. "Ny")
   badge?: string;
+  
+  // LCP optimization (first card should have priority=true)
+  priorityFirstImage?: boolean;
 }
 
 /* ------------------------------ Komponent ------------------------------ */
@@ -55,6 +58,7 @@ export default function PropertyCard({
   debtFreePrice,
   monthlyRent,
   badge,
+  priorityFirstImage = false,
 }: PropertyCardProps) {
   const L = mapLocale(locale);
 
@@ -97,7 +101,7 @@ export default function PropertyCard({
             fill
             sizes="(max-width: 768px) 100vw, 33vw"
             className="object-cover"
-            priority={false}
+            priority={priorityFirstImage && idx === 0}
           />
         ) : (
           <div className="grid h-full w-full place-items-center text-gray-400">No image</div>

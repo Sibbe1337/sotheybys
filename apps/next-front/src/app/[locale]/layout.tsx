@@ -31,15 +31,19 @@ export async function generateMetadata({ params: { locale } }: { params: { local
     en: 'en_US'
   };
 
+  // Correct canonical URL (must match current page URL exactly)
+  const base = process.env.NEXT_PUBLIC_BASE_URL || 'https://sothebysrealty.fi';
+  const canonical = locale === 'fi' ? base : `${base}/${locale}`;
+
   return {
-    metadataBase: new URL('https://sothebysrealty.fi'),
+    metadataBase: new URL(base),
     title: 'Snellman Sotheby\'s International Realty',
     description: 'Kansainvälinen kiinteistönvälitys paikallisesti - Premium real estate services in Finland',
     keywords: 'kiinteistönvälitys, luksusasunnot, Sotheby\'s, Finland, real estate',
     openGraph: {
       title: 'Snellman Sotheby\'s International Realty',
       description: 'Kansainvälinen kiinteistönvälitys paikallisesti',
-      url: 'https://sothebysrealty.fi',
+      url: canonical,
       siteName: 'Snellman Sotheby\'s International Realty',
       images: [
         {
@@ -58,12 +62,12 @@ export async function generateMetadata({ params: { locale } }: { params: { local
       images: ['/og-image.jpg'],
     },
     alternates: {
-      canonical: locale === 'fi' ? 'https://sothebysrealty.fi' : `https://sothebysrealty.fi/${locale}`,
+      canonical,
       languages: {
-        'fi': 'https://sothebysrealty.fi',
-        'sv': 'https://sothebysrealty.fi/sv',
-        'en': 'https://sothebysrealty.fi/en',
-        'x-default': 'https://sothebysrealty.fi',
+        'fi-FI': `${base}/fi`,
+        'sv-SE': `${base}/sv`,
+        'en-GB': `${base}/en`,
+        'x-default': base,
       },
     },
   };
@@ -87,12 +91,16 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <NextIntlClientProvider messages={messages}>
-      <div className="min-h-screen flex flex-col">
-        <Header locale={locale as 'fi' | 'sv' | 'en'} />
-        {children}
-        <FooterWithTeam />
-      </div>
-    </NextIntlClientProvider>
+    <html lang={validLocale}>
+      <body className={`${inter.variable} ${playfair.variable}`}>
+        <NextIntlClientProvider messages={messages}>
+          <div className="min-h-screen flex flex-col">
+            <Header locale={locale as 'fi' | 'sv' | 'en'} />
+            {children}
+            <FooterWithTeam />
+          </div>
+        </NextIntlClientProvider>
+      </body>
+    </html>
   );
 }

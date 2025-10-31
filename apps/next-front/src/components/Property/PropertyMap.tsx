@@ -6,7 +6,8 @@ import Image from 'next/image';
 import { Link } from '@/lib/navigation';
 import type { Property, Locale } from '@/lib/domain/property.types';
 import { lpick } from '@/lib/domain/locale-utils';
-import PropertyCardNew from './PropertyCardNew';
+import PropertyCard from './PropertyCard';
+import type { CardVariant } from './PropertyCard';
 
 interface PropertyMapProps {
   properties: Property[];
@@ -94,13 +95,43 @@ export default function PropertyMap({ properties, language }: PropertyMapProps) 
 
         {/* Show property list anyway */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {properties.map((property) => (
-            <PropertyCardNew 
-              key={property.id} 
-              property={property} 
-              locale={language as Locale} 
-            />
-          ))}
+          {properties.map((property, index) => {
+            const rent = property.meta.rent || property.rental?.monthlyRent || 0;
+            const isRental = rent > 0;
+            const typeCode = (property.meta.typeCode || '').toLowerCase();
+            const isApartment = typeCode.includes('kerrostalo') || typeCode.includes('flat') || typeCode.includes('apartment');
+            let variant: CardVariant = 'property';
+            if (isRental) variant = 'rental';
+            else if (isApartment) variant = 'apartment';
+            
+            const addressParts = [property.address[language] || property.address.fi, property.gate || ''].filter(Boolean);
+            const title = addressParts.join(' ').trim();
+            const images = (property.media.images || []).filter(img => !img.floorPlan).map(img => ({ url: img.url, alt: title }));
+            const district = property.city[language] || property.city.fi;
+            const apartmentTypeText = property.meta.apartmentTypeText?.[language] || property.meta.apartmentTypeText?.fi;
+            const listingTypeLabel = property.meta.listingTypeLabel?.[language] || property.meta.listingTypeLabel?.fi || property.meta.typeCode;
+            
+            return (
+              <PropertyCard
+                key={property.id}
+                href={`/${language}/kohde/${property.slug}`}
+                locale={language}
+                title={title}
+                listingTypeLabel={listingTypeLabel}
+                apartmentTypeText={apartmentTypeText}
+                district={district}
+                images={images}
+                variant={variant}
+                livingArea={property.dimensions.living}
+                otherArea={property.dimensions.other}
+                plotArea={property.dimensions.plot}
+                askPrice={property.pricing.sales}
+                debtFreePrice={property.pricing.debtFree}
+                monthlyRent={rent}
+                priorityFirstImage={index === 0}
+              />
+            );
+          })}
         </div>
       </div>
     );
@@ -179,15 +210,44 @@ export default function PropertyMap({ properties, language }: PropertyMapProps) 
         </div>
       </APIProvider>
 
-      {/* Property list under map - Use PropertyCardNew (BILAGA 2) */}
+      {/* Property list under map */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {properties.map((property) => (
-          <PropertyCardNew 
-            key={property.id} 
-            property={property} 
-            locale={language as Locale} 
-          />
-        ))}
+        {properties.map((property, index) => {
+          const rent = property.meta.rent || property.rental?.monthlyRent || 0;
+          const isRental = rent > 0;
+          const typeCode = (property.meta.typeCode || '').toLowerCase();
+          const isApartment = typeCode.includes('kerrostalo') || typeCode.includes('flat') || typeCode.includes('apartment');
+          let variant: CardVariant = 'property';
+          if (isRental) variant = 'rental';
+          else if (isApartment) variant = 'apartment';
+          
+          const addressParts = [property.address[language] || property.address.fi, property.gate || ''].filter(Boolean);
+          const title = addressParts.join(' ').trim();
+          const images = (property.media.images || []).filter(img => !img.floorPlan).map(img => ({ url: img.url, alt: title }));
+          const district = property.city[language] || property.city.fi;
+          const apartmentTypeText = property.meta.apartmentTypeText?.[language] || property.meta.apartmentTypeText?.fi;
+          const listingTypeLabel = property.meta.listingTypeLabel?.[language] || property.meta.listingTypeLabel?.fi || property.meta.typeCode;
+          
+          return (
+            <PropertyCard
+              key={property.id}
+              href={`/${language}/kohde/${property.slug}`}
+              locale={language}
+              title={title}
+              listingTypeLabel={listingTypeLabel}
+              apartmentTypeText={apartmentTypeText}
+              district={district}
+              images={images}
+              variant={variant}
+              livingArea={property.dimensions.living}
+              otherArea={property.dimensions.other}
+              plotArea={property.dimensions.plot}
+              askPrice={property.pricing.sales}
+              debtFreePrice={property.pricing.debtFree}
+              monthlyRent={rent}
+            />
+          );
+        })}
       </div>
     </div>
   );
