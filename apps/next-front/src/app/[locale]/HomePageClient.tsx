@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import HeroCarousel from '@/components/Homepage/HeroCarousel';
-import PropertyGridNew from '@/components/Property/PropertyGridNew';
+import FeaturedPropertyGrid from '@/components/Property/FeaturedPropertyGrid';
 import { Link } from '@/lib/navigation';
 import Image from 'next/image';
 import { getHomepageTranslation, type SupportedLanguage } from '@/lib/homepage-translations';
@@ -256,7 +256,7 @@ export default function HomePageClient({
                 </p>
               </div>
             ) : (
-              <PropertyGridNew properties={displayProperties} locale={locale} />
+              <FeaturedPropertyGrid properties={displayProperties} locale={locale} />
             )}
 
             {/* View All Button */}
