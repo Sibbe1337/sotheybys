@@ -2,11 +2,8 @@
 
 import { useState } from 'react';
 import { ImageCarousel } from './ImageCarousel';
-import dynamic from 'next/dynamic';
 import { t } from '@/lib/i18n/property-translations';
 import type { Locale } from '@/lib/domain/property.types';
-
-const MapView = dynamic(() => import('./MapView').then(m => m.MapView), { ssr: false });
 
 interface MediaTabsProps {
   images: Array<{ url: string; thumb?: string; floorPlan?: boolean }>;
@@ -112,7 +109,15 @@ export function MediaTabs({
         
         {activeTab === 'map' && coordinates && (
           <div className="w-full h-[500px]">
-            <MapView latitude={coordinates.lat} longitude={coordinates.lon} />
+            <iframe
+              title="Property Location Map"
+              src={`https://www.google.com/maps?q=${coordinates.lat},${coordinates.lon}&output=embed&z=15`}
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
           </div>
         )}
         
