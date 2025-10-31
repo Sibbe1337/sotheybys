@@ -16,7 +16,7 @@ export interface FeaturedPropertyCardProps {
   fullAddress: string;        // "Heikkiläntie 1 C 47, 00210 Helsinki"
   
   // Type & location
-  propertyType: string;       // "Kerrostalo" / "Mökki tai huvila"
+  propertyType?: string;      // "Kerrostalo" / "Mökki tai huvila"
   district?: string;          // "Lauttasaari" / "Sirkka"
   
   // Description

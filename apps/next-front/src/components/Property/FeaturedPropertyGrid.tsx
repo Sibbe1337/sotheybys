@@ -82,8 +82,11 @@ export default function FeaturedPropertyGrid({ properties, locale }: FeaturedPro
         // Get apartment type (huoneistoselitelmä)
         const apartmentType = property.meta.apartmentType?.[locale] || property.meta.apartmentType?.fi;
         
-        // Get listing type label
-        const propertyType = property.meta.listingTypeLabel?.[locale] || property.meta.listingTypeLabel?.fi || property.meta.typeCode;
+        // Get listing type label (with fallback to prevent undefined)
+        const propertyType = property.meta.listingTypeLabel?.[locale] 
+          || property.meta.listingTypeLabel?.fi 
+          || property.meta.typeCode 
+          || (variant === 'apartment' ? 'Kerrostalo' : variant === 'rental' ? 'Vuokrakohde' : 'Kiinteistö');
         
         // Calculate "other area" from balcony + terrace
         const balconyArea = property.dimensions.balcony || 0;
