@@ -2,6 +2,7 @@
 
 import { getSectionLabel, getFieldLabel } from '@/lib/i18n/property-translations';
 import { fmtPerM2, fmtPlotArea } from '@/lib/presentation/formatters/perSquareMeter';
+import { nonEmpty } from '@/lib/presentation/formatters/number';
 import type { Locale } from '@/lib/domain/property.types';
 import type { PropertyDetailVM } from '@/lib/presentation/property.view-model';
 
@@ -66,7 +67,7 @@ export function PropertySections({ vm, locale }: PropertySectionsProps) {
 
   return (
     <div>
-      {/* Kiinteistötiedot (Property Information) */}
+      {/* Kiinteistötiedot - LINUS SPEC: DÖLJ housingTenure/Hallintamuoto för fastigheter */}
       <Section title={getSectionLabel('property.info', locale)}>
         <Field label={getFieldLabel('propertyId', locale)} value={vm.propertyIdentifier} alwaysShow />
         <Field 
@@ -76,11 +77,16 @@ export function PropertySections({ vm, locale }: PropertySectionsProps) {
         />
         <Field label={getFieldLabel('plotOwnership', locale)} value={vm.plotOwnership} alwaysShow />
         <Field label={getFieldLabel('plan', locale)} value={vm.zoning} alwaysShow />
-        <Field label={getFieldLabel('energyClass', locale)} value={vm.energyClass} alwaysShow />
+        <Field 
+          label={getFieldLabel('energyClass', locale)} 
+          value={vm.energyClass || (vm.energyCertStatus === 'NOT_REQUIRED_BY_LAW' ? getFieldLabel('energy.notRequired', locale) : undefined)}
+          alwaysShow 
+        />
         <Field label={getFieldLabel('energyCertificate', locale)} value={vm.energyCertStatus} alwaysShow />
         <Field label={getFieldLabel('availableFrom', locale)} value={vm.availableFrom} alwaysShow />
         <Field label={getFieldLabel('plotRights', locale)} value={vm.propertyBuildingRights} />
         <Field label={getFieldLabel('servitudes', locale)} value={vm.propertyRestrictions} />
+        {/* LINUS: NO housingTenure/Hallintamuoto for properties! */}
       </Section>
 
       {/* Rakennustiedot (Building Facts) */}

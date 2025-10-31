@@ -2,6 +2,7 @@
 
 import { getSectionLabel, getFieldLabel } from '@/lib/i18n/property-translations';
 import { fmtPerM2 } from '@/lib/presentation/formatters/perSquareMeter';
+import { nonEmpty } from '@/lib/presentation/formatters/number';
 import type { Locale } from '@/lib/domain/property.types';
 import type { PropertyDetailVM } from '@/lib/presentation/property.view-model';
 
@@ -93,15 +94,22 @@ export function ApartmentSections({ vm, locale }: ApartmentSectionsProps) {
         />
       </Section>
 
-      {/* Yhtiö- ja Rakennustiedot */}
+      {/* Yhtiö- ja Rakennustiedot - LINUS SPEC: EN ruta, Hissi här, bolagslån/kiinnitykset endast om data */}
       <Section title={getSectionLabel('apartment.companyBuilding', locale)}>
         <Field label={getFieldLabel('yearBuilt', locale)} value={vm.yearBuilt} alwaysShow />
-        <Field label={getFieldLabel('energyClass', locale)} value={vm.energyClass} alwaysShow />
+        <Field 
+          label={getFieldLabel('energyClass', locale)} 
+          value={vm.energyClass || (vm.energyCertStatus === 'NOT_REQUIRED_BY_LAW' ? getFieldLabel('energy.notRequired', locale) : undefined)}
+          alwaysShow 
+        />
         <Field label={getFieldLabel('elevator', locale)} value={vm.hasElevator} alwaysShow />
         <Field label={getFieldLabel('companyName', locale)} value={vm.housingCompanyName} alwaysShow />
         <Field label={getFieldLabel('plotOwnership', locale)} value={vm.plotOwnership} alwaysShow />
         <Field label={getFieldLabel('housingTenure', locale)} value={vm.housingTenure} alwaysShow />
         <Field label={getFieldLabel('heatingSystem', locale)} value={vm.heatingSystem} />
+        {/* Company loans/mortgages - only if data exists */}
+        <Field label={getFieldLabel('companyLoans', locale)} value={vm.companyLoans ? `${vm.companyLoans} €` : undefined} />
+        <Field label={getFieldLabel('companyMortgages', locale)} value={vm.companyEncumbrances ? `${vm.companyEncumbrances} €` : undefined} />
       </Section>
 
       {/* Kustannukset */}
@@ -163,11 +171,11 @@ export function ApartmentSections({ vm, locale }: ApartmentSectionsProps) {
         </SubSection>
       </Section>
 
-      {/* Muut tiedot */}
+      {/* Muut tiedot - LINUS SPEC: Vapautuminen + Omistusmuoto här */}
       <Section title={getSectionLabel('apartment.other', locale)}>
-        <Field label={getFieldLabel('zoning', locale)} value={vm.zoning} alwaysShow />
         <Field label={getFieldLabel('availableFrom', locale)} value={vm.availableFrom} alwaysShow />
         <Field label={getFieldLabel('ownershipType', locale)} value={vm.ownershipType} alwaysShow />
+        <Field label={getFieldLabel('zoning', locale)} value={vm.zoning} alwaysShow />
       </Section>
 
       {/* Asiakirjat & Linkit */}

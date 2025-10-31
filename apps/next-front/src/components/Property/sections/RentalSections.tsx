@@ -1,6 +1,7 @@
 'use client';
 
 import { getSectionLabel, getFieldLabel } from '@/lib/i18n/property-translations';
+import { nonEmpty } from '@/lib/presentation/formatters/number';
 import type { Locale } from '@/lib/domain/property.types';
 import type { PropertyDetailVM } from '@/lib/presentation/property.view-model';
 
@@ -96,14 +97,20 @@ export function RentalSections({ vm, locale }: RentalSectionsProps) {
         )}
       </Section>
 
-      {/* Taloyhtiötiedot (Housing Company) */}
+      {/* Taloyhtiötiedot - LINUS SPEC: DÖLJ bolagslån/kiinnitykset/tontin omistus/hallintamuoto */}
       <Section title={getSectionLabel('rental.companyBuilding', locale)}>
         <Field label={getFieldLabel('companyName', locale)} value={vm.housingCompanyName} alwaysShow locale={locale} />
         <Field label={getFieldLabel('yearBuilt', locale)} value={vm.yearBuilt} alwaysShow locale={locale} />
-        <Field label={getFieldLabel('energyClass', locale)} value={vm.energyClass} alwaysShow locale={locale} />
+        <Field 
+          label={getFieldLabel('energyClass', locale)} 
+          value={vm.energyClass || (vm.energyCertStatus === 'NOT_REQUIRED_BY_LAW' ? getFieldLabel('energy.notRequired', locale) : undefined)}
+          alwaysShow 
+          locale={locale} 
+        />
         <Field label={getFieldLabel('energyCertificate', locale)} value={vm.energyCertStatus} alwaysShow locale={locale} />
         <Field label={getFieldLabel('elevator', locale)} value={vm.hasElevator} alwaysShow locale={locale} />
         <Field label={getFieldLabel('heatingSystem', locale)} value={vm.heatingSystem} locale={locale} />
+        {/* LINUS: NO companyLoans, plotOwnership, housingTenure for rentals! */}
       </Section>
 
       {/* Kustannukset (Costs) */}
