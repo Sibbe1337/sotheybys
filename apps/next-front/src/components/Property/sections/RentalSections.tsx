@@ -13,9 +13,10 @@ interface FieldProps {
   label: string;
   value?: string | number | boolean;
   alwaysShow?: boolean;
+  locale: Locale;
 }
 
-function Field({ label, value, alwaysShow = false }: FieldProps) {
+function Field({ label, value, alwaysShow = false, locale }: FieldProps) {
   if (!alwaysShow && (value === undefined || value === null || value === '')) return null;
   
   const displayValue = typeof value === 'boolean' 
@@ -56,13 +57,14 @@ export function RentalSections({ vm, locale }: RentalSectionsProps) {
     <div>
       {/* Huoneistotiedot (Apartment Details) */}
       <Section title={getSectionLabel('rental.unit', locale)}>
-        <Field label={getFieldLabel('floor', locale)} value={vm.floor} alwaysShow />
-        <Field label={getFieldLabel('condition', locale)} value={vm.condition} alwaysShow />
+        <Field label={getFieldLabel('floor', locale)} value={vm.floor} alwaysShow locale={locale} />
+        <Field label={getFieldLabel('condition', locale)} value={vm.condition} alwaysShow locale={locale} />
         {/* Show balcony/terrace ONLY if "Yes" */}
         {hasBalcony && (
           <Field 
             label={getFieldLabel('balcony', locale) + ' / ' + getFieldLabel('terrace', locale)} 
             value={getFieldLabel('yes', locale)} 
+            locale={locale}
           />
         )}
         {/* Show sauna ONLY if "Yes" */}
@@ -70,41 +72,42 @@ export function RentalSections({ vm, locale }: RentalSectionsProps) {
           <Field 
             label={getFieldLabel('sauna', locale)} 
             value={getFieldLabel('yes', locale)} 
+            locale={locale}
           />
         )}
       </Section>
 
       {/* Vuokratiedot (Rental Terms) */}
       <Section title={getSectionLabel('rental.rentInfo', locale)}>
-        <Field label={getFieldLabel('contractType', locale)} value={vm.rental?.contractType} alwaysShow />
-        <Field label={getFieldLabel('availableFrom', locale)} value={vm.availableFrom} alwaysShow />
-        <Field label={getFieldLabel('noticePeriod', locale)} value={vm.rental?.noticePeriod} />
+        <Field label={getFieldLabel('contractType', locale)} value={vm.rental?.contractType} alwaysShow locale={locale} />
+        <Field label={getFieldLabel('availableFrom', locale)} value={vm.availableFrom} alwaysShow locale={locale} />
+        <Field label={getFieldLabel('noticePeriod', locale)} value={vm.rental?.noticePeriod} locale={locale} />
         {/* Show pets/smoking ONLY if field is filled (Ja/Nej) */}
         {vm.rental?.petsAllowed !== undefined && (
-          <Field label={getFieldLabel('petsAllowed', locale)} value={vm.rental.petsAllowed} />
+          <Field label={getFieldLabel('petsAllowed', locale)} value={vm.rental.petsAllowed} locale={locale} />
         )}
         {vm.rental?.smokingAllowed !== undefined && (
-          <Field label={getFieldLabel('smokingAllowed', locale)} value={vm.rental.smokingAllowed} />
+          <Field label={getFieldLabel('smokingAllowed', locale)} value={vm.rental.smokingAllowed} locale={locale} />
         )}
       </Section>
 
       {/* Taloyhtiötiedot (Housing Company) */}
       <Section title={getSectionLabel('rental.companyBuilding', locale)}>
-        <Field label={getFieldLabel('companyName', locale)} value={vm.housingCompanyName} alwaysShow />
-        <Field label={getFieldLabel('yearBuilt', locale)} value={vm.yearBuilt} alwaysShow />
-        <Field label={getFieldLabel('energyClass', locale)} value={vm.energyClass} alwaysShow />
-        <Field label={getFieldLabel('energyCertificate', locale)} value={vm.energyCertStatus} alwaysShow />
-        <Field label={getFieldLabel('elevator', locale)} value={vm.hasElevator} alwaysShow />
-        <Field label={getFieldLabel('heatingSystem', locale)} value={vm.heatingSystem} />
+        <Field label={getFieldLabel('companyName', locale)} value={vm.housingCompanyName} alwaysShow locale={locale} />
+        <Field label={getFieldLabel('yearBuilt', locale)} value={vm.yearBuilt} alwaysShow locale={locale} />
+        <Field label={getFieldLabel('energyClass', locale)} value={vm.energyClass} alwaysShow locale={locale} />
+        <Field label={getFieldLabel('energyCertificate', locale)} value={vm.energyCertStatus} alwaysShow locale={locale} />
+        <Field label={getFieldLabel('elevator', locale)} value={vm.hasElevator} alwaysShow locale={locale} />
+        <Field label={getFieldLabel('heatingSystem', locale)} value={vm.heatingSystem} locale={locale} />
       </Section>
 
       {/* Kustannukset (Costs) */}
       <Section title={getSectionLabel('rental.costs', locale)}>
-        <Field label={getFieldLabel('monthlyRent', locale)} value={vm.rental?.monthlyRent} alwaysShow />
-        <Field label={getFieldLabel('securityDeposit', locale)} value={vm.rental?.securityDeposit} alwaysShow />
-        <Field label={getFieldLabel('waterFee', locale)} value={vm.fees?.water} />
-        <Field label={getFieldLabel('electricityFee', locale)} value={vm.fees?.electricity} />
-        <Field label={getFieldLabel('otherPayments', locale)} value={vm.rental?.additionalCostInfo} />
+        <Field label={getFieldLabel('monthlyRent', locale)} value={vm.rental?.monthlyRent} alwaysShow locale={locale} />
+        <Field label={getFieldLabel('securityDeposit', locale)} value={vm.rental?.securityDeposit} alwaysShow locale={locale} />
+        <Field label={getFieldLabel('waterFee', locale)} value={vm.fees?.water} locale={locale} />
+        <Field label={getFieldLabel('electricityFee', locale)} value={vm.fees?.electricity} locale={locale} />
+        <Field label={getFieldLabel('otherPayments', locale)} value={vm.rental?.additionalCostInfo} locale={locale} />
       </Section>
     </div>
   );
