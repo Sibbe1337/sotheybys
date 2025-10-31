@@ -100,7 +100,7 @@ export default function PropertyHeroCarousel({
           {/* Property Info */}
           <div className="max-w-4xl">
             <Link 
-              href={propertyUrl}
+              href={propertyUrl as any}
               className="block group"
             >
               <h2 className="text-4xl lg:text-5xl font-light text-white mb-3 group-hover:text-gray-200 transition-colors">
