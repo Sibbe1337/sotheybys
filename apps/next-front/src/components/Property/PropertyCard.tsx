@@ -79,12 +79,18 @@ export default function PropertyCard({
     variant, L, livingArea, askPrice, debtFreePrice, monthlyRent,
   });
 
-  // Typ | huoneistoselitelmä | stadsdel
+  // Typ | huoneistoselitelmä | stadsdel - filter out "Uppgift saknas" etc
+  const nonEmpty = (v?: string | null) => {
+    if (!v) return false;
+    const s = v.trim();
+    return s !== '' && !['Ei ilmoitettu', 'Ej angivet', 'Not specified', 'Uppgift saknas', '—'].includes(s);
+  };
+  
   const metaRow = [
-    listingTypeLabel?.trim(),
-    apartmentTypeText?.trim(),
-    district?.trim(),
-  ].filter(Boolean).join(' | ');
+    listingTypeLabel,
+    apartmentTypeText,
+    district,
+  ].filter(nonEmpty).join(' | ');
 
   return (
     <Link
