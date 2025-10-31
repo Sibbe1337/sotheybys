@@ -75,6 +75,23 @@ function parseNum(val: any): number | undefined {
   return Number.isFinite(num) && num > 0 ? num : undefined;
 }
 
+// LINUS FIX: Robust area number parsing (handles "2 400 m²" → 2400)
+function parseAreaNumber(input: any): number | undefined {
+  if (!input) return undefined;
+  const s = String(input).replace(/\s+/g, '').replace(/[^\d.,-]/g, '').replace(',', '.');
+  const n = parseFloat(s);
+  return Number.isFinite(n) && n > 0 ? n : undefined;
+}
+
+// LINUS FIX: Get first valid number from multiple sources
+function firstNumber(...vals: Array<any>): number | undefined {
+  for (const v of vals) {
+    const n = typeof v === 'number' ? v : parseAreaNumber(v);
+    if (Number.isFinite(n) && (n as number) > 0) return n as number;
+  }
+  return undefined;
+}
+
 function normalizeStatus(val: any): 'ACTIVE' | 'SOLD' | 'RESERVED' | undefined {
   const s = String(val || '').toLowerCase();
   if (/myyty|sold|såld/.test(s)) return 'SOLD';
@@ -141,7 +158,15 @@ export class LinearToPropertyMapper {
     // ========== DIMENSIONS (EXPANDED) ==========
     const living = parseNum(pickNV(nv, 'area') ?? lget(src.area!, 'fi')) || 0;
     const total = parseNum(pickNV(nv, 'totalArea') ?? lget(src.totalArea!, 'fi'));
-    const plot = parseNum(pickNV(nv, 'plotArea') ?? lget(src.plotArea!, 'fi'));
+    
+    // LINUS FIX: Robust plot area - try multiple sources (nv + localized FI fallback)
+    const nvPlot = firstNumber(nv?.plotArea, nv?.lotArea, nv?.siteArea);
+    const lotAreaFi = lget((src as any).lotArea, 'fi');
+    const plotAreaFi = lget((src as any).plotArea, 'fi');
+    const siteAreaFi = lget((src as any).siteArea, 'fi');
+    const localizedPlot = firstNumber(plotAreaFi, lotAreaFi, siteAreaFi);
+    const plot = nvPlot ?? localizedPlot;
+    
     const balcony = parseNum(pickNV(nv, 'balconyArea') ?? lget(src.balconyArea!, 'fi'));
     const terrace = parseNum(pickNV(nv, 'terraceArea') ?? lget(src.terraceArea!, 'fi'));
     const rooms = lget(src.rooms!, locale) || pickNV(nv, 'rooms') || undefined;
@@ -338,8 +363,13 @@ export class LinearToPropertyMapper {
         apartmentType: lv(src.typeOfApartment),
         condition: condition.fi || condition.sv || condition.en ? condition : undefined,
         
-        // Energy & systems
-        energyClass: lget(src.energyClass!, locale) || undefined,
+        // Energy & systems - LINUS FIX: Fallback locale → fi → nv
+        energyClass: (() => {
+          const fromLocale = lget((src as any).energyClass, locale);
+          const fromFi = lget((src as any).energyClass, 'fi');
+          const fromNv = typeof nv?.energyClass === 'string' ? nv.energyClass : undefined;
+          return [fromLocale, fromFi, fromNv].find(v => v && String(v).trim() !== '') || undefined;
+        })(),
         energyCertStatus: normalizeEnergyStatus(lget(src.listingHasEnergyCertificate!, locale)),
         heatingSystem: lv(src.heatingSystem),
         ventilationSystem: lv(src.ventilationSystem),
