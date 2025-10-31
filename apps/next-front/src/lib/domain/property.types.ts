@@ -130,6 +130,9 @@ export interface Property {
     video?: string;          // YouTube/Vimeo URL
   };
 
+  // International marketing
+  internationalUrl?: string;  // GLOBAL LISTING URL
+
   // Agent
   agent?: {
     name?: string;

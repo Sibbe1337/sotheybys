@@ -108,6 +108,9 @@ export interface PropertyDetailVM extends PropertyCardVM {
     energyCert?: string;
   };
   
+  // International marketing
+  internationalUrl?: string;  // GLOBAL LISTING URL
+  
   // Agent
   agent?: {
     name?: string;
@@ -245,6 +248,9 @@ export class PropertyVM {
 
       // Documents (NEW Phase 3)
       documents: p.documents,
+
+      // International marketing
+      internationalUrl: p.internationalUrl,
 
       // Agent
       agent: p.agent,

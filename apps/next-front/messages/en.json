@@ -253,6 +253,23 @@
     "contactTitle": "Contact | Snellman Sotheby's International Realty"
   },
   "property": {
+    "media": {
+      "photos": "Photos",
+      "floor": "Floor Plan",
+      "map": "Map Location",
+      "brochure": "Browse Brochure",
+      "video": "Watch Video",
+      "global": "GLOBAL LISTING"
+    },
+    "stats": {
+      "livingArea": "Living Area",
+      "totalArea": "Total Area",
+      "price": "Price",
+      "debtFree": "Debt-free Price",
+      "district": "District",
+      "yearBuilt": "Year Built",
+      "plotArea": "Plot Area"
+    },
     "tabs": {
       "overview": "Overview",
       "apartment": "Apartment Details",
@@ -273,7 +290,30 @@
       "monthlyFees": "Monthly Fees",
       "rentalInfo": "Rental Information",
       "ownershipAndTerms": "Ownership & Terms",
-      "features": "Features"
+      "features": "Features",
+      "apartment": {
+        "unit": "Apartment Details",
+        "companyBuilding": "Company & Building",
+        "costs": "Costs",
+        "other": "Other Details",
+        "docs": "Documents & Links",
+        "priceInfo": "Price Information",
+        "housingCosts": "Housing Costs",
+        "otherCosts": "Other Costs"
+      },
+      "property": {
+        "info": "Property Information",
+        "building": "Building Facts",
+        "costs": "Costs",
+        "docs": "Documents & Links",
+        "priceInfo": "Price Information"
+      },
+      "rental": {
+        "unit": "Apartment Details",
+        "rentInfo": "Rental Terms",
+        "companyBuilding": "Housing Company",
+        "costs": "Costs"
+      }
     },
     "fields": {
       "type": "Type",
@@ -309,16 +349,31 @@
       "parkingFee": "Parking Fee",
       "saunaFee": "Sauna Fee",
       "totalPerMonth": "Total per Month",
+      "totalFees": "Total Fees",
+      "otherFees": "Other Fees",
       "monthlyRent": "Monthly Rent",
       "securityDeposit": "Security Deposit",
       "contractType": "Contract Type",
       "earliestTermination": "Earliest Termination",
+      "noticePeriod": "Notice Period",
       "petsAllowed": "Pets Allowed",
       "smokingAllowed": "Smoking Allowed",
       "ownershipType": "Ownership Type",
       "plotOwnership": "Plot Ownership",
+      "plotSize": "Plot Size",
+      "plotRights": "Building Rights",
+      "servitudes": "Easements and Rights",
+      "propertyId": "Property ID",
+      "propertyTax": "Property Tax",
+      "mortgages": "Mortgages",
+      "otherPayments": "Other Payments",
       "availableFrom": "Available From",
       "zoning": "Zoning",
+      "plan": "Zoning Plan",
+      "condition": "Condition",
+      "balcony": "Balcony",
+      "terrace": "Terrace",
+      "sauna": "Sauna",
       "floorPlan": "Floor Plan",
       "brochure": "Property Brochure",
       "internationalBrochure": "International Brochure",

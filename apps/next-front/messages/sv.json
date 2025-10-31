@@ -253,6 +253,23 @@
     "contactTitle": "Kontakt | Snellman Sotheby's International Realty"
   },
   "property": {
+    "media": {
+      "photos": "Bilder",
+      "floor": "Planlösning",
+      "map": "Objekt på kartan",
+      "brochure": "Bläddra broschyren",
+      "video": "Titta video",
+      "global": "GLOBAL LISTING"
+    },
+    "stats": {
+      "livingArea": "Bostadsyta",
+      "totalArea": "Total yta",
+      "price": "Pris",
+      "debtFree": "Skuldfritt pris",
+      "district": "Stadsdel",
+      "yearBuilt": "Byggår",
+      "plotArea": "Tomtstorlek"
+    },
     "tabs": {
       "overview": "Översikt",
       "apartment": "Lägenhetsinformation",
@@ -273,7 +290,30 @@
       "monthlyFees": "Månatliga avgifter",
       "rentalInfo": "Hyresinformation",
       "ownershipAndTerms": "Ägandeform & Villkor",
-      "features": "Egenskaper"
+      "features": "Egenskaper",
+      "apartment": {
+        "unit": "Lägenhetsuppgifter",
+        "companyBuilding": "Bolag & Byggnad",
+        "costs": "Kostnader",
+        "other": "Övriga uppgifter",
+        "docs": "Dokument & Länkar",
+        "priceInfo": "Prisuppgifter",
+        "housingCosts": "Boendekostnader",
+        "otherCosts": "Övriga kostnader"
+      },
+      "property": {
+        "info": "Fastighetsinformation",
+        "building": "Byggfakta",
+        "costs": "Kostnader",
+        "docs": "Dokument & Länkar",
+        "priceInfo": "Prisuppgifter"
+      },
+      "rental": {
+        "unit": "Lägenhetsuppgifter",
+        "rentInfo": "Hyresuppgifter",
+        "companyBuilding": "Husbolagsuppgifter",
+        "costs": "Kostnader"
+      }
     },
     "fields": {
       "type": "Typ",
@@ -309,16 +349,31 @@
       "parkingFee": "Parkeringsavgift",
       "saunaFee": "Bastuavgift",
       "totalPerMonth": "Totalt per månad",
+      "totalFees": "Totala vederlag",
+      "otherFees": "Övriga vederlag",
       "monthlyRent": "Månadshyra",
       "securityDeposit": "Depositionsavgift",
       "contractType": "Avtalstyp",
       "earliestTermination": "Tidigaste uppsägning",
+      "noticePeriod": "Uppsägningstid",
       "petsAllowed": "Husdjur tillåtna",
       "smokingAllowed": "Rökning tillåten",
       "ownershipType": "Ägandeform",
       "plotOwnership": "Tomtägandeform",
+      "plotSize": "Tomtstorlek",
+      "plotRights": "Byggrätt",
+      "servitudes": "Servitut och rättigheter",
+      "propertyId": "Fastighetsbeteckning",
+      "propertyTax": "Fastighetsskatt",
+      "mortgages": "Inteckningar",
+      "otherPayments": "Övriga avgifter",
       "availableFrom": "Tillgänglig från",
       "zoning": "Planläggning",
+      "plan": "Detaljplan",
+      "condition": "Skick",
+      "balcony": "Balkong",
+      "terrace": "Terrass",
+      "sauna": "Bastu",
       "floorPlan": "Planlösning",
       "brochure": "Objektsbroschyr",
       "internationalBrochure": "Internationell broschyr",

@@ -253,6 +253,23 @@
     "contactTitle": "Yhteystiedot | Snellman Sotheby's International Realty"
   },
   "property": {
+    "media": {
+      "photos": "Kuvat",
+      "floor": "Pohjapiirros",
+      "map": "Kohde kartalla",
+      "brochure": "Selaa esitettä",
+      "video": "Katso video",
+      "global": "GLOBAL LISTING"
+    },
+    "stats": {
+      "livingArea": "Asuinpinta-ala",
+      "totalArea": "Kokonaispinta-ala",
+      "price": "Hinta",
+      "debtFree": "Velaton hinta",
+      "district": "Kaupunginosa",
+      "yearBuilt": "Rakennusvuosi",
+      "plotArea": "Tontin pinta-ala"
+    },
     "tabs": {
       "overview": "Yleiskatsaus",
       "apartment": "Huoneistotiedot",
@@ -273,7 +290,30 @@
       "monthlyFees": "Kuukausittaiset kulut",
       "rentalInfo": "Vuokratiedot",
       "ownershipAndTerms": "Omistus & Ehdot",
-      "features": "Ominaisuudet"
+      "features": "Ominaisuudet",
+      "apartment": {
+        "unit": "Huoneistotiedot",
+        "companyBuilding": "Yhtiö- ja Rakennustiedot",
+        "costs": "Kustannukset",
+        "other": "Muut tiedot",
+        "docs": "Asiakirjat & Linkit",
+        "priceInfo": "Hintatiedot",
+        "housingCosts": "Asumiskustannukset",
+        "otherCosts": "Muut kustannukset"
+      },
+      "property": {
+        "info": "Kiinteistötiedot",
+        "building": "Rakennustiedot",
+        "costs": "Kustannukset",
+        "docs": "Asiakirjat & Linkit",
+        "priceInfo": "Hintatiedot"
+      },
+      "rental": {
+        "unit": "Huoneistotiedot",
+        "rentInfo": "Vuokratiedot",
+        "companyBuilding": "Taloyhtiötiedot",
+        "costs": "Kustannukset"
+      }
     },
     "fields": {
       "type": "Tyyppi",
@@ -309,16 +349,31 @@
       "parkingFee": "Autopaikkamaksu",
       "saunaFee": "Saunamaksu",
       "totalPerMonth": "Yhteensä / kk",
+      "totalFees": "Yhteensä vastikkeet",
+      "otherFees": "Muut vastikkeet",
       "monthlyRent": "Vuokra / kk",
       "securityDeposit": "Vakuus",
       "contractType": "Sopimuksen tyyppi",
       "earliestTermination": "Aikaisin irtisanominen",
+      "noticePeriod": "Irtisanomisaika",
       "petsAllowed": "Lemmikit sallittu",
       "smokingAllowed": "Tupakointi sallittu",
       "ownershipType": "Omistusmuoto",
       "plotOwnership": "Tontin omistus",
+      "plotSize": "Tontin koko",
+      "plotRights": "Rakennusoikeus",
+      "servitudes": "Rasitteet ja oikeudet",
+      "propertyId": "Kiinteistötunnus",
+      "propertyTax": "Kiinteistövero",
+      "mortgages": "Kiinnitykset",
+      "otherPayments": "Muut maksut",
       "availableFrom": "Vapautuminen",
-      "zoning": "Kaavoitus",
+      "zoning": "Kaavatilanne",
+      "plan": "Kaavatilanne",
+      "condition": "Kunto",
+      "balcony": "Parveke",
+      "terrace": "Terassi",
+      "sauna": "Sauna",
       "floorPlan": "Pohjapiirros",
       "brochure": "Esittelyaineisto",
       "internationalBrochure": "Kansainvälinen esite",
