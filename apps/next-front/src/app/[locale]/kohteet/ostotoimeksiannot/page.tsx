@@ -133,15 +133,16 @@ export default function PurchaseAssignmentsPage() {
                 <p className="text-lg font-light leading-relaxed mb-8 text-white/90">
                   Vuonna 2015 alkoi uusi aikakausi Suomessa. Ab Snellman LKV Oy Sotheby's International Realty avasi ovensa suomalaisille markkinoille tavoitteenaan nostaa kiinteistönvälitys aivan uudelle tasolle. Dynaamisessa pääkaupungissa Helsingissä sijaitsevassa toimistossa odottaa motivoitunut asiantuntijatiimi, joka on valmis toteuttamaan unelmasi. Vaikka toimisto sijaitsee Etelä-Suomessa, myyntimme ja toimintamme kattavat koko maan. Kauniista saaristosta lumovaan Lappiin ja kaikkea siltä väliltä.
                 </p>
-                <Link
+                <a
                   href="https://maps.google.com/?q=Kasarmikatu+34,+00130+Helsinki"
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-block border-2 border-white text-white px-8 py-3 
                            hover:bg-white hover:text-[var(--color-primary)] transition-all duration-300 
                            uppercase tracking-wider text-sm font-light"
                 >
                   REITTIOHJEET »
-                </Link>
+                </a>
               </div>
 
               {/* Google Maps */}
