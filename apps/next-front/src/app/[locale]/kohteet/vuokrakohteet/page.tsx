@@ -232,9 +232,9 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
                   />
                   <label htmlFor="privacy" className="text-sm text-gray-600">
                     Olen lukenut{' '}
-                    <Link href="/tietosuojaseloste" className="text-[var(--color-primary)] hover:underline">
+                    <a href="/tietosuojaseloste" className="text-[var(--color-primary)] hover:underline">
                       Tietosuojaselosteen
-                    </Link>
+                    </a>
                   </label>
                 </div>
                 <div className="text-center">

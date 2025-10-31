@@ -225,9 +225,9 @@ export default function FooterBottomBar() {
                 </button>
                 <p className="text-xs text-white/60">
                   Olen tutustunut{' '}
-                  <Link href="/tietosuojaseloste" className="underline hover:text-white">
+                  <a href="/tietosuojaseloste" className="underline hover:text-white">
                     Tietosuojaselosteeseen
-                  </Link>
+                  </a>
                 </p>
               </form>
             </div>

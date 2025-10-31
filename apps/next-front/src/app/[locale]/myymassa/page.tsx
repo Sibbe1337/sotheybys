@@ -149,9 +149,9 @@ export default function SellingPage() {
                     />
                     <label htmlFor="privacy-fi" className="text-sm text-gray-700 font-light">
                       Olen lukenut{' '}
-                      <Link href="/tietosuojaseloste" className="text-[var(--color-primary)] hover:underline">
+                      <a href="/tietosuojaseloste" className="text-[var(--color-primary)] hover:underline">
                         Tietosuojaselosteen
-                      </Link>
+                      </a>
                     </label>
                   </div>
                   
