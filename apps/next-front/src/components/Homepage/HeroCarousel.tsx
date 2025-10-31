@@ -137,7 +137,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                     style={{ transitionDelay: (!hasInitialized && index === 0) ? '0ms' : '600ms' }}
                   >
                     <Link
-                      href={slide.buttonLink}
+                      href={slide.buttonLink as any}
                       className="group inline-flex items-center gap-3 text-white border border-white 
                                px-8 py-4 transition-all duration-300 
                                font-light tracking-wider uppercase text-sm relative overflow-hidden
