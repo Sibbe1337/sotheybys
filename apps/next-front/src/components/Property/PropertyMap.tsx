@@ -201,11 +201,11 @@ export default function PropertyMap({ properties, language }: PropertyMapProps) 
                     {(selectedProperty.pricing.debtFree || selectedProperty.pricing.sales || 0).toLocaleString('fi-FI')} €
                   </p>
                   <Link
-                    href={
+                    href={(
                       language === 'sv' ? `/objekt/${selectedProperty.slug}` :
                       language === 'en' ? `/properties/${selectedProperty.slug}` :
                       `/kohde/${selectedProperty.slug}`
-                    }
+                    ) as any}
                     className="block w-full text-center px-4 py-2 bg-[var(--color-primary)] text-white rounded hover:bg-[var(--color-primary-dark)] transition-colors text-sm"
                   >
                     {language === 'fi' ? 'Katso kohde' : language === 'sv' ? 'Se objekt' : 'View property'}
