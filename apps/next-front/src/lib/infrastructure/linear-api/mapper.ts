@@ -92,6 +92,26 @@ function firstNumber(...vals: Array<any>): number | undefined {
   return undefined;
 }
 
+// LINUS FIX: Unit-aware area conversion
+function normalizeUnit(u?: string | null): 'SQM'|'ARE'|'HECTARE'|undefined {
+  if (!u) return undefined;
+  const s = String(u).trim().toUpperCase();
+  if (s.includes('SQUARE') || s.includes('SQM') || s === 'M2' || s === 'M²') return 'SQM';
+  if (s.includes('ARE') || s === 'A') return 'ARE';
+  if (s.includes('HECTAR') || s === 'HA') return 'HECTARE';
+  return undefined;
+}
+
+function applyUnit(n: number, unit?: string | null, rawText?: string | null): number {
+  const nu = normalizeUnit(unit);
+  if (nu === 'ARE') return n * 100;
+  if (nu === 'HECTARE') return n * 10000;
+  // Fallback: localized string contains 'ha'
+  const raw = (rawText || '').toLowerCase();
+  if (raw.includes(' ha') || raw.endsWith('ha') || raw.includes('hehtaari')) return n * 10000;
+  return n; // default m²
+}
+
 function normalizeStatus(val: any): 'ACTIVE' | 'SOLD' | 'RESERVED' | undefined {
   const s = String(val || '').toLowerCase();
   if (/myyty|sold|såld/.test(s)) return 'SOLD';
@@ -159,13 +179,26 @@ export class LinearToPropertyMapper {
     const living = parseNum(pickNV(nv, 'area') ?? lget(src.area!, 'fi')) || 0;
     const total = parseNum(pickNV(nv, 'totalArea') ?? lget(src.totalArea!, 'fi'));
     
-    // LINUS FIX: Robust plot area - try multiple sources (nv + localized FI fallback)
+    // LINUS FIX: Unit-aware plot area - try multiple sources + convert units to m²
     const nvPlot = firstNumber(nv?.plotArea, nv?.lotArea, nv?.siteArea);
+    const unitNv = nv?.plotAreaUnit || nv?.lotAreaUnit || nv?.siteAreaUnit || null;
     const lotAreaFi = lget((src as any).lotArea, 'fi');
     const plotAreaFi = lget((src as any).plotArea, 'fi');
     const siteAreaFi = lget((src as any).siteArea, 'fi');
     const localizedPlot = firstNumber(plotAreaFi, lotAreaFi, siteAreaFi);
-    const plot = nvPlot ?? localizedPlot;
+    // Source value + unit conversion (output always in m²)
+    const plotCandidate = nvPlot ?? localizedPlot;
+    const plot = plotCandidate !== undefined ? applyUnit(plotCandidate, unitNv, plotAreaFi || lotAreaFi || siteAreaFi) : undefined;
+    
+    // DEBUG: Log plot sources in development
+    if (process.env.NODE_ENV !== 'production' && plot !== undefined) {
+      console.debug('[PLOT DEBUG]', {
+        id: nv?.id || (src as any)?.id,
+        nvPlot, unitNv,
+        localized: { plotAreaFi, lotAreaFi, siteAreaFi },
+        plotFinal: plot
+      });
+    }
     
     const balcony = parseNum(pickNV(nv, 'balconyArea') ?? lget(src.balconyArea!, 'fi'));
     const terrace = parseNum(pickNV(nv, 'terraceArea') ?? lget(src.terraceArea!, 'fi'));
