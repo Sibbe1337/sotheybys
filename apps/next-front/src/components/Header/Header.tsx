@@ -44,104 +44,105 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLandscape, setIsLandscape] = useState(false);
 
-  // Multilingual menu items
+  // 🔥 LINUS FIX: Use semantic path keys - next-intl handles locale translation!
+  // All paths are now semantic keys that map to localized URLs via pathnames.ts
   const getMenuItemsForLanguage = (lang: string): MenuItem[] => {
     if (lang === 'sv') {
       return [
-        { id: '1', label: 'HEM', path: '/sv', url: '/sv' },
+        { id: '1', label: 'HEM', path: '/', url: '/' },
         { 
           id: '2', 
           label: 'OBJEKT', 
-          path: '/sv/objekt', 
-          url: '/sv/objekt',
+          path: '/properties', 
+          url: '/properties',
           childItems: {
             nodes: [
-              { id: '2-1', label: 'Försäljningsobjekt', path: '/sv/objekt', url: '/sv/objekt' },
-              { id: '2-2', label: 'Hyresobjekt', path: '/sv/objekt/hyresobjekt', url: '/sv/objekt/hyresobjekt' },
-              { id: '2-3', label: 'Köpuppdrag', path: '/sv/objekt/kopuppdrag', url: '/sv/objekt/kopuppdrag' },
-              { id: '2-4', label: 'Referenser', path: '/sv/objekt/referenser', url: '/sv/objekt/referenser' },
+              { id: '2-1', label: 'Försäljningsobjekt', path: '/properties', url: '/properties' },
+              { id: '2-2', label: 'Hyresobjekt', path: '/properties/rentals', url: '/properties/rentals' },
+              { id: '2-3', label: 'Köpuppdrag', path: '/properties/purchase-assignments', url: '/properties/purchase-assignments' },
+              { id: '2-4', label: 'Referenser', path: '/properties/references', url: '/properties/references' },
             ]
           }
         },
-        { id: '3', label: 'SÄLJA', path: '/sv/salj-med-oss', url: '/sv/salj-med-oss' },
-        { id: '4', label: 'INTERNATIONELLT', path: '/sv/internationellt', url: '/sv/internationellt' },
-        { id: '5', label: 'PERSONAL', path: '/sv/personal', url: '/sv/personal' },
+        { id: '3', label: 'SÄLJA', path: '/sell', url: '/sell' },
+        { id: '4', label: 'INTERNATIONELLT', path: '/international', url: '/international' },
+        { id: '5', label: 'PERSONAL', path: '/staff', url: '/staff' },
         { 
           id: '6', 
           label: 'KONTAKTA OSS', 
-          path: '/sv/kontakta-oss', 
-          url: '/sv/kontakta-oss',
+          path: '/contact', 
+          url: '/contact',
           childItems: {
             nodes: [
-              { id: '6-1', label: 'Kontaktuppgifter', path: '/sv/kontakta-oss', url: '/sv/kontakta-oss' },
-              { id: '6-2', label: 'Företaget', path: '/sv/om-oss', url: '/sv/om-oss' },
+              { id: '6-1', label: 'Kontaktuppgifter', path: '/contact/info', url: '/contact/info' },
+              { id: '6-2', label: 'Företaget', path: '/about', url: '/about' },
             ]
           }
         },
       ];
     } else if (lang === 'en') {
       return [
-        { id: '1', label: 'HOME', path: '/en', url: '/en' },
+        { id: '1', label: 'HOME', path: '/', url: '/' },
         { 
           id: '2', 
           label: 'PROPERTIES', 
-          path: '/en/properties', 
-          url: '/en/properties',
+          path: '/properties', 
+          url: '/properties',
           childItems: {
             nodes: [
-              { id: '2-1', label: 'For Sale', path: '/en/properties', url: '/en/properties' },
-              { id: '2-2', label: 'For Rent', path: '/en/properties/rentals', url: '/en/properties/rentals' },
-              { id: '2-3', label: 'Purchase Assignments', path: '/en/properties/purchase-assignments', url: '/en/properties/purchase-assignments' },
-              { id: '2-4', label: 'References', path: '/en/properties/references', url: '/en/properties/references' },
+              { id: '2-1', label: 'For Sale', path: '/properties', url: '/properties' },
+              { id: '2-2', label: 'For Rent', path: '/properties/rentals', url: '/properties/rentals' },
+              { id: '2-3', label: 'Purchase Assignments', path: '/properties/purchase-assignments', url: '/properties/purchase-assignments' },
+              { id: '2-4', label: 'References', path: '/properties/references', url: '/properties/references' },
             ]
           }
         },
-        { id: '3', label: 'SELLING', path: '/en/sell-with-us', url: '/en/sell-with-us' },
-        { id: '4', label: 'INTERNATIONALLY', path: '/en/international', url: '/en/international' },
-        { id: '5', label: 'STAFF', path: '/en/staff', url: '/en/staff' },
+        { id: '3', label: 'SELLING', path: '/sell', url: '/sell' },
+        { id: '4', label: 'INTERNATIONALLY', path: '/international', url: '/international' },
+        { id: '5', label: 'STAFF', path: '/staff', url: '/staff' },
         { 
           id: '6', 
           label: 'CONTACT US', 
-          path: '/en/contact-us', 
-          url: '/en/contact-us',
+          path: '/contact', 
+          url: '/contact',
           childItems: {
             nodes: [
-              { id: '6-1', label: 'Contact Info', path: '/en/contact-us', url: '/en/contact-us' },
-              { id: '6-2', label: 'About Us', path: '/en/about', url: '/en/about' },
+              { id: '6-1', label: 'Contact Info', path: '/contact/info', url: '/contact/info' },
+              { id: '6-2', label: 'About Us', path: '/about', url: '/about' },
             ]
           }
         },
       ];
     } else {
-      // Finnish (default)
+      // Finnish (default) - also uses semantic keys
       return [
         { id: '1', label: 'KOTI', path: '/', url: '/' },
         { 
           id: '2', 
           label: 'KOHTEET', 
-          path: '/kohteet', 
-          url: '/kohteet',
+          path: '/properties', 
+          url: '/properties',
           childItems: {
             nodes: [
-              { id: '2-1', label: 'Myyntikohteet', path: '/kohteet', url: '/kohteet' },
-              { id: '2-2', label: 'Vuokrakohteet', path: '/kohteet/vuokrakohteet', url: '/kohteet/vuokrakohteet' },
-              { id: '2-3', label: 'Ostotoimeksiannot', path: '/kohteet/ostotoimeksiannot', url: '/kohteet/ostotoimeksiannot' },
-              { id: '2-4', label: 'Referenssit', path: '/kohteet/referenssit', url: '/kohteet/referenssit' },
+              { id: '2-1', label: 'Myyntikohteet', path: '/properties', url: '/properties' },
+              { id: '2-2', label: 'Vuokrakohteet', path: '/properties/rentals', url: '/properties/rentals' },
+              { id: '2-3', label: 'Ostotoimeksiannot', path: '/properties/purchase-assignments', url: '/properties/purchase-assignments' },
+              { id: '2-4', label: 'Referenssit', path: '/properties/references', url: '/properties/references' },
             ]
           }
         },
-        { id: '3', label: 'MYYMÄSSÄ', path: '/myymassa', url: '/myymassa' },
-        { id: '4', label: 'KANSAINVÄLISESTI', path: '/kansainvalisesti', url: '/kansainvalisesti' },
-        { id: '5', label: 'HENKILÖSTÖ', path: '/henkilosto', url: '/henkilosto' },
+        { id: '3', label: 'MYYMÄSSÄ', path: '/sell', url: '/sell' },
+        { id: '4', label: 'KANSAINVÄLISESTI', path: '/international', url: '/international' },
+        { id: '5', label: 'HENKILÖSTÖ', path: '/staff', url: '/staff' },
         { 
           id: '6', 
           label: 'OTA YHTEYTTÄ', 
-          path: '/ota-yhteytta', 
-          url: '/ota-yhteytta',
+          path: '/contact', 
+          url: '/contact',
           childItems: {
             nodes: [
-              { id: '6-1', label: 'Yhteystiedot', path: '/yhteystiedot', url: '/yhteystiedot' },
-              { id: '6-2', label: 'Yritys', path: '/yritys', url: '/yritys' },
+              { id: '6-1', label: 'Yhteystiedot', path: '/contact/info', url: '/contact/info' },
+              { id: '6-2', label: 'Yritys', path: '/about', url: '/about' },
             ]
           }
         },

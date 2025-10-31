@@ -15,11 +15,16 @@
  */
 
 import { createNavigation } from 'next-intl/navigation';
-import { locales, defaultLocale } from '@/i18n/config';
+import { locales } from '@/i18n/config';
+import { pathnames } from '@/i18n/pathnames';
 
-// ✅ FIX: Must match middleware localePrefix setting (always)
+// ✅ LINUS FIX: Use pathname mappings for localized routes
 export const { Link, redirect, usePathname, useRouter, getPathname } =
-  createNavigation({ locales, localePrefix: 'always' });
+  createNavigation({ 
+    locales, 
+    localePrefix: 'always',
+    pathnames
+  });
 
 /**
  * Backward compatibility helper
