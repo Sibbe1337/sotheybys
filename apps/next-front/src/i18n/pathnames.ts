@@ -1,16 +1,50 @@
 /**
- * Pathname Mappings - DISABLED FOR APP ROUTER
+ * Pathname Mappings - APP ROUTER FILESYSTEM ROUTES
  * 
  * App Router uses filesystem-based routing.
  * All routes use Finnish directory names because that's what exists in filesystem.
- * Cannot translate filesystem structure with pathname mappings in App Router.
  * 
- * Only dynamic catch-all routes work with pathname mappings.
+ * ALL LOCALES map to the SAME Finnish filesystem paths:
+ * - /kohteet (not /objekt or /properties)
+ * - /henkilosto (not /personal or /staff)
+ * - /myymassa (not /salj-med-oss or /sell-with-us)
+ * 
+ * This is required for next-intl Link component type safety.
  */
 
 export const pathnames = {
   // Homepage
   '/': '/',
+  
+  // Properties - ALL locales use Finnish filesystem path
+  '/kohteet': '/kohteet',
+  
+  // Rentals - ALL locales use Finnish filesystem path
+  '/kohteet/vuokrakohteet': '/kohteet/vuokrakohteet',
+  
+  // Purchase assignments - ALL locales use Finnish filesystem path
+  '/kohteet/ostotoimeksiannot': '/kohteet/ostotoimeksiannot',
+  
+  // References - ALL locales use Finnish filesystem path
+  '/kohteet/referenssit': '/kohteet/referenssit',
+  
+  // Sell - ALL locales use Finnish filesystem path
+  '/myymassa': '/myymassa',
+  
+  // International - ALL locales use Finnish filesystem path
+  '/kansainvalisesti': '/kansainvalisesti',
+  
+  // Staff - ALL locales use Finnish filesystem path
+  '/henkilosto': '/henkilosto',
+  
+  // Contact - ALL locales use Finnish filesystem path
+  '/yhteystiedot': '/yhteystiedot',
+  
+  // About - ALL locales use Finnish filesystem path
+  '/yritys': '/yritys',
+  
+  // Property detail - dynamic route
+  '/kohde/[slug]': '/kohde/[slug]',
   
   // Blog (same across all locales)
   '/blog': '/blog'
