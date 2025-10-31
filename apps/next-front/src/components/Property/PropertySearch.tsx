@@ -482,6 +482,11 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                     // Get listing type label
                     const listingTypeLabel = property.meta.listingTypeLabel?.[language] || property.meta.listingTypeLabel?.fi || property.meta.typeCode;
                     
+                    // Calculate "other area" from balcony + terrace
+                    const balconyArea = property.dimensions.balcony || 0;
+                    const terraceArea = property.dimensions.terrace || 0;
+                    const otherArea = balconyArea + terraceArea > 0 ? balconyArea + terraceArea : undefined;
+                    
                     return (
                       <PropertyCard
                         key={property.id}
@@ -494,7 +499,7 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                         images={images}
                         variant={variant}
                         livingArea={property.dimensions.living}
-                        otherArea={property.dimensions.other}
+                        otherArea={otherArea}
                         totalArea={property.dimensions.total}
                         plotArea={property.dimensions.plot}
                         askPrice={property.pricing.sales}

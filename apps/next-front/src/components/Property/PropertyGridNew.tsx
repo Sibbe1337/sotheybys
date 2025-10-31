@@ -73,6 +73,11 @@ export default function PropertyGridNew({ properties, locale }: PropertyGridNewP
         // Get listing type label
         const listingTypeLabel = property.meta.listingTypeLabel?.[locale] || property.meta.listingTypeLabel?.fi || property.meta.typeCode;
         
+        // Calculate "other area" from balcony + terrace
+        const balconyArea = property.dimensions.balcony || 0;
+        const terraceArea = property.dimensions.terrace || 0;
+        const otherArea = balconyArea + terraceArea > 0 ? balconyArea + terraceArea : undefined;
+        
         return (
           <PropertyCard
             key={property.id}
@@ -85,7 +90,7 @@ export default function PropertyGridNew({ properties, locale }: PropertyGridNewP
             images={images}
             variant={variant}
             livingArea={property.dimensions.living}
-            otherArea={property.dimensions.other}
+            otherArea={otherArea}
             totalArea={property.dimensions.total}
             plotArea={property.dimensions.plot}
             askPrice={property.pricing.sales}
