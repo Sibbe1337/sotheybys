@@ -86,6 +86,7 @@ export default function PropertyGridNew({ properties, locale }: PropertyGridNewP
             variant={variant}
             livingArea={property.dimensions.living}
             otherArea={property.dimensions.other}
+            totalArea={property.dimensions.total}
             plotArea={property.dimensions.plot}
             askPrice={property.pricing.sales}
             debtFreePrice={property.pricing.debtFree}

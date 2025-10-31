@@ -495,6 +495,7 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                         variant={variant}
                         livingArea={property.dimensions.living}
                         otherArea={property.dimensions.other}
+                        totalArea={property.dimensions.total}
                         plotArea={property.dimensions.plot}
                         askPrice={property.pricing.sales}
                         debtFreePrice={property.pricing.debtFree}

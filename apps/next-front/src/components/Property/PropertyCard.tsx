@@ -24,9 +24,10 @@ export interface PropertyCardProps {
   variant: CardVariant;
 
   // Mått
-  livingArea?: number | null;  // m²
-  otherArea?: number | null;   // m² (övrigt)
-  plotArea?: number | null;    // m² (för fastighet, valfritt)
+  livingArea?: number | null;  // m² (Bostadsyta)
+  otherArea?: number | null;   // m² (Övrig yta - for apartments)
+  totalArea?: number | null;   // m² (Total yta - for properties)
+  plotArea?: number | null;    // m² (Tomtstorlek - for properties)
 
   // Priser
   askPrice?: number | null;          // Myyntihinta
@@ -53,6 +54,7 @@ export default function PropertyCard({
   variant,
   livingArea,
   otherArea,
+  totalArea,
   plotArea,
   askPrice,
   debtFreePrice,
@@ -65,8 +67,12 @@ export default function PropertyCard({
   // Bildkarusell
   const { idx, setIdx, onTouchStart, onTouchMove, onTouchEnd } = useMiniCarousel(images.length);
 
-  // Area-sträng
-  const areaStr = joinPlus(fmtArea(livingArea, L), fmtArea(otherArea, L, true));
+  // Area-sträng - OLIKA FORMAT för olika typer
+  const areaStr = variant === 'property' 
+    ? formatPropertyArea(livingArea, totalArea, plotArea, L)  // "185 m² / 215 m² | 0.3399 ha"
+    : variant === 'rental'
+    ? fmtArea(livingArea, L)  // Hyresobjekt: Visa bara boyta "0 m²"
+    : joinPlus(fmtArea(livingArea, L), fmtArea(otherArea, L, true));  // Lägenhet: "141 m² + 31 m²"
 
   // Huvudpris + sekundär rad enligt typ
   const { mainPrice, subPrice, perSqm, rentSuffix } = priceLines({
@@ -158,7 +164,7 @@ export default function PropertyCard({
         {/* Meta-rad */}
         {metaRow && <p className="line-clamp-1 text-sm text-gray-600">{metaRow}</p>}
 
-        {/* Area */}
+        {/* Area - visa alltid area-sträng för alla typer */}
         {areaStr && <p className="text-sm text-gray-700">{areaStr}</p>}
 
         {/* Prisrad */}
@@ -170,9 +176,6 @@ export default function PropertyCard({
             </p>
           )}
           {subPrice && <p className="text-sm text-gray-600">{subPrice}</p>}
-          {variant === 'property' && plotArea ? (
-            <p className="text-xs text-gray-500">{fmtPlot(plotArea, L)}</p>
-          ) : null}
         </div>
       </div>
     </Link>
@@ -268,6 +271,28 @@ function fmtPlot(n?: number | null, locale = 'fi-FI') {
 
 function joinPlus(a: string, b: string) {
   return [a, b].filter(Boolean).join(' ');
+}
+
+// Format area for properties: "185 m² / 215 m² | 0.3399 ha"
+function formatPropertyArea(living?: number | null, total?: number | null, plot?: number | null, locale = 'fi-FI'): string {
+  const parts: string[] = [];
+  
+  // Living / Total area part
+  if (living && total) {
+    parts.push(`${living.toLocaleString(locale)} m² / ${total.toLocaleString(locale)} m²`);
+  } else if (living) {
+    parts.push(`${living.toLocaleString(locale)} m²`);
+  } else if (total) {
+    parts.push(`${total.toLocaleString(locale)} m²`);
+  }
+  
+  // Plot area part (with ha conversion if >= 10000 m²)
+  if (plot) {
+    const plotStr = fmtPlot(plot, locale);
+    if (plotStr) parts.push(plotStr);
+  }
+  
+  return parts.join(' | ');
 }
 
 function label(locale: string, k: 'myyntihinta') {
