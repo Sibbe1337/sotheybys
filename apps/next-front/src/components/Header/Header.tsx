@@ -257,7 +257,7 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
                     onMouseLeave={() => setActiveDropdown(null)}
                   >
                     <Link
-                      href={item.path || item.url}
+                      href={(item.path || item.url) as any}
                       className={`flex items-center py-2 px-5 text-sm font-bold uppercase tracking-[0.2em]
                                  transition-all duration-200 [font-family:'freight-sans-pro',sans-serif] ${
                                    isActive 
@@ -276,7 +276,7 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
                           {item.childItems.nodes.map((childItem) => (
                             <li key={childItem.id}>
                               <Link
-                                href={childItem.path || childItem.url}
+                                href={(childItem.path || childItem.url) as any}
                                 className="block px-4 py-3 text-sm text-gray-700 hover:text-[var(--color-gold)] hover:bg-gray-50 transition-colors [font-family:'freight-sans-pro',sans-serif]"
                                 target={childItem.target}
                               >
@@ -329,7 +329,7 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
                 <div key={item.id}>
                   <div className="flex items-center justify-between">
                     <Link
-                      href={item.path || item.url}
+                      href={(item.path || item.url) as any}
                       className={`block py-3 text-sm font-bold tracking-[0.15em] uppercase border-b border-white/10 flex-1
                                [font-family:'freight-sans-pro',sans-serif] ${isActive 
                                  ? 'text-[var(--color-gold)]' 
@@ -367,7 +367,7 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
                       {item.childItems.nodes.map((childItem) => (
                         <Link
                           key={childItem.id}
-                          href={childItem.path || childItem.url}
+                          href={(childItem.path || childItem.url) as any}
                           className="block py-2 text-sm text-white/80 hover:text-[var(--color-gold)] border-b border-white/5 [font-family:'freight-sans-pro',sans-serif]"
                           target={childItem.target}
                           onClick={() => setIsMobileMenuOpen(false)}
