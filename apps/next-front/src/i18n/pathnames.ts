@@ -84,7 +84,10 @@ export const pathnames = {
     fi: '/yritys',
     sv: '/om-oss',
     en: '/about'
-  }
+  },
+  
+  // Blog (same across all locales)
+  '/blog': '/blog'
 } as const;
 
 export type Pathnames = typeof pathnames;
