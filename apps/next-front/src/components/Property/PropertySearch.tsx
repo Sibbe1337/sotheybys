@@ -550,11 +550,11 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                               {price > 0 ? `${price.toLocaleString('fi-FI')} €` : ''}
                             </p>
                             <Link
-                              href={
+                              href={(
                                 language === 'sv' ? `/objekt/${property.slug}` :
                                 language === 'en' ? `/properties/${property.slug}` :
                                 `/kohde/${property.slug}`
-                              }
+                              ) as any}
                               className="px-6 py-3 bg-[var(--color-primary)] text-white rounded hover:bg-[var(--color-primary-dark)] transition-colors"
                             >
                               {language === 'fi' ? 'Katso kohde' : language === 'sv' ? 'Se objekt' : 'View property'}
