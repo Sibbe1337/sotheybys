@@ -80,7 +80,7 @@ export function ApartmentSections({ vm, locale }: ApartmentSectionsProps) {
       <Section title={getSectionLabel('apartment.unit', locale)}>
         <Field 
           label={getFieldLabel('floor', locale)} 
-          value={vm.floorsTotal ? `${vm.floor || '?'}/${vm.floorsTotal}` : vm.floor}
+          value={vm.floor && vm.floorsTotal ? `${vm.floor}/${vm.floorsTotal}` : vm.floor}
           alwaysShow 
         />
         <Field 

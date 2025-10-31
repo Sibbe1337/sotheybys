@@ -2,10 +2,23 @@
 
 import { useState, useMemo } from 'react';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import { Link } from '@/lib/navigation';
 import PropertyGridNew from './PropertyGridNew';
-import PropertyMap from './PropertyMap';
 import type { Property, Locale } from '@/lib/domain/property.types';
+
+// Lazy load map for performance
+const ListingMap = dynamic(() => import('../Map/ListingMap').then(mod => ({ default: mod.ListingMap })), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-[600px] flex items-center justify-center bg-gray-100">
+      <div className="text-center">
+        <div className="animate-spin w-8 h-8 border-4 border-[#002349] border-t-transparent rounded-full mx-auto mb-4"></div>
+        <p className="text-gray-600">Loading map...</p>
+      </div>
+    </div>
+  ),
+});
 
 interface PropertySearchProps {
   properties: Property[];
@@ -492,7 +505,9 @@ export default function PropertySearch({ properties, language }: PropertySearchP
 
               {/* Map View */}
               {viewMode === 'map' && (
-                <PropertyMap properties={filteredProperties} language={language} />
+                <div className="w-full h-[600px] border border-gray-200 rounded-lg overflow-hidden">
+                  <ListingMap properties={filteredProperties} locale={language} />
+                </div>
               )}
             </>
           ) : (

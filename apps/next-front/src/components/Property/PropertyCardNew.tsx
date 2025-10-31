@@ -21,6 +21,7 @@ import { lpick } from '@/lib/domain/locale-utils';
 import { fmtCurrency } from '@/lib/presentation/formatters/currency';
 import { fmtArea } from '@/lib/presentation/formatters/area';
 import { isProperty } from '@/lib/domain/property-type-helpers';
+import { PropertyCardCarousel } from './PropertyCardCarousel';
 
 interface PropertyCardNewProps {
   property: Property;
@@ -116,18 +117,19 @@ export default function PropertyCardNew({ property, locale }: PropertyCardNewPro
 
   return (
     <div className="bg-white border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow relative group">
-      {/* Property Image */}
-      <Link href={propertyUrl} className="block relative aspect-[4/3] bg-gray-100">
-        <Image
-          key={`card-${property.id || property.slug}-${imageUrl}`}
-          src={imageUrl}
+      {/* Property Image Carousel with Type Banner */}
+      <Link href={propertyUrl} className="block relative">
+        <PropertyCardCarousel 
+          images={property.media.images}
           alt={imageAlt}
-          fill
-          className="object-cover"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          quality={75}
-          priority={false}
         />
+        
+        {/* Type Banner */}
+        {typeLabel && (
+          <div className="absolute top-4 left-0 bg-[#002349] text-white px-4 py-1.5 text-sm font-medium uppercase tracking-wide">
+            {typeLabel}
+          </div>
+        )}
       </Link>
 
       {/* Property Details */}
@@ -156,71 +158,27 @@ export default function PropertyCardNew({ property, locale }: PropertyCardNewPro
           )}
         </div>
 
-        {/* Description - Huoneistoselitelmä / Room description */}
-        {description && (
-          <p className="text-sm text-gray-700 leading-relaxed">
-            {description}
-          </p>
-        )}
-
-        {/* Area - Different display for properties vs apartments */}
-        {isEstate && (totalArea || plotArea) ? (
-          // Properties: Show detailed breakdown
-          <div className="text-sm text-gray-700 space-y-1">
-            <div className="flex justify-between">
-              <span className="text-gray-600">
-                {locale === 'sv' ? 'Boarea' : locale === 'en' ? 'Living Area' : 'Asuinpinta-ala'}:
-              </span>
-              <span className="font-medium">{livingArea}</span>
-            </div>
-            {otherAreas && (
-              <div className="flex justify-between">
-                <span className="text-gray-600">
-                  {locale === 'sv' ? 'Yta för andra utrymmen' : locale === 'en' ? 'Other Areas' : 'Muut tilat'}:
-                </span>
-                <span className="font-medium">{otherAreas}</span>
-              </div>
-            )}
-            {totalArea && (
-              <div className="flex justify-between">
-                <span className="text-gray-600">
-                  {locale === 'sv' ? 'Total yta' : locale === 'en' ? 'Total Area' : 'Kokonaispinta-ala'}:
-                </span>
-                <span className="font-medium">{totalArea}</span>
-              </div>
-            )}
-            {plotArea && (
-              <div className="flex justify-between">
-                <span className="text-gray-600">
-                  {locale === 'sv' ? 'Tomtstorlek' : locale === 'en' ? 'Plot Size' : 'Tontin pinta-ala'}:
-                </span>
-                <span className="font-medium">{plotArea}</span>
-              </div>
-            )}
-          </div>
-        ) : (
-          // Apartments: Simple single line with balcony/terrace
-          <p className="text-sm text-gray-700">
-            {livingArea}
-            {(property.dimensions.balcony || property.dimensions.terrace) && (
-              ` + ${fmtArea((property.dimensions.balcony || 0) + (property.dimensions.terrace || 0), localeStr)}`
-            )}
-          </p>
-        )}
-
-        {/* Type + Location with emoji icons */}
-        <div className="flex items-center gap-3 text-sm text-gray-600">
-          {typeLabel && (
-            <span className="inline-flex items-center gap-1.5">
-              🏢 {typeLabel}
-            </span>
+        {/* Area - Compact single-line format per PDF spec */}
+        <p className="text-sm text-gray-600">
+          {isRental ? (
+            // Rental: Boyta [m²]
+            `${locale === 'sv' ? 'Boyta' : locale === 'en' ? 'Living area' : 'Asuinpinta-ala'} ${livingArea}`
+          ) : isEstate ? (
+            // Property: Boyta [m²] • Total yta [m²] • [Stad] • [Pris]
+            <>
+              {`${locale === 'sv' ? 'Boyta' : locale === 'en' ? 'Living area' : 'Asuinpinta-ala'} ${livingArea}`}
+              {totalArea && ` • ${locale === 'sv' ? 'Total yta' : locale === 'en' ? 'Total area' : 'Kokonaispinta-ala'} ${totalArea}`}
+              {district && ` • ${district}`}
+            </>
+          ) : (
+            // Apartment: Boyta [m²] • [Stad] • [Skuldfritt pris]
+            <>
+              {`${locale === 'sv' ? 'Boyta' : locale === 'en' ? 'Living area' : 'Asuinpinta-ala'} ${livingArea}`}
+              {district && ` • ${district}`}
+            </>
           )}
-          {district && (
-            <span className="inline-flex items-center gap-1.5">
-              📍 {district}
-            </span>
-          )}
-        </div>
+        </p>
+
 
         {/* Agent Info - Horizontal layout with photo and contact link */}
         {property.agent && property.agent.name && (

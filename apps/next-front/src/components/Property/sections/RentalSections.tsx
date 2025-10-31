@@ -57,7 +57,12 @@ export function RentalSections({ vm, locale }: RentalSectionsProps) {
     <div>
       {/* Huoneistotiedot (Apartment Details) */}
       <Section title={getSectionLabel('rental.unit', locale)}>
-        <Field label={getFieldLabel('floor', locale)} value={vm.floor} alwaysShow locale={locale} />
+        <Field 
+          label={getFieldLabel('floor', locale)} 
+          value={vm.floor && vm.floorsTotal ? `${vm.floor}/${vm.floorsTotal}` : vm.floor} 
+          alwaysShow 
+          locale={locale} 
+        />
         <Field label={getFieldLabel('condition', locale)} value={vm.condition} alwaysShow locale={locale} />
         {/* Show balcony/terrace ONLY if "Yes" */}
         {hasBalcony && (
