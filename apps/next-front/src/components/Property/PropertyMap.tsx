@@ -118,7 +118,7 @@ export default function PropertyMap({ properties, language }: PropertyMapProps) 
             
             return (
               <PropertyCard
-                key={property.id}
+              key={property.id} 
                 href={`/${language}/kohde/${property.slug}`}
                 locale={language}
                 title={title}
@@ -135,7 +135,7 @@ export default function PropertyMap({ properties, language }: PropertyMapProps) 
                 debtFreePrice={property.pricing.debtFree}
                 monthlyRent={rent}
                 priorityFirstImage={index === 0}
-              />
+            />
             );
 
           })}
@@ -242,7 +242,7 @@ export default function PropertyMap({ properties, language }: PropertyMapProps) 
           
           return (
             <PropertyCard
-              key={property.id}
+            key={property.id} 
               href={`/${language}/kohde/${property.slug}`}
               locale={language}
               title={title}
@@ -258,7 +258,7 @@ export default function PropertyMap({ properties, language }: PropertyMapProps) 
               askPrice={property.pricing.sales}
               debtFreePrice={property.pricing.debtFree}
               monthlyRent={rent}
-            />
+          />
           );
         })}
       </div>

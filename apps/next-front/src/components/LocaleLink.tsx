@@ -6,11 +6,11 @@ import type { ComponentProps } from 'react';
 
 type L = 'fi' | 'sv' | 'en';
 
-export function LocaleLink({
-  href,
-  children,
+export function LocaleLink({ 
+  href, 
+  children, 
   locale,
-  ...rest
+  ...rest 
 }: ComponentProps<typeof Link> & { locale?: L }) {
   const pathname = usePathname() || '/fi';
   const current = (pathname.split('/')[1] as L) || 'fi';
@@ -27,6 +27,6 @@ export function LocaleLink({
   } else if (href && typeof href === 'object' && 'pathname' in href && href.pathname) {
     finalHref = { ...href, pathname: prefix(String(href.pathname)) };
   }
-
+  
   return <Link href={finalHref} {...rest}>{children}</Link>;
 }

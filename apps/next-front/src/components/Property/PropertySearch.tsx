@@ -180,8 +180,8 @@ export default function PropertySearch({ properties, language }: PropertySearchP
       <section className="py-8 bg-white border-y border-gray-200">
         <div className="max-w-[1400px] mx-auto px-6">
           <FilterToggle locale={language}>
-            {/* Row 1: Dropdowns */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          {/* Row 1: Dropdowns */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             {/* Area Dropdown */}
             <div>
               <label className="block text-xs text-gray-600 mb-2 tracking-wider uppercase">{translations.area[language]}</label>
@@ -214,13 +214,13 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                     return count > 0;
                   })
                   .map(type => {
-                    const count = type.id === 'all' ? properties.length : (dynamicPropertyTypes.get(type.id) || 0);
-                    return (
-                      <option key={type.id} value={type.id}>
-                        {type.label[language]} ({count})
-                      </option>
-                    );
-                  })}
+                  const count = type.id === 'all' ? properties.length : (dynamicPropertyTypes.get(type.id) || 0);
+                  return (
+                    <option key={type.id} value={type.id}>
+                      {type.label[language]} ({count})
+                    </option>
+                  );
+                })}
               </select>
             </div>
           </div>
@@ -394,50 +394,50 @@ export default function PropertySearch({ properties, language }: PropertySearchP
             }
           `}</style>
 
-            {/* View Mode Selector - Centered */}
-            <div className="flex justify-center">
-              <div className="flex gap-1">
-                <button
-                  onClick={() => setViewMode('grid')}
-                  className={`p-2.5 border-none rounded-none transition-colors ${
-                    viewMode === 'grid'
-                      ? 'bg-[var(--color-primary)] text-white'
-                      : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
-                  }`}
-                  aria-label="Grid view"
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                  </svg>
-                </button>
-                <button
-                  onClick={() => setViewMode('list')}
-                  className={`p-2.5 border-none rounded-none transition-colors ${
-                    viewMode === 'list'
-                      ? 'bg-[var(--color-primary)] text-white'
-                      : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
-                  }`}
-                  aria-label="List view"
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-                  </svg>
-                </button>
-                <button
-                  onClick={() => setViewMode('map')}
-                  className={`p-2.5 border-none rounded-none transition-colors ${
-                    viewMode === 'map'
-                      ? 'bg-[var(--color-primary)] text-white'
-                      : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
-                  }`}
-                  aria-label="Map view"
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                  </svg>
-                </button>
-              </div>
+          {/* View Mode Selector - Centered */}
+          <div className="flex justify-center">
+            <div className="flex gap-1">
+              <button
+                onClick={() => setViewMode('grid')}
+                className={`p-2.5 border-none rounded-none transition-colors ${
+                  viewMode === 'grid'
+                    ? 'bg-[var(--color-primary)] text-white'
+                    : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                }`}
+                aria-label="Grid view"
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                </svg>
+              </button>
+              <button
+                onClick={() => setViewMode('list')}
+                className={`p-2.5 border-none rounded-none transition-colors ${
+                  viewMode === 'list'
+                    ? 'bg-[var(--color-primary)] text-white'
+                    : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                }`}
+                aria-label="List view"
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                </svg>
+              </button>
+              <button
+                onClick={() => setViewMode('map')}
+                className={`p-2.5 border-none rounded-none transition-colors ${
+                  viewMode === 'map'
+                    ? 'bg-[var(--color-primary)] text-white'
+                    : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                }`}
+                aria-label="Map view"
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                </svg>
+              </button>
             </div>
+          </div>
           </FilterToggle>
         </div>
       </section>

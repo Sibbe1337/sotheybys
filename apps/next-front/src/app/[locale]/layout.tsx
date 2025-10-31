@@ -93,13 +93,13 @@ export default async function LocaleLayout({
   return (
     <html lang={validLocale}>
       <body className={`${inter.variable} ${playfair.variable}`}>
-        <NextIntlClientProvider messages={messages}>
-          <div className="min-h-screen flex flex-col">
-            <Header locale={locale as 'fi' | 'sv' | 'en'} />
-            {children}
-            <FooterWithTeam />
-          </div>
-        </NextIntlClientProvider>
+    <NextIntlClientProvider messages={messages}>
+      <div className="min-h-screen flex flex-col">
+        <Header locale={locale as 'fi' | 'sv' | 'en'} />
+        {children}
+        <FooterWithTeam />
+      </div>
+    </NextIntlClientProvider>
       </body>
     </html>
   );

@@ -49,15 +49,15 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
   // All routes MUST match filesystem structure: kohteet, henkilosto, myymassa, etc.
   const getMenuItemsForLanguage = (lang: string): MenuItem[] => {
     // ALL LOCALES use same Finnish filesystem paths
-    return [
+      return [
       { id: '1', label: lang === 'sv' ? 'HEM' : lang === 'en' ? 'HOME' : 'KOTI', path: '/', url: '/' },
-      { 
-        id: '2', 
+        { 
+          id: '2', 
         label: lang === 'sv' ? 'OBJEKT' : lang === 'en' ? 'PROPERTIES' : 'KOHTEET', 
         path: '/kohteet', 
         url: '/kohteet',
-        childItems: {
-          nodes: [
+          childItems: {
+            nodes: [
             { 
               id: '2-1', 
               label: lang === 'sv' ? 'Försäljningsobjekt' : lang === 'en' ? 'For Sale' : 'Myyntikohteet', 
@@ -82,9 +82,9 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
               path: '/kohteet/referenssit', 
               url: '/kohteet/referenssit' 
             },
-          ]
-        }
-      },
+            ]
+          }
+        },
       { 
         id: '3', 
         label: lang === 'sv' ? 'SÄLJA' : lang === 'en' ? 'SELLING' : 'MYYMÄSSÄ', 
@@ -103,13 +103,13 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
         path: '/henkilosto', 
         url: '/henkilosto' 
       },
-      { 
-        id: '6', 
+        { 
+          id: '6', 
         label: lang === 'sv' ? 'KONTAKTA OSS' : lang === 'en' ? 'CONTACT US' : 'OTA YHTEYTTÄ', 
         path: '/yhteystiedot', 
         url: '/yhteystiedot',
-        childItems: {
-          nodes: [
+          childItems: {
+            nodes: [
             { 
               id: '6-1', 
               label: lang === 'sv' ? 'Kontaktuppgifter' : lang === 'en' ? 'Contact Info' : 'Yhteystiedot', 
@@ -122,10 +122,10 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
               path: '/yritys', 
               url: '/yritys' 
             },
-          ]
-        }
-      },
-    ];
+            ]
+          }
+        },
+      ];
   };
 
   // ✅ LINUS FIX: Always use dynamic menu items based on current language
