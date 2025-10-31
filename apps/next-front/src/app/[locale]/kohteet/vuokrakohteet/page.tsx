@@ -60,14 +60,14 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
             >
               Ota yhteyttä
             </Link>
-            <Link
+            <a
               href="#vuokrakohteet"
               className="inline-block border-2 border-[var(--color-primary)] text-[var(--color-primary)] px-10 py-4 
                        hover:bg-[var(--color-primary)] hover:text-white transition-all 
                        uppercase tracking-wider text-sm font-light"
             >
               Vuokrakohteet
-            </Link>
+            </a>
           </div>
         </div>
       </section>
