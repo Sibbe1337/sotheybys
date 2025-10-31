@@ -3,8 +3,10 @@
 import { getSectionLabel, getFieldLabel } from '@/lib/i18n/property-translations';
 import { fmtPerM2 } from '@/lib/presentation/formatters/perSquareMeter';
 import { nonEmpty } from '@/lib/presentation/formatters/number';
+import { getEnergyStatusLabel } from '@/lib/domain/energy';
 import type { Locale } from '@/lib/domain/property.types';
 import type { PropertyDetailVM } from '@/lib/presentation/property.view-model';
+import type { EnergyStatus } from '@/lib/domain/energy';
 
 interface ApartmentSectionsProps {
   vm: PropertyDetailVM;
@@ -105,7 +107,12 @@ export function ApartmentSections({ vm, locale }: ApartmentSectionsProps) {
         <Field label={getFieldLabel('yearBuilt', locale)} value={vm.yearBuilt} alwaysShow />
         <Field 
           label={getFieldLabel('energyClass', locale)} 
-          value={vm.energyClass || (vm.energyCertStatus === 'NOT_REQUIRED_BY_LAW' ? getFieldLabel('energy.notRequired', locale) : undefined)}
+          value={vm.energyClass}
+          alwaysShow 
+        />
+        <Field 
+          label={getFieldLabel('energyCertificate', locale)} 
+          value={vm.energyCertStatus ? getEnergyStatusLabel(vm.energyCertStatus as EnergyStatus, locale) : undefined}
           alwaysShow 
         />
         <Field label={getFieldLabel('elevator', locale)} value={vm.hasElevator} alwaysShow />

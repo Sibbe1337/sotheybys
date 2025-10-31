@@ -2,8 +2,10 @@
 
 import { getSectionLabel, getFieldLabel } from '@/lib/i18n/property-translations';
 import { nonEmpty } from '@/lib/presentation/formatters/number';
+import { getEnergyStatusLabel } from '@/lib/domain/energy';
 import type { Locale } from '@/lib/domain/property.types';
 import type { PropertyDetailVM } from '@/lib/presentation/property.view-model';
+import type { EnergyStatus } from '@/lib/domain/energy';
 
 interface RentalSectionsProps {
   vm: PropertyDetailVM;
@@ -110,11 +112,16 @@ export function RentalSections({ vm, locale }: RentalSectionsProps) {
         <Field label={getFieldLabel('yearBuilt', locale)} value={vm.yearBuilt} alwaysShow locale={locale} />
         <Field 
           label={getFieldLabel('energyClass', locale)} 
-          value={vm.energyClass || (vm.energyCertStatus === 'NOT_REQUIRED_BY_LAW' ? getFieldLabel('energy.notRequired', locale) : undefined)}
+          value={vm.energyClass}
           alwaysShow 
           locale={locale} 
         />
-        <Field label={getFieldLabel('energyCertificate', locale)} value={vm.energyCertStatus} alwaysShow locale={locale} />
+        <Field 
+          label={getFieldLabel('energyCertificate', locale)} 
+          value={vm.energyCertStatus ? getEnergyStatusLabel(vm.energyCertStatus as EnergyStatus, locale) : undefined}
+          alwaysShow 
+          locale={locale} 
+        />
         <Field label={getFieldLabel('elevator', locale)} value={vm.hasElevator} alwaysShow locale={locale} />
         <Field label={getFieldLabel('heatingSystem', locale)} value={vm.heatingSystem} locale={locale} />
         {/* LINUS: NO companyLoans, plotOwnership, housingTenure for rentals! */}
