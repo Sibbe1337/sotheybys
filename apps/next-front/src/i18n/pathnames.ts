@@ -43,6 +43,9 @@ export const pathnames = {
   // About - ALL locales use Finnish filesystem path
   '/yritys': '/yritys',
   
+  // Careers/Join us - ALL locales use Finnish filesystem path
+  '/meille-toihin': '/meille-toihin',
+  
   // Property detail - dynamic route
   '/kohde/[slug]': '/kohde/[slug]',
   

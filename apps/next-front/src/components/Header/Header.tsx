@@ -122,6 +122,12 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
               path: '/yritys', 
               url: '/yritys' 
             },
+            { 
+              id: '6-3', 
+              label: lang === 'sv' ? 'Jobba hos oss' : lang === 'en' ? 'Join Us' : 'Meille töihin', 
+              path: '/meille-toihin', 
+              url: '/meille-toihin' 
+            },
             ]
           }
         },
