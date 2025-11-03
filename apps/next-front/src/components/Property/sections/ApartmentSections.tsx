@@ -70,18 +70,27 @@ function SubSection({ title, children }: { title: string; children: React.ReactN
   );
 }
 
+// 🔥 LINUS FIX: Proper European number parsing (handles "1 363,55 €" correctly)
+function parseEuropeanNumber(value?: string): number | undefined {
+  if (!value) return undefined;
+  // Remove spaces (thousands separator), replace comma with dot (decimal), remove non-numeric chars
+  const cleaned = value.replace(/\s+/g, '').replace(',', '.').replace(/[^0-9.]/g, '');
+  const num = parseFloat(cleaned);
+  return Number.isFinite(num) && num > 0 ? num : undefined;
+}
+
 export function ApartmentSections({ vm, locale }: ApartmentSectionsProps) {
   // Extract numeric values for per m² calculations
-  const salesPriceNum = vm.price ? parseInt(vm.price.replace(/[^0-9]/g, '')) : undefined;
-  const debtFreePriceNum = vm.priceDebtFree ? parseInt(vm.priceDebtFree.replace(/[^0-9]/g, '')) : undefined;
+  const salesPriceNum = parseEuropeanNumber(vm.price);
+  const debtFreePriceNum = parseEuropeanNumber(vm.priceDebtFree);
   const debtPartNum = salesPriceNum && debtFreePriceNum ? salesPriceNum - debtFreePriceNum : undefined;
-  const livingAreaNum = vm.area ? parseInt(vm.area.replace(/[^0-9]/g, '')) : undefined;
+  const livingAreaNum = parseEuropeanNumber(vm.area);
 
   // Calculate total fees (sum of maintenance + financing + other fees, NOT water/electricity)
-  const maintenanceNum = vm.fees?.maintenance ? parseInt(vm.fees.maintenance.replace(/[^0-9]/g, '')) : 0;
-  const financingNum = vm.fees?.financing ? parseInt(vm.fees.financing.replace(/[^0-9]/g, '')) : 0;
+  const maintenanceNum = parseEuropeanNumber(vm.fees?.maintenance) || 0;
+  const financingNum = parseEuropeanNumber(vm.fees?.financing) || 0;
   const totalFeesNum = maintenanceNum + financingNum;
-  const totalFees = totalFeesNum > 0 ? `${totalFeesNum} €/kk` : undefined;
+  const totalFees = totalFeesNum > 0 ? `${totalFeesNum.toLocaleString(locale)} €/kk` : undefined;
 
   return (
     <div>
@@ -171,7 +180,7 @@ export function ApartmentSections({ vm, locale }: ApartmentSectionsProps) {
           <Field 
             label={getFieldLabel('waterFee', locale)} 
             value={vm.fees?.water}
-            sub={fmtPerM2(vm.fees?.water ? parseInt(vm.fees.water.replace(/[^0-9]/g, '')) : 0, livingAreaNum, locale)}
+            sub={fmtPerM2(parseEuropeanNumber(vm.fees?.water) || 0, livingAreaNum, locale)}
           />
         </SubSection>
 
