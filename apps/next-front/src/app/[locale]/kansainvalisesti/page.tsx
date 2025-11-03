@@ -111,17 +111,21 @@ export default function InternationalPage() {
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
-              <p className="text-3xl font-light text-gray-900 mb-8">
-                Discover the world's finest homes on{' '}
-                <a 
-                  href="https://www.sothebysrealty.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-[var(--color-primary)] hover:underline"
-                >
-                  sir.com
-                </a>
-              </p>
+              {/* Featured CTA Box */}
+              <div className="mb-12 p-8 bg-white rounded-lg shadow-md border-2 border-[#1a3a4a]/10">
+                <p className="text-3xl font-light text-gray-900">
+                  Discover the world's finest homes on{' '}
+                  <a 
+                    href="https://www.sothebysrealty.com" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-[var(--color-primary)] hover:text-[#0f2633] transition-colors underline decoration-2 underline-offset-4"
+                  >
+                    sir.com
+                  </a>
+                </p>
+              </div>
+              
               <h2 className="text-3xl font-light text-gray-900 mb-8">
                 Avaamme uusia ovia kansainvälisesti
               </h2>
