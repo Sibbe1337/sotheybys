@@ -10,6 +10,43 @@ export function generateStaticParams() {
   return (locales as readonly Locale[]).map((locale) => ({ locale }));
 }
 
+// 🔥 LINUS FIX: Translations
+const translations = {
+  fi: {
+    title: 'Henkilöstö',
+    intro: 'Kokenut ja ammattitaitoinen henkilökuntamme antaa\nsinulle mielellään lisätietoja.',
+    welcome: 'Tervetuloa tapaamaan meitä, kuulemme mielellämme miten voimme palvella juuri sinua.',
+    contactTitle: 'Jos mieleesi herää kysymyksiä, voit aina ottaa meihin yhteyttä\nsoittamalla, lähettämällä sähköpostia tai pistäytymällä\ntoimistollamme!',
+    officeTitle: 'Helsingin Toimipisteemme',
+    officeDesc1: 'Helsingin ydinkeskustassa sijaitsevassa toimistossamme tapaat joukon motivoituneita ja asiantuntevia välittäjiä, joiden päämääränä on tehdä unelmastasi totta.',
+    officeDesc2: 'Toimistoamme ympäröi dynaaminen Kaartinkaupunki muotiputiikkeineen, fine-dine-ravintoloineen sekä korkeatasoisine hotelleineen.',
+    officeDesc3: 'Kävelet toimistollemme vain muutamassa minuutissa Esplanadilta tai Senaatintorilta.',
+    directions: 'Reittiohjeet',
+  },
+  sv: {
+    title: 'Personal',
+    intro: 'Vår erfarna och professionella personal ger dig\ngärna mer information.',
+    welcome: 'Välkommen att träffa oss, vi hör gärna hur vi kan hjälpa just dig.',
+    contactTitle: 'Om du har frågor kan du alltid kontakta oss\ngenom att ringa, skicka e-post eller besöka\nvårt kontor!',
+    officeTitle: 'Vårt Helsingforskontor',
+    officeDesc1: 'På vårt kontor i Helsingfors centrum möter du ett team av motiverade och kunniga mäklare vars mål är att göra din dröm till verklighet.',
+    officeDesc2: 'Vårt kontor omges av det dynamiska Gardesstaden med modebutiker, fine-dining-restauranger och högklassiga hotell.',
+    officeDesc3: 'Du kan gå till vårt kontor på bara några minuter från Esplanaden eller Senatstorget.',
+    directions: 'Vägbeskrivning',
+  },
+  en: {
+    title: 'Staff',
+    intro: 'Our experienced and professional staff will gladly\nprovide you with more information.',
+    welcome: 'Welcome to meet us, we\'d love to hear how we can help you.',
+    contactTitle: 'If you have any questions, you can always contact us\nby calling, sending an email, or visiting\nour office!',
+    officeTitle: 'Our Helsinki Office',
+    officeDesc1: 'At our office in central Helsinki, you\'ll meet a team of motivated and knowledgeable agents whose goal is to make your dream come true.',
+    officeDesc2: 'Our office is surrounded by the dynamic Kaartinkaupunki district with its fashion boutiques, fine dining restaurants, and high-end hotels.',
+    officeDesc3: 'You can walk to our office in just a few minutes from Esplanade or Senate Square.',
+    directions: 'Directions',
+  },
+};
+
 // Actual staff data from Sotheby's website
 const staffMembers = [
   {
@@ -149,7 +186,9 @@ const LanguageFlags = ({ flags }: { flags: string[] }) => {
   );
 };
 
-export default function StaffPage() {
+export default function StaffPage({ params }: { params: { locale: Locale } }) {
+  const t = translations[params.locale] || translations.fi;
+  
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <main className="flex-1">
@@ -165,7 +204,7 @@ export default function StaffPage() {
           <div className="absolute inset-0 bg-[var(--color-primary)]/60"></div>
           <div className="relative z-10 text-center px-4 max-w-4xl">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-thin mb-8">
-              Henkilöstö
+              {t.title}
             </h1>
           </div>
         </section>
@@ -213,12 +252,11 @@ export default function StaffPage() {
         <section className="py-12 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-3xl font-light text-gray-900 mb-6">
-                Kokenut ja ammattitaitoinen henkilökuntamme antaa<br />
-                sinulle mielellään lisätietoja.
+              <h2 className="text-3xl font-light text-gray-900 mb-6 whitespace-pre-line">
+                {t.intro}
               </h2>
               <p className="text-gray-600 font-light">
-                Tervetuloa tapaamaan meitä, kuulemme mielellämme miten voimme palvella juuri sinua.
+                {t.welcome}
               </p>
             </div>
           </div>
@@ -280,10 +318,8 @@ export default function StaffPage() {
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center mb-12">
-              <h2 className="text-3xl font-light text-gray-900 mb-4">
-                Jos mieleesi herää kysymyksiä, voit aina ottaa meihin yhteyttä<br />
-                soittamalla, lähettämällä sähköpostia tai pistäytymällä<br />
-                toimistollamme!
+              <h2 className="text-3xl font-light text-gray-900 mb-4 whitespace-pre-line">
+                {t.contactTitle}
               </h2>
               
               <div className="flex flex-col md:flex-row justify-center items-center gap-8 mt-8 text-gray-700 font-light">
@@ -393,16 +429,16 @@ export default function StaffPage() {
           <div className="grid md:grid-cols-2">
             {/* Left Column - Office Info */}
             <div className="bg-[#5a7a94] p-12 md:p-16 text-white">
-              <h3 className="text-3xl font-light mb-6">Helsingin Toimipisteemme</h3>
+              <h3 className="text-3xl font-light mb-6">{t.officeTitle}</h3>
               <div className="space-y-4 text-gray-100 font-light">
                 <p>
-                  Helsingin ydinkeskustassa sijaitsevassa toimistossamme tapaat joukon motivoituneita ja asiantuntevia välittäjiä, joiden päämääränä on tehdä unelmastasi totta.
+                  {t.officeDesc1}
                 </p>
                 <p>
-                  Toimistoamme ympäröi dynaaminen Kaartinkaupunki muotiputiikkeineen, fine-dine-ravintoloineen sekä korkeatasoisine hotelleineen.
+                  {t.officeDesc2}
                 </p>
                 <p>
-                  Kävelet toimistollemme vain muutamassa minuutissa Esplanadilta tai Senaatintorilta.
+                  {t.officeDesc3}
                 </p>
                 <a 
                   href="https://goo.gl/maps/LjvLpXQFdT82" 
@@ -410,7 +446,7 @@ export default function StaffPage() {
                   rel="noopener noreferrer"
                   className="inline-block mt-4 text-white border border-white px-6 py-2 hover:bg-white hover:text-[#5a7a94] transition-all"
                 >
-                  Reittiohjeet →
+                  {t.directions} →
                 </a>
               </div>
             </div>
