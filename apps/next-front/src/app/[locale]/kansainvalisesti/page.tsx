@@ -10,7 +10,63 @@ export function generateStaticParams() {
   return (locales as readonly Locale[]).map((locale) => ({ locale }));
 }
 
-export default function InternationalPage() {
+// 🔥 LINUS FIX: Translations for international page
+const translations = {
+  fi: {
+    heroTitle: 'Kansainvälinen välittäjäsi\npaikallisesti',
+    heroStats: '26 100 välittäjää • 1 000 välitystoimistossa • 84 maassa ja alueella',
+    heroButton: 'LUE LISÄÄ',
+    contactTitle: 'Ainutlaatuinen maailmanlaajuinen\nulottuvuus ja paikallinen asiantuntemus',
+    discoverText: 'Discover the world\'s finest homes on',
+    mainTitle: 'Avaamme uusia ovia kansainvälisesti',
+    mainText1: 'Osaamiseemme ei perustu ainoastaan paikalliseen markkinatuntemukseen, sillä teemme työtä myös kansainvälisillä markkinoilla. Sotheby\'s International Realty®, kuten myös meillä osana suurta ketjua, on pääsy tehokkaimpiin ja vaikutusvaltaisimpiin markkinointi- ja mainoskanaviin ympäri maailman.',
+    mainText2: 'Nostamme kaikki mynnissämme olevat asunnot esiin uniikkeina kohteina niin kotimaisissa kuin kansainvälisissä kanavissa. Valitsemme ja suosittelemme parhaat markkinointikanavat juuri sinun kohteellesi. Mainontamme näkyy kaikissa tärkeimmissä digitaalisissa ja painetuissa markkinointikanavissa sekä Suomessa että maailmalla...',
+    readMore: 'Lue lisää...',
+    discoverUrban: 'DISCOVER YOUR OWN URBAN\nOASIS...►',
+    findSki: 'FIND SKI PROPERTIES...►',
+    ownParadise: 'OWN A SLICE OF PARADISE...►',
+    searchVineyard: 'SEARCH FINE WINERY AND\nVINEYARDS...►',
+    viewGolf: 'VIEW GOLF PROPERTIES...►',
+    exploreRugged: 'EXPLORE RUGGED\nLANDSCAPES & RETREATS...►',
+  },
+  sv: {
+    heroTitle: 'Din internationella mäklare\nlokalt',
+    heroStats: '26 100 mäklare • 1 000 kontor • 84 länder och territorier',
+    heroButton: 'LÄS MER',
+    contactTitle: 'Unik global räckvidd\noch lokal expertis',
+    discoverText: 'Upptäck världens finaste hem på',
+    mainTitle: 'Vi öppnar nya dörrar internationellt',
+    mainText1: 'Vår expertis baseras inte bara på lokal marknadskännedom, utan vi arbetar även på internationella marknader. Sotheby\'s International Realty®, liksom vi som en del av den stora kedjan, har tillgång till de mest effektiva och inflytelserika marknadsförings- och reklamkanalerna runt om i världen.',
+    mainText2: 'Vi lyfter fram alla våra bostäder som unika objekt i både inhemska och internationella kanaler. Vi väljer och rekommenderar de bästa marknadsföringskanalerna just för ditt objekt. Vår marknadsföring syns i alla de viktigaste digitala och tryckta marknadsföringskanalerna både i Finland och internationellt...',
+    readMore: 'Läs mer...',
+    discoverUrban: 'UPPTÄCK DIN EGEN URBANA\nOAS...►',
+    findSki: 'HITTA SKIDBOENDEN...►',
+    ownParadise: 'ÄG EN BIT AV PARADISET...►',
+    searchVineyard: 'SÖK FINA VINGÅRDAR\nOCH VINHUS...►',
+    viewGolf: 'SE GOLFBOENDEN...►',
+    exploreRugged: 'UTFORSKA STORSLAGNA\nLANDSKAP & RETREATER...►',
+  },
+  en: {
+    heroTitle: 'Your international broker\nlocally',
+    heroStats: '26,100 agents • 1,000 offices • 84 countries and territories',
+    heroButton: 'READ MORE',
+    contactTitle: 'Unique global reach\nand local expertise',
+    discoverText: 'Discover the world\'s finest homes on',
+    mainTitle: 'We open new doors internationally',
+    mainText1: 'Our expertise is not based solely on local market knowledge, as we also work in international markets. Sotheby\'s International Realty®, like us as part of the large chain, has access to the most effective and influential marketing and advertising channels around the world.',
+    mainText2: 'We highlight all our properties as unique objects in both domestic and international channels. We select and recommend the best marketing channels just for your property. Our marketing appears in all the most important digital and printed marketing channels both in Finland and worldwide...',
+    readMore: 'Read more...',
+    discoverUrban: 'DISCOVER YOUR OWN URBAN\nOASIS...►',
+    findSki: 'FIND SKI PROPERTIES...►',
+    ownParadise: 'OWN A SLICE OF PARADISE...►',
+    searchVineyard: 'SEARCH FINE WINERY AND\nVINEYARDS...►',
+    viewGolf: 'VIEW GOLF PROPERTIES...►',
+    exploreRugged: 'EXPLORE RUGGED\nLANDSCAPES & RETREATS...►',
+  },
+};
+
+export default function InternationalPage({ params }: { params: { locale: Locale } }) {
+  const t = translations[params.locale] || translations.fi;
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <main className="flex-1">
@@ -25,18 +81,17 @@ export default function InternationalPage() {
         >
           <div className="absolute inset-0 bg-black/40"></div>
           <div className="relative z-10 text-center px-4 max-w-4xl">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-thin mb-6">
-              Kansainvälinen välittäjäsi<br />
-              paikallisesti
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-thin mb-6 whitespace-pre-line">
+              {t.heroTitle}
             </h1>
             <p className="text-lg md:text-xl font-light mb-12 tracking-wide">
-              26 100 välittäjää • 1 000 välitystoimistossa • 84 maassa ja alueella
+              {t.heroStats}
             </p>
             <Link 
               href="/kansainvalisesti"
               className="international-button"
             >
-              LUE LISÄÄ &gt;
+              {t.heroButton} &gt;
             </Link>
           </div>
         </section>
@@ -84,9 +139,8 @@ export default function InternationalPage() {
         <section className="py-12 bg-white">
           <div className="container mx-auto px-4">
             <div className="text-center">
-              <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-4">
-                Ainutlaatuinen maailmanlaajuinen<br />
-                ulottuvuus ja paikallinen asiantuntemus
+              <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-4 whitespace-pre-line">
+                {t.contactTitle}
               </h2>
               <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8 text-gray-700">
                 <a href="tel:+358103156900" className="hover:text-[var(--color-primary)] transition-colors font-light">
@@ -114,7 +168,7 @@ export default function InternationalPage() {
               {/* Featured CTA Box */}
               <div className="mb-12 p-8 bg-white rounded-lg shadow-md border-2 border-[#1a3a4a]/10">
                 <p className="text-3xl font-light text-gray-900">
-                  Discover the world's finest homes on{' '}
+                  {t.discoverText}{' '}
                   <a 
                     href="https://www.sothebysrealty.com" 
                     target="_blank" 
@@ -127,18 +181,14 @@ export default function InternationalPage() {
               </div>
               
               <h2 className="text-3xl font-light text-gray-900 mb-8">
-                Avaamme uusia ovia kansainvälisesti
+                {t.mainTitle}
               </h2>
               <div className="space-y-4 text-gray-700 font-light leading-relaxed">
                 <p>
-                  Osaamiseemme ei perustu ainoastaan paikalliseen markkinatuntemukseen, sillä teemme työtä myös 
-                  kansainvälisillä markkinoilla. Sotheby´s International Realty®, kuten myös meillä osana suurta ketjua, on pääsy 
-                  tehokkaimpiin ja vaikutusvaltaisimpiin markkinointi- ja mainoskanaviin ympäri maailman.
+                  {t.mainText1}
                 </p>
                 <p>
-                  Nostamme kaikki mynnissämme olevat asunnot esiin uniikkeina kohteina niin kotimaisissa kuin kansainvälisissä 
-                  kanavissa. Valitsemme ja suosittelemme parhaat markkinointikanavat juuri sinun kohteellesi. Mainontamme näkyy 
-                  kaikissa tärkeimmissä digitaalisissa ja painetuissa markkinointikanavissa sekä Suomessa että maailmalla...
+                  {t.mainText2}
                 </p>
               </div>
             </div>
@@ -176,7 +226,7 @@ export default function InternationalPage() {
                     balance believing perks like flexible working hours yields a more productive work force...
                   </p>
                   <a href="#" className="text-[var(--color-primary)] hover:underline font-light text-sm">
-                    Read more...
+                    {t.readMore}
                   </a>
                 </div>
               </div>
@@ -206,7 +256,7 @@ export default function InternationalPage() {
                     Portugal luxury real estate market is a powerful incentive...
                   </p>
                   <a href="#" className="text-[var(--color-primary)] hover:underline font-light text-sm">
-                    Read more...
+                    {t.readMore}
                   </a>
                 </div>
               </div>
@@ -234,7 +284,7 @@ export default function InternationalPage() {
                     and Formentera. The Carthaginians, Romans, Vandals, Moors, French and British all left their marks here...
                   </p>
                   <a href="#" className="text-[var(--color-primary)] hover:underline font-light text-sm">
-                    Read more...
+                    {t.readMore}
                   </a>
                 </div>
               </div>
@@ -265,7 +315,7 @@ export default function InternationalPage() {
                     most of them small in size with tiny populations to match...
                   </p>
                   <a href="#" className="text-[var(--color-primary)] hover:underline font-light text-sm">
-                    Read more...
+                    {t.readMore}
                   </a>
                 </div>
               </div>
@@ -294,9 +344,8 @@ export default function InternationalPage() {
                       Urban Metropolitan<br />
                       Properties
                     </h3>
-                    <button className="border border-white px-6 py-2 hover:bg-white hover:text-black transition-all uppercase text-sm font-light">
-                      DISCOVER YOUR OWN URBAN<br />
-                      OASIS...►
+                    <button className="border border-white px-6 py-2 hover:bg-white hover:text-black transition-all uppercase text-sm font-light whitespace-pre-line">
+                      {t.discoverUrban}
                     </button>
                   </div>
                 </div>
@@ -317,7 +366,7 @@ export default function InternationalPage() {
                       Luxury Ski Properties
                     </h3>
                     <button className="border border-white px-6 py-2 hover:bg-white hover:text-black transition-all uppercase text-sm font-light">
-                      FIND SKI PROPERTIES...►
+                      {t.findSki}
                     </button>
                   </div>
                 </div>
@@ -339,7 +388,7 @@ export default function InternationalPage() {
                       Homes
                     </h3>
                     <button className="border border-white px-6 py-2 hover:bg-white hover:text-black transition-all uppercase text-sm font-light">
-                      OWN A SLICE OF PARADISE...►
+                      {t.ownParadise}
                     </button>
                   </div>
                 </div>
@@ -444,9 +493,8 @@ export default function InternationalPage() {
                       Wine & Vineyard<br />
                       Properties
                     </h3>
-                    <button className="border border-white px-6 py-2 hover:bg-white hover:text-black transition-all uppercase text-sm font-light">
-                      SEARCH FINE WINERY AND<br />
-                      VINEYARDS...►
+                    <button className="border border-white px-6 py-2 hover:bg-white hover:text-black transition-all uppercase text-sm font-light whitespace-pre-line">
+                      {t.searchVineyard}
                     </button>
                   </div>
                 </div>
@@ -468,7 +516,7 @@ export default function InternationalPage() {
                       Properties
                     </h3>
                     <button className="border border-white px-6 py-2 hover:bg-white hover:text-black transition-all uppercase text-sm font-light">
-                      VIEW GOLF PROPERTIES...►
+                      {t.viewGolf}
                     </button>
                   </div>
                 </div>
@@ -489,9 +537,8 @@ export default function InternationalPage() {
                       Majestic Mountain<br />
                       Properties
                     </h3>
-                    <button className="border border-white px-6 py-2 hover:bg-white hover:text-black transition-all uppercase text-sm font-light">
-                      EXPLORE RUGGED<br />
-                      LANDSCAPES & RETREATS...►
+                    <button className="border border-white px-6 py-2 hover:bg-white hover:text-black transition-all uppercase text-sm font-light whitespace-pre-line">
+                      {t.exploreRugged}
                     </button>
                   </div>
                 </div>
