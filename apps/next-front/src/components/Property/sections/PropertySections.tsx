@@ -110,36 +110,39 @@ export function PropertySections({ vm, locale }: PropertySectionsProps) {
     <div>
       {/* Kiinteistötiedot - LINUS SPEC: DÖLJ housingTenure/Hallintamuoto för fastigheter */}
       <Section title={getSectionLabel('property.info', locale)}>
-        <Field label={getFieldLabel('propertyId', locale)} value={vm.propertyIdentifier} alwaysShow />
+        <Field label={getFieldLabel('propertyId', locale)} value={vm.propertyIdentifier} alwaysShow locale={locale} />
         <Field 
           label={getFieldLabel('plotSize', locale)} 
           value={fmtPlotArea(plotAreaNum, locale)} 
           alwaysShow 
+          locale={locale}
         />
-        <Field label={getFieldLabel('plotOwnership', locale)} value={vm.plotOwnership} alwaysShow />
-        <Field label={getFieldLabel('plan', locale)} value={vm.zoning} alwaysShow />
+        <Field label={getFieldLabel('plotOwnership', locale)} value={vm.plotOwnership} alwaysShow locale={locale} />
+        <Field label={getFieldLabel('plan', locale)} value={vm.zoning} alwaysShow locale={locale} />
         <Field 
           label={getFieldLabel('energyClass', locale)} 
           value={vm.energyClass}
           alwaysShow 
+          locale={locale}
         />
         <Field 
           label={getFieldLabel('energyCertificate', locale)} 
           value={vm.energyCertStatus ? getEnergyStatusLabel(vm.energyCertStatus as EnergyStatus, locale) : undefined}
           alwaysShow 
+          locale={locale}
         />
-        <Field label={getFieldLabel('availableFrom', locale)} value={vm.availableFrom} alwaysShow />
-        <Field label={getFieldLabel('plotRights', locale)} value={vm.propertyBuildingRights} />
-        <Field label={getFieldLabel('servitudes', locale)} value={vm.propertyRestrictions} />
+        <Field label={getFieldLabel('availableFrom', locale)} value={vm.availableFrom} alwaysShow locale={locale} />
+        <Field label={getFieldLabel('plotRights', locale)} value={vm.propertyBuildingRights} locale={locale} />
+        <Field label={getFieldLabel('servitudes', locale)} value={vm.propertyRestrictions} locale={locale} />
         {/* LINUS: NO housingTenure/Hallintamuoto for properties! */}
       </Section>
 
       {/* Rakennustiedot (Building Facts) */}
       <Section title={getSectionLabel('property.building', locale)}>
-        <Field label={getFieldLabel('yearBuilt', locale)} value={vm.yearBuilt} alwaysShow />
-        <Field label={getFieldLabel('heatingSystem', locale)} value={vm.heatingSystem} />
-        <Field label={getFieldLabel('ventilationSystem', locale)} value={vm.ventilationSystem} />
-        <Field label={getFieldLabel('floorsTotal', locale)} value={vm.floorsTotal} />
+        <Field label={getFieldLabel('yearBuilt', locale)} value={vm.yearBuilt} alwaysShow locale={locale} />
+        <Field label={getFieldLabel('heatingSystem', locale)} value={vm.heatingSystem} locale={locale} />
+        <Field label={getFieldLabel('ventilationSystem', locale)} value={vm.ventilationSystem} locale={locale} />
+        <Field label={getFieldLabel('floorsTotal', locale)} value={vm.floorsTotal} locale={locale} />
       </Section>
 
       {/* Kustannukset (Costs) */}
@@ -150,14 +153,16 @@ export function PropertySections({ vm, locale }: PropertySectionsProps) {
             value={vm.price}
             sub={fmtPerM2(salesPriceNum, livingAreaNum, localeStr)}
             alwaysShow 
+            locale={locale}
           />
           <Field 
             label={getFieldLabel('propertyTax', locale)} 
             value={vm.propertyTax ? `${vm.propertyTax} €` : undefined}
             alwaysShow 
+            locale={locale}
           />
-          <Field label={getFieldLabel('mortgages', locale)} value={vm.propertyMortgages} />
-          <Field label={getFieldLabel('otherPayments', locale)} value={vm.propertyOtherFees} />
+          <Field label={getFieldLabel('mortgages', locale)} value={vm.propertyMortgages} locale={locale} />
+          <Field label={getFieldLabel('otherPayments', locale)} value={vm.propertyOtherFees} locale={locale} />
         </SubSection>
       </Section>
 
