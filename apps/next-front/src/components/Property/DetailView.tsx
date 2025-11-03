@@ -3,7 +3,6 @@
 import { RichText } from '@/lib/presentation/components/RichText';
 import { cleanAgentData } from '@/lib/domain/agent-utils';
 import { getPlaceholder, lpickWithIndicator } from '@/lib/domain/locale-utils';
-import { AutoTranslateBanner } from '@/components/AutoTranslateBanner';
 import { MediaTabs } from './MediaTabs';
 import { ShareButtons } from './ShareButtons';
 import { SummaryStats } from './SummaryStats';
@@ -157,15 +156,13 @@ export function DetailView({ vm, locale }: Props) {
           )}
         </div>
 
-        {/* Auto-translate Banner */}
-        <AutoTranslateBanner locale={locale} />
-
-        {/* Description */}
+        {/* Description - Steve Jobs inspired: MAXIMUM breathing room for clarity */}
         {vm.description && (
           <div className="mb-12 bg-white rounded-lg shadow-sm p-8 md:p-10">
-            <div className="prose prose-lg max-w-none prose-p:mb-10 prose-p:leading-loose prose-p:text-gray-700 prose-p:first:mt-0 prose-p:last:mb-0">
-            <RichText html={vm.description} />
-          </div>          </div>
+            <div className="prose prose-lg max-w-none text-gray-700 [&>p]:mb-10 [&>p]:leading-loose [&>p:first-child]:mt-0 [&>p:last-child]:mb-0">
+              <RichText html={vm.description} />
+            </div>
+          </div>
         )}
 
         {/* Type-specific Sections */}
