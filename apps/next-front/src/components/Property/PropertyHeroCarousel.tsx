@@ -9,7 +9,6 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
-import { Link } from '@/lib/navigation';
 import type { Property, Locale } from '@/lib/domain/property.types';
 import { lpick } from '@/lib/domain/locale-utils';
 
@@ -60,19 +59,9 @@ export default function PropertyHeroCarousel({
 
   const currentProperty = properties[currentIndex];
   const address = lpick(currentProperty.address, locale);
-  const city = lpick(currentProperty.city, locale);
-  const typeLabel = lpick(currentProperty.meta.listingTypeLabel, locale) || currentProperty.meta.typeCode;
   const imageUrl = currentProperty.media.images.find(img => !img.floorPlan)?.url || 
                    currentProperty.media.images[0]?.url || 
                    '/images/defaults/placeholder-property.jpg';
-
-  // ✅ LINUS FIX: Language-specific URLs for SEO
-  const propertyPaths = {
-    fi: `/kohde/${currentProperty.slug}`,
-    sv: `/objekt/${currentProperty.slug}`,
-    en: `/properties/${currentProperty.slug}`,
-  };
-  const propertyUrl = propertyPaths[locale];
 
   return (
     <div 
@@ -90,32 +79,11 @@ export default function PropertyHeroCarousel({
           priority
           unoptimized={imageUrl.startsWith('http')}
         />
-        {/* Dark overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/60" />
+        {/* Subtle overlay */}
+        <div className="absolute inset-0 bg-black/10" />
       </div>
 
-      {/* Content Container */}
-      <div className="relative h-full flex items-end">
-        <div className="container mx-auto px-4 pb-16 lg:pb-20">
-          {/* Property Info */}
-          <div className="max-w-4xl">
-            <Link 
-              href={propertyUrl as any}
-              className="block group"
-            >
-              <h2 className="text-4xl lg:text-5xl font-light text-white mb-3 group-hover:text-gray-200 transition-colors">
-                {address}
-              </h2>
-              <p className="text-xl lg:text-2xl text-white/90 mb-4">
-                {typeLabel} • {city}
-              </p>
-              <p className="text-lg text-white/80">
-                {currentProperty.dimensions.living} m²
-              </p>
-            </Link>
-          </div>
-        </div>
-      </div>
+      {/* Content Container - Removed text overlay per user request */}
 
       {/* Navigation Arrows */}
       {properties.length > 1 && (
