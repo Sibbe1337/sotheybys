@@ -202,9 +202,9 @@ export function ApartmentSections({ vm, locale }: ApartmentSectionsProps) {
 
       {/* Muut tiedot - LINUS SPEC: Vapautuminen + Omistusmuoto här */}
       <Section title={getSectionLabel('apartment.other', locale)}>
-        <Field label={getFieldLabel('availableFrom', locale)} value={vm.availableFrom} alwaysShow />
-        <Field label={getFieldLabel('ownershipType', locale)} value={vm.ownershipType} alwaysShow />
-        <Field label={getFieldLabel('zoning', locale)} value={vm.zoning} alwaysShow />
+        <Field label={getFieldLabel('availableFrom', locale)} value={vm.availableFrom} alwaysShow locale={locale} />
+        <Field label={getFieldLabel('ownershipType', locale)} value={vm.ownershipType} alwaysShow locale={locale} />
+        <Field label={getFieldLabel('zoning', locale)} value={vm.zoning} alwaysShow locale={locale} />
       </Section>
 
       {/* Asiakirjat & Linkit */}
