@@ -38,6 +38,33 @@ function lv(src: LinearLocalized | undefined): LocalizedValue {
   };
 }
 
+// LINUS FIX: Convert plain text line breaks to HTML paragraphs
+function textToHtml(text: string | undefined | null): string {
+  if (!text) return '';
+  
+  // Split by double line breaks (paragraphs) or single line breaks
+  const paragraphs = text
+    .split(/\n\n+/) // Split on double+ line breaks (paragraph separators)
+    .map(para => para.trim())
+    .filter(para => para.length > 0)
+    .map(para => {
+      // Within each paragraph, replace single line breaks with <br>
+      const withBreaks = para.replace(/\n/g, '<br>');
+      return `<p>${withBreaks}</p>`;
+    });
+  
+  return paragraphs.join('');
+}
+
+// LINUS FIX: Apply textToHtml to LocalizedValue
+function lvHtml(src: LinearLocalized | undefined): LocalizedValue {
+  return {
+    fi: textToHtml(lget(src, 'fi')),
+    sv: textToHtml(lget(src, 'sv')),
+    en: textToHtml(lget(src, 'en')),
+  };
+}
+
 function toBool(v: any): boolean | undefined {
   // ✅ FIX: Extract value from localized object structure
   let rawValue = v;
