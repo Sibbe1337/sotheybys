@@ -305,8 +305,19 @@ export default function ContactPage({ params }: { params: { locale: Locale } }) 
 
                   {/* Map */}
                   <div className="mt-12">
-                    <div className="bg-gray-100 h-64 rounded-lg flex items-center justify-center">
-                      <p className="text-gray-500 font-light">{t.mapLabel}</p>
+                    <h3 className="text-lg font-light text-gray-900 mb-4">
+                      {t.mapLabel}
+                    </h3>
+                    <div className="h-96 rounded-lg overflow-hidden">
+                      <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1984.2742908346392!2d24.94391521610656!3d60.164887881958975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46920bc8de21e969%3A0xb98ee1b9d2531ab!2sSnellman%20Sotheby's%20International%20Realty!5e0!3m2!1sfi!2sfi!4v1549539258229"
+                        width="100%" 
+                        height="100%" 
+                        style={{ border: 0 }} 
+                        allowFullScreen
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                      />
                     </div>
                   </div>
                 </div>

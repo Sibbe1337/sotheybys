@@ -79,8 +79,6 @@ export default function PropertyHeroCarousel({
           priority
           unoptimized={imageUrl.startsWith('http')}
         />
-        {/* Subtle overlay */}
-        <div className="absolute inset-0 bg-black/10" />
       </div>
 
       {/* Content Container - Removed text overlay per user request */}
