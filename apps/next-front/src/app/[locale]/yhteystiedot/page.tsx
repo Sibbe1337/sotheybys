@@ -9,7 +9,108 @@ export function generateStaticParams() {
   return (locales as readonly Locale[]).map((locale) => ({ locale }));
 }
 
-export default function ContactPage() {
+// 🔥 LINUS FIX: Complete translations for Contact page
+const translations = {
+  fi: {
+    title: 'Ota yhteyttä',
+    subtitle: 'Olemme täällä sinua varten',
+    formTitle: 'Lähetä viesti',
+    firstName: 'Etunimi *',
+    lastName: 'Sukunimi *',
+    email: 'Sähköposti *',
+    phone: 'Puhelin',
+    subject: 'Aihe',
+    selectSubject: 'Valitse aihe',
+    buying: 'Olen ostamassa',
+    selling: 'Olen myymässä',
+    renting: 'Olen vuokraamassa',
+    valuation: 'Arviokäynti',
+    other: 'Muu asia',
+    message: 'Viesti *',
+    privacy: 'Olen tutustunut tietosuojaselosteeseen ja hyväksyn tietojeni käsittelyn *',
+    submit: 'Lähetä viesti',
+    contactInfoTitle: 'Yhteystiedot',
+    officeTitle: 'Toimisto',
+    hoursTitle: 'Aukioloajat',
+    weekdays: 'Arkisin: 10:00 – 17:00',
+    saturday: 'Lauantai: Sopimuksen mukaan',
+    sunday: 'Sunnuntai: Suljettu',
+    companyTitle: 'Yritystiedot',
+    companyName: 'Ab Snellman LKV Oy',
+    businessId: 'Y-tunnus: 2644749-2',
+    mapLabel: 'Kartta',
+    officeImageTitle: 'Tervetuloa toimistollemme',
+    officeImageSubtitle: 'Upea toimistomme sijaitsee Helsingin ydinkeskustassa Kasarmikadulla',
+    officeImageAlt: 'Snellman Sotheby\'s toimisto',
+  },
+  sv: {
+    title: 'Kontakta oss',
+    subtitle: 'Vi är här för dig',
+    formTitle: 'Skicka meddelande',
+    firstName: 'Förnamn *',
+    lastName: 'Efternamn *',
+    email: 'E-post *',
+    phone: 'Telefon',
+    subject: 'Ämne',
+    selectSubject: 'Välj ämne',
+    buying: 'Jag köper',
+    selling: 'Jag säljer',
+    renting: 'Jag hyr',
+    valuation: 'Värderingsbesök',
+    other: 'Annat ärende',
+    message: 'Meddelande *',
+    privacy: 'Jag har läst integritetspolicyn och godkänner hanteringen av mina uppgifter *',
+    submit: 'Skicka meddelande',
+    contactInfoTitle: 'Kontaktuppgifter',
+    officeTitle: 'Kontor',
+    hoursTitle: 'Öppettider',
+    weekdays: 'Vardagar: 10:00 – 17:00',
+    saturday: 'Lördag: Enligt överenskommelse',
+    sunday: 'Söndag: Stängt',
+    companyTitle: 'Företagsinformation',
+    companyName: 'Ab Snellman LKV Oy',
+    businessId: 'FO-nummer: 2644749-2',
+    mapLabel: 'Karta',
+    officeImageTitle: 'Välkommen till vårt kontor',
+    officeImageSubtitle: 'Vårt fantastiska kontor ligger i Helsingfors centrum på Kaserngatan',
+    officeImageAlt: 'Snellman Sotheby\'s kontor',
+  },
+  en: {
+    title: 'Contact Us',
+    subtitle: 'We are here for you',
+    formTitle: 'Send Message',
+    firstName: 'First Name *',
+    lastName: 'Last Name *',
+    email: 'Email *',
+    phone: 'Phone',
+    subject: 'Subject',
+    selectSubject: 'Select subject',
+    buying: 'I am buying',
+    selling: 'I am selling',
+    renting: 'I am renting',
+    valuation: 'Valuation visit',
+    other: 'Other matter',
+    message: 'Message *',
+    privacy: 'I have read the privacy policy and accept the processing of my data *',
+    submit: 'Send message',
+    contactInfoTitle: 'Contact Information',
+    officeTitle: 'Office',
+    hoursTitle: 'Opening Hours',
+    weekdays: 'Weekdays: 10:00 – 17:00',
+    saturday: 'Saturday: By appointment',
+    sunday: 'Sunday: Closed',
+    companyTitle: 'Company Information',
+    companyName: 'Ab Snellman LKV Oy',
+    businessId: 'Business ID: 2644749-2',
+    mapLabel: 'Map',
+    officeImageTitle: 'Welcome to our office',
+    officeImageSubtitle: 'Our beautiful office is located in the heart of Helsinki on Kasarmikatu',
+    officeImageAlt: 'Snellman Sotheby\'s office',
+  },
+};
+
+export default function ContactPage({ params }: { params: { locale: Locale } }) {
+  const t = translations[params.locale] || translations.fi;
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <main className="flex-1">
@@ -18,10 +119,10 @@ export default function ContactPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-thin text-gray-900 mb-6">
-                Ota yhteyttä
+                {t.title}
               </h1>
               <p className="text-lg lg:text-xl text-gray-600 font-light">
-                Olemme täällä sinua varten
+                {t.subtitle}
               </p>
             </div>
           </div>
@@ -35,13 +136,13 @@ export default function ContactPage() {
                 {/* Contact Form */}
                 <div>
                   <h2 className="text-2xl font-light text-gray-900 mb-8">
-                    Lähetä viesti
+                    {t.formTitle}
                   </h2>
                   <form className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
                         <label htmlFor="firstName" className="block text-sm font-light text-gray-700 mb-2">
-                          Etunimi *
+                          {t.firstName}
                         </label>
                         <input
                           type="text"
@@ -54,7 +155,7 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <label htmlFor="lastName" className="block text-sm font-light text-gray-700 mb-2">
-                          Sukunimi *
+                          {t.lastName}
                         </label>
                         <input
                           type="text"
@@ -69,7 +170,7 @@ export default function ContactPage() {
 
                     <div>
                       <label htmlFor="email" className="block text-sm font-light text-gray-700 mb-2">
-                        Sähköposti *
+                        {t.email}
                       </label>
                       <input
                         type="email"
@@ -83,7 +184,7 @@ export default function ContactPage() {
 
                     <div>
                       <label htmlFor="phone" className="block text-sm font-light text-gray-700 mb-2">
-                        Puhelin
+                        {t.phone}
                       </label>
                       <input
                         type="tel"
@@ -96,7 +197,7 @@ export default function ContactPage() {
 
                     <div>
                       <label htmlFor="subject" className="block text-sm font-light text-gray-700 mb-2">
-                        Aihe
+                        {t.subject}
                       </label>
                       <select
                         id="subject"
@@ -104,18 +205,18 @@ export default function ContactPage() {
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg 
                                  focus:outline-none focus:border-[#1a3a4a] font-light"
                       >
-                        <option value="">Valitse aihe</option>
-                        <option value="buying">Olen ostamassa</option>
-                        <option value="selling">Olen myymässä</option>
-                        <option value="renting">Olen vuokraamassa</option>
-                        <option value="valuation">Arviokäynti</option>
-                        <option value="other">Muu asia</option>
+                        <option value="">{t.selectSubject}</option>
+                        <option value="buying">{t.buying}</option>
+                        <option value="selling">{t.selling}</option>
+                        <option value="renting">{t.renting}</option>
+                        <option value="valuation">{t.valuation}</option>
+                        <option value="other">{t.other}</option>
                       </select>
                     </div>
 
                     <div>
                       <label htmlFor="message" className="block text-sm font-light text-gray-700 mb-2">
-                        Viesti *
+                        {t.message}
                       </label>
                       <textarea
                         id="message"
@@ -136,7 +237,7 @@ export default function ContactPage() {
                         className="mt-1 mr-3"
                       />
                       <label htmlFor="privacy" className="text-sm font-light text-gray-700">
-                        Olen tutustunut tietosuojaselosteeseen ja hyväksyn tietojeni käsittelyn *
+                        {t.privacy}
                       </label>
                     </div>
 
@@ -146,7 +247,7 @@ export default function ContactPage() {
                                hover:bg-[#0f2633] transition-colors duration-300 
                                font-light tracking-wider uppercase text-sm"
                     >
-                      Lähetä viesti
+                      {t.submit}
                     </button>
                   </form>
                 </div>
@@ -154,14 +255,14 @@ export default function ContactPage() {
                 {/* Contact Information */}
                 <div className="lg:pl-12">
                   <h2 className="text-2xl font-light text-gray-900 mb-8">
-                    Yhteystiedot
+                    {t.contactInfoTitle}
                   </h2>
                   
                   <div className="space-y-8">
                     {/* Office Info */}
                     <div>
                       <h3 className="text-lg font-light text-gray-900 mb-4">
-                        Toimisto
+                        {t.officeTitle}
                       </h3>
                       <div className="space-y-2 text-gray-700 font-light">
                         <p>Kasarmikatu 34, 00130 Helsinki</p>
@@ -181,23 +282,23 @@ export default function ContactPage() {
                     {/* Opening Hours */}
                     <div>
                       <h3 className="text-lg font-light text-gray-900 mb-4">
-                        Aukioloajat
+                        {t.hoursTitle}
                       </h3>
                       <div className="space-y-2 text-gray-700 font-light">
-                        <p>Arkisin: 10:00 – 17:00</p>
-                        <p>Lauantai: Sopimuksen mukaan</p>
-                        <p>Sunnuntai: Suljettu</p>
+                        <p>{t.weekdays}</p>
+                        <p>{t.saturday}</p>
+                        <p>{t.sunday}</p>
                       </div>
                     </div>
 
                     {/* Company Info */}
                     <div>
                       <h3 className="text-lg font-light text-gray-900 mb-4">
-                        Yritystiedot
+                        {t.companyTitle}
                       </h3>
                       <div className="space-y-2 text-gray-700 font-light">
-                        <p>Ab Snellman LKV Oy</p>
-                        <p>Y-tunnus: 2644749-2</p>
+                        <p>{t.companyName}</p>
+                        <p>{t.businessId}</p>
                       </div>
                     </div>
                   </div>
@@ -205,7 +306,7 @@ export default function ContactPage() {
                   {/* Map */}
                   <div className="mt-12">
                     <div className="bg-gray-100 h-64 rounded-lg flex items-center justify-center">
-                      <p className="text-gray-500 font-light">Kartta</p>
+                      <p className="text-gray-500 font-light">{t.mapLabel}</p>
                     </div>
                   </div>
                 </div>
@@ -220,16 +321,16 @@ export default function ContactPage() {
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-8">
                 <h2 className="text-3xl font-light text-gray-900 mb-4">
-                  Tervetuloa toimistollemme
+                  {t.officeImageTitle}
                 </h2>
                 <p className="text-lg text-gray-600 font-light">
-                  Upea toimistomme sijaitsee Helsingin ydinkeskustassa Kasarmikadulla
+                  {t.officeImageSubtitle}
                 </p>
               </div>
               <div className="relative h-96 lg:h-[500px]">
                 <Image
                   src="/images/content/snellman-sothebys-toimisto.jpg"
-                  alt="Snellman Sotheby's toimisto"
+                  alt={t.officeImageAlt}
                   fill
                   sizes="100vw"
                   className="object-cover rounded-lg"

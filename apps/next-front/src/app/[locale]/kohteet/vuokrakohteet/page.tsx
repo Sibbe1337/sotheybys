@@ -11,7 +11,7 @@ export function generateStaticParams() {
   return (locales as readonly Locale[]).map((locale) => ({ locale }));
 }
 
-// 🔥 LINUS FIX: Translations for Rentals page
+// 🔥 LINUS FIX: Complete translations for Rentals page
 const translations = {
   fi: {
     title: 'Vuokrakohteet',
@@ -23,6 +23,25 @@ const translations = {
     welcomeTitle: 'Tervetuloa poikkeukselliseen kiinteistöilmoitukseen!',
     welcomeText: 'Katso kaikki myytävät kiinteistömme.',
     findHomeBtn: 'Löydä unelmiesi koti',
+    missionTitle: 'Snellman Sotheby\'s International Realty®',
+    missionText: 'Meillä kaikilla on erilaiset tarpeet ja toiveet, keskustelemme ja räätälöimme asiakkaidemme toiveiden ja vaatimusten mukaan. Tehtävämme on tehdä unelmastasi totta.',
+    missionBtn: 'Tee elämäsi ilmoitus',
+    referencesTitle: 'Referenssit',
+    referencesSubtitle: 'Näyte myydyistä kohteista',
+    referencesBtn: 'Katso lisää',
+    contactInfoTitle: 'Tervetuloa asiakkaaksemme!',
+    contactInfoText1: 'Haluatko vuokrata kotisi tai liiketilasi luotettavalle vuokralaiselle? Snellman Sotheby\'s International Realty tarjoaa vuokrauspalveluja myös vaativille kiinteistöille.',
+    contactInfoText2: 'Ammattitaitoinen vuokranvälittäjäsi palvelee sinua maanantaista perjantaihin klo 10 – 17,\nsekä muina aikoina sopimuksen mukaan.',
+    formTitle: 'Vuokranantaja, ota yhteyttä!',
+    formSubtitle: 'Kerro meille miten voimme auttaa, niin palaamme asiaan mahdollisimman pian.',
+    formDescription: 'Palveluumme kuuluu vuokranvälitys alusta loppuun, eli mm. asunnon tai liiketilan arvioinnit, kriteerejäsi vastaavan vuokralaisen etsintä sekä vuokrasopimuksen laatiminen.',
+    formName: 'Nimi *',
+    formEmail: 'Sähköposti *',
+    formPhone: 'Puhelin',
+    formMessage: 'Viesti *',
+    formPrivacy: 'Olen lukenut',
+    formPrivacyLink: 'Tietosuojaselosteen',
+    formSubmit: 'Lähetä viesti',
   },
   sv: {
     title: 'Hyresobjekt',
@@ -34,6 +53,25 @@ const translations = {
     welcomeTitle: 'Välkommen till en exceptionell fastighetsannons!',
     welcomeText: 'Se alla våra fastigheter till salu.',
     findHomeBtn: 'Hitta ditt drömhem',
+    missionTitle: 'Snellman Sotheby\'s International Realty®',
+    missionText: 'Vi har alla olika behov och önskemål, vi diskuterar och skräddarsyr enligt våra kunders önskemål och krav. Vårt uppdrag är att göra din dröm till verklighet.',
+    missionBtn: 'Gör din livs annons',
+    referencesTitle: 'Referenser',
+    referencesSubtitle: 'Prov på sålda objekt',
+    referencesBtn: 'Se mer',
+    contactInfoTitle: 'Välkommen som vår kund!',
+    contactInfoText1: 'Vill du hyra ut ditt hem eller din lokal till en pålitlig hyresgäst? Snellman Sotheby\'s International Realty erbjuder uthyrningstjänster även för krävande fastigheter.',
+    contactInfoText2: 'Din professionella uthyrningsförmedlare betjänar dig måndag till fredag kl. 10 – 17,\nsamt andra tider enligt överenskommelse.',
+    formTitle: 'Hyresvärd, kontakta oss!',
+    formSubtitle: 'Berätta hur vi kan hjälpa dig, så återkommer vi så snart som möjligt.',
+    formDescription: 'Vår tjänst omfattar uthyrningsförmedling från början till slut, dvs. bl.a. värdering av bostad eller lokal, sökning av hyresgäst som motsvarar dina kriterier samt upprättande av hyreskontrakt.',
+    formName: 'Namn *',
+    formEmail: 'E-post *',
+    formPhone: 'Telefon',
+    formMessage: 'Meddelande *',
+    formPrivacy: 'Jag har läst',
+    formPrivacyLink: 'Integritetspolicyn',
+    formSubmit: 'Skicka meddelande',
   },
   en: {
     title: 'Rental Properties',
@@ -45,6 +83,25 @@ const translations = {
     welcomeTitle: 'Welcome to an exceptional property listing!',
     welcomeText: 'See all our properties for sale.',
     findHomeBtn: 'Find your dream home',
+    missionTitle: 'Snellman Sotheby\'s International Realty®',
+    missionText: 'We all have different needs and wishes, we discuss and tailor according to our customers\' wishes and requirements. Our mission is to make your dream come true.',
+    missionBtn: 'Make your life\'s listing',
+    referencesTitle: 'References',
+    referencesSubtitle: 'Sample of sold properties',
+    referencesBtn: 'See more',
+    contactInfoTitle: 'Welcome as our customer!',
+    contactInfoText1: 'Do you want to rent your home or business premises to a reliable tenant? Snellman Sotheby\'s International Realty offers rental services also for demanding properties.',
+    contactInfoText2: 'Your professional rental agent serves you Monday to Friday from 10 am to 5 pm,\nand at other times by agreement.',
+    formTitle: 'Landlord, contact us!',
+    formSubtitle: 'Tell us how we can help, and we will get back to you as soon as possible.',
+    formDescription: 'Our service includes rental brokerage from start to finish, i.e. property or commercial space appraisals, finding a tenant that meets your criteria, and drafting a rental agreement.',
+    formName: 'Name *',
+    formEmail: 'Email *',
+    formPhone: 'Phone',
+    formMessage: 'Message *',
+    formPrivacy: 'I have read the',
+    formPrivacyLink: 'Privacy Policy',
+    formSubmit: 'Send message',
   },
 };
 
@@ -135,10 +192,10 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
         <div className="max-w-[1400px] mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl lg:text-4xl font-light text-gray-900 mb-6">
-              Snellman Sotheby's International Realty®
+              {t.missionTitle}
             </h2>
             <p className="text-lg font-light text-gray-700 leading-relaxed mb-8">
-              Meillä kaikilla on erilaiset tarpeet ja toiveet, keskustelemme ja räätälöimme asiakkaidemme toiveiden ja vaatimusten mukaan. Tehtävämme on tehdä unelmastasi totta.
+              {t.missionText}
             </p>
             <Link
               href="/myymassa"
@@ -146,7 +203,7 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
                        hover:bg-[var(--color-primary)] hover:text-white transition-all 
                        uppercase tracking-wider text-sm font-light"
             >
-              Tee elämäsi ilmoitus
+              {t.missionBtn}
             </Link>
           </div>
         </div>
@@ -156,10 +213,10 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
       <section className="py-20 bg-white">
         <div className="max-w-[1400px] mx-auto px-6 text-center">
           <h2 className="text-3xl lg:text-4xl font-light text-gray-900 mb-4">
-            Referenssit
+            {t.referencesTitle}
           </h2>
           <p className="text-lg font-light text-gray-600 mb-12">
-            Näyte myydyistä kohteista
+            {t.referencesSubtitle}
           </p>
           <Link
             href="/kohteet/referenssit"
@@ -167,7 +224,7 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
                      hover:bg-[var(--color-primary)] hover:text-white transition-all 
                      uppercase tracking-wider text-sm font-light"
           >
-            Katso lisää
+            {t.referencesBtn}
           </Link>
         </div>
       </section>
@@ -177,14 +234,13 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
         <div className="max-w-[1400px] mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl lg:text-4xl font-light text-gray-900 mb-6">
-              Tervetuloa asiakkaaksemme!
+              {t.contactInfoTitle}
             </h2>
             <p className="text-lg font-light text-gray-700 leading-relaxed mb-12">
-              Haluatko vuokrata kotisi tai liiketilasi luotettavalle vuokralaiselle? Snellman Sotheby's International Realty tarjoaa vuokrauspalveluja myös vaativille kiinteistöille.
+              {t.contactInfoText1}
             </p>
-            <p className="text-lg font-light text-gray-700 mb-12">
-              Ammattitaitoinen vuokranvälittäjäsi palvelee sinua maanantaista perjantaihin klo 10 – 17,<br />
-              sekä muina aikoina sopimuksen mukaan.
+            <p className="text-lg font-light text-gray-700 mb-12 whitespace-pre-line">
+              {t.contactInfoText2}
             </p>
             
             <div className="grid md:grid-cols-3 gap-8 mb-12">
@@ -217,13 +273,13 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
         <div className="max-w-[1400px] mx-auto px-6">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl lg:text-4xl font-light text-gray-900 mb-6 text-center">
-              Vuokranantaja, ota yhteyttä!
+              {t.formTitle}
             </h2>
             <p className="text-lg font-light text-gray-700 text-center mb-12">
-              Kerro meille miten voimme auttaa, niin palaamme asiaan mahdollisimman pian.
+              {t.formSubtitle}
             </p>
             <p className="text-base font-light text-gray-700 text-center mb-12">
-              Palveluumme kuuluu vuokranvälitys alusta loppuun, eli mm. asunnon tai liiketilan arvioinnit, kriteerejäsi vastaavan vuokralaisen etsintä sekä vuokrasopimuksen laatiminen.
+              {t.formDescription}
             </p>
             
             <div className="bg-white p-8 rounded-lg shadow-lg">
@@ -232,7 +288,7 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
                   <div>
                     <input
                       type="text"
-                      placeholder="Nimi *"
+                      placeholder={t.formName}
                       required
                       className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-[var(--color-primary)]"
                     />
@@ -240,7 +296,7 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
                   <div>
                     <input
                       type="email"
-                      placeholder="Sähköposti *"
+                      placeholder={t.formEmail}
                       required
                       className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-[var(--color-primary)]"
                     />
@@ -249,13 +305,13 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
                 <div>
                   <input
                     type="tel"
-                    placeholder="Puhelin"
+                    placeholder={t.formPhone}
                     className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-[var(--color-primary)]"
                   />
                 </div>
                 <div>
                   <textarea
-                    placeholder="Viesti *"
+                    placeholder={t.formMessage}
                     required
                     rows={6}
                     className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-[var(--color-primary)]"
@@ -269,9 +325,9 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
                     className="mt-1"
                   />
                   <label htmlFor="privacy" className="text-sm text-gray-600">
-                    Olen lukenut{' '}
+                    {t.formPrivacy}{' '}
                     <a href="/tietosuojaseloste" className="text-[var(--color-primary)] hover:underline">
-                      Tietosuojaselosteen
+                      {t.formPrivacyLink}
                     </a>
                   </label>
                 </div>
@@ -282,7 +338,7 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
                              hover:bg-[var(--color-primary-dark)] transition-colors 
                              uppercase tracking-wider text-sm font-light"
                   >
-                    Lähetä viesti
+                    {t.formSubmit}
                   </button>
                 </div>
               </form>
