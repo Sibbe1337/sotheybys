@@ -10,8 +10,8 @@ export const fmtPerM2 = (
 ): string => {
   if (amount == null || !living || living <= 0) return '';
   
-  const perM2 = (amount / living).toFixed(0);
-  return `${perM2} €/m²`;
+  const perM2 = Math.round(amount / living);
+  return `${perM2.toLocaleString(locale)} €/m²`;
 };
 
 /**
