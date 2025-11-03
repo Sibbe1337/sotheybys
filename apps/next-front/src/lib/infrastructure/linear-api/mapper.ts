@@ -431,7 +431,11 @@ export class LinearToPropertyMapper {
           const fromNv = typeof nv?.energyClass === 'string' ? nv.energyClass : undefined;
           return [fromLocale, fromFi, fromNv].find(v => v && String(v).trim() !== '') || undefined;
         })(),
-        energyCertStatus: normalizeEnergyStatus(lget(src.listingHasEnergyCertificate!, locale)),
+        energyCertStatus: (() => {
+          const fromLocale = lget(src.listingHasEnergyCertificate!, locale);
+          const fromFi = lget(src.listingHasEnergyCertificate!, 'fi');
+          return normalizeEnergyStatus(fromLocale || fromFi);
+        })(),
         heatingSystem: lv(src.heatingSystem),
         ventilationSystem: lv(src.ventilationSystem),
         
