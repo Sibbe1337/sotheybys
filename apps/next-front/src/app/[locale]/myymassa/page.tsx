@@ -11,7 +11,72 @@ export function generateStaticParams() {
   return (locales as readonly Locale[]).map((locale) => ({ locale }));
 }
 
-export default function SellingPage() {
+// 🔥 LINUS FIX: Complete translations for Selling page
+const translations = {
+  fi: {
+    title: 'Myymässä',
+    heroText: 'Haluamme luoda kestävän asiakassuhteen, jossa otamme huomioon pienimmätkin tarpeesi ja toiveesi. Keskustelemme avoimesti ja kuuntelemme huolella, sillä tehtävämme on tehdä unelmistasi totta.',
+    heroCTA: 'TEE ELÄMÄSI ASUNTOKAUPAT',
+    attentionTitle: 'Älä vain saa sitä markkinoille. Anna sille ansaitsemansa huomio.',
+    attentionText: 'Niille, jotka vaativat korotettua palvelua, jollaista ei muualla ole, on Sotheby\'s International Realty. Olemme alan parhaita välittäjiä, ja huolenpitomme tyyliin ja yksityiskohtiin on vertaansa vailla. Olemme täällä auttamassa sinua myymään kotisi mittakaavassa, jota et löydä muualta.',
+    welcomeTitle: 'Tervetuloa onnistuneeseen asuntokauppaan!',
+    formTitle: 'Sovi maksuton arviokäynti!',
+    formSubtitle: 'Tiedätkö asuntosi markkina-arvon?',
+    formText: 'Kutsu meidät maksuttomalle arviokäynnille – saat alueen asiantuntevimman lausunnon.',
+    honorTitle: 'Kunniatehtävä',
+    relationshipTitle: 'Arvokas asiakassuhde',
+    promiseTitle: 'Palvelulupauksemme',
+    pricingTitle: 'Palveluhinnasto',
+    videoTitle: 'Miksi myydä kanssamme?',
+    videoSubtitle: 'Katso miten autamme asiakkaitamme onnistuneeseen asuntokauppaan',
+    disputeTitle: 'Kuluttajariita',
+    disputeText: 'Sopimusta koskeva riita voidaan viedä kuluttajariitalautakunnan ratkaistavaksi.',
+    disputeLink: 'Lisätietoa osoitteesta:',
+  },
+  sv: {
+    title: 'Sälja',
+    heroText: 'Vi vill skapa en hållbar kundrelation där vi tar hänsyn till dina minsta behov och önskemål. Vi diskuterar öppet och lyssnar noggrant, eftersom vår uppgift är att göra dina drömmar till verklighet.',
+    heroCTA: 'GÖR DINA LIVS BOSTADSAFFÄRER',
+    attentionTitle: 'Få inte bara ut den på marknaden. Ge den den uppmärksamhet den förtjänar.',
+    attentionText: 'För dem som kräver förhöjd service som inte finns någon annanstans, finns Sotheby\'s International Realty. Vi är branschens bästa mäklare, och vår omsorg om stil och detaljer är oöverträffad. Vi är här för att hjälpa dig sälja ditt hem i en skala du inte hittar någon annanstans.',
+    welcomeTitle: 'Välkommen till en framgångsrik bostadsaffär!',
+    formTitle: 'Boka en gratis värdering!',
+    formSubtitle: 'Känner du till ditt hems marknadsvärde?',
+    formText: 'Bjud in oss för en kostnadsfri värdering – få områdets mest expertisutlåtande.',
+    honorTitle: 'Hedersuppdrag',
+    relationshipTitle: 'Värdefull kundrelation',
+    promiseTitle: 'Vårt servicelöfte',
+    pricingTitle: 'Prislista',
+    videoTitle: 'Varför sälja med oss?',
+    videoSubtitle: 'Se hur vi hjälper våra kunder till en framgångsrik bostadsaffär',
+    disputeTitle: 'Konsumenttvist',
+    disputeText: 'En tvist som rör avtalet kan tas upp för konsumenttvistnämnden.',
+    disputeLink: 'Mer information på:',
+  },
+  en: {
+    title: 'Selling',
+    heroText: 'We want to create a lasting customer relationship where we consider your smallest needs and wishes. We discuss openly and listen carefully, as our mission is to make your dreams come true.',
+    heroCTA: 'MAKE THE PROPERTY DEALS OF YOUR LIFE',
+    attentionTitle: 'Don\'t just get it on the market. Give it the attention it deserves.',
+    attentionText: 'For those who demand elevated service like nowhere else, there\'s Sotheby\'s International Realty. We are the industry\'s best agents, and our care for style and detail is unparalleled. We are here to help you sell your home on a scale you won\'t find elsewhere.',
+    welcomeTitle: 'Welcome to a successful property transaction!',
+    formTitle: 'Schedule a free appraisal!',
+    formSubtitle: 'Do you know your property\'s market value?',
+    formText: 'Invite us for a free appraisal – get the area\'s most expert opinion.',
+    honorTitle: 'Honorary Mission',
+    relationshipTitle: 'Valuable Customer Relationship',
+    promiseTitle: 'Our Service Promise',
+    pricingTitle: 'Service Pricing',
+    videoTitle: 'Why sell with us?',
+    videoSubtitle: 'See how we help our clients achieve successful property transactions',
+    disputeTitle: 'Consumer Dispute',
+    disputeText: 'A dispute concerning the contract can be submitted to the Consumer Disputes Board.',
+    disputeLink: 'More information at:',
+  },
+};
+
+export default function SellingPage({ params }: { params: { locale: Locale } }) {
+  const t = translations[params.locale] || translations.fi;
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <main className="flex-1">
@@ -27,12 +92,10 @@ export default function SellingPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-primary)]/70 to-[var(--color-primary)]/50"></div>
           <div className="relative z-10 text-center px-4 max-w-4xl">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-thin mb-8">
-              Myymässä
+              {t.title}
             </h1>
             <p className="text-lg md:text-xl font-light leading-relaxed mb-12 max-w-3xl mx-auto">
-              Haluamme luoda kestävän asiakassuhteen, jossa otamme huomioon pienimmätkin 
-              tarpeesi ja toiveesi. Keskustelemme avoimesti ja kuuntelemme huolella, sillä tehtävämme 
-              on tehdä unelmistasi totta.
+              {t.heroText}
             </p>
             <Link 
               href="/yhteystiedot"
@@ -40,7 +103,7 @@ export default function SellingPage() {
                        hover:bg-white hover:text-[var(--color-primary)] transition-all duration-300 
                        font-light uppercase tracking-wider text-sm"
             >
-              TEE ELÄMÄSI ASUNTOKAUPAT &gt;
+              {t.heroCTA} &gt;
             </Link>
           </div>
         </section>
@@ -50,12 +113,10 @@ export default function SellingPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-6">
-                Älä vain saa sitä markkinoille. Anna sille ansaitsemansa huomio.
+                {t.attentionTitle}
               </h2>
               <p className="text-lg text-gray-700 font-light leading-relaxed mb-8">
-                Niille, jotka vaativat korotettua palvelua, jollaista ei muualla ole, on Sotheby's International Realty. 
-                Olemme alan parhaita välittäjiä, ja huolenpitomme tyyliin ja yksityiskohtiin on vertaansa vailla. 
-                Olemme täällä auttamassa sinua myymään kotisi mittakaavassa, jota et löydä muualta.
+                {t.attentionText}
               </p>
             </div>
           </div>
@@ -66,7 +127,7 @@ export default function SellingPage() {
           <div className="container mx-auto px-4">
             <div className="text-center">
               <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-8">
-                Tervetuloa onnistuneeseen asuntokauppaan!
+                {t.welcomeTitle}
               </h2>
               <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8 text-gray-700">
                 <a href="tel:+358103156900" className="hover:text-[var(--color-primary)] transition-colors font-light">
@@ -94,13 +155,13 @@ export default function SellingPage() {
               {/* Valuation Form */}
               <div className="bg-gray-100 p-8 lg:p-12">
                 <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-6">
-                  Sovi maksuton arviokäynti!
+                  {t.formTitle}
                 </h2>
                 <p className="text-gray-700 font-light mb-2">
-                  Tiedätkö asuntosi markkina-arvon?
+                  {t.formSubtitle}
                 </p>
                 <p className="text-gray-700 font-light mb-8">
-                  Kutsu meidät maksuttomalle arviokäynnille – saat alueen asiantuntevimman lausunnon.
+                  {t.formText}
                 </p>
                 
                 <form className="space-y-4">
@@ -179,7 +240,7 @@ export default function SellingPage() {
               {/* Mission Section */}
               <div className="bg-white p-8 lg:p-12">
                 <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-6">
-                  Kunniatehtävä
+                  {t.honorTitle}
                 </h2>
                 <div className="space-y-4 text-gray-700 font-light leading-relaxed text-sm">
                   <p>
@@ -208,7 +269,7 @@ export default function SellingPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-5xl mx-auto">
               <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-8 text-center">
-                Arvokas asiakassuhde
+                {t.relationshipTitle}
               </h2>
               <div className="space-y-6 text-gray-700 font-light leading-relaxed text-base">
                 <p>
@@ -239,7 +300,7 @@ export default function SellingPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-5xl mx-auto">
               <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-8 text-center">
-                Palvelulupauksemme
+                {t.promiseTitle}
               </h2>
               <div className="space-y-6 text-gray-700 font-light leading-relaxed text-base">
                 <p>
@@ -261,7 +322,7 @@ export default function SellingPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-12 text-center">
-                Palveluhinnasto
+                {t.pricingTitle}
               </h2>
               
               <div className="bg-gray-50 p-8 md:p-12 rounded-lg">
@@ -331,8 +392,8 @@ export default function SellingPage() {
         {/* Video Section */}
         <VideoSection 
           videoId="hdXkBWw9wk0"
-          title="Miksi myydä kanssamme?"
-          subtitle="Katso miten autamme asiakkaitamme onnistuneeseen asuntokauppaan"
+          title={t.videoTitle}
+          subtitle={t.videoSubtitle}
         />
 
         {/* Consumer Dispute Section */}
@@ -340,13 +401,13 @@ export default function SellingPage() {
           <div className="container mx-auto px-4">
             <div className="text-center">
               <h2 className="text-2xl font-light mb-4">
-                Kuluttajariita
+                {t.disputeTitle}
               </h2>
               <p className="font-light mb-2">
-                Sopimusta koskeva riita voidaan viedä kuluttajariitalautakunnan ratkaistavaksi.
+                {t.disputeText}
               </p>
               <p className="font-light">
-                Lisätietoa osoitteesta:{' '}
+                {t.disputeLink}{' '}
                 <a href="https://www.kuluttajariita.fi" target="_blank" rel="noopener noreferrer" 
                    className="text-white underline hover:text-gray-200">
                   www.kuluttajariita.fi
