@@ -11,12 +11,50 @@ export function generateStaticParams() {
   return (locales as readonly Locale[]).map((locale) => ({ locale }));
 }
 
+// 🔥 LINUS FIX: Translations for Rentals page
+const translations = {
+  fi: {
+    title: 'Vuokrakohteet',
+    noProperties: 'Ei vuokrakohteita saatavilla tällä hetkellä.',
+    heroTitle: 'Palveleva vuokranvälityksesi!',
+    heroText: 'Onko kotisi tai toimistotilasi vuokraaminen ajankohtaista? Ammattitaitoiset välittäjämme auttavat sinua myös silloin, kun kotisi tai sijoitusasuntosi on vuokralaisen tarpeessa. Ota yhteyttä, niin keskustellaan mielellämme asunnon vuokraamisesta kanssasi.',
+    contactBtn: 'Ota yhteyttä',
+    rentalsBtn: 'Vuokrakohteet',
+    welcomeTitle: 'Tervetuloa poikkeukselliseen kiinteistöilmoitukseen!',
+    welcomeText: 'Katso kaikki myytävät kiinteistömme.',
+    findHomeBtn: 'Löydä unelmiesi koti',
+  },
+  sv: {
+    title: 'Hyresobjekt',
+    noProperties: 'Inga hyresobjekt tillgängliga för tillfället.',
+    heroTitle: 'Din serviceinriktade hyresförmedling!',
+    heroText: 'Är det aktuellt att hyra ut ditt hem eller kontorsutrymme? Våra professionella mäklare hjälper dig även när ditt hem eller din investeringslägenhet behöver en hyresgäst. Kontakta oss så diskuterar vi gärna uthyrning av bostaden med dig.',
+    contactBtn: 'Kontakta oss',
+    rentalsBtn: 'Hyresobjekt',
+    welcomeTitle: 'Välkommen till en exceptionell fastighetsannons!',
+    welcomeText: 'Se alla våra fastigheter till salu.',
+    findHomeBtn: 'Hitta ditt drömhem',
+  },
+  en: {
+    title: 'Rental Properties',
+    noProperties: 'No rental properties available at the moment.',
+    heroTitle: 'Your service-oriented rental agency!',
+    heroText: 'Is renting out your home or office space relevant? Our professional agents also help you when your home or investment property needs a tenant. Contact us and we\'ll be happy to discuss renting your property with you.',
+    contactBtn: 'Contact us',
+    rentalsBtn: 'Rental Properties',
+    welcomeTitle: 'Welcome to an exceptional property listing!',
+    welcomeText: 'See all our properties for sale.',
+    findHomeBtn: 'Find your dream home',
+  },
+};
+
 interface RentalPropertiesPageProps {
   params: { locale: Locale };
 }
 
 export default async function RentalPropertiesPage({ params }: RentalPropertiesPageProps) {
   const { locale } = params;
+  const t = translations[locale] || translations.fi;
   
   // ✅ SERVER ACTION: Fetch rental properties (no CORS, no duplication)
   const rentalProperties = await fetchRentalProperties(locale);
@@ -27,7 +65,7 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
       <section id="vuokrakohteet" className="py-20 bg-white">
         <div className="max-w-[1400px] mx-auto px-6">
           <h1 className="text-4xl lg:text-5xl font-light text-gray-900 mb-12 text-center">
-            Vuokrakohteet
+            {t.title}
           </h1>
 
           {rentalProperties.length > 0 ? (
@@ -35,7 +73,7 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
           ) : (
             <div className="text-center py-12">
               <p className="text-xl text-gray-600 font-light">
-                Ei vuokrakohteita saatavilla tällä hetkellä.
+                {t.noProperties}
               </p>
             </div>
           )}
@@ -46,10 +84,10 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
       <section className="py-20 lg:py-32 bg-gray-50">
         <div className="max-w-[1400px] mx-auto px-6 text-center">
           <h1 className="text-4xl lg:text-5xl font-light text-gray-900 mb-6">
-            Palveleva vuokranvälityksesi!
+            {t.heroTitle}
           </h1>
           <p className="text-xl font-light text-gray-700 leading-relaxed mb-12 max-w-4xl mx-auto">
-            Onko kotisi tai toimistotilasi vuokraaminen ajankohtaista? Ammattitaitoiset välittäjämme auttavat sinua myös silloin, kun kotisi tai sijoitusasuntosi on vuokralaisen tarpeessa. Ota yhteyttä, niin keskustellaan mielellämme asunnon vuokraamisesta kanssasi.
+            {t.heroText}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
@@ -58,7 +96,7 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
                        hover:bg-[var(--color-primary-dark)] transition-colors 
                        uppercase tracking-wider text-sm font-light"
             >
-              Ota yhteyttä
+              {t.contactBtn}
             </Link>
             <a
               href="#vuokrakohteet"
@@ -66,7 +104,7 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
                        hover:bg-[var(--color-primary)] hover:text-white transition-all 
                        uppercase tracking-wider text-sm font-light"
             >
-              Vuokrakohteet
+              {t.rentalsBtn}
             </a>
           </div>
         </div>
@@ -76,10 +114,10 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
       <section className="py-20 bg-white">
         <div className="max-w-[1400px] mx-auto px-6 text-center">
           <h2 className="text-3xl lg:text-4xl font-light text-gray-900 mb-6">
-            Tervetuloa poikkeukselliseen kiinteistöilmoitukseen!
+            {t.welcomeTitle}
           </h2>
           <p className="text-xl font-light text-gray-700 mb-8">
-            Katso kaikki myytävät kiinteistömme.
+            {t.welcomeText}
           </p>
           <Link
             href="/kohteet"
@@ -87,7 +125,7 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
                      hover:bg-[var(--color-primary-dark)] transition-colors 
                      uppercase tracking-wider text-sm font-light"
           >
-            Löydä unelmiesi koti
+            {t.findHomeBtn}
           </Link>
         </div>
       </section>

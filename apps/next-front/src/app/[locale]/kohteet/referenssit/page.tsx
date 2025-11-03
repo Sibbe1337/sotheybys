@@ -11,12 +11,47 @@ export function generateStaticParams() {
   return (locales as readonly Locale[]).map((locale) => ({ locale }));
 }
 
+// 🔥 LINUS FIX: Translations for References page
+const translations = {
+  fi: {
+    title: 'Referenssit',
+    subtitle: 'Valikoima onnistuneesti välittämistämme kohteista',
+    infoText: 'Olemme ylpeitä jokaisesta onnistuneesta kaupasta. Tässä valikoima aiemmin välittämistämme kohteista, jotka ovat löytäneet uudet omistajat.',
+    noProperties: 'Referenssejä päivitetään säännöllisesti.',
+    ctaTitle: 'Haluatko kodistasi seuraavan referenssin?',
+    ctaText: 'Ota yhteyttä, niin autamme sinua myymään kotisi parhaaseen hintaan.',
+    sellBtn: 'Myy kotisi',
+    contactBtn: 'Ota yhteyttä',
+  },
+  sv: {
+    title: 'Referenser',
+    subtitle: 'Ett urval av framgångsrikt förmedlade objekt',
+    infoText: 'Vi är stolta över varje lyckad affär. Här är ett urval av tidigare förmedlade objekt som har hittat nya ägare.',
+    noProperties: 'Referenser uppdateras regelbundet.',
+    ctaTitle: 'Vill du att ditt hem ska bli nästa referens?',
+    ctaText: 'Kontakta oss så hjälper vi dig sälja ditt hem till bästa pris.',
+    sellBtn: 'Sälj ditt hem',
+    contactBtn: 'Kontakta oss',
+  },
+  en: {
+    title: 'References',
+    subtitle: 'A selection of successfully brokered properties',
+    infoText: 'We are proud of every successful transaction. Here is a selection of previously brokered properties that have found new owners.',
+    noProperties: 'References are updated regularly.',
+    ctaTitle: 'Want your home to be the next reference?',
+    ctaText: 'Contact us and we will help you sell your home at the best price.',
+    sellBtn: 'Sell your home',
+    contactBtn: 'Contact us',
+  },
+};
+
 interface ReferencesPageProps {
   params: { locale: Locale };
 }
 
 export default async function ReferencesPage({ params }: ReferencesPageProps) {
   const { locale } = params;
+  const t = translations[locale] || translations.fi;
   
   // ✅ SERVER ACTION: Fetch sold properties (no CORS, no duplication)
   const referenceProperties = await fetchSoldProperties(locale);
@@ -28,10 +63,10 @@ export default async function ReferencesPage({ params }: ReferencesPageProps) {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-thin text-gray-900 mb-6">
-                Referenssit
+                {t.title}
               </h1>
               <p className="text-lg lg:text-xl text-gray-600 font-light">
-                Valikoima onnistuneesti välittämistämme kohteista
+                {t.subtitle}
               </p>
             </div>
           </div>
@@ -42,8 +77,7 @@ export default async function ReferencesPage({ params }: ReferencesPageProps) {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <p className="text-gray-700 font-light leading-relaxed">
-                Olemme ylpeitä jokaisesta onnistuneesta kaupasta. Tässä valikoima 
-                aiemmin välittämistämme kohteista, jotka ovat löytäneet uudet omistajat.
+                {t.infoText}
               </p>
             </div>
           </div>
@@ -57,7 +91,7 @@ export default async function ReferencesPage({ params }: ReferencesPageProps) {
             ) : (
               <div className="text-center py-20">
                 <p className="text-gray-600 font-light">
-                  Referenssejä päivitetään säännöllisesti.
+                  {t.noProperties}
                 </p>
               </div>
             )}
@@ -69,10 +103,10 @@ export default async function ReferencesPage({ params }: ReferencesPageProps) {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-3xl font-light text-gray-900 mb-6">
-                Haluatko kodistasi seuraavan referenssin?
+                {t.ctaTitle}
               </h2>
               <p className="text-lg text-gray-600 font-light mb-8">
-                Ota yhteyttä, niin autamme sinua myymään kotisi parhaaseen hintaan.
+                {t.ctaText}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
@@ -81,7 +115,7 @@ export default async function ReferencesPage({ params }: ReferencesPageProps) {
                            bg-[#1a3a4a] text-white hover:bg-[#0f2633] 
                            transition-colors duration-300 font-light tracking-wider uppercase text-sm"
                 >
-                  Myy kotisi
+                  {t.sellBtn}
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} 
                           d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -93,7 +127,7 @@ export default async function ReferencesPage({ params }: ReferencesPageProps) {
                            border border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white 
                            transition-colors duration-300 font-light tracking-wider uppercase text-sm"
                 >
-                  Ota yhteyttä
+                  {t.contactBtn}
                 </Link>
               </div>
             </div>

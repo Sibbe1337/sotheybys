@@ -11,7 +11,45 @@ export function generateStaticParams() {
   return (locales as readonly Locale[]).map((locale) => ({ locale }));
 }
 
-export default function PurchaseAssignmentsPage() {
+// 🔥 LINUS FIX: Translations for Purchase Assignments page
+const translations = {
+  fi: {
+    heroTitle: 'Asiakkaamme etsii',
+    videoPrivate: 'Tämä video on yksityinen',
+    ctaBtn: 'KATSO NYKYISET OSTOTOIMEKSIANNOT »',
+    mainTitle: 'Ostotoimeksiannot',
+    mainText: 'Asiakkaamme, eli ostaja, maksaa täyden välityspalkkion. Oletko harkinnut kotisi myyntiä?',
+    contactText: 'Jos sinulla on kysyttävää, voit aina ottaa meihin yhteyttä soittamalla, lähettämällä sähköpostia tai käymällä toimistollamme!',
+    officeTitle: 'Helsingin toimistomme',
+    officeText: 'Vuonna 2015 alkoi uusi aikakausi Suomessa. Ab Snellman LKV Oy Sotheby\'s International Realty avasi ovensa suomalaisille markkinoille tavoitteenaan nostaa kiinteistönvälitys aivan uudelle tasolle. Dynaamisessa pääkaupungissa Helsingissä sijaitsevassa toimistossa odottaa motivoitunut asiantuntijatiimi, joka on valmis toteuttamaan unelmasi. Vaikka toimisto sijaitsee Etelä-Suomessa, myyntimme ja toimintamme kattavat koko maan. Kauniista saaristosta lumovaan Lappiin ja kaikkea siltä väliltä.',
+    directionsBtn: 'REITTIOHJEET »',
+  },
+  sv: {
+    heroTitle: 'Vår kund söker',
+    videoPrivate: 'Denna video är privat',
+    ctaBtn: 'SE AKTUELLA KÖPUPPDRAG »',
+    mainTitle: 'Köpuppdrag',
+    mainText: 'Vår kund, det vill säga köparen, betalar full förmedlingsavgift. Har du övervägt att sälja ditt hem?',
+    contactText: 'Om du har frågor kan du alltid kontakta oss genom att ringa, skicka e-post eller besöka vårt kontor!',
+    officeTitle: 'Vårt kontor i Helsingfors',
+    officeText: 'År 2015 började en ny era i Finland. Ab Snellman LKV Oy Sotheby\'s International Realty öppnade sina dörrar för den finska marknaden med målet att lyfta fastighetsförmedling till en helt ny nivå. I det dynamiska huvudstaden Helsingfors väntar ett motiverat expertteam som är redo att förverkliga dina drömmar. Även om kontoret ligger i södra Finland täcker vår försäljning och verksamhet hela landet. Från den vackra skärgården till förtrollande Lappland och allt däremellan.',
+    directionsBtn: 'VÄGBESKRIVNING »',
+  },
+  en: {
+    heroTitle: 'Our client is looking',
+    videoPrivate: 'This video is private',
+    ctaBtn: 'SEE CURRENT PURCHASE ASSIGNMENTS »',
+    mainTitle: 'Purchase Assignments',
+    mainText: 'Our client, i.e. the buyer, pays the full brokerage fee. Have you considered selling your home?',
+    contactText: 'If you have any questions, you can always contact us by calling, sending an email or visiting our office!',
+    officeTitle: 'Our Helsinki office',
+    officeText: 'In 2015, a new era began in Finland. Ab Snellman LKV Oy Sotheby\'s International Realty opened its doors to the Finnish market with the aim of raising real estate brokerage to a whole new level. In the dynamic capital city of Helsinki, a motivated team of experts awaits, ready to make your dreams come true. Although the office is located in Southern Finland, our sales and operations cover the entire country. From the beautiful archipelago to enchanting Lapland and everything in between.',
+    directionsBtn: 'DIRECTIONS »',
+  },
+};
+
+export default function PurchaseAssignmentsPage({ params }: { params: { locale: Locale } }) {
+  const t = translations[params.locale] || translations.fi;
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <main className="flex-1">
@@ -20,7 +58,7 @@ export default function PurchaseAssignmentsPage() {
           <div className="max-w-[1400px] mx-auto px-6">
             <div className="text-center">
               <h1 className="text-4xl lg:text-5xl font-light mb-8" style={{ color: '#c9a961' }}>
-                Asiakkaamme etsii
+                {t.heroTitle}
               </h1>
               
               {/* Video Placeholder */}
@@ -30,7 +68,7 @@ export default function PurchaseAssignmentsPage() {
                     <div className="w-20 h-20 rounded-full border-4 border-white/80 flex items-center justify-center mb-4">
                       <span className="text-4xl font-bold">!</span>
                     </div>
-                    <p className="text-white text-lg">Tämä video on yksityinen</p>
+                    <p className="text-white text-lg">{t.videoPrivate}</p>
                   </div>
                 </div>
               </div>
@@ -41,7 +79,7 @@ export default function PurchaseAssignmentsPage() {
                          hover:bg-[#c9a961] hover:text-white transition-all duration-300 
                          uppercase tracking-wider text-sm font-light"
               >
-                KATSO NYKYISET OSTOTOIMEKSIANNOT »
+                {t.ctaBtn}
               </Link>
             </div>
           </div>
@@ -78,17 +116,17 @@ export default function PurchaseAssignmentsPage() {
             {/* Title & Description */}
             <div className="max-w-4xl mx-auto text-center mb-16">
               <h2 className="text-4xl lg:text-5xl font-light text-gray-900 mb-8">
-                Ostotoimeksiannot
+                {t.mainTitle}
               </h2>
               <p className="text-xl text-gray-700 font-light leading-relaxed mb-12">
-                Asiakkaamme, eli ostaja, maksaa täyden välityspalkkion. Oletko harkinnut kotisi myyntiä?
+                {t.mainText}
               </p>
             </div>
 
             {/* Contact Cards */}
             <div className="max-w-6xl mx-auto">
               <p className="text-center text-lg text-gray-700 font-light mb-12">
-                Jos sinulla on kysyttävää, voit aina ottaa meihin yhteyttä soittamalla, lähettämällä sähköpostia tai käymällä toimistollamme!
+                {t.contactText}
               </p>
               
               <div className="grid md:grid-cols-3 gap-8 mb-20">
@@ -128,10 +166,10 @@ export default function PurchaseAssignmentsPage() {
               {/* Text Content */}
               <div>
                 <h2 className="text-3xl lg:text-4xl font-light mb-6">
-                  Helsingin toimistomme
+                  {t.officeTitle}
                 </h2>
                 <p className="text-lg font-light leading-relaxed mb-8 text-white/90">
-                  Vuonna 2015 alkoi uusi aikakausi Suomessa. Ab Snellman LKV Oy Sotheby's International Realty avasi ovensa suomalaisille markkinoille tavoitteenaan nostaa kiinteistönvälitys aivan uudelle tasolle. Dynaamisessa pääkaupungissa Helsingissä sijaitsevassa toimistossa odottaa motivoitunut asiantuntijatiimi, joka on valmis toteuttamaan unelmasi. Vaikka toimisto sijaitsee Etelä-Suomessa, myyntimme ja toimintamme kattavat koko maan. Kauniista saaristosta lumovaan Lappiin ja kaikkea siltä väliltä.
+                  {t.officeText}
                 </p>
                 <a
                   href="https://maps.google.com/?q=Kasarmikatu+34,+00130+Helsinki"
@@ -141,7 +179,7 @@ export default function PurchaseAssignmentsPage() {
                            hover:bg-white hover:text-[var(--color-primary)] transition-all duration-300 
                            uppercase tracking-wider text-sm font-light"
                 >
-                  REITTIOHJEET »
+                  {t.directionsBtn}
                 </a>
               </div>
 
