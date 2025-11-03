@@ -15,6 +15,7 @@ const translations = {
   fi: {
     heroTitle: 'Snellman Sotheby\'s International Realty',
     heroSubtitle: 'Avaamme uusia ovia vuodesta 2015',
+    heroStats: '26 100 välittäjää • 1 000 välitystoimistossa • 84 maassa ja alueella',
     aboutTitle: 'Kansainvälinen osaaminen paikallisella kokemuksella',
     aboutText1: 'Snellman Sotheby\'s International Realty on osa maailman johtavaa luksuskiinteistöjen välitysketjua. Yhdistämme Sotheby\'s-brändin 280 vuoden historian ja kansainvälisen verkoston voiman paikalliseen asiantuntemukseen.',
     aboutText2: 'Toimintamme perustuu henkilökohtaiseen palveluun, luottamukseen ja ehdottomaan ammattitaitoon. Jokainen asiakas on meille ainutlaatuinen, ja räätälöimme palvelumme vastaamaan juuri heidän tarpeitaan.',
@@ -31,6 +32,8 @@ const translations = {
     historyText1: 'Sotheby\'s perustettiin Lontoossa vuonna 1744, ja se on yksi maailman vanhimmista ja arvostetuimmista huutokaupoista. Vuosisatojen aikana Sotheby\'s on rakentanut maineen laadun, asiantuntemuksen ja luotettavuuden synonyyminä.',
     historyText2: 'Sotheby\'s International Realty perustettiin vuonna 1976 palvelemaan Sotheby\'s-huutokaupan asiakkaita, jotka etsivät ainutlaatuisia koteja ympäri maailman. Tänään verkostoomme kuuluu yli 1100 toimistoa 84 maassa ja alueella.',
     historyText3: 'Snellman Sotheby\'s International Realty on ylpeä osa tätä arvostettua perinnettä, tuoden kansainvälisen osaamisen ja verkoston Suomen kiinteistömarkkinoille.',
+    philosophyTitle: 'Palvelufilosofiamme',
+    philosophyText: 'Unelma täydellisestä kodista on unelmiemme työtä. Jokainen välittämämme koti on yhtä ainutlaatuinen kuin jokainen asiakkaamme. Olemme ylpeitä saadessamme yhdistää toisiinsa täydellisesti yhteensopivat kodit sekä asukkaat.',
     ctaTitle: 'Tervetuloa tutustumaan toimintaamme',
     ctaText: 'Olemme täällä sinua varten, oli kyse sitten kodista, sijoituksesta tai unelmasta.',
     ctaContact: 'Ota yhteyttä',
@@ -39,6 +42,7 @@ const translations = {
   sv: {
     heroTitle: 'Snellman Sotheby\'s International Realty',
     heroSubtitle: 'Vi öppnar nya dörrar sedan 2015',
+    heroStats: '26 100 mäklare • 1 000 kontor • 84 länder och regioner',
     aboutTitle: 'Internationell kompetens med lokal erfarenhet',
     aboutText1: 'Snellman Sotheby\'s International Realty är en del av världens ledande lyxfastighetsmäklarkedja. Vi kombinerar Sotheby\'s-varumärkets 280-åriga historia och det internationella nätverkets kraft med lokal expertis.',
     aboutText2: 'Vår verksamhet bygger på personlig service, förtroende och absolut professionalism. Varje kund är unik för oss, och vi skräddarsyr våra tjänster för att möta just deras behov.',
@@ -55,6 +59,8 @@ const translations = {
     historyText1: 'Sotheby\'s grundades i London 1744 och är ett av världens äldsta och mest respekterade auktionshus. Under århundraden har Sotheby\'s byggt ett rykte som synonym med kvalitet, expertis och tillförlitlighet.',
     historyText2: 'Sotheby\'s International Realty grundades 1976 för att betjäna Sotheby\'s auktionshuskunder som sökte unika hem runt om i världen. Idag omfattar vårt nätverk över 1 100 kontor i 84 länder och regioner.',
     historyText3: 'Snellman Sotheby\'s International Realty är stolt del av denna respekterade tradition, och för internationell expertis och nätverk till den finska fastighetsmarknaden.',
+    philosophyTitle: 'Vår servicefilosofi',
+    philosophyText: 'Drömmen om det perfekta hemmet är vårt drömarbete. Varje hem vi förmedlar är lika unikt som varje kund. Vi är stolta över att kunna förena perfekt kompatibla hem och boende.',
     ctaTitle: 'Välkommen att bekanta dig med vår verksamhet',
     ctaText: 'Vi är här för dig, vare sig det gäller ett hem, en investering eller en dröm.',
     ctaContact: 'Kontakta oss',
@@ -63,6 +69,7 @@ const translations = {
   en: {
     heroTitle: 'Snellman Sotheby\'s International Realty',
     heroSubtitle: 'Opening new doors since 2015',
+    heroStats: '26,100 agents • 1,000 offices • 84 countries and territories',
     aboutTitle: 'International expertise with local experience',
     aboutText1: 'Snellman Sotheby\'s International Realty is part of the world\'s leading luxury real estate brokerage network. We combine the Sotheby\'s brand\'s 280-year history and the power of an international network with local expertise.',
     aboutText2: 'Our operations are based on personal service, trust, and absolute professionalism. Every client is unique to us, and we tailor our services to meet their specific needs.',
@@ -79,6 +86,8 @@ const translations = {
     historyText1: 'Sotheby\'s was founded in London in 1744 and is one of the world\'s oldest and most respected auction houses. Over the centuries, Sotheby\'s has built a reputation as synonymous with quality, expertise, and reliability.',
     historyText2: 'Sotheby\'s International Realty was founded in 1976 to serve Sotheby\'s auction house clients seeking unique homes around the world. Today, our network includes over 1,100 offices in 84 countries and regions.',
     historyText3: 'Snellman Sotheby\'s International Realty is a proud part of this respected tradition, bringing international expertise and network to the Finnish real estate market.',
+    philosophyTitle: 'Our Service Philosophy',
+    philosophyText: 'The dream of the perfect home is our dream work. Every home we broker is as unique as every client. We are proud to bring together perfectly compatible homes and residents.',
     ctaTitle: 'Welcome to learn about our operations',
     ctaText: 'We are here for you, whether it\'s about a home, an investment, or a dream.',
     ctaContact: 'Contact us',
@@ -98,8 +107,11 @@ export default function CompanyPage({ params }: { params: { locale: Locale } }) 
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-thin text-gray-900 mb-6">
                 {t.heroTitle}
               </h1>
-              <p className="text-lg lg:text-xl text-gray-600 font-light">
+              <p className="text-lg lg:text-xl text-gray-600 font-light mb-6">
                 {t.heroSubtitle}
+              </p>
+              <p className="text-sm lg:text-base text-gray-500 font-light">
+                {t.heroStats}
               </p>
             </div>
           </div>
@@ -171,7 +183,7 @@ export default function CompanyPage({ params }: { params: { locale: Locale } }) 
               </div>
 
               {/* History Section */}
-              <div className="bg-gray-50 p-8 lg:p-12 rounded-lg">
+              <div className="bg-gray-50 p-8 lg:p-12 rounded-lg mb-20">
                 <h2 className="text-3xl font-light text-gray-900 mb-8 text-center">
                   {t.historyTitle}
                 </h2>
@@ -180,6 +192,16 @@ export default function CompanyPage({ params }: { params: { locale: Locale } }) 
                   <p>{t.historyText2}</p>
                   <p>{t.historyText3}</p>
                 </div>
+              </div>
+
+              {/* Philosophy Section */}
+              <div className="text-center max-w-3xl mx-auto">
+                <h2 className="text-3xl font-light text-gray-900 mb-6">
+                  {t.philosophyTitle}
+                </h2>
+                <p className="text-xl text-gray-700 font-light leading-relaxed">
+                  {t.philosophyText}
+                </p>
               </div>
             </div>
           </div>
