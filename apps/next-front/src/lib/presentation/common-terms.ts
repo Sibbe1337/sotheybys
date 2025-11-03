@@ -24,10 +24,13 @@ const OWNERSHIP_TRANSLATIONS: Record<string, Record<Locale, string>> = {
 const HEATING_TRANSLATIONS: Record<string, Record<Locale, string>> = {
   'Kaukolämpö': { fi: 'Kaukolämpö', sv: 'Fjärrvärme', en: 'District heating' },
   'Kaukolämpö ja ilmalämpöpumppu': { fi: 'Kaukolämpö ja ilmalämpöpumppu', sv: 'Fjärrvärme och luftvärmepump', en: 'District heating and air source heat pump' },
+  'Maalämpö': { fi: 'Maalämpö', sv: 'Jordvärme', en: 'Geothermal heating' },
+  'Maalämpö ja lattialämmitys': { fi: 'Maalämpö ja lattialämmitys', sv: 'Jordvärme och golvvärme', en: 'Geothermal heating and underfloor heating' },
+  'Lattialämmitys': { fi: 'Lattialämmitys', sv: 'Golvvärme', en: 'Underfloor heating' },
   'Öljylämmitys': { fi: 'Öljylämmitys', sv: 'Oljeuppvärmning', en: 'Oil heating' },
   'Sähkölämmitys': { fi: 'Sähkölämmitys', sv: 'Eluppvärmning', en: 'Electric heating' },
-  'Maalämpö': { fi: 'Maalämpö', sv: 'Jordvärme', en: 'Geothermal heating' },
   'Ilmalämpöpumppu': { fi: 'Ilmalämpöpumppu', sv: 'Luftvärmepump', en: 'Air source heat pump' },
+  'Vesikiertoinen lattialämmitys': { fi: 'Vesikiertoinen lattialämmitys', sv: 'Vattenburen golvvärme', en: 'Hydronic underfloor heating' },
 };
 
 // Zoning
@@ -93,7 +96,13 @@ export function translateCommonTerm(text: string | undefined, locale: Locale = '
 export function translateCommonTerms(text: string | undefined, locale: Locale = 'fi'): string {
   if (!text || text.trim() === '') return '';
   
-  // Split by common separators
+  // Try translating the whole phrase first (for combined terms like "Maalämpö ja lattialämmitys")
+  const wholeTranslation = translateCommonTerm(text, locale);
+  if (wholeTranslation !== text) {
+    return wholeTranslation;
+  }
+  
+  // If no translation found for the whole phrase, try splitting and translating parts
   const terms = text.split(/[,;]/).map(t => t.trim());
   const translated = terms.map(term => translateCommonTerm(term, locale));
   
