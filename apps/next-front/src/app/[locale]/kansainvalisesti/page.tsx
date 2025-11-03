@@ -111,7 +111,7 @@ export default function InternationalPage() {
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
-              <p className="text-sm text-gray-600 font-light mb-4 tracking-wide">
+              <p className="text-3xl font-light text-gray-900 mb-8">
                 Discover the world's finest homes on{' '}
                 <a 
                   href="https://www.sothebysrealty.com" 
