@@ -4,6 +4,7 @@ import { getSectionLabel, getFieldLabel } from '@/lib/i18n/property-translations
 import { fmtPerM2, fmtPlotArea } from '@/lib/presentation/formatters/perSquareMeter';
 import { nonEmpty } from '@/lib/presentation/formatters/number';
 import { getEnergyStatusLabel } from '@/lib/domain/energy';
+import { translateBoolean, translateCommonTerm } from '@/lib/presentation/common-terms';
 import type { Locale } from '@/lib/domain/property.types';
 import type { PropertyDetailVM } from '@/lib/presentation/property.view-model';
 import type { EnergyStatus } from '@/lib/domain/energy';
@@ -18,18 +19,22 @@ interface FieldProps {
   value?: string | number | boolean;
   sub?: string;
   alwaysShow?: boolean;
+  locale?: Locale;
 }
 
-function Field({ label, value, sub, alwaysShow = false }: FieldProps) {
+function Field({ label, value, sub, alwaysShow = false, locale = 'fi' }: FieldProps) {
   if (!alwaysShow && (value === undefined || value === null || value === '')) return null;
   
   // Handle boolean values
   let displayValue: string | number | undefined;
   if (typeof value === 'boolean') {
-    displayValue = value ? getFieldLabel('yes', 'fi') : getFieldLabel('no', 'fi');
+    displayValue = translateBoolean(value, locale);
   } else if (value === undefined || value === null || value === '') {
     // Show default text for alwaysShow fields with no data
     displayValue = '—';
+  } else if (typeof value === 'string') {
+    // Translate common Finnish terms
+    displayValue = translateCommonTerm(value, locale);
   } else {
     displayValue = value;
   }
