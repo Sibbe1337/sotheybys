@@ -160,7 +160,8 @@ export class LinearToPropertyMapper {
     this.existingSlugs.add(slug);
 
     // ========== RICH CONTENT (NEW) ==========
-    const description = lv(src.freeText ?? src.marketingDescription);
+    // LINUS FIX: Convert line breaks to HTML for proper formatting
+    const description = lvHtml(src.freeText ?? src.marketingDescription);
     const descriptionTitle = lv(src.freeTextTitle);
 
     // ========== PRICING ==========
