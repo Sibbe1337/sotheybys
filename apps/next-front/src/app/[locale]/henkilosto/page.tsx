@@ -22,6 +22,19 @@ const translations = {
     officeDesc2: 'Toimistoamme ympäröi dynaaminen Kaartinkaupunki muotiputiikkeineen, fine-dine-ravintoloineen sekä korkeatasoisine hotelleineen.',
     officeDesc3: 'Kävelet toimistollemme vain muutamassa minuutissa Esplanadilta tai Senaatintorilta.',
     directions: 'Reittiohjeet',
+    formFirstName: 'Etunimi',
+    formLastName: 'Sukunimi',
+    formEmail: 'Sähköposti',
+    formPhone: 'Puhelinnumero',
+    formAddress: 'Osoite',
+    formMessage: 'Viesti',
+    formPrivacyText: 'Olen tutustunut Tietosuojaselosteeseen',
+    formPrivacyLink: 'Tietosuojaseloste',
+    formRecaptchaText: 'Tämän sivun suojaa reCAPTCHA, mikä tarkoittaa, että Googlen',
+    formRecaptchaPrivacy: 'tietosuojakäytännöt',
+    formRecaptchaTerms: 'käyttöehdot',
+    formRecaptchaEnd: 'ovat voimassa.',
+    formSubmit: 'Lähetä',
   },
   sv: {
     title: 'Personal',
@@ -33,6 +46,19 @@ const translations = {
     officeDesc2: 'Vårt kontor omges av det dynamiska Gardesstaden med modebutiker, fine-dining-restauranger och högklassiga hotell.',
     officeDesc3: 'Du kan gå till vårt kontor på bara några minuter från Esplanaden eller Senatstorget.',
     directions: 'Vägbeskrivning',
+    formFirstName: 'Förnamn',
+    formLastName: 'Efternamn',
+    formEmail: 'E-post',
+    formPhone: 'Telefonnummer',
+    formAddress: 'Adress',
+    formMessage: 'Meddelande',
+    formPrivacyText: 'Jag har läst Integritetspolicyn',
+    formPrivacyLink: 'Integritetspolicy',
+    formRecaptchaText: 'Denna sida skyddas av reCAPTCHA, vilket innebär att Googles',
+    formRecaptchaPrivacy: 'integritetspolicy',
+    formRecaptchaTerms: 'användarvillkor',
+    formRecaptchaEnd: 'gäller.',
+    formSubmit: 'Skicka',
   },
   en: {
     title: 'Staff',
@@ -44,6 +70,19 @@ const translations = {
     officeDesc2: 'Our office is surrounded by the dynamic Kaartinkaupunki district with its fashion boutiques, fine dining restaurants, and high-end hotels.',
     officeDesc3: 'You can walk to our office in just a few minutes from Esplanade or Senate Square.',
     directions: 'Directions',
+    formFirstName: 'First Name',
+    formLastName: 'Last Name',
+    formEmail: 'Email',
+    formPhone: 'Phone Number',
+    formAddress: 'Address',
+    formMessage: 'Message',
+    formPrivacyText: 'I have read the Privacy Policy',
+    formPrivacyLink: 'Privacy Policy',
+    formRecaptchaText: 'This site is protected by reCAPTCHA, which means that Google\'s',
+    formRecaptchaPrivacy: 'privacy policy',
+    formRecaptchaTerms: 'terms of service',
+    formRecaptchaEnd: 'apply.',
+    formSubmit: 'Send',
   },
 };
 
@@ -345,7 +384,7 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
                   <div>
                     <input
                       type="text"
-                      placeholder="Etunimi"
+                      placeholder={t.formFirstName}
                       className="w-full px-4 py-3 border-0 bg-white placeholder-gray-500 font-light"
                       required
                     />
@@ -353,7 +392,7 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
                   <div>
                     <input
                       type="text"
-                      placeholder="Sukunimi"
+                      placeholder={t.formLastName}
                       className="w-full px-4 py-3 border-0 bg-white placeholder-gray-500 font-light"
                       required
                     />
@@ -361,7 +400,7 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
                   <div>
                     <input
                       type="email"
-                      placeholder="Sähköposti"
+                      placeholder={t.formEmail}
                       className="w-full px-4 py-3 border-0 bg-white placeholder-gray-500 font-light"
                       required
                     />
@@ -369,7 +408,7 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
                   <div>
                     <input
                       type="tel"
-                      placeholder="Puhelinnumero"
+                      placeholder={t.formPhone}
                       className="w-full px-4 py-3 border-0 bg-white placeholder-gray-500 font-light"
                       required
                     />
@@ -379,14 +418,14 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
                 <div>
                   <input
                     type="text"
-                    placeholder="Osoite"
+                    placeholder={t.formAddress}
                     className="w-full px-4 py-3 border-0 bg-white placeholder-gray-500 font-light"
                   />
                 </div>
                 
                 <div>
                   <textarea
-                    placeholder="Viesti"
+                    placeholder={t.formMessage}
                     rows={6}
                     className="w-full px-4 py-3 border-0 bg-white placeholder-gray-500 font-light resize-none"
                     required
@@ -402,21 +441,21 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
                     className="mt-1 mr-3"
                   />
                   <label htmlFor="privacy-staff" className="text-sm font-light text-gray-700">
-                    Olen tutustunut Tietosuojaselosteeseen <a href="#" className="text-[var(--color-primary)] underline">Tietosuojaseloste</a>
+                    {t.formPrivacyText} <a href="#" className="text-[var(--color-primary)] underline">{t.formPrivacyLink}</a>
                   </label>
                 </div>
                 
                 <div className="text-center">
                   <p className="text-xs font-light text-gray-600 mb-4">
-                    Tämän sivun suojaa reCAPTCHA, mikä tarkoittaa, että Googlen{' '}
-                    <a href="#" className="text-[var(--color-primary)] underline">tietosuojakäytännöt</a> ja{' '}
-                    <a href="#" className="text-[var(--color-primary)] underline">käyttöehdot</a> ovat voimassa.
+                    {t.formRecaptchaText}{' '}
+                    <a href="#" className="text-[var(--color-primary)] underline">{t.formRecaptchaPrivacy}</a> {t.formRecaptchaTerms &&
+                     <>{' '}<a href="#" className="text-[var(--color-primary)] underline">{t.formRecaptchaTerms}</a> {t.formRecaptchaEnd}</>}
                   </p>
                   <button
                     type="submit"
                     className="px-8 py-3 bg-[var(--color-primary)] text-white hover:bg-[#0f2633] transition-colors font-light uppercase tracking-wider"
                   >
-                    Lähetä
+                    {t.formSubmit}
                   </button>
                 </div>
               </form>
