@@ -162,9 +162,11 @@ export function DetailView({ vm, locale }: Props) {
 
         {/* Description */}
         {vm.description && (
-          <div className="prose max-w-none mb-12 bg-white rounded-lg shadow-sm p-6">
+          <div className="mb-12 bg-white rounded-lg shadow-sm p-8 md:p-10">
+            <div className="prose prose-lg max-w-none prose-p:mb-6 prose-p:leading-relaxed prose-p:text-gray-700 prose-p:first:mt-0 prose-p:last:mb-0">
             <RichText html={vm.description} />
           </div>
+            </div>
         )}
 
         {/* Type-specific Sections */}
