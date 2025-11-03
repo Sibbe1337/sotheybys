@@ -69,10 +69,19 @@ function SubSection({ title, children }: { title: string; children: React.ReactN
   );
 }
 
+// 🔥 LINUS FIX: Proper European number parsing (handles "1 363,55 €" correctly)
+function parseEuropeanNumber(value?: string): number | undefined {
+  if (!value) return undefined;
+  // Remove spaces (thousands separator), replace comma with dot (decimal), remove non-numeric chars
+  const cleaned = value.replace(/\s+/g, '').replace(',', '.').replace(/[^0-9.]/g, '');
+  const num = parseFloat(cleaned);
+  return Number.isFinite(num) && num > 0 ? num : undefined;
+}
+
 export function PropertySections({ vm, locale }: PropertySectionsProps) {
-  const salesPriceNum = vm.price ? parseInt(vm.price.replace(/[^0-9]/g, '')) : undefined;
-  const livingAreaNum = vm.area ? parseInt(vm.area.replace(/[^0-9]/g, '')) : undefined;
-  const plotAreaNum = vm.plotArea ? parseInt(vm.plotArea.replace(/[^0-9]/g, '')) : undefined;
+  const salesPriceNum = parseEuropeanNumber(vm.price);
+  const livingAreaNum = parseEuropeanNumber(vm.area);
+  const plotAreaNum = parseEuropeanNumber(vm.plotArea);
 
   return (
     <div>
