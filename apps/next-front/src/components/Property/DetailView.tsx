@@ -9,6 +9,8 @@ import { SummaryStats } from './SummaryStats';
 import { ApartmentSections } from './sections/ApartmentSections';
 import { PropertySections } from './sections/PropertySections';
 import { RentalSections } from './sections/RentalSections';
+import { HeroAddressBadge } from './HeroAddressBadge';
+import { TopBar } from './TopBar';
 import { t } from '@/lib/i18n/property-translations';
 
 type VM = import('@/lib/presentation/property.view-model').PropertyDetailVM;
@@ -80,9 +82,27 @@ export function DetailView({ vm, locale }: Props) {
 
   return (
     <div key={componentKey} className="min-h-screen bg-gray-50">
+      {/* Top Bar - PDF spec s.3-4 */}
+      <TopBar
+        address={displayAddress}
+        postalCode={vm.postalCode}
+        city={vm.city}
+        agentEmail={agent.email}
+        locale={locale}
+      />
+
       {/* Media Tabs - Full width */}
-      <div className="w-full bg-white">
+      <div className="w-full bg-white relative">
         <div className="max-w-7xl mx-auto px-4 py-8">
+          {/* Hero Address Badge - PDF spec s.2 */}
+          <div className="relative mb-4">
+            <HeroAddressBadge
+              address={displayAddress}
+              postalCode={vm.postalCode}
+              city={vm.city}
+            />
+          </div>
+          
           <MediaTabs
             images={vm.images}
             title={vm.title}
@@ -156,9 +176,12 @@ export function DetailView({ vm, locale }: Props) {
           )}
         </div>
 
-        {/* Description - Steve Jobs inspired: MAXIMUM breathing room for clarity */}
+        {/* Description - PDF spec s.10: Add "Kuvaus / Beskrivning" heading */}
         {vm.description && (
           <div className="mb-12 bg-white rounded-lg shadow-sm p-8 md:p-10">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+              {locale === 'sv' ? 'Beskrivning' : locale === 'en' ? 'Description' : 'Kuvaus'}
+            </h2>
             <div className="prose prose-lg max-w-none text-gray-700 [&>p]:mb-10 [&>p]:leading-loose [&>p:first-child]:mt-0 [&>p:last-child]:mb-0">
               <RichText html={vm.description} />
             </div>
@@ -172,39 +195,55 @@ export function DetailView({ vm, locale }: Props) {
           {!isRental && isProperty && <PropertySections vm={vm} locale={locale} />}
         </div>
 
-        {/* Agent Card - Moved higher, no sidebar */}
+        {/* Agent Section - PDF spec s.11: "Lisätiedot ja esittelyt" */}
         {agent.name && (
           <div className="bg-white rounded-lg shadow-sm p-6 max-w-2xl">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              {t('fields.agent', locale)}
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+              {locale === 'sv' 
+                ? 'Tilläggsinfo och visning' 
+                : locale === 'en' 
+                ? 'Additional Info and Viewing' 
+                : 'Lisätiedot ja esittelyt'}
             </h2>
-            <div className="flex items-start gap-4">
+            <div className="flex items-start gap-6">
               {agent.photoUrl && (
                 <img 
                   src={agent.photoUrl} 
                   alt={agent.name} 
-                  className="w-24 h-24 rounded-full object-cover"
+                  className="w-32 h-32 rounded-full object-cover flex-shrink-0"
                 />
               )}
               <div className="flex-1">
-                <h3 className="text-xl font-semibold text-gray-900">{agent.name}</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-1">{agent.name}</h3>
                 {agent.title && (
-                  <p className="text-gray-600 mb-2">{agent.title}</p>
+                  <p className="text-gray-600 mb-3">{agent.title}</p>
                 )}
                 {agent.phone && (
-                  <p className="text-gray-700 mb-1">
+                  <p className="text-gray-700 mb-2">
+                    <span className="font-medium">
+                      {locale === 'sv' ? 'Telefon' : locale === 'en' ? 'Phone' : 'Puhelin'}:
+                    </span>{' '}
                     <a href={`tel:${agent.phone}`} className="hover:text-[#002349]">
                       {agent.phone}
                     </a>
                   </p>
                 )}
                 {agent.email && (
-                  <p className="text-gray-700">
+                  <p className="text-gray-700 mb-4">
+                    <span className="font-medium">
+                      {locale === 'sv' ? 'E-post' : locale === 'en' ? 'Email' : 'Sähköposti'}:
+                    </span>{' '}
                     <a href={`mailto:${agent.email}`} className="hover:text-[#002349]">
                       {agent.email}
                     </a>
                   </p>
                 )}
+                <a
+                  href={`mailto:${agent.email || 'info@sothebysrealty.fi'}`}
+                  className="inline-block px-6 py-2 bg-[#002349] text-white font-semibold rounded hover:bg-[#001731] transition-colors"
+                >
+                  {locale === 'sv' ? 'TA KONTAKT' : locale === 'en' ? 'CONTACT US' : 'OTA YHTEYTTÄ'}
+                </a>
               </div>
             </div>
           </div>

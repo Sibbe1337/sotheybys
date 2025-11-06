@@ -25,6 +25,7 @@ export interface PropertyDetailVM extends PropertyCardVM {
   address: string;      // Street address only (e.g., "Heikkiläntie 1")
   postalCode: string;
   city: string;
+  district?: string;    // Stadsdel/District (e.g., "Lauttasaari") - separate from city
   gate?: string;  // Staircase letter only (e.g., "C")
   
   // Rich content (NEW Phase 3)
@@ -176,6 +177,7 @@ export class PropertyVM {
       address: p.address[l] || p.address.fi,  // Street address only
       postalCode: p.postalCode,
       city: p.city[l] || p.city.fi,
+      district: p.district ? (p.district[l] || p.district.fi) : undefined,  // Separate district field
       gate: p.gate,
       
       // Rich content (NEW Phase 3)

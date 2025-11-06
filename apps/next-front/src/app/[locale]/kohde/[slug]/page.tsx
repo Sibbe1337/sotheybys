@@ -221,7 +221,12 @@ export async function generateMetadata({ params }: PropertyPageProps): Promise<M
       'max-snippet': -1,
     },
     alternates: {
-      canonical: `/kohde/${params.slug}`,
+      canonical: `https://sothebysrealty.fi/${locale}/kohde/${params.slug}`,
+      languages: {
+        'fi-FI': `https://sothebysrealty.fi/fi/kohde/${params.slug}`,
+        'sv-SE': `https://sothebysrealty.fi/sv/kohde/${params.slug}`,
+        'en-GB': `https://sothebysrealty.fi/en/kohde/${params.slug}`,
+      },
     },
   };
 }

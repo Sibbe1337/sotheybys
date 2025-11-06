@@ -166,30 +166,7 @@ export function PropertySections({ vm, locale }: PropertySectionsProps) {
         </SubSection>
       </Section>
 
-      {/* Asiakirjat & Linkit */}
-      <Section title={getSectionLabel('property.docs', locale)}>
-        {vm.documents?.brochure && (
-          <div className="py-2">
-            <a href={vm.documents.brochure} target="_blank" rel="noopener noreferrer" className="text-[#002349] hover:underline">
-              {getFieldLabel('brochure', locale)}
-            </a>
-          </div>
-        )}
-        {vm.documents?.energyCert && (
-          <div className="py-2">
-            <a href={vm.documents.energyCert} target="_blank" rel="noopener noreferrer" className="text-[#002349] hover:underline">
-              {getFieldLabel('energyCertificate', locale)}
-            </a>
-          </div>
-        )}
-        {vm.documents?.floorPlan && (
-          <div className="py-2">
-            <a href={vm.documents.floorPlan} target="_blank" rel="noopener noreferrer" className="text-[#002349] hover:underline">
-              {getFieldLabel('floorPlan', locale)}
-            </a>
-          </div>
-        )}
-      </Section>
+      {/* PDF spec s.11: "Asiakirjat & Linkit" block removed - documents available via MediaTabs */}
     </div>
   );
 }

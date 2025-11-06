@@ -11,8 +11,10 @@ export interface PropertyCardProps {
   href: string;                // Länk till detaljsidan
   locale: Locale;
 
-  // Titel & meta
-  title: string;               // T.ex. "Bernhardinkatu 1 B 27"
+  // Titel & meta - PDF spec s.7: Address with postal code + city
+  title: string;               // T.ex. "Bernhardinkatu 1 B" (NO apartment number)
+  postalCode?: string;         // Postal code
+  city?: string;               // City name
   listingTypeLabel?: string;   // T.ex. "Kerrostalo / Höghus / Apartment building"
   apartmentTypeText?: string;  // Huoneistoselitelmä (1h+kt …)
   district?: string;           // Kaupunginosa
@@ -47,6 +49,8 @@ export default function PropertyCard({
   href,
   locale,
   title,
+  postalCode,
+  city,
   listingTypeLabel,
   apartmentTypeText,
   district,
@@ -63,6 +67,11 @@ export default function PropertyCard({
   priorityFirstImage = false,
 }: PropertyCardProps) {
   const L = mapLocale(locale);
+  
+  // PDF spec s.7: Full address format "Address, POSTALCODE City"
+  const fullAddress = postalCode && city 
+    ? `${title}, ${postalCode} ${city}`
+    : title;
 
   // Bildkarusell
   const { idx, setIdx, onTouchStart, onTouchMove, onTouchEnd } = useMiniCarousel(images.length);
@@ -74,10 +83,13 @@ export default function PropertyCard({
     ? fmtArea(livingArea, L)  // Hyresobjekt: Visa bara boyta "0 m²"
     : joinPlus(fmtArea(livingArea, L), fmtArea(otherArea, L, true));  // Lägenhet: "141 m² + 31 m²"
 
-  // Huvudpris + sekundär rad enligt typ
+  // PDF spec s.7, s.9: Huvudpris + sekundär rad enligt typ with Vh/Mh labels
   const { mainPrice, subPrice, perSqm, rentSuffix } = priceLines({
-    variant, L, livingArea, askPrice, debtFreePrice, monthlyRent,
+    variant, L, locale, livingArea, askPrice, debtFreePrice, monthlyRent,
   });
+  
+  // PDF spec s.7: Button labels
+  const viewButtonText = locale === 'sv' ? 'Visa objektet' : locale === 'en' ? 'View property' : 'Katso kohde';
 
   // Typ | huoneistoselitelmä | stadsdel - filter out "Uppgift saknas" etc
   const nonEmpty = (v?: string | null) => {
@@ -163,9 +175,9 @@ export default function PropertyCard({
       </div>
 
       {/* Innehåll */}
-      <div className="space-y-2 p-3">
-        {/* Titel */}
-        <h3 className="line-clamp-1 text-base font-semibold text-gray-900">{title}</h3>
+      <div className="space-y-3 p-4">
+        {/* PDF spec s.7: Titel with full address */}
+        <h3 className="line-clamp-2 text-base font-semibold text-gray-900">{fullAddress}</h3>
 
         {/* Meta-rad */}
         {metaRow && <p className="line-clamp-1 text-sm text-gray-600">{metaRow}</p>}
@@ -183,6 +195,17 @@ export default function PropertyCard({
           )}
           {subPrice && <p className="text-sm text-gray-600">{subPrice}</p>}
         </div>
+
+        {/* PDF spec s.7: "Katso kohde / Visa objektet" button */}
+        <button 
+          className="mt-3 w-full px-4 py-2 bg-[#002349] text-white text-sm font-semibold rounded hover:bg-[#001731] transition-colors"
+          onClick={(e) => {
+            // Let the Link handle navigation, but prevent double-click issues
+            e.currentTarget.blur();
+          }}
+        >
+          {viewButtonText}
+        </button>
       </div>
     </Link>
   );
@@ -191,8 +214,8 @@ export default function PropertyCard({
 /* ------------------------------ Prislogik ------------------------------- */
 
 function priceLines(
-  { variant, L, livingArea, askPrice, debtFreePrice, monthlyRent }:
-  { variant: CardVariant; L: string; livingArea?: number | null; askPrice?: number | null; debtFreePrice?: number | null; monthlyRent?: number | null; }
+  { variant, L, locale, livingArea, askPrice, debtFreePrice, monthlyRent }:
+  { variant: CardVariant; L: string; locale: Locale; livingArea?: number | null; askPrice?: number | null; debtFreePrice?: number | null; monthlyRent?: number | null; }
 ) {
   const perSqm = (value?: number | null) =>
     value && livingArea && livingArea > 0 ? `${Math.round(value / livingArea).toLocaleString(L)} €/m²` : '';
@@ -208,19 +231,24 @@ function priceLines(
   }
 
   if (variant === 'apartment') {
+    // PDF spec s.7: Show Vh and Mh with labels
     const main = currency(debtFreePrice, L);           // Velaton hinta först
     const secondary = currency(askPrice, L);           // Myyntihinta
+    const vhLabel = locale === 'sv' ? 'Vh' : locale === 'en' ? 'Debt-free' : 'Vh';
+    const mhLabel = locale === 'sv' ? 'Mh' : locale === 'en' ? 'Sales price' : 'Mh';
+    
     return {
-      mainPrice: main,
-      subPrice: secondary ? label(L, 'myyntihinta') + ' ' + secondary : '',
+      mainPrice: main ? `${vhLabel}: ${main}` : '',
+      subPrice: secondary ? `${mhLabel}: ${secondary}` : '',
       perSqm: perSqm(debtFreePrice ?? undefined),
       rentSuffix: '',
     };
   }
 
-  // property
+  // PDF spec s.9: Properties show Mh (sales price)
+  const mhLabel = locale === 'sv' ? 'Mh' : locale === 'en' ? 'Sales price' : 'Mh';
   return {
-    mainPrice: currency(debtFreePrice ?? askPrice, L), // Endast velaton hinta enligt krav
+    mainPrice: currency(debtFreePrice ?? askPrice, L) ? `${mhLabel}: ${currency(debtFreePrice ?? askPrice, L)}` : '',
     subPrice: '',
     perSqm: perSqm(debtFreePrice ?? askPrice ?? undefined),
     rentSuffix: '',

@@ -80,10 +80,12 @@ export default function PropertyGridNew({ properties, locale }: PropertyGridNewP
         
         return (
           <PropertyCard
-          key={property.id} 
+            key={property.id} 
             href={`/${locale}/kohde/${property.slug}`}
-          locale={locale} 
+            locale={locale} 
             title={title}
+            postalCode={property.postalCode}
+            city={property.city[locale] || property.city.fi}
             listingTypeLabel={listingTypeLabel}
             apartmentTypeText={apartmentTypeText}
             district={district}
@@ -97,7 +99,7 @@ export default function PropertyGridNew({ properties, locale }: PropertyGridNewP
             debtFreePrice={property.pricing.debtFree}
             monthlyRent={rent}
             priorityFirstImage={index === 0}
-        />
+          />
         );
       })}
     </div>

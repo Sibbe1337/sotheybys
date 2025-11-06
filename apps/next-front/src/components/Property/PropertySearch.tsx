@@ -33,9 +33,10 @@ const PROPERTY_TYPES = [
     label: { fi: 'Kaikki kohteet', sv: 'Alla objekt', en: 'All properties' },
     image: '/images/property-types/all.svg',
     filter: (p: Property) => {
-      // "Kaikki kohteet" shows all SALE properties, but NOT rentals
+      // PDF spec s.3-4: "Kaikki kohteet" shows all SALE properties (status ON_SALE), but NOT rentals
       const rent = p.meta.rent || 0;
-      return !(rent > 0);
+      const isOnSale = !p.meta.status || p.meta.status === 'ACTIVE' || p.meta.status === 'RESERVED';
+      return !(rent > 0) && isOnSale;
     }
   },
   {
@@ -44,7 +45,8 @@ const PROPERTY_TYPES = [
     image: '/images/property-types/apartment.svg',
     filter: (p: Property) => {
       const rent = p.meta.rent || 0;
-      if (rent > 0) return false; // ✅ Dennis fix: exclude rentals from sale listings
+      const isOnSale = !p.meta.status || p.meta.status === 'ACTIVE' || p.meta.status === 'RESERVED';
+      if (rent > 0 || !isOnSale) return false; // PDF spec s.3-4: exclude rentals and non-sale from listings
       const type = (p.meta.typeCode || '').toLowerCase();
       return type.includes('kerrostalo') || type.includes('flat') || type.includes('apartment');
     }
@@ -55,7 +57,8 @@ const PROPERTY_TYPES = [
     image: '/images/property-types/house.svg',
     filter: (p: Property) => {
       const rent = p.meta.rent || 0;
-      if (rent > 0) return false; // ✅ Dennis fix: exclude rentals from sale listings
+      const isOnSale = !p.meta.status || p.meta.status === 'ACTIVE' || p.meta.status === 'RESERVED';
+      if (rent > 0 || !isOnSale) return false; // PDF spec s.3-4: exclude rentals and non-sale from listings
       const type = (p.meta.typeCode || '').toLowerCase();
       return type.includes('omakotitalo') || type.includes('detached') || type.includes('villa');
     }
@@ -66,7 +69,8 @@ const PROPERTY_TYPES = [
     image: '/images/property-types/townhouse.svg',
     filter: (p: Property) => {
       const rent = p.meta.rent || 0;
-      if (rent > 0) return false; // ✅ Dennis fix: exclude rentals from sale listings
+      const isOnSale = !p.meta.status || p.meta.status === 'ACTIVE' || p.meta.status === 'RESERVED';
+      if (rent > 0 || !isOnSale) return false; // PDF spec s.3-4: exclude rentals and non-sale from listings
       const type = (p.meta.typeCode || '').toLowerCase();
       return type.includes('rivi') || type.includes('row') || type.includes('townhouse');
     }
@@ -111,9 +115,14 @@ export default function PropertySearch({ properties, language }: PropertySearchP
     return Array.from(areasSet).sort();
   }, [properties, language]);
 
+  // PDF spec s.3-4: Only show property types that are ON_SALE (have count > 0)
   const dynamicPropertyTypes = useMemo(() => {
     const typesMap = new Map<string, number>();
     properties.forEach(property => {
+      // Only count properties that are ON_SALE
+      const isOnSale = !property.meta.status || property.meta.status === 'ACTIVE' || property.meta.status === 'RESERVED';
+      if (!isOnSale) return;
+      
       PROPERTY_TYPES.forEach(typeConfig => {
         if (typeConfig.id !== 'all' && typeConfig.filter(property)) {
           typesMap.set(typeConfig.id, (typesMap.get(typeConfig.id) || 0) + 1);
