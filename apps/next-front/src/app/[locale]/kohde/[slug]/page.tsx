@@ -105,7 +105,11 @@ interface PropertyWithACF {
   };
 }
 
-export const revalidate = 0; // Force server-side generation to clear cache
+// ✅ Use ISR (Incremental Static Regeneration) instead of SSR
+export const revalidate = 300; // Regenerate every 5 minutes
+
+// ✅ Ensure all locales are statically generated at build time
+export const dynamicParams = true; // Allow new properties to be generated on-demand
 
 // ✅ LINUS: Pre-generate all property pages at build time
 export async function generateStaticParams() {
