@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { usePathname, useRouter, Link } from '@/lib/navigation';
 import { useLocale } from 'next-intl';
 import Image from 'next/image';
+import NextLink from 'next/link';
+import { usePathname as useNextPathname } from 'next/navigation';
 
 interface MenuItem {
   id: string;
@@ -37,6 +39,18 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
   
   // ✅ FIX: Use locale directly - now from prop or hook
   const currentLang = locale;
+
+  // 🔥 LINUS-NIVÅ FIX: For language switcher, use full pathname with locale
+  // This handles dynamic routes like /kohde/[slug] correctly
+  const fullPathname = useNextPathname(); // Includes locale: /sv/kohde/slug
+  const pathnameWithoutLocale = fullPathname.replace(/^\/(fi|sv|en)/, '') || '/';
+  
+  // Build language switcher URLs manually to handle dynamic routes
+  const languageSwitcherUrls = {
+    fi: `/fi${pathnameWithoutLocale}`,
+    sv: `/sv${pathnameWithoutLocale}`,
+    en: `/en${pathnameWithoutLocale}`,
+  };
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -187,31 +201,28 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
       }`}>
         <div className="max-w-[1400px] mx-auto px-6">
           <div className="flex items-center justify-end gap-6 py-2">
-            {/* Language Switcher */}
+            {/* Language Switcher - 🔥 LINUS FIX: Use native Link for dynamic routes */}
             <div className="hidden md:flex items-center gap-3 text-xs [font-family:'freight-sans-pro',sans-serif]">
-              <Link
-                href={cleanPathname as any}
-                locale="fi"
+              <NextLink
+                href={languageSwitcherUrls.fi}
                 className={`transition-opacity ${currentLang === 'fi' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
               >
                 Suomi
-              </Link>
+              </NextLink>
               <span className="text-white/40">|</span>
-              <Link
-                href={cleanPathname as any}
-                locale="sv"
+              <NextLink
+                href={languageSwitcherUrls.sv}
                 className={`transition-opacity ${currentLang === 'sv' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
               >
                 Svenska
-              </Link>
+              </NextLink>
               <span className="text-white/40">|</span>
-              <Link
-                href={cleanPathname as any}
-                locale="en"
+              <NextLink
+                href={languageSwitcherUrls.en}
                 className={`transition-opacity ${currentLang === 'en' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
               >
                 English
-              </Link>
+              </NextLink>
             </div>
             
             {/* Search Box */}
@@ -392,35 +403,32 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
               );
             })}
             
-            {/* Mobile Language Switcher */}
+            {/* Mobile Language Switcher - 🔥 LINUS FIX: Use native Link for dynamic routes */}
             <div className="mt-4 pt-4 border-t border-white/20">
               <div className="flex items-center justify-center gap-4 text-xs">
-                <Link
-                  href={cleanPathname as any}
-                  locale="fi"
+                <NextLink
+                  href={languageSwitcherUrls.fi}
                   className={`transition-opacity [font-family:'freight-sans-pro',sans-serif] ${currentLang === 'fi' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Suomi
-                </Link>
+                </NextLink>
                 <span className="text-white/40">|</span>
-                <Link
-                  href={cleanPathname as any}
-                  locale="sv"
+                <NextLink
+                  href={languageSwitcherUrls.sv}
                   className={`transition-opacity [font-family:'freight-sans-pro',sans-serif] ${currentLang === 'sv' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Svenska
-                </Link>
+                </NextLink>
                 <span className="text-white/40">|</span>
-                <Link
-                  href={cleanPathname as any}
-                  locale="en"
+                <NextLink
+                  href={languageSwitcherUrls.en}
                   className={`transition-opacity [font-family:'freight-sans-pro',sans-serif] ${currentLang === 'en' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   English
-                </Link>
+                </NextLink>
               </div>
             </div>
           </nav>
