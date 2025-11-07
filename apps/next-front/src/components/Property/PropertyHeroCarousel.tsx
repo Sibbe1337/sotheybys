@@ -11,6 +11,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import type { Property, Locale } from '@/lib/domain/property.types';
 import { lpick } from '@/lib/domain/locale-utils';
+import { HeroAddressBadge } from './HeroAddressBadge';
 
 interface PropertyHeroCarouselProps {
   properties: Property[];
@@ -59,6 +60,10 @@ export default function PropertyHeroCarousel({
 
   const currentProperty = properties[currentIndex];
   const address = lpick(currentProperty.address, locale);
+  const gate = currentProperty.gate;
+  const displayAddress = gate ? `${address} ${gate}` : address;
+  const postalCode = currentProperty.postalCode;
+  const city = lpick(currentProperty.city, locale);
   const imageUrl = currentProperty.media.images.find(img => !img.floorPlan)?.url || 
                    currentProperty.media.images[0]?.url || 
                    '/images/defaults/placeholder-property.jpg';
@@ -82,6 +87,15 @@ export default function PropertyHeroCarousel({
       </div>
 
       {/* Content Container - Removed text overlay per user request */}
+
+      {/* Hero Address Badge - Dennis feedback: Show in bottom-left corner */}
+      <div className="absolute bottom-8 left-8 z-10">
+        <HeroAddressBadge
+          address={displayAddress}
+          postalCode={postalCode}
+          city={city}
+        />
+      </div>
 
       {/* Navigation Arrows */}
       {properties.length > 1 && (

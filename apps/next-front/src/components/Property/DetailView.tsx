@@ -91,31 +91,19 @@ export function DetailView({ vm, locale }: Props) {
         locale={locale}
       />
 
-      {/* Media Tabs - Full width with Hero Address Badge overlay */}
+      {/* Media Tabs - Full width */}
       <div className="w-full bg-white">
         <div className="max-w-7xl mx-auto px-4 py-8">
-          <div className="relative">
-            {/* MediaTabs with integrated hero image */}
-            <MediaTabs
-              images={vm.images}
-              title={vm.title}
-              propertyId={vm.id}
-              floorPlans={allFloorPlans}
-              coordinates={vm.coordinates}
-              brochureUrl={vm.documents?.brochure || vm.documents?.brochureIntl}
-              videoUrl={vm.documents?.video}
-              locale={locale}
-            />
-            
-            {/* Hero Address Badge - OVERLAY on hero image (PDF spec s.2) */}
-            <div className="absolute bottom-8 left-4 z-10">
-              <HeroAddressBadge
-                address={displayAddress}
-                postalCode={vm.postalCode}
-                city={vm.city}
-              />
-            </div>
-          </div>
+          <MediaTabs
+            images={vm.images}
+            title={vm.title}
+            propertyId={vm.id}
+            floorPlans={allFloorPlans}
+            coordinates={vm.coordinates}
+            brochureUrl={vm.documents?.brochure || vm.documents?.brochureIntl}
+            videoUrl={vm.documents?.video}
+            locale={locale}
+          />
         </div>
       </div>
 
