@@ -63,28 +63,8 @@ export function MediaTabs({
 
   return (
     <div className="w-full">
-      {/* Tab buttons - PDF spec s.14-15: Always visible, scroll horizontally on mobile */}
-      <div className="flex gap-2 mb-4 overflow-x-auto pb-2 scrollbar-hide">
-        {tabs.map(tab => (
-          <button
-            key={tab.id}
-            onClick={() => tab.enabled && setActiveTab(tab.id)}
-            disabled={!tab.enabled}
-            className={`px-4 md:px-6 py-2 rounded-full whitespace-nowrap font-medium transition-colors text-sm md:text-base flex-shrink-0 ${
-              activeTab === tab.id 
-                ? 'bg-[#002349] text-white' 
-                : tab.enabled 
-                  ? 'bg-gray-200 text-gray-800 hover:bg-gray-300' 
-                  : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
-
-      {/* Content */}
-      <div className="min-h-[400px] bg-gray-50 rounded-lg overflow-hidden">
+      {/* Content - Dennis: Images FIRST, then buttons below */}
+      <div className="min-h-[400px] bg-gray-50 rounded-lg overflow-hidden mb-4">
         {activeTab === 'photos' && photoImages.length > 0 && (
           <ImageCarousel images={photoImages} title={title} propertyId={propertyId} />
         )}
@@ -155,6 +135,26 @@ export function MediaTabs({
             />
           </div>
         )}
+      </div>
+
+      {/* Tab buttons - Dennis: UNDER bilderna (not above) */}
+      <div className="flex gap-2 mt-4 overflow-x-auto pb-2 scrollbar-hide">
+        {tabs.map(tab => (
+          <button
+            key={tab.id}
+            onClick={() => tab.enabled && setActiveTab(tab.id)}
+            disabled={!tab.enabled}
+            className={`px-4 md:px-6 py-2 rounded-full whitespace-nowrap font-medium transition-colors text-sm md:text-base flex-shrink-0 ${
+              activeTab === tab.id 
+                ? 'bg-[#002349] text-white' 
+                : tab.enabled 
+                  ? 'bg-gray-200 text-gray-800 hover:bg-gray-300' 
+                  : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
       </div>
     </div>
   );

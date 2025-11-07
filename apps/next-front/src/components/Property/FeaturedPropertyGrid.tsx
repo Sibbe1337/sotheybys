@@ -53,11 +53,10 @@ export default function FeaturedPropertyGrid({ properties, locale }: FeaturedPro
         if (isRental) variant = 'rental';
         else if (isApartment) variant = 'apartment';
         
-        // Build FULL address WITH apartment number and postal code (for featured cards)
+        // Dennis: NO apartment number (mäklarregler), only street + gate
         const addressParts = [
           property.address[locale] || property.address.fi,
           property.gate || '',
-          property.apartmentIdentifier || '', // Include apartment number for featured cards!
         ].filter(Boolean);
         const addressWithApt = addressParts.join(' ').trim();
         
