@@ -260,12 +260,8 @@ function useMiniCarousel(length: number) {
   const [idx, setIdx] = React.useState(0);
   const startX = React.useRef<number | null>(null);
 
-  // enkel autoplay (pausas automatiskt vid touch)
-  React.useEffect(() => {
-    if (length <= 1) return;
-    const t = setInterval(() => setIdx(i => (i + 1) % length), 3500);
-    return () => clearInterval(t);
-  }, [length]);
+  // Dennis: NO auto-play on property cards (only manual navigation)
+  // Auto-play is ONLY for PropertyHeroCarousel (the 6 featured properties)
 
   const onTouchStart = (e: React.TouchEvent) => { startX.current = e.touches[0].clientX; };
   const onTouchMove = (e: React.TouchEvent) => {

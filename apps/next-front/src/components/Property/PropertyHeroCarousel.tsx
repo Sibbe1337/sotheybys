@@ -64,6 +64,7 @@ export default function PropertyHeroCarousel({
   const displayAddress = gate ? `${address} ${gate}` : address;
   const postalCode = currentProperty.postalCode;
   const city = lpick(currentProperty.city, locale);
+  const slug = currentProperty.slug;
   const imageUrl = currentProperty.media.images.find(img => !img.floorPlan)?.url || 
                    currentProperty.media.images[0]?.url || 
                    '/images/defaults/placeholder-property.jpg';
@@ -88,12 +89,14 @@ export default function PropertyHeroCarousel({
 
       {/* Content Container - Removed text overlay per user request */}
 
-      {/* Hero Address Badge - Dennis feedback: Show in bottom-left corner */}
+      {/* Hero Address Badge - Dennis feedback: Show in bottom-left corner, opens property */}
       <div className="absolute bottom-8 left-8 z-10">
         <HeroAddressBadge
           address={displayAddress}
           postalCode={postalCode}
           city={city}
+          slug={slug}
+          locale={locale}
         />
       </div>
 

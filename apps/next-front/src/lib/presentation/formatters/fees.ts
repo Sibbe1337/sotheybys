@@ -6,11 +6,14 @@
 export const fmtFee = (n: number | undefined, locale = 'fi-FI'): string => {
   if (n == null || n === 0) return '';
   
+  // Dennis: Suffix must be localized
+  const suffix = locale === 'sv-SE' ? '/månad' : locale === 'en-GB' ? '/month' : '/kk';
+  
   return new Intl.NumberFormat(locale, {
     style: 'currency',
     currency: 'EUR',
     maximumFractionDigits: 2
-  }).format(n) + '/kk';
+  }).format(n) + suffix;
 };
 
 export const fmtFeeWithoutSuffix = (n: number | undefined, locale = 'fi-FI'): string => {
