@@ -195,9 +195,9 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
           )}
         </div>
 
-        {/* Agent */}
+        {/* Dennis: Agent med "Ota yhteyttä" på samma rad */}
         {agent && (
-          <div className="mb-4 flex items-center gap-3 border-t border-gray-100 pt-4">
+          <div className="mb-3 flex items-center gap-3 border-t border-gray-100 pt-4">
             {agent.photoUrl && (
               <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-full bg-gray-200">
                 <Image
@@ -213,26 +213,23 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
               <p className="font-semibold text-gray-900">{agent.name}</p>
               <p className="text-gray-600">{agent.phone}</p>
             </div>
-          </div>
-        )}
-
-        {/* CTAs */}
-        <div className="mt-auto flex gap-3">
-          {agent && (
+            {/* Dennis: "Ota yhteyttä" flyttad till höger bredvid mäklarinfo */}
             <a
               href={`tel:${agent.phone.replace(/\s/g, '')}`}
-              className="flex-1 rounded-none border border-gray-900 px-4 py-3 text-center text-sm font-medium uppercase tracking-wider text-gray-900 transition-colors hover:bg-gray-900 hover:text-white"
+              className="flex-shrink-0 rounded-none border border-gray-900 px-4 py-2 text-center text-xs font-medium uppercase tracking-wider text-gray-900 transition-colors hover:bg-gray-900 hover:text-white"
             >
               {contactText}
             </a>
-          )}
-          <Link
-            href={href}
-            className="flex-1 rounded-none bg-[var(--color-primary)] px-4 py-3 text-center text-sm font-medium uppercase tracking-wider text-white transition-colors hover:bg-[#001731]"
-          >
-            {viewText}
-          </Link>
-        </div>
+          </div>
+        )}
+
+        {/* Dennis: "Katso kohde" tar upp hela bredden */}
+        <Link
+          href={href}
+          className="mt-auto w-full rounded-none bg-[var(--color-primary)] px-4 py-3 text-center text-sm font-medium uppercase tracking-wider text-white transition-colors hover:bg-[#001731]"
+        >
+          {viewText}
+        </Link>
       </div>
     </div>
   );

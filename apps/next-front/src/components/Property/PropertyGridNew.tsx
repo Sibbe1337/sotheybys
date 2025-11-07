@@ -64,8 +64,8 @@ export default function PropertyGridNew({ properties, locale }: PropertyGridNewP
           .filter(img => !img.floorPlan)
           .map(img => ({ url: img.url, alt: title }));
         
-        // Get district from city
-        const district = property.city[locale] || property.city.fi;
+        // Dennis: Get STADSDEL (district), NOT city
+        const district = property.district?.[locale] || property.district?.fi;
         
         // Get apartment type (huoneistoselitelmä)
         const apartmentTypeText = property.meta.apartmentType?.[locale] || property.meta.apartmentType?.fi;
