@@ -205,7 +205,12 @@ export class LinearToPropertyMapper {
 
     // ========== DIMENSIONS (EXPANDED) ==========
     const living = parseNum(pickNV(nv, 'area') ?? lget(src.area!, 'fi')) || 0;
-    const total = parseNum(pickNV(nv, 'totalArea') ?? lget(src.totalArea!, 'fi'));
+    // Dennis: Total area for properties - check both totalArea AND overallArea
+    const total = parseNum(
+      pickNV(nv, 'totalArea') ?? 
+      lget(src.totalArea!, 'fi') ?? 
+      lget((src as any).overallArea, 'fi')
+    );
     
     // LINUS FIX: Unit-aware plot area - try multiple sources + convert units to m²
     const nvPlot = firstNumber(nv?.plotArea, nv?.lotArea, nv?.siteArea);
