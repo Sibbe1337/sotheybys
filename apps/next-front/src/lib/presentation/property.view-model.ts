@@ -154,7 +154,8 @@ export class PropertyVM {
       title,
       subtitle: [type, district].filter(Boolean).join(' • '),
       price: fmtCurrency(p.pricing.sales, localeStr),
-      priceDebtFree: p.pricing.debt > 0 ? fmtCurrency(p.pricing.debtFree, localeStr) : undefined,
+      // Dennis: ALWAYS show debtFree price for apartments, even when debt = 0 (Vh = Mh)
+      priceDebtFree: fmtCurrency(p.pricing.debtFree, localeStr),
       area,
       areaExtra: extra,
       image: p.media.images.find(img => !img.floorPlan)?.url || p.media.images[0]?.url,

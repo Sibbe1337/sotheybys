@@ -144,12 +144,13 @@ export function MediaTabs({
             key={tab.id}
             onClick={() => tab.enabled && setActiveTab(tab.id)}
             disabled={!tab.enabled}
+            title={!tab.enabled ? (locale === 'sv' ? 'Ej tillgänglig' : locale === 'en' ? 'Not available' : 'Ei saatavilla') : undefined}
             className={`px-4 md:px-6 py-2 rounded-full whitespace-nowrap font-medium transition-colors text-sm md:text-base flex-shrink-0 ${
               activeTab === tab.id 
                 ? 'bg-[#002349] text-white' 
                 : tab.enabled 
                   ? 'bg-gray-200 text-gray-800 hover:bg-gray-300' 
-                  : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                  : 'bg-gray-100 text-gray-400 cursor-not-allowed opacity-50'
             }`}
           >
             {tab.label}

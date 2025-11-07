@@ -1,14 +1,14 @@
 /**
  * FEATURED PROPERTY GRID
  * 
- * Renders a 2-column grid of FeaturedPropertyCard components.
- * Used on homepage - shows full details including agent info.
- * Uses Property domain objects directly.
+ * Dennis: Use PropertyCard (same layout as Objekt page)
+ * Renders a 2-column grid of PropertyCard components.
+ * Used on homepage.
  */
 
 import type { Property, Locale } from '@/lib/domain/property.types';
-import FeaturedPropertyCard from './FeaturedPropertyCard';
-import type { FeaturedPropertyCardProps } from './FeaturedPropertyCard';
+import PropertyCard from './PropertyCard';
+import type { CardVariant } from './PropertyCard';
 
 interface FeaturedPropertyGridProps {
   properties: Property[];
@@ -49,7 +49,7 @@ export default function FeaturedPropertyGrid({ properties, locale }: FeaturedPro
         const typeCode = (property.meta.typeCode || '').toLowerCase();
         const isApartment = typeCode.includes('kerrostalo') || typeCode.includes('flat') || typeCode.includes('apartment');
         
-        let variant: 'apartment' | 'property' | 'rental' = 'property';
+        let variant: CardVariant = 'property';
         if (isRental) variant = 'rental';
         else if (isApartment) variant = 'apartment';
         
@@ -58,68 +58,48 @@ export default function FeaturedPropertyGrid({ properties, locale }: FeaturedPro
           property.address[locale] || property.address.fi,
           property.gate || '',
         ].filter(Boolean);
-        const addressWithApt = addressParts.join(' ').trim();
+        const title = addressParts.join(' ').trim();
         
-        // Add postal code and city
-        const postalCode = property.postalCode;
-        const city = property.city[locale] || property.city.fi;
-        const fullAddress = postalCode 
-          ? `${addressWithApt}, ${postalCode} ${city}`.trim()
-          : `${addressWithApt}, ${city}`.trim();
-        
-        // Simple title (used as image alt)
-        const title = addressWithApt;
-        
-        // Get first non-floor-plan image
-        const image = (property.media.images || [])
+        // Map images (exclude floor plans)
+        const images = (property.media.images || [])
           .filter(img => !img.floorPlan)
-          .map(img => ({ url: img.url, alt: title }))[0] || { url: '', alt: title };
+          .map(img => ({ url: img.url, alt: title }));
         
-        // Get district from city
-        const district = city;
+        // Get district
+        const district = property.city[locale] || property.city.fi;
         
         // Get apartment type (huoneistoselitelmä)
-        const apartmentType = property.meta.apartmentType?.[locale] || property.meta.apartmentType?.fi;
+        const apartmentTypeText = property.meta.apartmentType?.[locale] || property.meta.apartmentType?.fi;
         
-        // Get listing type label (with fallback to prevent undefined)
-        const propertyType = property.meta.listingTypeLabel?.[locale] 
-          || property.meta.listingTypeLabel?.fi 
-          || property.meta.typeCode 
-          || (variant === 'apartment' ? 'Kerrostalo' : variant === 'rental' ? 'Vuokrakohde' : 'Kiinteistö');
+        // Get listing type label
+        const listingTypeLabel = property.meta.listingTypeLabel?.[locale] || property.meta.listingTypeLabel?.fi || property.meta.typeCode;
         
         // Calculate "other area" from balcony + terrace
         const balconyArea = property.dimensions.balcony || 0;
         const terraceArea = property.dimensions.terrace || 0;
         const otherArea = balconyArea + terraceArea > 0 ? balconyArea + terraceArea : undefined;
         
-        // Agent info
-        const agent = property.agent ? {
-          name: property.agent.name || '',
-          phone: property.agent.phone || '',
-          email: property.agent.email || '',
-          photoUrl: property.agent.photoUrl || undefined,
-        } : undefined;
-        
         return (
-          <FeaturedPropertyCard
+          <PropertyCard
             key={property.id}
             href={`/${locale}/kohde/${property.slug}`}
             locale={locale}
             title={title}
-            fullAddress={fullAddress}
-            propertyType={propertyType}
+            postalCode={property.postalCode}
+            city={property.city[locale] || property.city.fi}
+            listingTypeLabel={listingTypeLabel}
+            apartmentTypeText={apartmentTypeText}
             district={district}
-            apartmentType={apartmentType}
-            image={image}
+            images={images}
             variant={variant}
-            debtFreePrice={property.pricing.debtFree}
-            askPrice={property.pricing.sales}
-            monthlyRent={rent}
             livingArea={property.dimensions.living}
             otherArea={otherArea}
             totalArea={property.dimensions.total}
             plotArea={property.dimensions.plot}
-            agent={agent}
+            askPrice={property.pricing.sales}
+            debtFreePrice={property.pricing.debtFree}
+            monthlyRent={rent}
+            priorityFirstImage={index === 0}
           />
         );
       })}
