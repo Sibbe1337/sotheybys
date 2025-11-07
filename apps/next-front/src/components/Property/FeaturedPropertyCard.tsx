@@ -1,4 +1,5 @@
 'use client';
+import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -22,8 +23,10 @@ export interface FeaturedPropertyCardProps {
   // Description
   apartmentType?: string;     // "5-6h, k, kph..."
   
-  // Media
-  image: { url: string; alt?: string };
+  // Media - Dennis: Support both single image (Hem) and carousel (Objekt)
+  image?: { url: string; alt?: string };  // Single image (Hem-fliken)
+  images?: { url: string; alt?: string }[]; // Multiple images (Objekt-fliken)
+  showCarousel?: boolean;     // true = show carousel with arrows (Objekt), false = single image (Hem)
   
   // Variant
   variant: 'apartment' | 'property' | 'rental';
@@ -57,6 +60,8 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
     district,
     apartmentType,
     image,
+    images,
+    showCarousel = false,
     variant,
     debtFreePrice,
     askPrice,
@@ -67,6 +72,12 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
     plotArea,
     agent,
   } = props;
+
+  // Dennis: Carousel for Objekt-fliken, single image for Hem-fliken
+  const displayImages = images && images.length > 0 ? images : (image ? [image] : []);
+  const hasMultipleImages = displayImages.length > 1;
+  const { idx, setIdx, onTouchStart, onTouchMove, onTouchEnd } = useMiniCarousel(displayImages.length);
+  const currentImage = displayImages[idx] || displayImages[0];
 
   // Locale mapping
   const L = locale === 'sv' ? 'sv-SE' : locale === 'en' ? 'en-GB' : 'fi-FI';
@@ -136,16 +147,69 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
 
   return (
     <div className="group flex flex-col overflow-hidden rounded-none border border-gray-200 bg-white shadow-sm transition hover:shadow-md">
-      {/* Image */}
-      <Link href={href} className="relative block aspect-[16/10] w-full overflow-hidden bg-gray-100">
-        <Image
-          src={image.url}
-          alt={image.alt || fullAddress}
-          fill
-          sizes="(max-width: 768px) 100vw, 50vw"
-          className="object-cover transition-transform duration-300 group-hover:scale-105"
-        />
-      </Link>
+      {/* Image - Dennis: Carousel if showCarousel=true (Objekt), single if false (Hem) */}
+      <div 
+        className="relative block aspect-[16/10] w-full overflow-hidden bg-gray-100"
+        onTouchStart={showCarousel && hasMultipleImages ? onTouchStart : undefined}
+        onTouchMove={showCarousel && hasMultipleImages ? onTouchMove : undefined}
+        onTouchEnd={showCarousel && hasMultipleImages ? onTouchEnd : undefined}
+      >
+        <Link href={href} className="block w-full h-full">
+          <Image
+            src={currentImage.url}
+            alt={currentImage.alt || fullAddress}
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+        </Link>
+
+        {/* Carousel controls - ONLY if showCarousel=true AND multiple images */}
+        {showCarousel && hasMultipleImages && (
+          <>
+            {/* Previous button */}
+            <button
+              type="button"
+              onClick={(e) => { 
+                e.preventDefault(); 
+                e.stopPropagation();
+                setIdx((idx - 1 + displayImages.length) % displayImages.length); 
+              }}
+              className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-white/70 hover:bg-white/90 p-2 text-lg shadow-md transition-all z-10"
+              aria-label="Previous image"
+            >
+              ‹
+            </button>
+
+            {/* Next button */}
+            <button
+              type="button"
+              onClick={(e) => { 
+                e.preventDefault(); 
+                e.stopPropagation();
+                setIdx((idx + 1) % displayImages.length); 
+              }}
+              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-white/70 hover:bg-white/90 p-2 text-lg shadow-md transition-all z-10"
+              aria-label="Next image"
+            >
+              ›
+            </button>
+
+            {/* Dots */}
+            <div className="absolute bottom-2 left-1/2 flex -translate-x-1/2 gap-1 z-10">
+              {displayImages.map((_, i) => (
+                <span
+                  key={i}
+                  className={[
+                    'h-1.5 w-1.5 rounded-full ring-1 ring-white',
+                    i === idx ? 'bg-white' : 'bg-white/40',
+                  ].join(' ')}
+                />
+              ))}
+            </div>
+          </>
+        )}
+      </div>
 
       {/* Content */}
       <div className="flex flex-1 flex-col p-6">
@@ -233,5 +297,27 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
       </div>
     </div>
   );
+}
+
+// ============================================================================
+// Carousel Hook (Dennis: Manual navigation only, NO auto-play)
+// ============================================================================
+
+function useMiniCarousel(length: number) {
+  const [idx, setIdx] = React.useState(0);
+  const startX = React.useRef<number | null>(null);
+
+  const onTouchStart = (e: React.TouchEvent) => { startX.current = e.touches[0].clientX; };
+  const onTouchMove = (e: React.TouchEvent) => {
+    if (startX.current == null) return;
+    const dx = e.touches[0].clientX - startX.current;
+    if (Math.abs(dx) > 40) {
+      setIdx(i => (dx > 0 ? (i - 1 + length) % length : (i + 1) % length));
+      startX.current = null;
+    }
+  };
+  const onTouchEnd = () => { startX.current = null; };
+
+  return { idx, setIdx, onTouchStart, onTouchMove, onTouchEnd };
 }
 

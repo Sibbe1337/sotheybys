@@ -69,10 +69,10 @@ export default function PropertyGridNew({ properties, locale }: PropertyGridNewP
         // Simple title (used as image alt)
         const title = addressWithApt;
         
-        // Get first non-floor-plan image
-        const image = (property.media.images || [])
+        // Dennis: Get ALL images for carousel (Objekt-fliken needs to browse without opening)
+        const images = (property.media.images || [])
           .filter(img => !img.floorPlan)
-          .map(img => ({ url: img.url, alt: title }))[0] || { url: '', alt: title };
+          .map(img => ({ url: img.url, alt: title }));
         
         // Dennis: Get STADSDEL (district), NOT city
         const district = property.district?.[locale] || property.district?.fi;
@@ -109,7 +109,8 @@ export default function PropertyGridNew({ properties, locale }: PropertyGridNewP
             propertyType={propertyType}
             district={district}
             apartmentType={apartmentType}
-            image={image}
+            images={images}
+            showCarousel={true}  // Dennis: Objekt-fliken allows browsing images without opening
             variant={variant}
             debtFreePrice={property.pricing.debtFree}
             askPrice={property.pricing.sales}
