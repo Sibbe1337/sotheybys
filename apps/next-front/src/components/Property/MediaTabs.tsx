@@ -63,14 +63,14 @@ export function MediaTabs({
 
   return (
     <div className="w-full">
-      {/* Tab buttons */}
-      <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
+      {/* Tab buttons - PDF spec s.14-15: Always visible, scroll horizontally on mobile */}
+      <div className="flex gap-2 mb-4 overflow-x-auto pb-2 scrollbar-hide">
         {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => tab.enabled && setActiveTab(tab.id)}
             disabled={!tab.enabled}
-            className={`px-6 py-2 rounded-full whitespace-nowrap font-medium transition-colors ${
+            className={`px-4 md:px-6 py-2 rounded-full whitespace-nowrap font-medium transition-colors text-sm md:text-base flex-shrink-0 ${
               activeTab === tab.id 
                 ? 'bg-[#002349] text-white' 
                 : tab.enabled 
@@ -107,17 +107,30 @@ export function MediaTabs({
           </div>
         )}
         
-        {activeTab === 'map' && coordinates && (
-          <div className="w-full h-[500px]">
-            <iframe
-              title="Property Location Map"
-              src={`https://www.google.com/maps?q=${coordinates.lat},${coordinates.lon}&output=embed&z=15`}
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
+        {activeTab === 'map' && (
+          <div className="w-full h-[500px] flex items-center justify-center">
+            {coordinates ? (
+              <iframe
+                title="Property Location Map"
+                src={`https://www.google.com/maps?q=${coordinates.lat},${coordinates.lon}&output=embed&z=15`}
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            ) : (
+              // PDF spec s.9: Fallback when no coordinates
+              <div className="text-center text-gray-500">
+                <svg className="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <p className="font-medium">
+                  {locale === 'sv' ? 'Kartdata ej tillgänglig' : locale === 'en' ? 'Map data not available' : 'Karttadata ei saatavilla'}
+                </p>
+              </div>
+            )}
           </div>
         )}
         

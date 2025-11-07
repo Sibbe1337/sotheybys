@@ -138,13 +138,13 @@ export default function PropertyCard({
           </span>
         )}
 
-        {/* Karusellkontroller */}
+        {/* Karusellkontroller - PDF spec s.12: Transparent arrows (not solid boxes) */}
         {images.length > 1 && (
           <>
             <button
               type="button"
               onClick={(e) => { e.preventDefault(); setIdx((idx - 1 + images.length) % images.length); }}
-              className="absolute left-2 top-1/2 -translate-y-1/2 rounded-none bg-white/85 px-2 py-1 text-sm ring-1 ring-gray-300 hover:bg-white"
+              className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-white/70 hover:bg-white/90 p-2 text-lg shadow-md transition-all"
               aria-label="Previous image"
             >
               ‹
@@ -152,7 +152,7 @@ export default function PropertyCard({
             <button
               type="button"
               onClick={(e) => { e.preventDefault(); setIdx((idx + 1) % images.length); }}
-              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-none bg-white/85 px-2 py-1 text-sm ring-1 ring-gray-300 hover:bg-white"
+              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-white/70 hover:bg-white/90 p-2 text-lg shadow-md transition-all"
               aria-label="Next image"
             >
               ›
@@ -185,12 +185,11 @@ export default function PropertyCard({
         {/* Area - visa alltid area-sträng för alla typer */}
         {areaStr && <p className="text-sm text-gray-700">{areaStr}</p>}
 
-        {/* Prisrad */}
+        {/* Prisrad - PDF spec s.7, s.12: NO €/m² on price line (only for fees/vederlag) */}
         <div className="mt-1 space-y-0.5">
           {mainPrice && (
             <p className="text-base font-semibold text-gray-900">
               {mainPrice} {rentSuffix}
-              {perSqm && <span className="ml-2 text-sm font-normal text-gray-600">({perSqm})</span>}
             </p>
           )}
           {subPrice && <p className="text-sm text-gray-600">{subPrice}</p>}
