@@ -205,7 +205,7 @@ export function ApartmentSections({ vm, locale }: ApartmentSectionsProps) {
           <Field 
             label={getFieldLabel('waterFee', locale)} 
             value={vm.fees?.water}
-            sub={fmtPerM2(parseEuropeanNumber(vm.fees?.water) || 0, livingAreaNum, localeStr)}
+            // Dennis: NO €/m² for water fee (already has correct unit from fmtFee)
           />
         </SubSection>
 
