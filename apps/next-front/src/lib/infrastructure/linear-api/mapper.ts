@@ -205,12 +205,22 @@ export class LinearToPropertyMapper {
 
     // ========== DIMENSIONS (EXPANDED) ==========
     const living = parseNum(pickNV(nv, 'area') ?? lget(src.area!, 'fi')) || 0;
-    // Dennis: Total area for properties - check both totalArea AND overallArea
-    const total = parseNum(
+    
+    // Parse "Yta för andra utrymmen" (other spaces area)
+    const otherSpaces = parseNum(pickNV(nv, 'otherArea') ?? lget((src as any).otherArea, 'fi'));
+    
+    // Dennis: Total area for properties
+    // Try explicit totalArea/overallArea first, then CALCULATE from living + otherSpaces
+    let total = parseNum(
       pickNV(nv, 'totalArea') ?? 
       lget(src.totalArea!, 'fi') ?? 
       lget((src as any).overallArea, 'fi')
     );
+    
+    // If no explicit total but we have otherSpaces, calculate: total = living + otherSpaces
+    if (!total && otherSpaces && otherSpaces > 0) {
+      total = living + otherSpaces;
+    }
     
     // LINUS FIX: Unit-aware plot area - try multiple sources + convert units to m²
     const nvPlot = firstNumber(nv?.plotArea, nv?.lotArea, nv?.siteArea);

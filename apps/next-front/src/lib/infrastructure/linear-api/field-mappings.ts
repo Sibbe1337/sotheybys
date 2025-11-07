@@ -359,9 +359,9 @@ export const DIMENSION_MAPPINGS: FieldMapping[] = [
   },
   {
     target: 'dimensions.total',
-    sources: ['totalArea'],
+    sources: ['totalArea', 'overallArea', 'otherArea'],
     type: 'number',
-    notes: 'Total area in m²'
+    notes: 'Total area in m² - checks totalArea, overallArea, and otherArea'
   },
   {
     target: 'dimensions.plot',
