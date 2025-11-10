@@ -210,17 +210,37 @@ export class LinearToPropertyMapper {
     // Parse "Yta för andra utrymmen" (other spaces area)
     const otherSpaces = parseNum(pickNV(nv, 'otherArea') ?? lget((src as any).otherArea, 'fi'));
     
-    // Dennis: Total area for properties
-    // Try explicit totalArea/overallArea first, then CALCULATE from living + otherSpaces
+    // Dennis 2025-11-10: Total area for properties (Linnunpääntie has "Total yta: 290" in Linear)
+    // Try multiple field names from Linear API
     let total = parseNum(
-      pickNV(nv, 'totalArea') ?? 
+      pickNV(nv, 'totalArea', 'total_area', 'kokonaisala') ?? 
       lget(src.totalArea!, 'fi') ?? 
-      lget((src as any).overallArea, 'fi')
+      lget((src as any).overallArea, 'fi') ??
+      lget((src as any).total_area, 'fi') ??
+      lget((src as any).kokonaisala, 'fi') ??
+      lget((src as any).totalyta, 'fi')
     );
     
     // If no explicit total but we have otherSpaces, calculate: total = living + otherSpaces
     if (!total && otherSpaces && otherSpaces > 0) {
       total = living + otherSpaces;
+    }
+    
+    // Dennis: Debug log to see what Linear actually provides
+    if (process.env.NODE_ENV !== 'production') {
+      const id = nv?.id || (src as any)?.id;
+      if (id?.includes('linnun') || id?.includes('mustan')) {
+        console.debug('[TOTAL AREA DEBUG]', {
+          id,
+          living,
+          total,
+          otherSpaces,
+          nvTotalArea: nv?.totalArea,
+          srcTotalArea: src.totalArea,
+          srcOverallArea: (src as any).overallArea,
+          allSrcKeys: Object.keys(src)
+        });
+      }
     }
     
     // LINUS FIX: Unit-aware plot area - try multiple sources + convert units to m²
