@@ -120,12 +120,14 @@ function firstNumber(...vals: Array<any>): number | undefined {
 }
 
 // LINUS FIX: Unit-aware area conversion
+// Dennis 2025-11-10: VIKTIGT! Kolla HECTARE FÖRST annars matchar 'HECTARE' på 'ARE'!
 function normalizeUnit(u?: string | null): 'SQM'|'ARE'|'HECTARE'|undefined {
   if (!u) return undefined;
   const s = String(u).trim().toUpperCase();
   if (s.includes('SQUARE') || s.includes('SQM') || s === 'M2' || s === 'M²') return 'SQM';
-  if (s.includes('ARE') || s === 'A') return 'ARE';
+  // Dennis: Check HECTARE before ARE! ('HECTARE'.includes('ARE') === true)
   if (s.includes('HECTAR') || s === 'HA') return 'HECTARE';
+  if (s.includes('ARE') || s === 'A') return 'ARE';
   return undefined;
 }
 
@@ -238,31 +240,10 @@ export class LinearToPropertyMapper {
     const plotCandidate = nvPlot ?? localizedPlot;
     const plot = plotCandidate !== undefined ? applyUnit(plotCandidate, unitNv, plotAreaFi || lotAreaFi || siteAreaFi || propertyAreaFi || estateAreaFi) : undefined;
     
-    // DEBUG: Log plot sources (TEMPORARY - ALWAYS ON for Mailatie debugging)
-    const id = nv?.id || (src as any)?.id;
-    const shouldLog = plot !== undefined || (id && (
-      String(id).toLowerCase().includes('mailatie') ||
-      String(id).toLowerCase().includes('mustanlahden') ||
-      String(id).toLowerCase().includes('linnun')
-    ));
-    
-    if (shouldLog) {
-      console.log('[🔍 PLOT DEBUG]', {
-        id: String(id).substring(0, 30),
-        nvPlot, 
-        unitNv,
-        localized: { 
-          plotAreaFi, 
-          lotAreaFi, 
-          siteAreaFi, 
-          propertyAreaFi, 
-          estateAreaFi 
-        },
-        rawLotAreaFi: (src as any).lotArea?.fi,
-        plotCandidate,
-        plotFinal: plot
-      });
-    }
+    // Dennis 2025-11-10: Plot area conversion fixed! 
+    // Problem was: normalizeUnit() checked 'ARE' before 'HECTARE'
+    // So 'HECTARE'.includes('ARE') matched and returned wrong unit
+    // Fixed by checking HECTARE first in normalizeUnit()
     
     const balcony = parseNum(pickNV(nv, 'balconyArea') ?? lget(src.balconyArea!, 'fi'));
     const terrace = parseNum(pickNV(nv, 'terraceArea') ?? lget(src.terraceArea!, 'fi'));
