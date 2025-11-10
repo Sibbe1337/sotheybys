@@ -69,9 +69,10 @@ export default function PropertyGridNew({ properties, locale }: PropertyGridNewP
         // Simple title (used as image alt)
         const title = addressWithApt;
         
-        // Dennis: Get ALL images for carousel (Objekt-fliken needs to browse without opening)
+        // Dennis 2025-11-10: ENDAST 3 första bilderna ska visas i karusellen
         const images = (property.media.images || [])
           .filter(img => !img.floorPlan)
+          .slice(0, 3)  // MAX 3 bilder
           .map(img => ({ url: img.url, alt: title }));
         
         // Dennis: Get STADSDEL (district), NOT city
