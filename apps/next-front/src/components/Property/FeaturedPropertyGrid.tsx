@@ -69,10 +69,10 @@ export default function FeaturedPropertyGrid({ properties, locale }: FeaturedPro
         // Simple title (used as image alt)
         const title = addressWithApt;
         
-        // Get first non-floor-plan image
-        const image = (property.media.images || [])
+        // Dennis: Get ALL non-floor-plan images for carousel (Hem-fliken should also have carousel)
+        const images = (property.media.images || [])
           .filter(img => !img.floorPlan)
-          .map(img => ({ url: img.url, alt: title }))[0] || { url: '', alt: title };
+          .map(img => ({ url: img.url, alt: title }));
         
         // Dennis: Get STADSDEL (district), NOT city
         const district = property.district?.[locale] || property.district?.fi;
@@ -109,7 +109,8 @@ export default function FeaturedPropertyGrid({ properties, locale }: FeaturedPro
             propertyType={propertyType}
             district={district}
             apartmentType={apartmentType}
-            image={image}
+            images={images}             // Pass all images for carousel
+            showCarousel={true}         // Dennis: Hem-fliken should also have carousel with arrows (manual browsing, no autoplay)
             variant={variant}
             debtFreePrice={property.pricing.debtFree}
             askPrice={property.pricing.sales}

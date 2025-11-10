@@ -24,8 +24,8 @@ function Stat({ label, value, sub }: StatProps) {
   
   return (
     <div className="flex flex-col">
-      <div className="text-sm text-gray-600 mb-1">{label}</div>
-      <div className="text-lg font-semibold text-gray-900">{value}</div>
+      <div className="text-xs sm:text-sm text-gray-600 mb-1">{label}</div>
+      <div className="text-base sm:text-lg font-semibold text-gray-900 break-words">{value}</div>
       {sub && <div className="text-xs text-gray-500 mt-0.5">{sub}</div>}
     </div>
   );
@@ -48,7 +48,7 @@ export function SummaryStats({ vm, locale, isApartment, isProperty, isRental }: 
   // Apartment stats
   if (isApartment && !isRental) {
     return (
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-6 py-6 border-y border-gray-200">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 sm:gap-6 py-4 sm:py-6 border-y border-gray-200">
         <Stat 
           label={t('stats.livingArea', locale)} 
           value={vm.area} 
@@ -80,7 +80,7 @@ export function SummaryStats({ vm, locale, isApartment, isProperty, isRental }: 
   // Property/Estate stats
   if (isProperty && !isRental) {
     return (
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-6 py-6 border-y border-gray-200">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 sm:gap-6 py-4 sm:py-6 border-y border-gray-200">
         <Stat 
           label={t('stats.livingArea', locale)} 
           value={vm.area} 
@@ -113,7 +113,7 @@ export function SummaryStats({ vm, locale, isApartment, isProperty, isRental }: 
   // Rental stats
   if (isRental) {
     return (
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-6 py-6 border-y border-gray-200">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 sm:gap-6 py-4 sm:py-6 border-y border-gray-200">
         <Stat 
           label={t('stats.livingArea', locale)} 
           value={vm.area} 
