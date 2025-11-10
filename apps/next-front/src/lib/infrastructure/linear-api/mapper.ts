@@ -238,20 +238,30 @@ export class LinearToPropertyMapper {
     const plotCandidate = nvPlot ?? localizedPlot;
     const plot = plotCandidate !== undefined ? applyUnit(plotCandidate, unitNv, plotAreaFi || lotAreaFi || siteAreaFi || propertyAreaFi || estateAreaFi) : undefined;
     
-    // DEBUG: Log plot sources in development
-    if (process.env.NODE_ENV !== 'production') {
-      const id = nv?.id || (src as any)?.id;
-      // Dennis: Always log Mailatie to debug the 13 m² vs 1299 m² issue
-      if (plot !== undefined || (id && id.toLowerCase().includes('mailatie'))) {
-        console.debug('[PLOT DEBUG]', {
-          id,
-          nvPlot, unitNv,
-          localized: { plotAreaFi, lotAreaFi, siteAreaFi, propertyAreaFi, estateAreaFi },
-          rawLotAreaFi: (src as any).lotArea?.fi,
-          plotCandidate,
-          plotFinal: plot
-        });
-      }
+    // DEBUG: Log plot sources (TEMPORARY - ALWAYS ON for Mailatie debugging)
+    const id = nv?.id || (src as any)?.id;
+    const shouldLog = plot !== undefined || (id && (
+      String(id).toLowerCase().includes('mailatie') ||
+      String(id).toLowerCase().includes('mustanlahden') ||
+      String(id).toLowerCase().includes('linnun')
+    ));
+    
+    if (shouldLog) {
+      console.log('[🔍 PLOT DEBUG]', {
+        id: String(id).substring(0, 30),
+        nvPlot, 
+        unitNv,
+        localized: { 
+          plotAreaFi, 
+          lotAreaFi, 
+          siteAreaFi, 
+          propertyAreaFi, 
+          estateAreaFi 
+        },
+        rawLotAreaFi: (src as any).lotArea?.fi,
+        plotCandidate,
+        plotFinal: plot
+      });
     }
     
     const balcony = parseNum(pickNV(nv, 'balconyArea') ?? lget(src.balconyArea!, 'fi'));
