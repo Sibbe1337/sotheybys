@@ -207,40 +207,23 @@ export class LinearToPropertyMapper {
     // ========== DIMENSIONS (EXPANDED) ==========
     const living = parseNum(pickNV(nv, 'area') ?? lget(src.area!, 'fi')) || 0;
     
-    // Parse "Yta för andra utrymmen" (other spaces area)
-    const otherSpaces = parseNum(pickNV(nv, 'otherArea') ?? lget((src as any).otherArea, 'fi'));
+    // Dennis 2025-11-10: Parse "Yta för andra utrymmen" - FIX: Extract .value from Linear structure
+    const otherAreaObj = lget((src as any).otherArea, 'fi');
+    const otherSpaces = parseNum(pickNV(nv, 'otherArea') ?? otherAreaObj?.value);
     
-    // Dennis 2025-11-10: Total area for properties (Linnunpääntie has "Total yta: 290" in Linear)
-    // Try multiple field names from Linear API
+    // Dennis 2025-11-10: Total area for properties - FIX: Extract .value from Linear structure
+    // Linear structure: overallArea.fi.value = "60 m²", otherArea.fi.value = "5 m²"
+    const overallAreaObj = lget((src as any).overallArea, 'fi');
+    const totalAreaStr = overallAreaObj?.value ?? lget(src.totalArea!, 'fi');
+    
     let total = parseNum(
-      pickNV(nv, 'totalArea', 'total_area', 'kokonaisala') ?? 
-      lget(src.totalArea!, 'fi') ?? 
-      lget((src as any).overallArea, 'fi') ??
-      lget((src as any).total_area, 'fi') ??
-      lget((src as any).kokonaisala, 'fi') ??
-      lget((src as any).totalyta, 'fi')
+      pickNV(nv, 'totalArea', 'total_area', 'kokonaisala') ??
+      totalAreaStr
     );
-    
+
     // If no explicit total but we have otherSpaces, calculate: total = living + otherSpaces
     if (!total && otherSpaces && otherSpaces > 0) {
       total = living + otherSpaces;
-    }
-    
-    // Dennis: Debug log to see what Linear actually provides
-    if (process.env.NODE_ENV !== 'production') {
-      const id = nv?.id || (src as any)?.id;
-      if (id?.includes('linnun') || id?.includes('mustan')) {
-        console.debug('[TOTAL AREA DEBUG]', {
-          id,
-          living,
-          total,
-          otherSpaces,
-          nvTotalArea: nv?.totalArea,
-          srcTotalArea: src.totalArea,
-          srcOverallArea: (src as any).overallArea,
-          allSrcKeys: Object.keys(src)
-        });
-      }
     }
     
     // LINUS FIX: Unit-aware plot area - try multiple sources + convert units to m²
