@@ -157,19 +157,6 @@ export default function PropertyCard({
             >
               ›
             </button>
-
-            {/* Dots */}
-            <div className="absolute bottom-2 left-1/2 flex -translate-x-1/2 gap-1">
-              {images.map((_, i) => (
-                <span
-                  key={i}
-                  className={[
-                    'h-1.5 w-1.5 rounded-none ring-1 ring-white',
-                    i === idx ? 'bg-white' : 'bg-white/40',
-                  ].join(' ')}
-                />
-              ))}
-            </div>
           </>
         )}
       </div>
