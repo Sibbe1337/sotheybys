@@ -64,7 +64,7 @@ export function MediaTabs({
   return (
     <div className="w-full">
       {/* Content - Dennis: Images FIRST, then buttons below */}
-      <div className="min-h-[400px] bg-gray-50 rounded-lg overflow-hidden mb-4">
+      <div className="min-h-[300px] sm:min-h-[400px] bg-gray-50 rounded-lg overflow-hidden mb-4">
         {activeTab === 'photos' && photoImages.length > 0 && (
           <ImageCarousel images={photoImages} title={title} propertyId={propertyId} />
         )}
@@ -137,20 +137,20 @@ export function MediaTabs({
         )}
       </div>
 
-      {/* Tab buttons - Dennis: UNDER bilderna (not above) */}
-      <div className="flex gap-2 mt-4 overflow-x-auto pb-2 scrollbar-hide">
+      {/* Tab buttons - Dennis: UNDER bilderna (not above), MOBILE: scrollable horizontal */}
+      <div className="flex gap-2 mt-4 overflow-x-auto pb-2 scrollbar-hide relative z-10 -mx-3 px-3 sm:mx-0 sm:px-0">
         {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => tab.enabled && setActiveTab(tab.id)}
             disabled={!tab.enabled}
             title={!tab.enabled ? (locale === 'sv' ? 'Ej tillgänglig' : locale === 'en' ? 'Not available' : 'Ei saatavilla') : undefined}
-            className={`px-4 md:px-6 py-2 rounded-full whitespace-nowrap font-medium transition-colors text-sm md:text-base flex-shrink-0 ${
+            className={`px-3 sm:px-4 md:px-6 py-2 rounded-full whitespace-nowrap font-medium transition-colors text-xs sm:text-sm md:text-base flex-shrink-0 cursor-pointer ${
               activeTab === tab.id 
                 ? 'bg-[#002349] text-white' 
                 : tab.enabled 
-                  ? 'bg-gray-200 text-gray-800 hover:bg-gray-300' 
-                  : 'bg-gray-100 text-gray-400 cursor-not-allowed opacity-50'
+                  ? 'bg-gray-200 text-gray-800 hover:bg-gray-300 active:bg-gray-400' 
+                  : 'bg-gray-100 text-gray-400 cursor-not-allowed opacity-50 pointer-events-none'
             }`}
           >
             {tab.label}
