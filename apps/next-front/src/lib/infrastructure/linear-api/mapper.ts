@@ -197,10 +197,11 @@ export class LinearToPropertyMapper {
     const debt = Math.max(0, debtFree - sales);
     
     // Property tax (Kiinteistövero) - ONLY for properties, not apartments
+    // Dennis: Use 'fi' as fallback since tax data is often only in Finnish
     const propertyTax = parseEuro(
       pickNV(nv, 'propertyTax', 'realEstateTax') ?? 
-      (src.propertyTax && lget(src.propertyTax, locale)) ?? 
-      (src.realEstateTax && lget(src.realEstateTax, locale))
+      (src.propertyTax && (lget(src.propertyTax, locale) || lget(src.propertyTax, 'fi'))) ?? 
+      (src.realEstateTax && (lget(src.realEstateTax, locale) || lget(src.realEstateTax, 'fi')))
     ) || undefined;
 
     // ========== DIMENSIONS (EXPANDED) ==========
@@ -303,8 +304,18 @@ export class LinearToPropertyMapper {
     // ========== ADDITIONAL META (Blueprint completion) ==========
     const identifierFi = pickNV(nv, 'identifier', 'propertyId') ?? lget((src as any).identifier!, 'fi') ?? undefined;
     const condition = lv((src as any).condition);
-    const propertyIdentifier = pickNV(nv, 'propertyIdentifier', 'estateName') ?? lget((src as any).propertyIdentifier!, locale) ?? undefined;
-    const propertyBuildingRights = pickNV(nv, 'propertyBuildingRights', 'buildingRights') ?? lget((src as any).propertyBuildingRights!, locale) ?? undefined;
+    
+    // Dennis: Property data often only in Finnish - use 'fi' as fallback
+    const propertyIdentifier = pickNV(nv, 'propertyIdentifier', 'estateName') ?? 
+      lget((src as any).propertyIdentifier!, locale) ?? 
+      lget((src as any).propertyIdentifier!, 'fi') ?? 
+      undefined;
+    
+    const propertyBuildingRights = pickNV(nv, 'propertyBuildingRights', 'buildingRights') ?? 
+      lget((src as any).propertyBuildingRights!, locale) ?? 
+      lget((src as any).propertyBuildingRights!, 'fi') ?? 
+      undefined;
+    
     const restrictions = lv((src as any).restrictions);
 
     // ========== COORDINATES (NEW) ==========
