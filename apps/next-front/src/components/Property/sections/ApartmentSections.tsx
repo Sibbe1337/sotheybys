@@ -2,6 +2,7 @@
 
 import { getSectionLabel, getFieldLabel } from '@/lib/i18n/property-translations';
 import { fmtPerM2 } from '@/lib/presentation/formatters/perSquareMeter';
+import { fmtFee } from '@/lib/presentation/formatters/fees';
 import { nonEmpty } from '@/lib/presentation/formatters/number';
 import { getEnergyStatusLabel } from '@/lib/domain/energy';
 import { translateBoolean, translateCommonTerm } from '@/lib/presentation/common-terms';
