@@ -14,8 +14,8 @@ export function PropertyCardCarousel({ images, alt, onImageClick }: PropertyCard
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   
-  // Filter out floor plans
-  const photoImages = images.filter(img => !img.floorPlan);
+  // Filter out floor plans + LIMIT TO 3 IMAGES (Dennis 2025-11-10)
+  const photoImages = images.filter(img => !img.floorPlan).slice(0, 3);
   const displayImages = photoImages.length > 0 ? photoImages : images.slice(0, 1);
 
   // Auto-rotate on hover (desktop)
@@ -81,27 +81,7 @@ export function PropertyCardCarousel({ images, alt, onImageClick }: PropertyCard
         </>
       )}
 
-      {/* Dots indicator */}
-      {displayImages.length > 1 && (
-        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
-          {displayImages.map((_, index) => (
-            <button
-              key={index}
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                setCurrentIndex(index);
-              }}
-              className={`w-1.5 h-1.5 rounded-full transition-all ${
-                index === currentIndex 
-                  ? 'bg-white w-4' 
-                  : 'bg-white/50 hover:bg-white/75'
-              }`}
-              aria-label={`Go to image ${index + 1}`}
-            />
-          ))}
-        </div>
-      )}
+      {/* Dennis 2025-11-10: Dots/bollar borttagna - ska INTE synas */}
 
       {/* Image counter */}
       {displayImages.length > 1 && (
