@@ -136,9 +136,9 @@ export function MediaTabs({
         )}
         
         {activeTab === 'video' && (
-          <div className="w-full min-h-[400px] flex items-center justify-center">
+          <div className="w-full min-h-[400px] flex items-center justify-center bg-black">
             {videoUrl ? (
-              <div className="w-full aspect-video max-w-5xl mx-auto bg-black">
+              <div className="w-full aspect-video bg-black">
                 <iframe 
                   src={getEmbedUrl(videoUrl)} 
                   className="w-full h-full border-0"
