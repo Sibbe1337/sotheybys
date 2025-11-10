@@ -107,13 +107,17 @@ export function ApartmentSections({ vm, locale }: ApartmentSectionsProps) {
   // Extract numeric values for per m² calculations
   const salesPriceNum = parseEuropeanNumber(vm.price);
   const debtFreePriceNum = parseEuropeanNumber(vm.priceDebtFree);
-  const debtPartNum = salesPriceNum && debtFreePriceNum ? salesPriceNum - debtFreePriceNum : undefined;
+  // Dennis: Skuldandel should ALWAYS be POSITIVE
+  // Formula: debtPart = debtFree - sales (if debtFree > sales, show positive difference)
+  const debtPartNum = salesPriceNum && debtFreePriceNum ? Math.abs(debtFreePriceNum - salesPriceNum) : undefined;
   const livingAreaNum = parseEuropeanNumber(vm.area);
 
   // Calculate total fees (sum of maintenance + financing + other fees, NOT water/electricity)
   const maintenanceNum = parseEuropeanNumber(vm.fees?.maintenance) || 0;
   const financingNum = parseEuropeanNumber(vm.fees?.financing) || 0;
   const totalFeesNum = maintenanceNum + financingNum;
+  
+  // Dennis: Use fmtFee for localized suffix (€/kk → €/månad → €/month)
   const totalFees = totalFeesNum > 0 ? fmtFee(totalFeesNum, localeStr) : undefined;
 
   return (
@@ -176,7 +180,7 @@ export function ApartmentSections({ vm, locale }: ApartmentSectionsProps) {
           />
           <Field 
             label={getFieldLabel('debtPart', locale)} 
-            value={debtPartNum ? `${debtPartNum} €` : undefined}
+            value={debtPartNum && debtPartNum > 0 ? `${Math.abs(debtPartNum).toLocaleString(localeStr)} €` : undefined}
           />
         </SubSection>
 
@@ -203,7 +207,7 @@ export function ApartmentSections({ vm, locale }: ApartmentSectionsProps) {
           <Field 
             label={getFieldLabel('waterFee', locale)} 
             value={vm.fees?.water}
-            // Dennis: NO €/m² for water fee (already has correct unit from fmtFee)
+            // PDF spec s.6: NO €/m² for water fee (uses correct unit like €/kk/hlö instead)
           />
         </SubSection>
 

@@ -74,7 +74,9 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
   } = props;
 
   // Dennis: Carousel for Objekt-fliken, single image for Hem-fliken
-  const displayImages = images && images.length > 0 ? images : (image ? [image] : []);
+  // Dennis 2025-11-10: ENDAST 3 första bilderna ska visas i karusellen
+  const allImages = images && images.length > 0 ? images : (image ? [image] : []);
+  const displayImages = allImages.slice(0, 3);  // Begränsa till 3 bilder
   const hasMultipleImages = displayImages.length > 1;
   const { idx, setIdx, onTouchStart, onTouchMove, onTouchEnd } = useMiniCarousel(displayImages.length);
   const currentImage = displayImages[idx] || displayImages[0];
@@ -195,18 +197,7 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
               ›
             </button>
 
-            {/* Dots */}
-            <div className="absolute bottom-2 left-1/2 flex -translate-x-1/2 gap-1 z-10">
-              {displayImages.map((_, i) => (
-                <span
-                  key={i}
-                  className={[
-                    'h-1.5 w-1.5 rounded-full ring-1 ring-white',
-                    i === idx ? 'bg-white' : 'bg-white/40',
-                  ].join(' ')}
-                />
-              ))}
-            </div>
+            {/* Dennis 2025-11-10: Dots/bollar ska INTE synas - ta bort helt */}
           </>
         )}
       </div>

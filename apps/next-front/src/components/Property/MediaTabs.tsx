@@ -114,43 +114,66 @@ export function MediaTabs({
           </div>
         )}
         
-        {activeTab === 'brochure' && brochureUrl && (
-          <div className="w-full h-full min-h-[600px]">
-            <iframe 
-              src={brochureUrl} 
-              className="w-full h-[600px] border-0"
-              title="Property brochure"
-            />
+        {activeTab === 'brochure' && (
+          <div className="w-full h-full min-h-[600px] flex items-center justify-center">
+            {brochureUrl ? (
+              <iframe 
+                src={brochureUrl} 
+                className="w-full h-[600px] border-0"
+                title="Property brochure"
+              />
+            ) : (
+              <div className="text-center text-gray-500">
+                <svg className="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+                <p className="font-medium">
+                  {locale === 'sv' ? 'Broschyr ej tillgänglig' : locale === 'en' ? 'Brochure not available' : 'Esite ei saatavilla'}
+                </p>
+              </div>
+            )}
           </div>
         )}
         
-        {activeTab === 'video' && videoUrl && (
-          <div className="w-full aspect-video max-w-5xl mx-auto bg-black">
-            <iframe 
-              src={getEmbedUrl(videoUrl)} 
-              className="w-full h-full border-0"
-              title="Property video"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
+        {activeTab === 'video' && (
+          <div className="w-full min-h-[400px] flex items-center justify-center">
+            {videoUrl ? (
+              <div className="w-full aspect-video max-w-5xl mx-auto bg-black">
+                <iframe 
+                  src={getEmbedUrl(videoUrl)} 
+                  className="w-full h-full border-0"
+                  title="Property video"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            ) : (
+              <div className="text-center text-gray-500">
+                <svg className="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+                <p className="font-medium">
+                  {locale === 'sv' ? 'Video ej tillgänglig' : locale === 'en' ? 'Video not available' : 'Video ei saatavilla'}
+                </p>
+              </div>
+            )}
           </div>
         )}
       </div>
 
       {/* Tab buttons - Dennis: UNDER bilderna (not above), MOBILE: scrollable horizontal */}
+      {/* Dennis 2025-11-10: Ta bort pointer-events-none så knappar ALLTID är klickbara */}
       <div className="flex gap-2 mt-4 overflow-x-auto pb-2 scrollbar-hide relative z-10 -mx-3 px-3 sm:mx-0 sm:px-0">
         {tabs.map(tab => (
           <button
             key={tab.id}
-            onClick={() => tab.enabled && setActiveTab(tab.id)}
-            disabled={!tab.enabled}
-            title={!tab.enabled ? (locale === 'sv' ? 'Ej tillgänglig' : locale === 'en' ? 'Not available' : 'Ei saatavilla') : undefined}
+            onClick={() => setActiveTab(tab.id)}
             className={`px-3 sm:px-4 md:px-6 py-2 rounded-full whitespace-nowrap font-medium transition-colors text-xs sm:text-sm md:text-base flex-shrink-0 cursor-pointer ${
               activeTab === tab.id 
                 ? 'bg-[#002349] text-white' 
                 : tab.enabled 
                   ? 'bg-gray-200 text-gray-800 hover:bg-gray-300 active:bg-gray-400' 
-                  : 'bg-gray-100 text-gray-400 cursor-not-allowed opacity-50 pointer-events-none'
+                  : 'bg-gray-200/50 text-gray-500 hover:bg-gray-200 hover:text-gray-700'
             }`}
           >
             {tab.label}

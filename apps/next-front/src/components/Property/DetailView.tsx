@@ -107,8 +107,8 @@ export function DetailView({ vm, locale }: Props) {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      {/* Main Content - Dennis: Better mobile padding */}
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-4 sm:py-6 md:py-8">
         {/* Share Buttons - Top Right */}
         <div className="flex justify-end mb-6">
           <ShareButtons url={currentUrl} title={vm.title} />
@@ -152,65 +152,58 @@ export function DetailView({ vm, locale }: Props) {
           </div>
         )}
 
-        {/* Title, Address, Type */}
-        <div className="my-8">
+        {/* Title, Address, Type - Dennis: Responsive text sizes */}
+        <div className="my-4 sm:my-6 md:my-8">
           {vm.descriptionTitle && (
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2 sm:mb-3">
               {vm.descriptionTitle}
             </h1>
           )}
-          <p className="text-xl text-gray-700 mb-2">
+          <p className="text-lg sm:text-xl text-gray-700 mb-1.5 sm:mb-2">
             {displayAddress}, {vm.postalCode} {vm.city}
           </p>
           {titleLine && (
-            <p className="text-lg text-gray-600">{titleLine}</p>
+            <p className="text-base sm:text-lg text-gray-600">{titleLine}</p>
           )}
         </div>
 
         {/* Description - PDF spec s.10: Add "Kuvaus / Beskrivning" heading */}
         {vm.description && (
-          <div className="mb-12 bg-white rounded-lg shadow-sm p-8 md:p-10">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+          <div className="mb-8 sm:mb-10 md:mb-12 bg-white rounded-lg shadow-sm p-4 sm:p-6 md:p-8 lg:p-10">
+            <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-4 sm:mb-6">
               {locale === 'sv' ? 'Beskrivning' : locale === 'en' ? 'Description' : 'Kuvaus'}
             </h2>
-            <div className="prose prose-lg max-w-none text-gray-700 [&>p]:mb-10 [&>p]:leading-loose [&>p:first-child]:mt-0 [&>p:last-child]:mb-0">
+            <div className="prose prose-base sm:prose-lg max-w-none text-gray-700 [&>p]:mb-6 sm:[&>p]:mb-10 [&>p]:leading-relaxed sm:[&>p]:leading-loose [&>p:first-child]:mt-0 [&>p:last-child]:mb-0">
               <RichText html={vm.description} />
             </div>
           </div>
         )}
 
-        {/* Type-specific Sections */}
-        <div className="mb-12">
-          {isRental && <RentalSections vm={vm} locale={locale} />}
-          {!isRental && isApartment && <ApartmentSections vm={vm} locale={locale} />}
-          {!isRental && isProperty && <PropertySections vm={vm} locale={locale} />}
-        </div>
-
-        {/* Agent Section - PDF spec s.11: "Lisätiedot ja esittelyt" */}
+        {/* Agent Section - Dennis: Move AFTER description, BEFORE type-specific sections */}
         {agent.name && (
-          <div className="bg-white rounded-lg shadow-sm p-6 max-w-2xl">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+          <div className="mb-12 bg-white rounded-lg shadow-sm p-4 sm:p-6 max-w-2xl">
+            <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-4 sm:mb-6">
               {locale === 'sv' 
                 ? 'Tilläggsinfo och visning' 
                 : locale === 'en' 
                 ? 'Additional Info and Viewing' 
                 : 'Lisätiedot ja esittelyt'}
             </h2>
-            <div className="flex items-start gap-6">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
               {agent.photoUrl && (
                 <img 
                   src={agent.photoUrl} 
                   alt={agent.name} 
-                  className="w-32 h-32 rounded-full object-cover flex-shrink-0"
+                  className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover flex-shrink-0"
                 />
               )}
-              <div className="flex-1">
-                <h3 className="text-xl font-semibold text-gray-900 mb-1">{agent.name}</h3>
+              <div className="flex-1 text-center sm:text-left w-full">
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-1">{agent.name}</h3>
                 {agent.title && (
-                  <p className="text-gray-600 mb-3">{agent.title}</p>
+                  <p className="text-sm sm:text-base text-gray-600 mb-3">{agent.title}</p>
                 )}
                 {agent.phone && (
-                  <p className="text-gray-700 mb-2">
+                  <p className="text-sm sm:text-base text-gray-700 mb-2 break-words">
                     <span className="font-medium">
                       {locale === 'sv' ? 'Telefon' : locale === 'en' ? 'Phone' : 'Puhelin'}:
                     </span>{' '}
@@ -220,7 +213,7 @@ export function DetailView({ vm, locale }: Props) {
                   </p>
                 )}
                 {agent.email && (
-                  <p className="text-gray-700 mb-4">
+                  <p className="text-sm sm:text-base text-gray-700 mb-4 break-words">
                     <span className="font-medium">
                       {locale === 'sv' ? 'E-post' : locale === 'en' ? 'Email' : 'Sähköposti'}:
                     </span>{' '}
@@ -239,6 +232,13 @@ export function DetailView({ vm, locale }: Props) {
             </div>
           </div>
         )}
+
+        {/* Type-specific Sections */}
+        <div className="mb-12">
+          {isRental && <RentalSections vm={vm} locale={locale} />}
+          {!isRental && isApartment && <ApartmentSections vm={vm} locale={locale} />}
+          {!isRental && isProperty && <PropertySections vm={vm} locale={locale} />}
+        </div>
       </div>
     </div>
   );
