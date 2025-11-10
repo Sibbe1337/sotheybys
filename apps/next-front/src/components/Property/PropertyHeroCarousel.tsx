@@ -127,23 +127,7 @@ export default function PropertyHeroCarousel({
         </>
       )}
 
-      {/* Dots Navigation */}
-      {properties.length > 1 && (
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
-          {properties.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => goToSlide(index)}
-              className={`w-3 h-3 rounded-full transition-all ${
-                index === currentIndex 
-                  ? 'bg-white w-8' 
-                  : 'bg-white/50 hover:bg-white/70'
-              }`}
-              aria-label={`Go to property ${index + 1}`}
-            />
-          ))}
-        </div>
-      )}
+      {/* Dennis 2025-11-10: Dots/bollar borttagna - ska INTE synas */}
 
       {/* Slide Counter */}
       <div className="absolute top-4 right-4 bg-black/30 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm">

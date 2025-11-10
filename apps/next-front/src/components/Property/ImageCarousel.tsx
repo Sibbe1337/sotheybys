@@ -88,21 +88,7 @@ export function ImageCarousel({ images, title, propertyId }: ImageCarouselProps)
           </button>
         </div>
 
-        {/* Dots Navigation */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-          {images.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`transition-all ${
-                index === currentIndex
-                  ? 'w-8 h-2 bg-white'
-                  : 'w-2 h-2 bg-white/50 hover:bg-white/75'
-              } rounded-full`}
-              aria-label={`Gå till bild ${index + 1}`}
-            />
-          ))}
-        </div>
+        {/* Dennis 2025-11-10: Dots/bollar borttagna - ska INTE synas */}
       </section>
 
       {/* Fullscreen Modal */}
