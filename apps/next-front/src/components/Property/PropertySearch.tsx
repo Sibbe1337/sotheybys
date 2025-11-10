@@ -134,10 +134,15 @@ export default function PropertySearch({ properties, language }: PropertySearchP
   }, [properties]);
 
   const filteredProperties = useMemo(() => {
+    console.log('🔍 [FILTER DEBUG] Filtering with:', { selectedType, selectedArea, priceRange, areaRange });
     const filtered = properties.filter(property => {
       // Type filter (visa alla om "all" är valt)
       if (selectedType !== 'all') {
         const typeFilter = PROPERTY_TYPES.find(t => t.id === selectedType);
+        const passes = typeFilter?.filter(property);
+        if (!passes) {
+          console.log('🔍 [FILTER DEBUG] Property REJECTED:', property.id, 'typeCode:', property.meta.typeCode);
+        }
         if (!typeFilter?.filter(property)) return false;
       }
 
@@ -157,6 +162,8 @@ export default function PropertySearch({ properties, language }: PropertySearchP
 
       return true;
     });
+
+    console.log('🔍 [FILTER DEBUG] Filtered results:', filtered.length, 'properties');
 
     // Sort: Rental properties FIRST, then sale properties (by debt-free price descending)
     return filtered.sort((a, b) => {
@@ -213,7 +220,10 @@ export default function PropertySearch({ properties, language }: PropertySearchP
               <select
                 className="w-full px-4 py-3 border border-gray-300 rounded-none text-sm focus:outline-none focus:border-[var(--color-primary)]"
                 value={selectedType}
-                onChange={(e) => setSelectedType(e.target.value)}
+                onChange={(e) => {
+                  console.log('🔍 [FILTER DEBUG] Type changed from', selectedType, 'to', e.target.value);
+                  setSelectedType(e.target.value);
+                }}
               >
                 {PROPERTY_TYPES
                   .filter(type => {
