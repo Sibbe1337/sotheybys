@@ -537,6 +537,14 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                     const terraceArea = property.dimensions.terrace || 0;
                     const otherArea = balconyArea + terraceArea > 0 ? balconyArea + terraceArea : undefined;
                     
+                    // Dennis 2025-11-10: MÄKLARINFO ska synas (samma som huvudsidan)
+                    const agent = property.agent ? {
+                      name: property.agent.name || '',
+                      phone: property.agent.phone || '',
+                      email: property.agent.email || '',
+                      photoUrl: property.agent.photoUrl || undefined,
+                    } : undefined;
+                    
                     return (
                       <FeaturedPropertyCard
                         key={property.id}
@@ -557,6 +565,7 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                         askPrice={property.pricing.sales}
                         debtFreePrice={property.pricing.debtFree}
                         monthlyRent={rent}
+                        agent={agent}
                       />
                     );
                   })}
