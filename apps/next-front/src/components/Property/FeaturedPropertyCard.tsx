@@ -93,32 +93,17 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
   // Format area
   const area = (n?: number | null) => (typeof n === 'number' && n > 0 ? `${n.toLocaleString(L)} m²` : '');
 
-  // Format plot (ha if >= 10000, OR if value < 100 which means it's already in ha from Linear)
+  // Format plot - Dennis 2025-11-10: ALWAYS show in hectares for consistency
   const plot = (n?: number | null) => {
     if (typeof n !== 'number' || n <= 0) return '';
     
-    // Dennis 2025-11-10: If value is very small (<100), it's ALREADY in hectares from Linear
-    // Example: Mailatie has 0.1299 ha in Linear, NOT 0.1299 m²
-    if (n < 100) {
-      const formatted = new Intl.NumberFormat(L, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 4
-      }).format(n);
-      return `${formatted} ha`;
-    }
-    
-    // Large values (>= 10000 m²) → convert to ha
-    if (n >= 10000) {
-      const ha = n / 10000;
-      const formatted = new Intl.NumberFormat(L, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      }).format(ha);
-      return `${formatted} ha`;
-    }
-    
-    // Medium values (100-9999 m²) → show in m²
-    return area(n);
+    // Convert to hectares (m² / 10000)
+    const ha = n / 10000;
+    const formatted = new Intl.NumberFormat(L, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 4
+    }).format(ha);
+    return `${formatted} ha`;
   };
 
   // Price lines
