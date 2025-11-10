@@ -60,8 +60,9 @@ export default function PropertyHeroCarousel({
 
   const currentProperty = properties[currentIndex];
   const address = lpick(currentProperty.address, locale);
-  const gate = currentProperty.gate;
-  const displayAddress = gate ? `${address} ${gate}` : address;
+  const apartmentIdentifier = currentProperty.apartmentIdentifier; // e.g., "A 11"
+  // Dennis 2025-11-10: Show full address with apartment identifier on first line
+  const displayAddress = apartmentIdentifier ? `${address} ${apartmentIdentifier}` : address;
   const postalCode = currentProperty.postalCode;
   const city = lpick(currentProperty.city, locale);
   const slug = currentProperty.slug;
