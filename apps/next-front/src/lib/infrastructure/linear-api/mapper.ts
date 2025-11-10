@@ -225,22 +225,25 @@ export class LinearToPropertyMapper {
     }
     
     // LINUS FIX: Unit-aware plot area - try multiple sources + convert units to m²
-    const nvPlot = firstNumber(nv?.plotArea, nv?.lotArea, nv?.siteArea);
-    const unitNv = nv?.plotAreaUnit || nv?.lotAreaUnit || nv?.siteAreaUnit || null;
+    // Dennis 2025-11-10: Added propertyArea, estateArea for "Fastighetens areal"
+    const nvPlot = firstNumber(nv?.plotArea, nv?.lotArea, nv?.siteArea, nv?.propertyArea, nv?.estateArea);
+    const unitNv = nv?.plotAreaUnit || nv?.lotAreaUnit || nv?.siteAreaUnit || nv?.propertyAreaUnit || nv?.estateAreaUnit || null;
     const lotAreaFi = lget((src as any).lotArea, 'fi');
     const plotAreaFi = lget((src as any).plotArea, 'fi');
     const siteAreaFi = lget((src as any).siteArea, 'fi');
-    const localizedPlot = firstNumber(plotAreaFi, lotAreaFi, siteAreaFi);
+    const propertyAreaFi = lget((src as any).propertyArea, 'fi');
+    const estateAreaFi = lget((src as any).estateArea, 'fi');
+    const localizedPlot = firstNumber(plotAreaFi, lotAreaFi, siteAreaFi, propertyAreaFi, estateAreaFi);
     // Source value + unit conversion (output always in m²)
     const plotCandidate = nvPlot ?? localizedPlot;
-    const plot = plotCandidate !== undefined ? applyUnit(plotCandidate, unitNv, plotAreaFi || lotAreaFi || siteAreaFi) : undefined;
+    const plot = plotCandidate !== undefined ? applyUnit(plotCandidate, unitNv, plotAreaFi || lotAreaFi || siteAreaFi || propertyAreaFi || estateAreaFi) : undefined;
     
     // DEBUG: Log plot sources in development
     if (process.env.NODE_ENV !== 'production' && plot !== undefined) {
       console.debug('[PLOT DEBUG]', {
         id: nv?.id || (src as any)?.id,
         nvPlot, unitNv,
-        localized: { plotAreaFi, lotAreaFi, siteAreaFi },
+        localized: { plotAreaFi, lotAreaFi, siteAreaFi, propertyAreaFi, estateAreaFi },
         plotFinal: plot
       });
     }
