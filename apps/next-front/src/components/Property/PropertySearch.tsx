@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { Link } from '@/lib/navigation';
@@ -34,10 +34,15 @@ const PROPERTY_TYPES = [
     label: { fi: 'Kaikki kohteet', sv: 'Alla objekt', en: 'All properties' },
     image: '/images/property-types/all.svg',
     filter: (p: Property) => {
-      // PDF spec s.3-4: "Kaikki kohteet" shows all SALE properties (status ON_SALE), but NOT rentals
+      // Dennis 2025-11-10: "Kaikki kohteet" ska visa ALLA objekt till salu (14)
+      // Inklusive lägenheter, hus, mökkiä, paritalot, maatilat etc
+      // Exkludera ENDAST hyresobjekt
       const rent = p.meta.rent || 0;
+      const isRental = rent > 0;
       const isOnSale = !p.meta.status || p.meta.status === 'ACTIVE' || p.meta.status === 'RESERVED';
-      return !(rent > 0) && isOnSale;
+      
+      // Visa ALLA fastighetstyper som är till salu (inte hyra)
+      return !isRental && isOnSale;
     }
   },
   {
@@ -121,33 +126,29 @@ export default function PropertySearch({ properties, language }: PropertySearchP
     return Array.from(areasSet).sort();
   }, [properties, language]);
 
-  // PDF spec s.3-4: Only show property types that are ON_SALE (have count > 0)
+  // Dennis 2025-11-10: Count properties for each type
   const dynamicPropertyTypes = useMemo(() => {
     const typesMap = new Map<string, number>();
     properties.forEach(property => {
-      // Only count properties that are ON_SALE
-      const isOnSale = !property.meta.status || property.meta.status === 'ACTIVE' || property.meta.status === 'RESERVED';
-      if (!isOnSale) return;
-      
       PROPERTY_TYPES.forEach(typeConfig => {
-        if (typeConfig.id !== 'all' && typeConfig.filter(property)) {
+        if (typeConfig.filter(property)) {
           typesMap.set(typeConfig.id, (typesMap.get(typeConfig.id) || 0) + 1);
         }
       });
     });
     return typesMap;
   }, [properties]);
+  
+  // Dennis 2025-11-10: Count for "Kaikki kohteet" (all on-sale properties)
+  const allPropertiesCount = useMemo(() => {
+    return properties.filter(p => PROPERTY_TYPES[0].filter(p)).length;
+  }, [properties]);
 
   const filteredProperties = useMemo(() => {
-    console.log('🔍 [FILTER DEBUG] Filtering with:', { selectedType, selectedArea, priceRange, areaRange });
     const filtered = properties.filter(property => {
       // Type filter (visa alla om "all" är valt)
       if (selectedType !== 'all') {
         const typeFilter = PROPERTY_TYPES.find(t => t.id === selectedType);
-        const passes = typeFilter?.filter(property);
-        if (!passes) {
-          console.log('🔍 [FILTER DEBUG] Property REJECTED:', property.id, 'typeCode:', property.meta.typeCode);
-        }
         if (!typeFilter?.filter(property)) return false;
       }
 
@@ -167,8 +168,6 @@ export default function PropertySearch({ properties, language }: PropertySearchP
 
       return true;
     });
-
-    console.log('🔍 [FILTER DEBUG] Filtered results:', filtered.length, 'properties');
 
     // Sort: Rental properties FIRST, then sale properties (by debt-free price descending)
     return filtered.sort((a, b) => {
@@ -225,16 +224,10 @@ export default function PropertySearch({ properties, language }: PropertySearchP
               <select
                 className="w-full px-4 py-3 border border-gray-300 rounded-none text-sm focus:outline-none focus:border-[var(--color-primary)]"
                 value={selectedType}
-                onClick={() => console.log('🔍 [FILTER DEBUG] Dropdown CLICKED! Current value:', selectedType)}
-                onFocus={() => console.log('🔍 [FILTER DEBUG] Dropdown FOCUSED!')}
-                onChange={(e) => {
-                  console.log('🔍 [FILTER DEBUG] onChange FIRED! Type changed from', selectedType, 'to', e.target.value);
-                  setSelectedType(e.target.value);
-                  console.log('🔍 [FILTER DEBUG] setSelectedType called with:', e.target.value);
-                }}
+                onChange={(e) => setSelectedType(e.target.value)}
               >
                 <option value="all">
-                  {PROPERTY_TYPES[0].label[language]} ({properties.length})
+                  {PROPERTY_TYPES[0].label[language]} ({allPropertiesCount})
                 </option>
                 {PROPERTY_TYPES
                   .slice(1)
@@ -244,7 +237,6 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                   })
                   .map(type => {
                     const count = dynamicPropertyTypes.get(type.id) || 0;
-                    console.log('🔍 [FILTER DEBUG] Rendering option:', type.id, 'with value:', type.id);
                     return (
                       <option key={type.id} value={type.id}>
                         {type.label[language]} ({count})
@@ -476,10 +468,6 @@ export default function PropertySearch({ properties, language }: PropertySearchP
       {/* Results */}
       <section className="py-12 lg:py-20 bg-white">
         <div className="max-w-[1400px] mx-auto px-6">
-          {(() => {
-            console.log('🔍 [FILTER DEBUG] RENDERING UI with', filteredProperties.length, 'properties');
-            return null;
-          })()}
           {filteredProperties.length > 0 ? (
             <>
               {/* Grid View - NEW PropertyCard with 3-column layout */}
