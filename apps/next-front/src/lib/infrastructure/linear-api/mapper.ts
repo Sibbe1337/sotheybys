@@ -252,29 +252,37 @@ export class LinearToPropertyMapper {
     const bathrooms = parseNum(pickNV(nv, 'numberOfBathrooms') ?? lget(src.numberOfBathrooms!, 'fi'));
 
     // ========== FEES (NEW) ==========
+    // Dennis 2025-11-10: FI fallback för fees - Linear har inte alltid SV/EN översättningar
     const maintenance = parseEuro(
       pickNV(nv, 'renovationCharge', 'maintenanceCharge') ?? 
       lget(src.maintenanceCharge!, locale) ?? 
-      lget(src.renovationCharge!, locale)
+      lget(src.maintenanceCharge!, 'fi') ??  // FI fallback
+      lget(src.renovationCharge!, locale) ??
+      lget(src.renovationCharge!, 'fi')     // FI fallback
     ) || undefined;
 
     const financing = parseEuro(
       pickNV(nv, 'fundingCharge', 'financingCharge') ?? 
       lget(src.fundingCharge!, locale) ?? 
-      lget(src.financingCharge!, locale)
+      lget(src.fundingCharge!, 'fi') ??      // FI fallback
+      lget(src.financingCharge!, locale) ??
+      lget(src.financingCharge!, 'fi')       // FI fallback
     ) || undefined;
 
-    const water = parseEuro(pickNV(nv, 'waterCharge') ?? lget(src.waterCharge!, locale)) || undefined;
+    const water = parseEuro(pickNV(nv, 'waterCharge') ?? lget(src.waterCharge!, locale) ?? lget(src.waterCharge!, 'fi')) || undefined;
     const heating = parseEuro(
       pickNV(nv, 'heatingCharge', 'averageTotalHeatingCharge', 'electricHeatingCharge') ?? 
       lget(src.heatingCharge!, locale) ?? 
+      lget(src.heatingCharge!, 'fi') ??                           // FI fallback
       lget(src.averageTotalHeatingCharge!, locale) ?? 
-      lget(src.electricHeatingCharge!, locale)
+      lget(src.averageTotalHeatingCharge!, 'fi') ??               // FI fallback
+      lget(src.electricHeatingCharge!, locale) ??
+      lget(src.electricHeatingCharge!, 'fi')                      // FI fallback
     ) || undefined;
     
-    const electricity = parseEuro(pickNV(nv, 'electricHeatingCharge') ?? lget(src.electricHeatingCharge!, locale)) || undefined;
-    const parking = parseEuro(pickNV(nv, 'parkingCharge') ?? lget(src.parkingCharge!, locale)) || undefined;
-    const saunaFee = parseEuro(pickNV(nv, 'saunaCharge') ?? lget(src.saunaCharge!, locale)) || undefined;
+    const electricity = parseEuro(pickNV(nv, 'electricHeatingCharge') ?? lget(src.electricHeatingCharge!, locale) ?? lget(src.electricHeatingCharge!, 'fi')) || undefined;
+    const parking = parseEuro(pickNV(nv, 'parkingCharge') ?? lget(src.parkingCharge!, locale) ?? lget(src.parkingCharge!, 'fi')) || undefined;
+    const saunaFee = parseEuro(pickNV(nv, 'saunaCharge') ?? lget(src.saunaCharge!, locale) ?? lget(src.saunaCharge!, 'fi')) || undefined;
 
     // ========== FEATURES (NEW) ==========
     const features = {
