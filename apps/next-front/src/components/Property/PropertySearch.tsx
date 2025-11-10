@@ -1,9 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import Image from 'next/image';
 import dynamic from 'next/dynamic';
-import { Link } from '@/lib/navigation';
 import FeaturedPropertyCard from './FeaturedPropertyCard';
 import FilterToggle from '../Filters/FilterToggle';
 import type { Property, Locale } from '@/lib/domain/property.types';
@@ -572,56 +570,74 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                 </div>
               )}
 
-              {/* List View */}
+              {/* List View - Dennis 2025-11-10: SAMMA kort-layout som grid view (FeaturedPropertyCard) men 1 kolumn */}
               {viewMode === 'list' && (
-                <div className="space-y-6">
-                  {filteredProperties.map((property) => {
-                    const price = property.pricing.debtFree || property.pricing.sales || 0;
-                    const area = property.dimensions.living || 0;
-                    const address = property.address[language] || property.address.fi;
+                <div className="grid grid-cols-1 gap-8">
+                  {filteredProperties.map((property, index) => {
+                    // Dennis: Samma logik som grid view - återanvänd EXAKT samma FeaturedPropertyCard
+                    const rent = property.meta.rent || property.rental?.monthlyRent || 0;
+                    const isRental = rent > 0;
+                    const typeCode = (property.meta.typeCode || '').toLowerCase();
+                    const isApartment = typeCode.includes('kerrostalo') || typeCode.includes('flat') || typeCode.includes('apartment');
+                    
+                    let variant: CardVariant = 'property';
+                    if (isRental) variant = 'rental';
+                    else if (isApartment) variant = 'apartment';
+                    
+                    const addressParts = [
+                      property.address[language] || property.address.fi,
+                      property.gate || '',
+                    ].filter(Boolean);
+                    const title = addressParts.join(' ').trim();
+                    
+                    const postalCode = property.postalCode;
                     const city = property.city[language] || property.city.fi;
-                    const typeLabel = property.meta.listingTypeLabel?.[language] || property.meta.listingTypeLabel?.fi || property.meta.typeCode;
-                    const image = property.media.images.find(img => !img.floorPlan)?.url || 
-                                  property.media.images[0]?.url ||
-                                  '/images/defaults/property-placeholder.jpg';
-
+                    const fullAddress = postalCode 
+                      ? `${title}, ${postalCode} ${city}`.trim()
+                      : `${title}, ${city}`.trim();
+                    
+                    const images = (property.media.images || [])
+                      .filter(img => !img.floorPlan)
+                      .slice(0, 3)
+                      .map(img => ({ url: img.url, alt: title }));
+                    
+                    const district = property.district?.[language] || property.district?.fi;
+                    const propertyType = property.meta.listingTypeLabel?.[language] || property.meta.listingTypeLabel?.fi || property.meta.typeCode;
+                    const apartmentType = property.meta.apartmentType?.[language] || property.meta.apartmentType?.fi;
+                    
+                    const balconyArea = property.dimensions.balcony || 0;
+                    const terraceArea = property.dimensions.terrace || 0;
+                    const otherArea = balconyArea + terraceArea > 0 ? balconyArea + terraceArea : undefined;
+                    
+                    const agent = property.agent ? {
+                      name: property.agent.name || '',
+                      phone: property.agent.phone || '',
+                      email: property.agent.email || '',
+                      photoUrl: property.agent.photoUrl || undefined,
+                    } : undefined;
+                    
                     return (
-                      <div key={property.id} className="flex gap-6 bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-                        <div className="relative w-80 h-64 flex-shrink-0">
-                          <Image
-                            src={image}
-                            alt={address}
-                            fill
-                            className="object-cover"
-                            unoptimized={image.startsWith('http')}
-                          />
-                        </div>
-                        <div className="flex-1 p-6 flex flex-col justify-between">
-                          <div>
-                            <h3 className="text-2xl font-light text-gray-900 mb-2">{address}</h3>
-                            <p className="text-gray-600 mb-4">{city}</p>
-                            <div className="flex gap-6 text-sm text-gray-600 mb-4">
-                              {area > 0 && <span>{area} m²</span>}
-                              {typeLabel && <span>{typeLabel}</span>}
-                            </div>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <p className="text-3xl font-light text-[var(--color-primary)]">
-                              {price > 0 ? `${price.toLocaleString('fi-FI')} €` : ''}
-                            </p>
-                            <Link
-                              href={(
-                                language === 'sv' ? `/objekt/${property.slug}` :
-                                language === 'en' ? `/properties/${property.slug}` :
-                                `/kohde/${property.slug}`
-                              ) as any}
-                              className="px-6 py-3 bg-[var(--color-primary)] text-white rounded hover:bg-[var(--color-primary-dark)] transition-colors"
-                            >
-                              {language === 'fi' ? 'Katso kohde' : language === 'sv' ? 'Se objekt' : 'View property'}
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
+                      <FeaturedPropertyCard
+                        key={property.id}
+                        href={`/${language}/kohde/${property.slug}`}
+                        locale={language}
+                        title={title}
+                        fullAddress={fullAddress}
+                        propertyType={propertyType}
+                        apartmentType={apartmentType}
+                        district={district}
+                        images={images}
+                        showCarousel={true}
+                        variant={variant}
+                        livingArea={property.dimensions.living}
+                        otherArea={otherArea}
+                        totalArea={property.dimensions.total}
+                        plotArea={property.dimensions.plot}
+                        askPrice={property.pricing.sales}
+                        debtFreePrice={property.pricing.debtFree}
+                        monthlyRent={rent}
+                        agent={agent}
+                      />
                     );
                   })}
                 </div>
