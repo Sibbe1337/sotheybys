@@ -210,7 +210,7 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
               ›
             </button>
 
-            {/* Dennis 2025-11-10: Dots/bollar ska INTE synas - ta bort helt */}
+            {/* Dennis 2025-11-10: DOTS BORTTAGNA - Ska INTE synas någonstans! */}
           </>
         )}
       </div>
