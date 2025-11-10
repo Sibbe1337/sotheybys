@@ -207,18 +207,16 @@ export class LinearToPropertyMapper {
     // ========== DIMENSIONS (EXPANDED) ==========
     const living = parseNum(pickNV(nv, 'area') ?? lget(src.area!, 'fi')) || 0;
     
-    // Dennis 2025-11-10: Parse "Yta för andra utrymmen" - FIX: Extract .value from Linear structure
-    const otherAreaObj = lget((src as any).otherArea, 'fi');
-    const otherSpaces = parseNum(pickNV(nv, 'otherArea') ?? otherAreaObj?.value);
+    // Dennis 2025-11-10: Parse "Yta för andra utrymmen" 
+    // lget() already extracts .value from Linear's nested structure
+    const otherSpaces = parseNum(pickNV(nv, 'otherArea') ?? lget((src as any).otherArea, 'fi'));
     
-    // Dennis 2025-11-10: Total area for properties - FIX: Extract .value from Linear structure
-    // Linear structure: overallArea.fi.value = "60 m²", otherArea.fi.value = "5 m²"
-    const overallAreaObj = lget((src as any).overallArea, 'fi');
-    const totalAreaStr = overallAreaObj?.value ?? lget(src.totalArea!, 'fi');
-    
+    // Dennis 2025-11-10: Total area for properties
+    // lget() handles Linear's structure: overallArea.fi.value = "60 m²"
     let total = parseNum(
       pickNV(nv, 'totalArea', 'total_area', 'kokonaisala') ??
-      totalAreaStr
+      lget((src as any).overallArea, 'fi') ??
+      lget(src.totalArea!, 'fi')
     );
 
     // If no explicit total but we have otherSpaces, calculate: total = living + otherSpaces
