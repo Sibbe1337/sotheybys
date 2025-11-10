@@ -4,10 +4,11 @@ import { useState, useMemo } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { Link } from '@/lib/navigation';
-import PropertyCard from './PropertyCard';
+import FeaturedPropertyCard from './FeaturedPropertyCard';
 import FilterToggle from '../Filters/FilterToggle';
 import type { Property, Locale } from '@/lib/domain/property.types';
-import type { CardVariant } from './PropertyCard';
+
+type CardVariant = 'apartment' | 'property' | 'rental';
 
 // Lazy load map for performance
 const ListingMap = dynamic(() => import('../Map/ListingMap').then(mod => ({ default: mod.ListingMap })), {
@@ -470,42 +471,48 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                     if (isRental) variant = 'rental';
                     else if (isApartment) variant = 'apartment';
                     
-                    // Map address (without apartment number)
+                    // Dennis 2025-11-10: Samma kort-layout som på hem-sidan
+                    // Build full address: "Gatan Trapp, 00210 Helsinki"
                     const addressParts = [
                       property.address[language] || property.address.fi,
                       property.gate || '',
                     ].filter(Boolean);
                     const title = addressParts.join(' ').trim();
+                    const postalCode = property.postalCode;
+                    const city = property.city[language] || property.city.fi;
+                    const fullAddress = postalCode 
+                      ? `${title}, ${postalCode} ${city}`.trim()
+                      : `${title}, ${city}`.trim();
                     
-                    // Map images
+                    // Dennis 2025-11-10: ENDAST 3 första bilderna i karusellen
                     const images = (property.media.images || [])
                       .filter(img => !img.floorPlan)
+                      .slice(0, 3)
                       .map(img => ({ url: img.url, alt: title }));
                     
-                    // Get district from city
-                    const district = property.city[language] || property.city.fi;
+                    // District
+                    const district = property.district?.[language] || property.district?.fi;
                     
-                    // Get apartment type (huoneistoselitelmä)
-                    const apartmentTypeText = property.meta.apartmentType?.[language] || property.meta.apartmentType?.fi;
+                    // Type labels
+                    const propertyType = property.meta.listingTypeLabel?.[language] || property.meta.listingTypeLabel?.fi || property.meta.typeCode;
+                    const apartmentType = property.meta.apartmentType?.[language] || property.meta.apartmentType?.fi;
                     
-                    // Get listing type label
-                    const listingTypeLabel = property.meta.listingTypeLabel?.[language] || property.meta.listingTypeLabel?.fi || property.meta.typeCode;
-                    
-                    // Calculate "other area" from balcony + terrace
+                    // Calculate "other area" from balcony + terrace  
                     const balconyArea = property.dimensions.balcony || 0;
                     const terraceArea = property.dimensions.terrace || 0;
                     const otherArea = balconyArea + terraceArea > 0 ? balconyArea + terraceArea : undefined;
                     
                     return (
-                      <PropertyCard
+                      <FeaturedPropertyCard
                         key={property.id}
                         href={`/${language}/kohde/${property.slug}`}
                         locale={language}
-                        title={title}
-                        listingTypeLabel={listingTypeLabel}
-                        apartmentTypeText={apartmentTypeText}
+                        fullAddress={fullAddress}
+                        propertyType={propertyType}
+                        apartmentType={apartmentType}
                         district={district}
                         images={images}
+                        showCarousel={true}
                         variant={variant}
                         livingArea={property.dimensions.living}
                         otherArea={otherArea}
@@ -514,7 +521,6 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                         askPrice={property.pricing.sales}
                         debtFreePrice={property.pricing.debtFree}
                         monthlyRent={rent}
-                        priorityFirstImage={index === 0}
                       />
                     );
                   })}
