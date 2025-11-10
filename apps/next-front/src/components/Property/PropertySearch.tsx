@@ -492,9 +492,9 @@ export default function PropertySearch({ properties, language }: PropertySearchP
         <div className="max-w-[1400px] mx-auto px-6">
           {filteredProperties.length > 0 ? (
             <>
-              {/* Grid View - NEW PropertyCard with 3-column layout */}
+              {/* Grid View - Dennis 2025-11-10: SAMMA layout som huvudsidan (2 kolumner) */}
               {viewMode === 'grid' && (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                   {filteredProperties.map((property, index) => {
                     // Determine card variant
                     const rent = property.meta.rent || property.rental?.monthlyRent || 0;
