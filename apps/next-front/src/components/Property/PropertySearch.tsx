@@ -476,6 +476,10 @@ export default function PropertySearch({ properties, language }: PropertySearchP
       {/* Results */}
       <section className="py-12 lg:py-20 bg-white">
         <div className="max-w-[1400px] mx-auto px-6">
+          {(() => {
+            console.log('🔍 [FILTER DEBUG] RENDERING UI with', filteredProperties.length, 'properties');
+            return null;
+          })()}
           {filteredProperties.length > 0 ? (
             <>
               {/* Grid View - NEW PropertyCard with 3-column layout */}
