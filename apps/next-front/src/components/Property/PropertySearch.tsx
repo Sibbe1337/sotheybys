@@ -220,9 +220,12 @@ export default function PropertySearch({ properties, language }: PropertySearchP
               <select
                 className="w-full px-4 py-3 border border-gray-300 rounded-none text-sm focus:outline-none focus:border-[var(--color-primary)]"
                 value={selectedType}
+                onClick={() => console.log('🔍 [FILTER DEBUG] Dropdown CLICKED! Current value:', selectedType)}
+                onFocus={() => console.log('🔍 [FILTER DEBUG] Dropdown FOCUSED!')}
                 onChange={(e) => {
-                  console.log('🔍 [FILTER DEBUG] Type changed from', selectedType, 'to', e.target.value);
+                  console.log('🔍 [FILTER DEBUG] onChange FIRED! Type changed from', selectedType, 'to', e.target.value);
                   setSelectedType(e.target.value);
+                  console.log('🔍 [FILTER DEBUG] setSelectedType called with:', e.target.value);
                 }}
               >
                 {PROPERTY_TYPES
