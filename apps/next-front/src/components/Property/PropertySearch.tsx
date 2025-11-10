@@ -111,11 +111,6 @@ export default function PropertySearch({ properties, language }: PropertySearchP
   const [selectedArea, setSelectedArea] = useState('all');
   const [isFilterOpen, setIsFilterOpen] = useState(true); // Mobile collapsible state
 
-  // DEBUG: Log state changes
-  useEffect(() => {
-    console.log('🔍 [FILTER DEBUG] selectedType STATE CHANGED TO:', selectedType);
-  }, [selectedType]);
-
   // DYNAMIC FACETS: Extract unique areas/cities and property types from properties
   const dynamicAreas = useMemo(() => {
     const areasSet = new Set<string>();
