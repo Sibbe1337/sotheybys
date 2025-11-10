@@ -76,12 +76,36 @@ const PROPERTY_TYPES = [
     filter: (p: Property) => {
       const rent = p.meta.rent || 0;
       const isOnSale = !p.meta.status || p.meta.status === 'ACTIVE' || p.meta.status === 'RESERVED';
-      if (rent > 0 || !isOnSale) return false; // PDF spec s.3-4: exclude rentals and non-sale from listings
+      if (rent > 0 || !isOnSale) return false;
       const type = (p.meta.typeCode || '').toLowerCase();
-      return type.includes('rivi') || type.includes('row') || type.includes('townhouse');
+      return type.includes('rivi') || type.includes('row') || type.includes('townhouse') || type.includes('paritalo');
+    }
+  },
+  {
+    id: 'cottage',
+    label: { fi: 'Mökit ja huvilat', sv: 'Stugor och villor', en: 'Cottages and villas' },
+    image: '/images/property-types/cottage.svg',
+    filter: (p: Property) => {
+      const rent = p.meta.rent || 0;
+      const isOnSale = !p.meta.status || p.meta.status === 'ACTIVE' || p.meta.status === 'RESERVED';
+      if (rent > 0 || !isOnSale) return false;
+      const type = (p.meta.typeCode || '').toLowerCase();
+      return type.includes('mökki') || type.includes('huvila') || type.includes('cottage') || type.includes('cabin');
+    }
+  },
+  {
+    id: 'farm',
+    label: { fi: 'Maatilat', sv: 'Gårdar', en: 'Farms' },
+    image: '/images/property-types/farm.svg',
+    filter: (p: Property) => {
+      const rent = p.meta.rent || 0;
+      const isOnSale = !p.meta.status || p.meta.status === 'ACTIVE' || p.meta.status === 'RESERVED';
+      if (rent > 0 || !isOnSale) return false;
+      const type = (p.meta.typeCode || '').toLowerCase();
+      return type.includes('maatila') || type.includes('farm') || type.includes('estate');
     }
   }
-  // ✅ SPEC FIX: 'rental' type removed from filter - rentals have dedicated page (/kohteet/vuokrakohteet)
+  // Dennis 2025-11-10: Alla 14 objekt täcks nu av filter-kategorier
 ];
 
 export default function PropertySearch({ properties, language }: PropertySearchProps) {
