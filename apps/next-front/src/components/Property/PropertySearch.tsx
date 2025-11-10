@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { Link } from '@/lib/navigation';
@@ -105,6 +105,11 @@ export default function PropertySearch({ properties, language }: PropertySearchP
   const [viewMode, setViewMode] = useState<'grid' | 'list' | 'map'>('grid');
   const [selectedArea, setSelectedArea] = useState('all');
   const [isFilterOpen, setIsFilterOpen] = useState(true); // Mobile collapsible state
+
+  // DEBUG: Log state changes
+  useEffect(() => {
+    console.log('🔍 [FILTER DEBUG] selectedType STATE CHANGED TO:', selectedType);
+  }, [selectedType]);
 
   // DYNAMIC FACETS: Extract unique areas/cities and property types from properties
   const dynamicAreas = useMemo(() => {
@@ -228,22 +233,25 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                   console.log('🔍 [FILTER DEBUG] setSelectedType called with:', e.target.value);
                 }}
               >
+                <option value="all">
+                  {PROPERTY_TYPES[0].label[language]} ({properties.length})
+                </option>
                 {PROPERTY_TYPES
+                  .slice(1)
                   .filter(type => {
-                    // Always show "all" type
-                    if (type.id === 'all') return true;
-                    // Only show types with at least 1 property
                     const count = dynamicPropertyTypes.get(type.id) || 0;
                     return count > 0;
                   })
                   .map(type => {
-                  const count = type.id === 'all' ? properties.length : (dynamicPropertyTypes.get(type.id) || 0);
-                  return (
-                    <option key={type.id} value={type.id}>
-                      {type.label[language]} ({count})
-                    </option>
-                  );
-                })}
+                    const count = dynamicPropertyTypes.get(type.id) || 0;
+                    console.log('🔍 [FILTER DEBUG] Rendering option:', type.id, 'with value:', type.id);
+                    return (
+                      <option key={type.id} value={type.id}>
+                        {type.label[language]} ({count})
+                      </option>
+                    );
+                  })
+                }
               </select>
             </div>
           </div>
