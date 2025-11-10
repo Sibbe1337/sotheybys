@@ -195,6 +195,9 @@ export default function PropertySearch({ properties, language }: PropertySearchP
       {/* Simplified Search Filters - NON-STICKY on mobile, static/optional sticky on desktop */}
       <section className="py-8 bg-white border-y border-gray-200">
         <div className="max-w-[1400px] mx-auto px-6">
+          {/* Dennis 2025-11-10: Search title FÖRE filtren */}
+          <h2 className="text-2xl font-light text-gray-900 mb-6">{translations.searchTitle[language]}</h2>
+          
           <FilterToggle locale={language}>
           {/* Row 1: Dropdowns */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
