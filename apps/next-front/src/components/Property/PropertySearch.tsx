@@ -507,6 +507,7 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                         key={property.id}
                         href={`/${language}/kohde/${property.slug}`}
                         locale={language}
+                        title={title}
                         fullAddress={fullAddress}
                         propertyType={propertyType}
                         apartmentType={apartmentType}
