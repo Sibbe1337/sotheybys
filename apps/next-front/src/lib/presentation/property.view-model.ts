@@ -183,8 +183,30 @@ export class PropertyVM {
       
       // Rich content (NEW Phase 3)
       // ✅ SPEC: Allow FI fallback for descriptions (user-friendly), but strict for other fields
-      description: lpickWithFallback(p.description, l, true), // Allow FI fallback
-      descriptionTitle: lpickWithFallback(p.descriptionTitle, l, true),
+      description: (() => {
+        const desc = lpickWithFallback(p.description, l, true);
+        console.log('[🔍 DESCRIPTION DEBUG]', { 
+          locale: l,
+          description: p.description,
+          fi: p.description?.fi?.substring(0, 100),
+          sv: p.description?.sv?.substring(0, 100),
+          en: p.description?.en?.substring(0, 100),
+          selected: desc?.substring(0, 100)
+        });
+        return desc;
+      })(),
+      descriptionTitle: (() => {
+        const title = lpickWithFallback(p.descriptionTitle, l, true);
+        console.log('[🔍 TITLE DEBUG]', {
+          locale: l,
+          title: p.descriptionTitle,
+          fi: p.descriptionTitle?.fi,
+          sv: p.descriptionTitle?.sv,
+          en: p.descriptionTitle?.en,
+          selected: title
+        });
+        return title;
+      })(),
 
       // Dimensions (NEW Phase 3)
       rooms: p.dimensions.rooms,
