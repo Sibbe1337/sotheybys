@@ -151,7 +151,6 @@ export function PropertySections({ vm, locale }: PropertySectionsProps) {
           <Field 
             label={getFieldLabel('salesPrice', locale)} 
             value={vm.price}
-            sub={fmtPerM2(salesPriceNum, livingAreaNum, localeStr)}
             alwaysShow 
             locale={locale}
           />

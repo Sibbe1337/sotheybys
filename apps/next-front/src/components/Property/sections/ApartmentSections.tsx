@@ -113,7 +113,7 @@ export function ApartmentSections({ vm, locale }: ApartmentSectionsProps) {
   const maintenanceNum = parseEuropeanNumber(vm.fees?.maintenance) || 0;
   const financingNum = parseEuropeanNumber(vm.fees?.financing) || 0;
   const totalFeesNum = maintenanceNum + financingNum;
-  const totalFees = totalFeesNum > 0 ? `${totalFeesNum.toLocaleString(localeStr)} €/kk` : undefined;
+  const totalFees = totalFeesNum > 0 ? fmtFee(totalFeesNum, localeStr) : undefined;
 
   return (
     <div>
@@ -166,13 +166,11 @@ export function ApartmentSections({ vm, locale }: ApartmentSectionsProps) {
           <Field 
             label={getFieldLabel('debtFreePrice', locale)} 
             value={vm.priceDebtFree}
-            sub={fmtPerM2(debtFreePriceNum, livingAreaNum, localeStr)}
             alwaysShow 
           />
           <Field 
             label={getFieldLabel('salesPrice', locale)} 
             value={vm.price}
-            sub={fmtPerM2(salesPriceNum, livingAreaNum, localeStr)}
             alwaysShow 
           />
           <Field 
@@ -200,7 +198,6 @@ export function ApartmentSections({ vm, locale }: ApartmentSectionsProps) {
           <Field 
             label={getFieldLabel('totalFees', locale)} 
             value={totalFees}
-            sub={fmtPerM2(totalFeesNum, livingAreaNum, localeStr)}
           />
           <Field 
             label={getFieldLabel('waterFee', locale)} 
