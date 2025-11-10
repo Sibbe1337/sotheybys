@@ -15,13 +15,23 @@ export const fmtPerM2 = (
 };
 
 /**
- * Plot Area Formatter - Dennis 2025-11-10: ALWAYS show in hectares for consistency
- * Fixes: Mailatie 12,99 ha → 1,2990 ha (correct), Mellstenintie 3994 m² → 0,3994 ha
+ * Plot Area Formatter - Dennis 2025-11-10: Smart unit based on size
+ * < 10 000 m² → show in m²
+ * ≥ 10 000 m² → show in ha
  */
 export const fmtPlotArea = (m2: number | undefined, locale: string = 'fi-FI'): string => {
   if (!m2 || m2 <= 0) return '';
-  
-  // Dennis: ALWAYS convert to hectares (m² / 10000)
+
+  // Dennis: Under 10 000 m² → visa i m², annars i ha
+  if (m2 < 10000) {
+    const formatted = new Intl.NumberFormat(locale, {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(m2);
+    return `${formatted} m²`;
+  }
+
+  // ≥ 10 000 m² → convert to hectares
   const ha = m2 / 10000;
   const formatted = new Intl.NumberFormat(locale, {
     minimumFractionDigits: 2,

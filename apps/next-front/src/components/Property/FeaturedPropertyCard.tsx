@@ -93,11 +93,21 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
   // Format area
   const area = (n?: number | null) => (typeof n === 'number' && n > 0 ? `${n.toLocaleString(L)} m²` : '');
 
-  // Format plot - Dennis 2025-11-10: ALWAYS show in hectares for consistency
+  // Format plot - Dennis 2025-11-10: Smart unit based on size
+  // < 10 000 m² → m², ≥ 10 000 m² → ha
   const plot = (n?: number | null) => {
     if (typeof n !== 'number' || n <= 0) return '';
     
-    // Convert to hectares (m² / 10000)
+    // Dennis: Under 10 000 m² → visa i m², annars i ha
+    if (n < 10000) {
+      const formatted = new Intl.NumberFormat(L, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      }).format(n);
+      return `${formatted} m²`;
+    }
+    
+    // ≥ 10 000 m² → convert to hectares
     const ha = n / 10000;
     const formatted = new Intl.NumberFormat(L, {
       minimumFractionDigits: 2,
