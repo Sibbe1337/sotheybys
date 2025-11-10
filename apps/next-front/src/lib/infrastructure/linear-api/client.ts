@@ -12,7 +12,8 @@ export class LinearAPIClient {
 
   async fetchListings(): Promise<LinearListing[]> {
     try {
-      const endpoint = `${this.baseUrl}/v2/listings?languages[]=fi`;
+      // Dennis 2025-11-10: ALLTID hämta alla tre språk från Linear!
+      const endpoint = `${this.baseUrl}/v2/listings?languages[]=fi&languages[]=sv&languages[]=en`;
       
       log('🔥 LINEAR CLIENT: Starting fetch from:', endpoint);
       log('🔥 BASE URL:', this.baseUrl);
