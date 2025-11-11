@@ -28,6 +28,10 @@ export interface Property {
     debtFree: number;   // Velaton hinta
     debt: number;       // debtFree - sales (>=0)
     propertyTax?: number; // Kiinteistövero (ONLY for properties, NOT apartments)
+    
+    // Tarjouskauppa (bidding) - Dennis 2025-11-11
+    biddingStartPrice?: number | null;  // Tarjouskaupan velaton lähtöhinta
+    biddingUrl?: string | null;         // Link to bidding page
   };
 
   // Dimensions (expanded in Phase 3)

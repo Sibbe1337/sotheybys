@@ -205,6 +205,13 @@ export class LinearToPropertyMapper {
       (src.propertyTax && (lget(src.propertyTax, locale) || lget(src.propertyTax, 'fi'))) ?? 
       (src.realEstateTax && (lget(src.realEstateTax, locale) || lget(src.realEstateTax, 'fi')))
     ) || undefined;
+    
+    // Dennis 2025-11-11: Tarjouskauppa (bidding) fields
+    const biddingStartPrice = parseEuro(
+      pickNV(nv, 'debtlessStartPrice') ?? 
+      (src.debtlessStartPrice && lget(src.debtlessStartPrice, locale))
+    ) || undefined;
+    const biddingUrl = (src as any).biddingUrl || (nv as any).biddingUrl || undefined;
 
     // ========== DIMENSIONS (EXPANDED) ==========
     const living = parseNum(pickNV(nv, 'area') ?? lget(src.area!, 'fi')) || 0;
@@ -401,7 +408,14 @@ export class LinearToPropertyMapper {
       description: description.fi || description.sv || description.en ? description : undefined,
       descriptionTitle: descriptionTitle.fi || descriptionTitle.sv || descriptionTitle.en ? descriptionTitle : undefined,
 
-      pricing: { sales, debtFree, debt, propertyTax },
+      pricing: { 
+        sales, 
+        debtFree, 
+        debt, 
+        propertyTax,
+        biddingStartPrice,  // Dennis 2025-11-11
+        biddingUrl          // Dennis 2025-11-11
+      },
 
       dimensions: { 
         living, 

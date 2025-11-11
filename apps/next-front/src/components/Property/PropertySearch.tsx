@@ -563,6 +563,9 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                         askPrice={property.pricing.sales}
                         debtFreePrice={property.pricing.debtFree}
                         monthlyRent={rent}
+                        biddingStartPrice={property.pricing.biddingStartPrice}  // Dennis 2025-11-11
+                        biddingUrl={property.pricing.biddingUrl}                // Dennis 2025-11-11
+                        internationalUrl={property.internationalUrl}            // Dennis 2025-11-11
                         agent={agent}
                       />
                     );
@@ -636,6 +639,9 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                         askPrice={property.pricing.sales}
                         debtFreePrice={property.pricing.debtFree}
                         monthlyRent={rent}
+                        biddingStartPrice={property.pricing.biddingStartPrice}  // Dennis 2025-11-11
+                        biddingUrl={property.pricing.biddingUrl}                // Dennis 2025-11-11
+                        internationalUrl={property.internationalUrl}            // Dennis 2025-11-11
                         agent={agent}
                       />
                     );

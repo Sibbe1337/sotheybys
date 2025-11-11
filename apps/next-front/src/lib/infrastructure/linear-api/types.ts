@@ -30,6 +30,10 @@ export interface LinearListing {
   debtFreePrice?: LinearLocalized;
   propertyTax?: LinearLocalized;         // Kiinteistövero (ONLY for properties)
   realEstateTax?: LinearLocalized;       // Alternative field name
+  
+  // Tarjouskauppa (bidding) - Dennis 2025-11-11
+  debtlessStartPrice?: LinearLocalized;  // Tarjouskaupan velaton lähtöhinta
+  biddingUrl?: string;                   // Link to bidding page
 
   // dimensions
   area?: LinearLocalized;

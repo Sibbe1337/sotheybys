@@ -116,6 +116,9 @@ export default function FeaturedPropertyGrid({ properties, locale }: FeaturedPro
             debtFreePrice={property.pricing.debtFree}
             askPrice={property.pricing.sales}
             monthlyRent={rent}
+            biddingStartPrice={property.pricing.biddingStartPrice}  // Dennis 2025-11-11
+            biddingUrl={property.pricing.biddingUrl}                // Dennis 2025-11-11
+            internationalUrl={property.internationalUrl}            // Dennis 2025-11-11
             livingArea={property.dimensions.living}
             otherArea={otherArea}
             totalArea={property.dimensions.total}

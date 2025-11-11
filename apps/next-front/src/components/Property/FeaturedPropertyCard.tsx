@@ -36,6 +36,13 @@ export interface FeaturedPropertyCardProps {
   askPrice?: number | null;        // Myyntihinta (Mh)
   monthlyRent?: number | null;     // Vuokra/kk
   
+  // Tarjouskauppa (bidding) - Dennis 2025-11-11
+  biddingStartPrice?: number | null;  // Tarjouskaupan lähtöhinta
+  biddingUrl?: string | null;         // Link to bidding
+  
+  // International marketing - Dennis 2025-11-11
+  internationalUrl?: string | null;   // Global Listing URL
+  
   // Areas
   livingArea?: number | null;      // m² (Bostadsyta)
   otherArea?: number | null;       // m² (Balkong + Terrass för lägenhet)
@@ -66,6 +73,9 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
     debtFreePrice,
     askPrice,
     monthlyRent,
+    biddingStartPrice,
+    biddingUrl,
+    internationalUrl,
     livingArea,
     otherArea,
     totalArea,
@@ -116,9 +126,22 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
     return `${formatted} ha`;
   };
 
+  // Dennis 2025-11-11: Tarjouskauppa price label translations
+  const biddingLabel = {
+    fi: 'TARJOUSKAUPPA LÄHTÖHINTA',
+    sv: 'BUDGIVNING MED START FRÅN',
+    en: 'OPENING BIDS STARTING AT'
+  };
+
   // Price lines
   let priceDisplay = '';
-  if (variant === 'rental' && monthlyRent) {
+  let priceLabelOverride = ''; // For tarjouskauppa special label
+  
+  // Dennis 2025-11-11: If this is a tarjouskauppa property, show bidding start price with special label
+  if (biddingStartPrice && biddingStartPrice > 0) {
+    priceLabelOverride = biddingLabel[locale];
+    priceDisplay = money(biddingStartPrice);
+  } else if (variant === 'rental' && monthlyRent) {
     const suffix = locale === 'fi' ? '/kk' : locale === 'sv' ? '/mån' : '/month';
     priceDisplay = `${money(monthlyRent)} ${suffix}`;
   } else if (variant === 'apartment' && (debtFreePrice || askPrice)) {
@@ -224,9 +247,16 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
           </h3>
         </Link>
 
-        {/* Price */}
+        {/* Price - Dennis 2025-11-11: Show tarjouskauppa label if applicable */}
         {priceDisplay && (
-          <p className="mb-3 text-lg font-semibold text-gray-900">{priceDisplay}</p>
+          <div className="mb-3">
+            {priceLabelOverride && (
+              <p className="text-xs font-semibold uppercase tracking-wider text-gray-600 mb-1">
+                {priceLabelOverride}
+              </p>
+            )}
+            <p className="text-lg font-semibold text-gray-900">{priceDisplay}</p>
+          </div>
         )}
 
         {/* Description */}
@@ -289,6 +319,30 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
               {contactText}
             </a>
           </div>
+        )}
+
+        {/* Dennis 2025-11-11: SEURAA TARJOUSKAUPPA button (only for bidding properties) */}
+        {biddingUrl && (
+          <a
+            href={biddingUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 w-full rounded-none bg-[#8e740b] px-4 py-3 text-center text-sm font-medium uppercase tracking-wider text-white transition-colors hover:bg-[#6d5708]"
+          >
+            {locale === 'fi' ? 'SEURAA TARJOUSKAUPPAA' : locale === 'sv' ? 'FÖLJ BUDGIVNINGEN' : 'FOLLOW BIDDING'}
+          </a>
+        )}
+        
+        {/* Dennis 2025-11-11: GLOBAL LISTING button (only if published internationally) */}
+        {internationalUrl && (
+          <a
+            href={internationalUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 w-full rounded-none bg-gray-800 px-4 py-3 text-center text-sm font-medium uppercase tracking-wider text-white transition-colors hover:bg-black"
+          >
+            GLOBAL LISTING
+          </a>
         )}
 
         {/* Dennis: "Katso kohde" tar upp hela bredden */}
