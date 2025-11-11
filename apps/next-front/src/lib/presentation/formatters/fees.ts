@@ -6,13 +6,13 @@
 export const fmtFee = (n: number | undefined, locale = 'fi-FI'): string => {
   if (n == null || n === 0) return '';
   
-  // Dennis: Suffix must be localized
+  // Dennis 2025-11-11: Suffix must be localized, NO decimals for rent
   const suffix = locale === 'sv-SE' ? '/månad' : locale === 'en-GB' ? '/month' : '/kk';
   
   return new Intl.NumberFormat(locale, {
     style: 'currency',
     currency: 'EUR',
-    maximumFractionDigits: 2
+    maximumFractionDigits: 0  // Dennis 2025-11-11: No decimals (€3,840 not €3,840.00)
   }).format(n) + suffix;
 };
 
