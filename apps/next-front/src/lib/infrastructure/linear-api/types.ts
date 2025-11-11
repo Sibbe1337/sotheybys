@@ -38,7 +38,9 @@ export interface LinearListing {
   // dimensions
   area?: LinearLocalized;
   totalArea?: LinearLocalized;
+  overallArea?: LinearLocalized;         // Alternative field for total area
   plotArea?: LinearLocalized;
+  businessPremiseArea?: LinearLocalized; // Toimitilan pinta-ala (commercial) - Dennis 2025-11-11
   balconyArea?: LinearLocalized;         // NEW Phase 3
   terraceArea?: LinearLocalized;         // NEW Phase 3
   rooms?: LinearLocalized;               // NEW Phase 3 (e.g. "3h+k")

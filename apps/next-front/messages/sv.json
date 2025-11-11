@@ -324,10 +324,17 @@
       "floor": "Våning",
       "area": "Yta",
       "totalArea": "Total yta",
+      "businessArea": "Affärslokalens area",
       "balconyArea": "Balkongyta",
       "terraceArea": "Terrassyta",
       "yearBuilt": "Byggår",
       "energyClass": "Energiklass",
+      "energyCertificate": "Energicertifikat",
+      "energyCertStatus": {
+        "HAS_CERTIFICATE": "Ja",
+        "NOT_REQUIRED_BY_LAW": "Inget lagstadgat energicertifikat",
+        "EXEMPT_BY_ACT": "Undantagen enligt energicertifikatlagen"
+      },
       "heatingSystem": "Värmesystem",
       "ventilationSystem": "Ventilation",
       "elevator": "Hiss",

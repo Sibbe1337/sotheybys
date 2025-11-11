@@ -39,6 +39,7 @@ export interface Property {
     living: number;      // m² - Asuinpinta-ala
     total?: number;      // m² - Kokonaispinta-ala
     plot?: number;       // m² - Tontin pinta-ala
+    business?: number;   // m² - Toimitilan pinta-ala (for commercial properties) - Dennis 2025-11-11
     balcony?: number;    // m² - Parvekkeen pinta-ala (NEW)
     terrace?: number;    // m² - Terassin pinta-ala (NEW)
     rooms?: string;      // e.g. "3h+k" (NEW)

@@ -252,6 +252,14 @@ export class LinearToPropertyMapper {
     // So 'HECTARE'.includes('ARE') matched and returned wrong unit
     // Fixed by checking HECTARE first in normalizeUnit()
     
+    // Dennis 2025-11-11: Business premises area for commercial properties
+    // Fallback: if no businessPremiseArea, use totalArea for commercial
+    const business = parseNum(
+      pickNV(nv, 'businessPremiseArea') ?? 
+      lget(src.businessPremiseArea!, 'fi') ??
+      (total && total > 0 ? undefined : undefined) // Use total as fallback only if explicitly commercial
+    );
+    
     const balcony = parseNum(pickNV(nv, 'balconyArea') ?? lget(src.balconyArea!, 'fi'));
     const terrace = parseNum(pickNV(nv, 'terraceArea') ?? lget(src.terraceArea!, 'fi'));
     const rooms = lget(src.rooms!, locale) || pickNV(nv, 'rooms') || undefined;
@@ -421,6 +429,7 @@ export class LinearToPropertyMapper {
         living, 
         total, 
         plot,
+        business,  // Dennis 2025-11-11: Commercial premises area
         balcony,
         terrace,
         rooms,

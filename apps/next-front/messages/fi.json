@@ -324,10 +324,17 @@
       "floor": "Kerros",
       "area": "Pinta-ala",
       "totalArea": "Kokonaispinta-ala",
+      "businessArea": "Liiketilan pinta-ala",
       "balconyArea": "Parvekkeen pinta-ala",
       "terraceArea": "Terassin pinta-ala",
       "yearBuilt": "Rakennusvuosi",
       "energyClass": "Energialuokka",
+      "energyCertificate": "Energiatodistus",
+      "energyCertStatus": {
+        "HAS_CERTIFICATE": "Kyllä",
+        "NOT_REQUIRED_BY_LAW": "Ei lain edellyttämää energiatodistusta",
+        "EXEMPT_BY_ACT": "Kohde on vapautettu energiatodistuksesta"
+      },
       "heatingSystem": "Lämmitysjärjestelmä",
       "ventilationSystem": "Ilmanvaihto",
       "elevator": "Hissi",

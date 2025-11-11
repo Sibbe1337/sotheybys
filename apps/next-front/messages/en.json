@@ -324,10 +324,17 @@
       "floor": "Floor",
       "area": "Area",
       "totalArea": "Total Area",
+      "businessArea": "Business Premises Area",
       "balconyArea": "Balcony Area",
       "terraceArea": "Terrace Area",
       "yearBuilt": "Year Built",
       "energyClass": "Energy Class",
+      "energyCertificate": "Energy Certificate",
+      "energyCertStatus": {
+        "HAS_CERTIFICATE": "Yes",
+        "NOT_REQUIRED_BY_LAW": "No energy certificate required by law",
+        "EXEMPT_BY_ACT": "Exempt by act"
+      },
       "heatingSystem": "Heating System",
       "ventilationSystem": "Ventilation",
       "elevator": "Elevator",
