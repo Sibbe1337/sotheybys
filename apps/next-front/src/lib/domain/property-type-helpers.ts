@@ -45,6 +45,25 @@ const PROPERTY_CODES = new Set([
 ]);
 
 /**
+ * Commercial property codes (Kommersiella lokaler)
+ * Dennis 2025-11-11: Office spaces, retail, warehouses, etc.
+ */
+const COMMERCIAL_CODES = new Set([
+  'OFFICE',
+  'OFFICE_SPACE',
+  'TOIMISTO',
+  'TOIMISTOTILA',
+  'LIIKEHUONEISTO',
+  'COMMERCIAL_PROPERTY',
+  'COMMERCIAL',
+  'AFFÄRSLOKAL',
+  'WAREHOUSE',
+  'VARASTO',
+  'INDUSTRIAL_PROPERTY',
+  'TEOLLISUUSKIINTEISTÖ'
+]);
+
+/**
  * Check if property is an apartment (KERROSTALO/FLAT)
  * Apartments show: company info, company loans, housing cooperative details
  */
@@ -71,10 +90,20 @@ export function isRental(property: Property): boolean {
 }
 
 /**
+ * Check if property is commercial (office, retail, warehouse)
+ * Dennis 2025-11-11: Commercial properties show business area instead of living area
+ */
+export function isCommercial(property: Property): boolean {
+  const code = (property.meta.typeCode || '').toUpperCase();
+  return COMMERCIAL_CODES.has(code);
+}
+
+/**
  * Get property category for layout selection
  */
-export function getPropertyCategory(property: Property): 'apartment' | 'property' | 'rental' | 'unknown' {
+export function getPropertyCategory(property: Property): 'apartment' | 'property' | 'rental' | 'commercial' | 'unknown' {
   if (isRental(property)) return 'rental';
+  if (isCommercial(property)) return 'commercial';
   if (isApartment(property)) return 'apartment';
   if (isProperty(property)) return 'property';
   return 'unknown';
