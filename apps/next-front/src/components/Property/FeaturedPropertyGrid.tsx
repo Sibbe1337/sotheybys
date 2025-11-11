@@ -6,6 +6,7 @@
  */
 
 import type { Property, Locale } from '@/lib/domain/property.types';
+import { isCommercial } from '@/lib/domain/property-type-helpers';
 import FeaturedPropertyCard from './FeaturedPropertyCard';
 import type { FeaturedPropertyCardProps } from './FeaturedPropertyCard';
 
@@ -42,14 +43,16 @@ export default function FeaturedPropertyGrid({ properties, locale }: FeaturedPro
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
       {properties.map((property, index) => {
-        // Determine card variant
+        // Determine card variant - Dennis 2025-11-11: Added commercial support
         const rent = property.meta.rent || property.rental?.monthlyRent || 0;
         const isRental = rent > 0;
+        const isCommercialProperty = isCommercial(property);
         const typeCode = (property.meta.typeCode || '').toLowerCase();
         const isApartment = typeCode.includes('kerrostalo') || typeCode.includes('flat') || typeCode.includes('apartment');
         
-        let variant: 'apartment' | 'property' | 'rental' = 'property';
+        let variant: 'apartment' | 'property' | 'rental' | 'commercial' = 'property';
         if (isRental) variant = 'rental';
+        else if (isCommercialProperty) variant = 'commercial';
         else if (isApartment) variant = 'apartment';
         
         // Dennis: NO apartment number (mäklarregler), only street + gate
@@ -122,6 +125,7 @@ export default function FeaturedPropertyGrid({ properties, locale }: FeaturedPro
             livingArea={property.dimensions.living}
             otherArea={otherArea}
             totalArea={property.dimensions.total}
+            businessArea={property.dimensions.business}  // Dennis 2025-11-11: Commercial premises area
             plotArea={property.dimensions.plot}
             agent={agent}
           />

@@ -11,6 +11,7 @@ interface SummaryStatsProps {
   isApartment: boolean;
   isProperty: boolean;
   isRental: boolean;
+  isCommercial: boolean;  // Dennis 2025-11-11: Commercial properties support
 }
 
 interface StatProps {
@@ -31,7 +32,7 @@ function Stat({ label, value, sub }: StatProps) {
   );
 }
 
-export function SummaryStats({ vm, locale, isApartment, isProperty, isRental }: SummaryStatsProps) {
+export function SummaryStats({ vm, locale, isApartment, isProperty, isRental, isCommercial }: SummaryStatsProps) {
   // Extract numeric values for per m² calculations
   const salesPriceNum = vm.price ? parseInt(vm.price.replace(/[^0-9]/g, '')) : undefined;
   const debtFreePriceNum = vm.priceDebtFree ? parseInt(vm.priceDebtFree.replace(/[^0-9]/g, '')) : undefined;
@@ -63,6 +64,34 @@ export function SummaryStats({ vm, locale, isApartment, isProperty, isRental }: 
           value={vm.price} 
         />
         {/* Dennis: ONLY Stadsdel (district), NO City */}
+        {districtValue && (
+          <Stat 
+            label={locale === 'sv' ? 'Stadsdel' : locale === 'en' ? 'District' : 'Kaupunginosa'} 
+            value={districtValue} 
+          />
+        )}
+        <Stat 
+          label={t('stats.yearBuilt', locale)} 
+          value={vm.yearBuilt} 
+        />
+      </div>
+    );
+  }
+
+  // Commercial stats - Dennis 2025-11-11: Show businessArea instead of livingArea
+  if (isCommercial && !isRental) {
+    return (
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 sm:gap-6 py-4 sm:py-6 border-y border-gray-200">
+        <Stat 
+          label={t('fields.businessArea', locale)} 
+          value={vm.area} 
+        />
+        {/* Dennis: Price WITHOUT €/m² sub-text */}
+        <Stat 
+          label={askPriceLabel} 
+          value={vm.price} 
+        />
+        {/* Dennis: ONLY Stadsdel, NO City */}
         {districtValue && (
           <Stat 
             label={locale === 'sv' ? 'Stadsdel' : locale === 'en' ? 'District' : 'Kaupunginosa'} 
@@ -110,7 +139,7 @@ export function SummaryStats({ vm, locale, isApartment, isProperty, isRental }: 
     );
   }
 
-  // Rental stats
+  // Rental stats - Dennis 2025-11-11: Show both livingArea AND totalArea
   if (isRental) {
     return (
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 sm:gap-6 py-4 sm:py-6 border-y border-gray-200">
@@ -118,6 +147,13 @@ export function SummaryStats({ vm, locale, isApartment, isProperty, isRental }: 
           label={t('stats.livingArea', locale)} 
           value={vm.area} 
         />
+        {/* Dennis 2025-11-11: Show Total Area if exists for rentals */}
+        {vm.areaExtra && (
+          <Stat 
+            label={t('fields.totalArea', locale)} 
+            value={vm.areaExtra} 
+          />
+        )}
         <Stat 
           label={t('fields.monthlyRent', locale)} 
           value={vm.rental?.monthlyRent} 

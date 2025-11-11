@@ -29,7 +29,7 @@ export interface FeaturedPropertyCardProps {
   showCarousel?: boolean;     // true = show carousel with arrows (Objekt), false = single image (Hem)
   
   // Variant
-  variant: 'apartment' | 'property' | 'rental';
+  variant: 'apartment' | 'property' | 'rental' | 'commercial';
   
   // Prices
   debtFreePrice?: number | null;  // Velaton hinta (Vh)
@@ -46,7 +46,8 @@ export interface FeaturedPropertyCardProps {
   // Areas
   livingArea?: number | null;      // m² (Bostadsyta)
   otherArea?: number | null;       // m² (Balkong + Terrass för lägenhet)
-  totalArea?: number | null;       // m² (Total yta för fastighet)
+  totalArea?: number | null;       // m² (Total yta för fastighet / rental)
+  businessArea?: number | null;    // m² (Liiketilan pinta-ala för commercial) - Dennis 2025-11-11
   plotArea?: number | null;        // m² (Tomtstorlek)
   
   // Agent
@@ -79,6 +80,7 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
     livingArea,
     otherArea,
     totalArea,
+    businessArea,  // Dennis 2025-11-11: Commercial premises area
     plotArea,
     agent,
   } = props;
@@ -154,9 +156,25 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
   }
 
   // Area display
+  // Dennis 2025-11-11: Different logic for commercial, rental, property, apartment
   let areaDisplay = '';
-  if (variant === 'property') {
-    // "185 m² / 215 m² | 0,1299 ha"
+  if (variant === 'commercial') {
+    // Commercial: Show businessArea (or totalArea as fallback)
+    // "180 m²" (Affärslokalens area / Business premises area)
+    const commercialArea = businessArea || totalArea;
+    areaDisplay = area(commercialArea);
+  } else if (variant === 'rental') {
+    // Rental: Show both livingArea AND totalArea if both exist
+    // "141 m² • Total 185 m²"
+    const parts: string[] = [];
+    if (livingArea) parts.push(area(livingArea));
+    if (totalArea && totalArea !== livingArea) {
+      const totalLabel = locale === 'fi' ? 'Yht.' : locale === 'sv' ? 'Total' : 'Total';
+      parts.push(`${totalLabel} ${area(totalArea)}`);
+    }
+    areaDisplay = parts.join(' • ');
+  } else if (variant === 'property') {
+    // Property: "185 m² / 215 m² | 0,1299 ha"
     const parts: string[] = [];
     if (livingArea) parts.push(area(livingArea));
     if (totalArea) parts.push(area(totalArea));
@@ -169,8 +187,6 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
     } else if (plotPart) {
       areaDisplay = plotPart;
     }
-  } else if (variant === 'rental') {
-    areaDisplay = area(livingArea);
   } else {
     // Apartment: "141 m² + 31 m²"
     const parts: string[] = [];

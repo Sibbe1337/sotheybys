@@ -5,8 +5,9 @@ import dynamic from 'next/dynamic';
 import FeaturedPropertyCard from './FeaturedPropertyCard';
 import FilterToggle from '../Filters/FilterToggle';
 import type { Property, Locale } from '@/lib/domain/property.types';
+import { isCommercial } from '@/lib/domain/property-type-helpers';
 
-type CardVariant = 'apartment' | 'property' | 'rental';
+type CardVariant = 'apartment' | 'property' | 'rental' | 'commercial';
 
 // Lazy load map for performance
 const ListingMap = dynamic(() => import('../Map/ListingMap').then(mod => ({ default: mod.ListingMap })), {
@@ -494,14 +495,16 @@ export default function PropertySearch({ properties, language }: PropertySearchP
               {viewMode === 'grid' && (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                   {filteredProperties.map((property, index) => {
-                    // Determine card variant
+                    // Determine card variant - Dennis 2025-11-11: Added commercial support
                     const rent = property.meta.rent || property.rental?.monthlyRent || 0;
                     const isRental = rent > 0;
+                    const isCommercialProperty = isCommercial(property);
                     const typeCode = (property.meta.typeCode || '').toLowerCase();
                     const isApartment = typeCode.includes('kerrostalo') || typeCode.includes('flat') || typeCode.includes('apartment');
                     
                     let variant: CardVariant = 'property';
                     if (isRental) variant = 'rental';
+                    else if (isCommercialProperty) variant = 'commercial';
                     else if (isApartment) variant = 'apartment';
                     
                     // Dennis 2025-11-10: Samma kort-layout som på hem-sidan
@@ -559,6 +562,7 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                         livingArea={property.dimensions.living}
                         otherArea={otherArea}
                         totalArea={property.dimensions.total}
+                        businessArea={property.dimensions.business}  // Dennis 2025-11-11: Commercial premises area
                         plotArea={property.dimensions.plot}
                         askPrice={property.pricing.sales}
                         debtFreePrice={property.pricing.debtFree}
@@ -578,13 +582,16 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                 <div className="grid grid-cols-1 gap-8">
                   {filteredProperties.map((property, index) => {
                     // Dennis: Samma logik som grid view - återanvänd EXAKT samma FeaturedPropertyCard
+                    // Dennis 2025-11-11: Added commercial support
                     const rent = property.meta.rent || property.rental?.monthlyRent || 0;
                     const isRental = rent > 0;
+                    const isCommercialProperty = isCommercial(property);
                     const typeCode = (property.meta.typeCode || '').toLowerCase();
                     const isApartment = typeCode.includes('kerrostalo') || typeCode.includes('flat') || typeCode.includes('apartment');
                     
                     let variant: CardVariant = 'property';
                     if (isRental) variant = 'rental';
+                    else if (isCommercialProperty) variant = 'commercial';
                     else if (isApartment) variant = 'apartment';
                     
                     const addressParts = [
@@ -635,6 +642,7 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                         livingArea={property.dimensions.living}
                         otherArea={otherArea}
                         totalArea={property.dimensions.total}
+                        businessArea={property.dimensions.business}  // Dennis 2025-11-11: Commercial premises area
                         plotArea={property.dimensions.plot}
                         askPrice={property.pricing.sales}
                         debtFreePrice={property.pricing.debtFree}

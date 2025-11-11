@@ -1,4 +1,5 @@
 import { Property, Locale } from '@/lib/domain/property.types';
+import { isCommercial } from '@/lib/domain/property-type-helpers';
 import { fmtCurrency } from './formatters/currency';
 import { fmtArea } from './formatters/area';
 import { fmtFee, fmtFeeWithoutSuffix, calculateTotalFees } from './formatters/fees';
@@ -145,8 +146,17 @@ export class PropertyVM {
     const district = p.city[l] || p.city.fi;
     const localeStr = l === 'sv' ? 'sv-SE' : l === 'en' ? 'en-GB' : 'fi-FI';
     
-    const area = fmtArea(p.dimensions.living, localeStr);
-    const extra = p.dimensions.total ? fmtArea(p.dimensions.total, localeStr) : undefined;
+    // Dennis 2025-11-11: Commercial properties show businessArea, rentals show both living + total
+    const isCommercialProperty = isCommercial(p);
+    const isRental = this.isRental(p);
+    
+    const area = isCommercialProperty 
+      ? fmtArea(p.dimensions.business || p.dimensions.total, localeStr) // Commercial: business area or total as fallback
+      : fmtArea(p.dimensions.living, localeStr); // Normal: living area
+    
+    const extra = isRental && p.dimensions.total
+      ? fmtArea(p.dimensions.total, localeStr) // Rentals: show total area as well
+      : (p.dimensions.total ? fmtArea(p.dimensions.total, localeStr) : undefined); // Properties: show total if exists
     
     return {
       id: p.id,
