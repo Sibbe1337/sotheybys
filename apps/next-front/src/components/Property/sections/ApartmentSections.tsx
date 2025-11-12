@@ -117,6 +117,18 @@ export function ApartmentSections({ vm, locale }: ApartmentSectionsProps) {
   const financingNum = parseEuropeanNumber(vm.fees?.financing) || 0;
   const totalFeesNum = maintenanceNum + financingNum;
   
+  // Dennis 2025-11-10: DEBUG - Log fees to see if they exist
+  if (typeof window !== 'undefined') {
+    console.log('[FEES DEBUG]', {
+      locale,
+      maintenance: vm.fees?.maintenance,
+      financing: vm.fees?.financing,
+      maintenanceNum,
+      financingNum,
+      totalFeesNum
+    });
+  }
+  
   // Dennis: Use fmtFee for localized suffix (€/kk → €/månad → €/month)
   const totalFees = totalFeesNum > 0 ? fmtFee(totalFeesNum, localeStr) : undefined;
 
@@ -131,7 +143,7 @@ export function ApartmentSections({ vm, locale }: ApartmentSectionsProps) {
         />
         <Field 
           label={getFieldLabel('balcony', locale)} 
-          value={vm.features?.find(f => f.label.toLowerCase().includes('parveke') || f.label.toLowerCase().includes('balkong'))?.value ? getFieldLabel('yes', locale) : undefined}
+          value={vm.features?.find(f => f.label.toLowerCase().includes('parveke') || f.label.toLowerCase().includes('balkong') || f.label.toLowerCase().includes('balcony'))?.value ? getFieldLabel('yes', locale) : undefined}
         />
         <Field 
           label={getFieldLabel('sauna', locale)} 

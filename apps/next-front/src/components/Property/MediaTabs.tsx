@@ -64,7 +64,8 @@ export function MediaTabs({
   return (
     <div className="w-full">
       {/* Content - Dennis: Images FIRST, then buttons below */}
-      <div className="min-h-[300px] sm:min-h-[400px] bg-gray-50 rounded-lg overflow-hidden mb-4">
+      {/* Dennis 2025-11-12: Ta bort min-h constraints så bilder/video täcker hela framen */}
+      <div className="w-full bg-gray-50 rounded-lg overflow-hidden mb-4">
         {activeTab === 'photos' && photoImages.length > 0 && (
           <ImageCarousel images={photoImages} title={title} propertyId={propertyId} />
         )}
@@ -136,9 +137,10 @@ export function MediaTabs({
         )}
         
         {activeTab === 'video' && (
-          <div className="w-full min-h-[400px] flex items-center justify-center bg-black">
+          <div className="w-full">
             {videoUrl ? (
-              <div className="w-full aspect-video bg-black">
+              // Dennis 2025-11-12: Video täcker hela framen, ingen padding/black bars
+              <div className="w-full aspect-video">
                 <iframe 
                   src={getEmbedUrl(videoUrl)} 
                   className="w-full h-full border-0"
@@ -162,13 +164,13 @@ export function MediaTabs({
       </div>
 
       {/* Tab buttons - Dennis: UNDER bilderna (not above), MOBILE: scrollable horizontal */}
-      {/* Dennis 2025-11-10: Ta bort pointer-events-none så knappar ALLTID är klickbara */}
-      <div className="flex gap-2 mt-4 overflow-x-auto pb-2 scrollbar-hide relative z-10 -mx-3 px-3 sm:mx-0 sm:px-0">
+      {/* Dennis 2025-11-12: Grid på desktop (3 top, 2 bottom), scroll på mobil */}
+      <div className="flex sm:grid sm:grid-cols-3 gap-2 mt-4 overflow-x-auto sm:overflow-x-visible pb-2 scrollbar-hide relative z-10 -mx-3 px-3 sm:mx-0 sm:px-0">
         {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-3 sm:px-4 md:px-6 py-2 rounded-full whitespace-nowrap font-medium transition-colors text-xs sm:text-sm md:text-base flex-shrink-0 cursor-pointer ${
+            className={`px-3 sm:px-4 md:px-6 py-2 rounded-full whitespace-nowrap font-medium transition-colors text-xs sm:text-sm md:text-base flex-shrink-0 sm:flex-shrink cursor-pointer ${
               activeTab === tab.id 
                 ? 'bg-[#002349] text-white' 
                 : tab.enabled 

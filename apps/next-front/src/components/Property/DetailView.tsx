@@ -12,6 +12,7 @@ import { RentalSections } from './sections/RentalSections';
 import { HeroAddressBadge } from './HeroAddressBadge';
 import { TopBar } from './TopBar';
 import { t } from '@/lib/i18n/property-translations';
+import { isCommercial } from '@/lib/domain/property-type-helpers';
 
 type VM = import('@/lib/presentation/property.view-model').PropertyDetailVM;
 type Locale = 'fi' | 'sv' | 'en';
@@ -23,6 +24,14 @@ export function DetailView({ vm, locale }: Props) {
   
   // Extract property type from subtitle as fallback (e.g., "Mökki tai huvila • Kittilä" -> "mökki tai huvila")
   const typeFromSubtitle = (vm.subtitle?.split(' • ')[0] || '').toLowerCase().trim();
+  
+  // Dennis 2025-11-11: Detect commercial properties first (office, retail, warehouse, etc.)
+  const COMMERCIAL_CODES = [
+    'OFFICE', 'OFFICE_SPACE', 'TOIMISTO', 'TOIMISTOTILA',
+    'LIIKEHUONEISTO', 'COMMERCIAL_PROPERTY', 'COMMERCIAL', 'AFFÄRSLOKAL',
+    'WAREHOUSE', 'VARASTO', 'INDUSTRIAL_PROPERTY', 'TEOLLISUUSKIINTEISTÖ'
+  ];
+  const isCommercialProperty = COMMERCIAL_CODES.includes(typeCode);
   
   const isApartment = ['KERROSTALO', 'FLAT', 'APARTMENT_BUILDING'].includes(typeCode) ||
                       typeFromSubtitle === 'kerrostalo';
@@ -45,13 +54,14 @@ export function DetailView({ vm, locale }: Props) {
   
   const isRental = !!vm.rental;
   
-  // 🔍 DEBUG: Log detection for debugging
+  // 🔍 DEBUG: Log detection for debugging - Dennis 2025-11-11: Added isCommercialProperty
   console.log(`🔍 Property type detection for ${vm.title}:`, {
     typeCode,
     typeFromSubtitle,
     isApartment,
     isProperty,
-    isRental
+    isRental,
+    isCommercialProperty
   });
   
   const typePrefix = vm.subtitle.split(' • ')[0] || ''; // Objektstyp (Kerrostalo, etc.)
@@ -114,13 +124,14 @@ export function DetailView({ vm, locale }: Props) {
           <ShareButtons url={currentUrl} title={vm.title} />
         </div>
 
-        {/* Summary Stats */}
+        {/* Summary Stats - Dennis 2025-11-11: Added isCommercial */}
         <SummaryStats 
           vm={vm} 
           locale={locale} 
           isApartment={isApartment} 
           isProperty={isProperty} 
-          isRental={isRental} 
+          isRental={isRental}
+          isCommercial={isCommercialProperty}
         />
 
         {/* Bidding Link - if bidding property */}
@@ -233,11 +244,12 @@ export function DetailView({ vm, locale }: Props) {
           </div>
         )}
 
-        {/* Type-specific Sections */}
+        {/* Type-specific Sections - Dennis 2025-11-11: Added commercial support */}
         <div className="mb-12">
           {isRental && <RentalSections vm={vm} locale={locale} />}
-          {!isRental && isApartment && <ApartmentSections vm={vm} locale={locale} />}
-          {!isRental && isProperty && <PropertySections vm={vm} locale={locale} />}
+          {!isRental && isCommercialProperty && <PropertySections vm={vm} locale={locale} isCommercial={true} />}
+          {!isRental && !isCommercialProperty && isApartment && <ApartmentSections vm={vm} locale={locale} />}
+          {!isRental && !isCommercialProperty && isProperty && <PropertySections vm={vm} locale={locale} />}
         </div>
       </div>
     </div>
