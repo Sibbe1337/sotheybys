@@ -140,15 +140,21 @@ export function SummaryStats({ vm, locale, isApartment, isProperty, isRental, is
   }
 
   // Rental stats - Dennis 2025-11-11: Show both livingArea AND totalArea
+  // Dennis 2025-11-12: Support commercial rentals (Office Space) - show businessArea instead
   if (isRental) {
+    const areaLabel = isCommercial 
+      ? t('fields.businessArea', locale)  // "Liiketilan pinta-ala" for commercial
+      : t('stats.livingArea', locale);     // "Asuinpinta-ala" for residential
+    
     return (
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 sm:gap-6 py-4 sm:py-6 border-y border-gray-200">
         <Stat 
-          label={t('stats.livingArea', locale)} 
+          label={areaLabel} 
           value={vm.area} 
         />
         {/* Dennis 2025-11-11: Show Total Area if exists for rentals */}
-        {vm.areaExtra && (
+        {/* Dennis 2025-11-12: HIDE Total Area for commercial rentals - only show for residential */}
+        {vm.areaExtra && !isCommercial && (
           <Stat 
             label={t('fields.totalArea', locale)} 
             value={vm.areaExtra} 
