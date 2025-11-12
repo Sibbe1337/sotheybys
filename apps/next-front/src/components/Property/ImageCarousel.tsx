@@ -39,9 +39,10 @@ export function ImageCarousel({ images, title, propertyId }: ImageCarouselProps)
 
   return (
     <>
-      {/* Main Carousel - Reduced height with 21:9 aspect ratio */}
+      {/* Main Carousel - Dennis 2025-11-12: Optimerad för mobil med högre aspect ratio */}
       <section className="relative w-full bg-black">
-        <div className="relative w-full aspect-[21/9] overflow-hidden">
+        {/* Dennis 2025-11-12: Mobil 4:3 (mer square), Desktop 21:9 (bred panorama) */}
+        <div className="relative w-full aspect-[4/3] sm:aspect-[16/9] lg:aspect-[21/9] overflow-hidden">
           <Image
             key={imageKey}
             src={images[currentIndex].url}
@@ -58,33 +59,33 @@ export function ImageCarousel({ images, title, propertyId }: ImageCarouselProps)
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
         </div>
 
-        {/* Navigation Arrows - Desktop */}
+        {/* Navigation Arrows - Dennis 2025-11-12: Mindre på mobil, större på desktop */}
         <button
           onClick={goToPrev}
-          className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center bg-white/90 hover:bg-white text-gray-900 rounded-full shadow-lg transition-all hover:scale-110 z-10"
+          className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-white/90 hover:bg-white text-gray-900 rounded-full shadow-lg transition-all hover:scale-110 z-10"
           aria-label="Föregående bild"
         >
-          <ChevronLeft className="w-6 h-6" />
+          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
         <button
           onClick={goToNext}
-          className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center bg-white/90 hover:bg-white text-gray-900 rounded-full shadow-lg transition-all hover:scale-110 z-10"
+          className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-white/90 hover:bg-white text-gray-900 rounded-full shadow-lg transition-all hover:scale-110 z-10"
           aria-label="Nästa bild"
         >
-          <ChevronRight className="w-6 h-6" />
+          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
 
-        {/* Image Counter + Fullscreen Button */}
-        <div className="absolute top-4 right-4 flex items-center gap-2 z-10">
-          <div className="bg-black/60 text-white px-3 py-1 rounded-full text-sm">
+        {/* Image Counter + Fullscreen Button - Dennis 2025-11-12: Mindre på mobil */}
+        <div className="absolute top-2 sm:top-4 right-2 sm:right-4 flex items-center gap-1.5 sm:gap-2 z-10">
+          <div className="bg-black/60 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs sm:text-sm font-medium">
             {currentIndex + 1} / {images.length}
           </div>
           <button
             onClick={() => setIsFullscreen(true)}
-            className="w-10 h-10 flex items-center justify-center bg-black/60 hover:bg-black/80 text-white rounded-full transition-colors"
+            className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-black/60 hover:bg-black/80 text-white rounded-full transition-colors"
             aria-label="Visa i fullskärm"
           >
-            <Maximize2 className="w-5 h-5" />
+            <Maximize2 className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
         </div>
 
