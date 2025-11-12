@@ -12,8 +12,8 @@ import type { EnergyStatus } from '@/lib/domain/energy';
 interface PropertySectionsProps {
   vm: PropertyDetailVM;
   locale: Locale;
+  isCommercial?: boolean; // Dennis 2025-11-12: Support for commercial properties
 }
-
 interface FieldProps {
   label: string;
   value?: string | number | boolean;
@@ -98,7 +98,7 @@ function parseEuropeanNumber(value?: string): number | undefined {
   return Number.isFinite(num) && num > 0 ? num : undefined;
 }
 
-export function PropertySections({ vm, locale }: PropertySectionsProps) {
+export function PropertySections({ vm, locale, isCommercial = false }: PropertySectionsProps) {
   // Map locale for formatters
   const localeStr = locale === 'sv' ? 'sv-SE' : locale === 'en' ? 'en-GB' : 'fi-FI';
   
