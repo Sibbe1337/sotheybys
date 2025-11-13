@@ -38,7 +38,8 @@ export function TopBar({ address, postalCode, city, agentEmail, locale }: TopBar
   return (
     <div className="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-        <div className="flex items-center justify-between gap-3 sm:gap-4">
+        {/* Dennis 2025-11-12: Stack på mobil så knappen INTE täcker adressen */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
           {/* Breadcrumb - Dennis 2025-11-10: Mer tydlig på mobil */}
           <div className="flex items-center text-sm sm:text-base text-gray-700 min-w-0 flex-1">
             <span className="font-semibold text-gray-900 whitespace-nowrap">{translations.forSale[locale]}</span>
@@ -46,10 +47,10 @@ export function TopBar({ address, postalCode, city, agentEmail, locale }: TopBar
             <span className="truncate font-medium">{fullAddress}</span>
           </div>
 
-          {/* Contact Button - Dennis 2025-11-10: Tydligare på mobil */}
+          {/* Contact Button - Dennis 2025-11-12: Under adressen på mobil */}
           <a
             href={mailtoLink}
-            className="px-4 sm:px-6 py-2 sm:py-2.5 bg-[#002349] text-white font-bold text-xs sm:text-sm rounded hover:bg-[#001731] transition-colors whitespace-nowrap flex-shrink-0"
+            className="w-full sm:w-auto text-center px-4 sm:px-6 py-2 sm:py-2.5 bg-[#002349] text-white font-bold text-xs sm:text-sm rounded hover:bg-[#001731] transition-colors whitespace-nowrap flex-shrink-0"
           >
             {translations.contact[locale]}
           </a>

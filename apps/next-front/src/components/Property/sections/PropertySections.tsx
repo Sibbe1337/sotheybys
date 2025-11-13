@@ -14,6 +14,7 @@ interface PropertySectionsProps {
   locale: Locale;
   isCommercial?: boolean; // Dennis 2025-11-12: Support for commercial properties
 }
+
 interface FieldProps {
   label: string;
   value?: string | number | boolean;
@@ -169,4 +170,3 @@ export function PropertySections({ vm, locale, isCommercial = false }: PropertyS
     </div>
   );
 }
-

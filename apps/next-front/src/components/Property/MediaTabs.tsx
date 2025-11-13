@@ -139,8 +139,8 @@ export function MediaTabs({
         {activeTab === 'video' && (
           <div className="w-full">
             {videoUrl ? (
-              // Dennis 2025-11-12: Video täcker hela framen, ingen padding/black bars
-              <div className="w-full aspect-video">
+              // Dennis 2025-11-13: Video samma aspect ratio som bilder (4:3 mobil, 16:9 tablet, 21:9 desktop)
+              <div className="w-full aspect-[4/3] sm:aspect-[16/9] lg:aspect-[21/9]">
                 <iframe 
                   src={getEmbedUrl(videoUrl)} 
                   className="w-full h-full border-0"

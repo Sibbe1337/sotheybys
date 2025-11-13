@@ -475,7 +475,12 @@ export class LinearToPropertyMapper {
           
           return rawType.toUpperCase().replace(/ /g, '_');
         })(),
-        listingTypeLabel: localizeListingType(lget(src.listingType, 'en') || lget(src.listingType, 'fi') || lget(src.listingType, 'sv') || ''), // ✅ SPEC: Localized listing type
+        // Dennis 2025-11-13: Use Linear's localized listing type directly (Kerrostalo/Hyreshus/Apartment Building)
+        listingTypeLabel: {
+          fi: lget(src.listingType, 'fi') || lget(src.listingType, 'sv') || lget(src.listingType, 'en') || '',
+          sv: lget(src.listingType, 'sv') || lget(src.listingType, 'fi') || lget(src.listingType, 'en') || '',
+          en: lget(src.listingType, 'en') || lget(src.listingType, 'fi') || lget(src.listingType, 'sv') || ''
+        },
         
         // Basic metadata (from blueprint)
         identifierFi,
