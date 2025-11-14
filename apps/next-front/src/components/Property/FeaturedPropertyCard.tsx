@@ -338,12 +338,13 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
         )}
 
         {/* Dennis 2025-11-11: SEURAA TARJOUSKAUPPA button (only for bidding properties) */}
+        {/* Dennis 2025-11-13: Kantiga knappar, enhetlig stil */}
         {biddingUrl && (
           <a
             href={biddingUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2 w-full rounded-none bg-[#8e740b] px-4 py-3 text-center text-sm font-medium uppercase tracking-wider text-white transition-colors hover:bg-[#6d5708]"
+            className="mt-2 w-full rounded-none bg-[#8e740b] px-4 py-3 text-center text-xs sm:text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-[#6d5708] shadow-sm hover:shadow-md"
           >
             {locale === 'fi' ? 'SEURAA TARJOUSKAUPPAA' : locale === 'sv' ? 'FÖLJ BUDGIVNINGEN' : 'FOLLOW BIDDING'}
           </a>
@@ -355,16 +356,17 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
             href={internationalUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2 w-full rounded-none bg-gray-800 px-4 py-3 text-center text-sm font-medium uppercase tracking-wider text-white transition-colors hover:bg-black"
+            className="mt-2 w-full rounded-none bg-gray-800 px-4 py-3 text-center text-xs sm:text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-black shadow-sm hover:shadow-md"
           >
             GLOBAL LISTING
           </a>
         )}
 
         {/* Dennis: "Katso kohde" tar upp hela bredden */}
+        {/* Dennis 2025-11-13: Enhetlig stil - font-bold, tracking-wide */}
         <Link
           href={href}
-          className="mt-auto w-full rounded-none bg-[var(--color-primary)] px-4 py-3 text-center text-sm font-medium uppercase tracking-wider text-white transition-colors hover:bg-[#001731]"
+          className="mt-auto w-full rounded-none bg-[#002349] px-4 py-3 text-center text-xs sm:text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-[#001731] shadow-sm hover:shadow-md"
         >
           {viewText}
         </Link>

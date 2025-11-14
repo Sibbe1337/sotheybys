@@ -135,13 +135,15 @@ export default function PropertySearch({ properties, language }: PropertySearchP
   const [isFilterOpen, setIsFilterOpen] = useState(true); // Mobile collapsible state
 
   // DYNAMIC FACETS: Extract unique areas/cities and property types from properties
+  // Dennis 2025-11-13: Use locale-aware sort for Swedish/Finnish characters (ö, å, ä)
   const dynamicAreas = useMemo(() => {
     const areasSet = new Set<string>();
     properties.forEach(property => {
       const city = (property.city[language] || property.city.fi || '').trim();
       if (city) areasSet.add(city);
     });
-    return Array.from(areasSet).sort();
+    const locale = language === 'sv' ? 'sv-SE' : language === 'en' ? 'en-GB' : 'fi-FI';
+    return Array.from(areasSet).sort((a, b) => a.localeCompare(b, locale));
   }, [properties, language]);
 
   // Dennis 2025-11-10: Count properties for each type
@@ -203,14 +205,15 @@ export default function PropertySearch({ properties, language }: PropertySearchP
     });
   }, [properties, selectedType, priceRange, areaRange, selectedArea, language]);
 
+  // Dennis 2025-11-13: Fixed missing ö and å in Swedish translations
   const translations = {
-    searchTitle: { fi: 'Hae kohteita', sv: 'Sok objekt', en: 'Search properties' },
-    area: { fi: 'ALUE', sv: 'OMRADE', en: 'AREA' },
-    allAreas: { fi: 'Kaikki alueet', sv: 'Alla omraden', en: 'All areas' },
+    searchTitle: { fi: 'Hae kohteita', sv: 'Sök objekt', en: 'Search properties' },
+    area: { fi: 'ALUE', sv: 'OMRÅDE', en: 'AREA' },
+    allAreas: { fi: 'Kaikki alueet', sv: 'Alla områden', en: 'All areas' },
     propertyType: { fi: 'KOHDETYYPPI', sv: 'OBJEKTTYP', en: 'PROPERTY TYPE' },
-    priceRange: { fi: 'HINTAVALI', sv: 'PRISINTERVALL', en: 'PRICE RANGE' },
-    areaRange: { fi: 'KOKOVALIT', sv: 'STORLEKSINTERVALL', en: 'SIZE RANGE' },
-    resultsFound: { fi: 'kohdetta loytyi', sv: 'objekt hittades', en: 'properties found' }
+    priceRange: { fi: 'HINTAVÄLI', sv: 'PRISINTERVALL', en: 'PRICE RANGE' },
+    areaRange: { fi: 'KOKO', sv: 'STORLEKSINTERVALL', en: 'SIZE RANGE' },
+    resultsFound: { fi: 'kohdetta löytyi', sv: 'objekt hittades', en: 'properties found' }
   };
 
   return (

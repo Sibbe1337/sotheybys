@@ -64,8 +64,8 @@ export function MediaTabs({
   return (
     <div className="w-full">
       {/* Content - Dennis: Images FIRST, then buttons below */}
-      {/* Dennis 2025-11-12: Ta bort min-h constraints så bilder/video täcker hela framen */}
-      <div className="w-full bg-gray-50 rounded-lg overflow-hidden mb-4">
+      {/* Dennis 2025-11-13: Fixed min-height för alla tabs så dom int hoppar */}
+      <div className="w-full bg-gray-50 rounded-lg overflow-hidden mb-4 min-h-[400px] sm:min-h-[500px] lg:min-h-[600px]">
         {activeTab === 'photos' && photoImages.length > 0 && (
           <ImageCarousel images={photoImages} title={title} propertyId={propertyId} />
         )}
@@ -164,18 +164,19 @@ export function MediaTabs({
       </div>
 
       {/* Tab buttons - Dennis: UNDER bilderna (not above), MOBILE: scrollable horizontal */}
-      {/* Dennis 2025-11-12: Grid på desktop (3 top, 2 bottom), scroll på mobil */}
+      {/* Dennis 2025-11-13: KANTIGA knappar (no rounded-full!), 3 columns desktop (3 top + 2 bottom) */}
       <div className="flex sm:grid sm:grid-cols-3 gap-2 mt-4 overflow-x-auto sm:overflow-x-visible pb-2 scrollbar-hide relative z-10 -mx-3 px-3 sm:mx-0 sm:px-0">
         {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-3 sm:px-4 md:px-6 py-2 rounded-full whitespace-nowrap font-medium transition-colors text-xs sm:text-sm md:text-base flex-shrink-0 sm:flex-shrink cursor-pointer ${
+            disabled={!tab.enabled}
+            className={`px-3 sm:px-4 md:px-6 py-2 sm:py-3 rounded-none whitespace-nowrap font-bold uppercase tracking-wide transition-all text-xs sm:text-sm flex-shrink-0 sm:flex-shrink ${
               activeTab === tab.id 
-                ? 'bg-[#002349] text-white' 
+                ? 'bg-[#002349] text-white shadow-md' 
                 : tab.enabled 
-                  ? 'bg-gray-200 text-gray-800 hover:bg-gray-300 active:bg-gray-400' 
-                  : 'bg-gray-200/50 text-gray-500 hover:bg-gray-200 hover:text-gray-700'
+                  ? 'bg-gray-200 text-gray-900 hover:bg-gray-300 active:bg-[#002349] active:text-white cursor-pointer' 
+                  : 'bg-gray-100 text-gray-400 cursor-not-allowed'
             }`}
           >
             {tab.label}
