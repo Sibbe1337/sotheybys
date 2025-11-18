@@ -42,12 +42,6 @@ export function MediaTabs({
     { id: 'brochure' as TabId, label: t('media.brochure', locale), enabled: true },
     { id: 'video' as TabId, label: t('media.video', locale), enabled: true },
   ];
-  
-  // Debug: Log missing data
-  if (!coordinates) console.warn('[MediaTabs] Missing coordinates for property:', title);
-  if (!brochureUrl) console.warn('[MediaTabs] Missing brochure URL for property:', title);
-  if (!videoUrl) console.warn('[MediaTabs] Missing video URL for property:', title);
-  if (!hasFloorPlan) console.warn('[MediaTabs] Missing floor plan for property:', title);
 
   // Helper to get YouTube/Vimeo embed URL
   const getEmbedUrl = (url: string): string => {

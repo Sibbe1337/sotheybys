@@ -61,11 +61,7 @@ export function ImageCarousel({ images, title, propertyId }: ImageCarouselProps)
             alt={`${title} - Bild ${currentIndex + 1}`}
             className="absolute inset-0 w-full h-full object-cover"
             onError={(e) => {
-              console.error('❌ Image failed to load via proxy:', currentImageUrl);
               e.currentTarget.style.display = 'none';
-            }}
-            onLoad={() => {
-              console.log('✅ Image loaded via proxy:', currentImageUrl);
             }}
           />
           

@@ -21,7 +21,6 @@ async function geocodeWithGoogle(address: string): Promise<GeocodingResult | nul
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
   
   if (!apiKey) {
-    console.warn('[Geocoding] Google Maps API key not found, falling back to Nominatim');
     return null;
   }
 
@@ -39,7 +38,6 @@ async function geocodeWithGoogle(address: string): Promise<GeocodingResult | nul
       };
     }
 
-    console.warn('[Geocoding] Google API returned no results for:', address);
     return null;
   } catch (error) {
     console.error('[Geocoding] Google API error:', error);
@@ -72,7 +70,6 @@ async function geocodeWithNominatim(address: string): Promise<GeocodingResult | 
       };
     }
 
-    console.warn('[Geocoding] Nominatim returned no results for:', address);
     return null;
   } catch (error) {
     console.error('[Geocoding] Nominatim error:', error);
@@ -97,7 +94,6 @@ export async function geocodeAddress(address: string): Promise<GeocodingResult |
   // Check cache first
   if (geocodeCache.has(cacheKey)) {
     const cached = geocodeCache.get(cacheKey)!;
-    console.log('[Geocoding] Cache hit:', address, cached);
     return { ...cached, source: 'cache' };
   }
 
@@ -112,9 +108,6 @@ export async function geocodeAddress(address: string): Promise<GeocodingResult |
   // Cache result (even if null, to avoid repeated failed lookups)
   if (result) {
     geocodeCache.set(cacheKey, result);
-    console.log('[Geocoding] Success:', address, result);
-  } else {
-    console.warn('[Geocoding] Failed for address:', address);
   }
 
   return result;

@@ -181,14 +181,11 @@ async function extractCoordinates(
         ? `${address}, ${postalCode} ${city}, Finland`
         : `${address}, ${city}, Finland`;
       
-      console.log('[Mapper] Geocoding address:', fullAddress);
-      
       // Use dynamic import to avoid circular dependencies
       const { geocodeAddress } = await import('@/lib/utils/geocoding');
       const result = await geocodeAddress(fullAddress);
       
       if (result) {
-        console.log('[Mapper] Geocoded coordinates:', result);
         return { lat: result.lat, lon: result.lon };
       }
     } catch (error) {
@@ -385,13 +382,9 @@ export class LinearToPropertyMapper {
     const extractLinkFromArray = (pattern: RegExp, purpose: string): string | undefined => {
       const linksArray = (src as any).links;
       
-      // Debug: Log what we have
       if (!linksArray) {
-        console.log(`[Mapper] No links array for ${addressFi} - searching for ${purpose}`);
         return undefined;
       }
-      
-      console.log(`[Mapper] Links array exists for ${addressFi}:`, JSON.stringify(linksArray).substring(0, 200));
       
       // Handle if links is localized object with arrays
       const localeLinks = linksArray[locale] || linksArray['fi'] || linksArray;
@@ -400,26 +393,15 @@ export class LinearToPropertyMapper {
       const actualLinks = localeLinks?.value || localeLinks;
       
       if (!Array.isArray(actualLinks)) {
-        console.log(`[Mapper] Links not an array for ${addressFi}, type:`, typeof actualLinks);
         return undefined;
       }
-      
-      console.log(`[Mapper] Searching ${actualLinks.length} links for ${purpose} (pattern: ${pattern})`);
       
       // Find first link matching pattern
       // 🎯 FIX: Linear API uses "value" key, not "url"!
       const found = actualLinks.find((link: any) => {
         const url = link?.value || link?.url || link;
-        const matches = pattern.test(url);
-        if (matches) {
-          console.log(`[Mapper] ✅ Found ${purpose}: ${url}`);
-        }
-        return matches;
+        return pattern.test(url);
       });
-      
-      if (!found) {
-        console.log(`[Mapper] ⚠️ No ${purpose} found in links array for ${addressFi}`);
-      }
       
       return found?.value || found?.url || found;
     };
@@ -554,11 +536,6 @@ export class LinearToPropertyMapper {
           // Final fallback to type field
           if (!rawType) {
             rawType = lget(src.type, 'en') || lget(src.type, 'fi') || lget(src.type, 'sv');
-          }
-          
-          // DEBUG logging if still empty
-          if (!rawType && addressFi) {
-            console.log(`⚠️  ALL typeCode sources empty for ${addressFi}`);
           }
           
           return rawType.toUpperCase().replace(/ /g, '_');
