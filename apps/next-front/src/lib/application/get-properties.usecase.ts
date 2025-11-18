@@ -10,7 +10,7 @@ export class GetProperties {
 
   async execute(locale: 'fi' | 'sv' | 'en'): Promise<Property[]> {
     const raw = await this.client.fetchListings();
-    return raw.map((r: any) => this.mapper.map(r, locale));
+    return Promise.all(raw.map((r: any) => this.mapper.map(r, locale)));
   }
 }
 

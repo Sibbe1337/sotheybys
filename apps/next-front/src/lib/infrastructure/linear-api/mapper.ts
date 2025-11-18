@@ -149,7 +149,13 @@ function normalizeStatus(val: any): 'ACTIVE' | 'SOLD' | 'RESERVED' | undefined {
   return undefined;
 }
 
-function extractCoordinates(src: LinearListing, nv: any): { lat: number; lon: number } | undefined {
+async function extractCoordinates(
+  src: LinearListing, 
+  nv: any,
+  address?: string,
+  postalCode?: string,
+  city?: string
+): Promise<{ lat: number; lon: number } | undefined> {
   // Try multiple field names for latitude/longitude
   const lat = parseNum(
     pickNV(nv, 'latitude', 'lat') ?? 
@@ -163,13 +169,40 @@ function extractCoordinates(src: LinearListing, nv: any): { lat: number; lon: nu
     lget((src as any).mapCoordinates!, 'fi')?.split(',')[1]
   );
 
-  return lat && lon ? { lat, lon } : undefined;
+  // If coordinates exist, return them
+  if (lat && lon) {
+    return { lat, lon };
+  }
+
+  // FALLBACK: Geocode from address if coordinates missing
+  if (address && city) {
+    try {
+      const fullAddress = postalCode 
+        ? `${address}, ${postalCode} ${city}, Finland`
+        : `${address}, ${city}, Finland`;
+      
+      console.log('[Mapper] Geocoding address:', fullAddress);
+      
+      // Use dynamic import to avoid circular dependencies
+      const { geocodeAddress } = await import('@/lib/utils/geocoding');
+      const result = await geocodeAddress(fullAddress);
+      
+      if (result) {
+        console.log('[Mapper] Geocoded coordinates:', result);
+        return { lat: result.lat, lon: result.lon };
+      }
+    } catch (error) {
+      console.error('[Mapper] Geocoding failed:', error);
+    }
+  }
+
+  return undefined;
 }
 
 export class LinearToPropertyMapper {
   private existingSlugs = new Set<string>();
 
-  map(src: LinearListing, locale: 'fi' | 'sv' | 'en'): Property {
+  async map(src: LinearListing, locale: 'fi' | 'sv' | 'en'): Promise<Property> {
     const nv = src.nonLocalizedValues ?? {};
 
     // ========== BASIC INFO ==========
@@ -343,7 +376,7 @@ export class LinearToPropertyMapper {
     const restrictions = lv((src as any).restrictions);
 
     // ========== COORDINATES (NEW) ==========
-    const coordinates = extractCoordinates(src, nv);
+    const coordinates = await extractCoordinates(src, nv, addressFi, postalCode, cityFi);
 
     // ========== DOCUMENTS (NEW) ==========
     const floorPlanUrl = lget(src.floorPlanUrl!, locale) || 

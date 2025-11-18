@@ -261,11 +261,11 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                   })
                   .map(type => {
                     const count = dynamicPropertyTypes.get(type.id) || 0;
-                    return (
-                      <option key={type.id} value={type.id}>
-                        {type.label[language]} ({count})
-                      </option>
-                    );
+                  return (
+                    <option key={type.id} value={type.id}>
+                      {type.label[language]} ({count})
+                    </option>
+                  );
                   })
                 }
               </select>
@@ -536,7 +536,7 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                     const propertyType = property.meta.listingTypeLabel?.[language] || property.meta.listingTypeLabel?.fi || property.meta.typeCode;
                     const apartmentType = property.meta.apartmentType?.[language] || property.meta.apartmentType?.fi;
                     
-                    // Calculate "other area" from balcony + terrace  
+                    // Calculate "other area" from balcony + terrace
                     const balconyArea = property.dimensions.balcony || 0;
                     const terraceArea = property.dimensions.terrace || 0;
                     const otherArea = balconyArea + terraceArea > 0 ? balconyArea + terraceArea : undefined;
@@ -628,7 +628,7 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                       email: property.agent.email || '',
                       photoUrl: property.agent.photoUrl || undefined,
                     } : undefined;
-                    
+
                     return (
                       <FeaturedPropertyCard
                         key={property.id}

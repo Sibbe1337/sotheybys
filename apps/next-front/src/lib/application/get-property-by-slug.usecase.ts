@@ -10,7 +10,7 @@ export class GetPropertyBySlug {
 
   async execute(slug: string, locale: 'fi' | 'sv' | 'en'): Promise<Property | null> {
     const raw = await this.client.fetchListingBySlug(slug);
-    return raw ? this.mapper.map(raw, locale) : null;
+    return raw ? await this.mapper.map(raw, locale) : null;
   }
 }
 
