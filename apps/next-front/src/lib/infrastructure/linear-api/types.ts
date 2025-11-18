@@ -136,10 +136,11 @@ export interface LinearListing {
   energyCertificateUrl?: LinearLocalized;
   
   // Generic links array (NEW - Linear CMS "Länkar" field)
+  // 🎯 FIX: Linear API uses "value" and "label", not "url" and "title"
   links?: Array<{
-    url: string;
-    title?: string;
-    locale?: string;
+    value: string;      // The actual URL
+    label?: string;     // The link label/title
+    locale?: string;    // Optional locale
   }> | LinearLocalized;
 
   // agent / realtor (Linear API uses both field names)

@@ -395,16 +395,21 @@ export class LinearToPropertyMapper {
       
       // Handle if links is localized object with arrays
       const localeLinks = linksArray[locale] || linksArray['fi'] || linksArray;
-      if (!Array.isArray(localeLinks)) {
-        console.log(`[Mapper] Links not an array for ${addressFi}, type:`, typeof localeLinks);
+      
+      // 🎯 FIX: Linear returns { key, value: [...], category }, extract the value!
+      const actualLinks = localeLinks?.value || localeLinks;
+      
+      if (!Array.isArray(actualLinks)) {
+        console.log(`[Mapper] Links not an array for ${addressFi}, type:`, typeof actualLinks);
         return undefined;
       }
       
-      console.log(`[Mapper] Searching ${localeLinks.length} links for ${purpose} (pattern: ${pattern})`);
+      console.log(`[Mapper] Searching ${actualLinks.length} links for ${purpose} (pattern: ${pattern})`);
       
       // Find first link matching pattern
-      const found = localeLinks.find((link: any) => {
-        const url = link?.url || link;
+      // 🎯 FIX: Linear API uses "value" key, not "url"!
+      const found = actualLinks.find((link: any) => {
+        const url = link?.value || link?.url || link;
         const matches = pattern.test(url);
         if (matches) {
           console.log(`[Mapper] ✅ Found ${purpose}: ${url}`);
@@ -416,7 +421,7 @@ export class LinearToPropertyMapper {
         console.log(`[Mapper] ⚠️ No ${purpose} found in links array for ${addressFi}`);
       }
       
-      return found?.url || found;
+      return found?.value || found?.url || found;
     };
     
     const floorPlanUrl = lget(src.floorPlanUrl!, locale) || 
