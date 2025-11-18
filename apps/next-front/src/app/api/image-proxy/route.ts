@@ -1,76 +1,58 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 /**
- * Image proxy to bypass CORS restrictions from images.linear.fi
+ * Image Proxy API Route
  * 
- * Usage: /api/image-proxy?url=https://images.linear.fi/...jpg
+ * PROBLEM: images.linear.fi blocks direct browser requests from Vercel domain
+ * SOLUTION: Proxy images through our server-side API
+ * 
+ * Usage: /api/image-proxy?url=https://images.linear.fi/abc123.jpg
  */
 export async function GET(request: NextRequest) {
-  const searchParams = request.nextUrl.searchParams;
-  const imageUrl = searchParams.get('url');
-
-  if (!imageUrl) {
-    return NextResponse.json({ error: 'Missing url parameter' }, { status: 400 });
-  }
-
-  // Security: Only allow images.linear.fi
-  if (!imageUrl.startsWith('https://images.linear.fi/')) {
-    return NextResponse.json({ error: 'Invalid image URL' }, { status: 403 });
-  }
-
   try {
-    // Fetch image from Linear.fi
-    const imageResponse = await fetch(imageUrl, {
-      headers: {
-        // Pretend to be a regular browser
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
-        'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Accept-Language': 'fi-FI,fi;q=0.9,en-US;q=0.8,en;q=0.7,sv;q=0.6',
-      },
-      // @ts-ignore - next option exists in Node 18+
-      next: { revalidate: 3600 }, // Cache for 1 hour
-    });
+    const searchParams = request.nextUrl.searchParams;
+    const imageUrl = searchParams.get('url');
 
-    if (!imageResponse.ok) {
-      console.error('[Image Proxy] Failed to fetch:', imageUrl, imageResponse.status);
-      return NextResponse.json(
-        { error: `Failed to fetch image: ${imageResponse.status}` },
-        { status: imageResponse.status }
-      );
+    if (!imageUrl) {
+      return new NextResponse('Missing url parameter', { status: 400 });
     }
 
-    // Get image data
-    const imageData = await imageResponse.arrayBuffer();
-    const contentType = imageResponse.headers.get('content-type') || 'image/jpeg';
+    // Only allow Linear.fi images for security
+    if (!imageUrl.startsWith('https://images.linear.fi/')) {
+      return new NextResponse('Only Linear.fi images allowed', { status: 403 });
+    }
+
+    console.log('[Image Proxy] Fetching:', imageUrl);
+
+    // Fetch image from server-side (bypasses CORS)
+    const response = await fetch(imageUrl, {
+      headers: {
+        'User-Agent': 'Snellman-Sothebys-Website/1.0',
+      },
+    });
+
+    if (!response.ok) {
+      console.error('[Image Proxy] Failed to fetch:', response.status, response.statusText);
+      return new NextResponse(`Failed to fetch image: ${response.statusText}`, { 
+        status: response.status 
+      });
+    }
+
+    const imageBuffer = await response.arrayBuffer();
+    const contentType = response.headers.get('content-type') || 'image/jpeg';
+
+    console.log('[Image Proxy] Success:', imageUrl, `(${imageBuffer.byteLength} bytes)`);
 
     // Return image with proper headers
-    return new NextResponse(imageData, {
+    return new NextResponse(imageBuffer, {
       status: 200,
       headers: {
         'Content-Type': contentType,
-        'Cache-Control': 'public, max-age=31536000, immutable', // Cache 1 year
-        'Access-Control-Allow-Origin': '*', // Allow CORS
+        'Cache-Control': 'public, max-age=31536000, immutable', // Cache for 1 year
       },
     });
   } catch (error) {
     console.error('[Image Proxy] Error:', error);
-    return NextResponse.json(
-      { error: 'Failed to proxy image' },
-      { status: 500 }
-    );
+    return new NextResponse('Internal server error', { status: 500 });
   }
 }
-
-// Enable CORS preflight
-export async function OPTIONS() {
-  return new NextResponse(null, {
-    status: 200,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
-    },
-  });
-}
-
