@@ -17,8 +17,6 @@ const translations = {
     title: 'Myymässä',
     heroText: 'Haluamme luoda kestävän asiakassuhteen, jossa otamme huomioon pienimmätkin tarpeesi ja toiveesi. Keskustelemme avoimesti ja kuuntelemme huolella, sillä tehtävämme on tehdä unelmistasi totta.',
     heroCTA: 'TEE ELÄMÄSI ASUNTOKAUPAT',
-    attentionTitle: 'Älä vain saa sitä markkinoille. Anna sille ansaitsemansa huomio.',
-    attentionText: 'Niille, jotka vaativat korotettua palvelua, jollaista ei muualla ole, on Sotheby\'s International Realty. Olemme alan parhaita välittäjiä, ja huolenpitomme tyyliin ja yksityiskohtiin on vertaansa vailla. Olemme täällä auttamassa sinua myymään kotisi mittakaavassa, jota et löydä muualta.',
     welcomeTitle: 'Tervetuloa onnistuneeseen asuntokauppaan!',
     formTitle: 'Sovi maksuton arviokäynti!',
     formSubtitle: 'Tiedätkö asuntosi markkina-arvon?',
@@ -37,8 +35,6 @@ const translations = {
     title: 'Sälja',
     heroText: 'Vi vill skapa en hållbar kundrelation där vi tar hänsyn till dina minsta behov och önskemål. Vi diskuterar öppet och lyssnar noggrant, eftersom vår uppgift är att göra dina drömmar till verklighet.',
     heroCTA: 'GÖR DINA LIVS BOSTADSAFFÄRER',
-    attentionTitle: 'Få inte bara ut den på marknaden. Ge den den uppmärksamhet den förtjänar.',
-    attentionText: 'För dem som kräver förhöjd service som inte finns någon annanstans, finns Sotheby\'s International Realty. Vi är branschens bästa mäklare, och vår omsorg om stil och detaljer är oöverträffad. Vi är här för att hjälpa dig sälja ditt hem i en skala du inte hittar någon annanstans.',
     welcomeTitle: 'Välkommen till en framgångsrik bostadsaffär!',
     formTitle: 'Boka en gratis värdering!',
     formSubtitle: 'Känner du till ditt hems marknadsvärde?',
@@ -57,8 +53,6 @@ const translations = {
     title: 'Selling',
     heroText: 'We want to create a lasting customer relationship where we consider your smallest needs and wishes. We discuss openly and listen carefully, as our mission is to make your dreams come true.',
     heroCTA: 'MAKE THE PROPERTY DEALS OF YOUR LIFE',
-    attentionTitle: 'Don\'t just get it on the market. Give it the attention it deserves.',
-    attentionText: 'For those who demand elevated service like nowhere else, there\'s Sotheby\'s International Realty. We are the industry\'s best agents, and our care for style and detail is unparalleled. We are here to help you sell your home on a scale you won\'t find elsewhere.',
     welcomeTitle: 'Welcome to a successful property transaction!',
     formTitle: 'Schedule a free appraisal!',
     formSubtitle: 'Do you know your property\'s market value?',
@@ -105,20 +99,6 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
             >
               {t.heroCTA} &gt;
             </Link>
-          </div>
-        </section>
-
-        {/* Attention Section */}
-        <section className="py-16 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-6">
-                {t.attentionTitle}
-              </h2>
-              <p className="text-lg text-gray-700 font-light leading-relaxed mb-8">
-                {t.attentionText}
-              </p>
-            </div>
           </div>
         </section>
 
