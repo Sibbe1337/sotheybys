@@ -134,6 +134,13 @@ export interface LinearListing {
   internationalBrochureUrl?: LinearLocalized;
   videoUrl?: LinearLocalized;
   energyCertificateUrl?: LinearLocalized;
+  
+  // Generic links array (NEW - Linear CMS "Länkar" field)
+  links?: Array<{
+    url: string;
+    title?: string;
+    locale?: string;
+  }> | LinearLocalized;
 
   // agent / realtor (Linear API uses both field names)
   estateAgentName?: any;

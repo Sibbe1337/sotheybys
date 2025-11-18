@@ -379,18 +379,44 @@ export class LinearToPropertyMapper {
     const coordinates = await extractCoordinates(src, nv, addressFi, postalCode, cityFi);
 
     // ========== DOCUMENTS (NEW) ==========
+    
+    // 🔥 DENNIS FIX: Extract URLs from "Länkar" field in Linear CMS
+    // Linear CMS has a generic "links" array where all URLs are stored
+    const extractLinkFromArray = (pattern: RegExp): string | undefined => {
+      const linksArray = (src as any).links;
+      if (!linksArray) return undefined;
+      
+      // Handle if links is localized object with arrays
+      const localeLinks = linksArray[locale] || linksArray['fi'] || linksArray;
+      if (!Array.isArray(localeLinks)) return undefined;
+      
+      // Find first link matching pattern
+      const found = localeLinks.find((link: any) => 
+        pattern.test(link?.url || link)
+      );
+      return found?.url || found;
+    };
+    
     const floorPlanUrl = lget(src.floorPlanUrl!, locale) || 
                          src.images?.find(i => i.isFloorPlan)?.url || 
+                         extractLinkFromArray(/pohjakuva|floorplan|planritning/i) ||
                          undefined;
     
-    // 🔥 DENNIS FIX: Broschyr kan vara i "virtualTourUrl", "brochureUrl" eller "propertyBrochureUrl"
+    // 🔥 DENNIS FIX: Broschyr kan vara i flera olika fält eller i links-array
     const brochureUrl = lget((src as any).virtualTourUrl!, locale) ||
                         lget(src.brochureUrl!, locale) || 
-                        lget(src.propertyBrochureUrl!, locale) || 
+                        lget(src.propertyBrochureUrl!, locale) ||
+                        extractLinkFromArray(/esitteet|brochure|broschyr/i) ||
                         undefined;
     
-    const brochureIntl = lget(src.internationalBrochureUrl!, locale) || undefined;
-    const videoUrl = lget(src.videoUrl!, locale) || undefined;
+    const brochureIntl = lget(src.internationalBrochureUrl!, locale) || 
+                         extractLinkFromArray(/sothebysrealty\.com\/eng/i) ||
+                         undefined;
+    
+    const videoUrl = lget(src.videoUrl!, locale) || 
+                     extractLinkFromArray(/youtu\.be|youtube\.com|vimeo\.com/i) ||
+                     undefined;
+    
     const energyCertUrl = lget(src.energyCertificateUrl!, locale) || undefined;
 
     // ========== RENTAL (NEW) ==========
