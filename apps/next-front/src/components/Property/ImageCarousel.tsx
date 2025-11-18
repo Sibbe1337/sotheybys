@@ -24,29 +24,13 @@ export function ImageCarousel({ images, title, propertyId }: ImageCarouselProps)
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [imageError, setImageError] = useState(false);
 
-  // 🐛 DEBUG: Log what we're rendering
-  console.log('[ImageCarousel] Rendering:', {
-    imagesCount: images?.length,
-    currentIndex,
-    currentImageUrl: images?.[currentIndex]?.url,
-    propertyId,
-    title
-  });
-
   // 🔥 LINUS FIX: Reset index when images change (new property loaded)
   useEffect(() => {
     setCurrentIndex(0);
     setImageError(false);
   }, [images, propertyId]);
 
-  if (!images || images.length === 0) {
-    console.warn('[ImageCarousel] NO IMAGES!');
-    return (
-      <div className="w-full aspect-[4/3] bg-red-500 flex items-center justify-center text-white text-xl font-bold">
-        NO IMAGES PROVIDED
-      </div>
-    );
-  }
+  if (!images || images.length === 0) return null;
 
   const goToNext = () => setCurrentIndex((prev) => (prev + 1) % images.length);
   const goToPrev = () => setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
@@ -79,12 +63,11 @@ export function ImageCarousel({ images, title, propertyId }: ImageCarouselProps)
               quality={75}
               sizes="100vw"
               unoptimized={true}
-              onError={(e) => {
-                console.error('[ImageCarousel] Image load FAILED:', images[currentIndex].url, e);
+              onError={() => {
                 setImageError(true);
               }}
               onLoad={() => {
-                console.log('[ImageCarousel] Image loaded OK:', images[currentIndex].url);
+                setImageError(false);
               }}
             />
           )}
