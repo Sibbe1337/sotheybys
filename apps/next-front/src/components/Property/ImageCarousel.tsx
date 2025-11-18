@@ -59,17 +59,17 @@ export function ImageCarousel({ images, title, propertyId }: ImageCarouselProps)
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
         </div>
 
-        {/* Navigation Arrows - Dennis 2025-11-12: Mindre på mobil, större på desktop */}
+        {/* Navigation Arrows - Dennis 2025-11-18: Fyrkantig, genomskinlig bg, enhetlig stil */}
         <button
           onClick={goToPrev}
-          className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-white/90 hover:bg-white text-gray-900 rounded-full shadow-lg transition-all hover:scale-110 z-10"
+          className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-white/70 hover:bg-white/90 text-gray-900 rounded-none shadow-md transition-all z-10"
           aria-label="Föregående bild"
         >
           <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
         <button
           onClick={goToNext}
-          className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-white/90 hover:bg-white text-gray-900 rounded-full shadow-lg transition-all hover:scale-110 z-10"
+          className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-white/70 hover:bg-white/90 text-gray-900 rounded-none shadow-md transition-all z-10"
           aria-label="Nästa bild"
         >
           <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
