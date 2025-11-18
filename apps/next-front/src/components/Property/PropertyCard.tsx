@@ -184,7 +184,7 @@ export default function PropertyCard({
 
         {/* PDF spec s.7: "Katso kohde / Visa objektet" button */}
         <button 
-          className="mt-3 w-full px-4 py-2 bg-[#002349] text-white text-sm font-semibold rounded hover:bg-[#001731] transition-colors"
+          className="mt-3 w-full px-4 py-2 bg-[#002349] text-white text-sm font-semibold rounded-none hover:bg-[#001731] transition-colors"
           onClick={(e) => {
             // Let the Link handle navigation, but prevent double-click issues
             e.currentTarget.blur();

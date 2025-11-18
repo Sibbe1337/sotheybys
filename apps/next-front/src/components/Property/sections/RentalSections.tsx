@@ -50,7 +50,7 @@ function Field({ label, value, alwaysShow = false, locale = 'fi' }: FieldProps) 
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+    <div className="bg-white rounded-none shadow-sm p-6 mb-6">
       <h2 className="text-xl font-semibold text-gray-900 mb-4 pb-3 border-b border-gray-200">
         {title}
       </h2>
