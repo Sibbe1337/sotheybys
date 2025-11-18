@@ -24,9 +24,15 @@ export function CarouselArrowButton({
     ? 'left-2 sm:left-4' 
     : 'right-2 sm:right-4';
 
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onClick();
+  };
+
   return (
     <button
-      onClick={onClick}
+      onClick={handleClick}
       className={`${baseClasses} ${variantClasses} ${positionClasses} ${className}`}
       aria-label={direction === 'left' ? 'Previous' : 'Next'}
     >

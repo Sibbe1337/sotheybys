@@ -29,15 +29,11 @@ export function PropertyCardCarousel({ images, alt, onImageClick }: PropertyCard
     return () => clearInterval(interval);
   }, [isHovered, displayImages.length]);
 
-  const goToPrevious = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const goToPrevious = () => {
     setCurrentIndex((prev) => (prev - 1 + displayImages.length) % displayImages.length);
   };
 
-  const goToNext = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const goToNext = () => {
     setCurrentIndex((prev) => (prev + 1) % displayImages.length);
   };
 
