@@ -36,8 +36,17 @@ export function ImageCarousel({ images, title, propertyId }: ImageCarouselProps)
   const goToPrev = () => setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
 
   // ✅ LINUS FIX: Unique key per property to force image reload
-  // 🔥 NUCLEAR OPTION: Add URL itself to force browser to recognize different images
-  const imageKey = `img-${propertyId || 'default'}-${currentIndex}-${images[currentIndex].url}`;
+  const imageKey = `img-${propertyId || 'default'}-${currentIndex}`;
+  
+  // 🔥 PROXY FIX: Route images through our API to bypass CORS
+  const getProxiedUrl = (url: string) => {
+    if (url.startsWith('https://images.linear.fi/')) {
+      return `/api/image-proxy?url=${encodeURIComponent(url)}`;
+    }
+    return url;
+  };
+
+  const currentImageUrl = getProxiedUrl(images[currentIndex].url);
 
   return (
     <>
@@ -45,19 +54,18 @@ export function ImageCarousel({ images, title, propertyId }: ImageCarouselProps)
       <section className="relative w-full bg-black">
         {/* Dennis 2025-11-12: Mobil 4:3 (mer square), Desktop 21:9 (bred panorama) */}
         <div className="relative w-full aspect-[4/3] sm:aspect-[16/9] lg:aspect-[21/9] overflow-hidden">
-          {/* Use native img tag to bypass all Next.js processing */}
+          {/* Use native img tag with API proxy to bypass CORS */}
           <img
             key={imageKey}
-            src={images[currentIndex].url}
+            src={currentImageUrl}
             alt={`${title} - Bild ${currentIndex + 1}`}
             className="absolute inset-0 w-full h-full object-cover"
             onError={(e) => {
-              console.error('❌ Image failed to load:', images[currentIndex].url);
-              // Try to show something useful
+              console.error('❌ Image failed to load via proxy:', currentImageUrl);
               e.currentTarget.style.display = 'none';
             }}
             onLoad={() => {
-              console.log('✅ Image loaded:', images[currentIndex].url);
+              console.log('✅ Image loaded via proxy:', currentImageUrl);
             }}
           />
           
@@ -123,7 +131,7 @@ export function ImageCarousel({ images, title, propertyId }: ImageCarouselProps)
           <div className="relative w-full h-full p-4 flex items-center justify-center">
             <img
               key={imageKey}
-              src={images[currentIndex].url}
+              src={currentImageUrl}
               alt={`${title} - Bild ${currentIndex + 1}`}
               className="max-w-full max-h-full object-contain"
             />
