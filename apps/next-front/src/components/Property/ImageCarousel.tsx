@@ -45,32 +45,21 @@ export function ImageCarousel({ images, title, propertyId }: ImageCarouselProps)
       <section className="relative w-full bg-black">
         {/* Dennis 2025-11-12: Mobil 4:3 (mer square), Desktop 21:9 (bred panorama) */}
         <div className="relative w-full aspect-[4/3] sm:aspect-[16/9] lg:aspect-[21/9] overflow-hidden">
-          {imageError ? (
-            <div className="w-full h-full flex items-center justify-center bg-yellow-500 text-black p-4">
-              <div className="text-center">
-                <p className="font-bold mb-2">⚠️ IMAGE LOAD ERROR</p>
-                <p className="text-sm break-all">{images[currentIndex].url}</p>
-              </div>
-            </div>
-          ) : (
-            <Image
-              key={imageKey}
-              src={images[currentIndex].url}
-              alt={`${title} - Bild ${currentIndex + 1}`}
-              fill
-              className="object-cover"
-              priority={currentIndex === 0}
-              quality={75}
-              sizes="100vw"
-              unoptimized={true}
-              onError={() => {
-                setImageError(true);
-              }}
-              onLoad={() => {
-                setImageError(false);
-              }}
-            />
-          )}
+          {/* Use native img tag to bypass all Next.js processing */}
+          <img
+            key={imageKey}
+            src={images[currentIndex].url}
+            alt={`${title} - Bild ${currentIndex + 1}`}
+            className="absolute inset-0 w-full h-full object-cover"
+            onError={(e) => {
+              console.error('❌ Image failed to load:', images[currentIndex].url);
+              // Try to show something useful
+              e.currentTarget.style.display = 'none';
+            }}
+            onLoad={() => {
+              console.log('✅ Image loaded:', images[currentIndex].url);
+            }}
+          />
           
           {/* Gradient overlay for better text visibility */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
@@ -131,16 +120,12 @@ export function ImageCarousel({ images, title, propertyId }: ImageCarouselProps)
           </button>
 
           {/* Fullscreen Image */}
-          <div className="relative w-full h-full p-4">
-            <Image
+          <div className="relative w-full h-full p-4 flex items-center justify-center">
+            <img
               key={imageKey}
               src={images[currentIndex].url}
               alt={`${title} - Bild ${currentIndex + 1}`}
-              fill
-              className="object-contain"
-              quality={90}
-              sizes="100vw"
-              unoptimized={true}
+              className="max-w-full max-h-full object-contain"
             />
           </div>
         </div>
