@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Link } from '@/lib/navigation';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import { CarouselArrowButton } from '../ui/CarouselArrowButton';
 
@@ -19,6 +20,8 @@ interface HeroCarouselProps {
 }
 
 export default function HeroCarousel({ slides }: HeroCarouselProps) {
+  const params = useParams();
+  const locale = params?.locale || 'fi';
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [hasInitialized, setHasInitialized] = useState(false);
@@ -138,7 +141,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                     style={{ transitionDelay: (!hasInitialized && index === 0) ? '0ms' : '600ms' }}
                   >
                     <Link
-                      href={slide.buttonLink as any}
+                      href={slide.buttonLink.startsWith('#') ? slide.buttonLink : `/${locale}${slide.buttonLink}`}
                       className="group inline-flex items-center gap-3 text-white border border-white 
                                px-8 py-4 transition-all duration-300 
                                font-light tracking-wider uppercase text-sm relative overflow-hidden
