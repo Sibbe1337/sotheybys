@@ -85,7 +85,7 @@ export default function PropertyHeroCarousel({
           fill
           className="object-cover"
           priority
-          unoptimized={imageUrl.startsWith('http')}
+          unoptimized={true}
         />
       </div>
 

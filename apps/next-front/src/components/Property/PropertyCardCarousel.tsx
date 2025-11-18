@@ -55,6 +55,7 @@ export function PropertyCardCarousel({ images, alt, onImageClick }: PropertyCard
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         quality={75}
         priority={false}
+        unoptimized={true}
       />
 
       {/* Navigation arrows - show on hover if multiple images */}

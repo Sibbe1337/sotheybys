@@ -78,7 +78,7 @@ export function ImageCarousel({ images, title, propertyId }: ImageCarouselProps)
               priority={currentIndex === 0}
               quality={75}
               sizes="100vw"
-              unoptimized={false}
+              unoptimized={true}
               onError={(e) => {
                 console.error('[ImageCarousel] Image load FAILED:', images[currentIndex].url, e);
                 setImageError(true);
@@ -157,6 +157,7 @@ export function ImageCarousel({ images, title, propertyId }: ImageCarouselProps)
               className="object-contain"
               quality={90}
               sizes="100vw"
+              unoptimized={true}
             />
           </div>
         </div>
