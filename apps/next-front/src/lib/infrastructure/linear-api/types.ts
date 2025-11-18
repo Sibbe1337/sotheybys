@@ -130,6 +130,7 @@ export interface LinearListing {
   floorPlanUrl?: LinearLocalized;
   brochureUrl?: LinearLocalized;
   propertyBrochureUrl?: LinearLocalized;
+  virtualTourUrl?: LinearLocalized; // "Virtuell visning" i Linear CMS
   internationalBrochureUrl?: LinearLocalized;
   videoUrl?: LinearLocalized;
   energyCertificateUrl?: LinearLocalized;

@@ -383,7 +383,9 @@ export class LinearToPropertyMapper {
                          src.images?.find(i => i.isFloorPlan)?.url || 
                          undefined;
     
-    const brochureUrl = lget(src.brochureUrl!, locale) || 
+    // 🔥 DENNIS FIX: Broschyr kan vara i "virtualTourUrl", "brochureUrl" eller "propertyBrochureUrl"
+    const brochureUrl = lget((src as any).virtualTourUrl!, locale) ||
+                        lget(src.brochureUrl!, locale) || 
                         lget(src.propertyBrochureUrl!, locale) || 
                         undefined;
     
