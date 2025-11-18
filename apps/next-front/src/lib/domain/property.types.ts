@@ -71,7 +71,8 @@ export interface Property {
   // Metadata
   meta: {
     status?: 'ACTIVE' | 'SOLD' | 'RESERVED';  // NEW for filtering
-    typeCode?: string;               // KERROSTALO, MÖKKI_TAI_HUVILA, ... (raw code)
+    typeCode?: string;               // KERROSTALO, MÖKKI_TAI_HUVILA, ... (raw code from listingType)
+    productGroup?: string;           // APARTMENTS, PROPERTIES, ... (raw code from productGroup) - Dennis 2025-11-18
     listingTypeLabel?: LocalizedValue; // Localized listing type (Kerrostalo/Höghus/Apartment Building)
     
     // Basic metadata (NEW from blueprint)

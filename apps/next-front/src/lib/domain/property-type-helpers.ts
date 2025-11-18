@@ -66,8 +66,15 @@ const COMMERCIAL_CODES = new Set([
 /**
  * Check if property is an apartment (KERROSTALO/FLAT)
  * Apartments show: company info, company loans, housing cooperative details
+ * 
+ * Dennis 2025-11-18: Check productGroup FIRST (more general), then typeCode (specific)
  */
 export function isApartment(property: Property): boolean {
+  // 1. Check productGroup first (e.g., "APARTMENTS")
+  const productGroup = (property.meta.productGroup || '').toUpperCase();
+  if (productGroup === 'APARTMENTS') return true;
+  
+  // 2. Fallback to typeCode for specific types
   const code = (property.meta.typeCode || '').toUpperCase();
   return APARTMENT_CODES.has(code);
 }
@@ -75,8 +82,15 @@ export function isApartment(property: Property): boolean {
 /**
  * Check if property is a house/estate (OMAKOTITALO/DETACHED_HOUSE etc.)
  * Properties show: property tax, plot info, building details
+ * 
+ * Dennis 2025-11-18: Check productGroup FIRST (more general), then typeCode (specific)
  */
 export function isProperty(property: Property): boolean {
+  // 1. Check productGroup first (e.g., "PROPERTIES")
+  const productGroup = (property.meta.productGroup || '').toUpperCase();
+  if (productGroup === 'PROPERTIES') return true;
+  
+  // 2. Fallback to typeCode for specific types
   const code = (property.meta.typeCode || '').toUpperCase();
   return PROPERTY_CODES.has(code);
 }

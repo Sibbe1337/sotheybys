@@ -62,9 +62,10 @@ export interface LinearListing {
 
   // meta
   status?: LinearLocalized;              // NEW Phase 3 (ACTIVE/SOLD/RESERVED)
-  listingType?: LinearLocalized;         // Primary type field
+  listingType?: LinearLocalized;         // Primary type field (Objekttyp: KERROSTALO, PARITALO, etc)
   propertyType?: LinearLocalized;        // Fallback type field
   type?: LinearLocalized;                // Alternative type field
+  productGroup?: LinearLocalized;        // Produktgrupp: APARTMENTS, PROPERTIES, etc - Dennis 2025-11-18
   typeOfApartment?: LinearLocalized;
   energyClass?: LinearLocalized;
   energyClassInfo?: LinearLocalized;

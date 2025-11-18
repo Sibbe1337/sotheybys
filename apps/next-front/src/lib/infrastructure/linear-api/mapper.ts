@@ -475,6 +475,11 @@ export class LinearToPropertyMapper {
           
           return rawType.toUpperCase().replace(/ /g, '_');
         })(),
+        // Dennis 2025-11-18: Extract productGroup (APARTMENTS, PROPERTIES, etc)
+        productGroup: (() => {
+          const rawGroup = lget(src.productGroup, 'en') || lget(src.productGroup, 'fi') || lget(src.productGroup, 'sv');
+          return rawGroup ? rawGroup.toUpperCase().replace(/ /g, '_') : undefined;
+        })(),
         // Dennis 2025-11-13: Use Linear's localized listing type directly (Kerrostalo/Hyreshus/Apartment Building)
         listingTypeLabel: {
           fi: lget(src.listingType, 'fi') || lget(src.listingType, 'sv') || lget(src.listingType, 'en') || '',
