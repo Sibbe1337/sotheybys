@@ -36,12 +36,18 @@ export function MediaTabs({
   const [activeTab, setActiveTab] = useState<TabId>('photos');
 
   const tabs = [
-    { id: 'photos' as TabId, label: t('media.photos', locale), enabled: photoImages.length > 0 },
-    { id: 'floor' as TabId, label: t('media.floor', locale), enabled: hasFloorPlan },
-    { id: 'map' as TabId, label: t('media.map', locale), enabled: !!coordinates },
-    { id: 'brochure' as TabId, label: t('media.brochure', locale), enabled: !!brochureUrl },
-    { id: 'video' as TabId, label: t('media.video', locale), enabled: !!videoUrl },
+    { id: 'photos' as TabId, label: t('media.photos', locale), enabled: true },
+    { id: 'floor' as TabId, label: t('media.floor', locale), enabled: true },
+    { id: 'map' as TabId, label: t('media.map', locale), enabled: true },
+    { id: 'brochure' as TabId, label: t('media.brochure', locale), enabled: true },
+    { id: 'video' as TabId, label: t('media.video', locale), enabled: true },
   ];
+  
+  // Debug: Log missing data
+  if (!coordinates) console.warn('[MediaTabs] Missing coordinates for property:', title);
+  if (!brochureUrl) console.warn('[MediaTabs] Missing brochure URL for property:', title);
+  if (!videoUrl) console.warn('[MediaTabs] Missing video URL for property:', title);
+  if (!hasFloorPlan) console.warn('[MediaTabs] Missing floor plan for property:', title);
 
   // Helper to get YouTube/Vimeo embed URL
   const getEmbedUrl = (url: string): string => {
@@ -70,7 +76,7 @@ export function MediaTabs({
           <ImageCarousel images={photoImages} title={title} propertyId={propertyId} />
         )}
         
-        {activeTab === 'floor' && hasFloorPlan && (
+        {activeTab === 'floor' && (
           <div className="w-full h-full min-h-[400px] flex items-center justify-center p-4">
             {floorImages.length > 0 ? (
               <img 
@@ -84,12 +90,24 @@ export function MediaTabs({
                 className="w-full h-[600px] border-0"
                 title="Floor plan PDF"
               />
-            ) : null}
+            ) : (
+              <div className="text-center text-gray-500">
+                <svg className="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                <p className="font-medium mb-2">
+                  {locale === 'sv' ? 'Planlösning ej tillgänglig' : locale === 'en' ? 'Floor plan not available' : 'Pohjapiirros ei saatavilla'}
+                </p>
+                <p className="text-sm text-gray-400">
+                  {locale === 'sv' ? 'Kontakta mäklaren för mer information' : locale === 'en' ? 'Contact the agent for more information' : 'Ota yhteyttä välittäjään lisätietojen saamiseksi'}
+                </p>
+              </div>
+            )}
           </div>
         )}
         
         {activeTab === 'map' && (
-          <div className="w-full h-[500px] flex items-center justify-center">
+          <div className="w-full h-[500px] flex items-center justify-center bg-gray-50 rounded-lg">
             {coordinates ? (
               <iframe
                 title="Property Location Map"
@@ -99,16 +117,19 @@ export function MediaTabs({
                 style={{ border: 0 }}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
+                allow="geolocation"
               />
             ) : (
-              // PDF spec s.9: Fallback when no coordinates
-              <div className="text-center text-gray-500">
+              <div className="text-center text-gray-500 p-8">
                 <svg className="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                <p className="font-medium">
+                <p className="font-medium mb-2">
                   {locale === 'sv' ? 'Kartdata ej tillgänglig' : locale === 'en' ? 'Map data not available' : 'Karttadata ei saatavilla'}
+                </p>
+                <p className="text-sm text-gray-400">
+                  {locale === 'sv' ? 'GPS-koordinater saknas för denna fastighet' : locale === 'en' ? 'GPS coordinates missing for this property' : 'GPS-koordinaatit puuttuvat tälle kohteelle'}
                 </p>
               </div>
             )}
@@ -116,20 +137,36 @@ export function MediaTabs({
         )}
         
         {activeTab === 'brochure' && (
-          <div className="w-full h-full min-h-[600px] flex items-center justify-center">
+          <div className="w-full h-full min-h-[600px] flex flex-col items-center justify-center p-8">
             {brochureUrl ? (
-              <iframe 
-                src={brochureUrl} 
-                className="w-full h-[600px] border-0"
-                title="Property brochure"
-              />
+              <>
+                <iframe 
+                  src={brochureUrl} 
+                  className="w-full h-[500px] border-0 rounded-lg mb-4"
+                  title="Property brochure"
+                />
+                <a
+                  href={brochureUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-[#002349] text-white font-bold uppercase tracking-wide rounded-none hover:bg-[#001731] transition-colors shadow-md"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                  {locale === 'sv' ? 'Öppna broschyr i ny flik' : locale === 'en' ? 'Open brochure in new tab' : 'Avaa esite uudessa välilehdessä'}
+                </a>
+              </>
             ) : (
               <div className="text-center text-gray-500">
                 <svg className="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                 </svg>
-                <p className="font-medium">
+                <p className="font-medium mb-2">
                   {locale === 'sv' ? 'Broschyr ej tillgänglig' : locale === 'en' ? 'Brochure not available' : 'Esite ei saatavilla'}
+                </p>
+                <p className="text-sm text-gray-400">
+                  {locale === 'sv' ? 'Kontakta mäklaren för mer information' : locale === 'en' ? 'Contact the agent for more information' : 'Ota yhteyttä välittäjään lisätietojen saamiseksi'}
                 </p>
               </div>
             )}
@@ -150,12 +187,15 @@ export function MediaTabs({
                 />
               </div>
             ) : (
-              <div className="text-center text-gray-500">
+              <div className="text-center text-gray-500 p-8 min-h-[400px] flex flex-col items-center justify-center">
                 <svg className="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
                 </svg>
-                <p className="font-medium">
+                <p className="font-medium mb-2">
                   {locale === 'sv' ? 'Video ej tillgänglig' : locale === 'en' ? 'Video not available' : 'Video ei saatavilla'}
+                </p>
+                <p className="text-sm text-gray-400">
+                  {locale === 'sv' ? 'Kontakta mäklaren för att boka visning' : locale === 'en' ? 'Contact the agent to book a viewing' : 'Ota yhteyttä välittäjään esittelyn varaamiseksi'}
                 </p>
               </div>
             )}
