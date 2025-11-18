@@ -48,20 +48,35 @@ mapCoordinates (fi): 60.159324,24.795143
 ### Problem:
 "Ingen broschyr tillgänglig" visas i "Bläddra broschyren"-tab
 
-### Lösning:
-Använd fältet **"Virtuell visning"** i Linear CMS!
+### Lösning (2 alternativ):
 
-#### Fält som används (i prioritetsordning):
+#### **Alternativ A: Använd "Länkar" fältet (REKOMMENDERAT! 🌟)**
+
+Fyll i **ALLA** dina länkar i "Länkar"-fältet i Linear CMS, så hittar koden automatiskt rätt URL baserat på URL-mönster!
+
+**Exempel:**
 ```
-1. virtualTourUrl (fi)    ← ANVÄND DENNA! (Virtuell visning i UI)
+Fält: "Länkar" (med språkflikar: fi, sv, en)
+
+Lägg till dessa länkar:
+- https://sothebysrealty.fi/kohde/albertinkatu-19-b-20/
+- https://sothebysrealty.fi/esitteet/albertinkatu-19-b-20/ ← Broschyr!
+- https://youtu.be/z0Sws7RvVW4s ← Video!
+- https://www.sothebysrealty.com/eng/sales/... ← Global listing!
+```
+
+**Koden hittar automatiskt:**
+- Broschyr: URLs med `/esitteet/`, `brochure`, eller `broschyr`
+- Video: URLs med `youtube.com`, `youtu.be`, eller `vimeo.com`
+- Global listing: URLs med `sothebysrealty.com/eng`
+
+#### **Alternativ B: Använd specifika fält**
+
+Om du föredrar separata fält:
+```
+1. virtualTourUrl (fi)    ← "Virtuell visning" i UI
 2. brochureUrl (fi)
 3. propertyBrochureUrl (fi)
-```
-
-### Exempel:
-```
-Fält: "Länk till virtuell visning"
-Värde: https://sothebysrealty.fi/esitteet/albertinkatu-19-b-20/#page=1
 ```
 
 ### Bildexempel från Linear CMS:
@@ -155,31 +170,42 @@ energyClass (en): "C"
 ### Problem:
 "Global listing" länk saknas på objektsidan
 
-### Status:
-⚠️ **VÄNTAR PÅ LINEAR API-UPPDATERING**
+### Lösning (2 alternativ):
 
-Detta fält finns **INTE** i Linear API än.
-
-### När det är klart:
-Lägg till i Linear CMS:
+#### **Alternativ A: Lägg till i "Länkar" fältet (FUNGERAR NU! ✅)**
 ```
+Länk: https://www.sothebysrealty.com/eng/sales/detail/...
+```
+Koden hittar automatiskt sothebysrealty.com/eng länkar!
+
+#### **Alternativ B: Vänta på specifikt fält**
+```
+⚠️ Status: VÄNTAR PÅ LINEAR API-UPPDATERING
 internationalUrl (fi): https://www.sothebysrealty.com/eng/sales/...
 ```
 
-Koden är **redan klar** att hämta detta fält när det läggs till i API:et.
+Detta specifika fält finns **INTE** i Linear API än, men du kan använda "Länkar"-fältet istället!
 
 ---
 
 ## 📹 6. VIDEO (Bonus)
 
-### Fält:
+### Lösning (2 alternativ):
+
+#### **Alternativ A: Lägg till i "Länkar" fältet (ENKLAST! 🌟)**
+```
+Länk: https://youtu.be/z0Sws7RvVW4s
+```
+Koden hittar automatiskt YouTube/Vimeo-länkar!
+
+#### **Alternativ B: Använd specifikt fält**
 ```
 videoUrl (fi): https://youtube.com/watch?v=...
 ```
 
 ### Tjänster som stöds:
-- ✅ YouTube
-- ✅ Vimeo
+- ✅ YouTube (youtube.com, youtu.be)
+- ✅ Vimeo (vimeo.com)
 - ✅ Direktlänkar till MP4
 
 ---
