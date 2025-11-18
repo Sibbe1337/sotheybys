@@ -12,6 +12,7 @@ import Image from 'next/image';
 import type { Property, Locale } from '@/lib/domain/property.types';
 import { lpick } from '@/lib/domain/locale-utils';
 import { HeroAddressBadge } from './HeroAddressBadge';
+import { CarouselArrowButton } from '../ui/CarouselArrowButton';
 
 interface PropertyHeroCarouselProps {
   properties: Property[];
@@ -104,27 +105,8 @@ export default function PropertyHeroCarousel({
       {/* Navigation Arrows */}
       {properties.length > 1 && (
         <>
-          {/* Previous Button - Dennis 2025-11-18: Fyrkantig, genomskinlig, mindre på mobil */}
-          <button
-            onClick={goToPrevious}
-            className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white/90 text-gray-900 p-2 sm:p-3 rounded-none transition-all shadow-md"
-            aria-label="Previous property"
-          >
-            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-
-          {/* Next Button - Dennis 2025-11-18: Fyrkantig, genomskinlig, mindre på mobil */}
-          <button
-            onClick={goToNext}
-            className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white/90 text-gray-900 p-2 sm:p-3 rounded-none transition-all shadow-md"
-            aria-label="Next property"
-          >
-            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
+          <CarouselArrowButton direction="left" onClick={goToPrevious} variant="dark" />
+          <CarouselArrowButton direction="right" onClick={goToNext} variant="dark" />
         </>
       )}
 

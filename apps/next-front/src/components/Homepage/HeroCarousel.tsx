@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from '@/lib/navigation';
 import Image from 'next/image';
+import { CarouselArrowButton } from '../ui/CarouselArrowButton';
 
 interface Slide {
   id: string;
@@ -208,39 +209,9 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
       </div>
 
       {/* Navigation Arrows - Only visible on hover */}
-      <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-8 
-                    opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <button
-          onClick={prevSlide}
-          className="p-4 text-white/60 hover:text-white bg-black/20 hover:bg-black/40 
-                   backdrop-blur-sm transition-all duration-300 group/btn"
-          aria-label="Previous slide"
-        >
-          <svg 
-            className="w-8 h-8 transform transition-transform duration-300 group-hover/btn:-translate-x-1" 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-        
-        <button
-          onClick={nextSlide}
-          className="p-4 text-white/60 hover:text-white bg-black/20 hover:bg-black/40 
-                   backdrop-blur-sm transition-all duration-300 group/btn"
-          aria-label="Next slide"
-        >
-          <svg 
-            className="w-8 h-8 transform transition-transform duration-300 group-hover/btn:translate-x-1" 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
+      <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <CarouselArrowButton direction="left" onClick={prevSlide} variant="light" />
+        <CarouselArrowButton direction="right" onClick={nextSlide} variant="light" />
       </div>
     </div>
   );

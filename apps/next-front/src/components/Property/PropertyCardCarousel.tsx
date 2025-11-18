@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { CarouselArrowButton } from '../ui/CarouselArrowButton';
 
 interface PropertyCardCarouselProps {
   images: Array<{ url: string; thumb?: string; floorPlan?: boolean }>;
@@ -64,20 +64,18 @@ export function PropertyCardCarousel({ images, alt, onImageClick }: PropertyCard
       {/* Navigation arrows - show on hover if multiple images */}
       {displayImages.length > 1 && isHovered && (
         <>
-          <button
-            onClick={goToPrevious}
-            className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/70 hover:bg-white/90 text-gray-900 rounded-none flex items-center justify-center transition-colors shadow-md z-10"
-            aria-label="Previous image"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <button
-            onClick={goToNext}
-            className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/70 hover:bg-white/90 text-gray-900 rounded-none flex items-center justify-center transition-colors shadow-md z-10"
-            aria-label="Next image"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
+          <CarouselArrowButton 
+            direction="left" 
+            onClick={goToPrevious} 
+            variant="dark"
+            className="!w-8 !h-8"
+          />
+          <CarouselArrowButton 
+            direction="right" 
+            onClick={goToNext} 
+            variant="dark"
+            className="!w-8 !h-8"
+          />
         </>
       )}
 
