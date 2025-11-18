@@ -382,39 +382,61 @@ export class LinearToPropertyMapper {
     
     // 🔥 DENNIS FIX: Extract URLs from "Länkar" field in Linear CMS
     // Linear CMS has a generic "links" array where all URLs are stored
-    const extractLinkFromArray = (pattern: RegExp): string | undefined => {
+    const extractLinkFromArray = (pattern: RegExp, purpose: string): string | undefined => {
       const linksArray = (src as any).links;
-      if (!linksArray) return undefined;
+      
+      // Debug: Log what we have
+      if (!linksArray) {
+        console.log(`[Mapper] No links array for ${addressFi} - searching for ${purpose}`);
+        return undefined;
+      }
+      
+      console.log(`[Mapper] Links array exists for ${addressFi}:`, JSON.stringify(linksArray).substring(0, 200));
       
       // Handle if links is localized object with arrays
       const localeLinks = linksArray[locale] || linksArray['fi'] || linksArray;
-      if (!Array.isArray(localeLinks)) return undefined;
+      if (!Array.isArray(localeLinks)) {
+        console.log(`[Mapper] Links not an array for ${addressFi}, type:`, typeof localeLinks);
+        return undefined;
+      }
+      
+      console.log(`[Mapper] Searching ${localeLinks.length} links for ${purpose} (pattern: ${pattern})`);
       
       // Find first link matching pattern
-      const found = localeLinks.find((link: any) => 
-        pattern.test(link?.url || link)
-      );
+      const found = localeLinks.find((link: any) => {
+        const url = link?.url || link;
+        const matches = pattern.test(url);
+        if (matches) {
+          console.log(`[Mapper] ✅ Found ${purpose}: ${url}`);
+        }
+        return matches;
+      });
+      
+      if (!found) {
+        console.log(`[Mapper] ⚠️ No ${purpose} found in links array for ${addressFi}`);
+      }
+      
       return found?.url || found;
     };
     
     const floorPlanUrl = lget(src.floorPlanUrl!, locale) || 
                          src.images?.find(i => i.isFloorPlan)?.url || 
-                         extractLinkFromArray(/pohjakuva|floorplan|planritning/i) ||
+                         extractLinkFromArray(/pohjakuva|floorplan|planritning/i, 'floor plan') ||
                          undefined;
     
     // 🔥 DENNIS FIX: Broschyr kan vara i flera olika fält eller i links-array
     const brochureUrl = lget((src as any).virtualTourUrl!, locale) ||
                         lget(src.brochureUrl!, locale) || 
                         lget(src.propertyBrochureUrl!, locale) ||
-                        extractLinkFromArray(/esitteet|brochure|broschyr/i) ||
+                        extractLinkFromArray(/esitteet|brochure|broschyr/i, 'brochure') ||
                         undefined;
     
     const brochureIntl = lget(src.internationalBrochureUrl!, locale) || 
-                         extractLinkFromArray(/sothebysrealty\.com\/eng/i) ||
+                         extractLinkFromArray(/sothebysrealty\.com\/eng/i, 'international listing') ||
                          undefined;
     
     const videoUrl = lget(src.videoUrl!, locale) || 
-                     extractLinkFromArray(/youtu\.be|youtube\.com|vimeo\.com/i) ||
+                     extractLinkFromArray(/youtu\.be|youtube\.com|vimeo\.com/i, 'video') ||
                      undefined;
     
     const energyCertUrl = lget(src.energyCertificateUrl!, locale) || undefined;
