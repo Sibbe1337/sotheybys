@@ -522,13 +522,16 @@ export class LinearToPropertyMapper {
         zoning: lv((src as any).zoningStatus),
         
         // Building details
-        yearBuilt: Number(
-          nv.yearBuilt ?? 
-          nv.completeYear ?? 
-          (src as any).yearBuilt ?? 
-          (src as any).completeYear ?? 
-          lget((src as any).completeYear!, 'fi')
-        ) || undefined,
+        yearBuilt: (() => {
+          const year = Number(
+            nv.yearBuilt ?? 
+            nv.completeYear ?? 
+            (src as any).yearBuilt ?? 
+            (src as any).completeYear ?? 
+            lget((src as any).completeYear!, 'fi')
+          );
+          return (!isNaN(year) && year > 0) ? year : undefined;
+        })(),
         floorsTotal: Number(nv.floorCount ?? (src as any).floorCount) || undefined,
         floor,
         elevator: hasElevator,

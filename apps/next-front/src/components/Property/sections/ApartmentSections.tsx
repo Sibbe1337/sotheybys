@@ -24,15 +24,17 @@ interface FieldProps {
 }
 
 function Field({ label, value, sub, alwaysShow = false, locale = 'fi' }: FieldProps) {
-  // Hide if no value and not marked as "always show"
-  if (!alwaysShow && (value === undefined || value === null || value === '')) return null;
+  // Early return if no value and not required to show
+  if (!alwaysShow && (value === undefined || value === null || value === '' || (typeof value === 'number' && (isNaN(value) || value === 0)))) {
+    return null;
+  }
   
-  // Handle boolean values and empty values
+  // Handle display value
   let displayValue: string | number | undefined;
   if (typeof value === 'boolean') {
     displayValue = translateBoolean(value, locale);
-  } else if (value === undefined || value === null || value === '') {
-    // Show default text for alwaysShow fields with no data
+  } else if (value === undefined || value === null || value === '' || (typeof value === 'number' && (isNaN(value) || value === 0))) {
+    // Show default text for alwaysShow fields with no/invalid data
     displayValue = '—';
   } else if (typeof value === 'string') {
     // Translate common Finnish terms
