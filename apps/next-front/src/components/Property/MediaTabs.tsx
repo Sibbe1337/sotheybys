@@ -203,15 +203,15 @@ export function MediaTabs({
         )}
       </div>
 
-      {/* Tab buttons - Dennis: UNDER bilderna (not above), MOBILE: scrollable horizontal */}
-      {/* Dennis 2025-11-13: KANTIGA knappar (no rounded-full!), 3 columns desktop (3 top + 2 bottom) */}
-      <div className="flex sm:grid sm:grid-cols-3 gap-2 mt-4 overflow-x-auto sm:overflow-x-visible pb-2 scrollbar-hide relative z-10 -mx-3 px-3 sm:mx-0 sm:px-0">
+      {/* Tab buttons - Dennis: UNDER bilderna (not above) */}
+      {/* Desktop: ALL tabs on ONE row with equal width | Mobile: 3+2 grid layout */}
+      <div className="grid grid-cols-3 sm:flex sm:flex-row gap-2 mt-4">
         {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             disabled={!tab.enabled}
-            className={`px-3 sm:px-4 md:px-6 py-2 sm:py-3 rounded-none whitespace-nowrap font-bold uppercase tracking-wide transition-all text-xs sm:text-sm flex-shrink-0 sm:flex-shrink ${
+            className={`px-4 py-3 rounded-none whitespace-nowrap font-bold uppercase tracking-wide transition-all text-xs sm:text-sm sm:flex-1 ${
               activeTab === tab.id 
                 ? 'bg-[#002349] text-white shadow-md' 
                 : tab.enabled 
