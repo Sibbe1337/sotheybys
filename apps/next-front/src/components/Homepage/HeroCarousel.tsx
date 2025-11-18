@@ -91,7 +91,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
 
           {/* Content */}
           <div className="relative h-full flex items-center">
-            <div className="container mx-auto px-8 lg:px-16">
+            <div className="container mx-auto px-16 sm:px-8 lg:px-16">
               <div className="max-w-4xl">
                 {/* Subtitle - appears first */}
                 {slide.subtitle && (
