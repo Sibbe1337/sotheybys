@@ -117,6 +117,16 @@ export function RentalSections({ vm, locale }: RentalSectionsProps) {
       <Section title={getSectionLabel('rental.companyBuilding', locale)}>
         <Field label={getFieldLabel('companyName', locale)} value={vm.housingCompanyName} alwaysShow locale={locale} />
         <Field label={getFieldLabel('yearBuilt', locale)} value={vm.yearBuilt} alwaysShow locale={locale} />
+        
+        {/* JOHAN FIX 2025-11-18: Add legal disclaimer for rentals */}
+        <div className="mt-6 p-4 bg-gray-50 border-l-4 border-gray-300 text-sm text-gray-700 leading-relaxed">
+          {locale === 'sv' 
+            ? 'Denna presentation utgör inte en officiell försäljningsprospekt. Mer detaljerad information erhålles av mäklarna.' 
+            : locale === 'en'
+            ? 'This presentation does not constitute an official sales prospectus. More detailed information is available from the brokers.'
+            : 'Tämä esittely ei ole virallinen myyntiesite. Tarkempia tietoja saa välittäjiltä.'
+          }
+        </div>
         <Field 
           label={getFieldLabel('energyClass', locale)} 
           value={vm.energyClass}

@@ -151,24 +151,24 @@ export function PropertySections({ vm, locale, isCommercial = false }: PropertyS
 
       {/* Dennis 2025-11-18: Prisuppgifter först (endast försäljningspris), sedan Kostnader */}
       <Section title={getSectionLabel('property.priceInfo', locale)}>
-        <Field 
-          label={getFieldLabel('salesPrice', locale)} 
-          value={vm.price}
-          alwaysShow 
-          locale={locale}
-        />
+          <Field 
+            label={getFieldLabel('salesPrice', locale)} 
+            value={vm.price}
+            alwaysShow 
+            locale={locale}
+          />
       </Section>
 
       {/* Dennis 2025-11-18: Kostnader section med Fastighetsskatt (€/år format) */}
       <Section title={getSectionLabel('property.costs', locale)}>
-        <Field 
-          label={getFieldLabel('propertyTax', locale)} 
+          <Field 
+            label={getFieldLabel('propertyTax', locale)} 
           value={vm.propertyTax ? `${vm.propertyTax} €${locale === 'sv' ? '/år' : locale === 'en' ? '/year' : '/vuosi'}` : undefined}
-          alwaysShow 
-          locale={locale}
-        />
-        <Field label={getFieldLabel('mortgages', locale)} value={vm.propertyMortgages} locale={locale} />
-        <Field label={getFieldLabel('otherPayments', locale)} value={vm.propertyOtherFees} locale={locale} />
+            alwaysShow 
+            locale={locale}
+          />
+          <Field label={getFieldLabel('mortgages', locale)} value={vm.propertyMortgages} locale={locale} />
+          <Field label={getFieldLabel('otherPayments', locale)} value={vm.propertyOtherFees} locale={locale} />
       </Section>
 
       {/* PDF spec s.11: "Asiakirjat & Linkit" block removed - documents available via MediaTabs */}
