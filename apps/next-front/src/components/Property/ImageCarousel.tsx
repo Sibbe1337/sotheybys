@@ -22,14 +22,31 @@ interface ImageCarouselProps {
 export function ImageCarousel({ images, title, propertyId }: ImageCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
+  // 🐛 DEBUG: Log what we're rendering
+  console.log('[ImageCarousel] Rendering:', {
+    imagesCount: images?.length,
+    currentIndex,
+    currentImageUrl: images?.[currentIndex]?.url,
+    propertyId,
+    title
+  });
 
   // 🔥 LINUS FIX: Reset index when images change (new property loaded)
-  // Without this, we show wrong image index when navigating between properties
   useEffect(() => {
     setCurrentIndex(0);
+    setImageError(false);
   }, [images, propertyId]);
 
-  if (!images || images.length === 0) return null;
+  if (!images || images.length === 0) {
+    console.warn('[ImageCarousel] NO IMAGES!');
+    return (
+      <div className="w-full aspect-[4/3] bg-red-500 flex items-center justify-center text-white text-xl font-bold">
+        NO IMAGES PROVIDED
+      </div>
+    );
+  }
 
   const goToNext = () => setCurrentIndex((prev) => (prev + 1) % images.length);
   const goToPrev = () => setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
@@ -44,17 +61,33 @@ export function ImageCarousel({ images, title, propertyId }: ImageCarouselProps)
       <section className="relative w-full bg-black">
         {/* Dennis 2025-11-12: Mobil 4:3 (mer square), Desktop 21:9 (bred panorama) */}
         <div className="relative w-full aspect-[4/3] sm:aspect-[16/9] lg:aspect-[21/9] overflow-hidden">
-          <Image
-            key={imageKey}
-            src={images[currentIndex].url}
-            alt={`${title} - Bild ${currentIndex + 1}`}
-            fill
-            className="object-cover"
-            priority={currentIndex === 0}
-            quality={75}
-            sizes="100vw"
-            unoptimized={false}
-          />
+          {imageError ? (
+            <div className="w-full h-full flex items-center justify-center bg-yellow-500 text-black p-4">
+              <div className="text-center">
+                <p className="font-bold mb-2">⚠️ IMAGE LOAD ERROR</p>
+                <p className="text-sm break-all">{images[currentIndex].url}</p>
+              </div>
+            </div>
+          ) : (
+            <Image
+              key={imageKey}
+              src={images[currentIndex].url}
+              alt={`${title} - Bild ${currentIndex + 1}`}
+              fill
+              className="object-cover"
+              priority={currentIndex === 0}
+              quality={75}
+              sizes="100vw"
+              unoptimized={false}
+              onError={(e) => {
+                console.error('[ImageCarousel] Image load FAILED:', images[currentIndex].url, e);
+                setImageError(true);
+              }}
+              onLoad={() => {
+                console.log('[ImageCarousel] Image loaded OK:', images[currentIndex].url);
+              }}
+            />
+          )}
           
           {/* Gradient overlay for better text visibility */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
