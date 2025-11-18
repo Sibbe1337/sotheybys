@@ -19,8 +19,9 @@ type Locale = 'fi' | 'sv' | 'en';
 type Props = { vm: VM; locale: Locale };
 
 export function DetailView({ vm, locale }: Props) {
-  // 🔥 LINUS FIX: Type-specific layout detection with ROBUST subtitle fallback
+  // 🔥 2025-11-18 DENNIS FIX: Use productGroup first, then typeCode (matches property-type-helpers.ts)
   const typeCode = (vm.typeCode || '').toUpperCase();
+  const productGroup = (vm.productGroup || '').toUpperCase();
   
   // Extract property type from subtitle as fallback (e.g., "Mökki tai huvila • Kittilä" -> "mökki tai huvila")
   const typeFromSubtitle = (vm.subtitle?.split(' • ')[0] || '').toLowerCase().trim();
@@ -33,30 +34,34 @@ export function DetailView({ vm, locale }: Props) {
   ];
   const isCommercialProperty = COMMERCIAL_CODES.includes(typeCode);
   
-  const isApartment = ['KERROSTALO', 'FLAT', 'APARTMENT_BUILDING'].includes(typeCode) ||
+  // 🔥 CHECK PRODUCTGROUP FIRST (e.g., "APARTMENTS"), then fallback to typeCode
+  const isApartment = productGroup === 'APARTMENTS' ||
+                      ['KERROSTALO', 'FLAT', 'APARTMENT_BUILDING'].includes(typeCode) ||
                       typeFromSubtitle === 'kerrostalo';
   
-  // Check typeCode first, then fallback to subtitle keywords
-  const isProperty = [
-    'OMAKOTITALO', 'DETACHED_HOUSE', 'DETACHEDHOUSE',
-    'RIVITALO', 'TOWNHOUSE',
-    'PARITALO', 'SEMI_DETACHED_HOUSE',
-    'LUHTITALO', 'TERRACED_HOUSE',
-    'COTTAGE_OR_VILLA', 'MÖKKI_TAI_HUVILA',
-    'TONTTI', 'PLOT',
-    'MAATILA', 'FARM',
-    'VUOKRATALO', 'RENTAL_HOUSE'
-  ].includes(typeCode) || 
-  // 🔥 ROOT FIX: If typeCode is missing, detect from subtitle keywords
-  (!typeCode && ['mökki', 'huvila', 'omakotitalo', 'tontti', 'maatila', 'rivitalo', 'paritalo',
-                  'villa', 'cottage', 'detached', 'townhouse', 'plot', 'farm',
-                  'stuga', 'tomt', 'gård', 'radhus', 'parhus'].some(kw => typeFromSubtitle.includes(kw)));
+  // 🔥 CHECK PRODUCTGROUP FIRST (e.g., "PROPERTIES"), then fallback to typeCode and subtitle
+  const isProperty = productGroup === 'PROPERTIES' ||
+    [
+      'OMAKOTITALO', 'DETACHED_HOUSE', 'DETACHEDHOUSE',
+      'RIVITALO', 'TOWNHOUSE',
+      'PARITALO', 'SEMI_DETACHED_HOUSE',
+      'LUHTITALO', 'TERRACED_HOUSE',
+      'COTTAGE_OR_VILLA', 'MÖKKI_TAI_HUVILA',
+      'TONTTI', 'PLOT',
+      'MAATILA', 'FARM',
+      'VUOKRATALO', 'RENTAL_HOUSE'
+    ].includes(typeCode) || 
+    // 🔥 ROOT FIX: If typeCode is missing, detect from subtitle keywords
+    (!typeCode && ['mökki', 'huvila', 'omakotitalo', 'tontti', 'maatila', 'rivitalo', 'paritalo',
+                    'villa', 'cottage', 'detached', 'townhouse', 'plot', 'farm',
+                    'stuga', 'tomt', 'gård', 'radhus', 'parhus'].some(kw => typeFromSubtitle.includes(kw)));
   
   const isRental = !!vm.rental;
   
-  // 🔍 DEBUG: Log detection for debugging - Dennis 2025-11-11: Added isCommercialProperty
+  // 🔍 DEBUG: Log detection for debugging - Dennis 2025-11-18: Added productGroup
   console.log(`🔍 Property type detection for ${vm.title}:`, {
     typeCode,
+    productGroup,
     typeFromSubtitle,
     isApartment,
     isProperty,

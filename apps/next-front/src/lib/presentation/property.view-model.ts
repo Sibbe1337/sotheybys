@@ -72,6 +72,7 @@ export interface PropertyDetailVM extends PropertyCardVM {
   // Meta
   status?: 'ACTIVE' | 'SOLD' | 'RESERVED';  // NEW Phase 3
   typeCode?: string;
+  productGroup?: string;        // Product group from Linear (APARTMENTS, PROPERTIES, etc.)
   apartmentType?: string;
   condition?: string;          // Kunto / Skick (for rentals)
   energyClass?: string;
@@ -254,6 +255,7 @@ export class PropertyVM {
       // Meta
       status: p.meta.status,
       typeCode: p.meta.typeCode,
+      productGroup: p.meta.productGroup, // Product group from Linear (APARTMENTS, PROPERTIES, etc.)
       // ✅ SPEC: Use lpick for technical data (allows FI fallback for non-translated system values)
       apartmentType: lpick(p.meta.apartmentType, l),
       condition: lpick(p.meta.condition, l),
