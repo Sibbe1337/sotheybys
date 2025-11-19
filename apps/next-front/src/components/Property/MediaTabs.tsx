@@ -65,7 +65,7 @@ export function MediaTabs({
     <div className="w-full">
       {/* Content - Dennis: Images FIRST, then buttons below */}
       {/* Dennis 2025-11-13: Fixed min-height för alla tabs så dom int hoppar */}
-      <div className="w-full bg-gray-50 rounded-lg overflow-hidden mb-4 min-h-[400px] sm:min-h-[500px] lg:min-h-[600px]">
+      <div className="w-full bg-gray-50 overflow-hidden mb-4 min-h-[400px] sm:min-h-[500px] lg:min-h-[600px]">
         {activeTab === 'photos' && photoImages.length > 0 && (
           <ImageCarousel images={photoImages} title={title} propertyId={propertyId} />
         )}

@@ -13,8 +13,8 @@ export function CarouselArrowButton({
   className = '',
   variant = 'light'
 }: CarouselArrowButtonProps) {
-  // Mobile: top-[30%] to avoid covering text, Desktop: centered
-  const baseClasses = 'absolute top-[30%] sm:top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center bg-transparent backdrop-blur-sm transition-all duration-200 rounded-none border-2';
+  // Always centered vertically on all devices
+  const baseClasses = 'absolute top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center bg-transparent backdrop-blur-sm transition-all duration-200 rounded-none border-2';
   
   const variantClasses = variant === 'dark'
     ? 'border-black/20 hover:border-black/40 hover:bg-black/10'
