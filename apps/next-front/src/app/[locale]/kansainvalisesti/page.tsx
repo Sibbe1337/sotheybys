@@ -327,10 +327,15 @@ export default function InternationalPage({ params }: { params: { locale: Locale
         {/* Property Types Section */}
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
               
               {/* Urban Metropolitan */}
-              <div className="group cursor-pointer">
+              <a 
+                href="https://www.sothebysrealty.com/eng" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="group cursor-pointer"
+              >
                 <div className="h-64 relative overflow-hidden">
                   <Image
                     src="/images/international/new-york-skyline.jpg"
@@ -349,31 +354,15 @@ export default function InternationalPage({ params }: { params: { locale: Locale
                     </button>
                   </div>
                 </div>
-              </div>
-
-              {/* Luxury Ski */}
-              <div className="group cursor-pointer">
-                <div className="h-64 relative overflow-hidden">
-                  <Image
-                    src="/images/international/ski-mountain-property.jpg"
-                    alt="Luxury Ski Properties"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors"></div>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-6">
-                    <h3 className="text-2xl font-light mb-4">
-                      Luxury Ski Properties
-                    </h3>
-                    <button className="border border-white px-6 py-2 hover:bg-white hover:text-black transition-all uppercase text-sm font-light">
-                      {t.findSki}
-                    </button>
-                  </div>
-                </div>
-              </div>
+              </a>
 
               {/* Tranquil Beachfront */}
-              <div className="group cursor-pointer">
+              <a 
+                href="https://www.sothebysrealty.com/eng/sales/int/beach-lstyle" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="group cursor-pointer"
+              >
                 <div className="h-64 relative overflow-hidden">
                   <Image
                     src="/images/international/beachfront-property.jpg"
@@ -392,7 +381,7 @@ export default function InternationalPage({ params }: { params: { locale: Locale
                     </button>
                   </div>
                 </div>
-              </div>
+              </a>
 
             </div>
           </div>
@@ -476,10 +465,15 @@ export default function InternationalPage({ params }: { params: { locale: Locale
         {/* Bottom Property Types */}
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
               
               {/* Wine & Vineyard */}
-              <div className="group cursor-pointer">
+              <a 
+                href="https://www.sothebysrealty.com/eng/sales/int/wine-vineyard-lstyle" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="group cursor-pointer"
+              >
                 <div className="h-64 relative overflow-hidden">
                   <Image
                     src="/images/international/vineyard-property.jpg"
@@ -498,32 +492,15 @@ export default function InternationalPage({ params }: { params: { locale: Locale
                     </button>
                   </div>
                 </div>
-              </div>
-
-              {/* Champion Golf */}
-              <div className="group cursor-pointer">
-                <div className="h-64 relative overflow-hidden">
-                  <Image
-                    src="/images/international/golf-property.jpg"
-                    alt="Champion Golf Properties"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors"></div>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-6">
-                    <h3 className="text-2xl font-light mb-4">
-                      Champion Golf<br />
-                      Properties
-                    </h3>
-                    <button className="border border-white px-6 py-2 hover:bg-white hover:text-black transition-all uppercase text-sm font-light">
-                      {t.viewGolf}
-                    </button>
-                  </div>
-                </div>
-              </div>
+              </a>
 
               {/* Majestic Mountain */}
-              <div className="group cursor-pointer">
+              <a 
+                href="https://www.sothebysrealty.com/eng/sales/int/mountain-lstyle" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="group cursor-pointer"
+              >
                 <div className="h-64 relative overflow-hidden">
                   <Image
                     src="/images/international/ski-mountain-property.jpg"
@@ -542,7 +519,7 @@ export default function InternationalPage({ params }: { params: { locale: Locale
                     </button>
                   </div>
                 </div>
-              </div>
+              </a>
 
             </div>
           </div>
