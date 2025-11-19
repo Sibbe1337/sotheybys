@@ -31,8 +31,16 @@ const translations = {
     newsletterText: 'Haluan vastaanottaa Snellman Sotheby\'s uutiskirjeen',
     submitButton: 'Lähetä',
     honorTitle: 'Kunniatehtävä',
+    honorText1: 'Snellman | Sotheby\'s International Realty Finland toimii osana maailman suurimpiin kuuluvaa, menestyksekästä kiinteistönvälitysketjua Sotheby\'s International Realty®, joten tarjoamme käyttöösi laajan kontaktiverkoston asiantuntijoineen. Myyntikanavamme kattavat tehokkaan maailmanlaajuisen markkinointiverkoston.',
+    honorText2: 'Olemme erikoistuneet arvoasuntoihin. Jokainen toimeksianto saa myyntikohteenamme aseman, joka takaa sille erityisen, tavallista laadukkaamman palvelun.',
+    honorText3: 'Tarjoamme käyttöösi laajan asiantuntemuksen niin kotimaan kuin kansainvälisilläkin markkinoilla. Edustamme alan parasta osaamista ja hoidamme sydämellä koko myyntiprosessin alusta loppuun asti. Takaamme, että käytössäsi on kauttamme alan moderneimmat ja tehokkaimmat markkinointikanavat sekä laaja asiakasverkosto. Näin saavutamme kohteellesi korkeimman mahdollisen myyntihinnan.',
     relationshipTitle: 'Arvokas asiakassuhde',
+    relationshipText1: 'Toivomme, että yhteistyö kanssamme on aina pitkäaikainen suhde henkilökohtaisella tasolla. Pidämme jokaista asiakastamme ainutlaatuisena ja arvokkaana kaikilta osa-alueilta. Meillä kaikilla on erilaiset tarpeet ja toiveet, keskustelemme ja räätälöimme asiakkaidemme toiveiden ja vaatimusten mukaan. Tehtävämme on tehdä unelmastasi totta.',
+    relationshipText2: 'Snellman Sotheby\'s International Realty Finland kuuluu yhdeksi maailman arvostetuimmista kiinteistönvälitysketjuista. Jäsenyys Sotheby\'s International Realty®:ssä merkitsee jäsenyyttä globaalissa verkostossa, jolla on laaja asiantuntemus, elintärkeät kontaktit, poikkeukselliset myyntikanavat sekä pääsy tehokkaimpiin markkinointikanaviin.',
+    relationshipText3: 'Olemme erikoistuneet luksus- ja arvoasuntoihin, ja tarjoamme sinulle markkinoiden haluttuimpia koteja. Kokeneet tiimimme jäsenet kunnioittavat aina mahdollisuutta jakaa asiantuntemuksensa kanssasi, ja haluamme olla mukana prosessissa alusta loppuun. Takaamme pääsyn uusimpiin markkinointikanaviin, oikeaan asiakasverkostoon, korkeimpaan mahdolliseen hintaan ja tietysti kokemuksen, jonka muistat mielellään.',
     promiseTitle: 'Palvelulupauksemme',
+    promiseText1: 'Haluamme tukea sinua, kun olet tekemässä yhtä elämäsi tärkeimmistä taloudellisista päätöksistä ja varmistaa, että teet oikean valinnan. Takaamme, että saat kokeneiden asiantuntijoidemme mielipiteen ja tuen koko prosessin ajan. Korkein toiveemme on, että kaikki asiakkaamme tuntevat olonsa mukavaksi kanssamme ja että yhteistyö tulevaisuudessa on luonnollinen päätös jokaiselle asiakkaallemme.',
+    promiseText2: 'Älä unohda pyytää palvelutarjousta.',
     pricingTitle: 'Palveluhinnasto',
     videoTitle: 'Miksi myydä kanssamme?',
     videoSubtitle: 'Katso miten autamme asiakkaitamme onnistuneeseen asuntokauppaan',
@@ -58,8 +66,16 @@ const translations = {
     newsletterText: 'Jag vill ta emot Snellman Sotheby\'s nyhetsbrev',
     submitButton: 'Skicka',
     honorTitle: 'Hedersuppdrag',
+    honorText1: 'Snellman | Sotheby\'s International Realty Finland verkar som en del av en av världens största och mest framgångsrika fastighetsmäklarkedjor, Sotheby\'s International Realty®. Vi erbjuder därför tillgång till ett omfattande kontaktnätverk med experter. Våra försäljningskanaler täcker ett effektivt globalt marknadsföringsnätverk.',
+    honorText2: 'Vi är specialiserade på värdefulla bostäder. Varje uppdrag får en position hos oss som säljare som garanterar en särskild service av högre kvalitet än vanligt.',
+    honorText3: 'Vi erbjuder omfattande expertis på både inhemska och internationella marknader. Vi representerar branschens bästa kompetens och hanterar hela försäljningsprocessen från början till slut med hjärtat. Vi garanterar att du genom oss har tillgång till branschens modernaste och mest effektiva marknadsföringskanaler samt ett brett kundnätverk. På så sätt uppnår vi högsta möjliga försäljningspris för din fastighet.',
     relationshipTitle: 'Värdefull kundrelation',
+    relationshipText1: 'Vi hoppas att samarbetet med oss alltid är en långsiktig relation på personlig nivå. Vi betraktar varje kund som unik och värdefull i alla avseenden. Vi har alla olika behov och önskemål, vi diskuterar och skräddarsyr enligt våra kunders önskemål och krav. Vår uppgift är att göra din dröm till verklighet.',
+    relationshipText2: 'Snellman Sotheby\'s International Realty Finland hör till en av världens mest ansedda fastighetsmäklarkedjor. Medlemskap i Sotheby\'s International Realty® innebär medlemskap i ett globalt nätverk med bred expertis, viktiga kontakter, exceptionella försäljningskanaler och tillgång till de mest effektiva marknadsföringskanalerna.',
+    relationshipText3: 'Vi är specialiserade på lyxbostäder och värdefulla hem, och erbjuder dig marknadens mest eftertraktade bostäder. Våra erfarna teammedlemmar respekterar alltid möjligheten att dela sin expertis med dig, och vi vill vara med i processen från början till slut. Vi garanterar tillgång till de senaste marknadsföringskanalerna, rätt kundnätverk, högsta möjliga pris och naturligtvis en upplevelse som du gärna minns.',
     promiseTitle: 'Vårt servicelöfte',
+    promiseText1: 'Vi vill stödja dig när du fattar ett av livets viktigaste ekonomiska beslut och säkerställa att du gör rätt val. Vi garanterar att du får våra erfarna experters åsikt och stöd under hela processen. Vår högsta önskan är att alla våra kunder känner sig bekväma med oss och att framtida samarbete är ett naturligt val för varje kund.',
+    promiseText2: 'Glöm inte att begära ett serviceerbjudande.',
     pricingTitle: 'Prislista',
     videoTitle: 'Varför sälja med oss?',
     videoSubtitle: 'Se hur vi hjälper våra kunder till en framgångsrik bostadsaffär',
@@ -85,8 +101,16 @@ const translations = {
     newsletterText: 'I want to receive Snellman Sotheby\'s newsletter',
     submitButton: 'Send',
     honorTitle: 'Honorary Mission',
+    honorText1: 'Snellman | Sotheby\'s International Realty Finland operates as part of one of the world\'s largest and most successful real estate brokerage chains, Sotheby\'s International Realty®. We therefore offer access to an extensive network of experts. Our sales channels cover an effective global marketing network.',
+    honorText2: 'We specialize in valuable properties. Each assignment receives a position with us as a seller that guarantees a special service of higher quality than usual.',
+    honorText3: 'We offer extensive expertise in both domestic and international markets. We represent the industry\'s best competence and handle the entire sales process from start to finish with heart. We guarantee that through us you have access to the industry\'s most modern and effective marketing channels and a broad customer network. This way we achieve the highest possible selling price for your property.',
     relationshipTitle: 'Valuable Customer Relationship',
+    relationshipText1: 'We hope that cooperation with us is always a long-term relationship on a personal level. We consider each customer unique and valuable in all respects. We all have different needs and wishes, we discuss and tailor according to our customers\' wishes and requirements. Our mission is to make your dream come true.',
+    relationshipText2: 'Snellman Sotheby\'s International Realty Finland is one of the world\'s most prestigious real estate brokerage chains. Membership in Sotheby\'s International Realty® means membership in a global network with extensive expertise, vital contacts, exceptional sales channels and access to the most effective marketing channels.',
+    relationshipText3: 'We specialize in luxury and valuable homes, and offer you the market\'s most sought-after properties. Our experienced team members always respect the opportunity to share their expertise with you, and we want to be involved in the process from start to finish. We guarantee access to the latest marketing channels, the right customer network, the highest possible price and of course an experience you will gladly remember.',
     promiseTitle: 'Our Service Promise',
+    promiseText1: 'We want to support you when making one of life\'s most important financial decisions and ensure that you make the right choice. We guarantee that you will receive the opinion and support of our experienced experts throughout the process. Our highest wish is that all our customers feel comfortable with us and that future cooperation is a natural choice for every customer.',
+    promiseText2: 'Don\'t forget to request a service quote.',
     pricingTitle: 'Service Pricing',
     videoTitle: 'Why sell with us?',
     videoSubtitle: 'See how we help our clients achieve successful property transactions',
@@ -250,21 +274,9 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
                   {t.honorTitle}
                 </h2>
                 <div className="space-y-4 text-gray-700 font-light leading-relaxed text-base">
-                  <p>
-                    Snellman | Sotheby's International Realty Finland toimii osana maailman suurimpiin kuuluvaa, menestyksekästä 
-                    kiinteistönvälitysketjua Sotheby's International Realty®, joten tarjoamme käyttöösi laajan kontaktiverkoston 
-                    asiantuntijoineen. Myyntikanavamme kattavat tehokkaan maailmanlaajuisen markkinointiverkoston.
-                  </p>
-                  <p>
-                    Olemme erikoistuneet arvoasuntoihin. Jokainen toimeksianto saa myyntikohteenamme aseman, joka takaa sille erityisen, tavallista 
-                    laadukkaamman palvelun.
-                  </p>
-                  <p>
-                    Tarjoamme käyttöösi laajan asiantuntemuksen niin kotimaan kuin kansainvälisilläkin markkinoilla. Edustamme alan parasta 
-                    osaamista ja hoidamme sydämellä koko myyntiprosessin alusta loppuun asti. Takaamme, että käytössäsi on kauttamme alan 
-                    moderneimmat ja tehokkaimmat markkinointikanavat sekä laaja asiakasverkosto. Näin saavutamme kohteellesi korkeimman 
-                    mahdollisen myyntihinnan.
-                  </p>
+                  <p>{t.honorText1}</p>
+                  <p>{t.honorText2}</p>
+                  <p>{t.honorText3}</p>
                 </div>
               </div>
             </div>
@@ -279,24 +291,9 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
                 {t.relationshipTitle}
               </h2>
               <div className="space-y-6 text-gray-700 font-light leading-relaxed text-base">
-                <p>
-                  Toivomme, että yhteistyö kanssamme on aina pitkäaikainen suhde henkilökohtaisella tasolla. 
-                  Pidämme jokaista asiakastamme ainutlaatuisena ja arvokkaana kaikilta osa-alueilta. 
-                  Meillä kaikilla on erilaiset tarpeet ja toiveet, keskustelemme ja räätälöimme asiakkaidemme toiveiden ja vaatimusten mukaan. 
-                  Tehtävämme on tehdä unelmastasi totta.
-                </p>
-                <p>
-                  Snellman Sotheby's International Realty Finland kuuluu yhdeksi maailman arvostetuimmista 
-                  kiinteistönvälitysketjuista. Jäsenyys Sotheby's International Realty®:ssä merkitsee jäsenyyttä globaalissa verkostossa, 
-                  jolla on laaja asiantuntemus, elintärkeät kontaktit, poikkeukselliset myyntikanavat sekä pääsy tehokkaimpiin 
-                  markkinointikanaviin.
-                </p>
-                <p>
-                  Olemme erikoistuneet luksus- ja arvoasuntoihin, ja tarjoamme sinulle markkinoiden haluttuimpia koteja. 
-                  Kokeneet tiimimme jäsenet kunnioittavat aina mahdollisuutta jakaa asiantuntemuksensa kanssasi, 
-                  ja haluamme olla mukana prosessissa alusta loppuun. Takaamme pääsyn uusimpiin markkinointikanaviin, 
-                  oikeaan asiakasverkostoon, korkeimpaan mahdolliseen hintaan ja tietysti kokemuksen, jonka muistat mielellään.
-                </p>
+                <p>{t.relationshipText1}</p>
+                <p>{t.relationshipText2}</p>
+                <p>{t.relationshipText3}</p>
               </div>
             </div>
           </div>
@@ -310,15 +307,8 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
                 {t.promiseTitle}
               </h2>
               <div className="space-y-6 text-gray-700 font-light leading-relaxed text-base">
-                <p>
-                  Haluamme tukea sinua, kun olet tekemässä yhtä elämäsi tärkeimmistä taloudellisista päätöksistä 
-                  ja varmistaa, että teet oikean valinnan. Takaamme, että saat kokeneiden asiantuntijoidemme mielipiteen 
-                  ja tuen koko prosessin ajan. Korkein toiveemme on, että kaikki asiakkaamme tuntevat olonsa mukavaksi 
-                  kanssamme ja että yhteistyö tulevaisuudessa on luonnollinen päätös jokaiselle asiakkaallemme.
-                </p>
-                <p>
-                  Älä unohda pyytää palvelutarjousta.
-                </p>
+                <p>{t.promiseText1}</p>
+                <p>{t.promiseText2}</p>
               </div>
             </div>
           </div>
