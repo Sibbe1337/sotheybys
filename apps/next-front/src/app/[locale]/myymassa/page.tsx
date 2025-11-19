@@ -42,6 +42,17 @@ const translations = {
     promiseText1: 'Haluamme tukea sinua, kun olet tekemässä yhtä elämäsi tärkeimmistä taloudellisista päätöksistä ja varmistaa, että teet oikean valinnan. Takaamme, että saat kokeneiden asiantuntijoidemme mielipiteen ja tuen koko prosessin ajan. Korkein toiveemme on, että kaikki asiakkaamme tuntevat olonsa mukavaksi kanssamme ja että yhteistyö tulevaisuudessa on luonnollinen päätös jokaiselle asiakkaallemme.',
     promiseText2: 'Älä unohda pyytää palvelutarjousta.',
     pricingTitle: 'Palveluhinnasto',
+    pricingBroker: 'Välittäjä / Myyntitoimeksiannot',
+    pricingApartments: 'Osakehuoneistot',
+    pricingProperties: 'Kiinteistöt',
+    pricingRemote: 'Etä- ja erikoiskohteet',
+    pricingRental: 'Vuokraustoimeksianto',
+    pricingMinimum: 'Minimipalkkio',
+    pricingInternational: 'Kansainvälinen näkyvyys',
+    pricingStartFee: 'Aloitusmaksu',
+    pricingPropertiesRemote: 'Kiinteistöt / Etä- ja erikoiskohteet',
+    pricingNote1: '* Tai sopimuksen mukaan',
+    pricingNote2: '** Soveltuvin osin',
     videoTitle: 'Miksi myydä kanssamme?',
     videoSubtitle: 'Katso miten autamme asiakkaitamme onnistuneeseen asuntokauppaan',
     disputeTitle: 'Kuluttajariita',
@@ -77,6 +88,17 @@ const translations = {
     promiseText1: 'Vi vill stödja dig när du fattar ett av livets viktigaste ekonomiska beslut och säkerställa att du gör rätt val. Vi garanterar att du får våra erfarna experters åsikt och stöd under hela processen. Vår högsta önskan är att alla våra kunder känner sig bekväma med oss och att framtida samarbete är ett naturligt val för varje kund.',
     promiseText2: 'Glöm inte att begära ett serviceerbjudande.',
     pricingTitle: 'Prislista',
+    pricingBroker: 'Mäklare / Försäljningsuppdrag',
+    pricingApartments: 'Aktielägenheter',
+    pricingProperties: 'Fastigheter',
+    pricingRemote: 'Avlägsna och specialobjekt',
+    pricingRental: 'Uthyrningsuppdrag',
+    pricingMinimum: 'Minimiarvode',
+    pricingInternational: 'Internationell synlighet',
+    pricingStartFee: 'Startavgift',
+    pricingPropertiesRemote: 'Fastigheter / Avlägsna och specialobjekt',
+    pricingNote1: '* Eller enligt avtal',
+    pricingNote2: '** I tillämpliga fall',
     videoTitle: 'Varför sälja med oss?',
     videoSubtitle: 'Se hur vi hjälper våra kunder till en framgångsrik bostadsaffär',
     disputeTitle: 'Konsumenttvist',
@@ -112,6 +134,17 @@ const translations = {
     promiseText1: 'We want to support you when making one of life\'s most important financial decisions and ensure that you make the right choice. We guarantee that you will receive the opinion and support of our experienced experts throughout the process. Our highest wish is that all our customers feel comfortable with us and that future cooperation is a natural choice for every customer.',
     promiseText2: 'Don\'t forget to request a service quote.',
     pricingTitle: 'Service Pricing',
+    pricingBroker: 'Broker / Sales Assignments',
+    pricingApartments: 'Share apartments',
+    pricingProperties: 'Properties',
+    pricingRemote: 'Remote and special properties',
+    pricingRental: 'Rental assignment',
+    pricingMinimum: 'Minimum fee',
+    pricingInternational: 'International visibility',
+    pricingStartFee: 'Starting fee',
+    pricingPropertiesRemote: 'Properties / Remote and special properties',
+    pricingNote1: '* Or by agreement',
+    pricingNote2: '** As applicable',
     videoTitle: 'Why sell with us?',
     videoSubtitle: 'See how we help our clients achieve successful property transactions',
     disputeTitle: 'Consumer Dispute',
@@ -326,33 +359,33 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-gray-300">
-                      <th className="text-left pb-4 font-light text-lg">Välittäjä / Myyntitoimeksiannot</th>
+                      <th className="text-left pb-4 font-light text-lg">{t.pricingBroker}</th>
                       <th className="text-right pb-4 font-light text-lg"></th>
                     </tr>
                   </thead>
                   <tbody className="text-gray-700">
                     <tr className="border-b border-gray-200">
-                      <td className="py-3 font-light">Osakehuoneistot</td>
+                      <td className="py-3 font-light">{t.pricingApartments}</td>
                       <td className="py-3 text-right font-light">5 % sis. alv 25,5%*</td>
                     </tr>
                     <tr className="border-b border-gray-200">
-                      <td className="py-3 font-light">Kiinteistöt</td>
+                      <td className="py-3 font-light">{t.pricingProperties}</td>
                       <td className="py-3 text-right font-light">6 % sis. alv 25,5%*</td>
                     </tr>
                     <tr className="border-b border-gray-200">
-                      <td className="py-3 font-light">Etä- ja erikoiskohteet</td>
+                      <td className="py-3 font-light">{t.pricingRemote}</td>
                       <td className="py-3 text-right font-light">7 % sis. alv 25,5%*</td>
                     </tr>
                     <tr className="border-b border-gray-200">
-                      <td className="py-3 font-light">Vuokraustoimeksianto</td>
+                      <td className="py-3 font-light">{t.pricingRental}</td>
                       <td className="py-3 text-right font-light">2 kk vuokra sis. alv 25,5%*</td>
                     </tr>
                     <tr className="border-b border-gray-200">
-                      <td className="py-3 font-light">Minimipalkkio</td>
+                      <td className="py-3 font-light">{t.pricingMinimum}</td>
                       <td className="py-3 text-right font-light">5750 € sis. alv 25,5%*</td>
                     </tr>
                     <tr className="border-b border-gray-200">
-                      <td className="py-3 font-light">Kansainvälinen näkyvyys</td>
+                      <td className="py-3 font-light">{t.pricingInternational}</td>
                       <td className="py-3 text-right font-light">+0,50 % sis. alv 25,5%**</td>
                     </tr>
                   </tbody>
@@ -361,25 +394,25 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
                 <table className="w-full mt-8">
                   <thead>
                     <tr className="border-b border-gray-300">
-                      <th className="text-left pb-4 font-light text-lg">Aloitusmaksu</th>
+                      <th className="text-left pb-4 font-light text-lg">{t.pricingStartFee}</th>
                       <th className="text-right pb-4 font-light text-lg"></th>
                     </tr>
                   </thead>
                   <tbody className="text-gray-700">
                     <tr className="border-b border-gray-200">
-                      <td className="py-3 font-light">Osakehuoneistot</td>
+                      <td className="py-3 font-light">{t.pricingApartments}</td>
                       <td className="py-3 text-right font-light">Alkaen 500 € sis. alv 25,5%*</td>
                     </tr>
                     <tr className="border-b border-gray-200">
-                      <td className="py-3 font-light">Kiinteistöt / Etä- ja erikoiskohteet</td>
+                      <td className="py-3 font-light">{t.pricingPropertiesRemote}</td>
                       <td className="py-3 text-right font-light">Alkaen 3000 € sis. alv 25,5%*</td>
                     </tr>
                   </tbody>
                 </table>
                 
                 <div className="mt-8 text-sm text-gray-600 font-light">
-                  <p>* Tai sopimuksen mukaan</p>
-                  <p>** Soveltuvin osin</p>
+                  <p>{t.pricingNote1}</p>
+                  <p>{t.pricingNote2}</p>
                 </div>
               </div>
             </div>
