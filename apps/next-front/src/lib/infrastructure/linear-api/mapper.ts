@@ -602,10 +602,20 @@ export class LinearToPropertyMapper {
                 nv?.housingTenure,
                 nv?.housingCooperativeForm
             ];
+            
+            // DEBUG: Log what Linear API actually returns
+            if ((src as any).housingTenure) {
+                console.log('🔍 LINEAR API housingTenure:', JSON.stringify((src as any).housingTenure, null, 2));
+            }
+            
             for (const field of fields) {
                 const value = lv(field);
-                if (value.fi || value.sv || value.en) return value;
+                if (value.fi || value.sv || value.en) {
+                    console.log('✅ Found housingTenure:', value);
+                    return value;
+                }
             }
+            console.log('❌ No housingTenure found in any field');
             return { fi: '', sv: '', en: '' };
         })(),
         
