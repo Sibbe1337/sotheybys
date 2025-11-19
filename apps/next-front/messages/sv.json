@@ -255,10 +255,10 @@
   "property": {
     "media": {
       "photos": "Bilder",
-      "floor": "Planlösning",
+      "floor": "Bottenplan",
       "map": "Objekt på kartan",
-      "brochure": "Bläddra i broschyr",
-      "video": "Video",
+      "brochure": "Bläddra broschyren",
+      "video": "Titta video",
       "global": "GLOBAL LISTING"
     },
     "stats": {

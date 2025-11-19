@@ -254,11 +254,11 @@
   },
   "property": {
     "media": {
-      "photos": "Photos",
-      "floor": "Floor Plan",
-      "map": "Map Location",
-      "brochure": "Browse Brochure",
-      "video": "Video",
+      "photos": "Pictures",
+      "floor": "Floor plan",
+      "map": "Location on map",
+      "brochure": "Browse the brochure",
+      "video": "Watch video",
       "global": "GLOBAL LISTING"
     },
     "stats": {

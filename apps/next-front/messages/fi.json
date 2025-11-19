@@ -254,11 +254,11 @@
   },
   "property": {
     "media": {
-      "photos": "Kuvat",
-      "floor": "Pohjapiirros",
+      "photos": "Valokuvat",
+      "floor": "Pohjakuva",
       "map": "Kohde kartalla",
       "brochure": "Selaa esitettä",
-      "video": "Video",
+      "video": "Katso video",
       "global": "GLOBAL LISTING"
     },
     "stats": {
