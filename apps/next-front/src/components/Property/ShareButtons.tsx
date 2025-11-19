@@ -13,7 +13,7 @@ export function ShareButtons({ url, title }: ShareButtonsProps) {
   };
 
   return (
-    <div className="flex gap-2 items-center">
+    <div className="flex gap-2 items-center justify-center sm:justify-start">
       <a 
         href={shareUrls.facebook} 
         target="_blank" 
