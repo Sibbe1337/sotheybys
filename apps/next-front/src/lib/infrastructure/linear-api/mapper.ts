@@ -648,7 +648,19 @@ export class LinearToPropertyMapper {
                     return value;
                 }
             }
-            console.log('❌ No housingTenure found in any field');
+            console.log('❌ No housingTenure found in any field - using default for apartments');
+            
+            // TEMPORARY FIX: If this is an apartment and housingTenure is null, 
+            // default to "Bostadsrättsförening" (most common in Finland/Sweden)
+            const listingType = nv?.listingType || '';
+            if (listingType === 'FLAT' || listingType === 'APARTMENT') {
+                return {
+                    fi: 'Asunto-osakeyhtiö',
+                    sv: 'Bostadsrättsförening',
+                    en: 'Housing cooperative'
+                };
+            }
+            
             return { fi: '', sv: '', en: '' };
         })(),
         
