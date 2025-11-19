@@ -52,8 +52,8 @@ export function ImageCarousel({ images, title, propertyId }: ImageCarouselProps)
     <>
       {/* Main Carousel - Dennis 2025-11-12: Optimerad för mobil med högre aspect ratio */}
       <section className="relative w-full bg-black">
-        {/* Dennis 2025-11-12: Mobil 4:3 (mer square), Desktop 21:9 (bred panorama) */}
-        <div className="relative w-full aspect-[4/3] sm:aspect-[16/9] lg:aspect-[21/9] overflow-hidden">
+        {/* Dennis 2025-11-19: Mobil 3:2 (kompakt), Tablet 16:9, Desktop 21:9 (bred panorama) */}
+        <div className="relative w-full aspect-[3/2] sm:aspect-[16/9] lg:aspect-[21/9] overflow-hidden">
           {/* Use native img tag with API proxy to bypass CORS */}
           <img
             key={imageKey}
