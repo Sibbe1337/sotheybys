@@ -140,15 +140,6 @@ export function PropertySections({ vm, locale, isCommercial = false }: PropertyS
       <Section title={getSectionLabel('property.building', locale)}>
         <Field label={getFieldLabel('yearBuilt', locale)} value={vm.yearBuilt} alwaysShow locale={locale} />
         
-        {/* JOHAN FIX 2025-11-18: Add legal disclaimer for properties */}
-        <div className="mt-6 p-4 bg-gray-50 border-l-4 border-gray-300 text-sm text-gray-700 leading-relaxed">
-          {locale === 'sv' 
-            ? 'Denna presentation utgör inte en officiell försäljningsprospekt. Mer detaljerad information erhålles av mäklarna.' 
-            : locale === 'en'
-            ? 'This presentation does not constitute an official sales prospectus. More detailed information is available from the brokers.'
-            : 'Tämä esittely ei ole virallinen myyntiesite. Tarkempia tietoja saa välittäjiltä.'
-          }
-        </div>
         <Field label={getFieldLabel('heatingSystem', locale)} value={vm.heatingSystem} locale={locale} />
         <Field label={getFieldLabel('ventilationSystem', locale)} value={vm.ventilationSystem} locale={locale} />
         <Field label={getFieldLabel('floorsTotal', locale)} value={vm.floorsTotal} locale={locale} />
@@ -175,6 +166,16 @@ export function PropertySections({ vm, locale, isCommercial = false }: PropertyS
           <Field label={getFieldLabel('mortgages', locale)} value={vm.propertyMortgages} locale={locale} />
           <Field label={getFieldLabel('otherPayments', locale)} value={vm.propertyOtherFees} locale={locale} />
       </Section>
+
+
+      {/* Dennis 2025-11-19: Mandatory Legal Disclaimer - Updated text, placed at end after all property info */}
+      <div className="mt-6 p-6 bg-gray-50 border-l-4 border-[#002349] text-sm text-gray-800 leading-relaxed">
+        <p className="font-medium">
+          {locale === 'fi' && 'Tämä ilmoitus ei ole virallinen myyntiesite. Lisätiedot saat välittäjältä.'}
+          {locale === 'sv' && 'Denna annons är inte en officiell försäljningsbrochyr. Mer information fås av mäklaren.'}
+          {locale === 'en' && 'This listing is not an official sales brochure. For more information, please contact the agent.'}
+        </p>
+      </div>
 
       {/* PDF spec s.11: "Asiakirjat & Linkit" block removed - documents available via MediaTabs */}
     </div>

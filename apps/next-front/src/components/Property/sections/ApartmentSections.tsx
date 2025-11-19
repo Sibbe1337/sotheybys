@@ -156,16 +156,6 @@ export function ApartmentSections({ vm, locale }: ApartmentSectionsProps) {
       {/* Yhtiö- ja Rakennustiedot - LINUS SPEC: EN ruta, Hissi här, bolagslån/kiinnitykset endast om data */}
       <Section title={getSectionLabel('apartment.companyBuilding', locale)}>
         <Field label={getFieldLabel('yearBuilt', locale)} value={vm.yearBuilt} alwaysShow locale={locale} />
-        
-        {/* JOHAN FIX 2025-11-18: Add legal disclaimer for apartments */}
-        <div className="mt-6 p-4 bg-gray-50 border-l-4 border-gray-300 text-sm text-gray-700 leading-relaxed">
-          {locale === 'sv' 
-            ? 'Denna presentation utgör inte en officiell försäljningsprospekt. Mer detaljerad information erhålles av mäklarna.' 
-            : locale === 'en'
-            ? 'This presentation does not constitute an official sales prospectus. More detailed information is available from the brokers.'
-            : 'Tämä esittely ei ole virallinen myyntiesite. Tarkempia tietoja saa välittäjiltä.'
-          }
-        </div>
         <Field 
           label={getFieldLabel('energyClass', locale)} 
           value={vm.energyClass}
@@ -250,6 +240,16 @@ export function ApartmentSections({ vm, locale }: ApartmentSectionsProps) {
         <Field label={getFieldLabel('ownershipType', locale)} value={vm.ownershipType} alwaysShow locale={locale} />
         <Field label={getFieldLabel('zoning', locale)} value={vm.zoning} alwaysShow locale={locale} />
       </Section>
+
+
+      {/* Dennis 2025-11-19: Mandatory Legal Disclaimer - Updated text, placed at end after all property info */}
+      <div className="mt-6 p-6 bg-gray-50 border-l-4 border-[#002349] text-sm text-gray-800 leading-relaxed">
+        <p className="font-medium">
+          {locale === 'fi' && 'Tämä ilmoitus ei ole virallinen myyntiesite. Lisätiedot saat välittäjältä.'}
+          {locale === 'sv' && 'Denna annons är inte en officiell försäljningsbrochyr. Mer information fås av mäklaren.'}
+          {locale === 'en' && 'This listing is not an official sales brochure. For more information, please contact the agent.'}
+        </p>
+      </div>
 
       {/* PDF spec s.11: "Asiakirjat & Linkit" block removed - documents available via MediaTabs */}
     </div>
