@@ -21,6 +21,15 @@ const translations = {
     formTitle: 'Sovi maksuton arviokäynti!',
     formSubtitle: 'Tiedätkö asuntosi markkina-arvon?',
     formText: 'Kutsu meidät maksuttomalle arviokäynnille – saat alueen asiantuntevimman lausunnon.',
+    firstName: 'Etunimi',
+    lastName: 'Sukunimi',
+    email: 'Sähköposti',
+    phone: 'Puhelinnumero',
+    message: 'Viesti',
+    privacyText: 'Olen lukenut',
+    privacyLink: 'Tietosuojaselosteen',
+    newsletterText: 'Haluan vastaanottaa Snellman Sotheby's uutiskirjeen',
+    submitButton: 'Lähetä',
     honorTitle: 'Kunniatehtävä',
     relationshipTitle: 'Arvokas asiakassuhde',
     promiseTitle: 'Palvelulupauksemme',
@@ -39,6 +48,15 @@ const translations = {
     formTitle: 'Boka en gratis värdering!',
     formSubtitle: 'Känner du till ditt hems marknadsvärde?',
     formText: 'Bjud in oss för en kostnadsfri värdering – få områdets mest expertisutlåtande.',
+    firstName: 'Förnamn',
+    lastName: 'Efternamn',
+    email: 'E-post',
+    phone: 'Telefonnummer',
+    message: 'Meddelande',
+    privacyText: 'Jag har läst',
+    privacyLink: 'Integritetspolicyn',
+    newsletterText: 'Jag vill ta emot Snellman Sotheby's nyhetsbrev',
+    submitButton: 'Skicka',
     honorTitle: 'Hedersuppdrag',
     relationshipTitle: 'Värdefull kundrelation',
     promiseTitle: 'Vårt servicelöfte',
@@ -57,6 +75,15 @@ const translations = {
     formTitle: 'Schedule a free appraisal!',
     formSubtitle: 'Do you know your property\'s market value?',
     formText: 'Invite us for a free appraisal – get the area\'s most expert opinion.',
+    firstName: 'First name',
+    lastName: 'Last name',
+    email: 'Email',
+    phone: 'Phone number',
+    message: 'Message',
+    privacyText: 'I have read the',
+    privacyLink: 'Privacy Policy',
+    newsletterText: 'I want to receive Snellman Sotheby\'s newsletter',
+    submitButton: 'Send',
     honorTitle: 'Honorary Mission',
     relationshipTitle: 'Valuable Customer Relationship',
     promiseTitle: 'Our Service Promise',
@@ -128,10 +155,10 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
           </div>
         </section>
 
-        {/* Form and Mission Section Side by Side */}
+        {/* Form and Mission Section - Dennis 2025-11-19: Always stacked vertically, even on desktop */}
         <section className="py-16">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 gap-8 max-w-4xl mx-auto">
               {/* Valuation Form */}
               <div className="bg-gray-100 p-8 lg:p-12">
                 <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-6">
@@ -148,13 +175,13 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <input
                       type="text"
-                      placeholder="Etunimi"
+                      placeholder={t.firstName}
                       className="w-full px-4 py-3 bg-white border border-gray-300 focus:outline-none focus:border-[var(--color-primary)] font-light"
                       required
                     />
                     <input
                       type="text"
-                      placeholder="Sukunimi"
+                      placeholder={t.lastName}
                       className="w-full px-4 py-3 bg-white border border-gray-300 focus:outline-none focus:border-[var(--color-primary)] font-light"
                       required
                     />
@@ -163,20 +190,20 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <input
                       type="email"
-                      placeholder="Sähköposti"
+                      placeholder={t.email}
                       className="w-full px-4 py-3 bg-white border border-gray-300 focus:outline-none focus:border-[var(--color-primary)] font-light"
                       required
                     />
                     <input
                       type="tel"
-                      placeholder="Puhelinnumero"
+                      placeholder={t.phone}
                       className="w-full px-4 py-3 bg-white border border-gray-300 focus:outline-none focus:border-[var(--color-primary)] font-light"
                       required
                     />
                   </div>
                   
                   <textarea
-                    placeholder="Viesti"
+                    placeholder={t.message}
                     rows={6}
                     className="w-full px-4 py-3 bg-white border border-gray-300 focus:outline-none focus:border-[var(--color-primary)] font-light resize-none"
                   />
@@ -184,14 +211,14 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
                   <div className="flex items-start gap-3">
                     <input
                       type="checkbox"
-                      id="privacy-fi"
+                      id="privacy"
                       required
                       className="mt-1"
                     />
-                    <label htmlFor="privacy-fi" className="text-sm text-gray-700 font-light">
-                      Olen lukenut{' '}
+                    <label htmlFor="privacy" className="text-sm text-gray-700 font-light">
+                      {t.privacyText}{' '}
                       <a href="/tietosuojaseloste" className="text-[var(--color-primary)] hover:underline">
-                        Tietosuojaselosteen
+                        {t.privacyLink}
                       </a>
                     </label>
                   </div>
@@ -199,11 +226,11 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
                   <div className="flex items-start gap-3">
                     <input
                       type="checkbox"
-                      id="newsletter-fi"
+                      id="newsletter"
                       className="mt-1"
                     />
-                    <label htmlFor="newsletter-fi" className="text-sm text-gray-700 font-light">
-                      Haluan vastaanottaa Snellman Sotheby's uutiskirjeen
+                    <label htmlFor="newsletter" className="text-sm text-gray-700 font-light">
+                      {t.newsletterText}
                     </label>
                   </div>
                   
@@ -212,7 +239,7 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
                     className="w-full bg-[var(--color-primary)] text-white px-6 py-3 hover:bg-[var(--color-primary-dark)] 
                              transition-colors duration-300 font-light"
                   >
-                    Lähetä
+                    {t.submitButton}
                   </button>
                 </form>
               </div>
@@ -222,7 +249,7 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
                 <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-6">
                   {t.honorTitle}
                 </h2>
-                <div className="space-y-4 text-gray-700 font-light leading-relaxed text-sm">
+                <div className="space-y-4 text-gray-700 font-light leading-relaxed text-base">
                   <p>
                     Snellman | Sotheby's International Realty Finland toimii osana maailman suurimpiin kuuluvaa, menestyksekästä 
                     kiinteistönvälitysketjua Sotheby's International Realty®, joten tarjoamme käyttöösi laajan kontaktiverkoston 
