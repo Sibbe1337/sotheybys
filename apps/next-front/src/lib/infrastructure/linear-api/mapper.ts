@@ -595,17 +595,30 @@ export class LinearToPropertyMapper {
         housingTenure: (() => {
             const fields = [
                 (src as any).housingTenure,
+                (src as any).hallintamuoto,  // Finnish field name
                 (src as any).tenureType,
                 (src as any).managementForm,
                 (src as any).housingCooperativeForm,
                 (src as any).companyForm,
+                (src as any).forvaltningsform,  // Swedish field name
                 nv?.housingTenure,
+                nv?.hallintamuoto,
                 nv?.housingCooperativeForm
             ];
             
             // DEBUG: Log what Linear API actually returns
+            console.log('🔍 DEBUG: Checking all possible housingTenure field names...');
+            console.log('  housingTenure:', (src as any).housingTenure ? 'exists' : 'null');
+            console.log('  hallintamuoto:', (src as any).hallintamuoto ? 'exists' : 'null');
+            console.log('  managementForm:', (src as any).managementForm ? 'exists' : 'null');
+            console.log('  housingCooperativeForm:', (src as any).housingCooperativeForm ? 'exists' : 'null');
+            console.log('  companyForm:', (src as any).companyForm ? 'exists' : 'null');
+            
             if ((src as any).housingTenure) {
                 console.log('🔍 LINEAR API housingTenure:', JSON.stringify((src as any).housingTenure, null, 2));
+            }
+            if ((src as any).hallintamuoto) {
+                console.log('🔍 LINEAR API hallintamuoto:', JSON.stringify((src as any).hallintamuoto, null, 2));
             }
             
             for (const field of fields) {
