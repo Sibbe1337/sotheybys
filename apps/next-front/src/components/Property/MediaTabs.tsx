@@ -64,8 +64,8 @@ export function MediaTabs({
   return (
     <div className="w-full">
       {/* Content - Dennis: Images FIRST, then buttons below */}
-      {/* Dennis 2025-11-13: Fixed min-height för alla tabs så dom int hoppar */}
-      <div className="w-full bg-gray-50 overflow-hidden mb-4 min-h-[400px] sm:min-h-[500px] lg:min-h-[600px]">
+      {/* Dennis 2025-11-19: No min-height for photos (aspect ratio handles it), minimal margin for tight layout */}
+      <div className="w-full bg-gray-50 overflow-hidden mb-2">
         {activeTab === 'photos' && photoImages.length > 0 && (
           <ImageCarousel images={photoImages} title={title} propertyId={propertyId} />
         )}
@@ -204,7 +204,7 @@ export function MediaTabs({
         - Desktop (>= 1280px): Single row with equal width (flex-1)
         This ensures consistent, enhetlig layout across ALL devices and orientations
       */}
-      <div className="flex gap-2 mt-4 overflow-x-auto xl:overflow-x-visible pb-2 xl:pb-0 -mx-4 px-4 xl:mx-0 xl:px-0 scrollbar-hide">
+      <div className="flex gap-2 mt-2 overflow-x-auto xl:overflow-x-visible pb-2 xl:pb-0 -mx-4 px-4 xl:mx-0 xl:px-0 scrollbar-hide">
         {tabs.map((tab) => (
           <button
             key={tab.id}
