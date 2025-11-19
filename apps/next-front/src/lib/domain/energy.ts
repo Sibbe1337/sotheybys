@@ -9,16 +9,16 @@ export function normalizeEnergyStatus(txt: string): EnergyStatus {
   const s = (txt || '').toLowerCase();
   if (!s) return null;
   
-  // Has certificate
-  if (/(kyllä|ja|yes|kohteella on|har|has)/.test(s)) return 'HAS_CERTIFICATE';
-  
-  // Not required by law
-  if (/ei.*edellytt|not required|inget.*lagstadgat|ej.*lagstadgat/.test(s)) {
+  // Not required by law - CHECK THIS FIRST before "has certificate"
+  if (/ei.*edellytt|not required|inget.*lagstadgat|ej.*lagstadgat|behöver inte/.test(s)) {
     return 'NOT_REQUIRED_BY_LAW';
   }
   
   // Exempt by act
   if (/vapautettu|exempt|undantagen/.test(s)) return 'EXEMPT_BY_ACT';
+  
+  // Has certificate - CHECK THIS LAST to avoid false positives
+  if (/(kyllä|ja|yes|kohteella on|har|has)/.test(s)) return 'HAS_CERTIFICATE';
   
   return null;
 }
