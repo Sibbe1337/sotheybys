@@ -593,6 +593,32 @@ export class LinearToPropertyMapper {
         
         // Dennis 2025-11-19: Förvaltningsform/Hallintamuoto - try all possible field names
         housingTenure: (() => {
+            // DEBUG: Log ALL field names in the API response to find the correct one
+            console.log('🔍 ALL FIELDS IN LINEAR API RESPONSE:');
+            console.log(Object.keys(src as any).filter(key => 
+                key.toLowerCase().includes('housing') || 
+                key.toLowerCase().includes('tenure') || 
+                key.toLowerCase().includes('hallinta') ||
+                key.toLowerCase().includes('forvaltning') ||
+                key.toLowerCase().includes('company') ||
+                key.toLowerCase().includes('yhtiö') ||
+                key.toLowerCase().includes('cooperative')
+            ).join(', '));
+            
+            // Also check nonLocalizedValues
+            if (nv) {
+                console.log('🔍 RELEVANT FIELDS IN nonLocalizedValues:');
+                console.log(Object.keys(nv).filter(key => 
+                    key.toLowerCase().includes('housing') || 
+                    key.toLowerCase().includes('tenure') || 
+                    key.toLowerCase().includes('hallinta') ||
+                    key.toLowerCase().includes('forvaltning') ||
+                    key.toLowerCase().includes('company') ||
+                    key.toLowerCase().includes('yhtiö') ||
+                    key.toLowerCase().includes('cooperative')
+                ).join(', '));
+            }
+            
             const fields = [
                 (src as any).housingTenure,
                 (src as any).hallintamuoto,  // Finnish field name
@@ -606,19 +632,8 @@ export class LinearToPropertyMapper {
                 nv?.housingCooperativeForm
             ];
             
-            // DEBUG: Log what Linear API actually returns
-            console.log('🔍 DEBUG: Checking all possible housingTenure field names...');
-            console.log('  housingTenure:', (src as any).housingTenure ? 'exists' : 'null');
-            console.log('  hallintamuoto:', (src as any).hallintamuoto ? 'exists' : 'null');
-            console.log('  managementForm:', (src as any).managementForm ? 'exists' : 'null');
-            console.log('  housingCooperativeForm:', (src as any).housingCooperativeForm ? 'exists' : 'null');
-            console.log('  companyForm:', (src as any).companyForm ? 'exists' : 'null');
-            
             if ((src as any).housingTenure) {
                 console.log('🔍 LINEAR API housingTenure:', JSON.stringify((src as any).housingTenure, null, 2));
-            }
-            if ((src as any).hallintamuoto) {
-                console.log('🔍 LINEAR API hallintamuoto:', JSON.stringify((src as any).hallintamuoto, null, 2));
             }
             
             for (const field of fields) {
