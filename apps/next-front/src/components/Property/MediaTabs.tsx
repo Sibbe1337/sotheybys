@@ -198,14 +198,14 @@ export function MediaTabs({
       </div>
 
       {/* Tab buttons - Dennis: UNDER bilderna (not above) */}
-      {/* Desktop: ALL tabs on ONE row with equal width | Mobile: 3+2 grid layout */}
-      <div className="grid grid-cols-3 sm:flex sm:flex-row gap-2 mt-4">
+      {/* Desktop: ALL tabs on ONE row with equal width | Mobile: flex-wrap to prevent text clipping */}
+      <div className="flex flex-wrap sm:flex-nowrap gap-2 mt-4">
         {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             disabled={!tab.enabled}
-            className={`px-4 py-3 rounded-none whitespace-nowrap font-bold uppercase tracking-wide transition-all text-xs sm:text-sm sm:flex-1 ${
+            className={`flex-1 min-w-[140px] px-4 py-3 rounded-none whitespace-nowrap font-bold uppercase tracking-wide transition-all text-xs sm:text-sm ${
               activeTab === tab.id 
                 ? 'bg-[#002349] text-white shadow-md' 
                 : tab.enabled 
