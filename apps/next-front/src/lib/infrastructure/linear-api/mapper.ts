@@ -633,7 +633,12 @@ export class LinearToPropertyMapper {
             ];
             
             if ((src as any).housingTenure) {
-                console.log('🔍 LINEAR API housingTenure:', JSON.stringify((src as any).housingTenure, null, 2));
+                console.log('🔍 LINEAR API housingTenure FULL OBJECT:', JSON.stringify((src as any).housingTenure, null, 2));
+                console.log('🔍 housingTenure.fi:', (src as any).housingTenure.fi);
+                console.log('🔍 housingTenure.sv:', (src as any).housingTenure.sv);
+                console.log('🔍 housingTenure.en:', (src as any).housingTenure.en);
+            } else {
+                console.log('❌ housingTenure field does not exist in API response');
             }
             
             for (const field of fields) {
