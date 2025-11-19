@@ -198,14 +198,19 @@ export function MediaTabs({
       </div>
 
       {/* Tab buttons - Dennis: UNDER bilderna (not above) */}
-      {/* Desktop: ALL tabs on ONE row with equal width | Mobile: flex-wrap to prevent text clipping */}
-      <div className="flex flex-wrap sm:flex-nowrap gap-2 mt-4">
-        {tabs.map(tab => (
+      {/* 
+        RESPONSIVE LAYOUT STRATEGY:
+        - Mobile & Tablet: Horizontal scroll (all buttons in one row, scrollable)
+        - Desktop: Single row with equal width (flex-1)
+        This ensures consistent, enhetlig layout across ALL devices
+      */}
+      <div className="flex gap-2 mt-4 overflow-x-auto lg:overflow-x-visible pb-2 lg:pb-0 -mx-4 px-4 lg:mx-0 lg:px-0 scrollbar-hide">
+        {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             disabled={!tab.enabled}
-            className={`flex-1 min-w-[140px] px-4 py-3 rounded-none whitespace-nowrap font-bold uppercase tracking-wide transition-all text-xs sm:text-sm ${
+            className={`flex-shrink-0 lg:flex-1 px-6 py-3 rounded-none whitespace-nowrap font-bold uppercase tracking-wide transition-all text-xs sm:text-sm ${
               activeTab === tab.id 
                 ? 'bg-[#002349] text-white shadow-md' 
                 : tab.enabled 
