@@ -545,12 +545,11 @@ export class LinearToPropertyMapper {
           const rawGroup = lget(src.productGroup, 'en') || lget(src.productGroup, 'fi') || lget(src.productGroup, 'sv');
           return rawGroup ? rawGroup.toUpperCase().replace(/ /g, '_') : undefined;
         })(),
-        // Dennis 2025-11-13: Use Linear's localized listing type directly (Kerrostalo/Hyreshus/Apartment Building)
-        listingTypeLabel: {
-          fi: lget(src.listingType, 'fi') || lget(src.listingType, 'sv') || lget(src.listingType, 'en') || '',
-          sv: lget(src.listingType, 'sv') || lget(src.listingType, 'fi') || lget(src.listingType, 'en') || '',
-          en: lget(src.listingType, 'en') || lget(src.listingType, 'fi') || lget(src.listingType, 'sv') || ''
-        },
+        // Dennis 2025-11-19: Use localizeListingType() to ensure correct translations (Kerrostalo -> Höghus in Swedish)
+        listingTypeLabel: (() => {
+          const typeCode = nv?.listingType || lget(src.listingType, 'fi') || '';
+          return localizeListingType(typeCode);
+        })(),
         
         // Basic metadata (from blueprint)
         identifierFi,
