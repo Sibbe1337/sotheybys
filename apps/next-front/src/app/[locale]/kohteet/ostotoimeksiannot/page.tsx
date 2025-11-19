@@ -123,36 +123,41 @@ export default function PurchaseAssignmentsPage({ params }: { params: { locale: 
               </p>
             </div>
 
-            {/* Contact Cards */}
+            {/* Contact Info */}
             <div className="max-w-6xl mx-auto">
               <p className="text-center text-lg text-gray-700 font-light mb-12">
                 {t.contactText}
               </p>
               
-              <div className="grid md:grid-cols-3 gap-8 mb-20">
-                {/* Phone Card */}
-                <div className="text-center p-8 border border-gray-200 rounded-lg hover:shadow-lg transition-shadow">
-                  <div className="text-3xl mb-4">📞</div>
-                  <a href="tel:+358103156900" className="text-lg text-[var(--color-primary)] hover:underline font-light">
-                    +358 (0)10 315 6900
-                  </a>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center mb-20">
+                <div>
+                  <h4 className="text-lg font-light">
+                    <a href="tel:+358103156900" className="text-gray-900 hover:text-[#1a3a4a] transition-colors">
+                      +358 (0)10 315 6900
+                    </a>
+                  </h4>
                 </div>
-
-                {/* Address Card */}
-                <div className="text-center p-8 border border-gray-200 rounded-lg hover:shadow-lg transition-shadow">
-                  <div className="text-3xl mb-4">📍</div>
-                  <p className="text-lg text-gray-700 font-light">
-                    Kasarmikatu 34,<br />
-                    00130 Helsinki
-                  </p>
+                <div>
+                  <h4 className="text-lg font-light">
+                    <a
+                      href="https://goo.gl/maps/8HptT8TwUp42"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-900 hover:text-[#1a3a4a] transition-colors"
+                    >
+                      Kasarmikatu 34, 00130 Helsinki
+                    </a>
+                  </h4>
                 </div>
-
-                {/* Email Card */}
-                <div className="text-center p-8 border border-gray-200 rounded-lg hover:shadow-lg transition-shadow">
-                  <div className="text-3xl mb-4">✉️</div>
-                  <a href="mailto:info@sothebysrealty.fi" className="text-lg text-[var(--color-primary)] hover:underline font-light">
-                    info@sothebysrealty.fi
-                  </a>
+                <div>
+                  <h4 className="text-lg font-light">
+                    <a
+                      href="mailto:info@sothebysrealty.fi"
+                      className="text-gray-900 hover:text-[#1a3a4a] transition-colors"
+                    >
+                      info@sothebysrealty.fi
+                    </a>
+                  </h4>
                 </div>
               </div>
             </div>
