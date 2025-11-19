@@ -41,7 +41,7 @@ export function quickTranslate(text: string, targetLang: SupportedLanguage): str
     talo: { sv: 'hus', en: 'house' },
     omakotitalo: { sv: 'villa', en: 'detached house' },
     rivitalo: { sv: 'radhus', en: 'townhouse' },
-    kerrostalo: { sv: 'flerbostadshus', en: 'apartment building' },
+    kerrostalo: { sv: 'höghus', en: 'apartment building' },
     keittiö: { sv: 'kök', en: 'kitchen' },
     makuuhuone: { sv: 'sovrum', en: 'bedroom' },
     olohuone: { sv: 'vardagsrum', en: 'living room' },

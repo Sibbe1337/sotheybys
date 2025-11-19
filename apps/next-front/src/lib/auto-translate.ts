@@ -35,7 +35,7 @@ async function translateFiToSv(text: string): Promise<string> {
     'talo': 'hus',
     'omakotitalo': 'villa',
     'rivitalo': 'radhus',
-    'kerrostalo': 'flerbostadshus',
+    'kerrostalo': 'höghus',
     
     // Rooms
     'keittiö': 'kök',
