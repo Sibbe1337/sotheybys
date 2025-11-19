@@ -14,7 +14,7 @@ const typeTranslations: Record<string, Record<'fi' | 'sv' | 'en', string>> = {
   'apartment': { fi: 'Asunto', sv: 'Lägenhet', en: 'Apartment' },
   'omakotitalo': { fi: 'Omakotitalo', sv: 'Villa', en: 'Detached house' },
   'villa': { fi: 'Omakotitalo', sv: 'Villa', en: 'Detached house' },
-  'kerrostalo': { fi: 'Kerrostalo', sv: 'Flervåningshus', en: 'Apartment building' },
+  'kerrostalo': { fi: 'Kerrostalo', sv: 'Höghus', en: 'Apartment building' },
   'rivitalo': { fi: 'Rivitalo', sv: 'Radhus', en: 'Townhouse' },
   'radhus': { fi: 'Rivitalo', sv: 'Radhus', en: 'Townhouse' },
   'townhouse': { fi: 'Rivitalo', sv: 'Radhus', en: 'Townhouse' },
