@@ -45,25 +45,26 @@ const PROPERTY_TYPES = [
     }
   },
   {
-    id: 'apartment',
-    label: { fi: 'Asunnot', sv: 'Lägenheter', en: 'Apartments' },
+    id: 'highrise',
+    label: { fi: 'Kerrostalot', sv: 'Höghus', en: 'Apartment buildings' },
     image: '/images/property-types/apartment.svg',
     filter: (p: Property) => {
       const rent = p.meta.rent || 0;
       const isOnSale = !p.meta.status || p.meta.status === 'ACTIVE' || p.meta.status === 'RESERVED';
-      if (rent > 0 || !isOnSale) return false; // PDF spec s.3-4: exclude rentals and non-sale from listings
+      if (rent > 0 || !isOnSale) return false;
       const type = (p.meta.typeCode || '').toLowerCase();
-      return type.includes('kerrostalo') || type.includes('flat') || type.includes('apartment');
+      // Inkludera apartment_building, flat, kerrostalo MEN exkludera radhus/parhus om de råkar ha "flat"
+      return type.includes('kerrostalo') || type.includes('apartment_building') || (type.includes('flat') && !type.includes('row') && !type.includes('semi'));
     }
   },
   {
-    id: 'house',
-    label: { fi: 'Omakotitalot', sv: 'Villor', en: 'Houses' },
+    id: 'detached',
+    label: { fi: 'Omakotitalot', sv: 'Egnahemshus', en: 'Detached houses' },
     image: '/images/property-types/house.svg',
     filter: (p: Property) => {
       const rent = p.meta.rent || 0;
       const isOnSale = !p.meta.status || p.meta.status === 'ACTIVE' || p.meta.status === 'RESERVED';
-      if (rent > 0 || !isOnSale) return false; // PDF spec s.3-4: exclude rentals and non-sale from listings
+      if (rent > 0 || !isOnSale) return false;
       const type = (p.meta.typeCode || '').toLowerCase();
       return type.includes('omakotitalo') || type.includes('detached') || type.includes('villa');
     }
@@ -77,7 +78,21 @@ const PROPERTY_TYPES = [
       const isOnSale = !p.meta.status || p.meta.status === 'ACTIVE' || p.meta.status === 'RESERVED';
       if (rent > 0 || !isOnSale) return false;
       const type = (p.meta.typeCode || '').toLowerCase();
-      return type.includes('rivi') || type.includes('row') || type.includes('townhouse') || type.includes('paritalo');
+      // Exkludera parhus (semi-detached) från radhus
+      if (type.includes('paritalo') || type.includes('semi_detached') || type.includes('parhus')) return false;
+      return type.includes('rivi') || type.includes('row') || type.includes('townhouse') || type.includes('radhus');
+    }
+  },
+  {
+    id: 'semidetached',
+    label: { fi: 'Paritalot', sv: 'Parhus', en: 'Semi-detached houses' },
+    image: '/images/property-types/townhouse.svg', 
+    filter: (p: Property) => {
+      const rent = p.meta.rent || 0;
+      const isOnSale = !p.meta.status || p.meta.status === 'ACTIVE' || p.meta.status === 'RESERVED';
+      if (rent > 0 || !isOnSale) return false;
+      const type = (p.meta.typeCode || '').toLowerCase();
+      return type.includes('paritalo') || type.includes('semi_detached') || type.includes('parhus');
     }
   },
   {
@@ -89,7 +104,7 @@ const PROPERTY_TYPES = [
       const isOnSale = !p.meta.status || p.meta.status === 'ACTIVE' || p.meta.status === 'RESERVED';
       if (rent > 0 || !isOnSale) return false;
       const type = (p.meta.typeCode || '').toLowerCase();
-      return type.includes('mökki') || type.includes('huvila') || type.includes('cottage') || type.includes('cabin');
+      return type.includes('mökki') || type.includes('huvila') || type.includes('cottage') || type.includes('cabin') || type.includes('stuga');
     }
   },
   {
@@ -101,10 +116,9 @@ const PROPERTY_TYPES = [
       const isOnSale = !p.meta.status || p.meta.status === 'ACTIVE' || p.meta.status === 'RESERVED';
       if (rent > 0 || !isOnSale) return false;
       const type = (p.meta.typeCode || '').toLowerCase();
-      return type.includes('maatila') || type.includes('farm') || type.includes('estate');
+      return type.includes('maatila') || type.includes('farm') || type.includes('estate') || type.includes('gård');
     }
   }
-  // Dennis 2025-11-10: Alla 14 objekt täcks nu av filter-kategorier
 ];
 
 export default function PropertySearch({ properties, language }: PropertySearchProps) {
@@ -467,7 +481,7 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                 aria-label="List view"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                  <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
                 </svg>
               </button>
               <button
@@ -692,4 +706,3 @@ export default function PropertySearch({ properties, language }: PropertySearchP
     </div>
   );
 }
-

@@ -575,7 +575,19 @@ export class LinearToPropertyMapper {
         // Ownership & tenure
         ownershipType: lv((src as any).ownershipType),
         plotOwnership: lv((src as any).siteOwnershipType ?? (src as any).lotOwnership),
-        housingTenure: lv((src as any).housingTenure),
+        
+        // Dennis 2025-11-19: Robust "Hallintamuoto" mapping
+        // Try standard housingTenure first, then housingCooperativeForm, then custom fields
+        housingTenure: (() => {
+            const standard = lv((src as any).housingTenure);
+            if (standard.fi || standard.sv) return standard;
+            
+            // Fallback to housingCooperativeForm / yhtiömuoto
+            const form = lv((src as any).housingCooperativeForm ?? (src as any).companyForm ?? nv?.housingCooperativeForm);
+            if (form.fi || form.sv) return form;
+            
+            return standard;
+        })(),
         
         // Property-specific
         propertyIdentifier,

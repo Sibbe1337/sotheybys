@@ -56,7 +56,7 @@ function Field({ label, value, sub, alwaysShow = false, locale = 'fi' }: FieldPr
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+    <div className="bg-white rounded-none shadow-sm p-6 mb-6">
       <h2 className="text-xl font-semibold text-gray-900 mb-4 pb-3 border-b border-gray-200">
         {title}
       </h2>
@@ -78,27 +78,22 @@ function SubSection({ title, children }: { title: string; children: React.ReactN
   );
 }
 
-// 🔥 LINUS FIX: Universal number parsing (handles both European "1 363,55 €" and English "€1,570,000")
 function parseEuropeanNumber(value?: string): number | undefined {
   if (!value) return undefined;
   
-  // Remove currency symbols and spaces first
-  let cleaned = value.replace(/[€$£¥]/g, '').replace(/\s+/g, '');
+  // Handle string numbers with European formatting (spaces, periods, commas)
+  const cleaned = value
+    .replace(/\s/g, '')        // Remove spaces
+    .replace(/\./g, '')        // Remove thousand separators (dots)
+    .replace(',', '.');        // Replace comma decimal separator with period
   
-  // Check if it's English format (comma as thousands separator, e.g., "1,570,000")
-  // English format: has comma followed by exactly 3 digits
-  if (/,\d{3}/.test(cleaned)) {
-    // English format: remove commas (thousands separator)
-    cleaned = cleaned.replace(/,/g, '');
-  } else {
-    // European format: replace comma with dot (decimal separator)
-    cleaned = cleaned.replace(',', '.');
-  }
+  // Extract just the number part (remove any text like "m²", "ha", "€", etc)
+  const match = cleaned.match(/^-?\d+(\.\d+)?/);
+  if (!match) return undefined;
   
-  // Remove any remaining non-numeric characters except dot
-  cleaned = cleaned.replace(/[^0-9.]/g, '');
+  const num = parseFloat(match[0]);
   
-  const num = parseFloat(cleaned);
+  // Return undefined for invalid numbers (NaN or 0)
   return Number.isFinite(num) && num > 0 ? num : undefined;
 }
 
@@ -144,6 +139,16 @@ export function PropertySections({ vm, locale, isCommercial = false }: PropertyS
       {/* Rakennustiedot (Building Facts) */}
       <Section title={getSectionLabel('property.building', locale)}>
         <Field label={getFieldLabel('yearBuilt', locale)} value={vm.yearBuilt} alwaysShow locale={locale} />
+        
+        {/* JOHAN FIX 2025-11-18: Add legal disclaimer for properties */}
+        <div className="mt-6 p-4 bg-gray-50 border-l-4 border-gray-300 text-sm text-gray-700 leading-relaxed">
+          {locale === 'sv' 
+            ? 'Denna presentation utgör inte en officiell försäljningsprospekt. Mer detaljerad information erhålles av mäklarna.' 
+            : locale === 'en'
+            ? 'This presentation does not constitute an official sales prospectus. More detailed information is available from the brokers.'
+            : 'Tämä esittely ei ole virallinen myyntiesite. Tarkempia tietoja saa välittäjiltä.'
+          }
+        </div>
         <Field label={getFieldLabel('heatingSystem', locale)} value={vm.heatingSystem} locale={locale} />
         <Field label={getFieldLabel('ventilationSystem', locale)} value={vm.ventilationSystem} locale={locale} />
         <Field label={getFieldLabel('floorsTotal', locale)} value={vm.floorsTotal} locale={locale} />

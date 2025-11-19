@@ -94,7 +94,7 @@ export default function PropertyHeroCarousel({
       {/* Hero Address Badge - Dennis feedback: Show in bottom-left corner, opens property */}
       <div className="absolute bottom-8 left-8 z-10">
         <HeroAddressBadge
-          address={displayAddress}
+          address={address} // <-- FIX: Use 'address' (street only), NOT 'displayAddress' (with apt num)
           postalCode={postalCode}
           city={city}
           slug={slug}

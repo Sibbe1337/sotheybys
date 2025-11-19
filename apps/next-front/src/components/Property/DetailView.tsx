@@ -185,7 +185,7 @@ export function DetailView({ vm, locale }: Props) {
 
         {/* Description - PDF spec s.10: Add "Kuvaus / Beskrivning" heading */}
         {vm.description && (
-          <div className="mb-8 sm:mb-10 md:mb-12 bg-white rounded-lg shadow-sm p-4 sm:p-6 md:p-8 lg:p-10">
+          <div className="mb-8 sm:mb-10 md:mb-12 bg-white rounded-none shadow-sm p-4 sm:p-6 md:p-8 lg:p-10">
             <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-4 sm:mb-6">
               {locale === 'sv' ? 'Beskrivning' : locale === 'en' ? 'Description' : 'Kuvaus'}
             </h2>
@@ -197,7 +197,7 @@ export function DetailView({ vm, locale }: Props) {
 
         {/* Agent Section - Dennis: Move AFTER description, BEFORE type-specific sections */}
         {agent.name && (
-          <div className="mb-12 bg-white rounded-lg shadow-sm p-4 sm:p-6 max-w-2xl">
+          <div className="mb-12 bg-white rounded-none shadow-sm p-4 sm:p-6 max-w-2xl">
             <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-4 sm:mb-6">
               {locale === 'sv' 
                 ? 'Tilläggsinfo och visning' 
@@ -240,7 +240,7 @@ export function DetailView({ vm, locale }: Props) {
                 )}
                 <a
                   href={`mailto:${agent.email || 'info@sothebysrealty.fi'}`}
-                  className="inline-block px-6 py-2 bg-[#002349] text-white font-semibold rounded hover:bg-[#001731] transition-colors"
+                  className="inline-block px-6 py-2 bg-[#002349] text-white font-semibold rounded-none hover:bg-[#001731] transition-colors"
                 >
                   {locale === 'sv' ? 'TA KONTAKT' : locale === 'en' ? 'CONTACT US' : 'OTA YHTEYTTÄ'}
                 </a>
