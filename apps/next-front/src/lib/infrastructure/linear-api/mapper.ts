@@ -573,19 +573,40 @@ export class LinearToPropertyMapper {
         
         // Ownership & tenure
         ownershipType: lv((src as any).ownershipType),
-        plotOwnership: lv((src as any).siteOwnershipType ?? (src as any).lotOwnership),
         
-        // Dennis 2025-11-19: Robust "Hallintamuoto" mapping
-        // Try standard housingTenure first, then housingCooperativeForm, then custom fields
+        // Dennis 2025-11-19: Tomtägandeform - try all possible field names
+        plotOwnership: (() => {
+            const fields = [
+                (src as any).siteOwnershipType,
+                (src as any).lotOwnership,
+                (src as any).plotOwnership,
+                (src as any).landOwnership,
+                nv?.siteOwnershipType,
+                nv?.plotOwnership
+            ];
+            for (const field of fields) {
+                const value = lv(field);
+                if (value.fi || value.sv || value.en) return value;
+            }
+            return { fi: '', sv: '', en: '' };
+        })(),
+        
+        // Dennis 2025-11-19: Förvaltningsform/Hallintamuoto - try all possible field names
         housingTenure: (() => {
-            const standard = lv((src as any).housingTenure);
-            if (standard.fi || standard.sv) return standard;
-            
-            // Fallback to housingCooperativeForm / yhtiömuoto
-            const form = lv((src as any).housingCooperativeForm ?? (src as any).companyForm ?? nv?.housingCooperativeForm);
-            if (form.fi || form.sv) return form;
-            
-            return standard;
+            const fields = [
+                (src as any).housingTenure,
+                (src as any).tenureType,
+                (src as any).managementForm,
+                (src as any).housingCooperativeForm,
+                (src as any).companyForm,
+                nv?.housingTenure,
+                nv?.housingCooperativeForm
+            ];
+            for (const field of fields) {
+                const value = lv(field);
+                if (value.fi || value.sv || value.en) return value;
+            }
+            return { fi: '', sv: '', en: '' };
         })(),
         
         // Property-specific
