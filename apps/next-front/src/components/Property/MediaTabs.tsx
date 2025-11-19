@@ -64,14 +64,14 @@ export function MediaTabs({
   return (
     <div className="w-full">
       {/* Content - Dennis: Images FIRST, then buttons below */}
-      {/* Dennis 2025-11-19: No min-height for photos (aspect ratio handles it), minimal margin for tight layout */}
-      <div className="w-full bg-gray-50 overflow-hidden mb-2">
+      {/* Dennis 2025-11-19: Fixed height based on image aspect ratio to prevent jumping when switching tabs */}
+      <div className="w-full bg-gray-50 overflow-hidden mb-2 aspect-[3/2] sm:aspect-[16/9] lg:aspect-[21/9]">
         {activeTab === 'photos' && photoImages.length > 0 && (
           <ImageCarousel images={photoImages} title={title} propertyId={propertyId} />
         )}
         
         {activeTab === 'floor' && (
-          <div className="w-full h-full min-h-[400px] flex items-center justify-center p-4">
+          <div className="w-full h-full flex items-center justify-center p-4">
             {floorImages.length > 0 ? (
               <img 
                 src={floorImages[0].url} 
@@ -101,7 +101,7 @@ export function MediaTabs({
         )}
         
         {activeTab === 'map' && (
-          <div className="w-full h-[500px] flex items-center justify-center bg-gray-50 rounded-lg">
+          <div className="w-full h-full flex items-center justify-center bg-gray-50">
             {coordinates ? (
               <iframe
                 title="Property Location Map"
@@ -131,26 +131,13 @@ export function MediaTabs({
         )}
         
         {activeTab === 'brochure' && (
-          <div className="w-full h-full min-h-[600px] flex flex-col items-center justify-center p-8">
+          <div className="w-full h-full flex items-center justify-center">
             {brochureUrl ? (
-              <>
-                <iframe 
-                  src={brochureUrl} 
-                  className="w-full h-[500px] border-0 rounded-lg mb-4"
-                  title="Property brochure"
-                />
-                <a
-                  href={brochureUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-[#002349] text-white font-bold uppercase tracking-wide rounded-none hover:bg-[#001731] transition-colors shadow-md"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
-                  {locale === 'sv' ? 'Öppna broschyr i ny flik' : locale === 'en' ? 'Open brochure in new tab' : 'Avaa esite uudessa välilehdessä'}
-                </a>
-              </>
+              <iframe 
+                src={brochureUrl} 
+                className="w-full h-full border-0"
+                title="Property brochure"
+              />
             ) : (
               <div className="text-center text-gray-500">
                 <svg className="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -181,7 +168,7 @@ export function MediaTabs({
                 />
               </div>
             ) : (
-              <div className="text-center text-gray-500 p-8 min-h-[400px] flex flex-col items-center justify-center">
+              <div className="text-center text-gray-500 p-4 sm:p-8 h-full flex flex-col items-center justify-center">
                 <svg className="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
                 </svg>
