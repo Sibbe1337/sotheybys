@@ -138,13 +138,13 @@ export default function PropertyCard({
           </span>
         )}
 
-        {/* Karusellkontroller - PDF spec s.12: Transparent arrows (not solid boxes) */}
+        {/* Karusellkontroller - PDF spec s.12: Square arrows (not rounded) */}
         {images.length > 1 && (
           <>
             <button
               type="button"
               onClick={(e) => { e.preventDefault(); setIdx((idx - 1 + images.length) % images.length); }}
-              className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-white/70 hover:bg-white/90 p-2 text-lg shadow-md transition-all"
+              className="absolute left-2 top-1/2 -translate-y-1/2 rounded-none bg-white/70 hover:bg-white/90 p-2 text-lg shadow-md transition-all"
               aria-label="Previous image"
             >
               ‹
@@ -152,7 +152,7 @@ export default function PropertyCard({
             <button
               type="button"
               onClick={(e) => { e.preventDefault(); setIdx((idx + 1) % images.length); }}
-              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-white/70 hover:bg-white/90 p-2 text-lg shadow-md transition-all"
+              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-none bg-white/70 hover:bg-white/90 p-2 text-lg shadow-md transition-all"
               aria-label="Next image"
             >
               ›

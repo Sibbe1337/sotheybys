@@ -242,7 +242,7 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
                 e.stopPropagation();
                 setIdx((idx - 1 + displayImages.length) % displayImages.length); 
               }}
-              className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-white/70 hover:bg-white/90 p-2 text-lg shadow-md transition-all z-10"
+              className="absolute left-2 top-1/2 -translate-y-1/2 rounded-none bg-white/70 hover:bg-white/90 p-2 text-lg shadow-md transition-all z-10"
               aria-label="Previous image"
             >
               ‹
@@ -256,7 +256,7 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
                 e.stopPropagation();
                 setIdx((idx + 1) % displayImages.length); 
               }}
-              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-white/70 hover:bg-white/90 p-2 text-lg shadow-md transition-all z-10"
+              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-none bg-white/70 hover:bg-white/90 p-2 text-lg shadow-md transition-all z-10"
               aria-label="Next image"
             >
               ›
