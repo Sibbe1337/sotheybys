@@ -117,16 +117,6 @@ export function RentalSections({ vm, locale }: RentalSectionsProps) {
       <Section title={getSectionLabel('rental.companyBuilding', locale)}>
         <Field label={getFieldLabel('companyName', locale)} value={vm.housingCompanyName} alwaysShow locale={locale} />
         <Field label={getFieldLabel('yearBuilt', locale)} value={vm.yearBuilt} alwaysShow locale={locale} />
-        
-        {/* JOHAN FIX 2025-11-19: Mandatory Disclaimer */}
-        <div className="mt-6 p-4 bg-gray-50 border-l-4 border-gray-300 text-sm text-gray-700 leading-relaxed">
-          {locale === 'sv' 
-            ? 'Denna annons är inte en officiell försäljningbrochyr. Mer information fås av mäklaren.' 
-            : locale === 'en'
-            ? 'This listing is not an official sales brochure. For more information, please contact the agent.'
-            : 'Tämä ilmoitus ei ole virallinen myyntiesite. Lisätiedot saat välittäjältä.'
-          }
-        </div>
         <Field 
           label={getFieldLabel('energyClass', locale)} 
           value={vm.energyClass}
@@ -152,6 +142,15 @@ export function RentalSections({ vm, locale }: RentalSectionsProps) {
         <Field label={getFieldLabel('electricityFee', locale)} value={vm.fees?.electricity} locale={locale} />
         <Field label={getFieldLabel('otherPayments', locale)} value={vm.rental?.additionalCostInfo} locale={locale} />
       </Section>
+
+      {/* JOHAN FIX 2025-11-19: Mandatory Legal Disclaimer - Moved to end after all property info */}
+      <div className="mt-6 p-6 bg-gray-50 border-l-4 border-[#002349] text-sm text-gray-800 leading-relaxed space-y-2">
+        <p className="font-medium">
+          {locale === 'fi' && 'Tämä ilmoitus ei ole virallinen myyntiesite. Lisätiedot saat välittäjältä.'}
+          {locale === 'sv' && 'Denna annons är inte en officiell försäljningbrochyr. Mer information fås av mäklaren.'}
+          {locale === 'en' && 'This listing is not an official sales brochure. For more information, please contact the agent.'}
+        </p>
+      </div>
     </div>
   );
 }
