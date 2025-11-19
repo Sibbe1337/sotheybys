@@ -593,31 +593,12 @@ export class LinearToPropertyMapper {
         
         // Dennis 2025-11-19: Förvaltningsform/Hallintamuoto - try all possible field names
         housingTenure: (() => {
-            // DEBUG: Log ALL field names in the API response to find the correct one
-            console.log('🔍 ALL FIELDS IN LINEAR API RESPONSE:');
-            console.log(Object.keys(src as any).filter(key => 
-                key.toLowerCase().includes('housing') || 
-                key.toLowerCase().includes('tenure') || 
-                key.toLowerCase().includes('hallinta') ||
-                key.toLowerCase().includes('forvaltning') ||
-                key.toLowerCase().includes('company') ||
-                key.toLowerCase().includes('yhtiö') ||
-                key.toLowerCase().includes('cooperative')
-            ).join(', '));
-            
-            // Also check nonLocalizedValues
-            if (nv) {
-                console.log('🔍 RELEVANT FIELDS IN nonLocalizedValues:');
-                console.log(Object.keys(nv).filter(key => 
-                    key.toLowerCase().includes('housing') || 
-                    key.toLowerCase().includes('tenure') || 
-                    key.toLowerCase().includes('hallinta') ||
-                    key.toLowerCase().includes('forvaltning') ||
-                    key.toLowerCase().includes('company') ||
-                    key.toLowerCase().includes('yhtiö') ||
-                    key.toLowerCase().includes('cooperative')
-                ).join(', '));
-            }
+            // DEBUG: Log ownership-related fields
+            console.log('🔍 OWNERSHIP-RELATED FIELDS:');
+            console.log('  ownershipType:', (src as any).ownershipType ? JSON.stringify((src as any).ownershipType) : 'null');
+            console.log('  ownershipForm:', (src as any).ownershipForm ? JSON.stringify((src as any).ownershipForm) : 'null');
+            console.log('  ägandeform:', (src as any).ägandeform ? JSON.stringify((src as any).ägandeform) : 'null');
+            console.log('  agandeform:', (src as any).agandeform ? JSON.stringify((src as any).agandeform) : 'null');
             
             const fields = [
                 (src as any).housingTenure,
