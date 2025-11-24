@@ -110,6 +110,8 @@ export default function FeaturedPropertyGrid({ properties, locale }: FeaturedPro
             locale={locale}
             title={title}
             fullAddress={fullAddress}
+            postalCode={postalCode}
+            city={city}
             propertyType={propertyType}
             district={district}
             apartmentType={apartmentType}

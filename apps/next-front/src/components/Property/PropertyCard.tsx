@@ -68,10 +68,11 @@ export default function PropertyCard({
 }: PropertyCardProps) {
   const L = mapLocale(locale);
   
-  // PDF spec s.7: Full address format "Address, POSTALCODE City"
-  const fullAddress = postalCode && city 
-    ? `${title}, ${postalCode} ${city}`
-    : title;
+  // Dennis 2025-11-24: Split address into two lines
+  // Line 1: Street address (title)
+  // Line 2: Postal code + city
+  const addressLine1 = title;
+  const addressLine2 = postalCode && city ? `${postalCode} ${city}` : '';
 
   // Bildkarusell
   const { idx, setIdx, onTouchStart, onTouchMove, onTouchEnd } = useMiniCarousel(images.length);
@@ -163,8 +164,11 @@ export default function PropertyCard({
 
       {/* Innehåll */}
       <div className="space-y-3 p-4">
-        {/* PDF spec s.7: Titel with full address */}
-        <h3 className="line-clamp-2 text-base font-semibold text-gray-900">{fullAddress}</h3>
+        {/* Dennis 2025-11-24: Two-line address format */}
+        <div>
+          <h3 className="text-base font-semibold text-gray-900">{addressLine1}</h3>
+          {addressLine2 && <p className="text-sm text-gray-600">{addressLine2}</p>}
+        </div>
 
         {/* Meta-rad */}
         {metaRow && <p className="line-clamp-1 text-sm text-gray-600">{metaRow}</p>}

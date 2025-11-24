@@ -15,6 +15,8 @@ export interface FeaturedPropertyCardProps {
   locale: Locale;
   title: string;              // Full address WITH apartment number
   fullAddress: string;        // "Heikkiläntie 1 C 47, 00210 Helsinki"
+  postalCode?: string;        // Postal code
+  city?: string;              // City name
   
   // Type & location
   propertyType?: string;      // "Kerrostalo" / "Mökki tai huvila"
@@ -64,6 +66,8 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
     href,
     locale,
     fullAddress,
+    postalCode,
+    city,
     propertyType,
     district,
     apartmentType,
@@ -259,9 +263,14 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
       <div className="flex flex-1 flex-col p-6">
         {/* Title */}
         <Link href={href} className="mb-3">
-          <h3 className="font-serif text-2xl font-light leading-tight text-gray-900 transition-colors group-hover:text-[var(--color-primary)]">
-            {fullAddress}
-          </h3>
+          <div>
+            <h3 className="font-serif text-2xl font-light leading-tight text-gray-900 transition-colors group-hover:text-[var(--color-primary)]">
+              {fullAddress.split(',')[0].trim()}
+            </h3>
+            {postalCode && city && (
+              <p className="text-sm text-gray-600 mt-1">{postalCode} {city}</p>
+            )}
+          </div>
         </Link>
 
         {/* Price - Dennis 2025-11-11: Show tarjouskauppa label if applicable */}

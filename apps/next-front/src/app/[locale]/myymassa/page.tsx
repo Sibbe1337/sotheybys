@@ -319,7 +319,7 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
         {/* A Valuable Relationship Section */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
-            <div className="max-w-5xl mx-auto">
+            <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-8 text-center">
                 {t.relationshipTitle}
               </h2>
@@ -335,7 +335,7 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
         {/* Our Service Promise Section */}
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
-            <div className="max-w-5xl mx-auto">
+            <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-8 text-center">
                 {t.promiseTitle}
               </h2>

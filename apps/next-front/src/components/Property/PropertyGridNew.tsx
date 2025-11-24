@@ -107,6 +107,8 @@ export default function PropertyGridNew({ properties, locale }: PropertyGridNewP
             locale={locale}
             title={title}
             fullAddress={fullAddress}
+            postalCode={property.postalCode}
+            city={property.city[locale] || property.city.fi}
             propertyType={propertyType}
             district={district}
             apartmentType={apartmentType}
