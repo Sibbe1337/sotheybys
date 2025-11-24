@@ -217,24 +217,20 @@ function priceLines(
   }
 
   if (variant === 'apartment') {
-    // PDF spec s.7: Show Vh and Mh with labels
-    const main = currency(debtFreePrice, L);           // Velaton hinta först
-    const secondary = currency(askPrice, L);           // Myyntihinta
-    const vhLabel = locale === 'sv' ? 'Vh' : locale === 'en' ? 'Debt-free' : 'Vh';
-    const mhLabel = locale === 'sv' ? 'Mh' : locale === 'en' ? 'Sales price' : 'Mh';
+    // Dennis 2025-11-24: Show ONLY debt-free price (skuldfria priset), no prefix
+    const main = currency(debtFreePrice, L);
     
     return {
-      mainPrice: main ? `${vhLabel}: ${main}` : '',
-      subPrice: secondary ? `${mhLabel}: ${secondary}` : '',
+      mainPrice: main || '',
+      subPrice: '',
       perSqm: perSqm(debtFreePrice ?? undefined),
       rentSuffix: '',
     };
   }
 
-  // PDF spec s.9: Properties show Mh (sales price)
-  const mhLabel = locale === 'sv' ? 'Mh' : locale === 'en' ? 'Sales price' : 'Mh';
+  // Dennis 2025-11-24: Properties show ONLY sales price (försäljningspriset), no prefix
   return {
-    mainPrice: currency(debtFreePrice ?? askPrice, L) ? `${mhLabel}: ${currency(debtFreePrice ?? askPrice, L)}` : '',
+    mainPrice: currency(debtFreePrice ?? askPrice, L) || '',
     subPrice: '',
     perSqm: perSqm(debtFreePrice ?? askPrice ?? undefined),
     rentSuffix: '',

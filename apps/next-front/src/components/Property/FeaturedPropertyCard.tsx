@@ -146,26 +146,14 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
   } else if (variant === 'rental' && monthlyRent) {
     const suffix = locale === 'fi' ? '/kk' : locale === 'sv' ? '/mån' : '/month';
     priceDisplay = `${money(monthlyRent)} ${suffix}`;
-  } else if (variant === 'apartment' && (debtFreePrice || askPrice)) {
-    const parts: string[] = [];
-    if (debtFreePrice) parts.push(`Vh ${money(debtFreePrice)}`);
-    if (askPrice) parts.push(`Mh ${money(askPrice)}`);
-    priceDisplay = parts.join('  ');
+  } else if (variant === 'apartment' && debtFreePrice) {
+    // Dennis 2025-11-24: Show ONLY debt-free price for apartments, no prefix
+    priceDisplay = money(debtFreePrice);
   } else if (variant === 'property' && (debtFreePrice || askPrice)) {
-    // Dennis 2025-11-19: Visa även Velaton hinta för fastigheter (t.ex. Paritalo/Mellstenintie) om det finns
-    const parts: string[] = [];
-    // Visa bara Vh om det skiljer sig från Mh, annars räcker Mh
-    if (debtFreePrice && debtFreePrice !== askPrice) parts.push(`Vh ${money(debtFreePrice)}`);
-    if (askPrice) parts.push(`Mh ${money(askPrice)}`);
-    // Fallback om de är samma eller bara en finns
-    if (parts.length === 0) {
-        if (askPrice) priceDisplay = `Mh ${money(askPrice)}`;
-        else if (debtFreePrice) priceDisplay = `Vh ${money(debtFreePrice)}`;
-    } else {
-        priceDisplay = parts.join('  ');
-    }
+    // Dennis 2025-11-24: Show ONLY sales price for properties, no prefix
+    priceDisplay = money(debtFreePrice ?? askPrice);
   } else if (askPrice) {
-    priceDisplay = `Mh ${money(askPrice)}`;
+    priceDisplay = money(askPrice);
   }
 
   // Area display
