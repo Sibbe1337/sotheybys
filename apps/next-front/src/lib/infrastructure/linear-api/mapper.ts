@@ -587,15 +587,6 @@ export class LinearToPropertyMapper {
         energyCertStatus: (() => {
           const fromLocale = lget(src.listingHasEnergyCertificate!, locale);
           const fromFi = lget(src.listingHasEnergyCertificate!, 'fi');
-          const addressCheck = lget(src.address, 'fi') || '';
-          if (addressCheck.includes('Mailatie')) {
-            console.log('🔍 MAILATIE ENERGY CERT DEBUG:', {
-              rawField: src.listingHasEnergyCertificate,
-              fromLocale,
-              fromFi,
-              normalized: normalizeEnergyStatus(fromLocale || fromFi)
-            });
-          }
           return normalizeEnergyStatus(fromLocale || fromFi);
         })(),
         heatingSystem: lv(src.heatingSystem),
