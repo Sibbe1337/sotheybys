@@ -37,7 +37,8 @@ export function SummaryStats({ vm, locale, isApartment, isProperty, isRental, is
   const salesPriceNum = vm.price ? parseInt(vm.price.replace(/[^0-9]/g, '')) : undefined;
   const debtFreePriceNum = vm.priceDebtFree ? parseInt(vm.priceDebtFree.replace(/[^0-9]/g, '')) : undefined;
   const livingAreaNum = vm.area ? parseInt(vm.area.replace(/[^0-9]/g, '')) : undefined;
-  const plotAreaNum = vm.plotArea ? parseInt(vm.plotArea.replace(/[^0-9]/g, '')) : undefined;
+  // plotArea is now a number, no need to parse
+  const plotAreaNum = vm.plotArea;
 
   // Dennis: Full labels in stats (not Vh/Mh abbreviations - those are for cards only)
   const debtFreeLabel = locale === 'sv' ? 'Skuldfritt pris' : locale === 'en' ? 'Debt-free price' : 'Velaton hinta';
@@ -133,7 +134,7 @@ export function SummaryStats({ vm, locale, isApartment, isProperty, isRental, is
         )}
         <Stat 
           label={t('stats.plotArea', locale)} 
-          value={fmtPlotArea(plotAreaNum, locale)} 
+          value={fmtPlotArea(plotAreaNum, locale === 'sv' ? 'sv-SE' : locale === 'en' ? 'en-GB' : 'fi-FI')} 
         />
       </div>
     );

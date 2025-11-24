@@ -275,23 +275,6 @@ export class LinearToPropertyMapper {
     const propertyAreaFi = lget((src as any).propertyArea, 'fi');
     const estateAreaFi = lget((src as any).estateArea, 'fi');
     
-    // DEBUG: Log for Keselmäjärventie specifically
-    const addressCheck = lget(src.address, 'fi') || lget(src.address, 'sv') || '';
-    if (addressCheck.includes('Keselmäjärventie')) {
-      console.log('🔍 KESELMÄJÄRVENTIE PLOT DEBUG:', {
-        nvPlot,
-        unitNv,
-        plotAreaFi,
-        lotAreaFi,
-        siteAreaFi,
-        propertyAreaFi,
-        estateAreaFi,
-        rawPlotArea: (src as any).plotArea,
-        rawLotArea: (src as any).lotArea,
-        rawSiteArea: (src as any).siteArea
-      });
-    }
-    
     const localizedPlot = firstNumber(plotAreaFi, lotAreaFi, siteAreaFi, propertyAreaFi, estateAreaFi);
     // Source value + unit conversion (output always in m²)
     const plotCandidate = nvPlot ?? localizedPlot;

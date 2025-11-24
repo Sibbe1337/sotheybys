@@ -57,7 +57,7 @@ export interface PropertyDetailVM extends PropertyCardVM {
   
   // Property-specific fields (DENNIS SPEC)
   propertyIdentifier?: string;       // Kiinteistötunnus
-  plotArea?: string;                 // Tontin koko (formatted)
+  plotArea?: number;                 // Tontin koko (in m², format in component)
   propertyBuildingRights?: string;   // Rakennusoikeus
   propertyRestrictions?: string;     // Rasitteet ja oikeudet
   propertyMortgages?: string;        // Kiinnitykset
@@ -243,7 +243,7 @@ export class PropertyVM {
 
       // Property-specific fields (DENNIS SPEC)
       propertyIdentifier: p.meta.propertyIdentifier,
-      plotArea: p.dimensions.plot ? fmtArea(p.dimensions.plot, localeStr) : undefined,
+      plotArea: p.dimensions.plot, // Keep as number, format in component
       propertyBuildingRights: p.meta.propertyBuildingRights,
       propertyRestrictions: lpick(p.meta.restrictions, l),
       propertyMortgages: undefined, // TODO: Add to Property type if needed
