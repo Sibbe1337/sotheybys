@@ -20,7 +20,7 @@ export function normalizeEnergyStatus(txt: string): EnergyStatus {
   
   // Has certificate - CHECK THIS LAST to avoid false positives
   // Dennis 2025-11-24: Use word boundaries + check for complete "Kyllä" word
-  if (/^\s*kyllä\s*$/|^\s*ja\s*$/|^\s*yes\s*$/|\bkohteella on energiatodistus\b/.test(s)) return 'HAS_CERTIFICATE';
+  if (/^\s*kyllä\s*$|^\s*ja\s*$|^\s*yes\s*$|\bkohteella on energiatodistus\b/.test(s)) return 'HAS_CERTIFICATE';
   
   return null;
 }
