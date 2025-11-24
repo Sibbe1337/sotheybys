@@ -301,8 +301,8 @@ export default function HomePageClient({
                 <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center text-white p-8">
                   <h3 className="text-2xl font-light mb-4 text-center">{getHomepageTranslation('openNewDoors', language)}</h3>
                   <span className="inline-block border-2 border-white text-white px-6 py-2
-                             hover:bg-white hover:text-[#1a3a4a] transition-all duration-300
-                             font-light uppercase tracking-wider text-sm pointer-events-none"
+                             group-hover:bg-white group-hover:text-[#1a3a4a] transition-all duration-300
+                             font-light uppercase tracking-wider text-sm"
                   >
                     {getHomepageTranslation('findDreamHome', language)}
                   </span>
@@ -323,8 +323,8 @@ export default function HomePageClient({
                     {getHomepageTranslation('expertiseHeading', language)}
                   </h3>
                   <span className="inline-block border-2 border-white text-white px-6 py-2
-                             hover:bg-white hover:text-[#324b72] transition-all duration-300
-                             font-light uppercase tracking-wider text-sm pointer-events-none"
+                             group-hover:bg-white group-hover:text-[#324b72] transition-all duration-300
+                             font-light uppercase tracking-wider text-sm"
                   >
                     {getHomepageTranslation('readMoreAboutUs', language)}
                   </span>

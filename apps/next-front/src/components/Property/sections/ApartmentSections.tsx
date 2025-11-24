@@ -164,7 +164,7 @@ export function ApartmentSections({ vm, locale }: ApartmentSectionsProps) {
         />
         <Field 
           label={getFieldLabel('energyCertificate', locale)} 
-          value={vm.energyCertStatus ? getEnergyStatusLabel(vm.energyCertStatus as EnergyStatus, locale) : undefined}
+          value={getEnergyStatusLabel(vm.energyCertStatus as EnergyStatus, locale)}
           alwaysShow 
           locale={locale}
         />
