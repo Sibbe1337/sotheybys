@@ -523,9 +523,21 @@ export class LinearToPropertyMapper {
 
       meta: {
         status,
-        // ✅ Extract typeCode with MULTIPLE fallbacks (listingType, propertyType, type)
+        // Dennis 2025-11-18: Extract productGroup (APARTMENTS, PROPERTIES, etc)
+        productGroup: (() => {
+          const rawGroup = lget(src.productGroup, 'en') || lget(src.productGroup, 'fi') || lget(src.productGroup, 'sv');
+          return rawGroup ? rawGroup.toUpperCase().replace(/ /g, '_') : undefined;
+        })(),
+        // ✅ Extract typeCode - USE PRODUCT GROUP to determine if apartment or property
         typeCode: (() => {
-          // Try listingType first (preferred)
+          // First check productGroup - if it's "Lägenhet"/"Apartments", use FLAT
+          const rawGroup = lget(src.productGroup, 'en') || lget(src.productGroup, 'fi') || lget(src.productGroup, 'sv');
+          if (rawGroup && (rawGroup.toLowerCase().includes('lägenhet') || rawGroup.toLowerCase().includes('apartment'))) {
+            // It's an apartment in a housing cooperative, even if it's a detached house
+            return 'FLAT';
+          }
+          
+          // Otherwise, try listingType first (preferred)
           let rawType = lget(src.listingType, 'en') || lget(src.listingType, 'fi') || lget(src.listingType, 'sv');
           
           // Fallback to propertyType if listingType is empty
@@ -540,13 +552,19 @@ export class LinearToPropertyMapper {
           
           return rawType.toUpperCase().replace(/ /g, '_');
         })(),
-        // Dennis 2025-11-18: Extract productGroup (APARTMENTS, PROPERTIES, etc)
-        productGroup: (() => {
-          const rawGroup = lget(src.productGroup, 'en') || lget(src.productGroup, 'fi') || lget(src.productGroup, 'sv');
-          return rawGroup ? rawGroup.toUpperCase().replace(/ /g, '_') : undefined;
-        })(),
         // Dennis 2025-11-19: Use localizeListingType() to ensure correct translations (Kerrostalo -> Höghus in Swedish)
+        // Dennis 2025-11-24: If productGroup is "Lägenhet", show "Lägenhet" instead of actual building type
         listingTypeLabel: (() => {
+          const rawGroup = lget(src.productGroup, 'en') || lget(src.productGroup, 'fi') || lget(src.productGroup, 'sv');
+          if (rawGroup && (rawGroup.toLowerCase().includes('lägenhet') || rawGroup.toLowerCase().includes('apartment'))) {
+            // Show "Lägenhet" for all apartments, even if they're in detached houses
+            return {
+              fi: 'Asunto',
+              sv: 'Lägenhet',
+              en: 'Apartment'
+            };
+          }
+          
           const typeCode = nv?.listingType || lget(src.listingType, 'fi') || '';
           return localizeListingType(typeCode);
         })(),
