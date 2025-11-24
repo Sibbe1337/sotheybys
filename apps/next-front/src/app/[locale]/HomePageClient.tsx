@@ -290,7 +290,7 @@ export default function HomePageClient({
             {/* Three Columns */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Column 1 */}
-              <div className="relative h-80 group overflow-hidden">
+              <Link href="/kohteet" className="relative h-80 group overflow-hidden block">
                 <Image
                   src="/images/content/snellman-sothebys-yritys.jpg"
                   alt={getHomepageTranslation('openNewDoors', language)}
@@ -300,19 +300,17 @@ export default function HomePageClient({
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center text-white p-8">
                   <h3 className="text-2xl font-light mb-4 text-center">{getHomepageTranslation('openNewDoors', language)}</h3>
-                  <Link
-                    href="/kohteet"
-                    className="inline-block border-2 border-white text-white px-6 py-2
+                  <span className="inline-block border-2 border-white text-white px-6 py-2
                              hover:bg-white hover:text-[#1a3a4a] transition-all duration-300
-                             font-light uppercase tracking-wider text-sm"
+                             font-light uppercase tracking-wider text-sm pointer-events-none"
                   >
                     {getHomepageTranslation('findDreamHome', language)}
-                  </Link>
+                  </span>
                 </div>
-              </div>
+              </Link>
 
               {/* Column 2 */}
-              <div className="relative h-80 group overflow-hidden">
+              <Link href="/yritys" className="relative h-80 group overflow-hidden block">
                 <Image
                   src="/images/content/snellman-sothebys-kutsu-arviokaynnille.jpg"
                   alt={getHomepageTranslation('expertiseHeading', language)}
@@ -324,16 +322,14 @@ export default function HomePageClient({
                   <h3 className="text-2xl font-light mb-4 text-center">
                     {getHomepageTranslation('expertiseHeading', language)}
                   </h3>
-                  <Link
-                    href="/yritys"
-                    className="inline-block border-2 border-white text-white px-6 py-2
+                  <span className="inline-block border-2 border-white text-white px-6 py-2
                              hover:bg-white hover:text-[#324b72] transition-all duration-300
-                             font-light uppercase tracking-wider text-sm"
+                             font-light uppercase tracking-wider text-sm pointer-events-none"
                   >
                     {getHomepageTranslation('readMoreAboutUs', language)}
-                  </Link>
+                  </span>
                 </div>
-              </div>
+              </Link>
 
               {/* Column 3 */}
               <div className="relative h-80 group overflow-hidden">

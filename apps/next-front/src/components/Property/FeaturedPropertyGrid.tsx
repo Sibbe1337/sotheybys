@@ -41,7 +41,7 @@ export default function FeaturedPropertyGrid({ properties, locale }: FeaturedPro
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {properties.map((property, index) => {
         // Determine card variant - Dennis 2025-11-11: Added commercial support
         const rent = property.meta.rent || property.rental?.monthlyRent || 0;
