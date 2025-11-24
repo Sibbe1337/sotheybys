@@ -348,14 +348,14 @@ export default function HomePageClient({
                   <h3 className="text-2xl font-light mb-4 text-center">
                     {getHomepageTranslation('freeValuationHeading', language)}
                   </h3>
-                  <Link
-                    href="/myymassa"
+                  <a
+                    href="#newsletter"
                     className="inline-block border-2 border-white text-white px-6 py-2
                              hover:bg-white hover:text-gray-800 transition-all duration-300
                              font-light uppercase tracking-wider text-sm"
                   >
                     {getHomepageTranslation('contactUs', language)}
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>
@@ -419,7 +419,8 @@ export default function HomePageClient({
 
         {/* Newsletter Section */}
         <section
-          className="py-16 bg-cover bg-center relative"
+          id="newsletter"
+          className="py-16 bg-cover bg-center relative scroll-mt-20"
           style={{ backgroundImage: 'url(/images/content/snellman-sothebys-newsletter.jpg)' }}
         >
           <div className="absolute inset-0 bg-black bg-opacity-50"></div>

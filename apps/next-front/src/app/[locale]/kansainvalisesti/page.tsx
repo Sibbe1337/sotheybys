@@ -94,17 +94,17 @@ export default function InternationalPage({ params }: { params: { locale: Locale
             <p className="text-lg md:text-xl font-light mb-12 tracking-wide">
               {t.heroStats}
             </p>
-            <Link 
-              href="/kansainvalisesti"
+            <a 
+              href="#content"
               className="international-button"
             >
               {t.heroButton} &gt;
-            </Link>
+            </a>
           </div>
         </section>
 
         {/* Social Media Icons */}
-        <section className="py-6 bg-white">
+        <section id="content" className="py-6 bg-white scroll-mt-20">
           <div className="container mx-auto px-4">
             <div className="flex justify-center items-center gap-6">
               <a 
@@ -232,7 +232,12 @@ export default function InternationalPage({ params }: { params: { locale: Locale
                     environment for older adults. On the job, Sweden's corporate culture emphasizes live-work 
                     balance believing perks like flexible working hours yields a more productive work force...
                   </p>
-                  <a href="#" className="text-[var(--color-primary)] hover:underline font-light text-sm">
+                  <a 
+                    href="https://www.sothebysrealty.com/eng/sales/europe/sweden" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[var(--color-primary)] hover:underline font-light text-sm"
+                  >
                     {t.readMore}
                   </a>
                 </div>
@@ -262,7 +267,12 @@ export default function InternationalPage({ params }: { params: { locale: Locale
                     relocating, the opportunity to settle in this charmed corner of the continent through a burgeoning 
                     Portugal luxury real estate market is a powerful incentive...
                   </p>
-                  <a href="#" className="text-[var(--color-primary)] hover:underline font-light text-sm">
+                  <a 
+                    href="https://www.sothebysrealty.com/eng/sales/europe/portugal"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[var(--color-primary)] hover:underline font-light text-sm"
+                  >
                     {t.readMore}
                   </a>
                 </div>
@@ -290,7 +300,12 @@ export default function InternationalPage({ params }: { params: { locale: Locale
                     clustered in the Mediterranean. Mallorca is the largest of the four main islands, followed by Minorca, Ibiza 
                     and Formentera. The Carthaginians, Romans, Vandals, Moors, French and British all left their marks here...
                   </p>
-                  <a href="#" className="text-[var(--color-primary)] hover:underline font-light text-sm">
+                  <a 
+                    href="https://www.sothebysrealty.com/eng/sales/europe/spain/balearic-islands"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[var(--color-primary)] hover:underline font-light text-sm"
+                  >
                     {t.readMore}
                   </a>
                 </div>
@@ -321,7 +336,12 @@ export default function InternationalPage({ params }: { params: { locale: Locale
                     or less to most major European cities. The republic is made up of 15 counties and more than 2,000 islands, 
                     most of them small in size with tiny populations to match...
                   </p>
-                  <a href="#" className="text-[var(--color-primary)] hover:underline font-light text-sm">
+                  <a 
+                    href="https://www.sothebysrealty.com/eng/sales/europe/estonia"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[var(--color-primary)] hover:underline font-light text-sm"
+                  >
                     {t.readMore}
                   </a>
                 </div>
@@ -417,7 +437,12 @@ export default function InternationalPage({ params }: { params: { locale: Locale
                   The fact is that art permeates the city year-round. Whole neighborhoods have been revitalized by its 
                   creative community, making Miami real estate a great investment for aesthetes...
                 </p>
-                <a href="#" className="text-[var(--color-primary)] hover:underline font-light text-sm">
+                <a 
+                  href="https://www.sothebysrealty.com/eng/sales/usa/florida"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[var(--color-primary)] hover:underline font-light text-sm"
+                >
                   Read more...
                 </a>
               </div>
@@ -438,7 +463,12 @@ export default function InternationalPage({ params }: { params: { locale: Locale
                   borders Italy to the east, the Mediterranean to the south, the Rhone River to the west and the 
                   foothills of the Southern Alps to the north...
                 </p>
-                <a href="#" className="text-[var(--color-primary)] hover:underline font-light text-sm">
+                <a 
+                  href="https://www.sothebysrealty.com/eng/sales/europe/france/provence-alpes-cote-d-azur"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[var(--color-primary)] hover:underline font-light text-sm"
+                >
                   Read more...
                 </a>
               </div>
@@ -457,7 +487,12 @@ export default function InternationalPage({ params }: { params: { locale: Locale
                   care, and media. This makes Manhattan one of the premier markets in the world for luxury real estate, 
                   with high end condos, luxurious penthouses and elegant homes...
                 </p>
-                <a href="#" className="text-[var(--color-primary)] hover:underline font-light text-sm">
+                <a 
+                  href="https://www.sothebysrealty.com/eng/sales/usa/new-york"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[var(--color-primary)] hover:underline font-light text-sm"
+                >
                   Read more...
                 </a>
               </div>
