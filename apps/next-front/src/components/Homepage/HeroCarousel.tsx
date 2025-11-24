@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Link } from '@/lib/navigation';
+import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import { CarouselArrowButton } from '../ui/CarouselArrowButton';
@@ -171,7 +171,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                       </a>
                     ) : (
                       <Link
-                        href={slide.buttonLink as any}
+                        href={`/${locale}${slide.buttonLink}`}
                         className="group inline-flex items-center gap-3 text-white border border-white 
                                  px-8 py-4 transition-all duration-300 
                                  font-light tracking-wider uppercase text-sm relative overflow-hidden
