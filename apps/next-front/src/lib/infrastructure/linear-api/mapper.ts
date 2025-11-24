@@ -276,7 +276,8 @@ export class LinearToPropertyMapper {
     const estateAreaFi = lget((src as any).estateArea, 'fi');
     
     // DEBUG: Log for Keselmäjärventie specifically
-    if (src.title?.fi?.includes?.('Keselmäjärventie') || src.title?.sv?.includes?.('Keselmäjärventie')) {
+    const addressCheck = lget(src.address, 'fi') || lget(src.address, 'sv') || '';
+    if (addressCheck.includes('Keselmäjärventie')) {
       console.log('🔍 KESELMÄJÄRVENTIE PLOT DEBUG:', {
         nvPlot,
         unitNv,
