@@ -171,7 +171,10 @@ export function ApartmentSections({ vm, locale }: ApartmentSectionsProps) {
         <Field label={getFieldLabel('elevator', locale)} value={vm.hasElevator} alwaysShow locale={locale} />
         <Field label={getFieldLabel('companyName', locale)} value={vm.housingCompanyName} alwaysShow locale={locale} />
         <Field label={getFieldLabel('plotOwnership', locale)} value={vm.plotOwnership} alwaysShow locale={locale} />
+        
+        {/* Dennis 2025-11-19: Hallintamuoto / Upplåtelseform */}
         <Field label={getFieldLabel('housingTenure', locale)} value={vm.housingTenure} alwaysShow locale={locale} />
+        
         <Field label={getFieldLabel('heatingSystem', locale)} value={vm.heatingSystem} locale={locale} />
         {/* Company loans/mortgages - only if data exists */}
         <Field label={getFieldLabel('companyLoans', locale)} value={vm.companyLoans ? `${vm.companyLoans} €` : undefined} />
@@ -241,9 +244,8 @@ export function ApartmentSections({ vm, locale }: ApartmentSectionsProps) {
         <Field label={getFieldLabel('zoning', locale)} value={vm.zoning} alwaysShow locale={locale} />
       </Section>
 
-
       {/* Dennis 2025-11-19: Mandatory Legal Disclaimer - Updated text, placed at end after all property info */}
-      <div className="mt-6 p-6 bg-gray-50 border-l-4 border-[#002349] text-sm text-gray-800 leading-relaxed">
+      <div className="mt-6 p-6 bg-gray-50 border-l-4 border-[#002349] text-sm text-gray-800 leading-relaxed space-y-2">
         <p className="font-medium">
           {locale === 'fi' && 'Tämä ilmoitus ei ole virallinen myyntiesite. Lisätiedot saat välittäjältä.'}
           {locale === 'sv' && 'Denna annons är inte en officiell försäljningsbrochyr. Mer information fås av mäklaren.'}

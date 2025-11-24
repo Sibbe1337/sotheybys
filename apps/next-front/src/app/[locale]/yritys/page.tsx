@@ -1,5 +1,6 @@
 import { Link } from '@/lib/navigation';
 import Image from 'next/image';
+import { VideoSection } from '@/components/ui/VideoSection';
 import { locales, type Locale } from '@/i18n/config';
 
 export const dynamic = 'force-static';
@@ -34,6 +35,12 @@ const translations = {
     historyText3: 'Snellman Sotheby\'s International Realty on ylpeä osa tätä arvostettua perinnettä, tuoden kansainvälisen osaamisen ja verkoston Suomen kiinteistömarkkinoille.',
     philosophyTitle: 'Palvelufilosofiamme',
     philosophyText: 'Unelma täydellisestä kodista on unelmiemme työtä. Jokainen välittämämme koti on yhtä ainutlaatuinen kuin jokainen asiakkaamme. Olemme ylpeitä saadessamme yhdistää toisiinsa täydellisesti yhteensopivat kodit sekä asukkaat.',
+    brandStory1Title: 'Bränditarina - Osa 1',
+    brandStory1Subtitle: 'Tutustu Snellman Sotheby\'s International Realty -tarinamme alkuun',
+    brandStory2Title: 'Bränditarina - Osa 2',
+    brandStory2Subtitle: 'Jatkamme tarinaamme ja arvojamme',
+    brandStory3Title: 'Bränditarina - Osa 3',
+    brandStory3Subtitle: 'Kuinka palvelemme asiakkaitamme',
     ctaTitle: 'Tervetuloa tutustumaan toimintaamme',
     ctaText: 'Olemme täällä sinua varten, oli kyse sitten kodista, sijoituksesta tai unelmasta.',
     ctaContact: 'Ota yhteyttä',
@@ -61,6 +68,12 @@ const translations = {
     historyText3: 'Snellman Sotheby\'s International Realty är stolt del av denna respekterade tradition, och för internationell expertis och nätverk till den finska fastighetsmarknaden.',
     philosophyTitle: 'Vår servicefilosofi',
     philosophyText: 'Drömmen om det perfekta hemmet är vårt drömarbete. Varje hem vi förmedlar är lika unikt som varje kund. Vi är stolta över att kunna förena perfekt kompatibla hem och boende.',
+    brandStory1Title: 'Varumärkesberättelse - Del 1',
+    brandStory1Subtitle: 'Bekanta dig med början av vår Snellman Sotheby\'s International Realty-historia',
+    brandStory2Title: 'Varumärkesberättelse - Del 2',
+    brandStory2Subtitle: 'Vi fortsätter vår historia och våra värderingar',
+    brandStory3Title: 'Varumärkesberättelse - Del 3',
+    brandStory3Subtitle: 'Hur vi betjänar våra kunder',
     ctaTitle: 'Välkommen att bekanta dig med vår verksamhet',
     ctaText: 'Vi är här för dig, vare sig det gäller ett hem, en investering eller en dröm.',
     ctaContact: 'Kontakta oss',
@@ -88,6 +101,12 @@ const translations = {
     historyText3: 'Snellman Sotheby\'s International Realty is a proud part of this respected tradition, bringing international expertise and network to the Finnish real estate market.',
     philosophyTitle: 'Our Service Philosophy',
     philosophyText: 'The dream of the perfect home is our dream work. Every home we broker is as unique as every client. We are proud to bring together perfectly compatible homes and residents.',
+    brandStory1Title: 'Brand Story - Part 1',
+    brandStory1Subtitle: 'Discover the beginning of our Snellman Sotheby\'s International Realty story',
+    brandStory2Title: 'Brand Story - Part 2',
+    brandStory2Subtitle: 'We continue our story and values',
+    brandStory3Title: 'Brand Story - Part 3',
+    brandStory3Subtitle: 'How we serve our clients',
     ctaTitle: 'Welcome to learn about our operations',
     ctaText: 'We are here for you, whether it\'s about a home, an investment, or a dream.',
     ctaContact: 'Contact us',
@@ -206,6 +225,27 @@ export default function CompanyPage({ params }: { params: { locale: Locale } }) 
             </div>
           </div>
         </section>
+
+        {/* Brand Story Videos */}
+        <VideoSection 
+          videoId="BN8B-USaKeE"
+          title={t.brandStory1Title}
+          subtitle={t.brandStory1Subtitle}
+          className="bg-gray-50"
+        />
+
+        <VideoSection 
+          videoId="hwaaNQ-m9fk"
+          title={t.brandStory2Title}
+          subtitle={t.brandStory2Subtitle}
+        />
+
+        <VideoSection 
+          videoId="xdlWMvz6dlY"
+          title={t.brandStory3Title}
+          subtitle={t.brandStory3Subtitle}
+          className="bg-gray-50"
+        />
 
         {/* CTA Section */}
         <section className="py-16 bg-[#1a3a4a] text-white">

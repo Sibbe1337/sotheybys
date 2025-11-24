@@ -1,5 +1,6 @@
 import { Link } from '@/lib/navigation';
 import Image from 'next/image';
+import { VideoSection } from '@/components/ui/VideoSection';
 import { locales, type Locale } from '@/i18n/config';
 
 export const dynamic = 'force-static';
@@ -28,6 +29,8 @@ const translations = {
     searchVineyard: 'SEARCH FINE WINERY AND\nVINEYARDS...►',
     viewGolf: 'VIEW GOLF PROPERTIES...►',
     exploreRugged: 'EXPLORE RUGGED\nLANDSCAPES & RETREATS...►',
+    videoTitle: 'Kansainvälinen verkostomme',
+    videoSubtitle: 'Tutustu Sotheby\'s International Realty -verkostoon',
   },
   sv: {
     heroTitle: 'Din internationella mäklare\nlokalt',
@@ -45,6 +48,8 @@ const translations = {
     searchVineyard: 'SÖK FINA VINGÅRDAR\nOCH VINHUS...►',
     viewGolf: 'SE GOLFBOENDEN...►',
     exploreRugged: 'UTFORSKA STORSLAGNA\nLANDSKAP & RETREATER...►',
+    videoTitle: 'Vårt internationella nätverk',
+    videoSubtitle: 'Bekanta dig med Sotheby\'s International Realty-nätverket',
   },
   en: {
     heroTitle: 'Your international broker\nlocally',
@@ -62,6 +67,8 @@ const translations = {
     searchVineyard: 'SEARCH FINE WINERY AND\nVINEYARDS...►',
     viewGolf: 'VIEW GOLF PROPERTIES...►',
     exploreRugged: 'EXPLORE RUGGED\nLANDSCAPES & RETREATS...►',
+    videoTitle: 'Our International Network',
+    videoSubtitle: 'Explore the Sotheby\'s International Realty network',
   },
 };
 
@@ -524,6 +531,13 @@ export default function InternationalPage({ params }: { params: { locale: Locale
             </div>
           </div>
         </section>
+
+        {/* Video Section */}
+        <VideoSection 
+          videoId="Q9xlSscTaYU"
+          title={t.videoTitle}
+          subtitle={t.videoSubtitle}
+        />
       </main>
     </div>
   );

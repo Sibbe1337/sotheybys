@@ -139,7 +139,6 @@ export function PropertySections({ vm, locale, isCommercial = false }: PropertyS
       {/* Rakennustiedot (Building Facts) */}
       <Section title={getSectionLabel('property.building', locale)}>
         <Field label={getFieldLabel('yearBuilt', locale)} value={vm.yearBuilt} alwaysShow locale={locale} />
-        
         <Field label={getFieldLabel('heatingSystem', locale)} value={vm.heatingSystem} locale={locale} />
         <Field label={getFieldLabel('ventilationSystem', locale)} value={vm.ventilationSystem} locale={locale} />
         <Field label={getFieldLabel('floorsTotal', locale)} value={vm.floorsTotal} locale={locale} />
@@ -167,9 +166,8 @@ export function PropertySections({ vm, locale, isCommercial = false }: PropertyS
           <Field label={getFieldLabel('otherPayments', locale)} value={vm.propertyOtherFees} locale={locale} />
       </Section>
 
-
       {/* Dennis 2025-11-19: Mandatory Legal Disclaimer - Updated text, placed at end after all property info */}
-      <div className="mt-6 p-6 bg-gray-50 border-l-4 border-[#002349] text-sm text-gray-800 leading-relaxed">
+      <div className="mt-6 p-6 bg-gray-50 border-l-4 border-[#002349] text-sm text-gray-800 leading-relaxed space-y-2">
         <p className="font-medium">
           {locale === 'fi' && 'Tämä ilmoitus ei ole virallinen myyntiesite. Lisätiedot saat välittäjältä.'}
           {locale === 'sv' && 'Denna annons är inte en officiell försäljningsbrochyr. Mer information fås av mäklaren.'}

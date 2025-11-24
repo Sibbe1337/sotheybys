@@ -137,6 +137,18 @@ export const HOMEPAGE_TRANSLATIONS: HomepageTranslations = {
     en: 'Subscribe'
   },
   
+  // Video Section
+  videoTitle: {
+    fi: 'Katso videomme',
+    sv: 'Se vår video',
+    en: 'Watch Our Video'
+  },
+  videoSubtitle: {
+    fi: 'Tutustu toimintaamme ja arvoihimme',
+    sv: 'Bekanta dig med vår verksamhet och våra värderingar',
+    en: 'Learn about our operations and values'
+  },
+  
   // Property card abbreviations
   bedrooms: {
     fi: 'mh',

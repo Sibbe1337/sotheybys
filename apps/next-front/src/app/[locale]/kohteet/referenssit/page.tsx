@@ -1,5 +1,6 @@
 import PropertyGridNew from '@/components/Property/PropertyGridNew';
 import { Link } from '@/lib/navigation';
+import { VideoSection } from '@/components/ui/VideoSection';
 import { locales, type Locale } from '@/i18n/config';
 import { fetchSoldProperties } from '@/lib/server/fetch-properties';
 
@@ -22,6 +23,8 @@ const translations = {
     ctaText: 'Ota yhteyttä, niin autamme sinua myymään kotisi parhaaseen hintaan.',
     sellBtn: 'Myy kotisi',
     contactBtn: 'Ota yhteyttä',
+    videoTitle: 'Katso referenssejämme',
+    videoSubtitle: 'Tutustu onnistuneesti välittämiimme kohteisiin',
   },
   sv: {
     title: 'Referenser',
@@ -32,6 +35,8 @@ const translations = {
     ctaText: 'Kontakta oss så hjälper vi dig sälja ditt hem till bästa pris.',
     sellBtn: 'Sälj ditt hem',
     contactBtn: 'Kontakta oss',
+    videoTitle: 'Se våra referenser',
+    videoSubtitle: 'Bekanta dig med framgångsrikt förmedlade objekt',
   },
   en: {
     title: 'References',
@@ -42,6 +47,8 @@ const translations = {
     ctaText: 'Contact us and we will help you sell your home at the best price.',
     sellBtn: 'Sell your home',
     contactBtn: 'Contact us',
+    videoTitle: 'View our references',
+    videoSubtitle: 'Explore successfully brokered properties',
   },
 };
 
@@ -97,6 +104,13 @@ export default async function ReferencesPage({ params }: ReferencesPageProps) {
             )}
           </div>
         </section>
+
+        {/* Video Section */}
+        <VideoSection 
+          videoId="tSTKhZN4DHA"
+          title={t.videoTitle}
+          subtitle={t.videoSubtitle}
+        />
 
         {/* CTA Section */}
         <section className="py-16 bg-gray-50">

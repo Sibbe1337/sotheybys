@@ -5,6 +5,7 @@ import HeroCarousel from '@/components/Homepage/HeroCarousel';
 import FeaturedPropertyGrid from '@/components/Property/FeaturedPropertyGrid';
 import { Link } from '@/lib/navigation';
 import Image from 'next/image';
+import { VideoSection } from '@/components/ui/VideoSection';
 import { getHomepageTranslation, type SupportedLanguage } from '@/lib/homepage-translations';
 // Legacy imports removed - now using new API endpoints
 import type { Locale } from '@/i18n/config';
@@ -371,6 +372,13 @@ export default function HomePageClient({
             </h3>
           </div>
         </section>
+
+        {/* Video Section */}
+        <VideoSection 
+          videoId="vZRncaI6Lw8"
+          title={getHomepageTranslation('videoTitle', language)}
+          subtitle={getHomepageTranslation('videoSubtitle', language)}
+        />
 
         {/* Contact Info Bar */}
         <section className="py-8 bg-gray-100">
