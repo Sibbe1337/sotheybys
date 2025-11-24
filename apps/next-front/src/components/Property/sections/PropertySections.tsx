@@ -103,7 +103,8 @@ export function PropertySections({ vm, locale, isCommercial = false }: PropertyS
   
   const salesPriceNum = parseEuropeanNumber(vm.price);
   const livingAreaNum = parseEuropeanNumber(vm.area);
-  const plotAreaNum = parseEuropeanNumber(vm.plotArea);
+  // plotArea is now a number, no need to parse
+  const localeFormatted = locale === 'sv' ? 'sv-SE' : locale === 'en' ? 'en-GB' : 'fi-FI';
 
   return (
     <div>
@@ -112,7 +113,7 @@ export function PropertySections({ vm, locale, isCommercial = false }: PropertyS
         <Field label={getFieldLabel('propertyId', locale)} value={vm.propertyIdentifier} alwaysShow locale={locale} />
         <Field 
           label={getFieldLabel('plotSize', locale)} 
-          value={fmtPlotArea(plotAreaNum, locale)} 
+          value={fmtPlotArea(vm.plotArea, localeFormatted)} 
           alwaysShow 
           locale={locale}
         />
