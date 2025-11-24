@@ -56,6 +56,9 @@ export default async function PropertiesPage({ params }: PropertiesPageProps) {
         />
       )}
 
+      {/* Property Search Component with Visual Filters */}
+      <PropertySearch properties={allProperties} language={locale} />
+
       {/* Featured Properties Section - Same as Homepage */}
       {featuredThree.length > 0 && (
         <section className="py-16 bg-white">
@@ -72,9 +75,6 @@ export default async function PropertiesPage({ params }: PropertiesPageProps) {
           </div>
         </section>
       )}
-
-      {/* Property Search Component with Visual Filters */}
-      <PropertySearch properties={allProperties} language={locale} />
     </main>
   );
 }
