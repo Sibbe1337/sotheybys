@@ -266,6 +266,7 @@ export class LinearToPropertyMapper {
     
     // LINUS FIX: Unit-aware plot area - try multiple sources + convert units to m²
     // Dennis 2025-11-10: Added propertyArea, estateArea for "Fastighetens areal"
+    // Dennis 2025-11-24: DEBUG - let's see what Linear returns for plot size
     const nvPlot = firstNumber(nv?.plotArea, nv?.lotArea, nv?.siteArea, nv?.propertyArea, nv?.estateArea);
     const unitNv = nv?.plotAreaUnit || nv?.lotAreaUnit || nv?.siteAreaUnit || nv?.propertyAreaUnit || nv?.estateAreaUnit || null;
     const lotAreaFi = lget((src as any).lotArea, 'fi');
@@ -273,6 +274,23 @@ export class LinearToPropertyMapper {
     const siteAreaFi = lget((src as any).siteArea, 'fi');
     const propertyAreaFi = lget((src as any).propertyArea, 'fi');
     const estateAreaFi = lget((src as any).estateArea, 'fi');
+    
+    // DEBUG: Log for Keselmäjärventie specifically
+    if (src.title?.fi?.includes?.('Keselmäjärventie') || src.title?.sv?.includes?.('Keselmäjärventie')) {
+      console.log('🔍 KESELMÄJÄRVENTIE PLOT DEBUG:', {
+        nvPlot,
+        unitNv,
+        plotAreaFi,
+        lotAreaFi,
+        siteAreaFi,
+        propertyAreaFi,
+        estateAreaFi,
+        rawPlotArea: (src as any).plotArea,
+        rawLotArea: (src as any).lotArea,
+        rawSiteArea: (src as any).siteArea
+      });
+    }
+    
     const localizedPlot = firstNumber(plotAreaFi, lotAreaFi, siteAreaFi, propertyAreaFi, estateAreaFi);
     // Source value + unit conversion (output always in m²)
     const plotCandidate = nvPlot ?? localizedPlot;
