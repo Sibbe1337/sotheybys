@@ -146,7 +146,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                         className="group inline-flex items-center gap-3 text-white border border-white 
                                  px-8 py-4 transition-all duration-300 
                                  font-light tracking-wider uppercase text-sm relative overflow-hidden
-                                 hover:border-white"
+                                 hover:border-white z-20"
                       >
                         <span className="relative z-10 transition-colors duration-300 group-hover:text-[#002349]">
                           {slide.buttonText}
@@ -175,7 +175,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                         className="group inline-flex items-center gap-3 text-white border border-white 
                                  px-8 py-4 transition-all duration-300 
                                  font-light tracking-wider uppercase text-sm relative overflow-hidden
-                                 hover:border-white"
+                                 hover:border-white z-20"
                       >
                         <span className="relative z-10 transition-colors duration-300 group-hover:text-[#002349]">
                           {slide.buttonText}
