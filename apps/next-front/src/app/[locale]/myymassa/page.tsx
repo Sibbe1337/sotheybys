@@ -302,11 +302,11 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
               </div>
 
               {/* Mission Section */}
-              <div className="bg-white p-8 lg:p-12">
-                <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-6">
+              <div className="bg-white p-12 lg:p-16">
+                <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-8">
                   {t.honorTitle}
                 </h2>
-                <div className="space-y-4 text-gray-700 font-light leading-relaxed text-base">
+                <div className="space-y-6 text-gray-700 font-light leading-relaxed text-base">
                   <p>{t.honorText1}</p>
                   <p>{t.honorText2}</p>
                   <p>{t.honorText3}</p>
