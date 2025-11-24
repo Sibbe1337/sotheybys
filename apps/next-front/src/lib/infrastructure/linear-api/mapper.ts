@@ -229,11 +229,12 @@ export class LinearToPropertyMapper {
     const debt = Math.max(0, debtFree - sales);
     
     // Property tax (Kiinteistövero) - ONLY for properties, not apartments
-    // Dennis: Use 'fi' as fallback since tax data is often only in Finnish
+    // Dennis 2025-11-24: ALWAYS use Finnish value - tax amount is the same regardless of language
+    // Fixes issue where English shows "3 €/year" instead of "3000 €/year"
     const propertyTax = parseEuro(
       pickNV(nv, 'propertyTax', 'realEstateTax') ?? 
-      (src.propertyTax && (lget(src.propertyTax, locale) || lget(src.propertyTax, 'fi'))) ?? 
-      (src.realEstateTax && (lget(src.realEstateTax, locale) || lget(src.realEstateTax, 'fi')))
+      (src.propertyTax && lget(src.propertyTax, 'fi')) ?? 
+      (src.realEstateTax && lget(src.realEstateTax, 'fi'))
     ) || undefined;
     
     // Dennis 2025-11-11: Tarjouskauppa (bidding) fields

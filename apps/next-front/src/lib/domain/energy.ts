@@ -10,17 +10,17 @@ export function normalizeEnergyStatus(txt: string): EnergyStatus {
   if (!s) return null;
   
   // Not required by law - CHECK THIS FIRST before "has certificate"
-  // Dennis 2025-11-24: Added "ei.*tarvita" for Finnish "ei tarvita energiatodistusta"
-  if (/ei.*edellytt|ei.*tarvita|not required|inget.*lagstadgat|ej.*lagstadgat|behöver inte/.test(s)) {
+  // Dennis 2025-11-24: Finnish patterns for "not required"
+  if (/ei.*edellytt|ei.*tarvita|ei tarvitse|not required|inget.*lagstadgat|ej.*lagstadgat|behöver inte|fastigheten behöver inte/.test(s)) {
     return 'NOT_REQUIRED_BY_LAW';
   }
   
   // Exempt by act
-  if (/vapautettu|exempt|undantagen/.test(s)) return 'EXEMPT_BY_ACT';
+  if (/vapautettu|exempt|undantagen|undantaget/.test(s)) return 'EXEMPT_BY_ACT';
   
   // Has certificate - CHECK THIS LAST to avoid false positives
-  // Dennis 2025-11-24: Use word boundaries to avoid matching "on" in "energicertifikaton"
-  if (/\b(kyllä|ja|yes)\b|kohteella on|\bhar\b|\bhas\b/.test(s)) return 'HAS_CERTIFICATE';
+  // Dennis 2025-11-24: Use word boundaries + check for complete "Kyllä" word
+  if (/^\s*kyllä\s*$/|^\s*ja\s*$/|^\s*yes\s*$/|\bkohteella on energiatodistus\b/.test(s)) return 'HAS_CERTIFICATE';
   
   return null;
 }
