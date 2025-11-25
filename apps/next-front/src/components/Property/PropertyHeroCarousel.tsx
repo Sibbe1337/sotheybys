@@ -92,10 +92,10 @@ export default function PropertyHeroCarousel({
       {/* Content Container - Removed text overlay per user request */}
 
       {/* Hero Address Badge - Dennis feedback: Show in bottom-left corner, opens property */}
-      {/* Robert 2025-11-25: Use displayAddress to show full address on one line */}
+      {/* Robert 2025-11-25: Show street address only, NOT apartment number (e.g., "Kapteeninkatu 8" not "Kapteeninkatu 8 F 38") */}
       <div className="absolute bottom-8 left-8 z-10">
         <HeroAddressBadge
-          address={displayAddress}
+          address={address}
           postalCode={postalCode}
           city={city}
           slug={slug}
