@@ -303,13 +303,15 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
 
               {/* Mission Section - Kunniatehtävä */}
               <div className="bg-white p-8 lg:p-12">
-                <h2 className="text-lg font-semibold text-gray-900 mb-4 leading-relaxed">
-                  {t.honorTitle}
-                </h2>
-                <div className="space-y-4 text-gray-700 font-light leading-relaxed text-base">
-                  <p>{t.honorText1}</p>
-                  <p>{t.honorText2}</p>
-                  <p>{t.honorText3}</p>
+                <div className="max-w-4xl mx-auto">
+                  <h2 className="text-xl font-semibold text-gray-900 mb-4 leading-relaxed">
+                    {t.honorTitle}
+                  </h2>
+                  <div className="space-y-4 text-gray-700 font-light leading-relaxed text-lg">
+                    <p>{t.honorText1}</p>
+                    <p>{t.honorText2}</p>
+                    <p>{t.honorText3}</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -320,10 +322,10 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4 leading-relaxed">
+              <h2 className="text-xl font-semibold text-gray-900 mb-4 leading-relaxed">
                 {t.relationshipTitle}
               </h2>
-              <div className="space-y-4 text-gray-700 font-light leading-relaxed text-base">
+              <div className="space-y-4 text-gray-700 font-light leading-relaxed text-lg">
                 <p>{t.relationshipText1}</p>
                 <p>{t.relationshipText2}</p>
                 <p>{t.relationshipText3}</p>
@@ -336,10 +338,10 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4 leading-relaxed">
+              <h2 className="text-xl font-semibold text-gray-900 mb-4 leading-relaxed">
                 {t.promiseTitle}
               </h2>
-              <div className="space-y-4 text-gray-700 font-light leading-relaxed text-base">
+              <div className="space-y-4 text-gray-700 font-light leading-relaxed text-lg">
                 <p>{t.promiseText1}</p>
                 <p>{t.promiseText2}</p>
               </div>
