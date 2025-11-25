@@ -250,12 +250,13 @@ export function DetailView({ vm, locale }: Props) {
         )}
 
         {/* Type-specific Sections - Dennis 2025-11-11: Added commercial support */}
-        {/* Robert 2025-11-25: Made sections mutually exclusive to prevent duplicate disclaimers */}
+        {/* Robert 2025-11-25: productGroup APARTMENTS always shows ApartmentSections (for vederlag/prices) */}
+        {/* Even if typeCode is OMAKOTITALO, if productGroup is APARTMENTS, show ApartmentSections */}
         <div className="mb-12">
           {isRental && <RentalSections vm={vm} locale={locale} />}
           {!isRental && isCommercialProperty && <PropertySections vm={vm} locale={locale} isCommercial={true} />}
-          {!isRental && !isCommercialProperty && isApartment && !isProperty && <ApartmentSections vm={vm} locale={locale} />}
-          {!isRental && !isCommercialProperty && isProperty && <PropertySections vm={vm} locale={locale} />}
+          {!isRental && !isCommercialProperty && productGroup === 'APARTMENTS' && <ApartmentSections vm={vm} locale={locale} />}
+          {!isRental && !isCommercialProperty && productGroup !== 'APARTMENTS' && isProperty && <PropertySections vm={vm} locale={locale} />}
         </div>
       </div>
     </div>
