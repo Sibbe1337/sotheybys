@@ -170,14 +170,8 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                         />
                       </a>
                     ) : (
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          const url = `/${locale}${slide.buttonLink}`;
-                          console.log('Button clicked, navigating to:', url);
-                          window.location.href = url;
-                        }}
+                      <a
+                        href={`/${locale}${slide.buttonLink}`}
                         className="group inline-flex items-center gap-3 text-white border border-white 
                                  px-8 py-4 transition-all duration-300 
                                  font-light tracking-wider uppercase text-sm relative overflow-hidden
@@ -203,7 +197,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                           className="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 
                                    transition-transform duration-300 ease-out origin-left pointer-events-none" 
                         />
-                      </button>
+                      </a>
                     )}
                   </div>
                 )}
