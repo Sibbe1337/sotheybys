@@ -228,13 +228,6 @@ export function ApartmentSections({ vm, locale }: ApartmentSectionsProps) {
           />
         </SubSection>
 
-        {/* Muut kustannukset */}
-        <SubSection title={getSectionLabel('apartment.otherCosts', locale)}>
-          <Field 
-            label={getFieldLabel('otherPayments', locale)} 
-            value={undefined} // TODO: Add if available
-          />
-        </SubSection>
       </Section>
 
       {/* Muut tiedot - LINUS SPEC: Vapautuminen + Omistusmuoto här */}
