@@ -32,7 +32,8 @@ export default function FooterWithTeam({ contact, social, logo }: FooterProps = 
   const socialLinks = social || {
     facebook: 'https://www.facebook.com/snellmansothebysrealty',
     instagram: 'https://www.instagram.com/snellmansothebysrealty',
-    linkedin: 'https://www.linkedin.com/company/snellman-sotheby-s-international-realty'
+    linkedin: 'https://www.linkedin.com/company/snellman-sotheby-s-international-realty',
+    youtube: 'https://www.youtube.com/channel/UCUDafZp-yXwW6d-amvxoebQ'
   };
   
   const logoSrc = logo || '/images/logos/logo-white.png';
@@ -104,18 +105,28 @@ export default function FooterWithTeam({ contact, social, logo }: FooterProps = 
                 {/* Certification Badges */}
                 <div className="pt-4 flex items-center gap-6">
                   {/* SKVLA Badge */}
-                  <div className="inline-block">
+                  <a 
+                    href="https://kiinteistonvalitysala.fi/hyva-valitystapa/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block"
+                  >
                     <Image 
-                      src="/images/logos/skvla-logo.svg"
+                      src="/images/logos/skvla-logo-real.png"
                       alt="Suomen Kiinteistönvälittäjät SKVLA"
                       width={180}
                       height={60}
                       className="opacity-80 hover:opacity-100 transition-opacity"
                     />
-                  </div>
+                  </a>
                   
                   {/* KVKL Badge */}
-                  <div className="inline-block">
+                  <a 
+                    href="https://kiinteistonvalitysala.fi/hyva-valitystapa/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block"
+                  >
                     <Image 
                       src="/images/logos/kvkl-badge.svg"
                       alt="Noudatamme hyvää välitystapaa"
@@ -123,7 +134,7 @@ export default function FooterWithTeam({ contact, social, logo }: FooterProps = 
                       height={80}
                       className="opacity-80 hover:opacity-100 transition-opacity"
                     />
-                  </div>
+                  </a>
                 </div>
 
                 {/* Social Media Icons */}
@@ -150,8 +161,8 @@ export default function FooterWithTeam({ contact, social, logo }: FooterProps = 
                       </svg>
                     </a>
                   )}
-                  {socialLinks.linkedin && (
-                    <a href={socialLinks.linkedin} 
+                  {socialLinks.youtube && (
+                    <a href={socialLinks.youtube} 
                         target="_blank" 
                         rel="noopener noreferrer"
                         aria-label="YouTube" 
