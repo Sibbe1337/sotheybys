@@ -301,12 +301,12 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
                 </form>
               </div>
 
-              {/* Mission Section */}
+              {/* Mission Section - Kunniatehtävä */}
               <div className="bg-white p-8 lg:p-12">
                 <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-6">
                   {t.honorTitle}
                 </h2>
-                <div className="space-y-6 text-gray-700 font-light leading-relaxed text-base">
+                <div className="space-y-4 text-gray-700 font-light leading-relaxed text-base">
                   <p>{t.honorText1}</p>
                   <p>{t.honorText2}</p>
                   <p>{t.honorText3}</p>
@@ -316,14 +316,14 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
           </div>
         </section>
 
-        {/* A Valuable Relationship Section */}
+        {/* A Valuable Relationship Section - Arvokas asiakassuhde */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-8 text-center">
+              <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-8">
                 {t.relationshipTitle}
               </h2>
-              <div className="space-y-6 text-gray-700 font-light leading-relaxed text-base">
+              <div className="space-y-4 text-gray-700 font-light leading-relaxed text-base">
                 <p>{t.relationshipText1}</p>
                 <p>{t.relationshipText2}</p>
                 <p>{t.relationshipText3}</p>
@@ -332,14 +332,14 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
           </div>
         </section>
 
-        {/* Our Service Promise Section */}
+        {/* Our Service Promise Section - Värt servicelöfte */}
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-8 text-center">
+              <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-8">
                 {t.promiseTitle}
               </h2>
-              <div className="max-w-4xl space-y-6 text-gray-700 font-light leading-relaxed text-base">
+              <div className="space-y-4 text-gray-700 font-light leading-relaxed text-base">
                 <p>{t.promiseText1}</p>
                 <p>{t.promiseText2}</p>
               </div>
