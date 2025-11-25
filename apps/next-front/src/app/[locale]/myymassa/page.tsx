@@ -351,7 +351,7 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-12 text-center">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4 leading-relaxed">
                 {t.pricingTitle}
               </h2>
               
