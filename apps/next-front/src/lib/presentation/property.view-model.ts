@@ -228,9 +228,9 @@ export class PropertyVM {
 
       // Fees (NEW Phase 3)
       fees: {
-        maintenance: fmtFee(p.fees.maintenance, localeStr),
-        financing: fmtFee(p.fees.financing, localeStr),
-        total: totalFees > 0 ? fmtFee(totalFees, localeStr) : undefined,
+        maintenance: fmtFee(p.fees.maintenance, localeStr, true),  // Robert 2025-11-25: Show 2 decimals for vederlag
+        financing: fmtFee(p.fees.financing, localeStr, true),      // Robert 2025-11-25: Show 2 decimals for vederlag
+        total: totalFees > 0 ? fmtFee(totalFees, localeStr, true) : undefined,  // Robert 2025-11-25: Show 2 decimals for vederlag
         water: fmtFee(p.fees.water, localeStr),
         heating: fmtFee(p.fees.heating, localeStr),
         electricity: fmtFee(p.fees.electricity, localeStr),

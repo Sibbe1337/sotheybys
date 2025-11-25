@@ -3,16 +3,17 @@
  * Phase 3: Formatting monthly fees with locale support
  */
 
-export const fmtFee = (n: number | undefined, locale = 'fi-FI'): string => {
+export const fmtFee = (n: number | undefined, locale = 'fi-FI', showDecimals = false): string => {
   if (n == null || n === 0) return '';
   
-  // Dennis 2025-11-11: Suffix must be localized, NO decimals for rent
+  // Dennis 2025-11-11: Suffix must be localized
   const suffix = locale === 'sv-SE' ? '/månad' : locale === 'en-GB' ? '/month' : '/kk';
   
   return new Intl.NumberFormat(locale, {
     style: 'currency',
     currency: 'EUR',
-    maximumFractionDigits: 0  // Dennis 2025-11-11: No decimals (€3,840 not €3,840.00)
+    minimumFractionDigits: showDecimals ? 2 : 0,  // Robert 2025-11-25: Vederlag with 2 decimals
+    maximumFractionDigits: showDecimals ? 2 : 0
   }).format(n) + suffix;
 };
 
