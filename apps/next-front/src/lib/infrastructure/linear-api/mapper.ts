@@ -570,9 +570,19 @@ export class LinearToPropertyMapper {
           return [fromLocale, fromFi, fromNv].find(v => v && String(v).trim() !== '') || undefined;
         })(),
         energyCertStatus: (() => {
-          const fromLocale = lget(src.listingHasEnergyCertificate!, locale);
+          // LINUS FIX 2025-11-25: Try ALL languages and pick first valid result
+          // Linear sometimes has "Ei tietoa" (No info) in Finnish but proper text in Swedish/English
           const fromFi = lget(src.listingHasEnergyCertificate!, 'fi');
-          return normalizeEnergyStatus(fromLocale || fromFi);
+          const fromSv = lget(src.listingHasEnergyCertificate!, 'sv');
+          const fromEn = lget(src.listingHasEnergyCertificate!, 'en');
+          
+          // Try each language and return first non-null result
+          for (const text of [fromFi, fromSv, fromEn]) {
+            const status = normalizeEnergyStatus(text);
+            if (status !== null) return status;
+          }
+          
+          return null;
         })(),
         heatingSystem: lv(src.heatingSystem),
         ventilationSystem: lv(src.ventilationSystem),

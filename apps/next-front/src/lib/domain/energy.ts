@@ -11,7 +11,8 @@ export function normalizeEnergyStatus(txt: string): EnergyStatus {
   
   // Not required by law - CHECK THIS FIRST before "has certificate"
   // Dennis 2025-11-24: Finnish patterns for "not required"
-  if (/ei.*edellytt|ei.*tarvita|ei tarvitse|not required|inget.*lagstadgat|ej.*lagstadgat|behöver inte|fastigheten behöver inte/.test(s)) {
+  // LINUS FIX 2025-11-25: Added more patterns for all three languages
+  if (/ei.*edellytt|ei.*tarvita|ei tarvitse|ei lain|not required|inget.*lagstadgat|ej.*lagstadgat|behöver inte|fastigheten behöver inte|no statutory|ingen lagstadgad/.test(s)) {
     return 'NOT_REQUIRED_BY_LAW';
   }
   
