@@ -309,33 +309,28 @@ export default function InternationalPage({ params }: { params: { locale: Locale
                 </div>
               </div>
 
-              {/* Estonia */}
+              {/* French Riviera */}
               <div className="group">
                 <div className="h-64 relative overflow-hidden">
                   <Image
-                    src="/images/international/stockholm-cityscape.jpg"
-                    alt="Estonia"
+                    src="/images/international/french-riviera.jpg"
+                    alt="French Riviera"
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
                 <div className="p-6">
-                  <h3 className="text-2xl font-light text-gray-900 mb-2">Estonia</h3>
+                  <h3 className="text-2xl font-light text-gray-900 mb-2">French Riviera</h3>
                   <p className="text-sm text-gray-600 font-light italic mb-3">
-                    Living in Estonia<br />
+                    The Jewel of the Mediterranean<br />
                     by: Iyna Bort Caruso
                   </p>
                   <p className="text-gray-700 font-light text-sm leading-relaxed mb-4">
-                    Estonia withstood centuries of foreign rule including the Danes, Swedes, Germans and Russians – both 
-                    Tsarist and Soviet, the last Russian troops left in 1994. Today the smallest of the Baltic States is a member of 
-                    the European Union and NATO. It is especially proud of its high tech culture. It also has one of the world's 
-                    longest paid maternity leaves.<br /><br />
-                    Estonia lies on the shores of the Baltic Sea, a ferry ride from Finland and Sweden and a three-hour flight 
-                    or less to most major European cities. The republic is made up of 15 counties and more than 2,000 islands, 
-                    most of them small in size with tiny populations to match...
+                    The French Riviera, or Côte d'Azur, stretches along France's southeastern Mediterranean coast from Saint-Tropez to the Italian border. This glamorous coastline has long been a playground for the rich and famous, offering a perfect blend of natural beauty, cultural sophistication, and luxury living.<br /><br />
+                    With its mild climate, stunning beaches, world-class dining, and vibrant arts scene, the French Riviera continues to attract discerning buyers seeking exceptional properties in one of Europe's most prestigious locations. From Belle Époque villas to contemporary masterpieces, the region offers unparalleled real estate opportunities...
                   </p>
                   <a 
-                    href="https://www.sothebysrealty.com/eng/sales/europe/estonia"
+                    href="https://www.sothebysrealty.com/eng/destinations/french-riviera-france"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-[var(--color-primary)] hover:underline font-light text-sm"
