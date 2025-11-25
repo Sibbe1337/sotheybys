@@ -106,7 +106,7 @@ export default function FooterWithTeam({ contact, social, logo }: FooterProps = 
                   {/* SKVLA Badge */}
                   <div className="inline-block">
                     <Image 
-                      src="/images/logos/skvla-logo.png"
+                      src="/images/logos/skvla-logo.svg"
                       alt="Suomen Kiinteistönvälittäjät SKVLA"
                       width={180}
                       height={60}
@@ -117,7 +117,7 @@ export default function FooterWithTeam({ contact, social, logo }: FooterProps = 
                   {/* KVKL Badge */}
                   <div className="inline-block">
                     <Image 
-                      src="/images/logos/kvkl-badge.png"
+                      src="/images/logos/kvkl-badge.svg"
                       alt="Noudatamme hyvää välitystapaa"
                       width={80}
                       height={80}

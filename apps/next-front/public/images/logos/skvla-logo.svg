@@ -1,0 +1,21 @@
+<svg width="240" height="80" viewBox="0 0 240 80" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="240" height="80" fill="transparent"/>
+  
+  <!-- Main text -->
+  <text x="10" y="25" fill="#999" font-size="18" font-weight="300" font-family="Arial, sans-serif" letter-spacing="1">
+    SUOMEN
+  </text>
+  <text x="10" y="45" fill="#999" font-size="18" font-weight="300" font-family="Arial, sans-serif" letter-spacing="1">
+    KIINTEISTÖN-
+  </text>
+  <text x="10" y="65" fill="#999" font-size="18" font-weight="300" font-family="Arial, sans-serif" letter-spacing="1">
+    VÄLITTÄJÄT
+  </text>
+  
+  <!-- SKVLA text -->
+  <text x="10" y="78" fill="#999" font-size="14" font-weight="600" font-family="Arial, sans-serif" letter-spacing="2">
+    SKVLA
+  </text>
+</svg>
+
