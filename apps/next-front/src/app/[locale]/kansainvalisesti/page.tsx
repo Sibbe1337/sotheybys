@@ -231,7 +231,7 @@ export default function InternationalPage({ params }: { params: { locale: Locale
                     balance believing perks like flexible working hours yields a more productive work force...
                   </p>
                   <a 
-                    href="https://www.sothebysrealty.com/eng/sales/europe/sweden" 
+                    href="https://www.sothebysrealty.com/eng/destinations/sweden" 
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-[var(--color-primary)] hover:underline font-light text-sm"
@@ -266,7 +266,7 @@ export default function InternationalPage({ params }: { params: { locale: Locale
                     Portugal luxury real estate market is a powerful incentive...
                   </p>
                   <a 
-                    href="https://www.sothebysrealty.com/eng/sales/europe/portugal"
+                    href="https://www.sothebysrealty.com/eng/destinations/portugal"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-[var(--color-primary)] hover:underline font-light text-sm"
@@ -299,7 +299,7 @@ export default function InternationalPage({ params }: { params: { locale: Locale
                     and Formentera. The Carthaginians, Romans, Vandals, Moors, French and British all left their marks here...
                   </p>
                   <a 
-                    href="https://www.sothebysrealty.com/eng/sales/europe/spain/balearic-islands/mallorca"
+                    href="https://www.sothebysrealty.com/eng/destinations/mallorca-spain"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-[var(--color-primary)] hover:underline font-light text-sm"
@@ -351,7 +351,7 @@ export default function InternationalPage({ params }: { params: { locale: Locale
               
               {/* Urban Metropolitan */}
               <a 
-                href="https://www.sothebysrealty.com/eng" 
+                href="https://www.sothebysrealty.com/eng/sales/int/mountain-lstyle" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="group cursor-pointer"
@@ -431,7 +431,7 @@ export default function InternationalPage({ params }: { params: { locale: Locale
                   creative community, making Miami real estate a great investment for aesthetes...
                 </p>
                 <a 
-                  href="https://www.sothebysrealty.com/eng/sales/north-america/united-states-of-america/florida"
+                  href="https://www.sothebysrealty.com/eng/category/florida"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[var(--color-primary)] hover:underline font-light text-sm"
@@ -457,7 +457,7 @@ export default function InternationalPage({ params }: { params: { locale: Locale
                   foothills of the Southern Alps to the north...
                 </p>
                 <a 
-                  href="https://www.sothebysrealty.com/eng/sales/europe/france/provence-alpes-cote-dazur"
+                  href="https://www.sothebysrealty.com/eng/destinations/french-riviera-france"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[var(--color-primary)] hover:underline font-light text-sm"
@@ -481,7 +481,7 @@ export default function InternationalPage({ params }: { params: { locale: Locale
                   with high end condos, luxurious penthouses and elegant homes...
                 </p>
                 <a 
-                  href="https://www.sothebysrealty.com/eng/sales/north-america/united-states-of-america/new-york"
+                  href="https://www.sothebysrealty.com/eng/category/new-york-usa"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[var(--color-primary)] hover:underline font-light text-sm"
