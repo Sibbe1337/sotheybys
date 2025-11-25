@@ -166,7 +166,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                         </svg>
                         <span 
                           className="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 
-                                   transition-transform duration-300 ease-out origin-left" 
+                                   transition-transform duration-300 ease-out origin-left pointer-events-none" 
                         />
                       </a>
                     ) : (
