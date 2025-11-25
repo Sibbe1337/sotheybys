@@ -18,7 +18,7 @@ const getTranslatedSlides = (language: SupportedLanguage) => [
     title: getHomepageTranslation('hero1Title', language),
     subtitle: getHomepageTranslation('hero1Subtitle', language),
     buttonText: getHomepageTranslation('hero1Button', language),
-    buttonLink: '#avaamme-uusia-ovia'
+    buttonLink: '/yhteystiedot'
   },
   {
     id: '2',

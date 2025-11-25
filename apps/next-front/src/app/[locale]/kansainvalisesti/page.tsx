@@ -97,6 +97,10 @@ export default function InternationalPage({ params }: { params: { locale: Locale
             <a 
               href="#content"
               className="international-button"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('content')?.scrollIntoView({ behavior: 'smooth' });
+              }}
             >
               {t.heroButton} &gt;
             </a>
