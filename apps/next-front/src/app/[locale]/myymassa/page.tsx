@@ -302,16 +302,14 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
               </div>
 
               {/* Mission Section - Kunniatehtävä */}
-              <div className="bg-white p-8 lg:p-12">
-                <div className="max-w-4xl mx-auto">
-                  <h2 className="text-xl font-semibold text-gray-900 mb-4 leading-relaxed">
-                    {t.honorTitle}
-                  </h2>
-                  <div className="space-y-4 text-gray-700 font-light leading-relaxed text-lg">
-                    <p>{t.honorText1}</p>
-                    <p>{t.honorText2}</p>
-                    <p>{t.honorText3}</p>
-                  </div>
+              <div className="bg-white">
+                <h2 className="text-xl font-semibold text-gray-900 mb-4 leading-relaxed">
+                  {t.honorTitle}
+                </h2>
+                <div className="space-y-4 text-gray-700 font-light leading-relaxed text-lg">
+                  <p>{t.honorText1}</p>
+                  <p>{t.honorText2}</p>
+                  <p>{t.honorText3}</p>
                 </div>
               </div>
             </div>
