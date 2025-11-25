@@ -101,16 +101,28 @@ export default function FooterWithTeam({ contact, social, logo }: FooterProps = 
                   </div>
                 </div>
 
-                {/* KVKL Certification Badge */}
-                <div className="pt-4">
-                    <div className="inline-block bg-white/10 rounded-lg p-3">
-                      <Image 
-                        src="/images/logos/kvkl-badge.svg"
-                        alt="Noudatamme hyvää välitystapaa - Kiinteistönvälitysalan Keskusliitto"
-                        width={60}
-                        height={60}
-                        className="opacity-70"
-                      />
+                {/* Certification Badges */}
+                <div className="pt-4 flex items-center gap-6">
+                  {/* SKVLA Badge */}
+                  <div className="inline-block">
+                    <Image 
+                      src="/images/logos/skvla-logo.png"
+                      alt="Suomen Kiinteistönvälittäjät SKVLA"
+                      width={180}
+                      height={60}
+                      className="opacity-80 hover:opacity-100 transition-opacity"
+                    />
+                  </div>
+                  
+                  {/* KVKL Badge */}
+                  <div className="inline-block">
+                    <Image 
+                      src="/images/logos/kvkl-badge.png"
+                      alt="Noudatamme hyvää välitystapaa"
+                      width={80}
+                      height={80}
+                      className="opacity-80 hover:opacity-100 transition-opacity"
+                    />
                   </div>
                 </div>
 
