@@ -171,7 +171,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                       </a>
                     ) : (
                       <Link
-                        href={`/${locale}${slide.buttonLink}`}
+                        href={slide.buttonLink}
                         className="group inline-flex items-center gap-3 text-white border border-white 
                                  px-8 py-4 transition-all duration-300 
                                  font-light tracking-wider uppercase text-sm relative overflow-hidden
