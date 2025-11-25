@@ -1,8 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Link } from '@/lib/navigation';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { CarouselArrowButton } from '../ui/CarouselArrowButton';
 
@@ -21,6 +20,7 @@ interface HeroCarouselProps {
 
 export default function HeroCarousel({ slides }: HeroCarouselProps) {
   const params = useParams();
+  const router = useRouter();
   const locale = params?.locale || 'fi';
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
@@ -170,12 +170,12 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                         />
                       </a>
                     ) : (
-                      <Link
-                        href={slide.buttonLink as any}
+                      <button
+                        onClick={() => router.push(`/${locale}${slide.buttonLink}`)}
                         className="group inline-flex items-center gap-3 text-white border border-white 
                                  px-8 py-4 transition-all duration-300 
                                  font-light tracking-wider uppercase text-sm relative overflow-hidden
-                                 hover:border-white z-20"
+                                 hover:border-white z-20 cursor-pointer"
                       >
                         <span className="relative z-10 transition-colors duration-300 group-hover:text-[#002349]">
                           {slide.buttonText}
@@ -197,7 +197,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                           className="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 
                                    transition-transform duration-300 ease-out origin-left" 
                         />
-                      </Link>
+                      </button>
                     )}
                   </div>
                 )}
