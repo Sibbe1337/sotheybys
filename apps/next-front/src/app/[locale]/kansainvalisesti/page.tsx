@@ -299,7 +299,7 @@ export default function InternationalPage({ params }: { params: { locale: Locale
                     and Formentera. The Carthaginians, Romans, Vandals, Moors, French and British all left their marks here...
                   </p>
                   <a 
-                    href="https://www.sothebysrealty.com/eng/sales/europe/spain/balearic-islands"
+                    href="https://www.sothebysrealty.com/eng/sales/europe/spain/balearic-islands/mallorca"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-[var(--color-primary)] hover:underline font-light text-sm"
@@ -436,7 +436,7 @@ export default function InternationalPage({ params }: { params: { locale: Locale
                   creative community, making Miami real estate a great investment for aesthetes...
                 </p>
                 <a 
-                  href="https://www.sothebysrealty.com/eng/sales/usa/florida"
+                  href="https://www.sothebysrealty.com/eng/sales/north-america/united-states-of-america/florida"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[var(--color-primary)] hover:underline font-light text-sm"
@@ -462,7 +462,7 @@ export default function InternationalPage({ params }: { params: { locale: Locale
                   foothills of the Southern Alps to the north...
                 </p>
                 <a 
-                  href="https://www.sothebysrealty.com/eng/sales/europe/france/provence-alpes-cote-d-azur"
+                  href="https://www.sothebysrealty.com/eng/sales/europe/france/provence-alpes-cote-dazur"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[var(--color-primary)] hover:underline font-light text-sm"
@@ -486,7 +486,7 @@ export default function InternationalPage({ params }: { params: { locale: Locale
                   with high end condos, luxurious penthouses and elegant homes...
                 </p>
                 <a 
-                  href="https://www.sothebysrealty.com/eng/sales/usa/new-york"
+                  href="https://www.sothebysrealty.com/eng/sales/north-america/united-states-of-america/new-york"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[var(--color-primary)] hover:underline font-light text-sm"
