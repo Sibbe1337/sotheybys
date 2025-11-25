@@ -110,6 +110,11 @@ const LISTING_TYPE_LABELS: Record<string, LocalizedValue> = {
     sv: 'Parhus',
     en: 'Semi-detached House'
   },
+  'PAIRHOUSE': {
+    fi: 'Paritalo',
+    sv: 'Parhus',
+    en: 'Semi-detached House'
+  },
   'TERRACED_HOUSE': {
     fi: 'Luhtitalo',
     sv: 'Kedjehus',

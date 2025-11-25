@@ -66,7 +66,9 @@ const PROPERTY_TYPES = [
       const isOnSale = !p.meta.status || p.meta.status === 'ACTIVE' || p.meta.status === 'RESERVED';
       if (rent > 0 || !isOnSale) return false;
       const type = (p.meta.typeCode || '').toLowerCase();
-      return type.includes('omakotitalo') || type.includes('detached') || type.includes('villa');
+      // Exclude parhus, stugor, and villas - only pure detached houses
+      if (type.includes('paritalo') || type.includes('parhus') || type.includes('mökki') || type.includes('stuga') || type.includes('cottage')) return false;
+      return type.includes('omakotitalo') || type.includes('detached');
     }
   },
   {
