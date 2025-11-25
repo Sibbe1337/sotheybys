@@ -10,8 +10,13 @@ export const fmtPerM2 = (
 ): string => {
   if (amount == null || !living || living <= 0) return '';
   
-  const perM2 = Math.round(amount / living);
-  return `${perM2.toLocaleString(locale)} €/m²`;
+  const perM2 = amount / living;
+  // Robert 2025-11-25: Show 2 decimals for €/m² (customer feedback)
+  const formatted = new Intl.NumberFormat(locale, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }).format(perM2);
+  return `${formatted} €/m²`;
 };
 
 /**
