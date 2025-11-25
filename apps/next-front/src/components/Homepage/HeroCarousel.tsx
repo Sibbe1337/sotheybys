@@ -171,7 +171,13 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                       </a>
                     ) : (
                       <button
-                        onClick={() => router.push(`/${locale}${slide.buttonLink}`)}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          const url = `/${locale}${slide.buttonLink}`;
+                          console.log('Button clicked, navigating to:', url);
+                          window.location.href = url;
+                        }}
                         className="group inline-flex items-center gap-3 text-white border border-white 
                                  px-8 py-4 transition-all duration-300 
                                  font-light tracking-wider uppercase text-sm relative overflow-hidden
