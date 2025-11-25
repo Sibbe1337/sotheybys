@@ -36,9 +36,10 @@ export function HeroAddressBadge({ address, postalCode, city, slug, locale }: He
       className="absolute bottom-4 left-4 bg-[#002349]/90 hover:bg-[#002349] text-white px-4 py-3 rounded shadow-lg transition-colors cursor-pointer backdrop-blur-sm block"
       aria-label={`View property: ${fullAddress}`}
     >
+      {/* Robert 2025-11-25: Address on two lines only - whitespace-nowrap prevents line breaks */}
       <div className="text-left">
-        <div className="text-sm font-semibold">{address}</div>
-        <div className="text-xs opacity-90">{postalCode} {city}</div>
+        <div className="text-sm font-semibold whitespace-nowrap">{address}</div>
+        <div className="text-xs opacity-90 whitespace-nowrap">{postalCode} {city}</div>
       </div>
     </Link>
   );
