@@ -15,6 +15,7 @@ interface FooterProps {
     instagram?: string;
     linkedin?: string;
     twitter?: string;
+    youtube?: string;
   };
   logo?: string;
 }
