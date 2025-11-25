@@ -70,8 +70,8 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
           key={slide.id}
           className={`absolute inset-0 transition-all duration-1500 ${
             index === currentSlide 
-              ? 'opacity-100 scale-100' 
-              : 'opacity-0 scale-105'
+              ? 'opacity-100 scale-100 z-10' 
+              : 'opacity-0 scale-105 pointer-events-none'
           }`}
         >
           {/* Background Image with Ken Burns Effect */}
