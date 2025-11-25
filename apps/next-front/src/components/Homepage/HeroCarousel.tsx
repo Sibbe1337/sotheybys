@@ -140,65 +140,34 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                     }`}
                     style={{ transitionDelay: (!hasInitialized && index === 0) ? '0ms' : '600ms' }}
                   >
-                    {slide.buttonLink.startsWith('#') ? (
-                      <a
-                        href={slide.buttonLink}
-                        className="group inline-flex items-center gap-3 text-white border border-white 
-                                 px-8 py-4 transition-all duration-300 
-                                 font-light tracking-wider uppercase text-sm relative overflow-hidden
-                                 hover:border-white z-20"
+                    <a
+                      href={slide.buttonLink.startsWith('#') ? slide.buttonLink : `/${locale}${slide.buttonLink}`}
+                      className="group inline-flex items-center gap-3 text-white border border-white 
+                               px-8 py-4 transition-all duration-300 
+                               font-light tracking-wider uppercase text-sm relative overflow-hidden
+                               hover:border-white z-20 cursor-pointer"
+                    >
+                      <span className="relative z-10 transition-colors duration-300 group-hover:text-[#002349]">
+                        {slide.buttonText}
+                      </span>
+                      <svg 
+                        className="w-5 h-5 transform transition-all duration-300 group-hover:translate-x-1 relative z-10 group-hover:text-[#002349]" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
                       >
-                        <span className="relative z-10 transition-colors duration-300 group-hover:text-[#002349]">
-                          {slide.buttonText}
-                        </span>
-                        <svg 
-                          className="w-5 h-5 transform transition-all duration-300 group-hover:translate-x-1 relative z-10 group-hover:text-[#002349]" 
-                          fill="none" 
-                          stroke="currentColor" 
-                          viewBox="0 0 24 24"
-                        >
-                          <path 
-                            strokeLinecap="round" 
-                            strokeLinejoin="round" 
-                            strokeWidth={1.5} 
-                            d="M17 8l4 4m0 0l-4 4m4-4H3" 
-                          />
-                        </svg>
-                        <span 
-                          className="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 
-                                   transition-transform duration-300 ease-out origin-left pointer-events-none" 
+                        <path 
+                          strokeLinecap="round" 
+                          strokeLinejoin="round" 
+                          strokeWidth={1.5} 
+                          d="M17 8l4 4m0 0l-4 4m4-4H3" 
                         />
-                      </a>
-                    ) : (
-                      <a
-                        href={`/${locale}${slide.buttonLink}`}
-                        className="group inline-flex items-center gap-3 text-white border border-white 
-                                 px-8 py-4 transition-all duration-300 
-                                 font-light tracking-wider uppercase text-sm relative overflow-hidden
-                                 hover:border-white z-20 cursor-pointer"
-                      >
-                        <span className="relative z-10 transition-colors duration-300 group-hover:text-[#002349]">
-                          {slide.buttonText}
-                        </span>
-                        <svg 
-                          className="w-5 h-5 transform transition-all duration-300 group-hover:translate-x-1 relative z-10 group-hover:text-[#002349]" 
-                          fill="none" 
-                          stroke="currentColor" 
-                          viewBox="0 0 24 24"
-                        >
-                          <path 
-                            strokeLinecap="round" 
-                            strokeLinejoin="round" 
-                            strokeWidth={1.5} 
-                            d="M17 8l4 4m0 0l-4 4m4-4H3" 
-                          />
-                        </svg>
-                        <span 
-                          className="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 
-                                   transition-transform duration-300 ease-out origin-left pointer-events-none" 
-                        />
-                      </a>
-                    )}
+                      </svg>
+                      <span 
+                        className="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 
+                                 transition-transform duration-300 ease-out origin-left pointer-events-none" 
+                      />
+                    </a>
                   </div>
                 )}
               </div>
