@@ -20,7 +20,7 @@ const LISTING_TYPE_LABELS: Record<string, LocalizedValue> = {
   },
   'OMAKOTITALO': {
     fi: 'Omakotitalo',
-    sv: 'Villa',
+    sv: 'Egnahemshus',
     en: 'Detached House'
   },
   'RIVITALO': {
@@ -92,12 +92,12 @@ const LISTING_TYPE_LABELS: Record<string, LocalizedValue> = {
   },
   'DETACHED_HOUSE': {
     fi: 'Omakotitalo',
-    sv: 'Villa',
+    sv: 'Egnahemshus',
     en: 'Detached House'
   },
   'DETACHEDHOUSE': {
     fi: 'Omakotitalo',
-    sv: 'Villa',
+    sv: 'Egnahemshus',
     en: 'Detached House'
   },
   'TOWNHOUSE': {

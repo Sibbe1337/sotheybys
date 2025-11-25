@@ -120,7 +120,6 @@ export function RentalSections({ vm, locale }: RentalSectionsProps) {
         <Field 
           label={getFieldLabel('energyClass', locale)} 
           value={vm.energyClass}
-          alwaysShow 
           locale={locale} 
         />
         <Field 

@@ -531,16 +531,10 @@ export class LinearToPropertyMapper {
           const rawGroup = lget(src.productGroup, 'en') || lget(src.productGroup, 'fi') || lget(src.productGroup, 'sv');
           return rawGroup ? rawGroup.toUpperCase().replace(/ /g, '_') : undefined;
         })(),
-        // ✅ Extract typeCode - USE PRODUCT GROUP to determine if apartment or property
+        // FEEDBACK FIX 2025-11-25: Extract typeCode from ACTUAL objekttyp (listingType), NOT produktgrupp
+        // Example: Hiiralankaari 24 has produktgrupp "Lägenhet" but objekttyp "DETACHED_HOUSE" → use "DETACHED_HOUSE"
         typeCode: (() => {
-          // First check productGroup - if it's "Lägenhet"/"Apartments", use FLAT
-          const rawGroup = lget(src.productGroup, 'en') || lget(src.productGroup, 'fi') || lget(src.productGroup, 'sv');
-          if (rawGroup && (rawGroup.toLowerCase().includes('lägenhet') || rawGroup.toLowerCase().includes('apartment'))) {
-            // It's an apartment in a housing cooperative, even if it's a detached house
-            return 'FLAT';
-          }
-          
-          // Otherwise, try listingType first (preferred)
+          // Try listingType first (preferred - this is the objekttyp)
           let rawType = lget(src.listingType, 'en') || lget(src.listingType, 'fi') || lget(src.listingType, 'sv');
           
           // Fallback to propertyType if listingType is empty
@@ -553,21 +547,12 @@ export class LinearToPropertyMapper {
             rawType = lget(src.type, 'en') || lget(src.type, 'fi') || lget(src.type, 'sv');
           }
           
-          return rawType.toUpperCase().replace(/ /g, '_');
+          return rawType ? rawType.toUpperCase().replace(/ /g, '_') : undefined;
         })(),
         // Dennis 2025-11-19: Use localizeListingType() to ensure correct translations (Kerrostalo -> Höghus in Swedish)
-        // Dennis 2025-11-24: If productGroup is "Lägenhet", show "Lägenhet" instead of actual building type
+        // FEEDBACK FIX 2025-11-25: ALWAYS show objekttyp (building type), NOT produktgrupp
+        // Example: Hiiralankaari 24 is produktgrupp "Lägenhet" but objekttyp "Egnahemshus" → show "Egnahemshus"
         listingTypeLabel: (() => {
-          const rawGroup = lget(src.productGroup, 'en') || lget(src.productGroup, 'fi') || lget(src.productGroup, 'sv');
-          if (rawGroup && (rawGroup.toLowerCase().includes('lägenhet') || rawGroup.toLowerCase().includes('apartment'))) {
-            // Show "Lägenhet" for all apartments, even if they're in detached houses
-            return {
-              fi: 'Asunto',
-              sv: 'Lägenhet',
-              en: 'Apartment'
-            };
-          }
-          
           const typeCode = nv?.listingType || lget(src.listingType, 'fi') || '';
           return localizeListingType(typeCode);
         })(),

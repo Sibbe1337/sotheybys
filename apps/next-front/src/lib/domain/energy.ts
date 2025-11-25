@@ -43,7 +43,7 @@ export const energyLabels = {
   },
   en: {
     HAS_CERTIFICATE: 'Yes',
-    NOT_REQUIRED_BY_LAW: 'Not required by law',
+    NOT_REQUIRED_BY_LAW: 'No statutory energy certificate',
     EXEMPT_BY_ACT: 'Exempt by Act',
     null: 'No information'
   }

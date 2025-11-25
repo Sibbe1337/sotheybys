@@ -60,7 +60,7 @@ export default function FooterWithTeam({ contact, social, logo }: FooterProps = 
               {/* Contact Information */}
               <div className="space-y-4 text-sm">
                 <div>
-                  <h3 className="font-bold mb-3 text-base text-white">Helsinki</h3>
+                  <h3 className="font-bold mb-3 text-xl text-white">Helsinki</h3>
                   <div className="space-y-2 text-white font-bold">
                     {contactInfo.address && (
                       <p className="flex items-center gap-2">
