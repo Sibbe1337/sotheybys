@@ -303,8 +303,10 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
 
               {/* Mission Section - Kunniatehtävä */}
               <div className="bg-white p-8 lg:p-12">
+                <h2 className="text-base font-normal text-gray-900 mb-4">
+                  {t.honorTitle}
+                </h2>
                 <div className="space-y-4 text-gray-700 font-light leading-relaxed text-base">
-                  <p><span className="font-normal">{t.honorTitle}</span></p>
                   <p>{t.honorText1}</p>
                   <p>{t.honorText2}</p>
                   <p>{t.honorText3}</p>
@@ -318,8 +320,10 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
+              <h2 className="text-base font-normal text-gray-900 mb-4">
+                {t.relationshipTitle}
+              </h2>
               <div className="space-y-4 text-gray-700 font-light leading-relaxed text-base">
-                <p><span className="font-normal">{t.relationshipTitle}</span></p>
                 <p>{t.relationshipText1}</p>
                 <p>{t.relationshipText2}</p>
                 <p>{t.relationshipText3}</p>
