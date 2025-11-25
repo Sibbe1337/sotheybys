@@ -346,7 +346,9 @@ export class LinearToPropertyMapper {
     const status = normalizeStatus(pickNV(nv, 'status') ?? lget(src.status!, locale));
     const elevatorRaw = src.housingCooperativeElevator ?? src.elevator ?? pickNV(nv, 'housingCooperativeElevator');
     const hasElevator = toBool(elevatorRaw);
-    const rentValue = src.rent ? parseEuro(lget(src.rent, locale)) : undefined;
+    // Robert 2025-11-25: ALWAYS use Finnish value for rent - Linear API may have incorrect English translations
+    // Fixes issue where English shows "€4/month" instead of "€3,840/month"
+    const rentValue = src.rent ? parseEuro(lget(src.rent, 'fi')) : undefined;
     const floor = lget(src.floor!, locale) || lget(src.floorLocation!, locale) || pickNV(nv, 'floor') || undefined;
 
     // Company loans and encumbrances
