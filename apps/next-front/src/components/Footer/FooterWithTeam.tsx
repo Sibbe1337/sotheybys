@@ -103,9 +103,8 @@ export default function FooterWithTeam({ contact, social, logo }: FooterProps = 
                   </div>
                 </div>
 
-                {/* Certification Badges */}
-                <div className="pt-4 flex items-center gap-6">
-                  {/* SKVLA Badge */}
+                {/* Certification Badges - Robert 2025-11-25: skvla-logo-real.png contains BOTH logos */}
+                <div className="pt-4">
                   <a 
                     href="https://kiinteistonvalitysala.fi/hyva-valitystapa/"
                     target="_blank"
@@ -114,24 +113,8 @@ export default function FooterWithTeam({ contact, social, logo }: FooterProps = 
                   >
                     <Image 
                       src="/images/logos/skvla-logo-real.png"
-                      alt="Suomen Kiinteistönvälittäjät SKVLA"
-                      width={180}
-                      height={60}
-                      className="opacity-80 hover:opacity-100 transition-opacity"
-                    />
-                  </a>
-                  
-                  {/* KVKL Badge */}
-                  <a 
-                    href="https://kiinteistonvalitysala.fi/hyva-valitystapa/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block"
-                  >
-                    <Image 
-                      src="/images/logos/kvkl-badge.svg"
-                      alt="Noudatamme hyvää välitystapaa"
-                      width={80}
+                      alt="Suomen Kiinteistönvälittäjät SKVLA - Noudatamme hyvää välitystapaa"
+                      width={280}
                       height={80}
                       className="opacity-80 hover:opacity-100 transition-opacity"
                     />
