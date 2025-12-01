@@ -478,31 +478,35 @@ export default function HomePageClient({
                       >
                         <div className="relative h-48 overflow-hidden">
                           <Image
-                            src={property.images[0]?.url || '/images/placeholder.jpg'}
-                            alt={property.address.street}
+                            src={property.media.images[0]?.url || '/images/placeholder.jpg'}
+                            alt={typeof property.address === 'string' ? property.address : property.address.fi}
                             fill
                             sizes="320px"
                             className="object-cover"
                           />
-                          {property.meta.status && (
+                          {property.meta.listingTypeLabel && (
                             <div className="absolute top-3 left-3 bg-white/90 px-3 py-1 text-xs font-light">
-                              {property.meta.propertyType}
+                              {typeof property.meta.listingTypeLabel === 'string' 
+                                ? property.meta.listingTypeLabel 
+                                : property.meta.listingTypeLabel.fi}
                             </div>
                           )}
                         </div>
                         <div className="p-4">
                           <h3 className="text-lg font-normal text-gray-900 mb-1">
-                            {property.address.street}, {property.address.postalCode} {property.address.city}
+                            {typeof property.address === 'string' ? property.address : property.address.fi}, {property.postalCode} {typeof property.city === 'string' ? property.city : property.city.fi}
                           </h3>
-                          <p className="text-sm text-gray-600 mb-2">{property.meta.area} m²</p>
+                          <p className="text-sm text-gray-600 mb-2">{property.dimensions.living} m²</p>
                           <p className="text-sm text-gray-500 font-light line-clamp-2 mb-3">
-                            {property.meta.description}
+                            {property.description 
+                              ? (typeof property.description === 'string' ? property.description : property.description.fi)
+                              : ''}
                           </p>
                           <p className="text-lg font-normal text-gray-900">
-                            {property.pricing.debtFreePrice 
-                              ? new Intl.NumberFormat('fi-FI').format(property.pricing.debtFreePrice) + ' €'
-                              : property.pricing.salesPrice 
-                                ? new Intl.NumberFormat('fi-FI').format(property.pricing.salesPrice) + ' €'
+                            {property.pricing.debtFree 
+                              ? new Intl.NumberFormat('fi-FI').format(property.pricing.debtFree) + ' €'
+                              : property.pricing.sales 
+                                ? new Intl.NumberFormat('fi-FI').format(property.pricing.sales) + ' €'
                                 : ''}
                           </p>
                         </div>
