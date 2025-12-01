@@ -406,7 +406,7 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
             </div>
 
             {/* Form */}
-            <div className="max-w-3xl mx-auto bg-gray-200 p-8 md:p-12">
+            <div className="max-w-3xl mx-auto bg-gray-100 p-8 md:p-12">
               <form className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
@@ -495,9 +495,9 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
         <section className="py-0">
           <div className="grid md:grid-cols-2">
             {/* Left Column - Office Info */}
-            <div className="bg-[#5a7a94] p-12 md:p-16 text-white">
-              <h3 className="text-3xl font-light mb-6">{t.officeTitle}</h3>
-              <div className="space-y-4 text-gray-100 font-light">
+            <div className="bg-gray-100 p-12 md:p-16">
+              <h3 className="text-3xl font-light mb-6 text-gray-900">{t.officeTitle}</h3>
+              <div className="space-y-4 text-gray-700 font-light">
                 <p>
                   {t.officeDesc1}
                 </p>
@@ -511,7 +511,7 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
                   href="https://goo.gl/maps/LjvLpXQFdT82" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="inline-block mt-4 text-white border border-white px-6 py-2 hover:bg-white hover:text-[#5a7a94] transition-all"
+                  className="inline-block mt-4 text-gray-900 border border-gray-900 px-6 py-2 hover:bg-gray-900 hover:text-white transition-all"
                 >
                   {t.directions} →
                 </a>

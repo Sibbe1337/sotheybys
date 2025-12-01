@@ -119,16 +119,20 @@ export default function CompanyPage({ params }: { params: { locale: Locale } }) 
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <main className="flex-1">
-        {/* Hero Section with Background Image */}
-        <section 
-          className="relative h-[600px] flex items-center justify-center text-white"
-          style={{
-            backgroundImage: 'url("/images/content/snellman-sothebys-yritys.jpg")',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        >
-          <div className="absolute inset-0 bg-[var(--color-primary)]/60"></div>
+        {/* Hero Section with Video Background */}
+        <section className="relative h-[700px] flex items-center justify-center text-white overflow-hidden">
+          {/* Video Background */}
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+            poster="/images/content/snellman-sothebys-yritys.jpg"
+          >
+            <source src="https://www.sothebysrealty.com/extraordinary-living-blog/wp-content/uploads/sites/2/2023/12/SIR_BRAND_FILM_16x9_FINAL.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-black/50"></div>
           <div className="relative z-10 text-center px-4 max-w-4xl">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-thin mb-6">
               {t.heroTitle}
@@ -241,45 +245,6 @@ export default function CompanyPage({ params }: { params: { locale: Locale } }) 
                 </div>
               </div>
 
-              {/* Values Section */}
-              <div className="mb-20">
-                <h2 className="text-3xl font-light text-gray-900 mb-12 text-center">
-                  {t.valuesTitle}
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                  <div className="text-center">
-                    <div className="w-20 h-20 bg-[#1a3a4a] text-white rounded-full flex items-center justify-center mx-auto mb-4">
-                      <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} 
-                              d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-light text-gray-900 mb-2">{t.value1Title}</h3>
-                    <p className="text-gray-600 font-light text-sm">{t.value1Text}</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-20 h-20 bg-[#1a3a4a] text-white rounded-full flex items-center justify-center mx-auto mb-4">
-                      <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} 
-                              d="M13 10V3L4 14h7v7l9-11h-7z" />
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-light text-gray-900 mb-2">{t.value2Title}</h3>
-                    <p className="text-gray-600 font-light text-sm">{t.value2Text}</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-20 h-20 bg-[#1a3a4a] text-white rounded-full flex items-center justify-center mx-auto mb-4">
-                      <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} 
-                              d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-light text-gray-900 mb-2">{t.value3Title}</h3>
-                    <p className="text-gray-600 font-light text-sm">{t.value3Text}</p>
-                  </div>
-                </div>
-              </div>
-
               {/* History Section */}
               <div className="bg-gray-50 p-8 lg:p-12 rounded-lg mb-20">
                 <h2 className="text-3xl font-light text-gray-900 mb-8 text-center">
@@ -327,20 +292,20 @@ export default function CompanyPage({ params }: { params: { locale: Locale } }) 
         />
 
         {/* CTA Section */}
-        <section className="py-16 bg-[#5a7a94] text-white">
+        <section className="py-16 bg-gray-100">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-3xl font-light mb-6">
+              <h2 className="text-3xl font-light mb-6 text-gray-900">
                 {t.ctaTitle}
               </h2>
-              <p className="text-lg font-light mb-8 text-white/90">
+              <p className="text-lg font-light mb-8 text-gray-700">
                 {t.ctaText}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
                   href="/yhteystiedot"
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 
-                           bg-white text-[#5a7a94] hover:bg-gray-100 
+                           bg-[#002349] text-white hover:bg-[#001731] 
                            transition-colors duration-300 font-light tracking-wider uppercase text-sm"
                 >
                   {t.ctaContact}
@@ -348,7 +313,7 @@ export default function CompanyPage({ params }: { params: { locale: Locale } }) 
                 <Link
                   href="/henkilosto"
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 
-                           border border-white text-white hover:bg-white hover:text-[#5a7a94] 
+                           border border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white 
                            transition-colors duration-300 font-light tracking-wider uppercase text-sm"
                 >
                   {t.ctaMeet}

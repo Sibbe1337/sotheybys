@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { Link } from '@/lib/navigation';
 import { locales, type Locale } from '@/i18n/config';
 
 export const dynamic = 'force-static';
@@ -8,6 +9,58 @@ export const revalidate = 300;
 export function generateStaticParams() {
   return (locales as readonly Locale[]).map((locale) => ({ locale }));
 }
+
+// Staff data for contact page
+const staffMembers = [
+  {
+    id: '1',
+    name: 'Heidi Metsänen',
+    title: 'Global Sales Coordinator, M.Sc., LKV',
+    email: 'heidi@sothebysrealty.fi',
+    phone: '+358 (0)50 421 0905',
+    image: '/images/staff/heidi-metsanen.jpg',
+  },
+  {
+    id: '2',
+    name: 'Soile Goodall',
+    title: 'Senior Broker, LKV',
+    email: 'soile@sothebysrealty.fi',
+    phone: '+358 (0)40 533 5533',
+    image: '/images/staff/soile-goodall.jpg',
+  },
+  {
+    id: '3',
+    name: 'Ali Ahola',
+    title: 'Senior Broker, LKV',
+    email: 'ali@sothebysrealty.fi',
+    phone: '+358 (0)40 923 2561',
+    image: '/images/staff/ali-ahola.jpg',
+  },
+  {
+    id: '4',
+    name: 'Kadri-Ann Õunap',
+    title: 'Sales Associate, Notary, KED, KiAT',
+    email: 'kadri-ann@sothebysrealty.fi',
+    phone: '+358 (0)40 154 7844',
+    image: '/images/staff/kadri-ann-ounap.jpg',
+  },
+  {
+    id: '5',
+    name: 'Tea Käyhkö',
+    title: 'Senior Broker, BA, MA, LKV',
+    email: 'tea@sothebysrealty.fi',
+    phone: '+358 (0)50 370 1893',
+    image: '/images/staff/tea-kayhko.jpg',
+  },
+  {
+    id: '6',
+    name: 'Sima Shaygan',
+    title: 'Sales Associate, B.Sc, KiLaT',
+    email: 'sima@sothebysrealty.fi',
+    phone: '+358 (0)44 235 3979',
+    image: '/images/staff/sima-shaygan.jpg',
+  },
+];
 
 // 🔥 LINUS FIX: Complete translations for Contact page
 const translations = {
@@ -329,27 +382,94 @@ export default function ContactPage({ params }: { params: { locale: Locale } }) 
           </div>
         </section>
 
-        {/* Office Image Section */}
-        <section className="py-16 bg-gray-50">
+        {/* Staff Section */}
+        <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
-              <div className="text-center mb-8">
+              <div className="text-center mb-12">
                 <h2 className="text-3xl font-light text-gray-900 mb-4">
-                  {t.officeImageTitle}
+                  {params.locale === 'fi' ? 'Henkilökuntamme' : params.locale === 'sv' ? 'Vår personal' : 'Our Staff'}
                 </h2>
                 <p className="text-lg text-gray-600 font-light">
-                  {t.officeImageSubtitle}
+                  {params.locale === 'fi' ? 'Ota yhteyttä suoraan välittäjäämme' : params.locale === 'sv' ? 'Kontakta vår mäklare direkt' : 'Contact our agents directly'}
                 </p>
               </div>
-              <div className="relative h-96 lg:h-[500px]">
-                <Image
-                  src="/images/content/snellman-sothebys-toimisto.jpg"
-                  alt={t.officeImageAlt}
-                  fill
-                  sizes="100vw"
-                  className="object-cover rounded-lg"
-                />
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                {staffMembers.map((member) => (
+                  <div key={member.id} className="text-center">
+                    <div className="relative mb-3 mx-auto" style={{ width: '140px', height: '180px' }}>
+                      <Image
+                        src={member.image}
+                        alt={member.name}
+                        fill
+                        sizes="140px"
+                        className="object-cover grayscale hover:grayscale-0 transition-all duration-300"
+                      />
+                    </div>
+                    <h3 className="text-sm font-normal text-gray-900 mb-1">
+                      {member.name}
+                    </h3>
+                    <p className="text-xs text-gray-600 mb-2">
+                      {member.title}
+                    </p>
+                    <a 
+                      href={`tel:${member.phone.replace(/\s/g, '')}`} 
+                      className="block text-xs text-gray-700 hover:text-[#002349] transition-colors"
+                    >
+                      {member.phone}
+                    </a>
+                  </div>
+                ))}
               </div>
+              <div className="text-center mt-8">
+                <Link
+                  href="/henkilosto"
+                  className="inline-block border border-gray-900 text-gray-900 px-6 py-2 
+                           hover:bg-gray-900 hover:text-white transition-all duration-300
+                           font-light uppercase tracking-wider text-sm"
+                >
+                  {params.locale === 'fi' ? 'Kaikki välittäjät' : params.locale === 'sv' ? 'Alla mäklare' : 'All agents'}
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Office Location Section with Map */}
+        <section className="py-0">
+          <div className="grid md:grid-cols-2">
+            {/* Left Column - Office Info */}
+            <div className="bg-gray-100 p-12 md:p-16">
+              <h3 className="text-3xl font-light mb-6 text-gray-900">{t.officeImageTitle}</h3>
+              <div className="space-y-4 text-gray-700 font-light">
+                <p>{t.officeImageSubtitle}</p>
+                <div className="pt-4 space-y-2">
+                  <p className="font-medium">Kasarmikatu 34, 00130 Helsinki</p>
+                  <p>+358 (0)10 315 6900</p>
+                  <p>info@sothebysrealty.fi</p>
+                </div>
+                <a 
+                  href="https://goo.gl/maps/LjvLpXQFdT82" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-block mt-4 text-gray-900 border border-gray-900 px-6 py-2 hover:bg-gray-900 hover:text-white transition-all"
+                >
+                  {params.locale === 'fi' ? 'Reittiohjeet' : params.locale === 'sv' ? 'Vägbeskrivning' : 'Directions'} →
+                </a>
+              </div>
+            </div>
+            
+            {/* Right Column - Map */}
+            <div className="h-full min-h-[450px]">
+              <iframe 
+                loading="lazy" 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1984.9571707835125!2d24.94553971610621!3d60.164887881959004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46920bc8de21e969%3A0xb98ee1b9d2531ab!2sSnellman+Sotheby's+International+Realty!5e0!3m2!1sen!2sfi!4v1549539258229" 
+                width="100%" 
+                height="100%" 
+                frameBorder="0" 
+                style={{ border: 0, minHeight: '450px' }} 
+                allowFullScreen
+              />
             </div>
           </div>
         </section>

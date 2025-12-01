@@ -178,18 +178,16 @@ export default function FooterWithTeam({ contact, social, logo }: FooterProps = 
               </div>
             </div>
 
-            {/* RIGHT COLUMN: Team Photo - Smaller and Centered */}
-            <div className="flex items-center justify-center">
-              <div className="relative h-[350px] w-full max-w-[500px] overflow-hidden rounded-lg group">
+            {/* RIGHT COLUMN: Team Photo - Aligned to bottom edge */}
+            <div className="flex items-end justify-center lg:justify-end">
+              <div className="relative h-[400px] w-full overflow-hidden group">
                 <Image
                   src="/images/staff/team-photo.jpg"
                   alt="Snellman Sotheby's International Realty Team"
                   fill
-                  className="object-contain grayscale group-hover:grayscale-0 transition-all duration-500"
-                  sizes="(max-width: 768px) 100vw, 500px"
+                  className="object-contain object-bottom grayscale group-hover:grayscale-0 transition-all duration-500"
+                  sizes="(max-width: 768px) 100vw, 600px"
                 />
-                {/* Subtle overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#001731]/20 to-transparent pointer-events-none"></div>
               </div>
             </div>
 

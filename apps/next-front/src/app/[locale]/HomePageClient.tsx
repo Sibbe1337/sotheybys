@@ -245,36 +245,6 @@ export default function HomePageClient({
         {/* Hero Carousel */}
         <HeroCarousel slides={heroSlides} />
 
-{/* Company Info Section removed - duplicate of welcomeText in 3 columns section */}
-
-        {/* Reference Properties Section */}
-        {referenceProperties.length > 0 && (
-          <section className="py-16 bg-gray-50">
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-12">
-                <h2 className="text-4xl font-light text-gray-900 mb-4">
-                  {language === 'fi' ? 'Referenssit' : language === 'sv' ? 'Referenser' : 'References'}
-                </h2>
-                <div className="w-24 h-0.5 bg-gray-300 mx-auto mb-6"></div>
-                <p className="text-lg text-gray-600 max-w-3xl mx-auto font-light">
-                  {language === 'fi' ? 'Valikoima myydyistä kohteista' : language === 'sv' ? 'Urval av sålda objekt' : 'Selection of sold properties'}
-                </p>
-              </div>
-              <FeaturedPropertyGrid properties={referenceProperties} locale={locale} />
-              <div className="text-center mt-12">
-                <Link
-                  href="/kohteet/referenssit"
-                  className="inline-block bg-[#1a3a4a] text-white px-8 py-3
-                           hover:bg-[#0f2633] transition-colors duration-300
-                           font-light uppercase tracking-wider text-sm"
-                >
-                  {language === 'fi' ? 'Tutustu kohteisiin' : language === 'sv' ? 'Se objekten' : 'View properties'}
-                </Link>
-              </div>
-            </div>
-          </section>
-        )}
-
         {/* Three Column Section - Avaamme uusia ovia */}
         <section id="avaamme-uusia-ovia" className="py-16 bg-white">
           <div className="container mx-auto px-4">
@@ -422,9 +392,8 @@ export default function HomePageClient({
         </section>
 
         {/* Three Image Links Section */}
-        <section className="py-0 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+        <section className="bg-white">
+          <div className="grid grid-cols-1 md:grid-cols-3">
               {/* References */}
               <Link href="/kohteet/referenssit" className="relative h-80 group overflow-hidden block">
                 <Image
@@ -434,7 +403,7 @@ export default function HomePageClient({
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center text-white p-8">
+                <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white p-8">
                   <h3 className="text-2xl font-light mb-4 text-center">
                     {language === 'fi' ? 'Valikoima myydyistä kohteista' : language === 'sv' ? 'Urval av sålda objekt' : 'Selection of sold properties'}
                   </h3>
@@ -456,7 +425,7 @@ export default function HomePageClient({
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center text-white p-8">
+                <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white p-8">
                   <h3 className="text-2xl font-light mb-4 text-center">
                     {language === 'fi' ? 'Katso meidän uusimmat vuokrakohteet' : language === 'sv' ? 'Se våra senaste hyresobjekt' : 'View our latest rental properties'}
                   </h3>
@@ -478,7 +447,7 @@ export default function HomePageClient({
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center text-white p-8">
+                <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white p-8">
                   <h3 className="text-2xl font-light mb-4 text-center">
                     {language === 'fi' ? 'Näköalapaikka kansainväliseen kiinteistönvälitykseen' : language === 'sv' ? 'Utsiktsplats för internationell fastighetsförmedling' : 'International real estate career opportunity'}
                   </h3>
@@ -490,21 +459,60 @@ export default function HomePageClient({
                   </span>
                 </div>
               </Link>
-            </div>
           </div>
         </section>
 
-        {/* Featured Properties Section */}
+        {/* Featured Properties Section - Horizontal Scroll Carousel */}
         {featuredProperties.length > 0 && (
-          <section className="py-16 bg-gray-50">
+          <section className="py-16 bg-white">
             <div className="container mx-auto px-4">
-              <div className="text-center mb-12">
-                <h2 className="text-4xl font-light text-gray-900 mb-4">
-                  {language === 'fi' ? 'Valikoidut myynnissä olevat kohteet' : language === 'sv' ? 'Utvalda objekt till salu' : 'Featured properties for sale'}
-                </h2>
-                <div className="w-24 h-0.5 bg-gray-300 mx-auto"></div>
+              {/* Property Cards Carousel */}
+              <div className="relative">
+                <div className="overflow-x-auto pb-4 -mx-4 px-4 scrollbar-hide">
+                  <div className="flex gap-6" style={{ minWidth: 'max-content' }}>
+                    {featuredProperties.map((property) => (
+                      <Link
+                        key={property.id}
+                        href={`/kohde/${property.slug}`}
+                        className="flex-shrink-0 w-80 bg-white border border-gray-200 hover:shadow-lg transition-shadow duration-300"
+                      >
+                        <div className="relative h-48 overflow-hidden">
+                          <Image
+                            src={property.images[0]?.url || '/images/placeholder.jpg'}
+                            alt={property.address.street}
+                            fill
+                            sizes="320px"
+                            className="object-cover"
+                          />
+                          {property.meta.status && (
+                            <div className="absolute top-3 left-3 bg-white/90 px-3 py-1 text-xs font-light">
+                              {property.meta.propertyType}
+                            </div>
+                          )}
+                        </div>
+                        <div className="p-4">
+                          <h3 className="text-lg font-normal text-gray-900 mb-1">
+                            {property.address.street}, {property.address.postalCode} {property.address.city}
+                          </h3>
+                          <p className="text-sm text-gray-600 mb-2">{property.meta.area} m²</p>
+                          <p className="text-sm text-gray-500 font-light line-clamp-2 mb-3">
+                            {property.meta.description}
+                          </p>
+                          <p className="text-lg font-normal text-gray-900">
+                            {property.pricing.debtFreePrice 
+                              ? new Intl.NumberFormat('fi-FI').format(property.pricing.debtFreePrice) + ' €'
+                              : property.pricing.salesPrice 
+                                ? new Intl.NumberFormat('fi-FI').format(property.pricing.salesPrice) + ' €'
+                                : ''}
+                          </p>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
               </div>
-              <FeaturedPropertyGrid properties={featuredProperties} locale={locale} />
+              
+              {/* View All Button */}
               <div className="text-center mt-12">
                 <Link
                   href="/kohteet"
@@ -518,101 +526,6 @@ export default function HomePageClient({
             </div>
           </section>
         )}
-
-        {/* Rental Properties Section */}
-        {rentalProperties.length > 0 && (
-          <section className="py-16 bg-white">
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-12">
-                <h2 className="text-4xl font-light text-gray-900 mb-4">
-                  {language === 'fi' ? 'Uusimmat vuokrakohteet' : language === 'sv' ? 'Senaste hyresobjekt' : 'Latest rental properties'}
-                </h2>
-                <div className="w-24 h-0.5 bg-gray-300 mx-auto"></div>
-              </div>
-              <FeaturedPropertyGrid properties={rentalProperties} locale={locale} />
-              <div className="text-center mt-12">
-                <Link
-                  href="/kohteet/vuokrakohteet"
-                  className="inline-block bg-[#1a3a4a] text-white px-8 py-3
-                           hover:bg-[#0f2633] transition-colors duration-300
-                           font-light uppercase tracking-wider text-sm"
-                >
-                  {language === 'fi' ? 'Kaikki vuokrakohteemme' : language === 'sv' ? 'Alla våra hyresobjekt' : 'All our rental properties'}
-                </Link>
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* Valuation Form Section */}
-        <section className="py-16 bg-gray-50">
-          <div className="container mx-auto px-4">
-            <div className="max-w-2xl mx-auto">
-              <div className="text-center mb-8">
-                <h2 className="text-3xl lg:text-4xl font-light text-gray-900 mb-4">
-                  {language === 'fi' ? 'Kutsu meidät arviokäynnille!' : language === 'sv' ? 'Bjud in oss på värderingsbesök!' : 'Invite us for a valuation visit!'}
-                </h2>
-                <p className="text-lg text-gray-600 font-light mb-2">
-                  {language === 'fi' ? 'Oletko ostamassa? Oletko myymässä? Etsitkö sijoituskohteita?' : language === 'sv' ? 'Köper du? Säljer du? Letar du efter investeringsobjekt?' : 'Are you buying? Are you selling? Looking for investment properties?'}
-                </p>
-                <p className="text-lg text-gray-600 font-light">
-                  {language === 'fi' ? 'Kerro miten voimme auttaa ja otamme sinuun yhteyttä.' : language === 'sv' ? 'Berätta hur vi kan hjälpa dig så kontaktar vi dig.' : 'Tell us how we can help and we will contact you.'}
-                </p>
-              </div>
-              <form className="space-y-4 bg-white p-8 shadow-sm">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input
-                    type="text"
-                    placeholder={getHomepageTranslation('firstName', language)}
-                    className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[var(--color-primary)] font-light"
-                    required
-                  />
-                  <input
-                    type="text"
-                    placeholder={getHomepageTranslation('lastName', language)}
-                    className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[var(--color-primary)] font-light"
-                    required
-                  />
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input
-                    type="email"
-                    placeholder={getHomepageTranslation('email', language)}
-                    className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[var(--color-primary)] font-light"
-                    required
-                  />
-                  <input
-                    type="tel"
-                    placeholder={language === 'fi' ? 'Puhelinnumero' : language === 'sv' ? 'Telefonnummer' : 'Phone number'}
-                    className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[var(--color-primary)] font-light"
-                    required
-                  />
-                </div>
-                <textarea
-                  placeholder={language === 'fi' ? 'Viesti' : language === 'sv' ? 'Meddelande' : 'Message'}
-                  rows={6}
-                  className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[var(--color-primary)] font-light resize-none"
-                ></textarea>
-                <div className="flex items-start gap-3">
-                  <input type="checkbox" id="privacy-valuation" required className="mt-1" />
-                  <label htmlFor="privacy-valuation" className="text-sm text-gray-700 font-light">
-                    {getHomepageTranslation('privacyConsent', language)}{' '}
-                    <a href="/tietosuojaseloste" className="text-[var(--color-primary)] hover:underline">
-                      {getHomepageTranslation('privacyPolicy', language)}
-                    </a>
-                  </label>
-                </div>
-                <button
-                  type="submit"
-                  className="w-full bg-[var(--color-primary)] text-white px-6 py-3 hover:bg-[var(--color-primary-dark)]
-                           transition-colors duration-300 font-light uppercase tracking-wider text-sm"
-                >
-                  {language === 'fi' ? 'Lähetä' : language === 'sv' ? 'Skicka' : 'Send'}
-                </button>
-              </form>
-            </div>
-          </div>
-        </section>
 
         {/* Newsletter Section */}
         <section id="newsletter" className="py-16 relative">

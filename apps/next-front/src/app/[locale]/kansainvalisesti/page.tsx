@@ -71,16 +71,20 @@ export default function InternationalPage({ params }: { params: { locale: Locale
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <main className="flex-1">
-        {/* Hero Section with Background */}
-        <section 
-          className="relative h-[600px] flex items-center justify-center text-white"
-          style={{
-            backgroundImage: 'url("/images/international/stockholm-cityscape.jpg")',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        >
-          <div className="absolute inset-0 bg-black/40"></div>
+        {/* Hero Section with Video Background */}
+        <section className="relative h-[700px] flex items-center justify-center text-white overflow-hidden">
+          {/* Video Background */}
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+            poster="/images/international/stockholm-cityscape.jpg"
+          >
+            <source src="https://www.sothebysrealty.com/extraordinary-living-blog/wp-content/uploads/sites/2/2023/12/SIR_BRAND_FILM_16x9_FINAL.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-black/50"></div>
           <div className="relative z-10 text-center px-4 max-w-4xl">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-thin mb-6 whitespace-pre-line">
               {t.heroTitle}
@@ -90,7 +94,9 @@ export default function InternationalPage({ params }: { params: { locale: Locale
             </p>
             <a 
               href="#content"
-              className="international-button"
+              className="inline-block border-2 border-white text-white px-8 py-3 
+                       hover:bg-white hover:text-gray-900 transition-all duration-300
+                       font-light uppercase tracking-wider text-sm"
               onClick={(e) => {
                 e.preventDefault();
                 document.getElementById('content')?.scrollIntoView({ behavior: 'smooth' });
