@@ -7,7 +7,8 @@ import { CarouselArrowButton } from '../ui/CarouselArrowButton';
 
 interface Slide {
   id: string;
-  image: string;
+  image?: string;
+  video?: string;
   title: string;
   subtitle: string;
   buttonText?: string;
@@ -74,19 +75,31 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
               : 'opacity-0 scale-105 pointer-events-none'
           }`}
         >
-          {/* Background Image with Ken Burns Effect */}
+          {/* Background Image or Video with Ken Burns Effect */}
           <div className="absolute inset-0 overflow-hidden">
-            <Image
-              src={slide.image}
-              alt={slide.title}
-              fill
-              sizes="100vw"
-              className={`object-cover transition-transform duration-[20s] ease-out ${
-                index === currentSlide ? 'scale-110' : 'scale-100'
-              }`}
-              priority={index === 0}
-              quality={90}
-            />
+            {slide.video ? (
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover"
+              >
+                <source src={slide.video} type="video/mp4" />
+              </video>
+            ) : slide.image ? (
+              <Image
+                src={slide.image}
+                alt={slide.title}
+                fill
+                sizes="100vw"
+                className={`object-cover transition-transform duration-[20s] ease-out ${
+                  index === currentSlide ? 'scale-110' : 'scale-100'
+                }`}
+                priority={index === 0}
+                quality={90}
+              />
+            ) : null}
             {/* Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
             <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />

@@ -351,24 +351,15 @@ export default function HomePageClient({
         </section>
 
         {/* Luxury Outlook Report Section */}
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-[#f8f8f8]">
           <div className="container mx-auto px-4">
-            <div className="max-w-5xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                <div>
-                  <Image
-                    src="/images/content/luxury-outlook-2025.jpg"
-                    alt="2025 Luxury Outlook"
-                    width={600}
-                    height={400}
-                    className="w-full h-auto"
-                  />
-                </div>
-                <div>
+            <div className="max-w-6xl mx-auto">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div className="order-2 lg:order-1">
                   <h2 className="text-3xl lg:text-4xl font-light text-gray-900 mb-6">
                     2025 Luxury Outlook℠
                   </h2>
-                  <p className="text-lg text-gray-600 font-light leading-relaxed mb-8">
+                  <p className="text-lg text-gray-700 font-light leading-relaxed mb-8">
                     {language === 'fi' 
                       ? 'Vuoden 2025 Luxury Outlook℠ tutkii keskeisiä, tulevaisuuteen suuntautuvia kysymyksiä, jotka muokkaavat luksusasuntomarkkinoita ympäri maailmaa.'
                       : language === 'sv'
@@ -379,37 +370,47 @@ export default function HomePageClient({
                     href="https://www.sothebysrealty.com/eng/luxury-outlook"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-block bg-[#1a3a4a] text-white px-8 py-3
-                             hover:bg-[#0f2633] transition-colors duration-300
+                    className="inline-block bg-[#002349] text-white px-8 py-3
+                             hover:bg-[#001731] transition-colors duration-300
                              font-light uppercase tracking-wider text-sm"
                   >
                     {language === 'fi' ? 'Lue koko raportti' : language === 'sv' ? 'Läs hela rapporten' : 'Read full report'}
                   </a>
+                </div>
+                <div className="order-1 lg:order-2">
+                  <Image
+                    src="/images/content/luxury-outlook-2025.jpg"
+                    alt="2025 Luxury Outlook"
+                    width={600}
+                    height={400}
+                    className="w-full h-auto rounded-lg shadow-lg"
+                  />
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Three Image Links Section */}
-        <section className="bg-white">
-          <div className="grid grid-cols-1 md:grid-cols-3">
+        {/* Four Image Links Section */}
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {/* References */}
               <Link href="/kohteet/referenssit" className="relative h-80 group overflow-hidden block">
                 <Image
                   src="/images/content/snellman-sothebys-referenssit.jpg"
                   alt={language === 'fi' ? 'Referenssit' : language === 'sv' ? 'Referenser' : 'References'}
                   fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white p-8">
-                  <h3 className="text-2xl font-light mb-4 text-center">
+                <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white p-6">
+                  <h3 className="text-xl font-light mb-3 text-center">
                     {language === 'fi' ? 'Valikoima myydyistä kohteista' : language === 'sv' ? 'Urval av sålda objekt' : 'Selection of sold properties'}
                   </h3>
-                  <span className="inline-block border-2 border-white text-white px-6 py-2
+                  <span className="inline-block border-2 border-white text-white px-4 py-2
                              group-hover:bg-white group-hover:text-[#1a3a4a] transition-all duration-300
-                             font-light uppercase tracking-wider text-sm"
+                             font-light uppercase tracking-wider text-xs"
                   >
                     {language === 'fi' ? 'Katso referenssit' : language === 'sv' ? 'Se referenser' : 'View references'}
                   </span>
@@ -422,16 +423,16 @@ export default function HomePageClient({
                   src="/images/content/snellman-sothebys-vuokrakohteet.jpg"
                   alt={language === 'fi' ? 'Vuokrakohteet' : language === 'sv' ? 'Hyresobjekt' : 'Rental properties'}
                   fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white p-8">
-                  <h3 className="text-2xl font-light mb-4 text-center">
+                <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white p-6">
+                  <h3 className="text-xl font-light mb-3 text-center">
                     {language === 'fi' ? 'Katso meidän uusimmat vuokrakohteet' : language === 'sv' ? 'Se våra senaste hyresobjekt' : 'View our latest rental properties'}
                   </h3>
-                  <span className="inline-block border-2 border-white text-white px-6 py-2
+                  <span className="inline-block border-2 border-white text-white px-4 py-2
                              group-hover:bg-white group-hover:text-[#1a3a4a] transition-all duration-300
-                             font-light uppercase tracking-wider text-sm"
+                             font-light uppercase tracking-wider text-xs"
                   >
                     {language === 'fi' ? 'Vuokraa nyt' : language === 'sv' ? 'Hyr nu' : 'Rent now'}
                   </span>
@@ -444,21 +445,44 @@ export default function HomePageClient({
                   src="/images/content/snellman-sothebys-nakoalapaikka.jpg"
                   alt={language === 'fi' ? 'Työpaikat' : language === 'sv' ? 'Karriär' : 'Careers'}
                   fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white p-8">
-                  <h3 className="text-2xl font-light mb-4 text-center">
+                <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white p-6">
+                  <h3 className="text-xl font-light mb-3 text-center">
                     {language === 'fi' ? 'Näköalapaikka kansainväliseen kiinteistönvälitykseen' : language === 'sv' ? 'Utsiktsplats för internationell fastighetsförmedling' : 'International real estate career opportunity'}
                   </h3>
-                  <span className="inline-block border-2 border-white text-white px-6 py-2
+                  <span className="inline-block border-2 border-white text-white px-4 py-2
                              group-hover:bg-white group-hover:text-[#1a3a4a] transition-all duration-300
-                             font-light uppercase tracking-wider text-sm"
+                             font-light uppercase tracking-wider text-xs"
                   >
                     {language === 'fi' ? 'Työskentele kanssamme' : language === 'sv' ? 'Arbeta med oss' : 'Work with us'}
                   </span>
                 </div>
               </Link>
+
+              {/* Selling - New 4th box */}
+              <Link href="/myymassa" className="relative h-80 group overflow-hidden block">
+                <Image
+                  src="/images/content/snellman-sothebys-kutsu-arviokaynnille.jpg"
+                  alt={language === 'fi' ? 'Myymässä' : language === 'sv' ? 'Till salu' : 'Selling'}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white p-6">
+                  <h3 className="text-xl font-light mb-3 text-center">
+                    {language === 'fi' ? 'Myy kanssamme' : language === 'sv' ? 'Sälj med oss' : 'Sell with us'}
+                  </h3>
+                  <span className="inline-block border-2 border-white text-white px-4 py-2
+                             group-hover:bg-white group-hover:text-[#1a3a4a] transition-all duration-300
+                             font-light uppercase tracking-wider text-xs"
+                  >
+                    {language === 'fi' ? 'Lue lisää' : language === 'sv' ? 'Läs mer' : 'Read more'}
+                  </span>
+                </div>
+              </Link>
+            </div>
           </div>
         </section>
 
