@@ -471,10 +471,10 @@ export default function HomePageClient({
                 <div className="overflow-x-auto pb-4 -mx-4 px-4 scrollbar-hide">
                   <div className="flex gap-6" style={{ minWidth: 'max-content' }}>
                     {featuredProperties.map((property) => (
-                      <Link
+                      <a
                         key={property.id}
-                        href={`/kohde/${property.slug}`}
-                        className="flex-shrink-0 w-80 bg-white border border-gray-200 hover:shadow-lg transition-shadow duration-300"
+                        href={`/${locale}/kohde/${property.slug}`}
+                        className="flex-shrink-0 w-80 bg-white border border-gray-200 hover:shadow-lg transition-shadow duration-300 block"
                       >
                         <div className="relative h-48 overflow-hidden">
                           <Image
@@ -506,7 +506,7 @@ export default function HomePageClient({
                                 : ''}
                           </p>
                         </div>
-                      </Link>
+                      </a>
                     ))}
                   </div>
                 </div>
