@@ -212,10 +212,10 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
           </div>
         </section>
 
-        {/* Form and Mission Section - Dennis 2025-11-19: Always stacked vertically, even on desktop */}
+        {/* Form and Mission Section - 2 columns on desktop like original site */}
         <section className="py-16">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 gap-8 max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
               {/* Valuation Form */}
               <div className="bg-gray-100 p-8 lg:p-12">
                 <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-6">
@@ -301,32 +301,25 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
                 </form>
               </div>
 
-              {/* Mission Section - Kunniatehtävä */}
-              <div className="bg-white">
+              {/* Mission Section - Kunniatehtävä + Arvokas asiakassuhde */}
+              <div className="bg-white p-8 lg:p-12">
                 <h2 className="text-xl font-semibold text-gray-900 mb-4 leading-relaxed">
                   {t.honorTitle}
                 </h2>
-                <div className="space-y-4 text-gray-700 font-light leading-relaxed text-lg">
+                <div className="space-y-4 text-gray-700 font-light leading-relaxed text-base mb-8">
                   <p>{t.honorText1}</p>
                   <p>{t.honorText2}</p>
                   <p>{t.honorText3}</p>
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* A Valuable Relationship Section - Arvokas asiakassuhde */}
-        <section className="py-16 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4 leading-relaxed">
-                {t.relationshipTitle}
-              </h2>
-              <div className="space-y-4 text-gray-700 font-light leading-relaxed text-lg">
-                <p>{t.relationshipText1}</p>
-                <p>{t.relationshipText2}</p>
-                <p>{t.relationshipText3}</p>
+                
+                <h2 className="text-xl font-semibold text-gray-900 mb-4 leading-relaxed">
+                  {t.relationshipTitle}
+                </h2>
+                <div className="space-y-4 text-gray-700 font-light leading-relaxed text-base">
+                  <p>{t.relationshipText1}</p>
+                  <p>{t.relationshipText2}</p>
+                  <p>{t.relationshipText3}</p>
+                </div>
               </div>
             </div>
           </div>

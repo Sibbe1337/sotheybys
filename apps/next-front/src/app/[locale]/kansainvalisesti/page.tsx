@@ -200,10 +200,10 @@ export default function InternationalPage({ params }: { params: { locale: Locale
           </div>
         </section>
 
-        {/* Destinations Grid */}
+        {/* Destinations Grid - 3 columns on desktop like original site */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
               
               {/* Sweden */}
               <div className="group">
@@ -344,10 +344,10 @@ export default function InternationalPage({ params }: { params: { locale: Locale
           </div>
         </section>
 
-        {/* Property Types Section */}
+        {/* Property Types Section - 3 columns on desktop like original site */}
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
               
               {/* Urban Metropolitan */}
               <a 
@@ -410,7 +410,7 @@ export default function InternationalPage({ params }: { params: { locale: Locale
         {/* More Destinations */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
               
               {/* Florida */}
               <div className="bg-gray-50 p-8">
@@ -500,7 +500,7 @@ export default function InternationalPage({ params }: { params: { locale: Locale
         {/* Bottom Property Types */}
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
               
               {/* Wine & Vineyard */}
               <a 

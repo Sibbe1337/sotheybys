@@ -106,6 +106,11 @@ export function PropertySections({ vm, locale, isCommercial = false }: PropertyS
   // plotArea is now a number, no need to parse
   const localeFormatted = locale === 'sv' ? 'sv-SE' : locale === 'en' ? 'en-GB' : 'fi-FI';
   const plotAreaNum = vm.plotArea; // Already a number
+  
+  // Robert 2025-11-25: Extract numeric values for per m² calculations (for apartment shares in properties)
+  const maintenanceNum = parseEuropeanNumber(vm.fees?.maintenance) || 0;
+  const financingNum = parseEuropeanNumber(vm.fees?.financing) || 0;
+  const hasFees = maintenanceNum > 0 || financingNum > 0;
 
   return (
     <div>
@@ -123,7 +128,6 @@ export function PropertySections({ vm, locale, isCommercial = false }: PropertyS
         <Field 
           label={getFieldLabel('energyClass', locale)} 
           value={vm.energyClass}
-          alwaysShow 
           locale={locale}
         />
         <Field 
@@ -146,8 +150,17 @@ export function PropertySections({ vm, locale, isCommercial = false }: PropertyS
         <Field label={getFieldLabel('floorsTotal', locale)} value={vm.floorsTotal} locale={locale} />
       </Section>
 
-      {/* Dennis 2025-11-18: Prisuppgifter först (endast försäljningspris), sedan Kostnader */}
+      {/* Dennis 2025-11-18: Prisuppgifter först, sedan Kostnader */}
+      {/* Robert 2025-11-25: Show debt-free price for apartment shares in properties */}
       <Section title={getSectionLabel('property.priceInfo', locale)}>
+          {vm.priceDebtFree && (
+            <Field 
+              label={getFieldLabel('debtFreePrice', locale)} 
+              value={vm.priceDebtFree}
+              alwaysShow 
+              locale={locale}
+            />
+          )}
           <Field 
             label={getFieldLabel('salesPrice', locale)} 
             value={vm.price}
@@ -160,12 +173,28 @@ export function PropertySections({ vm, locale, isCommercial = false }: PropertyS
       <Section title={getSectionLabel('property.costs', locale)}>
           <Field 
             label={getFieldLabel('propertyTax', locale)} 
-          value={vm.propertyTax ? `${vm.propertyTax} €${locale === 'sv' ? '/år' : locale === 'en' ? '/year' : '/vuosi'}` : undefined}
+            value={vm.propertyTax ? `${Number(vm.propertyTax).toLocaleString(localeStr)} €${locale === 'sv' ? '/år' : locale === 'en' ? '/year' : '/vuosi'}` : undefined}
             alwaysShow 
             locale={locale}
           />
           <Field label={getFieldLabel('mortgages', locale)} value={vm.propertyMortgages} locale={locale} />
           <Field label={getFieldLabel('otherPayments', locale)} value={vm.propertyOtherFees} locale={locale} />
+          
+          {/* Robert 2025-11-25: Show housing costs for apartment shares (osakehuoneisto) in properties */}
+          {hasFees && (
+            <SubSection title={getSectionLabel('apartment.housingCosts', locale)}>
+              <Field 
+                label={getFieldLabel('maintenanceFee', locale)} 
+                value={vm.fees?.maintenance}
+                sub={fmtPerM2(maintenanceNum, livingAreaNum, localeStr)}
+              />
+              <Field 
+                label={getFieldLabel('financingFee', locale)} 
+                value={vm.fees?.financing}
+                sub={fmtPerM2(financingNum, livingAreaNum, localeStr)}
+              />
+            </SubSection>
+          )}
       </Section>
 
       {/* Dennis 2025-11-19: Mandatory Legal Disclaimer - Updated text, placed at end after all property info */}

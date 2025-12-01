@@ -86,47 +86,47 @@ const translations = {
   },
 };
 
-// Actual staff data from Sotheby's website
+// Actual staff data from Sotheby's website - ordered as on original site
 const staffMembers = [
   {
     id: '1',
-    name: 'Robert Charpentier',
-    title: 'Chairman, M.Sc., LKV',
-    email: 'robert@sothebysrealty.fi',
-    phone: '+358 (0)400 243 011',
-    image: '/images/staff/robert-charpentier.jpg',
-    description: '',
-    flags: ['fi', 'se', 'gb', 'de']
-  },
-  {
-    id: '2',
     name: 'Heidi Metsänen',
     title: 'Global Sales Coordinator, M.Sc., LKV',
     email: 'heidi@sothebysrealty.fi',
     phone: '+358 (0)50 421 0905',
     image: '/images/staff/heidi-metsanen.jpg',
     description: '',
-    flags: ['fi', 'se', 'gb', 'fr']
+    flags: ['fi', 'se', 'gb', 'fr', 'de']
   },
   {
-    id: '3',
-    name: 'Eeva Kyläkoski',
-    title: 'Senior Advisor - Board Member, LKV',
-    email: 'eeva@sothebysrealty.fi',
-    phone: '+358 (0)46 850 5850',
-    image: '/images/staff/eeva-kylakoski.jpg',
-    description: '',
-    flags: ['fi', 'gb']
-  },
-  {
-    id: '4',
+    id: '2',
     name: 'Soile Goodall',
     title: 'Senior Broker, LKV',
     email: 'soile@sothebysrealty.fi',
-    phone: '+358 (0)40 533 5333',
+    phone: '+358 (0)40 533 5533',
     image: '/images/staff/soile-goodall.jpg',
     description: '',
     flags: ['fi', 'gb']
+  },
+  {
+    id: '3',
+    name: 'Ali Ahola',
+    title: 'Senior Broker, LKV',
+    email: 'ali@sothebysrealty.fi',
+    phone: '+358 (0)40 923 2561',
+    image: '/images/staff/ali-ahola.jpg',
+    description: '',
+    flags: ['fi']
+  },
+  {
+    id: '4',
+    name: 'Kadri-Ann Õunap',
+    title: 'Sales Associate, Notary, KED, KiAT',
+    email: 'kadri-ann@sothebysrealty.fi',
+    phone: '+358 (0)40 154 7844',
+    image: '/images/staff/kadri-ann-ounap.jpg',
+    description: '',
+    flags: ['fi', 'gb', 'ee']
   },
   {
     id: '5',
@@ -140,36 +140,6 @@ const staffMembers = [
   },
   {
     id: '6',
-    name: 'Kadri-Ann Õunap',
-    title: 'Sales Associate, Notary, KED, KIAT',
-    email: 'kadri-ann@sothebysrealty.fi',
-    phone: '+358 (0)40 154 7844',
-    image: '/images/staff/kadri-ann-ounap.jpg',
-    description: '',
-    flags: ['fi', 'se', 'gb', 'ee', 'ru']
-  },
-  {
-    id: '7',
-    name: 'Ali Ahola',
-    title: 'Senior Broker, LKV',
-    email: 'ali@sothebysrealty.fi',
-    phone: '+358 (0)40 523 5251',
-    image: '/images/staff/ali-ahola.jpg',
-    description: '',
-    flags: ['fi']
-  },
-  {
-    id: '8',
-    name: 'Petteri Huovila',
-    title: 'Senior Advisor, LKV',
-    email: 'petteri@sothebysrealty.fi',
-    phone: '+358 (0)400 889 138',
-    image: '/images/staff/petteri-huovila.jpg',
-    description: '',
-    flags: ['fi', 'se']
-  },
-  {
-    id: '9',
     name: 'Sima Shaygan',
     title: 'Sales Associate, B.Sc, KiLaT',
     email: 'sima@sothebysrealty.fi',
@@ -179,22 +149,32 @@ const staffMembers = [
     flags: ['fi', 'gb', 'ir', 'tr']
   },
   {
-    id: '10',
-    name: 'Dennis Forsman',
-    title: 'Sales Assistant, B.Sc.',
-    email: 'dennis@sothebysrealty.fi',
-    phone: '+358 (0)44 999 4407',
-    image: '/images/staff/dennis-forsman.jpg',
+    id: '7',
+    name: 'Robert Charpentier',
+    title: 'Chairman, M.Sc., LKV',
+    email: 'robert@sothebysrealty.fi',
+    phone: '+358 (0)400 243 011',
+    image: '/images/staff/robert-charpentier.jpg',
     description: '',
-    flags: ['fi', 'se', 'gb']
+    flags: ['fi', 'se', 'gb', 'de']
   },
   {
-    id: '11',
+    id: '8',
     name: 'Johan Schröder',
     title: 'Graphic Designer',
     email: 'johan@sothebysrealty.fi',
     phone: '+358 (0)50 536 9106',
     image: '/images/staff/johan-schroder.jpg',
+    description: '',
+    flags: ['fi', 'se', 'gb']
+  },
+  {
+    id: '9',
+    name: 'Dennis Forsman',
+    title: 'Sales Assistant, B.Sc.',
+    email: 'dennis@sothebysrealty.fi',
+    phone: '+358 (0)44 999 4407',
+    image: '/images/staff/dennis-forsman.jpg',
     description: '',
     flags: ['fi', 'se', 'gb']
   }
@@ -305,8 +285,9 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
         <section className="py-12 lg:py-20">
           <div className="container mx-auto px-4">
             <div className="max-w-7xl mx-auto">
+              {/* First 8 members in regular grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                {staffMembers.map((member) => (
+                {staffMembers.slice(0, 8).map((member) => (
                   <div key={member.id} className="text-center">
                     {/* Photo */}
                     <div className="relative mb-4 mx-auto" style={{ width: '200px', height: '280px' }}>
@@ -348,13 +329,60 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
                   </div>
                 ))}
               </div>
+              
+              {/* Last row centered */}
+              {staffMembers.length > 8 && (
+                <div className="flex justify-center gap-8 mt-8">
+                  {staffMembers.slice(8).map((member) => (
+                    <div key={member.id} className="text-center" style={{ width: '200px' }}>
+                      {/* Photo */}
+                      <div className="relative mb-4 mx-auto" style={{ width: '200px', height: '280px' }}>
+                        <Image
+                          src={member.image}
+                          alt={member.name}
+                          fill
+                          sizes="200px"
+                          className="object-cover grayscale"
+                        />
+                      </div>
+                      
+                      {/* Info */}
+                      <h3 className="text-xl font-normal text-gray-900 mb-1">
+                        {member.name}
+                      </h3>
+                      <p className="text-sm text-gray-600 mb-2">
+                        {member.title}
+                      </p>
+                      
+                      {/* Contact */}
+                      <div className="space-y-1 mb-3">
+                        <a 
+                          href={`tel:${member.phone.replace(/\s/g, '')}`} 
+                          className="block text-sm text-gray-700 hover:text-[#002349] transition-colors"
+                        >
+                          {member.phone}
+                        </a>
+                        <a 
+                          href={`mailto:${member.email}`} 
+                          className="block text-sm text-gray-700 hover:text-[#002349] transition-colors"
+                        >
+                          {member.email}
+                        </a>
+                      </div>
+                      
+                      {/* Language Flags */}
+                      <LanguageFlags flags={member.flags} />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </section>
 
 
         {/* Contact Form Section */}
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center mb-12">
               <h2 className="text-3xl font-light text-gray-900 mb-4 whitespace-pre-line">
@@ -378,7 +406,7 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
             </div>
 
             {/* Form */}
-            <div className="max-w-3xl mx-auto bg-gray-400 p-8 md:p-12">
+            <div className="max-w-3xl mx-auto bg-gray-200 p-8 md:p-12">
               <form className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>

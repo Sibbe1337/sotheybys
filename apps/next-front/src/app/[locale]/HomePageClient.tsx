@@ -245,19 +245,7 @@ export default function HomePageClient({
         {/* Hero Carousel */}
         <HeroCarousel slides={heroSlides} />
 
-        {/* Company Info Section */}
-        <section className="py-12 bg-white border-b border-gray-200">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-3xl lg:text-4xl font-light text-gray-900 mb-6">
-                Snellman Sotheby's International Realty®
-              </h2>
-              <p className="text-lg text-gray-600 font-light leading-relaxed">
-                {getHomepageTranslation('welcomeText', language)}
-              </p>
-            </div>
-          </div>
-        </section>
+{/* Company Info Section removed - duplicate of welcomeText in 3 columns section */}
 
         {/* Reference Properties Section */}
         {referenceProperties.length > 0 && (
@@ -290,15 +278,7 @@ export default function HomePageClient({
         {/* Three Column Section - Avaamme uusia ovia */}
         <section id="avaamme-uusia-ovia" className="py-16 bg-white">
           <div className="container mx-auto px-4">
-            {/* Section Header */}
-            <div className="max-w-4xl mx-auto text-center mb-12">
-              <h2 className="text-3xl lg:text-4xl font-light text-gray-900 mb-8">
-                {getHomepageTranslation('welcomeHeading', language)}
-              </h2>
-              <p className="text-lg text-gray-600 font-light leading-relaxed">
-                {getHomepageTranslation('welcomeText', language)}
-              </p>
-            </div>
+{/* Section header removed - text is now in the hero carousel */}
 
             {/* Three Columns */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -345,7 +325,7 @@ export default function HomePageClient({
               </Link>
 
               {/* Column 3 */}
-              <div className="relative h-80 group overflow-hidden">
+              <Link href="/myymassa" className="relative h-80 group overflow-hidden block">
                 <Image
                   src="/images/content/snellman-sothebys-nakoalapaikka.jpg"
                   alt={getHomepageTranslation('freeValuationHeading', language)}
@@ -357,16 +337,14 @@ export default function HomePageClient({
                   <h3 className="text-2xl font-light mb-4 text-center">
                     {getHomepageTranslation('freeValuationHeading', language)}
                   </h3>
-                  <a
-                    href="#newsletter"
-                    className="inline-block border-2 border-white text-white px-6 py-2
-                             hover:bg-white hover:text-gray-800 transition-all duration-300
+                  <span className="inline-block border-2 border-white text-white px-6 py-2
+                             group-hover:bg-white group-hover:text-gray-800 transition-all duration-300
                              font-light uppercase tracking-wider text-sm"
                   >
                     {getHomepageTranslation('contactUs', language)}
-                  </a>
+                  </span>
                 </div>
-              </div>
+              </Link>
             </div>
           </div>
         </section>
@@ -375,26 +353,26 @@ export default function HomePageClient({
         <section className="py-12 bg-[#f8f8f8]">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
-              <h3 className="text-2xl md:text-3xl font-light text-gray-900 mb-4">
+              <p className="text-xl text-gray-900 font-light mb-2">
                 {getHomepageTranslation('officeHoursLine1', language)}
-              </h3>
-              <p className="text-lg text-gray-700 font-light mb-2">
+              </p>
+              <p className="text-xl text-gray-900 font-light mb-2">
                 {getHomepageTranslation('officeHoursLine2', language)}
               </p>
-              <p className="text-lg text-gray-700 font-light">
+              <p className="text-xl text-gray-900 font-light">
                 {getHomepageTranslation('officeHoursLine3', language)}
               </p>
               <div className="mt-8 flex flex-col md:flex-row justify-center items-center gap-6 text-gray-700">
-                <a href="tel:+358103156900" className="hover:text-[var(--color-primary)] transition-colors font-light">
+                <a href="tel:+358103156900" className="text-xl hover:text-[var(--color-primary)] transition-colors font-light">
                   +358 (0)10 315 6900
                 </a>
                 <span className="hidden md:inline text-gray-400">|</span>
                 <a href="https://goo.gl/maps/8HptT8TwUp42" target="_blank" rel="noopener noreferrer" 
-                   className="hover:text-[var(--color-primary)] transition-colors font-light">
+                   className="text-xl hover:text-[var(--color-primary)] transition-colors font-light">
                   Kasarmikatu 34, 00130 Helsinki
                 </a>
                 <span className="hidden md:inline text-gray-400">|</span>
-                <a href="mailto:info@sothebysrealty.fi" className="hover:text-[var(--color-primary)] transition-colors font-light">
+                <a href="mailto:info@sothebysrealty.fi" className="text-xl hover:text-[var(--color-primary)] transition-colors font-light">
                   info@sothebysrealty.fi
                 </a>
               </div>
@@ -530,8 +508,8 @@ export default function HomePageClient({
               <div className="text-center mt-12">
                 <Link
                   href="/kohteet"
-                  className="inline-block bg-[#1a3a4a] text-white px-8 py-3
-                           hover:bg-[#0f2633] transition-colors duration-300
+                  className="inline-block bg-[#8e740b] text-white px-8 py-3
+                           hover:bg-[#7a6409] transition-colors duration-300
                            font-light uppercase tracking-wider text-sm"
                 >
                   {language === 'fi' ? 'Kaikki myynnissä olevat kohteemme' : language === 'sv' ? 'Alla våra objekt till salu' : 'All our properties for sale'}
@@ -637,14 +615,24 @@ export default function HomePageClient({
         </section>
 
         {/* Newsletter Section */}
-        <section id="newsletter" className="py-16 bg-white">
-          <div className="container mx-auto px-4">
+        <section id="newsletter" className="py-16 relative">
+          {/* Background Image */}
+          <div className="absolute inset-0">
+            <Image
+              src="/images/content/snellman-sothebys-newsletter-bg.jpg"
+              alt=""
+              fill
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-[#002349]/80"></div>
+          </div>
+          <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-2xl mx-auto">
               <div className="text-center mb-8">
-                <h2 className="text-3xl lg:text-4xl font-light text-gray-900 mb-4">
+                <h2 className="text-3xl lg:text-4xl font-light text-white mb-4">
                   {getHomepageTranslation('subscribeNewsletter', language)}
                 </h2>
-                <p className="text-lg text-gray-600 font-light">
+                <p className="text-lg text-white/80 font-light">
                   {language === 'fi' 
                     ? 'Oletko kiinnostunut arvokodeista ja uniikeista kiinteistöistä? Tilaa uutiskirjeemme, niin pysyt ajan tasalla.'
                     : language === 'sv'
@@ -652,7 +640,7 @@ export default function HomePageClient({
                     : 'Interested in valuable homes and unique properties? Subscribe to our newsletter to stay updated.'}
                 </p>
               </div>
-              <form className="space-y-4 bg-gray-50 p-8">
+              <form className="space-y-4 bg-white/10 backdrop-blur-sm p-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <input
                     type="text"
@@ -675,16 +663,16 @@ export default function HomePageClient({
                 />
                 <div className="flex items-start gap-3">
                   <input type="checkbox" id="privacy-newsletter" required className="mt-1" />
-                  <label htmlFor="privacy-newsletter" className="text-sm text-gray-700 font-light">
+                  <label htmlFor="privacy-newsletter" className="text-sm text-white font-light">
                     {getHomepageTranslation('privacyConsent', language)}{' '}
-                    <a href="/tietosuojaseloste" className="text-[var(--color-primary)] hover:underline">
+                    <a href="/tietosuojaseloste" className="text-white underline hover:text-white/80">
                       {getHomepageTranslation('privacyPolicy', language)}
                     </a>
                   </label>
                 </div>
                 <div className="flex items-start gap-3">
                   <input type="checkbox" id="newsletter-consent" className="mt-1" />
-                  <label htmlFor="newsletter-consent" className="text-sm text-gray-700 font-light">
+                  <label htmlFor="newsletter-consent" className="text-sm text-white font-light">
                     {language === 'fi' 
                       ? 'Haluan vastaanottaa Snellman Sotheby\'s uutiskirjeen'
                       : language === 'sv'
@@ -694,7 +682,7 @@ export default function HomePageClient({
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-[var(--color-primary)] text-white px-6 py-3 hover:bg-[var(--color-primary-dark)]
+                  className="w-full bg-[#8e740b] text-white px-6 py-3 hover:bg-[#7a6409]
                            transition-colors duration-300 font-light uppercase tracking-wider text-sm"
                 >
                   {getHomepageTranslation('subscribe', language)}

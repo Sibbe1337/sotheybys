@@ -114,17 +114,20 @@ export default function ContactPage({ params }: { params: { locale: Locale } }) 
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="relative bg-gradient-to-b from-gray-50 to-white py-20 lg:py-28">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-thin text-gray-900 mb-6">
-                {t.title}
-              </h1>
-              <p className="text-lg lg:text-xl text-gray-600 font-light">
-                {t.subtitle}
-              </p>
-            </div>
+        {/* Hero Section with Background Image */}
+        <section 
+          className="relative h-[500px] flex items-center justify-center text-white"
+          style={{
+            backgroundImage: 'url("/images/international/henkilosto_34.jpg")',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        >
+          <div className="absolute inset-0 bg-[var(--color-primary)]/60"></div>
+          <div className="relative z-10 text-center px-4 max-w-4xl">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-thin mb-8">
+              {t.title}
+            </h1>
           </div>
         </section>
 
