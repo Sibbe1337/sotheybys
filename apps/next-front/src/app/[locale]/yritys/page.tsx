@@ -119,19 +119,98 @@ export default function CompanyPage({ params }: { params: { locale: Locale } }) 
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="relative bg-gradient-to-b from-gray-50 to-white py-20 lg:py-28">
+        {/* Hero Section with Background Image */}
+        <section 
+          className="relative h-[600px] flex items-center justify-center text-white"
+          style={{
+            backgroundImage: 'url("/images/content/snellman-sothebys-yritys.jpg")',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        >
+          <div className="absolute inset-0 bg-[var(--color-primary)]/60"></div>
+          <div className="relative z-10 text-center px-4 max-w-4xl">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-thin mb-6">
+              {t.heroTitle}
+            </h1>
+            <p className="text-lg lg:text-xl font-light mb-6">
+              {t.heroSubtitle}
+            </p>
+            <p className="text-sm lg:text-base font-light opacity-80">
+              {t.heroStats}
+            </p>
+          </div>
+        </section>
+
+        {/* Three Column Section */}
+        <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-thin text-gray-900 mb-6">
-                {t.heroTitle}
-              </h1>
-              <p className="text-lg lg:text-xl text-gray-600 font-light mb-6">
-                {t.heroSubtitle}
-              </p>
-              <p className="text-sm lg:text-base text-gray-500 font-light">
-                {t.heroStats}
-              </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+              {/* Column 1 - Kohteet */}
+              <Link href="/kohteet" className="relative h-80 group overflow-hidden block">
+                <Image
+                  src="/images/content/snellman-sothebys-yritys.jpg"
+                  alt={params.locale === 'fi' ? 'Avaamme uusia ovia' : params.locale === 'sv' ? 'Vi öppnar nya dörrar' : 'We open new doors'}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center text-white p-8">
+                  <h3 className="text-2xl font-light mb-4 text-center">
+                    {params.locale === 'fi' ? 'Avaamme uusia ovia!' : params.locale === 'sv' ? 'Vi öppnar nya dörrar!' : 'We open new doors!'}
+                  </h3>
+                  <span className="inline-block border-2 border-white text-white px-6 py-2
+                             group-hover:bg-white group-hover:text-[#1a3a4a] transition-all duration-300
+                             font-light uppercase tracking-wider text-sm"
+                  >
+                    {params.locale === 'fi' ? 'Löydä unelmiesi koti' : params.locale === 'sv' ? 'Hitta ditt drömhem' : 'Find your dream home'}
+                  </span>
+                </div>
+              </Link>
+
+              {/* Column 2 - Yritys */}
+              <Link href="/yritys" className="relative h-80 group overflow-hidden block">
+                <Image
+                  src="/images/content/snellman-sothebys-kutsu-arviokaynnille.jpg"
+                  alt={params.locale === 'fi' ? 'Asiantuntemus' : params.locale === 'sv' ? 'Expertis' : 'Expertise'}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-[#324b72] bg-opacity-80 flex flex-col items-center justify-center text-white p-8">
+                  <h3 className="text-2xl font-light mb-4 text-center">
+                    {params.locale === 'fi' ? 'Asiantuntemus joka ulottuu korttelista kaupunkiin ja aina maailman ympäri' : params.locale === 'sv' ? 'Expertis som sträcker sig från kvarteret till staden och världen runt' : 'Expertise from the block to the city and around the world'}
+                  </h3>
+                  <span className="inline-block border-2 border-white text-white px-6 py-2
+                             group-hover:bg-white group-hover:text-[#324b72] transition-all duration-300
+                             font-light uppercase tracking-wider text-sm"
+                  >
+                    {params.locale === 'fi' ? 'Lue lisää yrityksestämme' : params.locale === 'sv' ? 'Läs mer om oss' : 'Read more about us'}
+                  </span>
+                </div>
+              </Link>
+
+              {/* Column 3 - Myymässä */}
+              <Link href="/myymassa" className="relative h-80 group overflow-hidden block">
+                <Image
+                  src="/images/content/snellman-sothebys-nakoalapaikka.jpg"
+                  alt={params.locale === 'fi' ? 'Arviokäynti' : params.locale === 'sv' ? 'Värderingsbesök' : 'Valuation visit'}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gray-800 bg-opacity-60 flex flex-col items-center justify-center text-white p-8">
+                  <h3 className="text-2xl font-light mb-4 text-center">
+                    {params.locale === 'fi' ? 'Kutsu meidät maksuttomalle arviokäynnille' : params.locale === 'sv' ? 'Bjud in oss för en gratis värdering' : 'Invite us for a free valuation'}
+                  </h3>
+                  <span className="inline-block border-2 border-white text-white px-6 py-2
+                             group-hover:bg-white group-hover:text-gray-800 transition-all duration-300
+                             font-light uppercase tracking-wider text-sm"
+                  >
+                    {params.locale === 'fi' ? 'Ota meihin yhteyttä' : params.locale === 'sv' ? 'Kontakta oss' : 'Contact us'}
+                  </span>
+                </div>
+              </Link>
             </div>
           </div>
         </section>
@@ -248,7 +327,7 @@ export default function CompanyPage({ params }: { params: { locale: Locale } }) 
         />
 
         {/* CTA Section */}
-        <section className="py-16 bg-[#1a3a4a] text-white">
+        <section className="py-16 bg-[#5a7a94] text-white">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-3xl font-light mb-6">
@@ -261,7 +340,7 @@ export default function CompanyPage({ params }: { params: { locale: Locale } }) 
                 <Link
                   href="/yhteystiedot"
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 
-                           bg-white text-[#1a3a4a] hover:bg-gray-100 
+                           bg-white text-[#5a7a94] hover:bg-gray-100 
                            transition-colors duration-300 font-light tracking-wider uppercase text-sm"
                 >
                   {t.ctaContact}
@@ -269,7 +348,7 @@ export default function CompanyPage({ params }: { params: { locale: Locale } }) 
                 <Link
                   href="/henkilosto"
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 
-                           border border-white text-white hover:bg-white hover:text-[#1a3a4a] 
+                           border border-white text-white hover:bg-white hover:text-[#5a7a94] 
                            transition-colors duration-300 font-light tracking-wider uppercase text-sm"
                 >
                   {t.ctaMeet}
