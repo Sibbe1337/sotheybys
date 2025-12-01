@@ -180,13 +180,13 @@ export default function FooterWithTeam({ contact, social, logo }: FooterProps = 
 
             {/* RIGHT COLUMN: Team Photo - Aligned to bottom edge */}
             <div className="flex items-end justify-center lg:justify-end">
-              <div className="relative h-[400px] w-full overflow-hidden group">
+              <div className="relative h-[500px] w-full overflow-hidden group">
                 <Image
                   src="/images/staff/team-photo.jpg"
                   alt="Snellman Sotheby's International Realty Team"
                   fill
-                  className="object-contain object-bottom grayscale group-hover:grayscale-0 transition-all duration-500"
-                  sizes="(max-width: 768px) 100vw, 600px"
+                  className="object-cover object-bottom grayscale group-hover:grayscale-0 transition-all duration-500"
+                  sizes="(max-width: 768px) 100vw, 700px"
                 />
               </div>
             </div>

@@ -261,7 +261,7 @@ export default function HomePageClient({
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center text-white p-8">
+                <div className="absolute inset-0 bg-black bg-opacity-30 flex flex-col items-center justify-center text-white p-8">
                   <h3 className="text-2xl font-light mb-4 text-center">{getHomepageTranslation('openNewDoors', language)}</h3>
                   <span className="inline-block border-2 border-white text-white px-6 py-2
                              group-hover:bg-white group-hover:text-[#1a3a4a] transition-all duration-300
@@ -281,7 +281,7 @@ export default function HomePageClient({
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-[#324b72] bg-opacity-80 flex flex-col items-center justify-center text-white p-8">
+                <div className="absolute inset-0 bg-[#324b72] bg-opacity-70 flex flex-col items-center justify-center text-white p-8">
                   <h3 className="text-2xl font-light mb-4 text-center">
                     {getHomepageTranslation('expertiseHeading', language)}
                   </h3>
@@ -297,13 +297,13 @@ export default function HomePageClient({
               {/* Column 3 */}
               <Link href="/myymassa" className="relative h-80 group overflow-hidden block">
                 <Image
-                  src="/images/content/snellman-sothebys-nakoalapaikka.jpg"
+                  src="/images/content/snellman-sothebys-kutsu-arviokaynnille.jpg"
                   alt={getHomepageTranslation('freeValuationHeading', language)}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gray-800 bg-opacity-60 flex flex-col items-center justify-center text-white p-8">
+                <div className="absolute inset-0 bg-gray-800 bg-opacity-50 flex flex-col items-center justify-center text-white p-8">
                   <h3 className="text-2xl font-light mb-4 text-center">
                     {getHomepageTranslation('freeValuationHeading', language)}
                   </h3>
@@ -323,26 +323,26 @@ export default function HomePageClient({
         <section className="py-12 bg-[#f8f8f8]">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
-              <p className="text-xl text-gray-900 font-light mb-2">
+              <p className="text-lg text-gray-900 font-light mb-1">
                 {getHomepageTranslation('officeHoursLine1', language)}
               </p>
-              <p className="text-xl text-gray-900 font-light mb-2">
+              <p className="text-lg text-gray-900 font-light mb-1">
                 {getHomepageTranslation('officeHoursLine2', language)}
               </p>
-              <p className="text-xl text-gray-900 font-light">
+              <p className="text-lg text-gray-900 font-light">
                 {getHomepageTranslation('officeHoursLine3', language)}
               </p>
               <div className="mt-8 flex flex-col md:flex-row justify-center items-center gap-6 text-gray-700">
-                <a href="tel:+358103156900" className="text-xl hover:text-[var(--color-primary)] transition-colors font-light">
+                <a href="tel:+358103156900" className="text-lg hover:text-[var(--color-primary)] transition-colors font-light">
                   +358 (0)10 315 6900
                 </a>
                 <span className="hidden md:inline text-gray-400">|</span>
                 <a href="https://goo.gl/maps/8HptT8TwUp42" target="_blank" rel="noopener noreferrer" 
-                   className="text-xl hover:text-[var(--color-primary)] transition-colors font-light">
+                   className="text-lg hover:text-[var(--color-primary)] transition-colors font-light">
                   Kasarmikatu 34, 00130 Helsinki
                 </a>
                 <span className="hidden md:inline text-gray-400">|</span>
-                <a href="mailto:info@sothebysrealty.fi" className="text-xl hover:text-[var(--color-primary)] transition-colors font-light">
+                <a href="mailto:info@sothebysrealty.fi" className="text-lg hover:text-[var(--color-primary)] transition-colors font-light">
                   info@sothebysrealty.fi
                 </a>
               </div>
@@ -520,8 +520,8 @@ export default function HomePageClient({
               <div className="text-center mt-12">
                 <Link
                   href="/kohteet"
-                  className="inline-block bg-[#8e740b] text-white px-8 py-3
-                           hover:bg-[#7a6409] transition-colors duration-300
+                  className="inline-block bg-[#002349] text-white px-8 py-3
+                           hover:bg-[#001731] transition-colors duration-300
                            font-light uppercase tracking-wider text-sm"
                 >
                   {language === 'fi' ? 'Kaikki myynnissä olevat kohteemme' : language === 'sv' ? 'Alla våra objekt till salu' : 'All our properties for sale'}
