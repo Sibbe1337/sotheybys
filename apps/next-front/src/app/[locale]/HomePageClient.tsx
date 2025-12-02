@@ -351,15 +351,24 @@ export default function HomePageClient({
         </section>
 
         {/* Luxury Outlook Report Section */}
-        <section className="py-16 bg-[#f8f8f8]">
+        <section className="py-16 bg-[#5a7a94]">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div className="order-2 lg:order-1">
-                  <h2 className="text-3xl lg:text-4xl font-light text-gray-900 mb-6">
+                <div className="order-1 lg:order-1">
+                  <Image
+                    src="/images/content/luxury-outlook-2025.jpg"
+                    alt="2025 Luxury Outlook"
+                    width={600}
+                    height={400}
+                    className="w-full h-auto"
+                  />
+                </div>
+                <div className="order-2 lg:order-2">
+                  <h2 className="text-3xl lg:text-4xl font-light text-white mb-6">
                     2025 Luxury Outlook℠
                   </h2>
-                  <p className="text-lg text-gray-700 font-light leading-relaxed mb-8">
+                  <p className="text-lg text-white/90 font-light leading-relaxed mb-8">
                     {language === 'fi' 
                       ? 'Vuoden 2025 Luxury Outlook℠ tutkii keskeisiä, tulevaisuuteen suuntautuvia kysymyksiä, jotka muokkaavat luksusasuntomarkkinoita ympäri maailmaa.'
                       : language === 'sv'
@@ -370,21 +379,12 @@ export default function HomePageClient({
                     href="https://www.sothebysrealty.com/eng/luxury-outlook"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-block bg-[#002349] text-white px-8 py-3
-                             hover:bg-[#001731] transition-colors duration-300
+                    className="inline-block border-2 border-white text-white px-8 py-3
+                             hover:bg-white hover:text-[#5a7a94] transition-colors duration-300
                              font-light uppercase tracking-wider text-sm"
                   >
                     {language === 'fi' ? 'Lue koko raportti' : language === 'sv' ? 'Läs hela rapporten' : 'Read full report'}
                   </a>
-                </div>
-                <div className="order-1 lg:order-2">
-                  <Image
-                    src="/images/content/luxury-outlook-2025.jpg"
-                    alt="2025 Luxury Outlook"
-                    width={600}
-                    height={400}
-                    className="w-full h-auto rounded-lg shadow-lg"
-                  />
                 </div>
               </div>
             </div>
