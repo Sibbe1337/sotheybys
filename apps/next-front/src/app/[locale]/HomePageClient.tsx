@@ -502,46 +502,119 @@ export default function HomePageClient({
               {/* Property Cards Grid - 3 columns, 2 rows = 6 properties */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {featuredProperties.map((property) => (
-                  <a
+                  <div
                     key={property.id}
-                    href={`/${locale}/kohde/${property.slug}`}
-                    className="bg-white border border-gray-200 hover:shadow-lg transition-shadow duration-300 block"
+                    className="bg-white border border-gray-200 hover:shadow-lg transition-shadow duration-300 flex flex-col"
                   >
-                    <div className="relative h-48 overflow-hidden">
-                      <Image
-                        src={property.media.images[0]?.url || '/images/placeholder.jpg'}
-                        alt={typeof property.address === 'string' ? property.address : property.address.fi}
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        className="object-cover"
-                      />
-                      {property.meta.listingTypeLabel && (
-                        <div className="absolute top-3 left-3 bg-white/90 px-3 py-1 text-xs font-light">
-                          {typeof property.meta.listingTypeLabel === 'string' 
-                            ? property.meta.listingTypeLabel 
-                            : property.meta.listingTypeLabel.fi}
-                        </div>
-                      )}
-                    </div>
-                    <div className="p-4">
-                      <h3 className="text-lg font-normal text-gray-900 mb-1">
-                        {typeof property.address === 'string' ? property.address : property.address.fi}, {property.postalCode} {typeof property.city === 'string' ? property.city : property.city.fi}
-                      </h3>
-                      <p className="text-sm text-gray-600 mb-2">{property.dimensions.living} m²</p>
-                      <p className="text-sm text-gray-500 font-light line-clamp-2 mb-3">
-                        {property.description 
-                          ? (typeof property.description === 'string' ? property.description : property.description.fi)
-                          : ''}
-                      </p>
-                      <p className="text-lg font-normal text-gray-900">
-                        {property.pricing.debtFree 
-                          ? new Intl.NumberFormat('fi-FI').format(property.pricing.debtFree) + ' €'
-                          : property.pricing.sales 
-                            ? new Intl.NumberFormat('fi-FI').format(property.pricing.sales) + ' €'
+                    {/* Property Image */}
+                    <a href={`/${locale}/kohde/${property.slug}`} className="block">
+                      <div className="relative h-64 overflow-hidden">
+                        <Image
+                          src={property.media.images[0]?.url || '/images/placeholder.jpg'}
+                          alt={typeof property.address === 'string' ? property.address : property.address.fi}
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          className="object-cover"
+                        />
+                        {property.meta.listingTypeLabel && (
+                          <div className="absolute top-3 left-3 bg-white/90 px-3 py-1 text-xs font-light">
+                            {typeof property.meta.listingTypeLabel === 'string' 
+                              ? property.meta.listingTypeLabel 
+                              : property.meta.listingTypeLabel.fi}
+                          </div>
+                        )}
+                      </div>
+                    </a>
+
+                    {/* Property Details */}
+                    <div className="p-5 flex-grow flex flex-col">
+                      <a href={`/${locale}/kohde/${property.slug}`} className="block mb-4">
+                        <h3 className="text-xl font-normal text-gray-900 mb-2">
+                          {typeof property.address === 'string' ? property.address : property.address.fi}
+                        </h3>
+                        <p className="text-2xl font-light text-gray-900 mb-3">
+                          {property.pricing.debtFree 
+                            ? new Intl.NumberFormat('fi-FI').format(property.pricing.debtFree) + ' €'
+                            : property.pricing.sales 
+                              ? new Intl.NumberFormat('fi-FI').format(property.pricing.sales) + ' €'
+                              : ''}
+                        </p>
+                        <p className="text-sm text-gray-600 mb-3">
+                          {property.dimensions.rooms || ''}{property.dimensions.rooms ? '. ' : ''}
+                          {property.dimensions.living && `${property.dimensions.living} m²`}
+                          {property.dimensions.total && property.dimensions.total !== property.dimensions.living && ` / ${property.dimensions.total} m²`}
+                          {property.dimensions.plot && ` | ${property.dimensions.plot} m²`}
+                        </p>
+                        <p className="text-sm text-gray-600 font-light line-clamp-3 mb-4">
+                          {property.description 
+                            ? (typeof property.description === 'string' ? property.description : property.description.fi)
                             : ''}
-                      </p>
+                        </p>
+                        
+                        {/* Property Type and Location Tags */}
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {property.meta.listingTypeLabel && (
+                            <span className="inline-flex items-center text-xs text-gray-700">
+                              <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                              </svg>
+                              {typeof property.meta.listingTypeLabel === 'string' 
+                                ? property.meta.listingTypeLabel 
+                                : property.meta.listingTypeLabel.fi}
+                            </span>
+                          )}
+                          {property.district && (
+                            <span className="inline-flex items-center text-xs text-gray-700">
+                              <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                              </svg>
+                              {typeof property.district === 'string' ? property.district : property.district.fi}
+                            </span>
+                          )}
+                        </div>
+                      </a>
+
+                      {/* Agent Info & Buttons */}
+                      <div className="mt-auto">
+                        {property.agent && (
+                          <div className="flex items-center justify-between mb-4 pb-4 border-b border-gray-200">
+                            <div className="flex items-center gap-3">
+                              {property.agent.photoUrl && (
+                                <Image
+                                  src={property.agent.photoUrl}
+                                  alt={property.agent.name || ''}
+                                  width={40}
+                                  height={40}
+                                  className="rounded-full"
+                                />
+                              )}
+                              <div>
+                                <p className="text-sm font-normal text-gray-900">{property.agent.name}</p>
+                                <p className="text-xs text-gray-600">{property.agent.phone}</p>
+                              </div>
+                            </div>
+                            <a
+                              href={`tel:${property.agent.phone?.replace(/\s/g, '')}`}
+                              className="border border-gray-900 text-gray-900 px-4 py-2 text-xs
+                                       hover:bg-gray-900 hover:text-white transition-colors duration-300
+                                       font-light uppercase tracking-wider"
+                            >
+                              {language === 'fi' ? 'OTA YHTEYTTÄ' : language === 'sv' ? 'KONTAKTA' : 'CONTACT'}
+                            </a>
+                          </div>
+                        )}
+                        
+                        <a
+                          href={`/${locale}/kohde/${property.slug}`}
+                          className="block w-full bg-[#002349] text-white text-center px-6 py-3
+                                   hover:bg-[#001731] transition-colors duration-300
+                                   font-light uppercase tracking-wider text-sm"
+                        >
+                          {language === 'fi' ? 'KATSO KOHDE »' : language === 'sv' ? 'SE OBJEKT »' : 'VIEW PROPERTY »'}
+                        </a>
+                      </div>
                     </div>
-                  </a>
+                  </div>
                 ))}
               </div>
               
