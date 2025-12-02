@@ -486,58 +486,63 @@ export default function HomePageClient({
           </div>
         </section>
 
-        {/* Featured Properties Section - Horizontal Scroll Carousel */}
+        {/* Featured Properties Section - 3 Column Grid */}
         {featuredProperties.length > 0 && (
           <section className="py-16 bg-white">
             <div className="container mx-auto px-4">
-              {/* Property Cards Carousel */}
-              <div className="relative">
-                <div className="overflow-x-auto pb-4 -mx-4 px-4 scrollbar-hide">
-                  <div className="flex gap-6" style={{ minWidth: 'max-content' }}>
-                    {featuredProperties.map((property) => (
-                      <a
-                        key={property.id}
-                        href={`/${locale}/kohde/${property.slug}`}
-                        className="flex-shrink-0 w-80 bg-white border border-gray-200 hover:shadow-lg transition-shadow duration-300 block"
-                      >
-                        <div className="relative h-48 overflow-hidden">
-                          <Image
-                            src={property.media.images[0]?.url || '/images/placeholder.jpg'}
-                            alt={typeof property.address === 'string' ? property.address : property.address.fi}
-                            fill
-                            sizes="320px"
-                            className="object-cover"
-                          />
-                          {property.meta.listingTypeLabel && (
-                            <div className="absolute top-3 left-3 bg-white/90 px-3 py-1 text-xs font-light">
-                              {typeof property.meta.listingTypeLabel === 'string' 
-                                ? property.meta.listingTypeLabel 
-                                : property.meta.listingTypeLabel.fi}
-                            </div>
-                          )}
+              {/* Section Title */}
+              <h2 className="text-3xl lg:text-4xl font-light text-center mb-12">
+                {language === 'fi' 
+                  ? 'Ett urval av våra objekt till salu'
+                  : language === 'sv' 
+                    ? 'Ett urval av våra objekt till salu' 
+                    : 'A selection of our properties for sale'}
+              </h2>
+
+              {/* Property Cards Grid - 3 columns, 2 rows = 6 properties */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {featuredProperties.map((property) => (
+                  <a
+                    key={property.id}
+                    href={`/${locale}/kohde/${property.slug}`}
+                    className="bg-white border border-gray-200 hover:shadow-lg transition-shadow duration-300 block"
+                  >
+                    <div className="relative h-48 overflow-hidden">
+                      <Image
+                        src={property.media.images[0]?.url || '/images/placeholder.jpg'}
+                        alt={typeof property.address === 'string' ? property.address : property.address.fi}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="object-cover"
+                      />
+                      {property.meta.listingTypeLabel && (
+                        <div className="absolute top-3 left-3 bg-white/90 px-3 py-1 text-xs font-light">
+                          {typeof property.meta.listingTypeLabel === 'string' 
+                            ? property.meta.listingTypeLabel 
+                            : property.meta.listingTypeLabel.fi}
                         </div>
-                        <div className="p-4">
-                          <h3 className="text-lg font-normal text-gray-900 mb-1">
-                            {typeof property.address === 'string' ? property.address : property.address.fi}, {property.postalCode} {typeof property.city === 'string' ? property.city : property.city.fi}
-                          </h3>
-                          <p className="text-sm text-gray-600 mb-2">{property.dimensions.living} m²</p>
-                          <p className="text-sm text-gray-500 font-light line-clamp-2 mb-3">
-                            {property.description 
-                              ? (typeof property.description === 'string' ? property.description : property.description.fi)
-                              : ''}
-                          </p>
-                          <p className="text-lg font-normal text-gray-900">
-                            {property.pricing.debtFree 
-                              ? new Intl.NumberFormat('fi-FI').format(property.pricing.debtFree) + ' €'
-                              : property.pricing.sales 
-                                ? new Intl.NumberFormat('fi-FI').format(property.pricing.sales) + ' €'
-                                : ''}
-                          </p>
-                        </div>
-                      </a>
-                    ))}
-                  </div>
-                </div>
+                      )}
+                    </div>
+                    <div className="p-4">
+                      <h3 className="text-lg font-normal text-gray-900 mb-1">
+                        {typeof property.address === 'string' ? property.address : property.address.fi}, {property.postalCode} {typeof property.city === 'string' ? property.city : property.city.fi}
+                      </h3>
+                      <p className="text-sm text-gray-600 mb-2">{property.dimensions.living} m²</p>
+                      <p className="text-sm text-gray-500 font-light line-clamp-2 mb-3">
+                        {property.description 
+                          ? (typeof property.description === 'string' ? property.description : property.description.fi)
+                          : ''}
+                      </p>
+                      <p className="text-lg font-normal text-gray-900">
+                        {property.pricing.debtFree 
+                          ? new Intl.NumberFormat('fi-FI').format(property.pricing.debtFree) + ' €'
+                          : property.pricing.sales 
+                            ? new Intl.NumberFormat('fi-FI').format(property.pricing.sales) + ' €'
+                            : ''}
+                      </p>
+                    </div>
+                  </a>
+                ))}
               </div>
               
               {/* View All Button */}
