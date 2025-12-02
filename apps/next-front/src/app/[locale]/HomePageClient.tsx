@@ -493,7 +493,7 @@ export default function HomePageClient({
               {/* Section Title */}
               <h2 className="text-3xl lg:text-4xl font-light text-center mb-12">
                 {language === 'fi' 
-                  ? 'Ett urval av våra objekt till salu'
+                  ? 'Valikoima myynnissä olevista kohteistamme'
                   : language === 'sv' 
                     ? 'Ett urval av våra objekt till salu' 
                     : 'A selection of our properties for sale'}
