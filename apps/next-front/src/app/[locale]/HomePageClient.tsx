@@ -506,56 +506,72 @@ export default function HomePageClient({
                     key={property.id}
                     className="bg-white border border-gray-200 hover:shadow-lg transition-shadow duration-300 flex flex-col"
                   >
-                    {/* Property Image */}
-                    <a href={`/${locale}/kohde/${property.slug}`} className="block">
-                      <div className="relative h-64 overflow-hidden">
-                        <Image
-                          src={property.media.images[0]?.url || '/images/placeholder.jpg'}
-                          alt={typeof property.address === 'string' ? property.address : property.address.fi}
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          className="object-cover"
-                        />
-                        {property.meta.listingTypeLabel && (
-                          <div className="absolute top-3 left-3 bg-white/90 px-3 py-1 text-xs font-light">
-                            {typeof property.meta.listingTypeLabel === 'string' 
-                              ? property.meta.listingTypeLabel 
-                              : property.meta.listingTypeLabel.fi}
-                          </div>
-                        )}
-                      </div>
-                    </a>
+                    {/* Property Image with Carousel Navigation */}
+                    <div className="relative group">
+                      <a href={`/${locale}/kohde/${property.slug}`} className="block">
+                        <div className="relative h-56 overflow-hidden">
+                          <Image
+                            src={property.media.images[0]?.url || '/images/placeholder.jpg'}
+                            alt={typeof property.address === 'string' ? property.address : property.address.fi}
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            className="object-cover"
+                          />
+                          {property.meta.listingTypeLabel && (
+                            <div className="absolute top-3 left-3 bg-white/90 px-3 py-1 text-xs font-light">
+                              {typeof property.meta.listingTypeLabel === 'string' 
+                                ? property.meta.listingTypeLabel 
+                                : property.meta.listingTypeLabel.fi}
+                            </div>
+                          )}
+                        </div>
+                      </a>
+                      {/* Carousel Arrows */}
+                      {property.media.images.length > 1 && (
+                        <>
+                          <button className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                            </svg>
+                          </button>
+                          <button className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                          </button>
+                        </>
+                      )}
+                    </div>
 
                     {/* Property Details */}
                     <div className="p-5 flex-grow flex flex-col">
-                      <a href={`/${locale}/kohde/${property.slug}`} className="block mb-4">
-                        <h3 className="text-xl font-normal text-gray-900 mb-2">
+                      <a href={`/${locale}/kohde/${property.slug}`} className="block">
+                        <h3 className="text-lg font-normal text-gray-900 mb-2">
                           {typeof property.address === 'string' ? property.address : property.address.fi}
                         </h3>
-                        <p className="text-2xl font-light text-gray-900 mb-3">
+                        <p className="text-xl font-light text-gray-900 mb-3">
                           {property.pricing.debtFree 
                             ? new Intl.NumberFormat('fi-FI').format(property.pricing.debtFree) + ' €'
                             : property.pricing.sales 
                               ? new Intl.NumberFormat('fi-FI').format(property.pricing.sales) + ' €'
                               : ''}
                         </p>
-                        <p className="text-sm text-gray-600 mb-3">
-                          {property.dimensions.rooms || ''}{property.dimensions.rooms ? '. ' : ''}
-                          {property.dimensions.living && `${property.dimensions.living} m²`}
-                          {property.dimensions.total && property.dimensions.total !== property.dimensions.living && ` / ${property.dimensions.total} m²`}
-                          {property.dimensions.plot && ` | ${property.dimensions.plot} m²`}
-                        </p>
-                        <p className="text-sm text-gray-600 font-light line-clamp-3 mb-4">
+                        <p className="text-sm text-gray-700 font-light mb-3 leading-relaxed">
                           {property.description 
                             ? (typeof property.description === 'string' ? property.description : property.description.fi)
                             : ''}
                         </p>
+                        <p className="text-sm text-gray-600 mb-3">
+                          {property.dimensions.living && `${property.dimensions.living} m²`}
+                          {property.dimensions.total && property.dimensions.total !== property.dimensions.living && ` / ${property.dimensions.total} m²`}
+                          {property.dimensions.plot && ` | ${property.dimensions.plot} m²`}
+                        </p>
                         
                         {/* Property Type and Location Tags */}
-                        <div className="flex flex-wrap gap-2 mb-4">
+                        <div className="flex flex-wrap items-center gap-3 mb-4 text-xs text-gray-700">
                           {property.meta.listingTypeLabel && (
-                            <span className="inline-flex items-center text-xs text-gray-700">
-                              <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                            <span className="inline-flex items-center">
+                              <svg className="w-3.5 h-3.5 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
                               </svg>
                               {typeof property.meta.listingTypeLabel === 'string' 
@@ -564,8 +580,8 @@ export default function HomePageClient({
                             </span>
                           )}
                           {property.district && (
-                            <span className="inline-flex items-center text-xs text-gray-700">
-                              <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                            <span className="inline-flex items-center">
+                              <svg className="w-3.5 h-3.5 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                 <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                               </svg>
                               {typeof property.district === 'string' ? property.district : property.district.fi}
@@ -575,16 +591,16 @@ export default function HomePageClient({
                       </a>
 
                       {/* Agent Info & Buttons */}
-                      <div className="mt-auto">
+                      <div className="mt-auto pt-4 border-t border-gray-200">
                         {property.agent && (
-                          <div className="flex items-center justify-between mb-4 pb-4 border-b border-gray-200">
-                            <div className="flex items-center gap-3">
+                          <div className="flex items-center justify-between mb-3">
+                            <div className="flex items-center gap-2">
                               {property.agent.photoUrl && (
                                 <Image
                                   src={property.agent.photoUrl}
                                   alt={property.agent.name || ''}
-                                  width={40}
-                                  height={40}
+                                  width={36}
+                                  height={36}
                                   className="rounded-full"
                                 />
                               )}
@@ -595,9 +611,9 @@ export default function HomePageClient({
                             </div>
                             <a
                               href={`tel:${property.agent.phone?.replace(/\s/g, '')}`}
-                              className="border border-gray-900 text-gray-900 px-4 py-2 text-xs
+                              className="border border-gray-900 text-gray-900 px-3 py-1.5 text-xs
                                        hover:bg-gray-900 hover:text-white transition-colors duration-300
-                                       font-light uppercase tracking-wider"
+                                       font-light uppercase tracking-wider whitespace-nowrap"
                             >
                               {language === 'fi' ? 'OTA YHTEYTTÄ' : language === 'sv' ? 'KONTAKTA' : 'CONTACT'}
                             </a>
@@ -606,9 +622,9 @@ export default function HomePageClient({
                         
                         <a
                           href={`/${locale}/kohde/${property.slug}`}
-                          className="block w-full bg-[#002349] text-white text-center px-6 py-3
+                          className="block w-full bg-[#002349] text-white text-center px-6 py-2.5
                                    hover:bg-[#001731] transition-colors duration-300
-                                   font-light uppercase tracking-wider text-sm"
+                                   font-light uppercase tracking-wider text-xs"
                         >
                           {language === 'fi' ? 'KATSO KOHDE »' : language === 'sv' ? 'SE OBJEKT »' : 'VIEW PROPERTY »'}
                         </a>
