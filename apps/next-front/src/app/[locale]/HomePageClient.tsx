@@ -501,137 +501,144 @@ export default function HomePageClient({
 
               {/* Property Cards Grid - 3 columns, 2 rows = 6 properties */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {featuredProperties.map((property) => (
-                  <div
-                    key={property.id}
-                    className="bg-white border border-gray-200 hover:shadow-lg transition-shadow duration-300 flex flex-col"
-                  >
-                    {/* Property Image with Carousel Navigation */}
-                    <div className="relative group">
-                      <a href={`/${locale}/kohde/${property.slug}`} className="block">
-                        <div className="relative h-56 overflow-hidden">
-                          <Image
-                            src={property.media.images[0]?.url || '/images/placeholder.jpg'}
-                            alt={typeof property.address === 'string' ? property.address : property.address.fi}
-                            fill
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            className="object-cover"
-                          />
-                          {property.meta.listingTypeLabel && (
-                            <div className="absolute top-3 left-3 bg-white/90 px-3 py-1 text-xs font-light">
-                              {typeof property.meta.listingTypeLabel === 'string' 
-                                ? property.meta.listingTypeLabel 
-                                : property.meta.listingTypeLabel.fi}
-                            </div>
-                          )}
-                        </div>
-                      </a>
-                      {/* Carousel Arrows */}
-                      {property.media.images.length > 1 && (
-                        <>
-                          <button className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                            </svg>
-                          </button>
-                          <button className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            </svg>
-                          </button>
-                        </>
-                      )}
-                    </div>
+                {featuredProperties.map((property) => {
+                  const addressStr = typeof property.address === 'string' ? property.address : property.address.fi;
+                  const cityStr = typeof property.city === 'string' ? property.city : property.city.fi;
+                  const descriptionStr = property.description 
+                    ? (typeof property.description === 'string' ? property.description : property.description.fi)
+                    : '';
+                  const listingTypeStr = property.meta.listingTypeLabel
+                    ? (typeof property.meta.listingTypeLabel === 'string' 
+                        ? property.meta.listingTypeLabel 
+                        : property.meta.listingTypeLabel.fi)
+                    : '';
+                  const districtStr = property.district
+                    ? (typeof property.district === 'string' ? property.district : property.district.fi)
+                    : '';
 
-                    {/* Property Details */}
-                    <div className="p-5 flex-grow flex flex-col">
-                      <a href={`/${locale}/kohde/${property.slug}`} className="block">
-                        <h3 className="text-lg font-normal text-gray-900 mb-2">
-                          {typeof property.address === 'string' ? property.address : property.address.fi}
-                        </h3>
-                        <p className="text-xl font-light text-gray-900 mb-3">
-                          {property.pricing.debtFree 
-                            ? new Intl.NumberFormat('fi-FI').format(property.pricing.debtFree) + ' €'
-                            : property.pricing.sales 
-                              ? new Intl.NumberFormat('fi-FI').format(property.pricing.sales) + ' €'
-                              : ''}
-                        </p>
-                        <p className="text-sm text-gray-700 font-light mb-3 leading-relaxed">
-                          {property.description 
-                            ? (typeof property.description === 'string' ? property.description : property.description.fi)
-                            : ''}
-                        </p>
-                        <p className="text-sm text-gray-600 mb-3">
-                          {property.dimensions.living && `${property.dimensions.living} m²`}
-                          {property.dimensions.total && property.dimensions.total !== property.dimensions.living && ` / ${property.dimensions.total} m²`}
-                          {property.dimensions.plot && ` | ${property.dimensions.plot} m²`}
-                        </p>
+                  return (
+                    <div
+                      key={property.id}
+                      className="bg-white border border-gray-200 hover:shadow-lg transition-shadow duration-300 flex flex-col"
+                    >
+                      {/* Property Image with Carousel Navigation */}
+                      <div className="relative group">
+                        <a href={`/${locale}/kohde/${property.slug}`} className="block">
+                          <div className="relative h-48 overflow-hidden">
+                            <Image
+                              src={property.media.images[0]?.url || '/images/placeholder.jpg'}
+                              alt={addressStr}
+                              fill
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                              className="object-cover"
+                            />
+                          </div>
+                        </a>
+                        {/* Carousel Arrows */}
+                        {property.media.images.length > 1 && (
+                          <>
+                            <button className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                              </svg>
+                            </button>
+                            <button className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                              </svg>
+                            </button>
+                          </>
+                        )}
+                      </div>
+
+                      {/* Property Details */}
+                      <div className="p-4 flex-grow flex flex-col">
+                        <a href={`/${locale}/kohde/${property.slug}`} className="block mb-auto">
+                          <h3 className="text-base font-medium text-gray-900 mb-2">
+                            {addressStr}
+                          </h3>
+                          <p className="text-base font-normal text-gray-900 mb-2">
+                            {property.pricing.debtFree 
+                              ? new Intl.NumberFormat('fi-FI').format(property.pricing.debtFree) + ' €'
+                              : property.pricing.sales 
+                                ? new Intl.NumberFormat('fi-FI').format(property.pricing.sales) + ' €'
+                                : ''}
+                          </p>
+                          <p className="text-xs text-gray-700 font-light mb-2 line-clamp-3 leading-relaxed">
+                            {descriptionStr}
+                          </p>
+                          <p className="text-xs text-gray-600 mb-3">
+                            {property.dimensions.living && `${property.dimensions.living} m²`}
+                            {property.dimensions.total && property.dimensions.total !== property.dimensions.living && ` / ${property.dimensions.total} m²`}
+                            {property.dimensions.plot && ` | ${property.dimensions.plot} m²`}
+                          </p>
+                        </a>
                         
                         {/* Property Type and Location Tags */}
-                        <div className="flex flex-wrap items-center gap-3 mb-4 text-xs text-gray-700">
-                          {property.meta.listingTypeLabel && (
-                            <span className="inline-flex items-center">
-                              <svg className="w-3.5 h-3.5 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-                              </svg>
-                              {typeof property.meta.listingTypeLabel === 'string' 
-                                ? property.meta.listingTypeLabel 
-                                : property.meta.listingTypeLabel.fi}
-                            </span>
-                          )}
-                          {property.district && (
-                            <span className="inline-flex items-center">
-                              <svg className="w-3.5 h-3.5 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                              </svg>
-                              {typeof property.district === 'string' ? property.district : property.district.fi}
-                            </span>
-                          )}
-                        </div>
-                      </a>
-
-                      {/* Agent Info & Buttons */}
-                      <div className="mt-auto pt-4 border-t border-gray-200">
-                        {property.agent && (
-                          <div className="flex items-center justify-between mb-3">
-                            <div className="flex items-center gap-2">
-                              {property.agent.photoUrl && (
-                                <Image
-                                  src={property.agent.photoUrl}
-                                  alt={property.agent.name || ''}
-                                  width={36}
-                                  height={36}
-                                  className="rounded-full"
-                                />
-                              )}
-                              <div>
-                                <p className="text-sm font-normal text-gray-900">{property.agent.name}</p>
-                                <p className="text-xs text-gray-600">{property.agent.phone}</p>
-                              </div>
-                            </div>
-                            <a
-                              href={`tel:${property.agent.phone?.replace(/\s/g, '')}`}
-                              className="border border-gray-900 text-gray-900 px-3 py-1.5 text-xs
-                                       hover:bg-gray-900 hover:text-white transition-colors duration-300
-                                       font-light uppercase tracking-wider whitespace-nowrap"
-                            >
-                              {language === 'fi' ? 'OTA YHTEYTTÄ' : language === 'sv' ? 'KONTAKTA' : 'CONTACT'}
-                            </a>
+                        {(listingTypeStr || districtStr) && (
+                          <div className="flex flex-wrap items-center gap-2 mb-3 text-xs text-gray-600">
+                            {listingTypeStr && (
+                              <span className="inline-flex items-center">
+                                <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                  <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                                </svg>
+                                {listingTypeStr}
+                              </span>
+                            )}
+                            {districtStr && (
+                              <span className="inline-flex items-center">
+                                <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                                </svg>
+                                {districtStr}
+                              </span>
+                            )}
                           </div>
                         )}
-                        
-                        <a
-                          href={`/${locale}/kohde/${property.slug}`}
-                          className="block w-full bg-[#002349] text-white text-center px-6 py-2.5
-                                   hover:bg-[#001731] transition-colors duration-300
-                                   font-light uppercase tracking-wider text-xs"
-                        >
-                          {language === 'fi' ? 'KATSO KOHDE »' : language === 'sv' ? 'SE OBJEKT »' : 'VIEW PROPERTY »'}
-                        </a>
+
+                        {/* Agent Info & Buttons */}
+                        <div className="mt-auto pt-3 border-t border-gray-200">
+                          {property.agent && (
+                            <div className="flex items-center justify-between mb-2.5">
+                              <div className="flex items-center gap-2 min-w-0 flex-1">
+                                {property.agent.photoUrl && (
+                                  <Image
+                                    src={property.agent.photoUrl}
+                                    alt={property.agent.name || ''}
+                                    width={32}
+                                    height={32}
+                                    className="rounded-full flex-shrink-0"
+                                  />
+                                )}
+                                <div className="min-w-0">
+                                  <p className="text-xs font-medium text-gray-900 truncate">{property.agent.name}</p>
+                                  <p className="text-xs text-gray-600 truncate">{property.agent.phone}</p>
+                                </div>
+                              </div>
+                              <a
+                                href={`tel:${property.agent.phone?.replace(/\s/g, '')}`}
+                                className="border border-gray-900 text-gray-900 px-2.5 py-1 text-[10px]
+                                         hover:bg-gray-900 hover:text-white transition-colors duration-300
+                                         font-normal uppercase tracking-wide whitespace-nowrap flex-shrink-0 ml-2"
+                              >
+                                {language === 'fi' ? 'OTA YHTEYTTÄ' : language === 'sv' ? 'KONTAKTA' : 'CONTACT'}
+                              </a>
+                            </div>
+                          )}
+                          
+                          <a
+                            href={`/${locale}/kohde/${property.slug}`}
+                            className="block w-full bg-[#002349] text-white text-center px-4 py-2
+                                     hover:bg-[#001731] transition-colors duration-300
+                                     font-normal uppercase tracking-wide text-xs"
+                          >
+                            {language === 'fi' ? 'KATSO KOHDE »' : language === 'sv' ? 'SE OBJEKT »' : 'VIEW PROPERTY »'}
+                          </a>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
               
               {/* View All Button */}
