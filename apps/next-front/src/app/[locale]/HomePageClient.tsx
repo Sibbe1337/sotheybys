@@ -829,7 +829,7 @@ export default function HomePageClient({
                 </p>
                 <p className="text-lg text-gray-700 font-light leading-relaxed mb-4">
                   {language === 'fi' 
-                    ? 'Kerro miten voimme auttaa ja otamme sinuun yhteyttä.'
+                    ? 'Kerro miten voimme auttaa och otamme sinuun yhteyttä.'
                     : language === 'sv'
                     ? 'Berätta hur vi kan hjälpa till så kontaktar vi dig.'
                     : 'Tell us how we can help and we will contact you.'}
