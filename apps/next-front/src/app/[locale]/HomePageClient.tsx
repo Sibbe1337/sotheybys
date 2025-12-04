@@ -373,7 +373,7 @@ export default function HomePageClient({
         </section>
 
         {/* Office Hours Section */}
-        <section className="py-12 bg-[#f8f8f8]">
+        <section className="py-12 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
               <h3 className="text-lg text-gray-900 font-light mb-8 whitespace-pre-line">
