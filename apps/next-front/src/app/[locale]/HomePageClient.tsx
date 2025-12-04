@@ -320,7 +320,7 @@ export default function HomePageClient({
                              group-hover:bg-white group-hover:text-[#1a3a4a] transition-all duration-300
                              font-light uppercase tracking-wider text-sm"
                   >
-                    {getHomepageTranslation('findDreamHome', language)}
+                    {getHomepageTranslation('findDreamHome', language)} ›
                   </span>
                 </div>
               </Link>
@@ -342,7 +342,7 @@ export default function HomePageClient({
                              group-hover:bg-white group-hover:text-[#324b72] transition-all duration-300
                              font-light uppercase tracking-wider text-sm"
                   >
-                    {getHomepageTranslation('readMoreAboutUs', language)}
+                    {getHomepageTranslation('readMoreAboutUs', language)} ›
                   </span>
                 </div>
               </Link>
@@ -364,7 +364,7 @@ export default function HomePageClient({
                              group-hover:bg-white group-hover:text-gray-800 transition-all duration-300
                              font-light uppercase tracking-wider text-sm"
                   >
-                    {getHomepageTranslation('contactUs', language)}
+                    {getHomepageTranslation('contactUs', language)} ›
                   </span>
                 </div>
               </Link>
