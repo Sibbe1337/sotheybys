@@ -284,6 +284,20 @@ export default function HomePageClient({
           </div>
         </section>
 
+        {/* Welcome Section - "Tervetuloa onnistuneeseen asuntokauppaan!" */}
+        <section className="py-12 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto text-center">
+              <h2 className="text-3xl lg:text-4xl font-light text-gray-700 mb-6">
+                {getHomepageTranslation('welcomeHeading', language)}
+              </h2>
+              <p className="text-lg text-gray-600 font-light leading-relaxed">
+                {getHomepageTranslation('welcomeText', language)}
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* Three Column Section - Avaamme uusia ovia */}
         <section id="avaamme-uusia-ovia" className="py-16 bg-white">
           <div className="container mx-auto px-4">
@@ -354,20 +368,6 @@ export default function HomePageClient({
                   </span>
                 </div>
               </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* Welcome Section - "Tervetuloa onnistuneeseen asuntokauppaan!" */}
-        <section className="py-12 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-3xl lg:text-4xl font-light text-gray-700 mb-6">
-                {getHomepageTranslation('welcomeHeading', language)}
-              </h2>
-              <p className="text-lg text-gray-600 font-light leading-relaxed">
-                {getHomepageTranslation('welcomeText', language)}
-              </p>
             </div>
           </div>
         </section>
