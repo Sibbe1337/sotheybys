@@ -416,42 +416,43 @@ export default function HomePageClient({
         </section>
 
         {/* Luxury Outlook Report Section */}
-        <section className="py-16 bg-[#5a7a94]">
-          <div className="container mx-auto px-4">
-            <div className="max-w-6xl mx-auto">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div className="order-1 lg:order-1">
-                  <Image
-                    src="/images/content/luxury-outlook-2025.jpg"
-                    alt="2025 Luxury Outlook"
-                    width={600}
-                    height={400}
-                    className="w-full h-auto"
-                  />
-                </div>
-                <div className="order-2 lg:order-2">
-                  <h2 className="text-3xl lg:text-4xl font-light text-white mb-6">
-                    2025 Luxury Outlook℠
-                  </h2>
-                  <p className="text-lg text-white/90 font-light leading-relaxed mb-8">
-                    {language === 'fi' 
-                      ? 'Vuoden 2025 Luxury Outlook℠ tutkii keskeisiä, tulevaisuuteen suuntautuvia kysymyksiä, jotka muokkaavat luksusasuntomarkkinoita ympäri maailmaa.'
-                      : language === 'sv'
-                      ? 'Luxury Outlook℠ 2025 undersöker viktiga, framåtblickande frågor som formar lyxbostadsmarknaderna runt om i världen.'
-                      : 'The 2025 Luxury Outlook℠ explores key, forward-looking questions shaping luxury real estate markets around the world.'}
-                  </p>
-                  <a
-                    href="https://www.sothebysrealty.com/eng/luxury-outlook"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block border-2 border-white text-white px-8 py-3
-                             hover:bg-white hover:text-[#5a7a94] transition-colors duration-300
-                             font-light uppercase tracking-wider text-sm"
-                  >
-                    {language === 'fi' ? 'LUE KOKO 2025 LUXURY OUTLOOK℠ -RAPORTTI' : language === 'sv' ? 'LÄS HELA 2025 LUXURY OUTLOOK℠-RAPPORTEN' : 'READ THE FULL 2025 LUXURY OUTLOOK℠ REPORT'}
-                  </a>
-                </div>
-              </div>
+        <section className="relative py-16 overflow-hidden">
+          {/* Background Image */}
+          <div className="absolute inset-0">
+            <Image
+              src="/images/content/luxury-outlook-bg.jpg"
+              alt="2025 Luxury Outlook Background"
+              fill
+              className="object-cover"
+              priority={false}
+            />
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-black/25"></div>
+          </div>
+          
+          {/* Content */}
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-4xl mx-auto text-center">
+              <h2 className="text-3xl lg:text-4xl font-light text-white mb-6">
+                2025 Luxury Outlook℠
+              </h2>
+              <p className="text-lg text-white font-light leading-relaxed mb-8">
+                {language === 'fi' 
+                  ? 'Vuoden 2025 Luxury Outlook℠ tutkii keskeisiä, tulevaisuuteen suuntautuvia kysymyksiä, jotka muokkaavat luksusasuntomarkkinoita ympäri maailmaa.'
+                  : language === 'sv'
+                  ? 'Luxury Outlook℠ 2025 undersöker viktiga, framåtblickande frågor som formar lyxbostadsmarknaderna runt om i världen.'
+                  : 'The 2025 Luxury Outlook℠ explores key, forward-looking questions shaping luxury real estate markets around the world.'}
+              </p>
+              <a
+                href="https://www.sothebysrealty.com/eng/luxury-outlook"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block border-2 border-white text-white px-8 py-3
+                         hover:bg-white hover:text-black transition-colors duration-300
+                         font-light uppercase tracking-wider text-sm"
+              >
+                {language === 'fi' ? 'LUE KOKO 2025 LUXURY OUTLOOK℠ -RAPORTTI ›' : language === 'sv' ? 'LÄS HELA 2025 LUXURY OUTLOOK℠-RAPPORTEN ›' : 'READ THE FULL 2025 LUXURY OUTLOOK℠ REPORT ›'}
+              </a>
             </div>
           </div>
         </section>
