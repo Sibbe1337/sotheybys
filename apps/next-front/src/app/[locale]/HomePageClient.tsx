@@ -376,12 +376,26 @@ export default function HomePageClient({
         <section className="py-12 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
-              <h3 className="text-lg text-gray-900 font-light mb-8 whitespace-pre-line">
-                {language === 'fi' 
-                  ? 'Upea toimistomme palvelee\nteitä arkisin 10:00 – 17:00\nsekä muina aikoina sopimuksen mukaan.'
-                  : language === 'sv'
-                  ? 'Vårt fantastiska kontor betjänar\ndig vardagar 10:00 – 17:00\nsamt andra tider enligt överenskommelse.'
-                  : 'Our great office serves\nyou on weekdays 10:00 – 17:00\nand at other times by appointment.'}
+              <h3 className="text-gray-900 mb-8">
+                {language === 'fi' ? (
+                  <>
+                    Upea toimistomme palvelee<br />
+                    teitä arkisin 10:00 – 17:00<br />
+                    sekä muina aikoina sopimuksen mukaan.
+                  </>
+                ) : language === 'sv' ? (
+                  <>
+                    Vårt fantastiska kontor betjänar<br />
+                    dig vardagar 10:00 – 17:00<br />
+                    samt andra tider enligt överenskommelse.
+                  </>
+                ) : (
+                  <>
+                    Our great office serves<br />
+                    you on weekdays 10:00 – 17:00<br />
+                    and at other times by appointment.
+                  </>
+                )}
               </h3>
               <div className="mt-8 flex flex-col md:flex-row justify-center items-center gap-6 text-gray-700">
                 <a href="tel:+358103156900" className="text-lg hover:text-[var(--color-primary)] transition-colors font-light">
