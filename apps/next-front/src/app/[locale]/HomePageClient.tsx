@@ -337,14 +337,12 @@ export default function HomePageClient({
         <section className="py-12 bg-[#f8f8f8]">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
-              <h3 className="text-lg text-gray-900 font-light mb-1">
-                {getHomepageTranslation('officeHoursLine1', language)}
-              </h3>
-              <h3 className="text-lg text-gray-900 font-light mb-1">
-                {getHomepageTranslation('officeHoursLine2', language)}
-              </h3>
-              <h3 className="text-lg text-gray-900 font-light">
-                {getHomepageTranslation('officeHoursLine3', language)}
+              <h3 className="text-lg text-gray-900 font-light mb-8 whitespace-pre-line">
+                {language === 'fi' 
+                  ? 'Upea toimistomme palvelee\nteitä arkisin 10:00 – 17:00\nsekä muina aikoina sopimuksen mukaan.'
+                  : language === 'sv'
+                  ? 'Vårt fantastiska kontor betjänar\ndig vardagar 10:00 – 17:00\nsamt andra tider enligt överenskommelse.'
+                  : 'Our great office serves\nyou on weekdays 10:00 – 17:00\nand at other times by appointment.'}
               </h3>
               <div className="mt-8 flex flex-col md:flex-row justify-center items-center gap-6 text-gray-700">
                 <a href="tel:+358103156900" className="text-lg hover:text-[var(--color-primary)] transition-colors font-light">
@@ -669,6 +667,194 @@ export default function HomePageClient({
             </div>
           </section>
         )}
+
+        {/* Latest Rental Properties Section */}
+        {rentalProperties.length > 0 && (
+          <section className="py-16 bg-white">
+            <div className="container mx-auto px-4">
+              <h2 className="text-3xl lg:text-4xl font-light text-center mb-12">
+                {language === 'fi' 
+                  ? 'Uusimmat vuokrakohteet'
+                  : language === 'sv' 
+                    ? 'Senaste hyresobjekt' 
+                    : 'Latest rental properties'}
+              </h2>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {rentalProperties.map((property) => {
+                  const addressStr = typeof property.address === 'string' ? property.address : property.address.fi;
+                  const cityStr = typeof property.city === 'string' ? property.city : property.city.fi;
+                  const descriptionStr = property.description 
+                    ? (typeof property.description === 'string' ? property.description : property.description.fi)
+                    : '';
+
+                  return (
+                    <div
+                      key={property.id}
+                      className="bg-white border border-gray-200 hover:shadow-lg transition-shadow duration-300 flex flex-col"
+                    >
+                      <div className="relative group">
+                        <a href={`/${locale}/kohde/${property.slug}`} className="block">
+                          <div className="relative h-56 overflow-hidden">
+                            <Image
+                              src={property.media.images[0]?.url || '/images/placeholder.jpg'}
+                              alt={addressStr}
+                              fill
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                              className="object-cover"
+                            />
+                          </div>
+                        </a>
+                      </div>
+
+                      <div className="p-5 flex-grow flex flex-col">
+                        <a href={`/${locale}/kohde/${property.slug}`} className="block mb-auto">
+                          <h3 className="text-lg font-medium text-gray-900 mb-2">
+                            {addressStr}
+                          </h3>
+                          <p className="text-lg font-normal text-gray-900 mb-3">
+                            {property.meta.rent 
+                              ? new Intl.NumberFormat('fi-FI').format(property.meta.rent) + ' €/kk'
+                              : ''}
+                          </p>
+                          <p className="text-sm text-gray-700 font-light mb-3 line-clamp-3 leading-relaxed">
+                            {descriptionStr}
+                          </p>
+                          <p className="text-sm text-gray-600 mb-4">
+                            {property.dimensions.living && `${property.dimensions.living} m²`}
+                          </p>
+                        </a>
+                        
+                        <a
+                          href={`/${locale}/kohde/${property.slug}`}
+                          className="block w-full bg-[#002349] text-white text-center px-6 py-2.5
+                                   hover:bg-[#001731] transition-colors duration-300
+                                   font-normal uppercase tracking-wide text-sm mt-auto"
+                        >
+                          {language === 'fi' ? 'NÄYTÄ KOHDE' : language === 'sv' ? 'VISA OBJEKT' : 'VIEW PROPERTY'}
+                        </a>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              
+              <div className="text-center mt-12">
+                <Link
+                  href="/kohteet/vuokrakohteet"
+                  className="inline-block bg-[#002349] text-white px-8 py-3
+                           hover:bg-[#001731] transition-colors duration-300
+                           font-light uppercase tracking-wider text-sm"
+                >
+                  {language === 'fi' ? 'Kaikki vuokrakohteemme' : language === 'sv' ? 'Alla våra hyresobjekt' : 'All our rental properties'}
+                </Link>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Contact CTA Section - "Kutsu meidät arviokäynnille!" */}
+        <section className="py-16 bg-[#f2f2f2]">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+              {/* Left column - Text */}
+              <div className="lg:pl-12">
+                <h2 className="text-3xl lg:text-4xl font-light text-[#5a7a94] mb-6">
+                  {language === 'fi' 
+                    ? 'Kutsu meidät arviokäynnille!'
+                    : language === 'sv'
+                    ? 'Bjud in oss till ett värderingsbesök!'
+                    : 'Invite us for a valuation visit!'}
+                </h2>
+                <p className="text-lg text-gray-700 font-light leading-relaxed mb-4">
+                  {language === 'fi' 
+                    ? 'Oletko ostamassa? Oletko myymässä? Etsitkö sijoituskohteita?'
+                    : language === 'sv'
+                    ? 'Köper du? Säljer du? Letar du efter investeringsobjekt?'
+                    : 'Are you buying? Are you selling? Looking for investment properties?'}
+                </p>
+                <p className="text-lg text-gray-700 font-light leading-relaxed mb-4">
+                  {language === 'fi' 
+                    ? 'Kerro miten voimme auttaa ja otamme sinuun yhteyttä.'
+                    : language === 'sv'
+                    ? 'Berätta hur vi kan hjälpa till så kontaktar vi dig.'
+                    : 'Tell us how we can help and we will contact you.'}
+                </p>
+                <p className="text-lg text-gray-700 font-light leading-relaxed mb-4">
+                  {language === 'fi' 
+                    ? 'Oletko kiinnostunut arvokodeista ja uniikeista kiinteistöistä?'
+                    : language === 'sv'
+                    ? 'Är du intresserad av värdefulla hem och unika fastigheter?'
+                    : 'Interested in valuable homes and unique properties?'}
+                </p>
+                <p className="text-lg text-gray-700 font-light leading-relaxed">
+                  {language === 'fi' 
+                    ? 'Tilaa uutiskirjeemme, niin pysyt ajan tasalla.'
+                    : language === 'sv'
+                    ? 'Prenumerera på vårt nyhetsbrev så håller du dig uppdaterad.'
+                    : 'Subscribe to our newsletter to stay updated.'}
+                </p>
+              </div>
+
+              {/* Right column - Form */}
+              <div className="bg-white p-8">
+                <form className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input
+                      type="text"
+                      placeholder={language === 'fi' ? 'Etunimi' : language === 'sv' ? 'Förnamn' : 'First name'}
+                      className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#002349]"
+                      required
+                    />
+                    <input
+                      type="text"
+                      placeholder={language === 'fi' ? 'Sukunimi' : language === 'sv' ? 'Efternamn' : 'Last name'}
+                      className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#002349]"
+                      required
+                    />
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input
+                      type="email"
+                      placeholder={language === 'fi' ? 'Sähköposti' : language === 'sv' ? 'E-post' : 'Email'}
+                      className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#002349]"
+                      required
+                    />
+                    <input
+                      type="tel"
+                      placeholder={language === 'fi' ? 'Puhelinnumero' : language === 'sv' ? 'Telefonnummer' : 'Phone number'}
+                      className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#002349]"
+                      required
+                    />
+                  </div>
+                  <textarea
+                    placeholder={language === 'fi' ? 'Viesti' : language === 'sv' ? 'Meddelande' : 'Message'}
+                    rows={6}
+                    className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#002349]"
+                    required
+                  />
+                  <div className="flex items-start gap-3">
+                    <input type="checkbox" id="privacy-contact" required className="mt-1" />
+                    <label htmlFor="privacy-contact" className="text-sm text-gray-700">
+                      {language === 'fi' 
+                        ? 'Olen tutustunut Tietosuojaselosteeseen'
+                        : language === 'sv'
+                        ? 'Jag har läst integritetspolicyn'
+                        : 'I have read the privacy policy'}
+                    </label>
+                  </div>
+                  <button
+                    type="submit"
+                    className="w-full bg-[#8e740b] text-white px-6 py-3 hover:bg-[#7a6409]
+                             transition-colors duration-300 font-light uppercase tracking-wider text-sm"
+                  >
+                    {language === 'fi' ? 'LÄHETÄ' : language === 'sv' ? 'SKICKA' : 'SEND'}
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Newsletter Section */}
         <section id="newsletter" className="py-16 relative">
