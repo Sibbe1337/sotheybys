@@ -323,10 +323,10 @@ export default function HomePageClient({
         <section className="py-12 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-3xl lg:text-4xl font-light text-[#5a7a94] mb-8">
+              <h2 className="text-3xl lg:text-4xl font-light text-gray-700 mb-6">
                 {getHomepageTranslation('welcomeHeading', language)}
               </h2>
-              <p className="text-lg text-gray-700 font-light leading-relaxed">
+              <p className="text-lg text-gray-600 font-light leading-relaxed">
                 {getHomepageTranslation('welcomeText', language)}
               </p>
             </div>
