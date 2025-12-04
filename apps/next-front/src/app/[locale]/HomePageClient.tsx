@@ -319,19 +319,33 @@ export default function HomePageClient({
           </div>
         </section>
 
+        {/* Welcome Section - "Tervetuloa onnistuneeseen asuntokauppaan!" */}
+        <section className="py-12 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto text-center">
+              <h2 className="text-3xl lg:text-4xl font-light text-[#5a7a94] mb-8">
+                {getHomepageTranslation('welcomeHeading', language)}
+              </h2>
+              <p className="text-lg text-gray-700 font-light leading-relaxed">
+                {getHomepageTranslation('welcomeText', language)}
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* Office Hours Section */}
         <section className="py-12 bg-[#f8f8f8]">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
-              <p className="text-lg text-gray-900 font-light mb-1">
+              <h3 className="text-lg text-gray-900 font-light mb-1">
                 {getHomepageTranslation('officeHoursLine1', language)}
-              </p>
-              <p className="text-lg text-gray-900 font-light mb-1">
+              </h3>
+              <h3 className="text-lg text-gray-900 font-light mb-1">
                 {getHomepageTranslation('officeHoursLine2', language)}
-              </p>
-              <p className="text-lg text-gray-900 font-light">
+              </h3>
+              <h3 className="text-lg text-gray-900 font-light">
                 {getHomepageTranslation('officeHoursLine3', language)}
-              </p>
+              </h3>
               <div className="mt-8 flex flex-col md:flex-row justify-center items-center gap-6 text-gray-700">
                 <a href="tel:+358103156900" className="text-lg hover:text-[var(--color-primary)] transition-colors font-light">
                   +358 (0)10 315 6900
@@ -383,7 +397,7 @@ export default function HomePageClient({
                              hover:bg-white hover:text-[#5a7a94] transition-colors duration-300
                              font-light uppercase tracking-wider text-sm"
                   >
-                    {language === 'fi' ? 'Lue koko raportti' : language === 'sv' ? 'Läs hela rapporten' : 'Read full report'}
+                    {language === 'fi' ? 'LUE KOKO 2025 LUXURY OUTLOOK℠ -RAPORTTI' : language === 'sv' ? 'LÄS HELA 2025 LUXURY OUTLOOK℠-RAPPORTEN' : 'READ THE FULL 2025 LUXURY OUTLOOK℠ REPORT'}
                   </a>
                 </div>
               </div>
@@ -493,10 +507,10 @@ export default function HomePageClient({
               {/* Section Title */}
               <h2 className="text-3xl lg:text-4xl font-light text-center mb-12">
                 {language === 'fi' 
-                  ? 'Valikoima myynnissä olevista kohteistamme'
+                  ? 'Valikoidut myynnissä olevat kohteet'
                   : language === 'sv' 
-                    ? 'Ett urval av våra objekt till salu' 
-                    : 'A selection of our properties for sale'}
+                    ? 'Utvalda objekt till salu' 
+                    : 'Selected properties for sale'}
               </h2>
 
               {/* Property Cards Grid - 3 columns, 2 rows = 6 properties */}
@@ -632,7 +646,7 @@ export default function HomePageClient({
                                      hover:bg-[#001731] transition-colors duration-300
                                      font-normal uppercase tracking-wide text-sm"
                           >
-                            {language === 'fi' ? 'KATSO KOHDE »' : language === 'sv' ? 'SE OBJEKT »' : 'VIEW PROPERTY »'}
+                            {language === 'fi' ? 'NÄYTÄ KOHDE' : language === 'sv' ? 'VISA OBJEKT' : 'VIEW PROPERTY'}
                           </a>
                         </div>
                       </div>
