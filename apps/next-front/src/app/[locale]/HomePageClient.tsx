@@ -314,11 +314,11 @@ export default function HomePageClient({
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-30 flex flex-col items-center justify-center text-white p-8">
-                  <h3 className="text-2xl font-light mb-4 text-center">{getHomepageTranslation('openNewDoors', language)}</h3>
-                  <span className="inline-block border-2 border-white text-white px-6 py-2
-                             group-hover:bg-white group-hover:text-[#1a3a4a] transition-all duration-300
-                             font-light uppercase tracking-wider text-sm"
+                <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center text-white p-8">
+                  <h3 className="text-2xl font-light mb-6 text-center">{getHomepageTranslation('openNewDoors', language)}</h3>
+                  <span className="inline-block border-2 border-white text-white px-6 py-2.5
+                             group-hover:bg-white group-hover:text-black transition-all duration-300
+                             font-light text-xs tracking-wide"
                   >
                     {getHomepageTranslation('findDreamHome', language)} ›
                   </span>
@@ -334,13 +334,13 @@ export default function HomePageClient({
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-[#324b72] bg-opacity-70 flex flex-col items-center justify-center text-white p-8">
-                  <h3 className="text-2xl font-light mb-4 text-center">
+                <div className="absolute inset-0 bg-[#324b72] bg-opacity-80 flex flex-col items-center justify-center text-white p-8">
+                  <h3 className="text-2xl font-light mb-6 text-center">
                     {getHomepageTranslation('expertiseHeading', language)}
                   </h3>
-                  <span className="inline-block border-2 border-white text-white px-6 py-2
+                  <span className="inline-block border-2 border-white text-white px-6 py-2.5
                              group-hover:bg-white group-hover:text-[#324b72] transition-all duration-300
-                             font-light uppercase tracking-wider text-sm"
+                             font-light text-xs tracking-wide"
                   >
                     {getHomepageTranslation('readMoreAboutUs', language)} ›
                   </span>
@@ -356,13 +356,13 @@ export default function HomePageClient({
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gray-800 bg-opacity-50 flex flex-col items-center justify-center text-white p-8">
-                  <h3 className="text-2xl font-light mb-4 text-center">
+                <div className="absolute inset-0 bg-[#4a6b8a] bg-opacity-70 flex flex-col items-center justify-center text-white p-8">
+                  <h3 className="text-2xl font-light mb-6 text-center">
                     {getHomepageTranslation('freeValuationHeading', language)}
                   </h3>
-                  <span className="inline-block border-2 border-white text-white px-6 py-2
-                             group-hover:bg-white group-hover:text-gray-800 transition-all duration-300
-                             font-light uppercase tracking-wider text-sm"
+                  <span className="inline-block border-2 border-white text-white px-6 py-2.5
+                             group-hover:bg-white group-hover:text-[#4a6b8a] transition-all duration-300
+                             font-light text-xs tracking-wide"
                   >
                     {getHomepageTranslation('contactUs', language)} ›
                   </span>

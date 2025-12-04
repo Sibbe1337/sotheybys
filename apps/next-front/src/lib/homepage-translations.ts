@@ -58,9 +58,9 @@ export const HOMEPAGE_TRANSLATIONS: HomepageTranslations = {
     en: 'We Open New Doors!'
   },
   findDreamHome: {
-    fi: 'Löydä unelmiesi koti',
-    sv: 'Hitta ditt drömhem',
-    en: 'Find Your Dream Home'
+    fi: 'LÖYDÄ UNELMIESI KOTI',
+    sv: 'HITTA DITT DRÖMHEM',
+    en: 'FIND YOUR DREAM HOME'
   },
   expertiseHeading: {
     fi: 'Asiantuntemus joka ulottuu korttelista kaupunkiin ja aina maailman ympäri',
@@ -68,9 +68,9 @@ export const HOMEPAGE_TRANSLATIONS: HomepageTranslations = {
     en: 'Expertise that extends from the neighborhood to the city and around the world'
   },
   readMoreAboutUs: {
-    fi: 'Lue lisää yrityksestämme',
-    sv: 'Läs mer om oss',
-    en: 'Read More About Us'
+    fi: 'LUE LISÄÄ YRITYKSESTÄMME',
+    sv: 'LÄS MER OM OSS',
+    en: 'READ MORE ABOUT US'
   },
   freeValuationHeading: {
     fi: 'Kutsu meidät maksuttomalle arviokäynnille',
@@ -78,9 +78,9 @@ export const HOMEPAGE_TRANSLATIONS: HomepageTranslations = {
     en: 'Invite us for a free property valuation'
   },
   contactUs: {
-    fi: 'Ota meihin yhteyttä',
-    sv: 'Kontakta oss',
-    en: 'Contact Us'
+    fi: 'OTA MEIHIN YHTEYTTÄ',
+    sv: 'KONTAKTA OSS',
+    en: 'CONTACT US'
   },
   
   // Office Hours
