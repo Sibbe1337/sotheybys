@@ -119,36 +119,37 @@ export default function CompanyPage({ params }: { params: { locale: Locale } }) 
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <main className="flex-1">
-        {/* Hero Section with Video Background */}
-        <section className="relative h-[700px] flex items-center justify-center text-white overflow-hidden">
-          {/* Video Background */}
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover"
-            poster="/images/content/snellman-sothebys-yritys.jpg"
-          >
-            <source src="https://www.sothebysrealty.com/extraordinary-living-blog/wp-content/uploads/sites/2/2023/12/SIR_BRAND_FILM_16x9_FINAL.mp4" type="video/mp4" />
-          </video>
-          <div className="absolute inset-0 bg-black/50"></div>
+        {/* Hero Section with Background Image */}
+        <section 
+          className="relative h-[500px] flex items-center justify-center text-white"
+          style={{
+            backgroundImage: 'url(/images/international/snellman-sothebys-international-kakumae-web-768x480.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        >
+          <div className="absolute inset-0 bg-black/40"></div>
           <div className="relative z-10 text-center px-4 max-w-4xl">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-thin mb-6">
-                {t.heroTitle}
-              </h1>
-            <p className="text-lg lg:text-xl font-light mb-6">
-                {t.heroSubtitle}
-              </p>
-            <p className="text-sm lg:text-base font-light opacity-80">
-                {t.heroStats}
-              </p>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-light mb-6">
+              {params.locale === 'fi' ? 'Kansainvälinen välittäjäsi paikallisesti' : params.locale === 'sv' ? 'Din internationella mäklare lokalt' : 'Your international broker locally'}
+            </h1>
+            <p className="text-base lg:text-lg font-light mb-8">
+              {t.heroStats}
+            </p>
+            <a 
+              href="#content"
+              className="inline-block border-2 border-white text-white px-8 py-3 
+                       hover:bg-white hover:text-gray-900 transition-all duration-300
+                       font-light uppercase tracking-wider text-sm"
+            >
+              {params.locale === 'fi' ? 'Avaamme uusia ovia' : params.locale === 'sv' ? 'Vi öppnar nya dörrar' : 'We open new doors'}
+            </a>
           </div>
         </section>
 
         {/* Three Column Section */}
-        <section className="py-16 bg-white">
-          <div className="container mx-auto px-4">
+        <section id="content" className="py-0 bg-white">
+          <div className="w-full">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
               {/* Column 1 - Kohteet */}
               <Link href="/kohteet" className="relative h-80 group overflow-hidden block">
