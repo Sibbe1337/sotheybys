@@ -416,7 +416,7 @@ export default function HomePageClient({
         </section>
 
         {/* Luxury Outlook Report Section */}
-        <section className="relative overflow-hidden bg-[#16223c]" style={{ paddingTop: '60px', paddingBottom: '60px' }}>
+        <section className="relative overflow-hidden bg-[#16223c]" style={{ paddingTop: '40px', paddingBottom: '40px' }}>
           {/* Background Image */}
           <div 
             className="absolute inset-0 bg-cover bg-scroll"
