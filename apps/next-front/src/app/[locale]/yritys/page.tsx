@@ -118,100 +118,116 @@ export default function CompanyPage({ params }: { params: { locale: Locale } }) 
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <main className="flex-1">
-        {/* Hero Section with Background Image */}
+        {/* Hero Carousel Section */}
         <section 
           className="relative h-[500px] flex items-center justify-center text-white"
           style={{
-            backgroundImage: 'url(/images/international/snellman-sothebys-international-kakumae-web-768x480.jpg)',
+            backgroundImage: 'url(/images/content/snellman-sothebys-yritys-01.jpg)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
         >
-          <div className="absolute inset-0 bg-black/40"></div>
+          <div className="absolute inset-0 bg-[#002349]/60"></div>
           <div className="relative z-10 text-center px-4 max-w-4xl">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-light mb-6">
+            <h1 className="text-4xl md:text-5xl font-light mb-4">
               {params.locale === 'fi' ? 'Kansainvälinen välittäjäsi paikallisesti' : params.locale === 'sv' ? 'Din internationella mäklare lokalt' : 'Your international broker locally'}
             </h1>
-            <p className="text-base lg:text-lg font-light mb-8">
-              {t.heroStats}
+            <p className="text-lg font-light mb-6">
+              {params.locale === 'fi' ? '26 100 välittäjää 1100 välitystoimistossa 84 maassa ja alueella' : params.locale === 'sv' ? '26 100 mäklare 1100 kontor 84 länder och regioner' : '26,100 agents 1,100 offices 84 countries and territories'}
             </p>
-            <a 
-              href="#content"
-              className="inline-block border-2 border-white text-white px-8 py-3 
-                       hover:bg-white hover:text-gray-900 transition-all duration-300
-                       font-light uppercase tracking-wider text-sm"
-            >
+            <p className="text-xl font-light">
               {params.locale === 'fi' ? 'Avaamme uusia ovia' : params.locale === 'sv' ? 'Vi öppnar nya dörrar' : 'We open new doors'}
-            </a>
+            </p>
           </div>
         </section>
 
-        {/* Three Column Section */}
-        <section id="content" className="py-0 bg-white">
-          <div className="w-full">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
-              {/* Column 1 - Kohteet */}
-              <Link href="/kohteet" className="relative h-80 group overflow-hidden block">
+        {/* Welcome Section */}
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto text-center">
+              <h2 className="text-4xl font-light text-gray-900 mb-6">
+                {params.locale === 'fi' ? 'Tervetuloa onnistuneeseen asuntokauppaan!' : params.locale === 'sv' ? 'Välkommen till en framgångsrik bostadsaffär!' : 'Welcome to a successful property transaction!'}
+              </h2>
+              <p className="text-lg text-gray-700 font-light">
+                {params.locale === 'fi' ? 'Katso kaikki myynnissä olevat kohteemme.' : params.locale === 'sv' ? 'Se alla våra försäljningsobjekt.' : 'See all our properties for sale.'}
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Three Large Image Cards */}
+        <section className="py-12 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* Sotheby's Huutokauppakamari */}
+              <a 
+                href="https://www.sothebys.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="relative h-96 group overflow-hidden block"
+              >
                 <Image
-                  src="/images/content/snellman-sothebys-yritys.jpg"
-                  alt={params.locale === 'fi' ? 'Avaamme uusia ovia' : params.locale === 'sv' ? 'Vi öppnar nya dörrar' : 'We open new doors'}
+                  src="/images/content/sothebys-auction-house.jpg"
+                  alt="Sotheby's Huutokauppakamari"
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="object-cover grayscale"
+                  unoptimized
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center text-white p-8">
+                <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white p-8">
                   <h3 className="text-2xl font-light mb-4 text-center">
-                    {params.locale === 'fi' ? 'Avaamme uusia ovia!' : params.locale === 'sv' ? 'Vi öppnar nya dörrar!' : 'We open new doors!'}
+                    Sotheby's<br/>Huutokauppakamari
                   </h3>
-                  <span className="inline-block border-2 border-white text-white px-6 py-2
-                             group-hover:bg-white group-hover:text-[#1a3a4a] transition-all duration-300
-                             font-light uppercase tracking-wider text-sm"
-                  >
-                    {params.locale === 'fi' ? 'Löydä unelmiesi koti' : params.locale === 'sv' ? 'Hitta ditt drömhem' : 'Find your dream home'}
+                  <span className="text-sm font-light uppercase tracking-wider">
+                    Lue lisää
                   </span>
                 </div>
-              </Link>
+              </a>
 
-              {/* Column 2 - Yritys */}
-              <Link href="/yritys" className="relative h-80 group overflow-hidden block">
+              {/* Sotheby's International Realty */}
+              <a 
+                href="https://www.sothebysrealty.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="relative h-96 group overflow-hidden block"
+              >
                 <Image
-                  src="/images/content/snellman-sothebys-kutsu-arviokaynnille.jpg"
-                  alt={params.locale === 'fi' ? 'Asiantuntemus' : params.locale === 'sv' ? 'Expertis' : 'Expertise'}
+                  src="/images/content/sothebys-international-realty.jpg"
+                  alt="Sotheby's International Realty"
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="object-cover"
+                  unoptimized
                 />
-                <div className="absolute inset-0 bg-[#324b72] bg-opacity-80 flex flex-col items-center justify-center text-white p-8">
+                <div className="absolute inset-0 bg-[#002349]/60 flex flex-col items-center justify-center text-white p-8">
                   <h3 className="text-2xl font-light mb-4 text-center">
-                    {params.locale === 'fi' ? 'Asiantuntemus joka ulottuu korttelista kaupunkiin ja aina maailman ympäri' : params.locale === 'sv' ? 'Expertis som sträcker sig från kvarteret till staden och världen runt' : 'Expertise from the block to the city and around the world'}
+                    Sotheby's<br/>International Realty®
                   </h3>
-                  <span className="inline-block border-2 border-white text-white px-6 py-2
-                             group-hover:bg-white group-hover:text-[#324b72] transition-all duration-300
-                             font-light uppercase tracking-wider text-sm"
-                  >
-                    {params.locale === 'fi' ? 'Lue lisää yrityksestämme' : params.locale === 'sv' ? 'Läs mer om oss' : 'Read more about us'}
+                  <span className="text-sm font-light uppercase tracking-wider">
+                    Lue lisää
                   </span>
                 </div>
-              </Link>
+              </a>
 
-              {/* Column 3 - Myymässä */}
-              <Link href="/myymassa" className="relative h-80 group overflow-hidden block">
+              {/* Tutustu henkilökuntaamme */}
+              <Link 
+                href="/henkilosto"
+                className="relative h-96 group overflow-hidden block"
+              >
                 <Image
-                  src="/images/content/snellman-sothebys-nakoalapaikka.jpg"
-                  alt={params.locale === 'fi' ? 'Arviokäynti' : params.locale === 'sv' ? 'Värderingsbesök' : 'Valuation visit'}
+                  src="/images/content/snellman-sothebys-henkilosto.jpg"
+                  alt="Henkilökunta"
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="object-cover grayscale"
+                  unoptimized
                 />
-                <div className="absolute inset-0 bg-gray-800 bg-opacity-60 flex flex-col items-center justify-center text-white p-8">
+                <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white p-8">
                   <h3 className="text-2xl font-light mb-4 text-center">
-                    {params.locale === 'fi' ? 'Kutsu meidät maksuttomalle arviokäynnille' : params.locale === 'sv' ? 'Bjud in oss för en gratis värdering' : 'Invite us for a free valuation'}
+                    {params.locale === 'fi' ? 'Tutustu henkilökuntaamme' : params.locale === 'sv' ? 'Möt vår personal' : 'Meet our staff'}
                   </h3>
-                  <span className="inline-block border-2 border-white text-white px-6 py-2
-                             group-hover:bg-white group-hover:text-gray-800 transition-all duration-300
-                             font-light uppercase tracking-wider text-sm"
-                  >
-                    {params.locale === 'fi' ? 'Ota meihin yhteyttä' : params.locale === 'sv' ? 'Kontakta oss' : 'Contact us'}
+                  <span className="text-sm font-light uppercase tracking-wider">
+                    {params.locale === 'fi' ? 'Ota yhteyttä' : params.locale === 'sv' ? 'Kontakta' : 'Contact'}
                   </span>
                 </div>
               </Link>
@@ -219,85 +235,132 @@ export default function CompanyPage({ params }: { params: { locale: Locale } }) 
           </div>
         </section>
 
-        {/* About Section */}
-        <section className="py-12 lg:py-20">
+        {/* Snellman Sotheby's International Realty Section */}
+        <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
-            <div className="max-w-6xl mx-auto">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
-                <div>
-                  <h2 className="text-3xl font-light text-gray-900 mb-6">
-                    {t.aboutTitle}
-                  </h2>
-                  <div className="space-y-4 text-gray-700 font-light">
-                    <p>{t.aboutText1}</p>
-                    <p>{t.aboutText2}</p>
-                    <p>{t.aboutText3}</p>
-                  </div>
-                </div>
-                <div className="relative h-96 lg:h-[500px]">
-                  <Image
-                    src="/images/content/snellman-sothebys-yritys.jpg"
-                    alt={t.imageAlt}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    className="object-cover rounded-lg"
-                  />
-                </div>
-              </div>
-
-              {/* History Section */}
-              <div className="bg-gray-50 p-8 lg:p-12 rounded-lg mb-20">
-                <h2 className="text-3xl font-light text-gray-900 mb-8 text-center">
-                  {t.historyTitle}
-                </h2>
-                <div className="max-w-3xl mx-auto space-y-4 text-gray-700 font-light">
-                  <p>{t.historyText1}</p>
-                  <p>{t.historyText2}</p>
-                  <p>{t.historyText3}</p>
+            <div className="max-w-4xl mx-auto text-center">
+              <h2 className="text-4xl font-light text-gray-900 mb-8">
+                Snellman Sotheby's International Realty®
+              </h2>
+              <div className="space-y-4 text-gray-700 font-light leading-relaxed text-center">
+                <p>
+                  {params.locale === 'fi' 
+                    ? 'Tänä päivänä 84 maassa, 1100 välitystoimiston ja 26 100 välittäjän vahvuudella palveleva Sotheby\'s International Realty® kuuluu maailman suurimpiin kiinteistöalan brändeihin. Globaali verkostomme avaa asiakkaille eri puolilla maailmaa oven kansainvälisille arvokiinteistömarkkinoille.'
+                    : params.locale === 'sv'
+                    ? 'Idag med 84 länder, 1100 kontor och 26 100 mäklare är Sotheby\'s International Realty® ett av världens största fastighetsmärken. Vårt globala nätverk öppnar dörren till internationella lyxfastighetsmarknader för kunder runt om i världen.'
+                    : 'Today with 84 countries, 1,100 offices and 26,100 agents, Sotheby\'s International Realty® is one of the world\'s largest real estate brands. Our global network opens the door to international luxury real estate markets for clients around the world.'}
+                </p>
+                <div className="pt-8 space-y-2 text-lg">
+                  <p className="font-medium">
+                    {params.locale === 'fi' ? 'Upea toimistomme palvelee teitä arkisin 10:00 – 17:00' : params.locale === 'sv' ? 'Vårt fantastiska kontor betjänar er vardagar 10:00 – 17:00' : 'Our beautiful office serves you on weekdays 10:00 – 17:00'}
+                  </p>
+                  <p>
+                    {params.locale === 'fi' ? 'sekä muina aikoina sopimuksen mukaan.' : params.locale === 'sv' ? 'samt övriga tider enligt överenskommelse.' : 'and at other times by appointment.'}
+                  </p>
+                  <p className="pt-4">+358 (0)10 315 6900</p>
+                  <p>Kasarmikatu 34, 00130 Helsinki</p>
+                  <p>info@sothebysrealty.fi</p>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
 
-              {/* Philosophy Section */}
-              <div className="text-center max-w-3xl mx-auto">
-                <h2 className="text-3xl font-light text-gray-900 mb-6">
-                  {t.philosophyTitle}
-                </h2>
-                <p className="text-xl text-gray-700 font-light leading-relaxed">
-                  {t.philosophyText}
+        {/* Sotheby's & Sotheby's International Realty Section */}
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-4xl font-light text-gray-900 mb-8 text-center">
+                Sotheby's® & Sotheby´s International Realty®
+              </h2>
+              <div className="space-y-4 text-gray-700 font-light leading-relaxed">
+                <p>
+                  {params.locale === 'fi'
+                    ? 'Vuonna 1744 perustetun, perinteikkään Sotheby\'s huutokauppakamarin rinnalle perustettiin vuonna 1976 kiinteistönvälitysketju, jonka toiminnan kulmakivenä on tarjota laatutietoisille asiakkaille kiinteistömarkkinoilla yhtä vahvaa markkinaosaamista ja palvelutasoa kuin taiteen ja antiikin välityksessä, yksilöllisesti ja hienovaraisesti.'
+                    : params.locale === 'sv'
+                    ? 'Vid sidan av det traditionella Sotheby\'s auktionshuset som grundades 1744, grundades 1976 en fastighetsmäklarkedja vars hörnsten är att erbjuda kvalitetsmedvetna kunder samma starka marknadskunskap och servicenivå på fastighetsmarknaden som inom konst- och antikförmedling, individuellt och diskret.'
+                    : 'Alongside the traditional Sotheby\'s auction house founded in 1744, a real estate brokerage chain was founded in 1976 whose cornerstone is to offer quality-conscious customers the same strong market knowledge and service level in the real estate market as in art and antique brokerage, individually and discreetly.'}
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="py-16 bg-gray-100">
+        {/* Snellman Sotheby's International Realty Finland Section */}
+        <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-4xl font-light text-gray-900 mb-8 text-center">
+                Snellman Sotheby's International Realty®
+              </h2>
+              <div className="space-y-4 text-gray-700 font-light leading-relaxed">
+                <p>
+                  {params.locale === 'fi'
+                    ? 'Snellman Sotheby\'s International Realty Finland aloitti toimintansa Helsingissä syksyllä 2015. Olemme yksi harvoista arvokiinteistöihin erikoistuneista välittäjistä, joka pystyy tarjoamaan laatutietoisille asiakkaille ainutlaatuisia kohteita ja yksilöityä palvelua niin Suomessa kuin ympäri maailmaa. Välitämme ainutlaatuisia kohteita, tyylillä.'
+                    : params.locale === 'sv'
+                    ? 'Snellman Sotheby\'s International Realty Finland startade sin verksamhet i Helsingfors hösten 2015. Vi är en av få mäklare specialiserade på värdefullafast igheter som kan erbjuda kvalitetsmedvetna kunder unika objekt och individuell service både i Finland och runt om i världen. Vi förmedlar unika objekt, med stil.'
+                    : 'Snellman Sotheby\'s International Realty Finland started its operations in Helsinki in the fall of 2015. We are one of the few brokers specializing in valuable properties that can offer quality-conscious customers unique properties and individualized service both in Finland and around the world. We broker unique properties, with style.'}
+                </p>
+                <p>
+                  {params.locale === 'fi'
+                    ? 'Oletpa ostamassa tai myymässä asuntoa, kiinteistöä, vapaa-ajan kohdetta, maatilaa tai kokonaista kartanoaluetta, haluamme auttaa sinua tekemään elämäsi kaupat.'
+                    : params.locale === 'sv'
+                    ? 'Oavsett om du köper eller säljer en bostad, fastighet, fritidsobjekt, gård eller ett helt herrgårdsområde, vill vi hjälpa dig att göra livets affär.'
+                    : 'Whether you are buying or selling a home, property, vacation property, farm or an entire manor area, we want to help you make the deal of your life.'}
+                </p>
+                <p>
+                  {params.locale === 'fi'
+                    ? 'Olemme kotonamme niin kotikulmillasi kuin kansainvälisillä arvokiinteistömarkkinoilla.'
+                    : params.locale === 'sv'
+                    ? 'Vi är hemma både i ditt närområde och på internationella lyxfastighetsmarknader.'
+                    : 'We are at home both in your local area and in international luxury real estate markets.'}
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Palvelufilosofiamme Section */}
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-4xl font-light text-gray-900 mb-8 text-center">
+                {params.locale === 'fi' ? 'Palvelufilosofiamme' : params.locale === 'sv' ? 'Vår servicefilosofi' : 'Our Service Philosophy'}
+              </h2>
+              <div className="space-y-4 text-gray-700 font-light leading-relaxed">
+                <p>
+                  {params.locale === 'fi'
+                    ? 'Unelma täydellisestä kodista on unelmiemme työtä, sillä koti on paikka, jossa saavutettavissa oleva elämänlaatu kiteytyy parhaiten. Parasta luksusta koti on silloin, kun siinä on jotakin erityistä verrattuna alueen muihin asuntoihin sekä silloin, kun se vastaa asukkaidensa elämäntyyliä ja unelmia. Eksklusiivinen koti on erityinen niin ratkaisuiltaan, rakennuksena kuin sijainniltaan.'
+                    : params.locale === 'sv'
+                    ? 'Drömmen om det perfekta hemmet är vårt drömarbete, eftersom hemmet är platsen där den uppnåeliga livskvaliteten kristalliseras bäst. Bästa lyxen är hemmet när det har något speciellt jämfört med andra bostäder i området och när det motsvarar invånarnas livsstil och drömmar. Ett exklusivt hem är speciellt både i lösningar, som byggnad och i läge.'
+                    : 'The dream of the perfect home is our dream work, because home is the place where achievable quality of life is best crystallized. The best luxury is home when it has something special compared to other homes in the area and when it matches its residents\' lifestyle and dreams. An exclusive home is special in solutions, as a building and in location.'}
+                </p>
+                <p>
+                  {params.locale === 'fi'
+                    ? 'Kiinteistönvälittäjänä ja arvoasuntojen asiantuntijana olemme ylpeitä saadessamme yhdistää toisiinsa täydellisesti yhteensopivat kodit sekä asukkaat. Jokainen välittämämme koti on yhtä ainutlaatuinen kuin jokainen asiakkaamme.'
+                    : params.locale === 'sv'
+                    ? 'Som fastighetsmäklare och expert på värdebostäder är vi stolta över att få förena perfekt kompatibla hem och invånare. Varje hem vi förmedlar är lika unikt som varje kund.'
+                    : 'As a real estate broker and expert in valuable homes, we are proud to bring together perfectly compatible homes and residents. Every home we broker is as unique as every customer.'}
+                </p>
+                <p>
+                  {params.locale === 'fi'
+                    ? 'Suomessa olemme keskittyneet välittämään pääkaupunkiseudun ja sitä ympäröivän rannikkoalueen premium-asuntoja ja -kiinteistöjä. Valikoimaamme kuuluu muun muassa laadukkaita loft- ja penthouse-asuntoja sekä arvokkaita uudisrakennuskohteita. Lisäksi välitämme vapaa-ajankohteita rannikon huviloista Lapin hiihtomajoihin.'
+                    : params.locale === 'sv'
+                    ? 'I Finland har vi koncentrerat oss på att förmedla premium-bostäder och fastigheter i huvudstadsregionen och det omgivande kustområdet. Vårt sortiment inkluderar bland annat högkvalitativa loft- och takvåningar samt värdefulla nybyggnadsobjekt. Dessutom förmedlar vi fritidsobjekt från kustvillor till Lapplands skidboenden.'
+                    : 'In Finland, we have focused on brokering premium apartments and properties in the capital region and the surrounding coastal area. Our selection includes, among other things, high-quality loft and penthouse apartments as well as valuable new construction properties. In addition, we broker vacation properties from coastal villas to Lapland ski accommodations.'}
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Avaamme uusia ovia CTA Section */}
+        <section className="py-16 bg-[#002349] text-white">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-3xl font-light mb-6 text-gray-900">
-                {t.ctaTitle}
+              <h2 className="text-4xl font-light mb-4">
+                {params.locale === 'fi' ? 'Avaamme uusia ovia' : params.locale === 'sv' ? 'Vi öppnar nya dörrar' : 'We open new doors'}
               </h2>
-              <p className="text-lg font-light mb-8 text-gray-700">
-                {t.ctaText}
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link
-                  href="/yhteystiedot"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 
-                           bg-[#002349] text-white hover:bg-[#001731] 
-                           transition-colors duration-300 font-light tracking-wider uppercase text-sm"
-                >
-                  {t.ctaContact}
-                </Link>
-                <Link
-                  href="/henkilosto"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 
-                           border border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white 
-                           transition-colors duration-300 font-light tracking-wider uppercase text-sm"
-                >
-                  {t.ctaMeet}
-                </Link>
-              </div>
             </div>
           </div>
         </section>
