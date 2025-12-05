@@ -167,33 +167,20 @@ export default function ContactPage({ params }: { params: { locale: Locale } }) 
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <main className="flex-1">
-        {/* Hero Section with Background Image */}
-        <section 
-          className="relative h-[500px] flex items-center justify-center text-white"
-          style={{
-            backgroundImage: 'url("/images/international/henkilosto_34.jpg")',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        >
-          <div className="absolute inset-0 bg-[var(--color-primary)]/60"></div>
-          <div className="relative z-10 text-center px-4 max-w-4xl">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-thin mb-8">
-                {t.title}
-              </h1>
+        {/* Page Title */}
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <h1 className="text-5xl md:text-6xl font-light text-gray-900 text-center mb-4">
+              {t.title}
+            </h1>
           </div>
         </section>
 
-        {/* Contact Info Section */}
-        <section className="py-12 lg:py-20">
+        {/* Contact Form Section */}
+        <section className="py-12 bg-white">
           <div className="container mx-auto px-4">
-            <div className="max-w-6xl mx-auto">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                {/* Contact Form */}
-                <div>
-                  <h2 className="text-2xl font-light text-gray-900 mb-8">
-                    {t.formTitle}
-                  </h2>
+            <div className="max-w-2xl mx-auto">
+              <div>
                   <form className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
@@ -299,84 +286,35 @@ export default function ContactPage({ params }: { params: { locale: Locale } }) 
 
                     <button
                       type="submit"
-                      className="w-full md:w-auto px-8 py-4 bg-[#1a3a4a] text-white 
-                               hover:bg-[#0f2633] transition-colors duration-300 
+                      className="w-full px-8 py-4 bg-[var(--color-primary)] text-white 
+                               hover:bg-[#001731] transition-colors duration-300 
                                font-light tracking-wider uppercase text-sm"
                     >
                       {t.submit}
                     </button>
                   </form>
                 </div>
+            </div>
+          </div>
+        </section>
 
-                {/* Contact Information */}
-                <div className="lg:pl-12">
-                  <h2 className="text-2xl font-light text-gray-900 mb-8">
-                    {t.contactInfoTitle}
-                  </h2>
-                  
-                  <div className="space-y-8">
-                    {/* Office Info */}
-                    <div>
-                      <h3 className="text-lg font-light text-gray-900 mb-4">
-                        {t.officeTitle}
-                      </h3>
-                      <div className="space-y-2 text-gray-700 font-light">
-                        <p>Kasarmikatu 34, 00130 Helsinki</p>
-                        <p className="mt-4">
-                          <a href="tel:+358103156900" className="text-[#1a3a4a] hover:text-[#0f2633] transition-colors">
-                            +358 (0)10 315 6900
-                          </a>
-                        </p>
-                        <p>
-                          <a href="mailto:info@sothebysrealty.fi" className="text-[#1a3a4a] hover:text-[#0f2633] transition-colors">
-                            info@sothebysrealty.fi
-                          </a>
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Opening Hours */}
-                    <div>
-                      <h3 className="text-lg font-light text-gray-900 mb-4">
-                        {t.hoursTitle}
-                      </h3>
-                      <div className="space-y-2 text-gray-700 font-light">
-                        <p>{t.weekdays}</p>
-                        <p>{t.saturday}</p>
-                        <p>{t.sunday}</p>
-                      </div>
-                    </div>
-
-                    {/* Company Info */}
-                    <div>
-                      <h3 className="text-lg font-light text-gray-900 mb-4">
-                        {t.companyTitle}
-                      </h3>
-                      <div className="space-y-2 text-gray-700 font-light">
-                        <p>{t.companyName}</p>
-                        <p>{t.businessId}</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Map */}
-                  <div className="mt-12">
-                    <h3 className="text-lg font-light text-gray-900 mb-4">
-                      {t.mapLabel}
-                    </h3>
-                    <div className="h-96 rounded-lg overflow-hidden">
-                      <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1984.2742908346392!2d24.94391521610656!3d60.164887881958975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46920bc8de21e969%3A0xb98ee1b9d2531ab!2sSnellman%20Sotheby's%20International%20Realty!5e0!3m2!1sfi!2sfi!4v1549539258229"
-                        width="100%" 
-                        height="100%" 
-                        style={{ border: 0 }} 
-                        allowFullScreen
-                        loading="lazy"
-                        referrerPolicy="no-referrer-when-downgrade"
-                      />
-                    </div>
-                  </div>
-                </div>
+        {/* Welcome Section with Contact Info */}
+        <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto text-center">
+              <h2 className="text-4xl font-light text-gray-900 mb-8">
+                {params.locale === 'fi' ? 'Tervetuloa onnistuneeseen asuntokauppaan!' : params.locale === 'sv' ? 'Välkommen till en framgångsrik bostadsaffär!' : 'Welcome to a successful property transaction!'}
+              </h2>
+              <p className="text-lg text-gray-700 font-light mb-8">
+                {params.locale === 'fi' ? 'Tervetuloa tapaamaan meitä, kuulemme mielellämme miten voimme palvella juuri sinua.' : params.locale === 'sv' ? 'Välkommen att träffa oss, vi hör gärna hur vi kan tjäna dig.' : 'Welcome to meet us, we are happy to hear how we can serve you.'}
+              </p>
+              <div className="text-lg text-gray-700 font-light">
+                <p className="mb-2">
+                  {params.locale === 'fi' ? 'Upea toimistomme palvelee teitä arkisin 10:00 – 17:00' : params.locale === 'sv' ? 'Vårt fantastiska kontor betjänar er vardagar 10:00 – 17:00' : 'Our beautiful office serves you on weekdays 10:00 – 17:00'}
+                </p>
+                <p>
+                  {params.locale === 'fi' ? 'sekä muina aikoina sopimuksen mukaan.' : params.locale === 'sv' ? 'samt övriga tider enligt överenskommelse.' : 'and at other times by appointment.'}
+                </p>
               </div>
             </div>
           </div>
@@ -435,41 +373,44 @@ export default function ContactPage({ params }: { params: { locale: Locale } }) 
           </div>
         </section>
 
-        {/* Office Location Section with Map */}
-        <section className="py-0">
-          <div className="grid md:grid-cols-2">
-            {/* Left Column - Office Info */}
-            <div className="bg-gray-100 p-12 md:p-16">
-              <h3 className="text-3xl font-light mb-6 text-gray-900">{t.officeImageTitle}</h3>
-              <div className="space-y-4 text-gray-700 font-light">
-                <p>{t.officeImageSubtitle}</p>
-                <div className="pt-4 space-y-2">
-                  <p className="font-medium">Kasarmikatu 34, 00130 Helsinki</p>
-                  <p>+358 (0)10 315 6900</p>
-                  <p>info@sothebysrealty.fi</p>
-                </div>
+        {/* Office Location Section */}
+        <section className="py-16 bg-[#001731] text-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <h3 className="text-3xl font-light mb-6">
+                {params.locale === 'fi' ? 'Helsingin Toimipisteemme' : params.locale === 'sv' ? 'Vårt kontor i Helsingfors' : 'Our Helsinki Office'}
+              </h3>
+              <div className="space-y-4 font-light leading-relaxed">
+                <p>
+                  {params.locale === 'fi' 
+                    ? 'Helsingin ydinkeskustassa sijaitsevassa toimistossamme tapaat joukon motivoituneita ja asiantuntevia välittäjiä, joiden päämääränä on tehdä unelmastasi totta.' 
+                    : params.locale === 'sv'
+                    ? 'I vårt kontor i centrala Helsingfors träffar du ett gäng motiverade och kunniga mäklare vars mål är att göra din dröm till verklighet.'
+                    : 'In our office in central Helsinki, you will meet a group of motivated and knowledgeable agents whose goal is to make your dream come true.'}
+                </p>
+                <p>
+                  {params.locale === 'fi'
+                    ? 'Toimistoamme ympäröi dynaaminen Kaartinkaupunki muotiputiikkeineen, fine-dine-ravintoloineen sekä korkeatasoisine hotelleineen.'
+                    : params.locale === 'sv'
+                    ? 'Vårt kontor omges av den dynamiska Gardesstaden med modebutiker, fine dining-restauranger och högklassiga hotell.'
+                    : 'Our office is surrounded by the dynamic Kaartinkaupunki district with fashion boutiques, fine dining restaurants and high-class hotels.'}
+                </p>
+                <p>
+                  {params.locale === 'fi'
+                    ? 'Kävelet toimistollemme vain muutamassa minuutissa Esplanadilta tai Senaatintorilta.'
+                    : params.locale === 'sv'
+                    ? 'Du går till vårt kontor på bara några minuter från Esplanaden eller Senatstorget.'
+                    : 'You can walk to our office in just a few minutes from Esplanadi or Senate Square.'}
+                </p>
                 <a 
                   href="https://goo.gl/maps/LjvLpXQFdT82" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="inline-block mt-4 text-gray-900 border border-gray-900 px-6 py-2 hover:bg-gray-900 hover:text-white transition-all"
+                  className="inline-block mt-6 border-2 border-white text-white px-6 py-2 hover:bg-white hover:text-[#001731] transition-all"
                 >
                   {params.locale === 'fi' ? 'Reittiohjeet' : params.locale === 'sv' ? 'Vägbeskrivning' : 'Directions'} →
                 </a>
               </div>
-            </div>
-            
-            {/* Right Column - Map */}
-            <div className="h-full min-h-[450px]">
-              <iframe 
-                loading="lazy" 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1984.9571707835125!2d24.94553971610621!3d60.164887881959004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46920bc8de21e969%3A0xb98ee1b9d2531ab!2sSnellman+Sotheby's+International+Realty!5e0!3m2!1sen!2sfi!4v1549539258229" 
-                width="100%" 
-                height="100%" 
-                frameBorder="0" 
-                style={{ border: 0, minHeight: '450px' }} 
-                allowFullScreen
-              />
             </div>
           </div>
         </section>
