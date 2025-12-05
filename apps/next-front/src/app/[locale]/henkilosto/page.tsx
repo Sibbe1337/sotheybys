@@ -269,13 +269,13 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
         </section>
 
         {/* Introduction Section */}
-        <section className="py-12 bg-[#5a7a94]">
+        <section className="py-12 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-3xl font-light text-white mb-6 whitespace-pre-line">
+              <h2 className="text-3xl font-light text-gray-900 mb-6 whitespace-pre-line">
                 {t.intro}
               </h2>
-              <p className="text-white font-light">
+              <p className="text-gray-700 font-light">
                 {t.welcome}
               </p>
             </div>
