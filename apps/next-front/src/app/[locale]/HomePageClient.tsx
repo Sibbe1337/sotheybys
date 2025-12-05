@@ -468,97 +468,77 @@ export default function HomePageClient({
           </div>
         </section>
 
-        {/* Four Image Links Section */}
+        {/* Three Image Links Section */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {/* References */}
-              <Link href="/kohteet/referenssit" className="relative h-80 group overflow-hidden block">
-                <Image
-                  src="/images/content/snellman-sothebys-referenssit.jpg"
-                  alt={language === 'fi' ? 'Referenssit' : language === 'sv' ? 'Referenser' : 'References'}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white p-6">
-                  <h3 className="text-xl font-light mb-3 text-center">
-                    {language === 'fi' ? 'Valikoima myydyistä kohteista' : language === 'sv' ? 'Urval av sålda objekt' : 'Selection of sold properties'}
-                  </h3>
-                  <span className="inline-block border-2 border-white text-white px-4 py-2
-                             group-hover:bg-white group-hover:text-[#1a3a4a] transition-all duration-300
-                             font-light uppercase tracking-wider text-xs"
-                  >
-                    {language === 'fi' ? 'Katso referenssit' : language === 'sv' ? 'Se referenser' : 'View references'}
-                  </span>
-                </div>
-              </Link>
+            <div className="max-w-5xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* References */}
+                <Link href="/kohteet/referenssit" className="relative h-80 group overflow-hidden block">
+                  <Image
+                    src="/images/content/snellman-sothebys-referenssit.jpg"
+                    alt={language === 'fi' ? 'Referenssit' : language === 'sv' ? 'Referenser' : 'References'}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white p-6">
+                    <h3 className="text-xl font-light mb-3 text-center">
+                      {language === 'fi' ? 'Valikoima myydyistä kohteista' : language === 'sv' ? 'Urval av sålda objekt' : 'Selection of sold properties'}
+                    </h3>
+                    <span className="inline-block border-2 border-white text-white px-4 py-2
+                               group-hover:bg-white group-hover:text-[#1a3a4a] transition-all duration-300
+                               font-light uppercase tracking-wider text-xs"
+                    >
+                      {language === 'fi' ? 'Katso referenssit' : language === 'sv' ? 'Se referenser' : 'View references'}
+                    </span>
+                  </div>
+                </Link>
 
-              {/* Rentals */}
-              <Link href="/kohteet/vuokrakohteet" className="relative h-80 group overflow-hidden block">
-                <Image
-                  src="/images/content/snellman-sothebys-vuokrakohteet.jpg"
-                  alt={language === 'fi' ? 'Vuokrakohteet' : language === 'sv' ? 'Hyresobjekt' : 'Rental properties'}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white p-6">
-                  <h3 className="text-xl font-light mb-3 text-center">
-                    {language === 'fi' ? 'Katso meidän uusimmat vuokrakohteet' : language === 'sv' ? 'Se våra senaste hyresobjekt' : 'View our latest rental properties'}
-                  </h3>
-                  <span className="inline-block border-2 border-white text-white px-4 py-2
-                             group-hover:bg-white group-hover:text-[#1a3a4a] transition-all duration-300
-                             font-light uppercase tracking-wider text-xs"
-                  >
-                    {language === 'fi' ? 'Vuokraa nyt' : language === 'sv' ? 'Hyr nu' : 'Rent now'}
-                  </span>
-                </div>
-              </Link>
+                {/* Rentals */}
+                <Link href="/kohteet/vuokrakohteet" className="relative h-80 group overflow-hidden block">
+                  <Image
+                    src="/images/content/snellman-sothebys-vuokrakohteet.jpg"
+                    alt={language === 'fi' ? 'Vuokrakohteet' : language === 'sv' ? 'Hyresobjekt' : 'Rental properties'}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white p-6">
+                    <h3 className="text-xl font-light mb-3 text-center">
+                      {language === 'fi' ? 'Katso meidän uusimmat vuokrakohteet' : language === 'sv' ? 'Se våra senaste hyresobjekt' : 'View our latest rental properties'}
+                    </h3>
+                    <span className="inline-block border-2 border-white text-white px-4 py-2
+                               group-hover:bg-white group-hover:text-[#1a3a4a] transition-all duration-300
+                               font-light uppercase tracking-wider text-xs"
+                    >
+                      {language === 'fi' ? 'Vuokraa nyt' : language === 'sv' ? 'Hyr nu' : 'Rent now'}
+                    </span>
+                  </div>
+                </Link>
 
-              {/* Careers */}
-              <Link href="/meille-toihin" className="relative h-80 group overflow-hidden block">
-                <Image
-                  src="/images/content/snellman-sothebys-nakoalapaikka.jpg"
-                  alt={language === 'fi' ? 'Työpaikat' : language === 'sv' ? 'Karriär' : 'Careers'}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white p-6">
-                  <h3 className="text-xl font-light mb-3 text-center">
-                    {language === 'fi' ? 'Näköalapaikka kansainväliseen kiinteistönvälitykseen' : language === 'sv' ? 'Utsiktsplats för internationell fastighetsförmedling' : 'International real estate career opportunity'}
-                  </h3>
-                  <span className="inline-block border-2 border-white text-white px-4 py-2
-                             group-hover:bg-white group-hover:text-[#1a3a4a] transition-all duration-300
-                             font-light uppercase tracking-wider text-xs"
-                  >
-                    {language === 'fi' ? 'Työskentele kanssamme' : language === 'sv' ? 'Arbeta med oss' : 'Work with us'}
-                  </span>
-                </div>
-              </Link>
-
-              {/* Selling - New 4th box */}
-              <Link href="/myymassa" className="relative h-80 group overflow-hidden block">
-                <Image
-                  src="/images/content/snellman-sothebys-kutsu-arviokaynnille.jpg"
-                  alt={language === 'fi' ? 'Myymässä' : language === 'sv' ? 'Till salu' : 'Selling'}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white p-6">
-                  <h3 className="text-xl font-light mb-3 text-center">
-                    {language === 'fi' ? 'Myy kanssamme' : language === 'sv' ? 'Sälj med oss' : 'Sell with us'}
-                  </h3>
-                  <span className="inline-block border-2 border-white text-white px-4 py-2
-                             group-hover:bg-white group-hover:text-[#1a3a4a] transition-all duration-300
-                             font-light uppercase tracking-wider text-xs"
-                  >
-                    {language === 'fi' ? 'Lue lisää' : language === 'sv' ? 'Läs mer' : 'Read more'}
-                  </span>
-                </div>
-              </Link>
+                {/* Careers */}
+                <Link href="/meille-toihin" className="relative h-80 group overflow-hidden block">
+                  <Image
+                    src="/images/content/snellman-sothebys-nakoalapaikka.jpg"
+                    alt={language === 'fi' ? 'Työpaikat' : language === 'sv' ? 'Karriär' : 'Careers'}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white p-6">
+                    <h3 className="text-xl font-light mb-3 text-center">
+                      {language === 'fi' ? 'Näköalapaikka kansainväliseen kiinteistönvälitykseen' : language === 'sv' ? 'Utsiktsplats för internationell fastighetsförmedling' : 'International real estate career opportunity'}
+                    </h3>
+                    <span className="inline-block border-2 border-white text-white px-4 py-2
+                               group-hover:bg-white group-hover:text-[#1a3a4a] transition-all duration-300
+                               font-light uppercase tracking-wider text-xs"
+                    >
+                      {language === 'fi' ? 'Työskentele kanssamme' : language === 'sv' ? 'Arbeta med oss' : 'Work with us'}
+                    </span>
+                  </div>
+                </Link>
+              </div>
             </div>
           </div>
         </section>
