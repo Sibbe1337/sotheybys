@@ -416,7 +416,7 @@ export default function HomePageClient({
         </section>
 
         {/* Luxury Outlook Report Section */}
-        <section className="relative py-8 md:py-10 overflow-hidden bg-[#16223c]">
+        <section className="relative overflow-hidden bg-[#16223c] h-[200px] md:h-[250px] flex items-center justify-center">
           {/* Background Image */}
           <div className="absolute inset-0">
             <Image
@@ -433,10 +433,10 @@ export default function HomePageClient({
           {/* Content */}
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-2xl mx-auto text-center">
-              <h2 className="text-xl md:text-2xl font-light text-white mb-3 [text-shadow:_0_2px_4px_rgb(0_0_0_/40%)]">
+              <h2 className="text-xl md:text-2xl font-light text-white mb-2 md:mb-3 [text-shadow:_0_2px_4px_rgb(0_0_0_/40%)]">
                 2025 Luxury Outlook℠
               </h2>
-              <p className="text-xs md:text-sm text-white/90 font-light leading-relaxed mb-4 [text-shadow:_0_1px_2px_rgb(0_0_0_/40%)]">
+              <p className="text-xs md:text-sm text-white/90 font-light leading-snug mb-3 md:mb-4 [text-shadow:_0_1px_2px_rgb(0_0_0_/40%)]">
                 {language === 'fi' 
                   ? 'Vuoden 2025 Luxury Outlook℠ tutkii keskeisiä, tulevaisuuteen suuntautuvia kysymyksiä, jotka muokkaavat luksusasuntomarkkinoita ympäri maailmaa.'
                   : language === 'sv'
@@ -447,7 +447,7 @@ export default function HomePageClient({
                 href="https://www.sothebysrealty.com/eng/luxury-outlook"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block border border-white text-white px-5 py-1.5
+                className="inline-block border border-white text-white px-4 md:px-5 py-1 md:py-1.5
                          hover:bg-white hover:text-[#5a7a94] transition-colors duration-300
                          font-light tracking-wide text-[10px] md:text-xs uppercase"
               >
