@@ -319,7 +319,7 @@ export default function InternationalPage({ params }: { params: { locale: Locale
               <div className="group">
                 <div className="h-64 relative overflow-hidden">
                   <Image
-                    src="/images/international/estonia-tallinn.jpg"
+                    src="/images/international/snellman-sothebys-international-kakumae-web-768x480.jpg"
                     alt="Estonia"
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
