@@ -1,6 +1,5 @@
 import { Link } from '@/lib/navigation';
 import Image from 'next/image';
-import { VideoSection } from '@/components/ui/VideoSection';
 import { locales, type Locale } from '@/i18n/config';
 
 export const dynamic = 'force-static';
@@ -270,27 +269,6 @@ export default function CompanyPage({ params }: { params: { locale: Locale } }) 
             </div>
           </div>
         </section>
-
-        {/* Brand Story Videos */}
-        <VideoSection 
-          videoId="BN8B-USaKeE"
-          title={t.brandStory1Title}
-          subtitle={t.brandStory1Subtitle}
-          className="bg-gray-50"
-        />
-
-        <VideoSection 
-          videoId="hwaaNQ-m9fk"
-          title={t.brandStory2Title}
-          subtitle={t.brandStory2Subtitle}
-        />
-
-        <VideoSection 
-          videoId="xdlWMvz6dlY"
-          title={t.brandStory3Title}
-          subtitle={t.brandStory3Subtitle}
-          className="bg-gray-50"
-        />
 
         {/* CTA Section */}
         <section className="py-16 bg-gray-100">
