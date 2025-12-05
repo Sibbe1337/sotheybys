@@ -38,6 +38,10 @@ const translations = {
     relationshipText1: 'Toivomme, että yhteistyö kanssamme on aina pitkäaikainen suhde henkilökohtaisella tasolla. Pidämme jokaista asiakastamme ainutlaatuisena ja arvokkaana kaikilta osa-alueilta. Meillä kaikilla on erilaiset tarpeet ja toiveet, keskustelemme ja räätälöimme asiakkaidemme toiveiden ja vaatimusten mukaan. Tehtävämme on tehdä unelmastasi totta.',
     relationshipText2: 'Snellman Sotheby\'s International Realty Finland kuuluu yhdeksi maailman arvostetuimmista kiinteistönvälitysketjuista. Jäsenyys Sotheby\'s International Realty®:ssä merkitsee jäsenyyttä globaalissa verkostossa, jolla on laaja asiantuntemus, elintärkeät kontaktit, poikkeukselliset myyntikanavat sekä pääsy tehokkaimpiin markkinointikanaviin.',
     relationshipText3: 'Olemme erikoistuneet luksus- ja arvoasuntoihin, ja tarjoamme sinulle markkinoiden haluttuimpia koteja. Kokeneet tiimimme jäsenet kunnioittavat aina mahdollisuutta jakaa asiantuntemuksensa kanssasi, ja haluamme olla mukana prosessissa alusta loppuun. Takaamme pääsyn uusimpiin markkinointikanaviin, oikeaan asiakasverkostoon, korkeimpaan mahdolliseen hintaan ja tietysti kokemuksen, jonka muistat mielellään.',
+    servicesTitle: 'Palvelumme',
+    servicesText1: 'Haluamme olla mukana elämäsi suuressa taloudellisessa päätöksenteossa, sen vaatimalla arvokkuudella. Voit aina olla vakuuttunut siitä, että saat asiantuntivimmat sekä luottamuksellisemmat neuvot kokeneilta välittäjiltämme.',
+    servicesText2: 'Haluamme olla osa koko myyntiprosessia, aina maksuttomasta arviointikäynnistä kauppaan saakka. Tinkimätön tavoitteemme on, että yhteistyö on hedelmällistä ja että kaikki asiakkaamme palaavat meille tulevaisuudessakin.',
+    servicesText3: 'Pyydä palvelutarjous maksuttomalla arviokäynnillä.',
     promiseTitle: 'Palvelulupauksemme',
     promiseText1: 'Haluamme tukea sinua, kun olet tekemässä yhtä elämäsi tärkeimmistä taloudellisista päätöksistä ja varmistaa, että teet oikean valinnan. Takaamme, että saat kokeneiden asiantuntijoidemme mielipiteen ja tuen koko prosessin ajan. Korkein toiveemme on, että kaikki asiakkaamme tuntevat olonsa mukavaksi kanssamme ja että yhteistyö tulevaisuudessa on luonnollinen päätös jokaiselle asiakkaallemme.',
     promiseText2: 'Älä unohda pyytää palvelutarjousta.',
@@ -351,12 +355,106 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
           </div>
         </section>
 
-        {/* Palveluhinnasto Section */}
-        <section className="py-16 bg-gray-100">
+        {/* Palvelumme Section - 2 columns */}
+        <section className="py-0">
+          <div className="w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-2">
+              {/* Left Column - Palvelumme */}
+              <div style={{ backgroundColor: '#FFFFFF' }} className="p-8 lg:p-16">
+                <h2 className="text-3xl font-light text-gray-900 mb-6 text-right">
+                  {t.servicesTitle}
+                </h2>
+                <div className="space-y-4 text-gray-700 font-light leading-relaxed text-right">
+                  <p>{t.servicesText1}</p>
+                  <p>{t.servicesText2}</p>
+                  <p>{t.servicesText3}</p>
+                </div>
+              </div>
+
+              {/* Right Column - Palveluhinnasto */}
+              <div style={{ backgroundColor: '#CCCCCC' }} className="p-8 lg:p-16">
+                <h2 className="text-3xl font-light text-gray-900 mb-6">
+                  {t.pricingTitle}
+                </h2>
+              
+                <div>
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr>
+                        <th className="text-left pb-2 font-normal text-gray-900">{t.pricingBroker}</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody className="text-gray-700">
+                      <tr>
+                        <td className="py-2 font-light pl-4">{t.pricingApartments}</td>
+                        <td className="py-2 text-right font-bold">5 % sis. alv 25,5%*</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 font-light pl-4">{t.pricingProperties}</td>
+                        <td className="py-2 text-right font-bold">6 % sis. alv 25,5%*</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 font-light pl-4">{t.pricingRemote}</td>
+                        <td className="py-2 text-right font-bold">7 % sis. alv 25,5%*</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 font-light">{t.pricingRental}</td>
+                        <td className="py-2 text-right font-bold">2 kk vuokra sis. alv 25,5%*</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 font-light">{t.pricingMinimum}</td>
+                        <td className="py-2 text-right font-bold">5750 € sis. alv 25,5%*</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 font-light">{t.pricingInternational}</td>
+                        <td className="py-2 text-right font-bold">+0,50 % sis. alv 25,5%**</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  
+                  <table className="w-full mt-6 text-sm">
+                    <thead>
+                      <tr>
+                        <th className="text-left pb-2 font-normal text-gray-900">{t.pricingStartFee}</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody className="text-gray-700">
+                      <tr>
+                        <td className="py-2 font-light pl-4">{t.pricingApartments}</td>
+                        <td className="py-2 text-right font-bold">Alkaen 500 € sis. alv 25,5%*</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 font-light pl-4">{t.pricingPropertiesRemote}</td>
+                        <td className="py-2 text-right font-bold">Alkaen 3000 € sis. alv 25,5%*</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  
+                  <div className="mt-6 text-xs text-gray-600 font-light">
+                    <p><strong>{t.pricingNote1}</strong></p>
+                    <p><strong>{t.pricingNote2}</strong></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Video Section */}
+        <VideoSection 
+          videoId="hdXkBWw9wk0"
+          title={t.videoTitle}
+          subtitle={t.videoSubtitle}
+        />
+
+        {/* Consumer Dispute Section - Temporarily Hidden to remove old Palveluhinnasto */}
+        <section style={{ display: 'none' }} className="py-0 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl font-light text-gray-900 mb-8">
-                {t.pricingTitle}
+                REMOVE THIS
               </h2>
               
               <div>
