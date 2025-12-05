@@ -373,7 +373,6 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
                 <div className="space-y-4 text-gray-700 font-light leading-relaxed text-right">
                   <p>{t.servicesText1}</p>
                   <p>{t.servicesText2}</p>
-                  <p>{t.servicesText3}</p>
                 </div>
               </div>
 
