@@ -482,7 +482,7 @@ export default function HomePageClient({
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white p-6">
+                  <div className="absolute inset-0 bg-black bg-opacity-25 flex flex-col items-center justify-center text-white p-6">
                     <h3 className="text-xl font-light mb-3 text-center">
                       {language === 'fi' ? 'Valikoima myydyistä kohteista' : language === 'sv' ? 'Urval av sålda objekt' : 'Selection of sold properties'}
                     </h3>
@@ -504,7 +504,7 @@ export default function HomePageClient({
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white p-6">
+                  <div className="absolute inset-0 bg-black bg-opacity-25 flex flex-col items-center justify-center text-white p-6">
                     <h3 className="text-xl font-light mb-3 text-center">
                       {language === 'fi' ? 'Katso meidän uusimmat vuokrakohteet' : language === 'sv' ? 'Se våra senaste hyresobjekt' : 'View our latest rental properties'}
                     </h3>
@@ -526,7 +526,7 @@ export default function HomePageClient({
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white p-6">
+                  <div className="absolute inset-0 bg-black bg-opacity-25 flex flex-col items-center justify-center text-white p-6">
                     <h3 className="text-xl font-light mb-3 text-center">
                       {language === 'fi' ? 'Näköalapaikka kansainväliseen kiinteistönvälitykseen' : language === 'sv' ? 'Utsiktsplats för internationell fastighetsförmedling' : 'International real estate career opportunity'}
                     </h3>
