@@ -416,7 +416,7 @@ export default function HomePageClient({
         </section>
 
         {/* Luxury Outlook Report Section */}
-        <section className="relative py-16 overflow-hidden">
+        <section className="relative py-20 overflow-hidden bg-[#16223c]">
           {/* Background Image */}
           <div className="absolute inset-0">
             <Image
@@ -432,11 +432,11 @@ export default function HomePageClient({
           
           {/* Content */}
           <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-3xl lg:text-4xl font-light text-white mb-6">
+            <div className="max-w-3xl mx-auto text-center">
+              <h2 className="text-4xl font-light text-white mb-6 [text-shadow:_0_2px_4px_rgb(0_0_0_/40%)]">
                 2025 Luxury Outlook℠
               </h2>
-              <p className="text-lg text-white font-light leading-relaxed mb-8">
+              <p className="text-base text-white/90 font-light leading-relaxed mb-8 [text-shadow:_0_1px_2px_rgb(0_0_0_/40%)]">
                 {language === 'fi' 
                   ? 'Vuoden 2025 Luxury Outlook℠ tutkii keskeisiä, tulevaisuuteen suuntautuvia kysymyksiä, jotka muokkaavat luksusasuntomarkkinoita ympäri maailmaa.'
                   : language === 'sv'
@@ -448,8 +448,8 @@ export default function HomePageClient({
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block border-2 border-white text-white px-8 py-3
-                         hover:bg-white hover:text-black transition-colors duration-300
-                         font-light uppercase tracking-wider text-sm"
+                         hover:bg-white hover:text-[#5a7a94] transition-colors duration-300
+                         font-light tracking-wider text-sm uppercase"
               >
                 {language === 'fi' ? 'LUE KOKO 2025 LUXURY OUTLOOK℠ -RAPORTTI ›' : language === 'sv' ? 'LÄS HELA 2025 LUXURY OUTLOOK℠-RAPPORTEN ›' : 'READ THE FULL 2025 LUXURY OUTLOOK℠ REPORT ›'}
               </a>
