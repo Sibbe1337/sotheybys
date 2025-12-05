@@ -315,6 +315,37 @@ export default function InternationalPage({ params }: { params: { locale: Locale
                 </div>
               </div>
 
+              {/* Estonia */}
+              <div className="group">
+                <div className="h-64 relative overflow-hidden">
+                  <Image
+                    src="/images/international/estonia-tallinn.jpg"
+                    alt="Estonia"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-2xl font-light text-gray-900 mb-2">Estonia</h3>
+                  <p className="text-sm text-gray-600 font-light italic mb-3">
+                    Living in Estonia<br />
+                    by: Iyna Bort Caruso
+                  </p>
+                  <p className="text-gray-700 font-light text-sm leading-relaxed mb-4">
+                    Estonia withstood centuries of foreign rule including the Danes, Swedes, Germans and Russians – both Tsarist and Soviet, the last Russian troops left in 1994. Today the smallest of the Baltic States is a member of the European Union and NATO. It is especially proud of its high tech culture. It also has one of the world's longest paid maternity leaves.<br /><br />
+                    Estonia lies on the shores of the Baltic Sea, a ferry ride from Finland and Sweden and a three-hour flight or less to most major European cities. The republic is made up of 15 counties and more than 2,000 islands, most of them small in size with tiny populations to match...
+                  </p>
+                  <a 
+                    href="https://www.sothebysrealty.com/eng/destinations/estonia"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[var(--color-primary)] hover:underline font-light text-sm"
+                  >
+                    {t.readMore}
+                  </a>
+                </div>
+              </div>
+
               {/* French Riviera */}
               <div className="group">
                 <div className="h-64 relative overflow-hidden">
