@@ -419,11 +419,12 @@ export default function HomePageClient({
         <section className="relative overflow-hidden bg-[#16223c]" style={{ paddingTop: '40px', paddingBottom: '40px' }}>
           {/* Background Image */}
           <div 
-            className="absolute inset-0 bg-cover bg-scroll"
+            className="absolute inset-0 bg-scroll"
             style={{
               backgroundImage: 'url(/images/content/luxury-outlook-2025.jpg)',
               backgroundPosition: '50% -94px',
-              backgroundRepeat: 'no-repeat'
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: '100% auto'
             }}
           >
             {/* Overlay */}
