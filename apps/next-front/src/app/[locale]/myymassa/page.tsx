@@ -108,6 +108,9 @@ const translations = {
     disputeTitle: 'Konsumenttvist',
     disputeText: 'En tvist som rör avtalet kan tas upp för konsumenttvistnämnden.',
     disputeLink: 'Mer information på:',
+    servicesTitle: 'Våra tjänster',
+    servicesText1: 'Vi vet att försäljning av en bostad är ett av livets viktigaste ekonomiska beslut. Därför garanterar vi att du får stöd från våra erfarna experter under hela processen.',
+    servicesText2: 'Vårt servicelöfte bygger på transparens, professionalitet och en långsiktig kundrelation. Vi vill att varje kund känner sig trygg med oss.',
   },
   en: {
     title: 'Selling',
@@ -154,6 +157,9 @@ const translations = {
     disputeTitle: 'Consumer Dispute',
     disputeText: 'A dispute concerning the contract can be submitted to the Consumer Disputes Board.',
     disputeLink: 'More information at:',
+    servicesTitle: 'Our Services',
+    servicesText1: 'We know that selling a property is one of life\'s most important financial decisions. That\'s why we guarantee that you will receive support from our experienced experts throughout the process.',
+    servicesText2: 'Our service promise is based on transparency, professionalism and a long-term customer relationship. We want every customer to feel secure with us.',
   },
 };
 
