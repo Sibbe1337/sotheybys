@@ -179,8 +179,8 @@ export default function ContactPage({ params }: { params: { locale: Locale } }) 
           <div className="absolute inset-0 bg-[var(--color-primary)]/60"></div>
           <div className="relative z-10 text-center px-4 max-w-4xl">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-thin mb-8">
-              {t.title}
-            </h1>
+                {t.title}
+              </h1>
           </div>
         </section>
 
@@ -398,7 +398,7 @@ export default function ContactPage({ params }: { params: { locale: Locale } }) 
                 {staffMembers.map((member) => (
                   <div key={member.id} className="text-center">
                     <div className="relative mb-3 mx-auto" style={{ width: '140px', height: '180px' }}>
-                      <Image
+                <Image
                         src={member.image}
                         alt={member.name}
                         fill

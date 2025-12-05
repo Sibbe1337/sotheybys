@@ -135,14 +135,14 @@ export default function CompanyPage({ params }: { params: { locale: Locale } }) 
           <div className="absolute inset-0 bg-black/50"></div>
           <div className="relative z-10 text-center px-4 max-w-4xl">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-thin mb-6">
-              {t.heroTitle}
-            </h1>
+                {t.heroTitle}
+              </h1>
             <p className="text-lg lg:text-xl font-light mb-6">
-              {t.heroSubtitle}
-            </p>
+                {t.heroSubtitle}
+              </p>
             <p className="text-sm lg:text-base font-light opacity-80">
-              {t.heroStats}
-            </p>
+                {t.heroStats}
+              </p>
           </div>
         </section>
 

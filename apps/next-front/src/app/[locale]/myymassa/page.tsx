@@ -313,12 +313,12 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
                 </div>
                 
                 <h2 className="text-xl font-semibold text-gray-900 mb-4 leading-relaxed">
-                  {t.relationshipTitle}
-                </h2>
+                {t.relationshipTitle}
+              </h2>
                 <div className="space-y-4 text-gray-700 font-light leading-relaxed text-base">
-                  <p>{t.relationshipText1}</p>
-                  <p>{t.relationshipText2}</p>
-                  <p>{t.relationshipText3}</p>
+                <p>{t.relationshipText1}</p>
+                <p>{t.relationshipText2}</p>
+                <p>{t.relationshipText3}</p>
                 </div>
               </div>
             </div>

@@ -396,7 +396,7 @@ export default function HomePageClient({
                     and at other times by appointment.
                   </>
                 )}
-              </h3>
+            </h3>
               <div className="mt-8 flex flex-col md:flex-row justify-center items-center gap-6 text-gray-700">
                 <a href="tel:+358103156900" className="text-lg hover:text-[var(--color-primary)] transition-colors font-light">
                   +358 (0)10 315 6900
@@ -420,7 +420,7 @@ export default function HomePageClient({
           {/* Background Image */}
           <div className="absolute inset-0">
             <Image
-              src="/images/content/luxury-outlook-bg.jpg"
+              src="/images/content/luxury-outlook-2025.jpg"
               alt="2025 Luxury Outlook Background"
               fill
               className="object-cover"
@@ -688,7 +688,7 @@ export default function HomePageClient({
                                          font-normal uppercase tracking-wide whitespace-nowrap flex-shrink-0 ml-2"
                               >
                                 {language === 'fi' ? 'OTA YHTEYTTÄ' : language === 'sv' ? 'KONTAKTA' : 'CONTACT'}
-                              </a>
+                  </a>
                             </div>
                           )}
                           
@@ -799,7 +799,7 @@ export default function HomePageClient({
                   className="inline-block bg-[#002349] text-white px-8 py-3
                            hover:bg-[#001731] transition-colors duration-300
                            font-light uppercase tracking-wider text-sm"
-                >
+                  >
                   {language === 'fi' ? 'Kaikki vuokrakohteemme' : language === 'sv' ? 'Alla våra hyresobjekt' : 'All our rental properties'}
                 </Link>
               </div>
@@ -943,8 +943,8 @@ export default function HomePageClient({
             <div className="max-w-2xl mx-auto">
               <div className="text-center mb-8">
                 <h2 className="text-3xl lg:text-4xl font-light text-white mb-4">
-                  {getHomepageTranslation('subscribeNewsletter', language)}
-                </h2>
+                {getHomepageTranslation('subscribeNewsletter', language)}
+              </h2>
                 <p className="text-lg text-white/80 font-light">
                   {language === 'fi' 
                     ? 'Oletko kiinnostunut arvokodeista ja uniikeista kiinteistöistä? Tilaa uutiskirjeemme, niin pysyt ajan tasalla.'
@@ -955,18 +955,18 @@ export default function HomePageClient({
               </div>
               <form className="space-y-4 bg-white/10 backdrop-blur-sm p-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input
-                    type="text"
-                    placeholder={getHomepageTranslation('firstName', language)}
+                <input
+                  type="text"
+                  placeholder={getHomepageTranslation('firstName', language)}
                     className="w-full px-4 py-3 bg-white border border-gray-300 focus:outline-none focus:border-[var(--color-primary)] font-light"
                     required
-                  />
-                  <input
-                    type="text"
-                    placeholder={getHomepageTranslation('lastName', language)}
+                />
+                <input
+                  type="text"
+                  placeholder={getHomepageTranslation('lastName', language)}
                     className="w-full px-4 py-3 bg-white border border-gray-300 focus:outline-none focus:border-[var(--color-primary)] font-light"
                     required
-                  />
+                />
                 </div>
                 <input
                   type="email"

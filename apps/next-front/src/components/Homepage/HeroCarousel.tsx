@@ -88,17 +88,17 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                 <source src={slide.video} type="video/mp4" />
               </video>
             ) : slide.image ? (
-              <Image
-                src={slide.image}
-                alt={slide.title}
-                fill
-                sizes="100vw"
-                className={`object-cover transition-transform duration-[20s] ease-out ${
-                  index === currentSlide ? 'scale-110' : 'scale-100'
-                }`}
-                priority={index === 0}
-                quality={90}
-              />
+            <Image
+              src={slide.image}
+              alt={slide.title}
+              fill
+              sizes="100vw"
+              className={`object-cover transition-transform duration-[20s] ease-out ${
+                index === currentSlide ? 'scale-110' : 'scale-100'
+              }`}
+              priority={index === 0}
+              quality={90}
+            />
             ) : null}
             {/* Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
@@ -153,35 +153,35 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                     }`}
                     style={{ transitionDelay: (!hasInitialized && index === 0) ? '0ms' : '600ms' }}
                   >
-                    <a
+                      <a
                       href={slide.buttonLink.startsWith('#') ? slide.buttonLink : `/${locale}${slide.buttonLink}`}
-                      className="group inline-flex items-center gap-3 text-white border border-white 
-                               px-8 py-4 transition-all duration-300 
-                               font-light tracking-wider uppercase text-sm relative overflow-hidden
+                        className="group inline-flex items-center gap-3 text-white border border-white 
+                                 px-8 py-4 transition-all duration-300 
+                                 font-light tracking-wider uppercase text-sm relative overflow-hidden
                                hover:border-white cursor-pointer"
                       style={{ position: 'relative', zIndex: 50 }}
-                    >
-                      <span className="relative z-10 transition-colors duration-300 group-hover:text-[#002349]">
-                        {slide.buttonText}
-                      </span>
-                      <svg 
-                        className="w-5 h-5 transform transition-all duration-300 group-hover:translate-x-1 relative z-10 group-hover:text-[#002349]" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        viewBox="0 0 24 24"
                       >
-                        <path 
-                          strokeLinecap="round" 
-                          strokeLinejoin="round" 
-                          strokeWidth={1.5} 
-                          d="M17 8l4 4m0 0l-4 4m4-4H3" 
-                        />
-                      </svg>
-                      <span 
-                        className="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 
+                        <span className="relative z-10 transition-colors duration-300 group-hover:text-[#002349]">
+                          {slide.buttonText}
+                        </span>
+                        <svg 
+                          className="w-5 h-5 transform transition-all duration-300 group-hover:translate-x-1 relative z-10 group-hover:text-[#002349]" 
+                          fill="none" 
+                          stroke="currentColor" 
+                          viewBox="0 0 24 24"
+                        >
+                          <path 
+                            strokeLinecap="round" 
+                            strokeLinejoin="round" 
+                            strokeWidth={1.5} 
+                            d="M17 8l4 4m0 0l-4 4m4-4H3" 
+                          />
+                        </svg>
+                        <span 
+                          className="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 
                                  transition-transform duration-300 ease-out origin-left pointer-events-none" 
-                      />
-                    </a>
+                        />
+                      </a>
                   </div>
                 )}
               </div>

@@ -111,13 +111,13 @@ export default function FooterWithTeam({ contact, social, logo }: FooterProps = 
                     rel="noopener noreferrer"
                     className="inline-block"
                   >
-                    <Image 
+                      <Image 
                       src="/images/logos/skvla-logo-real.png"
                       alt="Suomen Kiinteistönvälittäjät SKVLA - Noudatamme hyvää välitystapaa"
                       width={280}
                       height={80}
                       className="opacity-80 hover:opacity-100 transition-opacity"
-                    />
+                      />
                   </a>
                 </div>
 
