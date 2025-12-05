@@ -212,12 +212,12 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
           </div>
         </section>
 
-        {/* Form and Mission Section - 4 columns on desktop like original site */}
+        {/* Form and Mission Section - 2x2 grid on desktop like original site */}
         <section className="py-0">
           <div className="w-full">
-            <div className="grid grid-cols-1 lg:grid-cols-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2">
               {/* Box 1: Valuation Form - Gray background (#CCC) */}
-              <div style={{ backgroundColor: '#CCCCCC' }} className="p-8 lg:p-12">
+              <div style={{ backgroundColor: '#CCCCCC' }} className="p-8 lg:p-16">
                 <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-6">
                   {t.formTitle}
                 </h2>
@@ -302,7 +302,7 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
               </div>
 
               {/* Box 2: Kunniatehtävä - White background (#FFF) */}
-              <div style={{ backgroundColor: '#FFFFFF' }} className="p-8 lg:p-12">
+              <div style={{ backgroundColor: '#FFFFFF' }} className="p-8 lg:p-16">
                 <h2 className="text-2xl font-light text-gray-900 mb-6">
                   {t.honorTitle}
                 </h2>
@@ -314,7 +314,7 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
               </div>
 
               {/* Box 3: Arvokas asiakassuhde - White background (#FFF) */}
-              <div style={{ backgroundColor: '#FFFFFF' }} className="p-8 lg:p-12">
+              <div style={{ backgroundColor: '#FFFFFF' }} className="p-8 lg:p-16">
                 <h2 className="text-2xl font-light text-gray-900 mb-6">
                   {t.relationshipTitle}
                 </h2>
@@ -326,7 +326,7 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
               </div>
 
               {/* Box 4: Palvelulupauksemme - Gray background (#CCC) */}
-              <div style={{ backgroundColor: '#CCCCCC' }} className="p-8 lg:p-12">
+              <div style={{ backgroundColor: '#CCCCCC' }} className="p-8 lg:p-16">
                 <h2 className="text-2xl font-light text-gray-900 mb-6">
                   {t.promiseTitle}
                 </h2>
