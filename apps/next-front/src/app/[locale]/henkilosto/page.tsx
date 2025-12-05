@@ -215,14 +215,15 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
         <section 
           className="relative h-[500px] flex items-center justify-center text-white"
           style={{
-            backgroundImage: 'url("/images/international/henkilosto_34.jpg")',
+            backgroundImage: 'url(/images/content/snellman-sothebys-yritys-01.jpg)',
             backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat',
+            backgroundAttachment: 'fixed'
           }}
         >
-          <div className="absolute inset-0 bg-[var(--color-primary)]/60"></div>
           <div className="relative z-10 text-center px-4 max-w-4xl">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-thin mb-8">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-light text-white">
               {t.title}
             </h1>
           </div>
@@ -268,13 +269,13 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
         </section>
 
         {/* Introduction Section */}
-        <section className="py-12 bg-white">
+        <section className="py-12 bg-[#5a7a94]">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-3xl font-light text-gray-900 mb-6 whitespace-pre-line">
+              <h2 className="text-3xl font-light text-white mb-6 whitespace-pre-line">
                 {t.intro}
               </h2>
-              <p className="text-gray-600 font-light">
+              <p className="text-white font-light">
                 {t.welcome}
               </p>
             </div>
