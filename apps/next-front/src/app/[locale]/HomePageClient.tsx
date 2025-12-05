@@ -418,14 +418,14 @@ export default function HomePageClient({
         {/* Luxury Outlook Report Section */}
         <section className="relative overflow-hidden bg-[#16223c] py-16">
           {/* Background Image */}
-          <div className="absolute inset-0">
-            <Image
-              src="/images/content/luxury-outlook-2025.jpg"
-              alt="2025 Luxury Outlook Background"
-              fill
-              className="object-cover object-center"
-              priority={false}
-            />
+          <div 
+            className="absolute inset-0 bg-cover bg-scroll"
+            style={{
+              backgroundImage: 'url(/images/content/luxury-outlook-2025.jpg)',
+              backgroundPosition: '50% -94px',
+              backgroundRepeat: 'no-repeat'
+            }}
+          >
             {/* Overlay */}
             <div className="absolute inset-0 bg-black/25"></div>
           </div>
