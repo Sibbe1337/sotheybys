@@ -172,6 +172,7 @@ export default function CompanyPage({ params }: { params: { locale: Locale } }) 
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover grayscale"
+                  priority
                 />
                 <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white p-8">
                   <h3 className="text-2xl font-light mb-4 text-center">
@@ -196,6 +197,7 @@ export default function CompanyPage({ params }: { params: { locale: Locale } }) 
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover"
+                  priority
                 />
                 <div className="absolute inset-0 bg-[#002349]/60 flex flex-col items-center justify-center text-white p-8">
                   <h3 className="text-2xl font-light mb-4 text-center">
@@ -218,6 +220,7 @@ export default function CompanyPage({ params }: { params: { locale: Locale } }) 
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover grayscale"
+                  priority
                 />
                 <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white p-8">
                   <h3 className="text-2xl font-light mb-4 text-center">
