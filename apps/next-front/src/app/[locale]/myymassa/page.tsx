@@ -233,13 +233,13 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
                     <input
                       type="text"
                       placeholder={t.firstName}
-                      className="w-full px-4 py-3 bg-white border border-gray-300 focus:outline-none focus:border-[var(--color-primary)] font-light"
+                      className="w-full px-4 py-3 bg-white border-0 focus:outline-none font-light text-center"
                       required
                     />
                     <input
                       type="text"
                       placeholder={t.lastName}
-                      className="w-full px-4 py-3 bg-white border border-gray-300 focus:outline-none focus:border-[var(--color-primary)] font-light"
+                      className="w-full px-4 py-3 bg-white border-0 focus:outline-none font-light text-center"
                       required
                     />
                   </div>
@@ -248,21 +248,21 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
                     <input
                       type="email"
                       placeholder={t.email}
-                      className="w-full px-4 py-3 bg-white border border-gray-300 focus:outline-none focus:border-[var(--color-primary)] font-light"
+                      className="w-full px-4 py-3 bg-white border-0 focus:outline-none font-light text-center"
                       required
                     />
                     <input
                       type="tel"
                       placeholder={t.phone}
-                      className="w-full px-4 py-3 bg-white border border-gray-300 focus:outline-none focus:border-[var(--color-primary)] font-light"
+                      className="w-full px-4 py-3 bg-white border-0 focus:outline-none font-light text-center"
                       required
                     />
                   </div>
                   
                   <textarea
                     placeholder={t.message}
-                    rows={6}
-                    className="w-full px-4 py-3 bg-white border border-gray-300 focus:outline-none focus:border-[var(--color-primary)] font-light resize-none"
+                    rows={5}
+                    className="w-full px-4 py-3 bg-white border-0 focus:outline-none font-light resize-none text-center"
                   />
                   
                   <div className="flex items-start gap-3">
@@ -291,10 +291,22 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
                     </label>
                   </div>
                   
+                  <p className="text-xs text-white font-light">
+                    Tämän sivun suojaa reCAPTCHA, mikä tarkoittaa, että Googlen{' '}
+                    <a href="https://policies.google.com/privacy?hl=fi" target="_blank" rel="noopener noreferrer" className="text-white underline">
+                      tietosuojakäytännöt
+                    </a>{' '}
+                    ja{' '}
+                    <a href="https://policies.google.com/terms?hl=fi" target="_blank" rel="noopener noreferrer" className="text-white underline">
+                      käyttöehdot
+                    </a>{' '}
+                    ovat voimassa.
+                  </p>
+                  
                   <button
                     type="submit"
                     className="w-full bg-[var(--color-primary)] text-white px-6 py-3 hover:bg-[var(--color-primary-dark)] 
-                             transition-colors duration-300 font-light"
+                             transition-colors duration-300 font-light text-center"
                   >
                     {t.submitButton}
                   </button>
