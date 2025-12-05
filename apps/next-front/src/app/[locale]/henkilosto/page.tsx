@@ -496,9 +496,9 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
         <section className="py-0">
           <div className="grid md:grid-cols-2">
             {/* Left Column - Office Info */}
-            <div className="bg-gray-100 p-12 md:p-16">
-              <h3 className="text-3xl font-light mb-6 text-gray-900">{t.officeTitle}</h3>
-              <div className="space-y-4 text-gray-700 font-light">
+            <div className="p-12 md:p-16" style={{ backgroundColor: '#001731' }}>
+              <h3 className="text-3xl font-light mb-6 text-white">{t.officeTitle}</h3>
+              <div className="space-y-4 text-white font-light">
                 <p>
                   {t.officeDesc1}
                 </p>
@@ -512,7 +512,7 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
                   href="https://goo.gl/maps/LjvLpXQFdT82" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="inline-block mt-4 text-gray-900 border border-gray-900 px-6 py-2 hover:bg-gray-900 hover:text-white transition-all"
+                  className="inline-block mt-4 text-white border border-white px-6 py-2 hover:bg-white hover:text-[#001731] transition-all"
                 >
                   {t.directions} →
                 </a>
