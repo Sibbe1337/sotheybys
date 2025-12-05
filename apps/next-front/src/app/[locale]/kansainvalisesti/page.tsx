@@ -2,7 +2,6 @@
 
 import { Link } from '@/lib/navigation';
 import Image from 'next/image';
-import { VideoSection } from '@/components/ui/VideoSection';
 import { type Locale } from '@/i18n/config';
 
 // 🔥 LINUS FIX: Translations for international page
@@ -596,13 +595,6 @@ export default function InternationalPage({ params }: { params: { locale: Locale
             </div>
           </div>
         </section>
-
-        {/* Video Section */}
-        <VideoSection 
-          videoId="Q9xlSscTaYU"
-          title={t.videoTitle}
-          subtitle={t.videoSubtitle}
-        />
       </main>
     </div>
   );
