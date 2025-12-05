@@ -481,7 +481,6 @@ export default function HomePageClient({
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    unoptimized
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white p-6">
                     <h3 className="text-xl font-light mb-3 text-center">
@@ -504,7 +503,6 @@ export default function HomePageClient({
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    unoptimized
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white p-6">
                     <h3 className="text-xl font-light mb-3 text-center">
@@ -527,7 +525,6 @@ export default function HomePageClient({
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    unoptimized
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white p-6">
                     <h3 className="text-xl font-light mb-3 text-center">
