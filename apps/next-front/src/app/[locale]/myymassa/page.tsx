@@ -172,7 +172,7 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
         <section 
           className="relative h-[600px] flex items-center justify-center text-white"
           style={{
-            backgroundImage: 'url("/images/content/snellman-sothebys-merry-christmas-2023-web.jpg")',
+            backgroundImage: 'url("/images/content/myymassa-banner.jpg")',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
