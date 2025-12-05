@@ -426,7 +426,7 @@ export default function HomePageClient({
                 <div 
                   className="absolute inset-0 bg-scroll"
                   style={{
-                    backgroundImage: 'url(/images/content/luxury-outlook-2025.jpg)',
+                    backgroundImage: 'url(/images/content/2025-luxury-outlook-report-sothebys-international-realty.jpg)',
                     backgroundPosition: 'center center',
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'cover'
