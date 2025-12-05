@@ -476,11 +476,12 @@ export default function HomePageClient({
                 {/* References */}
                 <Link href="/kohteet/referenssit" className="relative h-80 group overflow-hidden block">
                   <Image
-                    src="/images/content/snellman-front-box-04.jpg"
+                    src="/images/content/snellman-sothebys-referenssit.jpg"
                     alt={language === 'fi' ? 'Referenssit' : language === 'sv' ? 'Referenser' : 'References'}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    unoptimized
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white p-6">
                     <h3 className="text-xl font-light mb-3 text-center">
@@ -498,11 +499,12 @@ export default function HomePageClient({
                 {/* Rentals */}
                 <Link href="/kohteet/vuokrakohteet" className="relative h-80 group overflow-hidden block">
                   <Image
-                    src="/images/content/snellman-sothebys-myymassa-03.jpg"
+                    src="/images/content/snellman-sothebys-vuokrakohteet.jpg"
                     alt={language === 'fi' ? 'Vuokrakohteet' : language === 'sv' ? 'Hyresobjekt' : 'Rental properties'}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    unoptimized
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white p-6">
                     <h3 className="text-xl font-light mb-3 text-center">
@@ -520,11 +522,12 @@ export default function HomePageClient({
                 {/* Careers */}
                 <Link href="/meille-toihin" className="relative h-80 group overflow-hidden block">
                   <Image
-                    src="/images/content/snellman-sothebys-nakoalapaikka-kansainvaliseen-kiinteistonvalitykseen-ratakatu.png"
+                    src="/images/content/snellman-sothebys-nakoalapaikka.jpg"
                     alt={language === 'fi' ? 'Työpaikat' : language === 'sv' ? 'Karriär' : 'Careers'}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    unoptimized
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white p-6">
                     <h3 className="text-xl font-light mb-3 text-center">
