@@ -416,7 +416,7 @@ export default function HomePageClient({
         </section>
 
         {/* Luxury Outlook Report Section */}
-        <section className="relative overflow-hidden bg-[#16223c]" style={{ paddingTop: '40px', paddingBottom: '40px' }}>
+        <section className="relative overflow-hidden bg-[#16223c]" style={{ paddingTop: '20px', paddingBottom: '20px' }}>
           {/* Background Image */}
           <div 
             className="absolute inset-0 bg-scroll"
@@ -434,10 +434,10 @@ export default function HomePageClient({
           {/* Content */}
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-3xl md:text-4xl font-light text-white mb-6 [text-shadow:_0_2px_4px_rgb(0_0_0_/40%)]">
+              <h2 className="text-2xl md:text-3xl font-light text-white mb-3 [text-shadow:_0_2px_4px_rgb(0_0_0_/40%)]">
                 2025 Luxury Outlook℠
               </h2>
-              <h4 className="text-base md:text-lg text-white font-light leading-relaxed mb-8 [text-shadow:_0_1px_2px_rgb(0_0_0_/40%)]">
+              <h4 className="text-sm md:text-base text-white font-light leading-snug mb-4 [text-shadow:_0_1px_2px_rgb(0_0_0_/40%)]">
                 {language === 'fi' 
                   ? 'Vuoden 2025 Luxury Outlook℠ tutkii keskeisiä, tulevaisuuteen suuntautuvia kysymyksiä, jotka muokkaavat luksusasuntomarkkinoita ympäri maailmaa.'
                   : language === 'sv'
