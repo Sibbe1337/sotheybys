@@ -126,18 +126,12 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
             nodes: [
             { 
               id: '6-1', 
-              label: lang === 'sv' ? 'Kontaktuppgifter' : lang === 'en' ? 'Contact Info' : 'Yhteystiedot', 
-              path: '/yhteystiedot', 
-              url: '/yhteystiedot' 
-            },
-            { 
-              id: '6-2', 
               label: lang === 'sv' ? 'Företaget' : lang === 'en' ? 'About Us' : 'Yritys', 
               path: '/yritys', 
               url: '/yritys' 
             },
             { 
-              id: '6-3', 
+              id: '6-2', 
               label: lang === 'sv' ? 'Jobba hos oss' : lang === 'en' ? 'Join Us' : 'Meille töihin', 
               path: '/meille-toihin', 
               url: '/meille-toihin' 
