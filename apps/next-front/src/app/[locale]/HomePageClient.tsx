@@ -923,7 +923,7 @@ export default function HomePageClient({
           {/* Background Image */}
           <div className="absolute inset-0">
             <Image
-              src="/images/content/snellman-sothebys-toimisto.jpg"
+              src="/images/content/snellman-sothebys-newsletter.jpg"
               alt=""
               fill
               className="object-cover"
