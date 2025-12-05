@@ -162,7 +162,7 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
         <section 
           className="relative h-[600px] flex items-center justify-center text-white"
           style={{
-            backgroundImage: 'url("/images/international/helsinki-waterfront.jpg")',
+            backgroundImage: 'url("/images/content/snellman-sothebys-merry-christmas-2023-web.jpg")',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -325,87 +325,86 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
           </div>
         </section>
 
-        {/* Our Service Promise Section - Palvelulupauksemme */}
-        <section className="py-16 bg-gray-50">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4 leading-relaxed">
-                {t.promiseTitle}
-              </h2>
-              <div className="space-y-4 text-gray-700 font-light leading-relaxed text-lg">
-                <p>{t.promiseText1}</p>
-                <p>{t.promiseText2}</p>
+        {/* Palvelumme and Palveluhinnasto - 2 columns like old design */}
+        <section className="py-0">
+          <div className="container mx-auto px-0">
+            <div className="grid grid-cols-1 lg:grid-cols-2">
+              {/* Palvelulupauksemme - Left Column */}
+              <div className="bg-white p-8 lg:p-16">
+                <h2 className="text-3xl font-light text-gray-900 mb-6 text-right">
+                  {t.promiseTitle}
+                </h2>
+                <div className="space-y-4 text-gray-700 font-light leading-relaxed text-right">
+                  <p>{t.promiseText1}</p>
+                  <p>{t.promiseText2}</p>
+                </div>
               </div>
-            </div>
-          </div>
-        </section>
 
-        {/* Pricing Section */}
-        <section className="py-16 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4 leading-relaxed">
-                {t.pricingTitle}
-              </h2>
+              {/* Palveluhinnasto - Right Column */}
+              <div className="bg-gray-100 p-8 lg:p-16">
+                <h2 className="text-3xl font-light text-gray-900 mb-6">
+                  {t.pricingTitle}
+                </h2>
               
-              <div className="bg-gray-50 p-8 md:p-12 rounded-lg">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b border-gray-300">
-                      <th className="text-left pb-4 font-light text-lg">{t.pricingBroker}</th>
-                      <th className="text-right pb-4 font-light text-lg"></th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-gray-700">
-                    <tr className="border-b border-gray-200">
-                      <td className="py-3 font-light">{t.pricingApartments}</td>
-                      <td className="py-3 text-right font-light">5 % sis. alv 25,5%*</td>
-                    </tr>
-                    <tr className="border-b border-gray-200">
-                      <td className="py-3 font-light">{t.pricingProperties}</td>
-                      <td className="py-3 text-right font-light">6 % sis. alv 25,5%*</td>
-                    </tr>
-                    <tr className="border-b border-gray-200">
-                      <td className="py-3 font-light">{t.pricingRemote}</td>
-                      <td className="py-3 text-right font-light">7 % sis. alv 25,5%*</td>
-                    </tr>
-                    <tr className="border-b border-gray-200">
-                      <td className="py-3 font-light">{t.pricingRental}</td>
-                      <td className="py-3 text-right font-light">2 kk vuokra sis. alv 25,5%*</td>
-                    </tr>
-                    <tr className="border-b border-gray-200">
-                      <td className="py-3 font-light">{t.pricingMinimum}</td>
-                      <td className="py-3 text-right font-light">5750 € sis. alv 25,5%*</td>
-                    </tr>
-                    <tr className="border-b border-gray-200">
-                      <td className="py-3 font-light">{t.pricingInternational}</td>
-                      <td className="py-3 text-right font-light">+0,50 % sis. alv 25,5%**</td>
-                    </tr>
-                  </tbody>
-                </table>
-                
-                <table className="w-full mt-8">
-                  <thead>
-                    <tr className="border-b border-gray-300">
-                      <th className="text-left pb-4 font-light text-lg">{t.pricingStartFee}</th>
-                      <th className="text-right pb-4 font-light text-lg"></th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-gray-700">
-                    <tr className="border-b border-gray-200">
-                      <td className="py-3 font-light">{t.pricingApartments}</td>
-                      <td className="py-3 text-right font-light">Alkaen 500 € sis. alv 25,5%*</td>
-                    </tr>
-                    <tr className="border-b border-gray-200">
-                      <td className="py-3 font-light">{t.pricingPropertiesRemote}</td>
-                      <td className="py-3 text-right font-light">Alkaen 3000 € sis. alv 25,5%*</td>
-                    </tr>
-                  </tbody>
-                </table>
-                
-                <div className="mt-8 text-sm text-gray-600 font-light">
-                  <p>{t.pricingNote1}</p>
-                  <p>{t.pricingNote2}</p>
+                <div className="">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr>
+                        <th className="text-left pb-2 font-normal text-gray-900">{t.pricingBroker}</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody className="text-gray-700">
+                      <tr>
+                        <td className="py-2 font-light pl-4">{t.pricingApartments}</td>
+                        <td className="py-2 text-right font-bold">5 % sis. alv 25,5%*</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 font-light pl-4">{t.pricingProperties}</td>
+                        <td className="py-2 text-right font-bold">6 % sis. alv 25,5%*</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 font-light pl-4">{t.pricingRemote}</td>
+                        <td className="py-2 text-right font-bold">7 % sis. alv 25,5%*</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 font-light">{t.pricingRental}</td>
+                        <td className="py-2 text-right font-bold">2 kk vuokra sis. alv 25,5%*</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 font-light">{t.pricingMinimum}</td>
+                        <td className="py-2 text-right font-bold">5750 € sis. alv 25,5%*</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 font-light">{t.pricingInternational}</td>
+                        <td className="py-2 text-right font-bold">+0,50 % sis. alv 25,5%**</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  
+                  <table className="w-full mt-6 text-sm">
+                    <thead>
+                      <tr>
+                        <th className="text-left pb-2 font-normal text-gray-900">{t.pricingStartFee}</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody className="text-gray-700">
+                      <tr>
+                        <td className="py-2 font-light pl-4">{t.pricingApartments}</td>
+                        <td className="py-2 text-right font-bold">Alkaen 500 € sis. alv 25,5%*</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 font-light pl-4">{t.pricingPropertiesRemote}</td>
+                        <td className="py-2 text-right font-bold">Alkaen 3000 € sis. alv 25,5%*</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  
+                  <div className="mt-6 text-xs text-gray-600 font-light">
+                    <p><strong>{t.pricingNote1}</strong></p>
+                    <p><strong>{t.pricingNote2}</strong></p>
+                  </div>
                 </div>
               </div>
             </div>
