@@ -167,16 +167,15 @@ export default function CompanyPage({ params }: { params: { locale: Locale } }) 
                 className="relative h-96 group overflow-hidden block"
               >
                 <Image
-                  src="/images/content/sothebys-auction-house.jpg"
+                  src="/images/content/snellman-sothebys-auction-house.jpg"
                   alt="Sotheby's Huutokauppakamari"
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover grayscale"
-                  unoptimized
                 />
                 <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white p-8">
                   <h3 className="text-2xl font-light mb-4 text-center">
-                    Sotheby's<br/>Huutokauppakamari
+                    Sotheby's®<br/>Huutokauppakamari
                   </h3>
                   <span className="text-sm font-light uppercase tracking-wider">
                     Lue lisää
@@ -192,12 +191,11 @@ export default function CompanyPage({ params }: { params: { locale: Locale } }) 
                 className="relative h-96 group overflow-hidden block"
               >
                 <Image
-                  src="/images/content/sothebys-international-realty.jpg"
+                  src="/images/content/snellman-sothebys-sothebys-international-realty.jpg"
                   alt="Sotheby's International Realty"
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover"
-                  unoptimized
                 />
                 <div className="absolute inset-0 bg-[#002349]/60 flex flex-col items-center justify-center text-white p-8">
                   <h3 className="text-2xl font-light mb-4 text-center">
@@ -215,12 +213,11 @@ export default function CompanyPage({ params }: { params: { locale: Locale } }) 
                 className="relative h-96 group overflow-hidden block"
               >
                 <Image
-                  src="/images/content/snellman-sothebys-henkilosto.jpg"
+                  src="/images/content/snellman-sothebys-valittajat-2025-11-dark.png"
                   alt="Henkilökunta"
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover grayscale"
-                  unoptimized
                 />
                 <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white p-8">
                   <h3 className="text-2xl font-light mb-4 text-center">
