@@ -857,13 +857,13 @@ export default function HomePageClient({
                     <input
                       type="text"
                       placeholder={language === 'fi' ? 'Etunimi' : language === 'sv' ? 'Förnamn' : 'First name'}
-                      className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#002349]"
+                      className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#002349] text-center"
                       required
                     />
                     <input
                       type="text"
                       placeholder={language === 'fi' ? 'Sukunimi' : language === 'sv' ? 'Efternamn' : 'Last name'}
-                      className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#002349]"
+                      className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#002349] text-center"
                       required
                     />
                   </div>
@@ -871,38 +871,55 @@ export default function HomePageClient({
                     <input
                       type="email"
                       placeholder={language === 'fi' ? 'Sähköposti' : language === 'sv' ? 'E-post' : 'Email'}
-                      className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#002349]"
+                      className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#002349] text-center"
                       required
                     />
                     <input
                       type="tel"
                       placeholder={language === 'fi' ? 'Puhelinnumero' : language === 'sv' ? 'Telefonnummer' : 'Phone number'}
-                      className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#002349]"
+                      className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#002349] text-center"
                       required
                     />
                   </div>
                   <textarea
                     placeholder={language === 'fi' ? 'Viesti' : language === 'sv' ? 'Meddelande' : 'Message'}
                     rows={6}
-                    className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#002349]"
+                    className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#002349] text-center"
                     required
                   />
                   <div className="flex items-start gap-3">
                     <input type="checkbox" id="privacy-contact" required className="mt-1" />
                     <label htmlFor="privacy-contact" className="text-sm text-gray-700">
                       {language === 'fi' 
-                        ? 'Olen tutustunut Tietosuojaselosteeseen'
+                        ? <>Olen tutustunut Tietosuojaselosteeseen <a href="http://sothebysrealty.fi/tietosuojaseloste/" target="_blank" rel="noopener noreferrer" className="underline">Tietosuojaseloste</a></>
                         : language === 'sv'
-                        ? 'Jag har läst integritetspolicyn'
-                        : 'I have read the privacy policy'}
+                        ? <>Jag har läst integritetspolicyn <a href="http://sothebysrealty.fi/sv/tietosuojaseloste/" target="_blank" rel="noopener noreferrer" className="underline">Integritetspolicy</a></>
+                        : <>I have read the privacy policy <a href="http://sothebysrealty.fi/en/privacy-policy/" target="_blank" rel="noopener noreferrer" className="underline">Privacy Policy</a></>}
                     </label>
                   </div>
+                  <div className="flex items-start gap-3">
+                    <input type="checkbox" id="newsletter-contact" className="mt-1" />
+                    <label htmlFor="newsletter-contact" className="text-sm text-gray-700">
+                      {language === 'fi' 
+                        ? 'Haluan vastaanottaa Snellman Sotheby\'s uutiskirjeen'
+                        : language === 'sv'
+                        ? 'Jag vill ta emot Snellman Sotheby\'s nyhetsbrev'
+                        : 'I want to receive Snellman Sotheby\'s newsletter'}
+                    </label>
+                  </div>
+                  <p className="text-xs text-white">
+                    {language === 'fi' 
+                      ? <>Tämän sivun suojaa reCAPTCHA, mikä tarkoittaa, että Googlen <a href="https://policies.google.com/privacy?hl=fi" target="_blank" rel="noopener noreferrer" className="underline">tietosuojakäytännöt</a> ja <a href="https://policies.google.com/terms?hl=fi" target="_blank" rel="noopener noreferrer" className="underline">käyttöehdot</a> ovat voimassa.</>
+                      : language === 'sv'
+                      ? <>Denna sida skyddas av reCAPTCHA, vilket innebär att Googles <a href="https://policies.google.com/privacy?hl=sv" target="_blank" rel="noopener noreferrer" className="underline">sekretesspolicy</a> och <a href="https://policies.google.com/terms?hl=sv" target="_blank" rel="noopener noreferrer" className="underline">användarvillkor</a> gäller.</>
+                      : <>This page is protected by reCAPTCHA, which means that Google's <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="underline">privacy policy</a> and <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" className="underline">terms of service</a> apply.</>}
+                  </p>
                   <button
                     type="submit"
                     className="w-full bg-[#8e740b] text-white px-6 py-3 hover:bg-[#7a6409]
-                             transition-colors duration-300 font-light uppercase tracking-wider text-sm"
+                             transition-colors duration-300 font-light text-center"
                   >
-                    {language === 'fi' ? 'LÄHETÄ' : language === 'sv' ? 'SKICKA' : 'SEND'}
+                    {language === 'fi' ? 'Lähetä' : language === 'sv' ? 'Skicka' : 'Send'}
                   </button>
                 </form>
               </div>
