@@ -301,73 +301,75 @@ export default function HomePageClient({
         {/* Three Column Section - Avaamme uusia ovia */}
         <section id="avaamme-uusia-ovia" className="py-16 bg-white">
           <div className="container mx-auto px-4">
-{/* Section header removed - text is now in the hero carousel */}
+            <div className="max-w-5xl mx-auto">
+              {/* Section header removed - text is now in the hero carousel */}
 
-            {/* Three Columns */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Column 1 */}
-              <Link href="/kohteet" className="relative h-80 group overflow-hidden block">
-                <Image
-                  src="/images/content/snellman-sothebys-yritys.jpg"
-                  alt={getHomepageTranslation('openNewDoors', language)}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center text-white p-8">
-                  <h3 className="text-2xl font-light mb-6 text-center">{getHomepageTranslation('openNewDoors', language)}</h3>
-                  <span className="inline-block border-2 border-white text-white px-6 py-2.5
-                             group-hover:bg-white group-hover:text-black transition-all duration-300
-                             font-light text-xs tracking-wide"
-                  >
-                    {getHomepageTranslation('findDreamHome', language)} ›
-                  </span>
-                </div>
-              </Link>
+              {/* Three Columns */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Column 1 */}
+                <Link href="/kohteet" className="relative h-80 group overflow-hidden block">
+                  <Image
+                    src="/images/content/snellman-sothebys-yritys.jpg"
+                    alt={getHomepageTranslation('openNewDoors', language)}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center text-white p-8">
+                    <h3 className="text-2xl font-light mb-6 text-center">{getHomepageTranslation('openNewDoors', language)}</h3>
+                    <span className="inline-block border-2 border-white text-white px-6 py-2.5
+                               group-hover:bg-white group-hover:text-black transition-all duration-300
+                               font-light text-xs tracking-wide"
+                    >
+                      {getHomepageTranslation('findDreamHome', language)} ›
+                    </span>
+                  </div>
+                </Link>
 
-              {/* Column 2 */}
-              <Link href="/yritys" className="relative h-80 group overflow-hidden block">
-                <Image
-                  src="/images/content/snellman-sothebys-kutsu-arviokaynnille.jpg"
-                  alt={getHomepageTranslation('expertiseHeading', language)}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-[#324b72] bg-opacity-80 flex flex-col items-center justify-center text-white p-8">
-                  <h3 className="text-2xl font-light mb-6 text-center">
-                    {getHomepageTranslation('expertiseHeading', language)}
-                  </h3>
-                  <span className="inline-block border-2 border-white text-white px-6 py-2.5
-                             group-hover:bg-white group-hover:text-[#324b72] transition-all duration-300
-                             font-light text-xs tracking-wide"
-                  >
-                    {getHomepageTranslation('readMoreAboutUs', language)} ›
-                  </span>
-                </div>
-              </Link>
+                {/* Column 2 */}
+                <Link href="/yritys" className="relative h-80 group overflow-hidden block">
+                  <Image
+                    src="/images/content/snellman-sothebys-kutsu-arviokaynnille.jpg"
+                    alt={getHomepageTranslation('expertiseHeading', language)}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-[#324b72] bg-opacity-80 flex flex-col items-center justify-center text-white p-8">
+                    <h3 className="text-2xl font-light mb-6 text-center">
+                      {getHomepageTranslation('expertiseHeading', language)}
+                    </h3>
+                    <span className="inline-block border-2 border-white text-white px-6 py-2.5
+                               group-hover:bg-white group-hover:text-[#324b72] transition-all duration-300
+                               font-light text-xs tracking-wide"
+                    >
+                      {getHomepageTranslation('readMoreAboutUs', language)} ›
+                    </span>
+                  </div>
+                </Link>
 
-              {/* Column 3 */}
-              <Link href="/myymassa" className="relative h-80 group overflow-hidden block">
-                <Image
-                  src="/images/content/snellman-sothebys-kutsu-arviokaynnille.jpg"
-                  alt={getHomepageTranslation('freeValuationHeading', language)}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-[#4a6b8a] bg-opacity-70 flex flex-col items-center justify-center text-white p-8">
-                  <h3 className="text-2xl font-light mb-6 text-center">
-                    {getHomepageTranslation('freeValuationHeading', language)}
-                  </h3>
-                  <span className="inline-block border-2 border-white text-white px-6 py-2.5
-                             group-hover:bg-white group-hover:text-[#4a6b8a] transition-all duration-300
-                             font-light text-xs tracking-wide"
-                  >
-                    {getHomepageTranslation('contactUs', language)} ›
-                  </span>
-                </div>
-              </Link>
+                {/* Column 3 */}
+                <Link href="/myymassa" className="relative h-80 group overflow-hidden block">
+                  <Image
+                    src="/images/content/snellman-sothebys-kutsu-arviokaynnille.jpg"
+                    alt={getHomepageTranslation('freeValuationHeading', language)}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-[#4a6b8a] bg-opacity-70 flex flex-col items-center justify-center text-white p-8">
+                    <h3 className="text-2xl font-light mb-6 text-center">
+                      {getHomepageTranslation('freeValuationHeading', language)}
+                    </h3>
+                    <span className="inline-block border-2 border-white text-white px-6 py-2.5
+                               group-hover:bg-white group-hover:text-[#4a6b8a] transition-all duration-300
+                               font-light text-xs tracking-wide"
+                    >
+                      {getHomepageTranslation('contactUs', language)} ›
+                    </span>
+                  </div>
+                </Link>
+              </div>
             </div>
           </div>
         </section>
