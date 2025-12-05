@@ -212,12 +212,12 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
           </div>
         </section>
 
-        {/* Form and Mission Section - 2 columns on desktop like original site */}
-        <section className="py-16">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-              {/* Valuation Form */}
-              <div className="bg-gray-100 p-8 lg:p-12">
+        {/* Form and Mission Section - 4 columns on desktop like original site */}
+        <section className="py-0">
+          <div className="w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-4">
+              {/* Box 1: Valuation Form - Gray background (#CCC) */}
+              <div style={{ backgroundColor: '#CCCCCC' }} className="p-8 lg:p-12">
                 <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-6">
                   {t.formTitle}
                 </h2>
@@ -301,52 +301,53 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
                 </form>
               </div>
 
-              {/* Mission Section - Kunniatehtävä + Arvokas asiakassuhde */}
-              <div className="bg-white p-8 lg:p-12">
-                <h2 className="text-xl font-semibold text-gray-900 mb-4 leading-relaxed">
+              {/* Box 2: Kunniatehtävä - White background (#FFF) */}
+              <div style={{ backgroundColor: '#FFFFFF' }} className="p-8 lg:p-12">
+                <h2 className="text-2xl font-light text-gray-900 mb-6">
                   {t.honorTitle}
                 </h2>
-                <div className="space-y-4 text-gray-700 font-light leading-relaxed text-base mb-8">
+                <div className="space-y-4 text-gray-700 font-light leading-relaxed text-sm">
                   <p>{t.honorText1}</p>
                   <p>{t.honorText2}</p>
                   <p>{t.honorText3}</p>
                 </div>
-                
-                <h2 className="text-xl font-semibold text-gray-900 mb-4 leading-relaxed">
-                {t.relationshipTitle}
-              </h2>
-                <div className="space-y-4 text-gray-700 font-light leading-relaxed text-base">
-                <p>{t.relationshipText1}</p>
-                <p>{t.relationshipText2}</p>
-                <p>{t.relationshipText3}</p>
+              </div>
+
+              {/* Box 3: Arvokas asiakassuhde - White background (#FFF) */}
+              <div style={{ backgroundColor: '#FFFFFF' }} className="p-8 lg:p-12">
+                <h2 className="text-2xl font-light text-gray-900 mb-6">
+                  {t.relationshipTitle}
+                </h2>
+                <div className="space-y-4 text-gray-700 font-light leading-relaxed text-sm">
+                  <p>{t.relationshipText1}</p>
+                  <p>{t.relationshipText2}</p>
+                  <p>{t.relationshipText3}</p>
+                </div>
+              </div>
+
+              {/* Box 4: Palvelulupauksemme - Gray background (#CCC) */}
+              <div style={{ backgroundColor: '#CCCCCC' }} className="p-8 lg:p-12">
+                <h2 className="text-2xl font-light text-gray-900 mb-6">
+                  {t.promiseTitle}
+                </h2>
+                <div className="space-y-4 text-gray-700 font-light leading-relaxed text-sm">
+                  <p>{t.promiseText1}</p>
+                  <p>{t.promiseText2}</p>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Palvelumme and Palveluhinnasto - 2 columns like old design */}
-        <section className="py-0">
-          <div className="container mx-auto px-0">
-            <div className="grid grid-cols-1 lg:grid-cols-2">
-              {/* Palvelulupauksemme - Left Column */}
-              <div className="bg-white p-8 lg:p-16">
-                <h2 className="text-3xl font-light text-gray-900 mb-6 text-right">
-                  {t.promiseTitle}
-                </h2>
-                <div className="space-y-4 text-gray-700 font-light leading-relaxed text-right">
-                  <p>{t.promiseText1}</p>
-                  <p>{t.promiseText2}</p>
-                </div>
-              </div>
-
-              {/* Palveluhinnasto - Right Column */}
-              <div className="bg-gray-100 p-8 lg:p-16">
-                <h2 className="text-3xl font-light text-gray-900 mb-6">
-                  {t.pricingTitle}
-                </h2>
+        {/* Palveluhinnasto Section */}
+        <section className="py-16 bg-gray-100">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-3xl font-light text-gray-900 mb-8">
+                {t.pricingTitle}
+              </h2>
               
-                <div className="">
+              <div>
                   <table className="w-full text-sm">
                     <thead>
                       <tr>
