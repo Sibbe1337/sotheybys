@@ -476,7 +476,7 @@ export default function HomePageClient({
                 {/* References */}
                 <Link href="/kohteet/referenssit" className="relative h-80 group overflow-hidden block">
                   <Image
-                    src="/images/content/snellman-sothebys-referenssit.jpg"
+                    src="/images/content/snellman-front-box-04.jpg"
                     alt={language === 'fi' ? 'Referenssit' : language === 'sv' ? 'Referenser' : 'References'}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
@@ -498,7 +498,7 @@ export default function HomePageClient({
                 {/* Rentals */}
                 <Link href="/kohteet/vuokrakohteet" className="relative h-80 group overflow-hidden block">
                   <Image
-                    src="/images/content/snellman-sothebys-vuokrakohteet.jpg"
+                    src="/images/content/snellman-sothebys-myymassa-03.jpg"
                     alt={language === 'fi' ? 'Vuokrakohteet' : language === 'sv' ? 'Hyresobjekt' : 'Rental properties'}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
@@ -520,7 +520,7 @@ export default function HomePageClient({
                 {/* Careers */}
                 <Link href="/meille-toihin" className="relative h-80 group overflow-hidden block">
                   <Image
-                    src="/images/content/snellman-sothebys-nakoalapaikka.jpg"
+                    src="/images/content/snellman-sothebys-nakoalapaikka-kansainvaliseen-kiinteistonvalitykseen-ratakatu.png"
                     alt={language === 'fi' ? 'Työpaikat' : language === 'sv' ? 'Karriär' : 'Careers'}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
