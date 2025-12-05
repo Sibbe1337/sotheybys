@@ -447,13 +447,6 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
           </div>
         </section>
 
-        {/* Video Section */}
-        <VideoSection 
-          videoId="hdXkBWw9wk0"
-          title={t.videoTitle}
-          subtitle={t.videoSubtitle}
-        />
-
         {/* Consumer Dispute Section */}
         <section className="py-12 bg-[var(--color-primary)] text-white">
           <div className="container mx-auto px-4">
