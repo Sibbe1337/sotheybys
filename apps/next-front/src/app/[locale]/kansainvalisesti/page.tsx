@@ -350,7 +350,7 @@ export default function InternationalPage({ params }: { params: { locale: Locale
               <div className="group">
                 <div className="h-64 relative overflow-hidden">
                   <Image
-                    src="/images/international/french-riviera.jpg"
+                    src="/images/international/french-riviera-marina.jpg"
                     alt="French Riviera"
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
