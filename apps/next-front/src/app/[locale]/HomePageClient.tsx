@@ -898,7 +898,7 @@ export default function HomePageClient({
                         : 'I want to receive Snellman Sotheby\'s newsletter'}
                     </label>
                   </div>
-                  <p className="text-xs text-white">
+                  <p className="text-xs text-gray-600">
                     {language === 'fi' 
                       ? <>Tämän sivun suojaa reCAPTCHA, mikä tarkoittaa, että Googlen <a href="https://policies.google.com/privacy?hl=fi" target="_blank" rel="noopener noreferrer" className="underline">tietosuojakäytännöt</a> ja <a href="https://policies.google.com/terms?hl=fi" target="_blank" rel="noopener noreferrer" className="underline">käyttöehdot</a> ovat voimassa.</>
                       : language === 'sv'
@@ -923,7 +923,7 @@ export default function HomePageClient({
           {/* Background Image */}
           <div className="absolute inset-0">
             <Image
-              src="/images/content/snellman-sothebys-newsletter-bg.jpg"
+              src="/images/content/snellman-sothebys-toimisto.jpg"
               alt=""
               fill
               className="object-cover"
