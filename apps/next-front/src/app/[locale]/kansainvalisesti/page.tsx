@@ -1,8 +1,15 @@
-'use client';
-
 import { Link } from '@/lib/navigation';
 import Image from 'next/image';
-import { type Locale } from '@/i18n/config';
+import { locales, type Locale } from '@/i18n/config';
+
+// ✅ LINUS FIX: Convert to Server Component with static generation
+export const dynamic = 'force-static';
+export const dynamicParams = false;
+export const revalidate = 3600;
+
+export function generateStaticParams() {
+  return (locales as readonly Locale[]).map((locale) => ({ locale }));
+}
 
 // 🔥 LINUS FIX: Translations for international page
 const translations = {
@@ -95,11 +102,7 @@ export default function InternationalPage({ params }: { params: { locale: Locale
               href="#content"
               className="inline-block border-2 border-white text-white px-8 py-3 
                        hover:bg-white hover:text-gray-900 transition-all duration-300
-                       font-light uppercase tracking-wider text-sm"
-              onClick={(e) => {
-                e.preventDefault();
-                document.getElementById('content')?.scrollIntoView({ behavior: 'smooth' });
-              }}
+                       font-light uppercase tracking-wider text-sm scroll-smooth"
             >
               {t.heroButton} &gt;
             </a>
