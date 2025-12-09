@@ -150,13 +150,13 @@ const staffMembers = [
   },
   {
     id: '7',
-    name: 'Robert Charpentier',
-    title: 'Chairman, M.Sc., LKV',
-    email: 'robert@sothebysrealty.fi',
-    phone: '+358 (0)400 243 011',
-    image: '/images/staff/robert-charpentier.jpg',
+    name: 'Dennis Forsman',
+    title: 'Sales Assistant, B.Sc.',
+    email: 'dennis@sothebysrealty.fi',
+    phone: '+358 (0)44 999 4407',
+    image: '/images/staff/dennis-forsman.jpg',
     description: '',
-    flags: ['fi', 'se', 'gb', 'de']
+    flags: ['fi', 'se', 'gb']
   },
   {
     id: '8',
@@ -170,13 +170,13 @@ const staffMembers = [
   },
   {
     id: '9',
-    name: 'Dennis Forsman',
-    title: 'Sales Assistant, B.Sc.',
-    email: 'dennis@sothebysrealty.fi',
-    phone: '+358 (0)44 999 4407',
-    image: '/images/staff/dennis-forsman.jpg',
+    name: 'Robert Charpentier',
+    title: 'Chairman, M.Sc., LKV',
+    email: 'robert@sothebysrealty.fi',
+    phone: '+358 (0)400 243 011',
+    image: '/images/staff/robert-charpentier.jpg',
     description: '',
-    flags: ['fi', 'se', 'gb']
+    flags: ['fi', 'se', 'gb', 'de']
   }
 ];
 
