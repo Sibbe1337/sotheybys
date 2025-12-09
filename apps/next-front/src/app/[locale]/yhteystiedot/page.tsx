@@ -225,13 +225,13 @@ export default function ContactPage({ params }: { params: { locale: Locale } }) 
       <main className="flex-1">
         {/* Hero Section with Contact Form Overlay */}
         <section className="relative min-h-[500px] md:min-h-[600px]">
-          {/* Background Image - Office interior */}
+          {/* Background Image - Office interior, centered to show desk and painting */}
           <div className="absolute inset-0">
             <Image
               src="/images/content/snellman-sothebys-toimisto.jpg"
               alt="Snellman Sotheby's Office"
               fill
-              className="object-cover"
+              className="object-cover object-center"
               priority
             />
             <div className="absolute inset-0 bg-black/30"></div>
@@ -431,13 +431,13 @@ export default function ContactPage({ params }: { params: { locale: Locale } }) 
 
         {/* Office Location Section - Dark blue background */}
         <section className="relative py-16 text-white">
-          {/* Background Image - Office exterior/street view */}
+          {/* Background Image - Office interior centered */}
           <div className="absolute inset-0">
             <Image
               src="/images/content/snellman-sothebys-toimisto.jpg"
               alt="Helsinki Office"
               fill
-              className="object-cover"
+              className="object-cover object-center"
             />
             <div className="absolute inset-0 bg-[#001731]/85"></div>
           </div>
