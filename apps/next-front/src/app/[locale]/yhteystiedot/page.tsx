@@ -214,8 +214,8 @@ export default function ContactPage({ params }: { params: { locale: string } }) 
           </div>
           
           {/* Content */}
-          <div className="relative z-10 container mx-auto px-4 py-16">
-            <div className="max-w-md mx-auto md:ml-auto md:mr-16">
+          <div className="relative z-10 container mx-auto px-4 py-16 flex items-center justify-center min-h-[500px] md:min-h-[600px]">
+            <div className="max-w-md w-full">
               {/* Contact Form - Client Component */}
               <ContactForm translations={{
                 heroTitle: t.heroTitle,
