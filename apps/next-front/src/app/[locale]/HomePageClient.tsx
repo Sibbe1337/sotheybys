@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import HeroCarousel from '@/components/Homepage/HeroCarousel';
 import FeaturedPropertyGrid from '@/components/Property/FeaturedPropertyGrid';
 import { Link } from '@/lib/navigation';
+import NextLink from 'next/link';  // Native Link for dynamic routes
 import Image from 'next/image';
 import { VideoSection } from '@/components/ui/VideoSection';
 import { getHomepageTranslation, type SupportedLanguage } from '@/lib/homepage-translations';
@@ -609,7 +610,7 @@ export default function HomePageClient({
                     >
                       {/* Property Image with Carousel Navigation */}
                       <div className="relative group">
-                        <Link href={`/${locale}/kohde/${property.slug}`} className="block" prefetch={true}>
+                        <NextLink href={`/${locale}/kohde/${property.slug}`} className="block" prefetch={true}>
                           <div className="relative h-56 overflow-hidden">
                             <Image
                               src={property.media.images[0]?.url || '/images/placeholder.jpg'}
@@ -619,7 +620,7 @@ export default function HomePageClient({
                               className="object-cover"
                             />
                           </div>
-                        </Link>
+                        </NextLink>
                         {/* Carousel Arrows */}
                         {property.media.images.length > 1 && (
                           <>
@@ -639,7 +640,7 @@ export default function HomePageClient({
 
                       {/* Property Details */}
                       <div className="p-5 flex-grow flex flex-col">
-                        <Link href={`/${locale}/kohde/${property.slug}`} className="block mb-auto" prefetch={true}>
+                        <NextLink href={`/${locale}/kohde/${property.slug}`} className="block mb-auto" prefetch={true}>
                           <h3 className="text-lg font-medium text-gray-900 mb-2">
                             {addressStr}
                           </h3>
@@ -658,7 +659,7 @@ export default function HomePageClient({
                             {property.dimensions.total && property.dimensions.total !== property.dimensions.living && ` / ${Math.round(property.dimensions.total)} m²`}
                             {property.dimensions.plot && ` | ${formatPlot(property.dimensions.plot, language)}`}
                           </p>
-                        </Link>
+                        </NextLink>
                         
                         {/* Property Type and Location Tags */}
                         {(listingTypeStr || districtStr) && (
@@ -712,7 +713,7 @@ export default function HomePageClient({
                             </div>
                           )}
                           
-                          <Link
+                          <NextLink
                             href={`/${locale}/kohde/${property.slug}`}
                             className="block w-full bg-[#002349] text-white text-center px-6 py-2.5
                                      hover:bg-[#001731] transition-colors duration-300
@@ -720,7 +721,7 @@ export default function HomePageClient({
                             prefetch={true}
                           >
                             {language === 'fi' ? 'NÄYTÄ KOHDE' : language === 'sv' ? 'VISA OBJEKT' : 'VIEW PROPERTY'}
-                          </Link>
+                          </NextLink>
                         </div>
                       </div>
                     </div>
@@ -770,7 +771,7 @@ export default function HomePageClient({
                       className="bg-white border border-gray-200 hover:shadow-lg transition-shadow duration-300 flex flex-col"
                     >
                       <div className="relative group">
-                        <Link href={`/${locale}/kohde/${property.slug}`} className="block" prefetch={true}>
+                        <NextLink href={`/${locale}/kohde/${property.slug}`} className="block" prefetch={true}>
                           <div className="relative h-56 overflow-hidden">
                             <Image
                               src={property.media.images[0]?.url || '/images/placeholder.jpg'}
@@ -780,11 +781,11 @@ export default function HomePageClient({
                               className="object-cover"
                             />
                           </div>
-                        </Link>
+                        </NextLink>
                       </div>
 
                       <div className="p-5 flex-grow flex flex-col">
-                        <Link href={`/${locale}/kohde/${property.slug}`} className="block mb-auto" prefetch={true}>
+                        <NextLink href={`/${locale}/kohde/${property.slug}`} className="block mb-auto" prefetch={true}>
                           <h3 className="text-lg font-medium text-gray-900 mb-2">
                             {addressStr}
                           </h3>
@@ -799,9 +800,9 @@ export default function HomePageClient({
                           <p className="text-sm text-gray-600 mb-4">
                             {property.dimensions.living && `${Math.round(property.dimensions.living)} m²`}
                           </p>
-                        </Link>
+                        </NextLink>
                         
-                        <Link
+                        <NextLink
                           href={`/${locale}/kohde/${property.slug}`}
                           className="block w-full bg-[#002349] text-white text-center px-6 py-2.5
                                    hover:bg-[#001731] transition-colors duration-300
@@ -809,7 +810,7 @@ export default function HomePageClient({
                           prefetch={true}
                         >
                           {language === 'fi' ? 'NÄYTÄ KOHDE' : language === 'sv' ? 'VISA OBJEKT' : 'VIEW PROPERTY'}
-                        </Link>
+                        </NextLink>
                       </div>
                     </div>
                   );
