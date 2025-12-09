@@ -1,92 +1,16 @@
-'use client';
-
 import Image from 'next/image';
 import { Link } from '@/lib/navigation';
-import { useState, useEffect } from 'react';
+import HeroCarousel from '@/components/HeroCarousel';
+import { locales, type Locale } from '@/i18n/config';
 
-// Hero carousel slides
-const heroSlides = [
-  {
-    id: 1,
-    image: '/images/content/snellman-sothebys-yritys-01.jpg',
-    title: {
-      fi: 'Kansainvälinen välittäjäsi paikallisesti',
-      sv: 'Din internationella mäklare lokalt',
-      en: 'Your international agent locally'
-    },
-    subtitle: {
-      fi: '26 100 välittäjää 1100 välitystoimistossa 84 maassa ja alueella',
-      sv: '26 100 mäklare 1100 kontor 84 länder och regioner',
-      en: '26,100 agents 1,100 offices 84 countries and territories'
-    },
-    buttonText: {
-      fi: 'AVAAMME UUSIA OVIA »',
-      sv: 'VI ÖPPNAR NYA DÖRRAR »',
-      en: 'WE OPEN NEW DOORS »'
-    },
-    buttonLink: '/kohteet'
-  },
-  {
-    id: 2,
-    image: '/images/content/snellman-sothebys-yritys.jpg',
-    title: {
-      fi: 'Tervetuloa onnistuneeseen asuntokauppaan!',
-      sv: 'Välkommen till en framgångsrik bostadsaffär!',
-      en: 'Welcome to a successful property transaction!'
-    },
-    subtitle: {
-      fi: 'Katso kaikki myynnissä olevat kohteemme.',
-      sv: 'Se alla våra objekt till salu.',
-      en: 'See all our properties for sale.'
-    },
-    buttonText: {
-      fi: 'LÖYDÄ UNELMIESI KOTI »',
-      sv: 'HITTA DITT DRÖMHEM »',
-      en: 'FIND YOUR DREAM HOME »'
-    },
-    buttonLink: '/kohteet'
-  },
-  {
-    id: 3,
-    image: '/images/content/snellman-sothebys-nakoalapaikka.jpg',
-    title: {
-      fi: 'Snellman Sotheby\'s International Realty®',
-      sv: 'Snellman Sotheby\'s International Realty®',
-      en: 'Snellman Sotheby\'s International Realty®'
-    },
-    subtitle: {
-      fi: 'Edustamme Suomessa yhtä ainutlaatuisinta kiinteistönvälitysketjua maailmassa.',
-      sv: 'Vi representerar i Finland en av de mest unika fastighetsmäklarkedjorna i världen.',
-      en: 'We represent in Finland one of the most unique real estate brokerage networks in the world.'
-    },
-    buttonText: {
-      fi: 'TUTUSTU TOIMINTAAMME »',
-      sv: 'LÄR KÄNNA OSS »',
-      en: 'GET TO KNOW US »'
-    },
-    buttonLink: '/henkilosto'
-  },
-  {
-    id: 4,
-    image: '/images/content/snellman-sothebys-kutsu-arviokaynnille.jpg',
-    title: {
-      fi: 'Myymässä asuntoasi?',
-      sv: 'Säljer du din bostad?',
-      en: 'Selling your property?'
-    },
-    subtitle: {
-      fi: 'Kutsu meidät maksuttomalle arviokäynnille.',
-      sv: 'Bjud in oss för ett kostnadsfritt värderingsbesök.',
-      en: 'Invite us for a free valuation visit.'
-    },
-    buttonText: {
-      fi: 'OTA YHTEYTTÄ »',
-      sv: 'KONTAKTA OSS »',
-      en: 'CONTACT US »'
-    },
-    buttonLink: '/yhteystiedot'
-  }
-];
+// ✅ LINUS FIX: Static generation for all locales
+export const dynamic = 'force-static';
+export const dynamicParams = false;
+export const revalidate = 3600; // Revalidate every hour
+
+export function generateStaticParams() {
+  return (locales as readonly Locale[]).map((locale) => ({ locale }));
+}
 
 // Translations
 const translations = {
@@ -96,27 +20,22 @@ const translations = {
     officeTitle: 'Upea toimistomme palvelee',
     officeHours: 'teitä arkisin 10:00 – 17:00',
     officeExtra: 'sekä muina aikoina sopimuksen mukaan.',
-    
     box1Title: 'Sotheby\'s Huutokauppatalo',
     box1Button: 'LUE LISÄÄ »',
     box2Title: 'Sotheby\'s International Realty®',
     box2Button: 'LUE LISÄÄ »',
     box3Title: 'Tutustu henkilökuntaamme',
     box3Button: 'OTA YHTEYTTÄ »',
-    
     historyTitle: 'Sotheby\'s® & Sotheby\'s International Realty®',
     historyText: 'Vuonna 1744 perustetun, perinteikkään Sotheby\'s huutokauppakamarin rinnalle perustettiin vuonna 1976 kiinteistönvälitysketju, jonka toiminnan kulmakivenä on tarjota laatutietoisille asiakkaille kiinteistömarkkinoilla yhtä vahvaa markkinaosaamista ja palvelutasoa kuin taiteen ja antiikin välityksessä, yksilöllisesti ja hienovaraisesti.',
-    
     aboutTitle: 'Snellman Sotheby\'s International Realty®',
     aboutText1: 'Snellman Sotheby\'s International Realty Finland aloitti toimintansa Helsingissä syksyllä 2015. Olemme yksi harvoista arvokiinteistöihin erikoistuneista välittäjistä, joka pystyy tarjoamaan laatutietoisille asiakkaille ainutlaatuisia kohteita ja yksilöityä palvelua niin Suomessa kuin ympäri maailmaa. Välitämme ainutlaatuisia kohteita, tyylillä.',
     aboutText2: 'Oletpa ostamassa tai myymässä asuntoa, kiinteistöä, vapaa-ajan kohdetta, maatilaa tai kokonaista kartanoaluetta, haluamme auttaa sinua tekemään elämäsi kaupat.',
     aboutText3: 'Olemme kotonamme niin kotikulmillasi kuin kansainvälisillä arvokiinteistömarkkinoilla.',
-    
     philosophyTitle: 'Palvelufilosofiamme',
     philosophyText1: 'Unelma täydellisestä kodista on unelmiemme työtä, sillä koti on paikka, jossa saavutettavissa oleva elämänlaatu kiteytyy parhaiten. Parasta luksusta koti on silloin, kun siinä on jotakin erityistä verrattuna alueen muihin asuntoihin sekä silloin, kun se vastaa asukkaidensa elämäntyyliä ja unelmia. Eksklusiivinen koti on erityinen niin ratkaisuiltaan, rakennuksena kuin sijainniltaan.',
     philosophyText2: 'Kiinteistönvälittäjänä ja arvoasuntojen asiantuntijana olemme ylpeitä saadessamme yhdistää toisiinsa täydellisesti yhteensopivat kodit sekä asukkaat. Jokainen välittämämme koti on yhtä ainutlaatuinen kuin jokainen asiakkaamme.',
     philosophyText3: 'Suomessa olemme keskittyneet välittämään pääkaupunkiseudun ja sitä ympäröivän rannikkoalueen premium-asuntoja ja -kiinteistöjä. Valikoimaamme kuuluu muun muassa laadukkaita loft- ja penthouse-asuntoja sekä arvokkaita uudisrakennuskohteita. Lisäksi välitämme vapaa-ajankohteita rannikon huviloista Lapin hiihtomajoihin.',
-    
     openDoorsTitle: 'Avaamme uusia ovia',
   },
   sv: {
@@ -125,27 +44,22 @@ const translations = {
     officeTitle: 'Vårt fantastiska kontor betjänar',
     officeHours: 'er vardagar 10:00 – 17:00',
     officeExtra: 'samt övriga tider enligt överenskommelse.',
-    
     box1Title: 'Sotheby\'s Auktionshus',
     box1Button: 'LÄS MER »',
     box2Title: 'Sotheby\'s International Realty®',
     box2Button: 'LÄS MER »',
     box3Title: 'Lär känna vår personal',
     box3Button: 'KONTAKTA »',
-    
     historyTitle: 'Sotheby\'s® & Sotheby\'s International Realty®',
     historyText: 'Vid sidan av det traditionella Sotheby\'s auktionshuset som grundades 1744, grundades 1976 en fastighetsmäklarkedja vars hörnsten är att erbjuda kvalitetsmedvetna kunder samma starka marknadskunskap och servicenivå på fastighetsmarknaden som inom konst- och antikförmedling, individuellt och diskret.',
-    
     aboutTitle: 'Snellman Sotheby\'s International Realty®',
     aboutText1: 'Snellman Sotheby\'s International Realty Finland startade sin verksamhet i Helsingfors hösten 2015. Vi är en av få mäklare specialiserade på värdefulla fastigheter som kan erbjuda kvalitetsmedvetna kunder unika objekt och individuell service både i Finland och runt om i världen. Vi förmedlar unika objekt, med stil.',
     aboutText2: 'Oavsett om du köper eller säljer en bostad, fastighet, fritidsobjekt, gård eller ett helt herrgårdsområde, vill vi hjälpa dig att göra livets affär.',
     aboutText3: 'Vi är hemma både i ditt närområde och på internationella lyxfastighetsmarknader.',
-    
     philosophyTitle: 'Vår servicefilosofi',
-    philosophyText1: 'Drömmen om det perfekta hemmet är vårt drömarbete, eftersom hemmet är platsen där den uppnåeliga livskvaliteten kristalliseras bäst. Bästa lyxen är hemmet när det har något speciellt jämfört med andra bostäder i området och när det motsvarar invånarnas livsstil och drömmar. Ett exklusivt hem är speciellt både i lösningar, som byggnad och i läge.',
+    philosophyText1: 'Drömmen om det perfekta hemmet är vårt drömarbete, eftersom hemmet är platsen där den uppnåeliga livskvaliteten kristalliseras bäst.',
     philosophyText2: 'Som fastighetsmäklare och expert på värdebostäder är vi stolta över att få förena perfekt kompatibla hem och invånare. Varje hem vi förmedlar är lika unikt som varje kund.',
-    philosophyText3: 'I Finland har vi koncentrerat oss på att förmedla premium-bostäder och fastigheter i huvudstadsregionen och det omgivande kustområdet. Vårt sortiment inkluderar bland annat högkvalitativa loft- och takvåningar samt värdefulla nybyggnadsobjekt. Dessutom förmedlar vi fritidsobjekt från kustvillor till Lapplands skidboenden.',
-    
+    philosophyText3: 'I Finland har vi koncentrerat oss på att förmedla premium-bostäder och fastigheter i huvudstadsregionen och det omgivande kustområdet.',
     openDoorsTitle: 'Vi öppnar nya dörrar',
   },
   en: {
@@ -154,117 +68,78 @@ const translations = {
     officeTitle: 'Our beautiful office serves',
     officeHours: 'you on weekdays 10:00 – 17:00',
     officeExtra: 'and at other times by appointment.',
-    
     box1Title: 'Sotheby\'s Auction House',
     box1Button: 'READ MORE »',
     box2Title: 'Sotheby\'s International Realty®',
     box2Button: 'READ MORE »',
     box3Title: 'Meet our staff',
     box3Button: 'CONTACT »',
-    
     historyTitle: 'Sotheby\'s® & Sotheby\'s International Realty®',
     historyText: 'Alongside the traditional Sotheby\'s auction house founded in 1744, a real estate brokerage chain was founded in 1976 whose cornerstone is to offer quality-conscious customers the same strong market knowledge and service level in the real estate market as in art and antique brokerage, individually and discreetly.',
-    
     aboutTitle: 'Snellman Sotheby\'s International Realty®',
     aboutText1: 'Snellman Sotheby\'s International Realty Finland started its operations in Helsinki in the fall of 2015. We are one of the few brokers specializing in valuable properties that can offer quality-conscious customers unique properties and individualized service both in Finland and around the world. We broker unique properties, with style.',
     aboutText2: 'Whether you are buying or selling a home, property, vacation property, farm or an entire manor area, we want to help you make the deal of your life.',
     aboutText3: 'We are at home both in your local area and in international luxury real estate markets.',
-    
     philosophyTitle: 'Our Service Philosophy',
-    philosophyText1: 'The dream of the perfect home is our dream work, because home is the place where achievable quality of life is best crystallized. The best luxury is home when it has something special compared to other homes in the area and when it matches its residents\' lifestyle and dreams. An exclusive home is special in solutions, as a building and in location.',
+    philosophyText1: 'The dream of the perfect home is our dream work, because home is the place where achievable quality of life is best crystallized.',
     philosophyText2: 'As a real estate broker and expert in valuable homes, we are proud to bring together perfectly compatible homes and residents. Every home we broker is as unique as every customer.',
-    philosophyText3: 'In Finland, we have focused on brokering premium apartments and properties in the capital region and the surrounding coastal area. Our selection includes high-quality loft and penthouse apartments as well as valuable new construction properties. In addition, we broker vacation properties from coastal villas to Lapland ski accommodations.',
-    
+    philosophyText3: 'In Finland, we have focused on brokering premium apartments and properties in the capital region and the surrounding coastal area.',
     openDoorsTitle: 'We open new doors',
   },
 };
 
-type Locale = 'fi' | 'sv' | 'en';
+// Hero slides data
+const getHeroSlides = (locale: string) => [
+  {
+    id: 1,
+    image: '/images/content/snellman-sothebys-yritys-01.jpg',
+    title: locale === 'fi' ? 'Kansainvälinen välittäjäsi paikallisesti' : locale === 'sv' ? 'Din internationella mäklare lokalt' : 'Your international agent locally',
+    subtitle: locale === 'fi' ? '26 100 välittäjää 1100 välitystoimistossa 84 maassa ja alueella' : locale === 'sv' ? '26 100 mäklare 1100 kontor 84 länder och regioner' : '26,100 agents 1,100 offices 84 countries and territories',
+    buttonText: locale === 'fi' ? 'AVAAMME UUSIA OVIA »' : locale === 'sv' ? 'VI ÖPPNAR NYA DÖRRAR »' : 'WE OPEN NEW DOORS »',
+    buttonLink: '/kohteet'
+  },
+  {
+    id: 2,
+    image: '/images/content/snellman-sothebys-yritys.jpg',
+    title: locale === 'fi' ? 'Tervetuloa onnistuneeseen asuntokauppaan!' : locale === 'sv' ? 'Välkommen till en framgångsrik bostadsaffär!' : 'Welcome to a successful property transaction!',
+    subtitle: locale === 'fi' ? 'Katso kaikki myynnissä olevat kohteemme.' : locale === 'sv' ? 'Se alla våra objekt till salu.' : 'See all our properties for sale.',
+    buttonText: locale === 'fi' ? 'LÖYDÄ UNELMIESI KOTI »' : locale === 'sv' ? 'HITTA DITT DRÖMHEM »' : 'FIND YOUR DREAM HOME »',
+    buttonLink: '/kohteet'
+  },
+  {
+    id: 3,
+    image: '/images/content/snellman-sothebys-nakoalapaikka.jpg',
+    title: 'Snellman Sotheby\'s International Realty®',
+    subtitle: locale === 'fi' ? 'Edustamme Suomessa yhtä ainutlaatuisinta kiinteistönvälitysketjua maailmassa.' : locale === 'sv' ? 'Vi representerar i Finland en av de mest unika fastighetsmäklarkedjorna i världen.' : 'We represent in Finland one of the most unique real estate brokerage networks in the world.',
+    buttonText: locale === 'fi' ? 'TUTUSTU TOIMINTAAMME »' : locale === 'sv' ? 'LÄR KÄNNA OSS »' : 'GET TO KNOW US »',
+    buttonLink: '/henkilosto'
+  },
+  {
+    id: 4,
+    image: '/images/content/snellman-sothebys-kutsu-arviokaynnille.jpg',
+    title: locale === 'fi' ? 'Myymässä asuntoasi?' : locale === 'sv' ? 'Säljer du din bostad?' : 'Selling your property?',
+    subtitle: locale === 'fi' ? 'Kutsu meidät maksuttomalle arviokäynnille.' : locale === 'sv' ? 'Bjud in oss för ett kostnadsfritt värderingsbesök.' : 'Invite us for a free valuation visit.',
+    buttonText: locale === 'fi' ? 'OTA YHTEYTTÄ »' : locale === 'sv' ? 'KONTAKTA OSS »' : 'CONTACT US »',
+    buttonLink: '/yhteystiedot'
+  }
+];
 
+type LocaleType = 'fi' | 'sv' | 'en';
+
+// ✅ SERVER COMPONENT - pre-rendered at build time
 export default function CompanyPage({ params }: { params: { locale: string } }) {
-  const locale = (params.locale || 'fi') as Locale;
+  const locale = (params.locale || 'fi') as LocaleType;
   const t = translations[locale] || translations.fi;
-  
-  // Carousel state
-  const [currentSlide, setCurrentSlide] = useState(0);
-  
-  // Auto-advance carousel
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 6000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const slide = heroSlides[currentSlide];
+  const heroSlides = getHeroSlides(locale);
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <main className="flex-1">
         
-        {/* Hero Carousel */}
-        <section className="relative h-[400px] md:h-[500px] overflow-hidden">
-          {/* Background Image */}
-          <div className="absolute inset-0">
-            <Image
-              src={slide.image}
-              alt=""
-              fill
-              className="object-cover object-center"
-              priority
-            />
-            <div className="absolute inset-0 bg-black/40"></div>
-          </div>
-          
-          {/* Content */}
-          <div className="relative z-10 h-full flex items-center">
-            <div className="container mx-auto px-4">
-              <div className="max-w-2xl mx-auto text-center text-white">
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-light mb-4">
-                  {slide.title[locale]}
-                </h1>
-                <p className="text-lg md:text-xl font-light mb-8 text-white/90">
-                  {slide.subtitle[locale]}
-                </p>
-                <Link
-                  href={slide.buttonLink as any}
-                  className="inline-block border border-white text-white px-8 py-3 hover:bg-white hover:text-[#001731] transition-all uppercase text-sm tracking-wider"
-                >
-                  {slide.buttonText[locale]}
-                </Link>
-              </div>
-            </div>
-          </div>
-          
-          {/* Navigation Arrows */}
-          <button 
-            onClick={() => setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)}
-            className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/40 flex items-center justify-center transition-all z-20"
-          >
-            <span className="text-white text-2xl">‹</span>
-          </button>
-          <button 
-            onClick={() => setCurrentSlide((prev) => (prev + 1) % heroSlides.length)}
-            className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/40 flex items-center justify-center transition-all z-20"
-          >
-            <span className="text-white text-2xl">›</span>
-          </button>
-          
-          {/* Dots */}
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-            {heroSlides.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCurrentSlide(idx)}
-                className={`w-3 h-3 rounded-full transition-all ${
-                  idx === currentSlide ? 'bg-white' : 'bg-white/50'
-                }`}
-              />
-            ))}
-          </div>
-        </section>
+        {/* Hero Carousel - Client Component */}
+        <HeroCarousel slides={heroSlides} />
 
-        {/* Social Icons */}
+        {/* Social Icons - static */}
         <section className="py-8 bg-white">
           <div className="flex justify-center gap-4">
             <a href="https://www.facebook.com/snellmansothebysrealty" target="_blank" rel="noopener noreferrer"
@@ -288,7 +163,7 @@ export default function CompanyPage({ params }: { params: { locale: string } }) 
           </div>
         </section>
 
-        {/* Intro Section */}
+        {/* Intro Section - static */}
         <section className="py-8 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
@@ -302,7 +177,7 @@ export default function CompanyPage({ params }: { params: { locale: string } }) 
           </div>
         </section>
 
-        {/* Office Hours */}
+        {/* Office Hours - static */}
         <section className="py-6 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center text-gray-600 font-light text-sm">
@@ -313,7 +188,7 @@ export default function CompanyPage({ params }: { params: { locale: string } }) 
           </div>
         </section>
 
-        {/* Contact Info Bar */}
+        {/* Contact Info Bar - static */}
         <section className="py-6 bg-white border-t border-b">
           <div className="container mx-auto px-4">
             <div className="flex flex-wrap justify-center items-center gap-6 md:gap-12 text-sm text-gray-700">
@@ -330,7 +205,7 @@ export default function CompanyPage({ params }: { params: { locale: string } }) 
           </div>
         </section>
 
-        {/* Three Promo Boxes */}
+        {/* Three Promo Boxes - static */}
         <section className="py-12 bg-white">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
@@ -378,7 +253,7 @@ export default function CompanyPage({ params }: { params: { locale: string } }) 
                 />
                 <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white p-6">
                   <h3 className="text-xl font-light mb-4 text-center">{t.box3Title}</h3>
-                  <Link href="/henkilosto"
+                  <Link href="/henkilosto" prefetch={true}
                      className="border border-white px-4 py-2 text-xs uppercase tracking-wider hover:bg-white hover:text-[#002349] transition-all">
                     {t.box3Button}
                   </Link>
@@ -388,7 +263,7 @@ export default function CompanyPage({ params }: { params: { locale: string } }) 
           </div>
         </section>
 
-        {/* Sotheby's History Section */}
+        {/* Sotheby's History Section - static */}
         <section className="py-12 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
@@ -402,7 +277,7 @@ export default function CompanyPage({ params }: { params: { locale: string } }) 
           </div>
         </section>
 
-        {/* About Section - Image Left, Text Right */}
+        {/* About Section - Image Left, Text Right - static */}
         <section className="bg-[#001731] text-white">
           <div className="flex flex-col lg:flex-row">
             {/* Left - Image */}
@@ -438,7 +313,7 @@ export default function CompanyPage({ params }: { params: { locale: string } }) 
           </div>
         </section>
 
-        {/* Service Philosophy Section - Text Left, Image Right */}
+        {/* Service Philosophy Section - Text Left, Image Right - static */}
         <section className="bg-white">
           <div className="flex flex-col lg:flex-row">
             {/* Left - Text */}
@@ -474,7 +349,7 @@ export default function CompanyPage({ params }: { params: { locale: string } }) 
           </div>
         </section>
 
-        {/* "We Open New Doors" Section */}
+        {/* "We Open New Doors" Section - static */}
         <section className="py-16 bg-[#001731] text-white">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-light text-center">

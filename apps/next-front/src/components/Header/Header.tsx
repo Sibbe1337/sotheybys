@@ -218,6 +218,7 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
             <div className="hidden md:flex items-center gap-3 text-xs [font-family:'freight-sans-pro',sans-serif]">
               <NextLink
                 href={languageSwitcherUrls.fi}
+                prefetch={true}
                 className={`transition-opacity ${currentLang === 'fi' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
               >
                 Suomi
@@ -225,6 +226,7 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
               <span className="text-white/40">|</span>
               <NextLink
                 href={languageSwitcherUrls.sv}
+                prefetch={true}
                 className={`transition-opacity ${currentLang === 'sv' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
               >
                 Svenska
@@ -232,6 +234,7 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
               <span className="text-white/40">|</span>
               <NextLink
                 href={languageSwitcherUrls.en}
+                prefetch={true}
                 className={`transition-opacity ${currentLang === 'en' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
               >
                 English
@@ -290,6 +293,7 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
                     <Link
                       href={(item.path || item.url) as any}
                       locale={currentLang}
+                      prefetch={true}
                       className={`flex items-center py-2 px-5 text-sm font-bold uppercase tracking-[0.2em]
                                  transition-all duration-200 [font-family:'freight-sans-pro',sans-serif] ${
                                    isActive 
@@ -310,6 +314,7 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
                               <Link
                                 href={(childItem.path || childItem.url) as any}
                                 locale={currentLang}
+                                prefetch={true}
                                 className="block px-4 py-3 text-sm text-gray-700 hover:text-[var(--color-gold)] hover:bg-gray-50 transition-colors [font-family:'freight-sans-pro',sans-serif]"
                                 target={childItem.target}
                               >
@@ -364,6 +369,7 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
                     <Link
                       href={(item.path || item.url) as any}
                       locale={currentLang}
+                      prefetch={true}
                       className={`block py-3 text-sm font-bold tracking-[0.15em] uppercase border-b border-white/10 flex-1
                                [font-family:'freight-sans-pro',sans-serif] ${isActive 
                                  ? 'text-[var(--color-gold)]' 
