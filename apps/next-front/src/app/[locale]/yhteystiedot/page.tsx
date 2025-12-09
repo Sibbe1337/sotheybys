@@ -2,167 +2,190 @@
 
 import Image from 'next/image';
 import { Link } from '@/lib/navigation';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-// Hero carousel slides
-const heroSlides = [
+// Staff members data
+const staffMembers = [
   {
-    id: 1,
-    image: '/images/content/snellman-sothebys-yritys-01.jpg',
-    logo: true,
-    title: {
-      fi: 'Kansainvälinen välittäjäsi paikallisesti',
-      sv: 'Din internationella mäklare lokalt',
-      en: 'Your international agent locally'
-    },
-    subtitle: {
-      fi: 'Autamme sinua ostamaan, myymään ja muuttamaan yli rajojen turvallisesti.',
-      sv: 'Vi hjälper dig att köpa, sälja och flytta över gränser säkert.',
-      en: 'We help you buy, sell and move across borders safely.'
-    },
-    buttonText: {
-      fi: 'AVAAMME UUSIA OVIA »',
-      sv: 'VI ÖPPNAR NYA DÖRRAR »',
-      en: 'WE OPEN NEW DOORS »'
-    },
-    buttonLink: '/yritys'
+    id: '1',
+    name: 'Heidi Metsänen',
+    title: 'Global Sales Coordinator, M.Sc., LKV',
+    email: 'heidi@sothebysrealty.fi',
+    phone: '+358 (0)50 421 0905',
+    image: '/images/staff/heidi-metsanen.jpg',
+    flags: ['fi', 'se', 'gb', 'fr', 'de']
   },
   {
-    id: 2,
-    image: '/images/content/snellman-sothebys-yritys.jpg',
-    title: {
-      fi: 'Tervetuloa onnistuneeseen asuntokauppaan!',
-      sv: 'Välkommen till en framgångsrik bostadsaffär!',
-      en: 'Welcome to a successful property transaction!'
-    },
-    subtitle: {
-      fi: 'Katso kaikki myynnissä olevat kohteemme.',
-      sv: 'Se alla våra objekt till salu.',
-      en: 'See all our properties for sale.'
-    },
-    buttonText: {
-      fi: 'LÖYDÄ UNELMIESI KOTI »',
-      sv: 'HITTA DITT DRÖMHEM »',
-      en: 'FIND YOUR DREAM HOME »'
-    },
-    buttonLink: '/kohteet'
+    id: '2',
+    name: 'Soile Goodall',
+    title: 'Senior Broker, LKV',
+    email: 'soile@sothebysrealty.fi',
+    phone: '+358 (0)40 533 5533',
+    image: '/images/staff/soile-goodall.jpg',
+    flags: ['fi', 'gb']
   },
   {
-    id: 3,
-    image: '/images/content/snellman-sothebys-yritys.jpg',
-    logo: true,
-    title: {
-      fi: 'Snellman Sotheby\'s International Realty®',
-      sv: 'Snellman Sotheby\'s International Realty®',
-      en: 'Snellman Sotheby\'s International Realty®'
-    },
-    subtitle: {
-      fi: 'Edustamme Suomessa yhtä ainutlaatuisinta, joissa olemme huomisen kodista tänään.',
-      sv: 'Vi representerar i Finland en av de mest unika.',
-      en: 'We represent in Finland one of the most unique.'
-    },
-    buttonText: {
-      fi: 'TUTUSTU TOIMINTAAMME »',
-      sv: 'LÄR KÄNNA OSS »',
-      en: 'GET TO KNOW US »'
-    },
-    buttonLink: '/yritys'
+    id: '3',
+    name: 'Ali Ahola',
+    title: 'Senior Broker, LKV',
+    email: 'ali@sothebysrealty.fi',
+    phone: '+358 (0)40 923 2561',
+    image: '/images/staff/ali-ahola.jpg',
+    flags: ['fi']
+  },
+  {
+    id: '4',
+    name: 'Kadri-Ann Õunap',
+    title: 'Sales Associate, Notary, KED, KiAT',
+    email: 'kadri-ann@sothebysrealty.fi',
+    phone: '+358 (0)40 154 7844',
+    image: '/images/staff/kadri-ann-ounap.jpg',
+    flags: ['fi', 'gb', 'ee']
+  },
+  {
+    id: '5',
+    name: 'Tea Käyhkö',
+    title: 'Senior Broker, BA, MA, LKV',
+    email: 'tea@sothebysrealty.fi',
+    phone: '+358 (0)50 370 1893',
+    image: '/images/staff/tea-kayhko.jpg',
+    flags: ['fi', 'se', 'gb']
+  },
+  {
+    id: '6',
+    name: 'Sima Shaygan',
+    title: 'Sales Associate, B.Sc, KiLaT',
+    email: 'sima@sothebysrealty.fi',
+    phone: '+358 (0)44 235 3979',
+    image: '/images/staff/sima-shaygan.jpg',
+    flags: ['fi', 'gb', 'ir', 'tr']
+  },
+  {
+    id: '7',
+    name: 'Dennis Forsman',
+    title: 'Sales Assistant, B.Sc.',
+    email: 'dennis@sothebysrealty.fi',
+    phone: '+358 (0)44 999 4407',
+    image: '/images/staff/dennis-forsman.jpg',
+    flags: ['fi', 'se', 'gb']
+  },
+  {
+    id: '8',
+    name: 'Johan Schröder',
+    title: 'Graphic Designer',
+    email: 'johan@sothebysrealty.fi',
+    phone: '+358 (0)50 536 9106',
+    image: '/images/staff/johan-schroder.jpg',
+    flags: ['fi', 'se', 'gb']
+  },
+  {
+    id: '9',
+    name: 'Eeva Kyläkoski',
+    title: 'Senior Advisor - Board Member, LKV',
+    email: 'eeva@sothebysrealty.fi',
+    phone: '+358 (0)40 861 4611',
+    image: '/images/staff/eeva-kylakoski.jpg',
+    flags: ['fi', 'gb']
+  },
+  {
+    id: '10',
+    name: 'Robert Charpentier',
+    title: 'Chairman, M.Sc., LKV',
+    email: 'robert@sothebysrealty.fi',
+    phone: '+358 (0)400 243 011',
+    image: '/images/staff/robert-charpentier.jpg',
+    flags: ['fi', 'se', 'gb', 'de']
+  },
+  {
+    id: '11',
+    name: 'Petteri Huovila',
+    title: 'Senior Advisor, LKV',
+    email: 'petteri@sothebysrealty.fi',
+    phone: '+358 (0)400 484 138',
+    image: '/images/staff/petteri-huovila.jpg',
+    flags: ['fi', 'se', 'gb']
   }
 ];
+
+// Language flag components
+const LanguageFlags = ({ flags }: { flags: string[] }) => {
+  const flagEmojis: Record<string, string> = {
+    fi: '🇫🇮',
+    se: '🇸🇪',
+    gb: '🇬🇧',
+    de: '🇩🇪',
+    fr: '🇫🇷',
+    ee: '🇪🇪',
+    ir: '🇮🇷',
+    tr: '🇹🇷'
+  };
+
+  return (
+    <div className="flex gap-1 justify-center mb-2">
+      {flags.map((flag) => (
+        <span key={flag} className="text-sm">{flagEmojis[flag]}</span>
+      ))}
+    </div>
+  );
+};
 
 // Translations
 const translations = {
   fi: {
-    introTitle: 'Snellman Sotheby\'s International Realty®',
-    introText: 'Tällä palvelulla itse asiassa, oma välityskokemus ja se on välittäjiin parhaalla palvelussa. Sotheby\'s International Realty® on yksi maailman suurimmista kiinteistönvälitysketjuista. Oikeat asunnonomme osin mukaillen on',
+    heroTitle: 'Ota yhteyttä',
+    privacyLabel: 'Olen tutustunut Tietosuojaselosteeseen',
+    privacyLink: 'Tietosuojaseloste',
+    recaptchaText: 'Tämän sivun suojaa reCAPTCHA, mikä tarkoittaa, että Googlen tietosuojakäytännöt & käyttöehdot ovat voimassa.',
+    submitBtn: 'Lähetä',
+    welcomeTitle: 'Tervetuloa onnistuneeseen asuntokauppaan!',
+    welcomeText: 'Tervetuloa tapaamaan meitä, kuulemme mielellämme miten voimme palvella juuri sinua.',
     officeTitle: 'Upea toimistomme palvelee',
     officeHours: 'teitä arkisin 10:00 – 17:00',
     officeExtra: 'sekä muina aikoina sopimuksen mukaan.',
-    
-    box1Title: 'Sotheby\'s Huutokauppatalo',
-    box1Button: 'LUE LISÄÄ »',
-    box2Title: 'Sotheby\'s International Realty®',
-    box2Button: 'LUE LISÄÄ »',
-    box3Title: 'Tutustu henkilökuntaamme',
-    box3Button: 'LUE LISÄÄ »',
-    
-    historyTitle: 'Sotheby\'s® & Sotheby\'s International Realty®',
-    historyText: 'Vuonna 1744 perustettu, perinteikäs Sotheby\'s huutokauppakamari toimii perustettiin vuonna 1976 kiinteistönvälityseksi, jonka toiminnan kulmakivenä on erpaa laatuisettojen sekä luksusasette toimialoittaelmalla yhtä vahvan markkinaosaamisen ja palvelusta kuin Sotheby ja aikittäen, jotillisen ja kansainvälisesti.',
-    
-    aboutTitle: 'Snellman Sotheby\'s International Realty®',
-    aboutText1: 'Snellman Sotheby\'s International Realty Fidelissydiä toimintansa Helsingissä sykyllä 2015. Olemme yke harvoja ainutkertaiselle arkkinlahjuossa välittäjiä, jotka pystyy tarjoamaan kansainvälisesti asiakkaille ainutlaatuista kohdetta ja ylistetä palvelua eri Suomessa kun ympäri maailmaa. Välitämme ainutlaatuisia kohteita, tyyllä.',
-    aboutText2: 'Olipa osteessa tai myyntävissä asuntoa, tonttimää, magai-open kohdata, medillaa tai toteimelu kerentuisille, haluamme auttaa sinua löitämään yldeitäsi koogen.',
-    aboutText3: 'Olemmetuomimma me sutkointullas kun kansainvälisilit siviestiitstiimarkkinoilla.',
-    
-    philosophyTitle: 'Palvelufilosofiamme',
-    philosophyText1: 'Unikia tilytulisiä kohita on unelmiemme tytö, että koti on paikla, jossa sanostolämian aina tämmittäisi. Kiretyyn partten. Panosta lalussa koti on ohon, kun sitä ei jaokm etelijää murtautua siuon mulun asuntokin valli alivit, kun se masta isulaikohta eälmttötgiö ja ostaja. Stokaitinen koti- tai orttyyen on sikasosten, niimumasta kun syjyminen.',
-    philosophyText2: 'Kiinteistönvälittäjiä ja arvaattynon asontmapina olemne ymmä suolaomme yhdeksi toimka täyttestä ylenongipan kaiit salksioluoit - asialtm välittamme koii on yhtä ainalaaatuinen suo juliomn asaltamme.',
-    philosophyText3: 'Suomessa olemna kantityeser välittämän palaaupoiitoloon ja siia yrintyölin nanklostouman premium asunto ja - kiitestijä, valitoommea kautta muast mappa alakistoin ok ja perinisum auuittoja siitä arveläedu sautiättämarakohteta. Lasku välittimme oppaa aptolytostia nandiet Nuutoska syori Nomaanopila.',
-    
-    openDoorsTitle: 'Avaamme uusia ovia',
-    
+    staffTitle: 'Henkilökuntamme',
+    ctaTitle: 'Jos mieleesi herää kysymyksiä, voit aina ottaa meihin yhteyttä soittamalla, lähettämällä sähköpostia tai pistäytymällä toimistollamme!',
+    officeLocationTitle: 'Helsingin Toimipisteemme',
+    officeLocationText1: 'Helsingin ydinkeskustassa sijaitsevassa toimistossamme tapaat joukon motivoituneita ja asiantuntevia välittäjiä, joiden päämääränä on tehdä unelmastasi totta.',
+    officeLocationText2: 'Toimistoamme ympäröi dynaaminen Kaartinkaupunki muotiputiikkeineen, fine-dine-ravintoloineen sekä korkeatasoisine hotelleineen.',
+    officeLocationText3: 'Kävelet toimistollemme vain muutamassa minuutissa Esplanadilta tai Senaatintorilta.',
     directionsBtn: 'REITTIOHJEET »',
   },
   sv: {
-    introTitle: 'Snellman Sotheby\'s International Realty®',
-    introText: 'Med denna tjänst faktiskt, egen förmedlingsupplevelse och det är till mäklare med bästa service.',
+    heroTitle: 'Kontakta oss',
+    privacyLabel: 'Jag har läst integritetspolicyn',
+    privacyLink: 'Integritetspolicy',
+    recaptchaText: 'Denna sida skyddas av reCAPTCHA, vilket innebär att Googles integritetspolicy och användarvillkor gäller.',
+    submitBtn: 'Skicka',
+    welcomeTitle: 'Välkommen till en framgångsrik bostadsaffär!',
+    welcomeText: 'Välkommen att träffa oss, vi hör gärna hur vi kan betjäna just dig.',
     officeTitle: 'Vårt fantastiska kontor betjänar',
     officeHours: 'er vardagar 10:00 – 17:00',
     officeExtra: 'samt övriga tider enligt överenskommelse.',
-    
-    box1Title: 'Sotheby\'s Auktionshus',
-    box1Button: 'LÄS MER »',
-    box2Title: 'Sotheby\'s International Realty®',
-    box2Button: 'LÄS MER »',
-    box3Title: 'Lär känna vår personal',
-    box3Button: 'LÄS MER »',
-    
-    historyTitle: 'Sotheby\'s® & Sotheby\'s International Realty®',
-    historyText: 'Grundat 1744, det traditionella Sotheby\'s auktionshus grundades 1976 som fastighetsförmedling.',
-    
-    aboutTitle: 'Snellman Sotheby\'s International Realty®',
-    aboutText1: 'Snellman Sotheby\'s International Realty startade sin verksamhet i Helsingfors hösten 2015.',
-    aboutText2: 'Oavsett om du köper eller säljer, vill vi hjälpa dig.',
-    aboutText3: 'Vi är på de internationella marknaderna.',
-    
-    philosophyTitle: 'Vår servicefilosofi',
-    philosophyText1: 'Unika fastigheter är vårt arbete.',
-    philosophyText2: 'Som fastighetsmäklare förstår vi.',
-    philosophyText3: 'I Finland förmedlar vi premium.',
-    
-    openDoorsTitle: 'Vi öppnar nya dörrar',
-    
+    staffTitle: 'Vår personal',
+    ctaTitle: 'Om du har frågor kan du alltid kontakta oss genom att ringa, skicka e-post eller besöka vårt kontor!',
+    officeLocationTitle: 'Vårt kontor i Helsingfors',
+    officeLocationText1: 'På vårt kontor i centrala Helsingfors möter du ett team av motiverade och kunniga mäklare vars mål är att göra din dröm till verklighet.',
+    officeLocationText2: 'Vårt kontor omges av det dynamiska Kaserntorget med modebutiker, fine dining-restauranger och högklassiga hotell.',
+    officeLocationText3: 'Du går till vårt kontor på bara några minuter från Esplanaden eller Senatstorget.',
     directionsBtn: 'VÄGBESKRIVNING »',
   },
   en: {
-    introTitle: 'Snellman Sotheby\'s International Realty®',
-    introText: 'With this service, own brokerage experience and it is to agents with the best service.',
+    heroTitle: 'Contact us',
+    privacyLabel: 'I have read the Privacy Policy',
+    privacyLink: 'Privacy Policy',
+    recaptchaText: 'This page is protected by reCAPTCHA, which means Google\'s privacy policy and terms of service apply.',
+    submitBtn: 'Send',
+    welcomeTitle: 'Welcome to a successful property transaction!',
+    welcomeText: 'Welcome to meet us, we would love to hear how we can serve you.',
     officeTitle: 'Our beautiful office serves',
     officeHours: 'you on weekdays 10:00 – 17:00',
     officeExtra: 'and at other times by appointment.',
-    
-    box1Title: 'Sotheby\'s Auction House',
-    box1Button: 'READ MORE »',
-    box2Title: 'Sotheby\'s International Realty®',
-    box2Button: 'READ MORE »',
-    box3Title: 'Meet our staff',
-    box3Button: 'READ MORE »',
-    
-    historyTitle: 'Sotheby\'s® & Sotheby\'s International Realty®',
-    historyText: 'Founded in 1744, the traditional Sotheby\'s auction house was founded in 1976 as a real estate brokerage.',
-    
-    aboutTitle: 'Snellman Sotheby\'s International Realty®',
-    aboutText1: 'Snellman Sotheby\'s International Realty started its operations in Helsinki in autumn 2015.',
-    aboutText2: 'Whether you are buying or selling, we want to help you.',
-    aboutText3: 'We are in the international markets.',
-    
-    philosophyTitle: 'Our Service Philosophy',
-    philosophyText1: 'Unique properties are our work.',
-    philosophyText2: 'As real estate agents we understand.',
-    philosophyText3: 'In Finland we broker premium.',
-    
-    openDoorsTitle: 'We open new doors',
-    
+    staffTitle: 'Our Staff',
+    ctaTitle: 'If you have any questions, you can always contact us by calling, sending an email, or stopping by our office!',
+    officeLocationTitle: 'Our Helsinki Office',
+    officeLocationText1: 'At our office in central Helsinki, you will meet a team of motivated and knowledgeable brokers whose goal is to make your dream come true.',
+    officeLocationText2: 'Our office is surrounded by the dynamic Kaartinkaupunki with fashion boutiques, fine-dining restaurants, and high-end hotels.',
+    officeLocationText3: 'You can walk to our office in just a few minutes from the Esplanade or Senate Square.',
     directionsBtn: 'DIRECTIONS »',
   },
 };
@@ -173,93 +196,103 @@ export default function ContactPage({ params }: { params: { locale: string } }) 
   const locale = (params.locale || 'fi') as Locale;
   const t = translations[locale] || translations.fi;
   
-  // Carousel state
-  const [currentSlide, setCurrentSlide] = useState(0);
-  
-  // Auto-advance carousel
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 6000);
-    return () => clearInterval(timer);
-  }, []);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: '',
+    privacy: false
+  });
 
-  const slide = heroSlides[currentSlide];
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle form submission
+    console.log('Form submitted:', formData);
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <main className="flex-1">
         
-        {/* Hero Carousel */}
-        <section className="relative h-[400px] md:h-[500px] overflow-hidden">
+        {/* Hero Section with Contact Form */}
+        <section className="relative min-h-[500px] md:min-h-[600px]">
           {/* Background Image */}
           <div className="absolute inset-0">
             <Image
-              src={slide.image}
+              src="/images/content/snellman-sothebys-yritys-01.jpg"
               alt=""
               fill
               className="object-cover object-center"
               priority
             />
-            <div className="absolute inset-0 bg-black/40"></div>
+            <div className="absolute inset-0 bg-black/30"></div>
           </div>
           
           {/* Content */}
-          <div className="relative z-10 h-full flex items-center">
-            <div className="container mx-auto px-4">
-              <div className="max-w-2xl mx-auto text-center text-white">
-                {slide.logo && (
-                  <div className="mb-6">
-                    <Image
-                      src="/images/logos/snellman-sothebys-logo-white.png"
-                      alt="Snellman Sotheby's"
-                      width={250}
-                      height={60}
-                      className="mx-auto"
-                    />
-                  </div>
-                )}
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-light mb-4">
-                  {slide.title[locale]}
+          <div className="relative z-10 container mx-auto px-4 py-16">
+            <div className="max-w-md mx-auto md:ml-auto md:mr-16">
+              {/* Contact Form Card */}
+              <div className="bg-white/95 backdrop-blur-sm p-8 shadow-lg">
+                <h1 className="text-2xl font-light text-gray-900 mb-6 text-center">
+                  {t.heroTitle}
                 </h1>
-                <p className="text-lg md:text-xl font-light mb-8 text-white/90">
-                  {slide.subtitle[locale]}
-                </p>
-                <Link
-                  href={slide.buttonLink as any}
-                  className="inline-block border border-white text-white px-8 py-3 hover:bg-white hover:text-[#001731] transition-all uppercase text-sm tracking-wider"
-                >
-                  {slide.buttonText[locale]}
-                </Link>
+                
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <input
+                    type="text"
+                    placeholder="Nimi / Name"
+                    className="w-full px-4 py-3 border border-gray-300 focus:border-[#002349] focus:outline-none text-sm"
+                    value={formData.name}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  />
+                  <input
+                    type="email"
+                    placeholder="Sähköposti / Email"
+                    className="w-full px-4 py-3 border border-gray-300 focus:border-[#002349] focus:outline-none text-sm"
+                    value={formData.email}
+                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  />
+                  <input
+                    type="tel"
+                    placeholder="Puhelin / Phone"
+                    className="w-full px-4 py-3 border border-gray-300 focus:border-[#002349] focus:outline-none text-sm"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                  />
+                  <textarea
+                    placeholder="Viesti / Message"
+                    rows={4}
+                    className="w-full px-4 py-3 border border-gray-300 focus:border-[#002349] focus:outline-none text-sm resize-none"
+                    value={formData.message}
+                    onChange={(e) => setFormData({...formData, message: e.target.value})}
+                  />
+                  
+                  <div className="flex items-start gap-2">
+                    <input
+                      type="checkbox"
+                      id="privacy"
+                      className="mt-1"
+                      checked={formData.privacy}
+                      onChange={(e) => setFormData({...formData, privacy: e.target.checked})}
+                    />
+                    <label htmlFor="privacy" className="text-xs text-gray-600">
+                      {t.privacyLabel} <a href="#" className="text-[#002349] underline">{t.privacyLink}</a>
+                    </label>
+                  </div>
+                  
+                  <p className="text-[10px] text-gray-500 leading-tight">
+                    {t.recaptchaText}
+                  </p>
+                  
+                  <button
+                    type="submit"
+                    className="w-full bg-[#002349] text-white py-3 hover:bg-[#001731] transition-colors text-sm uppercase tracking-wider"
+                  >
+                    {t.submitBtn}
+                  </button>
+                </form>
               </div>
             </div>
-          </div>
-          
-          {/* Navigation Arrows */}
-          <button 
-            onClick={() => setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)}
-            className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/40 flex items-center justify-center transition-all z-20"
-          >
-            <span className="text-white text-2xl">‹</span>
-          </button>
-          <button 
-            onClick={() => setCurrentSlide((prev) => (prev + 1) % heroSlides.length)}
-            className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/40 flex items-center justify-center transition-all z-20"
-          >
-            <span className="text-white text-2xl">›</span>
-          </button>
-          
-          {/* Dots */}
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-            {heroSlides.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCurrentSlide(idx)}
-                className={`w-3 h-3 rounded-full transition-all ${
-                  idx === currentSlide ? 'bg-white' : 'bg-white/50'
-                }`}
-              />
-            ))}
           </div>
         </section>
 
@@ -287,198 +320,132 @@ export default function ContactPage({ params }: { params: { locale: string } }) 
           </div>
         </section>
 
-        {/* Intro Section */}
+        {/* Welcome Section */}
         <section className="py-8 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-4">
-                {t.introTitle}
+                {t.welcomeTitle}
               </h2>
-              <p className="text-sm text-gray-600 font-light leading-relaxed">
-                {t.introText}
+              <p className="text-sm text-gray-600 font-light mb-6">
+                {t.welcomeText}
               </p>
+              <div className="text-gray-600 font-light text-sm">
+                <p className="mb-1">{t.officeTitle}</p>
+                <p className="mb-1">{t.officeHours}</p>
+                <p>{t.officeExtra}</p>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Office Hours */}
-        <section className="py-6 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center text-gray-600 font-light text-sm">
-              <p className="mb-1">{t.officeTitle}</p>
-              <p className="mb-1">{t.officeHours}</p>
-              <p>{t.officeExtra}</p>
-            </div>
-          </div>
-        </section>
-
-        {/* Contact Info Bar */}
-        <section className="py-6 bg-white border-t border-b">
-          <div className="container mx-auto px-4">
-            <div className="flex flex-wrap justify-center items-center gap-6 md:gap-12 text-sm text-gray-700">
-              <a href="tel:+358103156900" className="hover:text-[#002349] transition-colors">
-                +358 (0)10 315 6900
-              </a>
-              <span className="hidden md:inline text-gray-300">|</span>
-              <span>Kasarmikatu 34, 00130 Helsinki</span>
-              <span className="hidden md:inline text-gray-300">|</span>
-              <a href="mailto:info@sothebysrealty.fi" className="hover:text-[#002349] transition-colors">
-                info@sothebysrealty.fi
-              </a>
-            </div>
-          </div>
-        </section>
-
-        {/* Three Promo Boxes */}
+        {/* Staff Section */}
         <section className="py-12 bg-white">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-              {/* Box 1 - Auction House */}
-              <div className="relative h-[250px] group overflow-hidden">
-                <Image
-                  src="/images/content/snellman-sothebys-auction-house.jpg"
-                  alt={t.box1Title}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-[#002349]/70 flex flex-col items-center justify-center text-white p-6">
-                  <h3 className="text-xl font-light mb-4 text-center">{t.box1Title}</h3>
-                  <a href="https://www.sothebys.com" target="_blank" rel="noopener noreferrer"
-                     className="border border-white px-4 py-2 text-xs uppercase tracking-wider hover:bg-white hover:text-[#002349] transition-all">
-                    {t.box1Button}
+            <h2 className="text-2xl font-light text-gray-900 mb-10 text-center">
+              {t.staffTitle}
+            </h2>
+            
+            {/* Staff Grid - 4 columns */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
+              {staffMembers.map((member) => (
+                <div key={member.id} className="text-center">
+                  {/* Photo */}
+                  <div className="relative w-32 h-40 mx-auto mb-3 overflow-hidden">
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      fill
+                      className="object-cover object-top grayscale"
+                    />
+                  </div>
+                  
+                  {/* Flags */}
+                  <LanguageFlags flags={member.flags} />
+                  
+                  {/* Name */}
+                  <h3 className="text-sm font-medium text-gray-900 mb-1">
+                    {member.name}
+                  </h3>
+                  
+                  {/* Title */}
+                  <p className="text-xs text-gray-600 mb-2 leading-tight">
+                    {member.title}
+                  </p>
+                  
+                  {/* Phone */}
+                  <p className="text-xs text-gray-600 mb-1">
+                    {member.phone}
+                  </p>
+                  
+                  {/* Email */}
+                  <a 
+                    href={`mailto:${member.email}`}
+                    className="text-xs text-gray-600 hover:text-[#002349] transition-colors"
+                  >
+                    {member.email}
                   </a>
                 </div>
-              </div>
-              
-              {/* Box 2 - SIR */}
-              <div className="relative h-[250px] group overflow-hidden">
-                <Image
-                  src="/images/content/snellman-sothebys-sothebys-international-realty.jpg"
-                  alt={t.box2Title}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-[#002349]/70 flex flex-col items-center justify-center text-white p-6">
-                  <h3 className="text-xl font-light mb-4 text-center">{t.box2Title}</h3>
-                  <a href="https://www.sothebysrealty.com" target="_blank" rel="noopener noreferrer"
-                     className="border border-white px-4 py-2 text-xs uppercase tracking-wider hover:bg-white hover:text-[#002349] transition-all">
-                    {t.box2Button}
-                  </a>
-                </div>
-              </div>
-              
-              {/* Box 3 - Staff */}
-              <div className="relative h-[250px] group overflow-hidden">
-                <Image
-                  src="/images/content/snellman-sothebys-valittajat-2025-11-dark.png"
-                  alt={t.box3Title}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-[#002349]/70 flex flex-col items-center justify-center text-white p-6">
-                  <h3 className="text-xl font-light mb-4 text-center">{t.box3Title}</h3>
-                  <Link href="/henkilosto"
-                     className="border border-white px-4 py-2 text-xs uppercase tracking-wider hover:bg-white hover:text-[#002349] transition-all">
-                    {t.box3Button}
-                  </Link>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* Sotheby's History Section */}
-        <section className="py-12 bg-white">
+        {/* Contact CTA Section */}
+        <section className="py-10 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-2xl font-light text-gray-900 mb-6">
-                {t.historyTitle}
-              </h2>
-              <p className="text-sm text-gray-600 font-light leading-relaxed">
-                {t.historyText}
+              <p className="text-lg text-gray-700 font-light italic mb-8">
+                {t.ctaTitle}
               </p>
-            </div>
-          </div>
-        </section>
-
-        {/* About Section - Image Left, Text Right */}
-        <section className="bg-[#001731] text-white">
-          <div className="flex flex-col lg:flex-row">
-            {/* Left - Image */}
-            <div className="lg:w-1/2 relative h-[300px] lg:h-auto lg:min-h-[400px]">
-              <Image
-                src="/images/content/snellman-sothebys-yritys-01.jpg"
-                alt="Office"
-                fill
-                className="object-cover object-center"
-              />
-              <div className="absolute inset-0 flex items-end justify-center pb-8">
-                <Image
-                  src="/images/logos/snellman-sothebys-logo-white.png"
-                  alt="Snellman Sotheby's"
-                  width={200}
-                  height={50}
-                  className="opacity-80"
-                />
-              </div>
-            </div>
-            
-            {/* Right - Text */}
-            <div className="lg:w-1/2 py-12 px-8 lg:px-16">
-              <h3 className="text-2xl font-light mb-6">
-                {t.aboutTitle}
-              </h3>
-              <div className="space-y-4 text-sm font-light leading-relaxed text-white/90">
-                <p>{t.aboutText1}</p>
-                <p>{t.aboutText2}</p>
-                <p>{t.aboutText3}</p>
+              
+              {/* Contact Info Bar */}
+              <div className="flex flex-wrap justify-center items-center gap-6 md:gap-12 text-sm text-gray-700">
+                <a href="tel:+358103156900" className="hover:text-[#002349] transition-colors">
+                  +358 (0)10 315 6900
+                </a>
+                <span className="hidden md:inline text-gray-300">|</span>
+                <span>Kasarmikatu 34,<br className="md:hidden" /> 00130 Helsinki</span>
+                <span className="hidden md:inline text-gray-300">|</span>
+                <a href="mailto:info@sothebysrealty.fi" className="hover:text-[#002349] transition-colors">
+                  info@sothebysrealty.fi
+                </a>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Service Philosophy Section - Text Left, Image Right */}
-        <section className="bg-white">
-          <div className="flex flex-col lg:flex-row">
-            {/* Left - Text */}
-            <div className="lg:w-1/2 py-12 px-8 lg:px-16 bg-gray-50">
-              <h3 className="text-2xl font-light text-gray-900 mb-6">
-                {t.philosophyTitle}
-              </h3>
-              <div className="space-y-4 text-sm font-light leading-relaxed text-gray-600">
-                <p>{t.philosophyText1}</p>
-                <p>{t.philosophyText2}</p>
-                <p>{t.philosophyText3}</p>
-              </div>
-            </div>
-            
-            {/* Right - Image */}
-            <div className="lg:w-1/2 relative h-[300px] lg:h-auto lg:min-h-[400px]">
-              <Image
-                src="/images/content/snellman-sothebys-yritys.jpg"
-                alt="Service"
-                fill
-                className="object-cover object-center"
-              />
-              <div className="absolute inset-0 flex items-end justify-end p-8">
-                <Image
-                  src="/images/logos/snellman-sothebys-logo-white.png"
-                  alt="Snellman Sotheby's"
-                  width={180}
-                  height={45}
-                  className="opacity-80"
-                />
-              </div>
-            </div>
+        {/* Office Location Section */}
+        <section className="relative py-20 bg-[#001731] text-white">
+          {/* Background Image */}
+          <div className="absolute inset-0">
+            <Image
+              src="/images/content/snellman-sothebys-yritys.jpg"
+              alt=""
+              fill
+              className="object-cover object-center opacity-40"
+            />
           </div>
-        </section>
-
-        {/* "We Open New Doors" Section */}
-        <section className="py-16 bg-[#001731] text-white">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-light text-center">
-              {t.openDoorsTitle}
-            </h2>
+          
+          <div className="relative z-10 container mx-auto px-4">
+            <div className="max-w-2xl mx-auto text-center">
+              <h2 className="text-2xl font-light mb-6">
+                {t.officeLocationTitle}
+              </h2>
+              <div className="space-y-4 text-sm font-light leading-relaxed text-white/90 mb-8">
+                <p>{t.officeLocationText1}</p>
+                <p>{t.officeLocationText2}</p>
+                <p>{t.officeLocationText3}</p>
+              </div>
+              <a
+                href="https://www.google.com/maps/dir//Kasarmikatu+34,+00130+Helsinki"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block border border-white text-white px-6 py-2 hover:bg-white hover:text-[#001731] transition-all text-sm uppercase tracking-wider"
+              >
+                {t.directionsBtn}
+              </a>
+            </div>
           </div>
         </section>
 
