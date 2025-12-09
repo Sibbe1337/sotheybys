@@ -177,6 +177,26 @@ const staffMembers = [
     image: '/images/staff/robert-charpentier.jpg',
     description: '',
     flags: ['fi', 'se', 'gb', 'de']
+  },
+  {
+    id: '10',
+    name: 'Eeva Kyläkoski',
+    title: 'Senior Advisor - Board Member, LKV',
+    email: 'eeva@sothebysrealty.fi',
+    phone: '+358 (0)40 861 4611',
+    image: '/images/staff/eeva-kylakoski.jpg',
+    description: '',
+    flags: ['fi', 'gb']
+  },
+  {
+    id: '11',
+    name: 'Petteri Huovila',
+    title: 'Senior Advisor, LKV',
+    email: 'petteri@sothebysrealty.fi',
+    phone: '+358 (0)400 484 138',
+    image: '/images/staff/petteri-huovila.jpg',
+    description: '',
+    flags: ['fi', 'se', 'gb']
   }
 ];
 

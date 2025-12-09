@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 const heroSlides = [
   {
     id: 1,
-    image: '/images/content/snellman-sothebys-toimisto.jpg',
+    image: '/images/content/snellman-sothebys-yritys-01.jpg',
     logo: true,
     title: {
       fi: 'Kansainvälinen välittäjäsi paikallisesti',
@@ -29,7 +29,7 @@ const heroSlides = [
   },
   {
     id: 2,
-    image: '/images/content/snellman-sothebys-toimisto.jpg',
+    image: '/images/content/snellman-sothebys-yritys.jpg',
     title: {
       fi: 'Tervetuloa onnistuneeseen asuntokauppaan!',
       sv: 'Välkommen till en framgångsrik bostadsaffär!',
@@ -407,7 +407,7 @@ export default function ContactPage({ params }: { params: { locale: string } }) 
             {/* Left - Image */}
             <div className="lg:w-1/2 relative h-[300px] lg:h-auto lg:min-h-[400px]">
               <Image
-                src="/images/content/snellman-sothebys-toimisto.jpg"
+                src="/images/content/snellman-sothebys-yritys-01.jpg"
                 alt="Office"
                 fill
                 className="object-cover object-center"
