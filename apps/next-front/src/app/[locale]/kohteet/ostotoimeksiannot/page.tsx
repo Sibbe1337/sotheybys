@@ -1,6 +1,4 @@
 import { Link } from '@/lib/navigation';
-import Image from 'next/image';
-import ClientGoogleMap from '@/components/ClientGoogleMap';
 import { locales, type Locale } from '@/i18n/config';
 
 export const dynamic = 'force-static';
@@ -164,38 +162,41 @@ export default function PurchaseAssignmentsPage({ params }: { params: { locale: 
           </div>
         </section>
 
-        {/* Helsinki Office Section */}
-        <section className="py-16 bg-[var(--color-primary)] text-white">
-          <div className="max-w-[1400px] mx-auto px-6">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              {/* Text Content */}
-              <div>
-                <h2 className="text-3xl lg:text-4xl font-light mb-6">
+        {/* Helsinki Office Section - Two columns: Text + Map */}
+        <section className="bg-[#001731] text-white">
+          <div className="flex flex-col lg:flex-row">
+            {/* Left side - Text content */}
+            <div className="lg:w-1/2 py-16 px-8 lg:px-16">
+              <div className="max-w-xl mx-auto lg:mx-0">
+                <h3 className="text-2xl md:text-3xl font-light mb-8">
                   {t.officeTitle}
-                </h2>
-                <p className="text-lg font-light leading-relaxed mb-8 text-white/90">
-                  {t.officeText}
-                </p>
-                <a
-                  href="https://maps.google.com/?q=Kasarmikatu+34,+00130+Helsinki"
-                  target="_blank"
+                </h3>
+                <div className="space-y-4 font-light leading-relaxed text-white/90 text-sm">
+                  <p>{t.officeText}</p>
+                </div>
+                <a 
+                  href="https://goo.gl/maps/LjvLpXQFdT82" 
+                  target="_blank" 
                   rel="noopener noreferrer"
-                  className="inline-block border-2 border-white text-white px-8 py-3 
-                           hover:bg-white hover:text-[var(--color-primary)] transition-all duration-300 
-                           uppercase tracking-wider text-sm font-light"
+                  className="inline-block mt-8 border border-white text-white px-6 py-2 hover:bg-white hover:text-[#001731] transition-all uppercase text-sm tracking-wider"
                 >
                   {t.directionsBtn}
                 </a>
               </div>
-
-              {/* Google Maps */}
-              <div className="relative h-96 lg:h-[500px] rounded-lg overflow-hidden shadow-2xl">
-                <ClientGoogleMap
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1983.4469348473456!2d24.948847!3d60.165641!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46920bcfef7f1a35%3A0x5e8a9b4e4e5c7d4f!2sSnellman%20Sotheby&#39;s%20International%20Realty!5e0!3m2!1sen!2sfi!4v1234567890123!5m2!1sen!2sfi"
-                  title="Snellman Sotheby's International Realty Office"
-                  className="w-full h-full"
-                />
-              </div>
+            </div>
+            
+            {/* Right side - Google Map */}
+            <div className="lg:w-1/2 h-[300px] lg:h-auto lg:min-h-[400px]">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1984.4!2d24.9456!3d60.1656!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46920bcb6d8b8e8f%3A0x5c8b8e8f8e8f8e8f!2sKasarmikatu%2034%2C%2000130%20Helsinki!5e0!3m2!1sfi!2sfi!4v1699999999999!5m2!1sfi!2sfi"
+                width="100%"
+                height="100%"
+                style={{ border: 0, minHeight: '300px' }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Snellman Sotheby's Office Location"
+              />
             </div>
           </div>
         </section>
