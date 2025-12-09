@@ -429,38 +429,43 @@ export default function ContactPage({ params }: { params: { locale: Locale } }) 
           </div>
         </section>
 
-        {/* Office Location Section - Dark blue background */}
-        <section className="relative py-16 text-white">
-          {/* Background Image - Office interior centered */}
-          <div className="absolute inset-0">
-            <Image
-              src="/images/content/snellman-sothebys-toimisto.jpg"
-              alt="Helsinki Office"
-              fill
-              className="object-cover object-center"
-            />
-            <div className="absolute inset-0 bg-[#001731]/85"></div>
-          </div>
-
-          {/* Content */}
-          <div className="relative z-10 container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center">
-              <h3 className="text-2xl md:text-3xl font-light mb-8">
-                {t.officeTitle}
-              </h3>
-              <div className="space-y-4 font-light leading-relaxed text-white/90">
-                <p>{t.officeText1}</p>
-                <p>{t.officeText2}</p>
-                <p>{t.officeText3}</p>
+        {/* Office Location Section - Two columns: Text + Map */}
+        <section className="bg-[#001731] text-white">
+          <div className="flex flex-col lg:flex-row">
+            {/* Left side - Text content */}
+            <div className="lg:w-1/2 py-16 px-8 lg:px-16">
+              <div className="max-w-xl mx-auto lg:mx-0">
+                <h3 className="text-2xl md:text-3xl font-light mb-8">
+                  {t.officeTitle}
+                </h3>
+                <div className="space-y-4 font-light leading-relaxed text-white/90 text-sm">
+                  <p>{t.officeText1}</p>
+                  <p>{t.officeText2}</p>
+                  <p>{t.officeText3}</p>
+                </div>
+                <a 
+                  href="https://goo.gl/maps/LjvLpXQFdT82" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-block mt-8 border border-white text-white px-6 py-2 hover:bg-white hover:text-[#001731] transition-all uppercase text-sm tracking-wider"
+                >
+                  {t.directions} →
+                </a>
               </div>
-              <a 
-                href="https://goo.gl/maps/LjvLpXQFdT82" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-block mt-8 border border-white text-white px-6 py-2 hover:bg-white hover:text-[#001731] transition-all uppercase text-sm tracking-wider"
-              >
-                {t.directions} →
-              </a>
+            </div>
+            
+            {/* Right side - Google Map */}
+            <div className="lg:w-1/2 h-[300px] lg:h-auto lg:min-h-[400px]">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1984.4!2d24.9456!3d60.1656!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46920bcb6d8b8e8f%3A0x5c8b8e8f8e8f8e8f!2sKasarmikatu%2034%2C%2000130%20Helsinki!5e0!3m2!1sfi!2sfi!4v1699999999999!5m2!1sfi!2sfi"
+                width="100%"
+                height="100%"
+                style={{ border: 0, minHeight: '300px' }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Snellman Sotheby's Office Location"
+              />
             </div>
           </div>
         </section>
