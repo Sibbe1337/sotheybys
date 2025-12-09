@@ -150,33 +150,52 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
     setIsMobileMenuOpen(false);
   }, [pathname]);
 
-  // Scroll listener för komprimerande header
+  // Scroll listener för komprimerande header - THROTTLED for performance
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+    let ticking = false;
+    let lastScrollY = 0;
     
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Landscape orientation detector för mobil
-  useEffect(() => {
-    const checkOrientation = () => {
-      const isLandscapeMode = window.innerWidth > window.innerHeight && window.innerWidth < 1024;
-      setIsLandscape(isLandscapeMode);
+    const handleScroll = () => {
+      lastScrollY = window.scrollY;
       
-      // Stäng mobilmenyn automatiskt i landscape för att inte täcka skärmen
-      if (isLandscapeMode && isMobileMenuOpen) {
-        setIsMobileMenuOpen(false);
+      if (!ticking) {
+        // Use requestAnimationFrame for smooth 60fps throttling
+        requestAnimationFrame(() => {
+          setIsScrolled(lastScrollY > 50);
+          ticking = false;
+        });
+        ticking = true;
       }
     };
     
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Landscape orientation detector för mobil - THROTTLED for performance
+  useEffect(() => {
+    let resizeTimeout: NodeJS.Timeout;
+    
+    const checkOrientation = () => {
+      // Debounce resize events to prevent excessive re-renders
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        const isLandscapeMode = window.innerWidth > window.innerHeight && window.innerWidth < 1024;
+        setIsLandscape(isLandscapeMode);
+        
+        // Stäng mobilmenyn automatiskt i landscape för att inte täcka skärmen
+        if (isLandscapeMode && isMobileMenuOpen) {
+          setIsMobileMenuOpen(false);
+        }
+      }, 100); // 100ms debounce
+    };
+    
     checkOrientation();
-    window.addEventListener('resize', checkOrientation);
+    window.addEventListener('resize', checkOrientation, { passive: true });
     window.addEventListener('orientationchange', checkOrientation);
     
     return () => {
+      clearTimeout(resizeTimeout);
       window.removeEventListener('resize', checkOrientation);
       window.removeEventListener('orientationchange', checkOrientation);
     };

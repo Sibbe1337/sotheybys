@@ -10,6 +10,34 @@ import { getHomepageTranslation, type SupportedLanguage } from '@/lib/homepage-t
 // Legacy imports removed - now using new API endpoints
 import type { Locale } from '@/i18n/config';
 
+// Helper: Strip HTML tags from description
+function stripHtml(html: string): string {
+  return html.replace(/<[^>]*>/g, '').trim();
+}
+
+// Helper: Format plot area with smart units
+// < 10 000 m² → m², ≥ 10 000 m² → ha
+function formatPlot(n: number | null | undefined, locale: string): string {
+  if (typeof n !== 'number' || n <= 0) return '';
+  const L = locale === 'sv' ? 'sv-SE' : locale === 'en' ? 'en-GB' : 'fi-FI';
+  
+  if (n < 10000) {
+    const formatted = new Intl.NumberFormat(L, {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(Math.round(n));
+    return `${formatted} m²`;
+  }
+  
+  // ≥ 10 000 m² → convert to hectares
+  const ha = n / 10000;
+  const formatted = new Intl.NumberFormat(L, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }).format(ha);
+  return `${formatted} ha`;
+}
+
 // Function to get translated hero slides
 const getTranslatedSlides = (language: SupportedLanguage) => [
   {
@@ -561,9 +589,10 @@ export default function HomePageClient({
                 {featuredProperties.map((property) => {
                   const addressStr = typeof property.address === 'string' ? property.address : property.address.fi;
                   const cityStr = typeof property.city === 'string' ? property.city : property.city.fi;
-                  const descriptionStr = property.description 
+                  const descriptionRaw = property.description 
                     ? (typeof property.description === 'string' ? property.description : property.description.fi)
                     : '';
+                  const descriptionStr = stripHtml(descriptionRaw);
                   const listingTypeStr = property.meta.listingTypeLabel
                     ? (typeof property.meta.listingTypeLabel === 'string' 
                         ? property.meta.listingTypeLabel 
@@ -580,7 +609,7 @@ export default function HomePageClient({
                     >
                       {/* Property Image with Carousel Navigation */}
                       <div className="relative group">
-                        <a href={`/${locale}/kohde/${property.slug}`} className="block">
+                        <Link href={`/${locale}/kohde/${property.slug}`} className="block" prefetch={true}>
                           <div className="relative h-56 overflow-hidden">
                             <Image
                               src={property.media.images[0]?.url || '/images/placeholder.jpg'}
@@ -590,7 +619,7 @@ export default function HomePageClient({
                               className="object-cover"
                             />
                           </div>
-                        </a>
+                        </Link>
                         {/* Carousel Arrows */}
                         {property.media.images.length > 1 && (
                           <>
@@ -610,7 +639,7 @@ export default function HomePageClient({
 
                       {/* Property Details */}
                       <div className="p-5 flex-grow flex flex-col">
-                        <a href={`/${locale}/kohde/${property.slug}`} className="block mb-auto">
+                        <Link href={`/${locale}/kohde/${property.slug}`} className="block mb-auto" prefetch={true}>
                           <h3 className="text-lg font-medium text-gray-900 mb-2">
                             {addressStr}
                           </h3>
@@ -625,11 +654,11 @@ export default function HomePageClient({
                             {descriptionStr}
                           </p>
                           <p className="text-sm text-gray-600 mb-4">
-                            {property.dimensions.living && `${property.dimensions.living} m²`}
-                            {property.dimensions.total && property.dimensions.total !== property.dimensions.living && ` / ${property.dimensions.total} m²`}
-                            {property.dimensions.plot && ` | ${property.dimensions.plot} m²`}
+                            {property.dimensions.living && `${Math.round(property.dimensions.living)} m²`}
+                            {property.dimensions.total && property.dimensions.total !== property.dimensions.living && ` / ${Math.round(property.dimensions.total)} m²`}
+                            {property.dimensions.plot && ` | ${formatPlot(property.dimensions.plot, language)}`}
                           </p>
-                        </a>
+                        </Link>
                         
                         {/* Property Type and Location Tags */}
                         {(listingTypeStr || districtStr) && (
@@ -683,14 +712,15 @@ export default function HomePageClient({
                             </div>
                           )}
                           
-                          <a
+                          <Link
                             href={`/${locale}/kohde/${property.slug}`}
                             className="block w-full bg-[#002349] text-white text-center px-6 py-2.5
                                      hover:bg-[#001731] transition-colors duration-300
                                      font-normal uppercase tracking-wide text-sm"
+                            prefetch={true}
                           >
                             {language === 'fi' ? 'NÄYTÄ KOHDE' : language === 'sv' ? 'VISA OBJEKT' : 'VIEW PROPERTY'}
-                          </a>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -729,9 +759,10 @@ export default function HomePageClient({
                 {rentalProperties.map((property) => {
                   const addressStr = typeof property.address === 'string' ? property.address : property.address.fi;
                   const cityStr = typeof property.city === 'string' ? property.city : property.city.fi;
-                  const descriptionStr = property.description 
+                  const descriptionRaw = property.description 
                     ? (typeof property.description === 'string' ? property.description : property.description.fi)
                     : '';
+                  const descriptionStr = stripHtml(descriptionRaw);
 
                   return (
                     <div
@@ -739,7 +770,7 @@ export default function HomePageClient({
                       className="bg-white border border-gray-200 hover:shadow-lg transition-shadow duration-300 flex flex-col"
                     >
                       <div className="relative group">
-                        <a href={`/${locale}/kohde/${property.slug}`} className="block">
+                        <Link href={`/${locale}/kohde/${property.slug}`} className="block" prefetch={true}>
                           <div className="relative h-56 overflow-hidden">
                             <Image
                               src={property.media.images[0]?.url || '/images/placeholder.jpg'}
@@ -749,11 +780,11 @@ export default function HomePageClient({
                               className="object-cover"
                             />
                           </div>
-                        </a>
+                        </Link>
                       </div>
 
                       <div className="p-5 flex-grow flex flex-col">
-                        <a href={`/${locale}/kohde/${property.slug}`} className="block mb-auto">
+                        <Link href={`/${locale}/kohde/${property.slug}`} className="block mb-auto" prefetch={true}>
                           <h3 className="text-lg font-medium text-gray-900 mb-2">
                             {addressStr}
                           </h3>
@@ -766,18 +797,19 @@ export default function HomePageClient({
                             {descriptionStr}
                           </p>
                           <p className="text-sm text-gray-600 mb-4">
-                            {property.dimensions.living && `${property.dimensions.living} m²`}
+                            {property.dimensions.living && `${Math.round(property.dimensions.living)} m²`}
                           </p>
-                        </a>
+                        </Link>
                         
-                        <a
+                        <Link
                           href={`/${locale}/kohde/${property.slug}`}
                           className="block w-full bg-[#002349] text-white text-center px-6 py-2.5
                                    hover:bg-[#001731] transition-colors duration-300
                                    font-normal uppercase tracking-wide text-sm mt-auto"
+                          prefetch={true}
                         >
                           {language === 'fi' ? 'NÄYTÄ KOHDE' : language === 'sv' ? 'VISA OBJEKT' : 'VIEW PROPERTY'}
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   );
@@ -790,6 +822,7 @@ export default function HomePageClient({
                   className="inline-block bg-[#002349] text-white px-8 py-3
                            hover:bg-[#001731] transition-colors duration-300
                            font-light uppercase tracking-wider text-sm"
+                  prefetch={true}
                   >
                   {language === 'fi' ? 'Kaikki vuokrakohteemme' : language === 'sv' ? 'Alla våra hyresobjekt' : 'All our rental properties'}
                 </Link>

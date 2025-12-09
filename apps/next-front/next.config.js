@@ -5,6 +5,15 @@ const withNextIntl = require('next-intl/plugin')(
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // ✅ Performance: Enable React Compiler for faster re-renders (Next.js 14+)
+  reactStrictMode: true,
+  
+  // ✅ Performance: Enable compression
+  compress: true,
+  
+  // ✅ Performance: Generate ETags for caching
+  generateEtags: true,
+  
   experimental: {
     serverComponentsExternalPackages: ['@apollo/client'],
     instrumentationHook: true,

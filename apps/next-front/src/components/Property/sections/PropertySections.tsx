@@ -106,7 +106,7 @@ export function PropertySections({ vm, locale, isCommercial = false }: PropertyS
   // plotArea is now a number, no need to parse
   const localeFormatted = locale === 'sv' ? 'sv-SE' : locale === 'en' ? 'en-GB' : 'fi-FI';
   const plotAreaNum = vm.plotArea; // Already a number
-  
+
   // Robert 2025-11-25: Extract numeric values for per m² calculations (for apartment shares in properties)
   const maintenanceNum = parseEuropeanNumber(vm.fees?.maintenance) || 0;
   const financingNum = parseEuropeanNumber(vm.fees?.financing) || 0;
