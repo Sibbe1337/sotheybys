@@ -355,8 +355,8 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
 
       {/* Mobile Menu - Statisk storlek */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden bg-[var(--color-primary)] border-t border-white/10">
-          <nav className="max-w-[1400px] mx-auto px-6 py-4">
+        <div className="lg:hidden bg-[var(--color-primary)]">
+          <nav className="max-w-[1400px] mx-auto px-6 py-2">
             {/* Mobile Navigation */}
             {items.map((item) => {
               const isActive = pathname === item.path;
@@ -423,8 +423,8 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
             })}
             
             {/* Mobile Language Switcher - 🔥 LINUS FIX: Use native Link for dynamic routes */}
-            <div className="mt-4 pt-4 border-t border-white/20">
-              <div className="flex items-center justify-center gap-4 text-xs">
+            <div className="mt-2 pt-2 border-t border-white/10">
+              <div className="flex items-center justify-center gap-4 text-xs pb-2">
                 <NextLink
                   href={languageSwitcherUrls.fi}
                   className={`transition-opacity [font-family:'freight-sans-pro',sans-serif] ${currentLang === 'fi' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
