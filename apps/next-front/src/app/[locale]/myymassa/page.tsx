@@ -1,4 +1,4 @@
-import { Link } from '@/lib/navigation';
+    import { Link } from '@/lib/navigation';
 import Image from 'next/image';
 import { VideoSection } from '@/components/ui/VideoSection';
 import { locales, type Locale } from '@/i18n/config';

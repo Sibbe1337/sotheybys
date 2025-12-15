@@ -84,6 +84,9 @@ export default function FeaturedPropertyGrid({ properties, locale }: FeaturedPro
         // Get apartment type (huoneistoselitelmä)
         const apartmentType = property.meta.apartmentType?.[locale] || property.meta.apartmentType?.fi;
         
+        // Get marketing title (esittelytekstin otsikko)
+        const marketingTitle = property.descriptionTitle?.[locale] || property.descriptionTitle?.fi;
+        
         // Get listing type label (with fallback to prevent undefined)
         const propertyType = property.meta.listingTypeLabel?.[locale] 
           || property.meta.listingTypeLabel?.fi 
@@ -115,6 +118,7 @@ export default function FeaturedPropertyGrid({ properties, locale }: FeaturedPro
             propertyType={propertyType}
             district={district}
             apartmentType={apartmentType}
+            marketingTitle={marketingTitle}
             images={images}             // Pass all images for carousel
             showCarousel={true}         // Dennis: Hem-fliken should also have carousel with arrows (manual browsing, no autoplay)
             variant={variant}

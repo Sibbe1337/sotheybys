@@ -106,8 +106,8 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
           </div>
 
           {/* Content */}
-          <div className="relative h-full flex items-center">
-            <div className="container mx-auto px-16 sm:px-20 lg:px-24">
+          <div className="relative h-full flex items-end sm:items-center pb-24 sm:pb-0">
+            <div className="container mx-auto px-6 sm:px-16 md:px-20 lg:px-24">
               <div className="max-w-4xl">
                 {/* Subtitle - appears first */}
                 {slide.subtitle && (
@@ -130,9 +130,9 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                 )}
                 
                 {/* Title */}
-                <div className="overflow-hidden mb-8">
+                <div className="overflow-hidden mb-6 sm:mb-8">
                   <h1 
-                    className={`text-white text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-thin leading-none transform transition-all duration-1000 ${
+                    className={`text-white text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-thin leading-tight sm:leading-none transform transition-all duration-1000 ${
                       index === currentSlide 
                         ? 'translate-y-0 opacity-100' 
                         : 'translate-y-full opacity-0'

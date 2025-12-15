@@ -552,6 +552,9 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                     const propertyType = property.meta.listingTypeLabel?.[language] || property.meta.listingTypeLabel?.fi || property.meta.typeCode;
                     const apartmentType = property.meta.apartmentType?.[language] || property.meta.apartmentType?.fi;
                     
+                    // Marketing title (esittelytekstin otsikko)
+                    const marketingTitle = property.descriptionTitle?.[language] || property.descriptionTitle?.fi;
+                    
                     // Calculate "other area" from balcony + terrace
                     const balconyArea = property.dimensions.balcony || 0;
                     const terraceArea = property.dimensions.terrace || 0;
@@ -574,6 +577,7 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                         fullAddress={fullAddress}
                         propertyType={propertyType}
                         apartmentType={apartmentType}
+                        marketingTitle={marketingTitle}
                         district={district}
                         images={images}
                         showCarousel={true}
@@ -634,6 +638,9 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                     const propertyType = property.meta.listingTypeLabel?.[language] || property.meta.listingTypeLabel?.fi || property.meta.typeCode;
                     const apartmentType = property.meta.apartmentType?.[language] || property.meta.apartmentType?.fi;
                     
+                    // Marketing title (esittelytekstin otsikko)
+                    const marketingTitle = property.descriptionTitle?.[language] || property.descriptionTitle?.fi;
+                    
                     const balconyArea = property.dimensions.balcony || 0;
                     const terraceArea = property.dimensions.terrace || 0;
                     const otherArea = balconyArea + terraceArea > 0 ? balconyArea + terraceArea : undefined;
@@ -654,6 +661,7 @@ export default function PropertySearch({ properties, language }: PropertySearchP
                         fullAddress={fullAddress}
                         propertyType={propertyType}
                         apartmentType={apartmentType}
+                        marketingTitle={marketingTitle}
                         district={district}
                         images={images}
                         showCarousel={true}

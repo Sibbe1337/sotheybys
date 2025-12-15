@@ -87,33 +87,45 @@ export function ListingMap({ properties, onPropertyClick, locale }: ListingMapPr
 
       const { lat, lon } = property.media.coordinates;
       
+      // Sotheby's branded marker with "S" logo
       const marker = new google.maps.Marker({
         position: { lat, lng: lon },
         map,
         title: property.address[locale] || property.address.fi,
         icon: {
           url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
-            <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="16" cy="16" r="14" fill="#002349" stroke="white" stroke-width="2"/>
-              <text x="16" y="21" text-anchor="middle" fill="white" font-size="16" font-weight="bold">€</text>
+            <svg width="40" height="48" viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 0C8.954 0 0 8.954 0 20c0 14 20 28 20 28s20-14 20-28C40 8.954 31.046 0 20 0z" fill="#002349"/>
+              <circle cx="20" cy="18" r="12" fill="white"/>
+              <text x="20" y="23" text-anchor="middle" fill="#002349" font-size="14" font-weight="bold" font-family="Georgia, serif">S</text>
             </svg>
           `),
-          scaledSize: new google.maps.Size(32, 32),
+          scaledSize: new google.maps.Size(40, 48),
+          anchor: new google.maps.Point(20, 48),
         },
       });
 
-      // Create info window content
+      // Create info window content with image and more details
       const address = property.address[locale] || property.address.fi;
       const city = property.city[locale] || property.city.fi;
       const price = property.rental 
-        ? `${property.rental.monthlyRent} €/kk`
-        : `${property.pricing.debtFree.toLocaleString()} €`;
+        ? `${property.rental.monthlyRent?.toLocaleString()} €/kk`
+        : `${property.pricing.debtFree?.toLocaleString()} €`;
+      const area = property.areas.living ? `${property.areas.living} m²` : '';
+      const imageUrl = property.media.images?.[0]?.url || '';
+      const propertyUrl = `/${locale}/kohde/${property.slug}`;
+      const viewText = locale === 'sv' ? 'VISA OBJEKT »' : locale === 'en' ? 'VIEW PROPERTY »' : 'KATSO KOHDE »';
       
       const content = `
-        <div style="padding: 8px; min-width: 200px;">
-          <h3 style="margin: 0 0 4px 0; font-size: 14px; font-weight: 600;">${address}</h3>
-          <p style="margin: 0 0 4px 0; font-size: 12px; color: #666;">${city}</p>
-          <p style="margin: 0; font-size: 14px; font-weight: 700; color: #002349;">${price}</p>
+        <div style="padding: 0; min-width: 250px; max-width: 300px; font-family: 'freight-text-pro', Georgia, serif;">
+          ${imageUrl ? `<img src="${imageUrl}" alt="${address}" style="width: 100%; height: 120px; object-fit: cover; display: block;"/>` : ''}
+          <div style="padding: 12px;">
+            <h3 style="margin: 0 0 4px 0; font-size: 15px; font-weight: 600; color: #1a1a1a;">${address}</h3>
+            <p style="margin: 0 0 8px 0; font-size: 13px; color: #666;">${city}</p>
+            ${area ? `<p style="margin: 0 0 4px 0; font-size: 13px; color: #444;">${area}</p>` : ''}
+            <p style="margin: 0 0 12px 0; font-size: 16px; font-weight: 700; color: #002349;">${price}</p>
+            <a href="${propertyUrl}" style="display: inline-block; background: #002349; color: white; padding: 8px 16px; font-size: 11px; text-decoration: none; letter-spacing: 0.5px;">${viewText}</a>
+          </div>
         </div>
       `;
 

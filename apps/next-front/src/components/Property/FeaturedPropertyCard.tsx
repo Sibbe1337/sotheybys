@@ -24,6 +24,7 @@ export interface FeaturedPropertyCardProps {
   
   // Description
   apartmentType?: string;     // "5-6h, k, kph..."
+  marketingTitle?: string;    // Esittelytekstin otsikko / Marketing headline
   
   // Media - Dennis: Support both single image (Hem) and carousel (Objekt)
   image?: { url: string; alt?: string };  // Single image (Hem-fliken)
@@ -71,6 +72,7 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
     propertyType,
     district,
     apartmentType,
+    marketingTitle,
     image,
     images,
     showCarousel = false,
@@ -285,7 +287,12 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
           </div>
         )}
 
-        {/* Description */}
+        {/* Marketing Title (esittelytekstin otsikko) - shown prominently if available */}
+        {marketingTitle && (
+          <p className="mb-2 text-base font-medium leading-snug text-gray-800">{marketingTitle}</p>
+        )}
+
+        {/* Room description (huoneistoselitelmä) */}
         {apartmentType && (
           <p className="mb-2 text-sm leading-relaxed text-gray-600">{apartmentType}</p>
         )}

@@ -81,6 +81,9 @@ export default function PropertyGridNew({ properties, locale }: PropertyGridNewP
         // Get apartment type (huoneistoselitelmä)
         const apartmentType = property.meta.apartmentType?.[locale] || property.meta.apartmentType?.fi;
         
+        // Get marketing title (esittelytekstin otsikko)
+        const marketingTitle = property.descriptionTitle?.[locale] || property.descriptionTitle?.fi;
+        
         // Get listing type label (with fallback to prevent undefined)
         const propertyType = property.meta.listingTypeLabel?.[locale] 
           || property.meta.listingTypeLabel?.fi 
@@ -112,6 +115,7 @@ export default function PropertyGridNew({ properties, locale }: PropertyGridNewP
             propertyType={propertyType}
             district={district}
             apartmentType={apartmentType}
+            marketingTitle={marketingTitle}
             images={images}
             showCarousel={true}  // Dennis: Objekt-fliken allows browsing images without opening
             variant={variant}
