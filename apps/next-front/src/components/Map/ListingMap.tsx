@@ -87,18 +87,13 @@ export function ListingMap({ properties, onPropertyClick, locale }: ListingMapPr
 
       const { lat, lon } = property.media.coordinates;
       
-      // Sotheby's branded marker - simple circle with "S" (matching old design)
+      // Sotheby's branded marker - use static SVG file for reliability
       const marker = new google.maps.Marker({
         position: { lat, lng: lon },
         map,
         title: property.address[locale] || property.address.fi,
         icon: {
-          url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
-            <svg width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="18" cy="18" r="17" fill="#002349" stroke="white" stroke-width="2"/>
-              <text x="18" y="24" text-anchor="middle" fill="white" font-size="18" font-weight="bold" font-family="Georgia, serif">S</text>
-            </svg>
-          `),
+          url: '/images/icons/map-marker.svg',
           scaledSize: new google.maps.Size(36, 36),
           anchor: new google.maps.Point(18, 18),
         },
