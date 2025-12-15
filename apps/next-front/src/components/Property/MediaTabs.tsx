@@ -83,6 +83,8 @@ export function MediaTabs({
                 src={floorPlans[0]} 
                 className="w-full h-[600px] border-0"
                 title="Floor plan PDF"
+                allowFullScreen
+                allow="fullscreen"
               />
             ) : (
               <div className="text-center text-gray-500">
@@ -137,6 +139,8 @@ export function MediaTabs({
                 src={brochureUrl} 
                 className="w-full h-full border-0"
                 title="Property brochure"
+                allowFullScreen
+                allow="fullscreen; autoplay; encrypted-media"
               />
             ) : (
               <div className="text-center text-gray-500">
