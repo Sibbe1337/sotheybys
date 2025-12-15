@@ -167,8 +167,12 @@ export default function PropertyMap({ properties, language }: PropertyMapProps) 
                   position={position}
                   onClick={() => setSelectedProperty(property)}
                 >
-                  <div className="bg-[var(--color-primary)] text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg cursor-pointer hover:bg-[var(--color-primary-dark)] transition-colors">
-                    {price > 0 ? `${(price / 1000).toFixed(0)}k €` : '•'}
+                  {/* Sotheby's "S" marker - matching old design */}
+                  <div 
+                    className="w-9 h-9 rounded-full bg-[#002349] border-2 border-white flex items-center justify-center shadow-lg cursor-pointer hover:scale-110 transition-transform"
+                    style={{ fontFamily: 'Georgia, serif' }}
+                  >
+                    <span className="text-white text-lg font-bold">S</span>
                   </div>
                 </AdvancedMarker>
               );

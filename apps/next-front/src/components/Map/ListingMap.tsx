@@ -87,21 +87,20 @@ export function ListingMap({ properties, onPropertyClick, locale }: ListingMapPr
 
       const { lat, lon } = property.media.coordinates;
       
-      // Sotheby's branded marker with "S" logo
+      // Sotheby's branded marker - simple circle with "S" (matching old design)
       const marker = new google.maps.Marker({
         position: { lat, lng: lon },
         map,
         title: property.address[locale] || property.address.fi,
         icon: {
           url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
-            <svg width="40" height="48" viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg">
-              <path d="M20 0C8.954 0 0 8.954 0 20c0 14 20 28 20 28s20-14 20-28C40 8.954 31.046 0 20 0z" fill="#002349"/>
-              <circle cx="20" cy="18" r="12" fill="white"/>
-              <text x="20" y="23" text-anchor="middle" fill="#002349" font-size="14" font-weight="bold" font-family="Georgia, serif">S</text>
+            <svg width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="18" cy="18" r="17" fill="#002349" stroke="white" stroke-width="2"/>
+              <text x="18" y="24" text-anchor="middle" fill="white" font-size="18" font-weight="bold" font-family="Georgia, serif">S</text>
             </svg>
           `),
-          scaledSize: new google.maps.Size(40, 48),
-          anchor: new google.maps.Point(20, 48),
+          scaledSize: new google.maps.Size(36, 36),
+          anchor: new google.maps.Point(18, 18),
         },
       });
 
