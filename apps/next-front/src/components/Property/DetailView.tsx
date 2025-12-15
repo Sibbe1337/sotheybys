@@ -154,16 +154,16 @@ export function DetailView({ vm, locale }: Props) {
           </div>
         )}
 
-        {/* GLOBAL LISTING Button */}
+        {/* GLOBAL LISTING Button - Centered under stats, matching old design */}
         {vm.internationalUrl && (
-          <div className="my-6">
+          <div className="my-6 flex justify-center">
             <a 
               href={vm.internationalUrl} 
               target="_blank" 
               rel="noopener noreferrer"
-              className="inline-block px-8 py-3 bg-[#8e740b] text-white font-semibold rounded hover:bg-[#7a6209] transition-colors"
+              className="inline-block px-8 py-3 bg-[#002349] text-white font-semibold uppercase tracking-wider hover:bg-[#001731] transition-colors"
             >
-              {t('media.global', locale)}
+              GLOBAL LISTING »
             </a>
           </div>
         )}

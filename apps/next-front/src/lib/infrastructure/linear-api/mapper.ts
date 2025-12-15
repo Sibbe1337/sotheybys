@@ -427,6 +427,13 @@ export class LinearToPropertyMapper {
                          extractLinkFromArray(/sothebysrealty\.com\/eng/i, 'international listing') ||
                          undefined;
     
+    // Dennis 2025-12-15: International URL (Global Listing on sothebysrealty.com)
+    const internationalUrl = lget((src as any).internationalUrl!, locale) ||
+                             lget((src as any).internationalListingUrl!, locale) ||
+                             lget((src as any).globalListingUrl!, locale) ||
+                             extractLinkFromArray(/sothebysrealty\.com\/(eng|id-id|zh-cn|ru-ru|pt-pt|es-mx|fr-fr|ja-jp|ko-kr|de-de)\/sales/i, 'global listing') ||
+                             undefined;
+    
     const videoUrl = lget(src.videoUrl!, locale) || 
                      extractLinkFromArray(/youtu\.be|youtube\.com|vimeo\.com/i, 'video') ||
                      undefined;
@@ -716,6 +723,9 @@ export class LinearToPropertyMapper {
         video: videoUrl,
         energyCert: energyCertUrl
       },
+
+      // Dennis 2025-12-15: International listing URL (Global Listing)
+      internationalUrl,
 
       agent: Object.values(agentData).some(v => v) ? agentData : undefined,
 
