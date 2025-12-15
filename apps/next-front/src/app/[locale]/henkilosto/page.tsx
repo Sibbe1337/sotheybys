@@ -322,10 +322,10 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
                     </div>
                     
                     {/* Info */}
-                    <h3 className="text-xl font-normal text-gray-900 mb-1">
+                    <h3 className="text-2xl font-normal text-gray-900 mb-1">
                       {member.name}
                     </h3>
-                    <p className="text-base text-gray-600 mb-2">
+                    <p className="text-lg text-gray-600 mb-2">
                       {member.title}
                     </p>
                     
@@ -333,13 +333,13 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
                     <div className="space-y-1 mb-3">
                       <a 
                         href={`tel:${member.phone.replace(/\s/g, '')}`} 
-                        className="block text-base text-gray-700 hover:text-[#002349] transition-colors"
+                        className="block text-lg text-gray-700 hover:text-[#002349] transition-colors"
                       >
                         {member.phone}
                       </a>
                       <a 
                         href={`mailto:${member.email}`} 
-                        className="block text-base text-gray-700 hover:text-[#002349] transition-colors"
+                        className="block text-lg text-gray-700 hover:text-[#002349] transition-colors"
                       >
                         {member.email}
                       </a>

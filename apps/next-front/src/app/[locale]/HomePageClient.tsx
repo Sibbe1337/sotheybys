@@ -410,7 +410,7 @@ export default function HomePageClient({
         <section className="py-12 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
-              <h3 className="text-gray-900 mb-8">
+              <h3 className="text-xl md:text-2xl text-gray-900 mb-8 font-light leading-relaxed">
                 {language === 'fi' ? (
                   <>
                     Upea toimistomme palvelee<br />
@@ -430,7 +430,7 @@ export default function HomePageClient({
                     and at other times by appointment.
                   </>
                 )}
-            </h3>
+              </h3>
               <div className="mt-8 flex flex-col md:flex-row justify-center items-center gap-6 text-gray-700">
                 <a href="tel:+358103156900" className="text-lg hover:text-[var(--color-primary)] transition-colors font-light">
                   +358 (0)10 315 6900
