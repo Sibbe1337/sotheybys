@@ -368,7 +368,7 @@ export default function ContactPage({ params }: { params: { locale: string } }) 
         </section>
 
         {/* Office Location Section - static */}
-        <section className="relative py-20 bg-[#001731] text-white">
+        <section className="relative py-20 bg-[#00234A] text-white">
           {/* Background Image */}
           <div className="absolute inset-0">
             <Image
@@ -393,7 +393,7 @@ export default function ContactPage({ params }: { params: { locale: string } }) 
                 href="https://www.google.com/maps/dir//Kasarmikatu+34,+00130+Helsinki"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block border border-white text-white px-6 py-2 hover:bg-white hover:text-[#001731] transition-all text-sm uppercase tracking-wider"
+                className="inline-block border border-white text-white px-6 py-2 hover:bg-white hover:text-[#00234A] transition-all text-sm uppercase tracking-wider"
               >
                 {t.directionsBtn}
               </a>

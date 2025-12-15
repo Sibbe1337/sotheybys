@@ -516,7 +516,7 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
         <section className="py-0">
           <div className="grid md:grid-cols-2">
             {/* Left Column - Office Info */}
-            <div className="p-12 md:p-16" style={{ backgroundColor: '#001731' }}>
+            <div className="p-12 md:p-16" style={{ backgroundColor: '#00234A' }}>
               <h3 className="text-3xl font-light mb-6 text-white">{t.officeTitle}</h3>
               <div className="space-y-4 text-white font-light">
                 <p>
