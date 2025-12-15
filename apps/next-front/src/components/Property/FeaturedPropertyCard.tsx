@@ -287,10 +287,7 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
           </div>
         )}
 
-        {/* Marketing Title (esittelytekstin otsikko) - shown prominently if available */}
-        {marketingTitle && (
-          <p className="mb-2 text-base font-medium leading-snug text-gray-800">{marketingTitle}</p>
-        )}
+        {/* Marketing Title removed from cards - too cluttered, show on detail page only */}
 
         {/* Room description (huoneistoselitelmä) */}
         {apartmentType && (
