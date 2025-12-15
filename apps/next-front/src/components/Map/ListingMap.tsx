@@ -111,7 +111,7 @@ export function ListingMap({ properties, onPropertyClick, locale }: ListingMapPr
       const price = property.rental 
         ? `${property.rental.monthlyRent?.toLocaleString()} €/kk`
         : `${property.pricing.debtFree?.toLocaleString()} €`;
-      const area = property.areas.living ? `${property.areas.living} m²` : '';
+      const area = property.dimensions.living ? `${property.dimensions.living} m²` : '';
       const imageUrl = property.media.images?.[0]?.url || '';
       const propertyUrl = `/${locale}/kohde/${property.slug}`;
       const viewText = locale === 'sv' ? 'VISA OBJEKT »' : locale === 'en' ? 'VIEW PROPERTY »' : 'KATSO KOHDE »';
