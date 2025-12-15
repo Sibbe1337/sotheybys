@@ -328,27 +328,29 @@ export default function HomePageClient({
         </section>
 
         {/* Three Column Section - Avaamme uusia ovia */}
-        <section id="avaamme-uusia-ovia" className="py-16 bg-white">
+        <section id="avaamme-uusia-ovia" className="py-8 bg-white">
           <div className="container mx-auto px-4">
-            <div className="max-w-5xl mx-auto">
+            <div className="max-w-6xl mx-auto">
               {/* Section header removed - text is now in the hero carousel */}
 
-              {/* Three Columns */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Three Columns - Matching old website style */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {/* Column 1 - Hitta din drömbostad */}
-                <Link href="/kohteet" className="relative h-80 group overflow-hidden block">
+                <Link href="/kohteet" className="relative aspect-[4/5] md:aspect-[3/4] group overflow-hidden block">
                   <Image
                     src="/images/content/snellman-sothebys-nakoalapaikka.jpg"
                     alt={getHomepageTranslation('openNewDoors', language)}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-[var(--color-primary)] bg-opacity-60 flex flex-col items-center justify-center text-white p-8">
-                    <h3 className="text-2xl font-light mb-6 text-center">{getHomepageTranslation('openNewDoors', language)}</h3>
-                    <span className="inline-block border-2 border-white text-white px-6 py-2.5
+                  <div className="absolute inset-0 bg-[var(--color-primary)]/60 group-hover:bg-[var(--color-primary)]/70 transition-all duration-300 flex flex-col items-center justify-center text-white p-6 md:p-10">
+                    <h3 className="text-xl md:text-2xl lg:text-[26px] font-light italic mb-8 text-center leading-relaxed tracking-wide">
+                      {getHomepageTranslation('openNewDoors', language)}
+                    </h3>
+                    <span className="inline-block border border-white text-white px-8 py-3
                                group-hover:bg-white group-hover:text-[var(--color-primary)] transition-all duration-300
-                               font-light text-xs tracking-wide uppercase"
+                               text-[11px] tracking-[0.15em] uppercase font-normal"
                     >
                       {getHomepageTranslation('findDreamHome', language)} ›
                     </span>
@@ -356,21 +358,21 @@ export default function HomePageClient({
                 </Link>
 
                 {/* Column 2 - Om oss */}
-                <Link href="/yritys" className="relative h-80 group overflow-hidden block">
+                <Link href="/yritys" className="relative aspect-[4/5] md:aspect-[3/4] group overflow-hidden block">
                   <Image
                     src="/images/content/snellman-sothebys-toimisto.jpg"
                     alt={getHomepageTranslation('expertiseHeading', language)}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-[var(--color-primary)] bg-opacity-70 flex flex-col items-center justify-center text-white p-8">
-                    <h3 className="text-2xl font-light mb-6 text-center">
+                  <div className="absolute inset-0 bg-[var(--color-primary)]/70 group-hover:bg-[var(--color-primary)]/80 transition-all duration-300 flex flex-col items-center justify-center text-white p-6 md:p-10">
+                    <h3 className="text-xl md:text-2xl lg:text-[26px] font-light italic mb-8 text-center leading-relaxed tracking-wide">
                       {getHomepageTranslation('expertiseHeading', language)}
                     </h3>
-                    <span className="inline-block border-2 border-white text-white px-6 py-2.5
+                    <span className="inline-block border border-white text-white px-8 py-3
                                group-hover:bg-white group-hover:text-[var(--color-primary)] transition-all duration-300
-                               font-light text-xs tracking-wide uppercase"
+                               text-[11px] tracking-[0.15em] uppercase font-normal"
                     >
                       {getHomepageTranslation('readMoreAboutUs', language)} ›
                     </span>
@@ -378,21 +380,21 @@ export default function HomePageClient({
                 </Link>
 
                 {/* Column 3 - Sälja */}
-                <Link href="/myymassa" className="relative h-80 group overflow-hidden block">
+                <Link href="/myymassa" className="relative aspect-[4/5] md:aspect-[3/4] group overflow-hidden block">
                   <Image
                     src="/images/content/snellman-sothebys-kutsu-arviokaynnille.jpg"
                     alt={getHomepageTranslation('freeValuationHeading', language)}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-[var(--color-gold)] bg-opacity-80 flex flex-col items-center justify-center text-white p-8">
-                    <h3 className="text-2xl font-light mb-6 text-center">
+                  <div className="absolute inset-0 bg-[var(--color-primary)]/70 group-hover:bg-[var(--color-primary)]/80 transition-all duration-300 flex flex-col items-center justify-center text-white p-6 md:p-10">
+                    <h3 className="text-xl md:text-2xl lg:text-[26px] font-light italic mb-8 text-center leading-relaxed tracking-wide">
                       {getHomepageTranslation('freeValuationHeading', language)}
                     </h3>
-                    <span className="inline-block border-2 border-white text-white px-6 py-2.5
-                               group-hover:bg-white group-hover:text-[var(--color-gold)] transition-all duration-300
-                               font-light text-xs tracking-wide uppercase"
+                    <span className="inline-block border border-white text-white px-8 py-3
+                               group-hover:bg-white group-hover:text-[var(--color-primary)] transition-all duration-300
+                               text-[11px] tracking-[0.15em] uppercase font-normal"
                     >
                       {getHomepageTranslation('contactUs', language)} ›
                     </span>

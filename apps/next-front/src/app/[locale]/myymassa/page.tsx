@@ -59,9 +59,6 @@ const translations = {
     pricingNote2: '** Soveltuvin osin',
     videoTitle: 'Miksi myydä kanssamme?',
     videoSubtitle: 'Katso miten autamme asiakkaitamme onnistuneeseen asuntokauppaan',
-    disputeTitle: 'Kuluttajariita',
-    disputeText: 'Sopimusta koskeva riita voidaan viedä kuluttajariitalautakunnan ratkaistavaksi.',
-    disputeLink: 'Lisätietoa osoitteesta:',
   },
   sv: {
     title: 'Sälja',
@@ -105,9 +102,6 @@ const translations = {
     pricingNote2: '** I tillämpliga fall',
     videoTitle: 'Varför sälja med oss?',
     videoSubtitle: 'Se hur vi hjälper våra kunder till en framgångsrik bostadsaffär',
-    disputeTitle: 'Konsumenttvist',
-    disputeText: 'En tvist som rör avtalet kan tas upp för konsumenttvistnämnden.',
-    disputeLink: 'Mer information på:',
     servicesTitle: 'Våra tjänster',
     servicesText1: 'Vi vet att försäljning av en bostad är ett av livets viktigaste ekonomiska beslut. Därför garanterar vi att du får stöd från våra erfarna experter under hela processen.',
     servicesText2: 'Vårt servicelöfte bygger på transparens, professionalitet och en långsiktig kundrelation. Vi vill att varje kund känner sig trygg med oss.',
@@ -154,9 +148,6 @@ const translations = {
     pricingNote2: '** As applicable',
     videoTitle: 'Why sell with us?',
     videoSubtitle: 'See how we help our clients achieve successful property transactions',
-    disputeTitle: 'Consumer Dispute',
-    disputeText: 'A dispute concerning the contract can be submitted to the Consumer Disputes Board.',
-    disputeLink: 'More information at:',
     servicesTitle: 'Our Services',
     servicesText1: 'We know that selling a property is one of life\'s most important financial decisions. That\'s why we guarantee that you will receive support from our experienced experts throughout the process.',
     servicesText2: 'Our service promise is based on transparency, professionalism and a long-term customer relationship. We want every customer to feel secure with us.',
@@ -332,29 +323,6 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
                   <p>{t.honorText1}</p>
                   <p>{t.honorText2}</p>
                   <p>{t.honorText3}</p>
-                </div>
-              </div>
-
-              {/* Box 3: Arvokas asiakassuhde - White background (#FFF) */}
-              <div style={{ backgroundColor: '#FFFFFF' }} className="p-8 lg:p-16">
-                <h2 className="text-2xl font-light text-gray-900 mb-6">
-                  {t.relationshipTitle}
-                </h2>
-                <div className="space-y-4 text-gray-700 font-light leading-relaxed text-sm">
-                  <p>{t.relationshipText1}</p>
-                  <p>{t.relationshipText2}</p>
-                  <p>{t.relationshipText3}</p>
-                </div>
-              </div>
-
-              {/* Box 4: Palvelulupauksemme - Gray background (#CCC) */}
-              <div style={{ backgroundColor: '#CCCCCC' }} className="p-8 lg:p-16">
-                <h2 className="text-2xl font-light text-gray-900 mb-6">
-                  {t.promiseTitle}
-                </h2>
-                <div className="space-y-4 text-gray-700 font-light leading-relaxed text-sm">
-                  <p>{t.promiseText1}</p>
-                  <p>{t.promiseText2}</p>
                 </div>
               </div>
             </div>
