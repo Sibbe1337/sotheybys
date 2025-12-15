@@ -5,6 +5,7 @@ import { LinearToPropertyMapper } from '@/lib/infrastructure/linear-api/mapper';
 /**
  * Debug endpoint to check Swedish translations from Linear API
  * GET /api/debug/translations
+ * Updated: 2025-12-15
  */
 export async function GET() {
   try {
