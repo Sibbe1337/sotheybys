@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { LinearApiClient } from '@/lib/infrastructure/linear-api/client';
-import { LinearPropertyMapper } from '@/lib/infrastructure/linear-api/mapper';
+import { LinearAPIClient } from '@/lib/infrastructure/linear-api/client';
+import { LinearToPropertyMapper } from '@/lib/infrastructure/linear-api/mapper';
 
 /**
  * Debug endpoint to check Swedish translations from Linear API
@@ -8,29 +8,40 @@ import { LinearPropertyMapper } from '@/lib/infrastructure/linear-api/mapper';
  */
 export async function GET() {
   try {
-    const client = new LinearApiClient();
-    const rawListings = await client.getListings();
-    const mapper = new LinearPropertyMapper();
+    // Get API credentials - use the same base URL as the working listings endpoint
+    // LINEAR_API_URL already includes /api, so we need the base without it
+    const baseApiUrl = process.env.LINEAR_API_URL?.replace('/api', '') || 'https://linear-external-api.azurewebsites.net';
+    const apiKey = process.env.LINEAR_API_KEY;
+    const companyId = process.env.LINEAR_COMPANY_ID;
+    
+    if (!apiKey) {
+      return NextResponse.json({
+        success: false,
+        error: 'LINEAR_API_KEY not configured',
+      }, { status: 500 });
+    }
+    
+    const client = new LinearAPIClient(baseApiUrl, apiKey, companyId);
+    const rawListings = await client.fetchListings();
+    const mapper = new LinearToPropertyMapper();
     
     // Map properties for each locale
     const results = await Promise.all(
       rawListings.slice(0, 5).map(async (listing: any) => {
         const propertyFi = await mapper.map(listing, 'fi');
-        const propertySv = await mapper.map(listing, 'sv');
-        const propertyEn = await mapper.map(listing, 'en');
         
         return {
           id: propertyFi.id,
           slug: propertyFi.slug,
           address: {
             fi: propertyFi.address.fi,
-            sv: propertyFi.address.sv,
-            en: propertyFi.address.en,
+            sv: propertyFi.address.sv || null,
+            en: propertyFi.address.en || null,
           },
           city: {
             fi: propertyFi.city.fi,
-            sv: propertyFi.city.sv,
-            en: propertyFi.city.en,
+            sv: propertyFi.city.sv || null,
+            en: propertyFi.city.en || null,
           },
           description: {
             fi: propertyFi.description?.fi?.substring(0, 100) || null,
@@ -94,4 +105,3 @@ export async function GET() {
     }, { status: 500 });
   }
 }
-
