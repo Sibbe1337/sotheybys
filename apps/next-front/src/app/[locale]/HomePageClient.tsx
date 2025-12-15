@@ -480,7 +480,9 @@ export default function HomePageClient({
                     </h4>
                     <p className="text-center">
                       <a
-                        href="/2025-luxury-outlook-report/"
+                        href="https://sothebysrealty.fi/2025-luxury-outlook-report/"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="inline-block border-2 border-white text-white px-8 py-3
                                  hover:bg-white hover:text-black transition-colors duration-300
                                  font-light tracking-wider text-sm uppercase"
