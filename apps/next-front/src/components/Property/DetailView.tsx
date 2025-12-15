@@ -168,28 +168,17 @@ export function DetailView({ vm, locale }: Props) {
           </div>
         )}
 
-        {/* Title, Address, Type - Dennis: Responsive text sizes */}
+        {/* Title, Address, Type - Feedback fix: Address as main heading, remove marketing title */}
         <div className="my-4 sm:my-6 md:my-8">
-          {vm.descriptionTitle && (
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2 sm:mb-3">
-              {vm.descriptionTitle}
-            </h1>
-          )}
-          <p className="text-lg sm:text-xl text-gray-700 mb-1.5 sm:mb-2">
-            {displayAddress}, {vm.postalCode} {vm.city}
-          </p>
           {titleLine && (
             <p className="text-base sm:text-lg text-gray-600">{titleLine}</p>
           )}
         </div>
 
-        {/* Description - PDF spec s.10: Add "Kuvaus / Beskrivning" heading */}
+        {/* Description - Feedback: Removed heading, improved paragraph spacing */}
         {vm.description && (
-          <div className="mb-8 sm:mb-10 md:mb-12 bg-white rounded-none shadow-sm p-4 sm:p-6 md:p-8 lg:p-10">
-            <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-4 sm:mb-6">
-              {locale === 'sv' ? 'Beskrivning' : locale === 'en' ? 'Description' : 'Kuvaus'}
-            </h2>
-            <div className="prose prose-base sm:prose-lg max-w-none text-gray-700 [&>p]:mb-6 sm:[&>p]:mb-10 [&>p]:leading-relaxed sm:[&>p]:leading-loose [&>p:first-child]:mt-0 [&>p:last-child]:mb-0">
+          <div className="mb-8 sm:mb-10 md:mb-12">
+            <div className="prose prose-base sm:prose-lg max-w-none text-gray-800 leading-relaxed [&>p]:mb-6 [&>p]:leading-relaxed [&>p:first-child]:mt-0 [&>p:last-child]:mb-0">
               <RichText html={vm.description} />
             </div>
           </div>
