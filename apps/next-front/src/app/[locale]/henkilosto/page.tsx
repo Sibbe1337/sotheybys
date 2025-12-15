@@ -35,6 +35,19 @@ const translations = {
     formRecaptchaTerms: 'käyttöehdot',
     formRecaptchaEnd: 'ovat voimassa.',
     formSubmit: 'Lähetä',
+    // Three boxes
+    box1Title: 'Sotheby\'s Huutokauppatalo',
+    box1Button: 'LUE LISÄÄ »',
+    box2Title: 'Sotheby\'s International Realty®',
+    box2Button: 'LUE LISÄÄ »',
+    box3Title: 'Tutustu henkilökuntaamme',
+    box3Button: 'OTA YHTEYTTÄ »',
+    // Intro section
+    introTitle: 'Snellman Sotheby\'s International Realty®',
+    introText: 'Tänä päivänä 84 maassa, 1100 välitystoimiston ja 26 100 välittäjän vahvuudella palveleva Sotheby\'s International Realty® kuuluu maailman suurimpiin kiinteistöalan brändeihin. Globaali verkostomme avaa asiakkaille eri puolilla maailmaa oven kansainvälisille arvokiinteistömarkkinoille.',
+    officeHoursTitle: 'Upea toimistomme palvelee',
+    officeHours: 'teitä arkisin 10:00 – 17:00',
+    officeExtra: 'sekä muina aikoina sopimuksen mukaan.',
   },
   sv: {
     title: 'Personal',
@@ -59,6 +72,19 @@ const translations = {
     formRecaptchaTerms: 'användarvillkor',
     formRecaptchaEnd: 'gäller.',
     formSubmit: 'Skicka',
+    // Three boxes
+    box1Title: 'Sotheby\'s Auktionshus',
+    box1Button: 'LÄS MER »',
+    box2Title: 'Sotheby\'s International Realty®',
+    box2Button: 'LÄS MER »',
+    box3Title: 'Lär känna vår personal',
+    box3Button: 'KONTAKTA »',
+    // Intro section
+    introTitle: 'Snellman Sotheby\'s International Realty®',
+    introText: 'Idag med 84 länder, 1100 kontor och 26 100 mäklare är Sotheby\'s International Realty® ett av världens största fastighetsmärken. Vårt globala nätverk öppnar dörren till internationella lyxfastighetsmarknader för kunder runt om i världen.',
+    officeHoursTitle: 'Vårt fantastiska kontor betjänar',
+    officeHours: 'er vardagar 10:00 – 17:00',
+    officeExtra: 'samt övriga tider enligt överenskommelse.',
   },
   en: {
     title: 'Staff',
@@ -83,6 +109,19 @@ const translations = {
     formRecaptchaTerms: 'terms of service',
     formRecaptchaEnd: 'apply.',
     formSubmit: 'Send',
+    // Three boxes
+    box1Title: 'Sotheby\'s Auction House',
+    box1Button: 'READ MORE »',
+    box2Title: 'Sotheby\'s International Realty®',
+    box2Button: 'READ MORE »',
+    box3Title: 'Meet our staff',
+    box3Button: 'CONTACT »',
+    // Intro section
+    introTitle: 'Snellman Sotheby\'s International Realty®',
+    introText: 'Today with 84 countries, 1,100 offices and 26,100 agents, Sotheby\'s International Realty® is one of the world\'s largest real estate brands. Our global network opens the door to international luxury real estate markets for clients around the world.',
+    officeHoursTitle: 'Our beautiful office serves',
+    officeHours: 'you on weekdays 10:00 – 17:00',
+    officeExtra: 'and at other times by appointment.',
   },
 };
 
@@ -284,6 +323,106 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </a>
+            </div>
+          </div>
+        </section>
+
+        {/* Intro Section */}
+        <section className="py-8 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto text-center">
+              <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-4">
+                {t.introTitle}
+              </h2>
+              <p className="text-sm text-gray-600 font-light leading-relaxed">
+                {t.introText}
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Office Hours */}
+        <section className="py-6 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto text-center text-gray-600 font-light text-sm">
+              <p className="mb-1">{t.officeHoursTitle}</p>
+              <p className="mb-1">{t.officeHours}</p>
+              <p>{t.officeExtra}</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Contact Info Bar */}
+        <section className="py-6 bg-white border-t border-b">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-wrap justify-center items-center gap-6 md:gap-12 text-sm text-gray-700">
+              <a href="tel:+358103156900" className="hover:text-[#002349] transition-colors">
+                +358 (0)10 315 6900
+              </a>
+              <span className="hidden md:inline text-gray-300">|</span>
+              <span>Kasarmikatu 34, 00130 Helsinki</span>
+              <span className="hidden md:inline text-gray-300">|</span>
+              <a href="mailto:info@sothebysrealty.fi" className="hover:text-[#002349] transition-colors">
+                info@sothebysrealty.fi
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* Three Promo Boxes */}
+        <section className="py-12 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+              {/* Box 1 - Auction House */}
+              <div className="relative h-[250px] group overflow-hidden">
+                <Image
+                  src="/images/content/snellman-sothebys-auction-house.jpg"
+                  alt={t.box1Title}
+                  fill
+                  className="object-cover grayscale group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white p-6">
+                  <h3 className="text-xl font-light mb-4 text-center">{t.box1Title}</h3>
+                  <a href="https://www.sothebys.com" target="_blank" rel="noopener noreferrer"
+                     className="border border-white px-4 py-2 text-xs uppercase tracking-wider hover:bg-white hover:text-[#002349] transition-all">
+                    {t.box1Button}
+                  </a>
+                </div>
+              </div>
+              
+              {/* Box 2 - SIR */}
+              <div className="relative h-[250px] group overflow-hidden">
+                <Image
+                  src="/images/content/snellman-sothebys-sothebys-international-realty.jpg"
+                  alt={t.box2Title}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-[#002349]/70 flex flex-col items-center justify-center text-white p-6">
+                  <h3 className="text-xl font-light mb-4 text-center">{t.box2Title}</h3>
+                  <a href="https://www.sothebysrealty.com" target="_blank" rel="noopener noreferrer"
+                     className="border border-white px-4 py-2 text-xs uppercase tracking-wider hover:bg-white hover:text-[#002349] transition-all">
+                    {t.box2Button}
+                  </a>
+                </div>
+              </div>
+              
+              {/* Box 3 - Staff */}
+              <div className="relative h-[250px] group overflow-hidden">
+                <Image
+                  src="/images/content/snellman-sothebys-valittajat-2025-11-dark.png"
+                  alt={t.box3Title}
+                  fill
+                  className="object-cover grayscale group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white p-6">
+                  <h3 className="text-xl font-light mb-4 text-center">{t.box3Title}</h3>
+                  <Link href="/yhteystiedot" prefetch={true}
+                     className="border border-white px-4 py-2 text-xs uppercase tracking-wider hover:bg-white hover:text-[#002349] transition-all">
+                    {t.box3Button}
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </section>

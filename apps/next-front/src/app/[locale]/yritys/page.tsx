@@ -349,12 +349,37 @@ export default function CompanyPage({ params }: { params: { locale: string } }) 
           </div>
         </section>
 
-        {/* "We Open New Doors" Section - static */}
-        <section className="py-16 bg-[#001731] text-white">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-light text-center">
-              {t.openDoorsTitle}
-            </h2>
+        {/* "We Open New Doors" Section - with image background like original */}
+        <section className="relative py-20 text-white">
+          {/* Background Image */}
+          <div className="absolute inset-0">
+            <Image
+              src="/images/content/snellman-sothebys-yritys.jpg"
+              alt=""
+              fill
+              className="object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-[#001731]/80"></div>
+          </div>
+          
+          <div className="relative z-10 container mx-auto px-4 flex items-center">
+            {/* Logo on left */}
+            <div className="hidden lg:block flex-shrink-0 mr-8">
+              <Image
+                src="/images/logos/snellman-sothebys-logo-white.png"
+                alt="Snellman Sotheby's"
+                width={200}
+                height={50}
+                className="opacity-80"
+              />
+            </div>
+            
+            {/* Title centered */}
+            <div className="flex-1">
+              <h2 className="text-3xl md:text-4xl font-light text-center lg:text-left">
+                {t.openDoorsTitle}
+              </h2>
+            </div>
           </div>
         </section>
 
