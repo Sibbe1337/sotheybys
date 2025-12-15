@@ -153,7 +153,7 @@ const staffMembers = [
     name: 'Dennis Forsman',
     title: 'Sales Assistant, B.Sc.',
     email: 'dennis@sothebysrealty.fi',
-    phone: '+358 (0)44 999 4407',
+    phone: '+358 (0)44 599 4407',
     image: '/images/staff/dennis-forsman.jpg',
     description: '',
     flags: ['fi', 'se', 'gb']
