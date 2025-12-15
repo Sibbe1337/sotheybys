@@ -105,10 +105,10 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
             <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
           </div>
 
-          {/* Content */}
+          {/* Content - Centered text */}
           <div className="relative h-full flex items-end sm:items-center pb-24 sm:pb-0">
             <div className="container mx-auto px-6 sm:px-16 md:px-20 lg:px-24">
-              <div className="max-w-4xl">
+              <div className="max-w-4xl mx-auto text-center">
                 {/* Subtitle - appears first */}
                 {slide.subtitle && (
                   <div 
@@ -143,10 +143,10 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                   </h1>
                 </div>
 
-                {/* Button */}
+                {/* Button - Centered */}
                 {slide.buttonText && slide.buttonLink && (
                   <div 
-                    className={`transform transition-all duration-1000 ${
+                    className={`transform transition-all duration-1000 flex justify-center ${
                       index === currentSlide 
                         ? 'translate-y-0 opacity-100' 
                         : 'translate-y-10 opacity-0'
