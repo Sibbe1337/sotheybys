@@ -53,13 +53,14 @@ export function ImageCarousel({ images, title, propertyId }: ImageCarouselProps)
       {/* Main Carousel - Dennis 2025-11-12: Optimerad för mobil med högre aspect ratio */}
       <section className="relative w-full bg-black">
         {/* Dennis 2025-11-19: Mobil 3:2 (kompakt), Tablet 16:9, Desktop 21:9 (bred panorama) */}
-        <div className="relative w-full aspect-[3/2] sm:aspect-[16/9] lg:aspect-[21/9] overflow-hidden">
+        {/* object-contain ensures portrait images show in full without cropping */}
+        <div className="relative w-full aspect-[3/2] sm:aspect-[16/9] lg:aspect-[21/9] overflow-hidden bg-black">
           {/* Use native img tag with API proxy to bypass CORS */}
           <img
             key={imageKey}
             src={currentImageUrl}
             alt={`${title} - Bild ${currentIndex + 1}`}
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-contain"
             onError={(e) => {
               e.currentTarget.style.display = 'none';
             }}

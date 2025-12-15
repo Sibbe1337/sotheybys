@@ -9,6 +9,11 @@ interface ContactFormProps {
     privacyLink: string;
     recaptchaText: string;
     submitBtn: string;
+    // Language-specific placeholders
+    namePlaceholder?: string;
+    emailPlaceholder?: string;
+    phonePlaceholder?: string;
+    messagePlaceholder?: string;
   };
 }
 
@@ -35,27 +40,27 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"
-          placeholder="Nimi / Name"
+          placeholder={t.namePlaceholder || 'Nimi / Name'}
           className="w-full px-4 py-3 border border-gray-300 focus:border-[#002349] focus:outline-none text-sm"
           value={formData.name}
           onChange={(e) => setFormData({...formData, name: e.target.value})}
         />
         <input
           type="email"
-          placeholder="Sähköposti / Email"
+          placeholder={t.emailPlaceholder || 'Sähköposti / Email'}
           className="w-full px-4 py-3 border border-gray-300 focus:border-[#002349] focus:outline-none text-sm"
           value={formData.email}
           onChange={(e) => setFormData({...formData, email: e.target.value})}
         />
         <input
           type="tel"
-          placeholder="Puhelin / Phone"
+          placeholder={t.phonePlaceholder || 'Puhelin / Phone'}
           className="w-full px-4 py-3 border border-gray-300 focus:border-[#002349] focus:outline-none text-sm"
           value={formData.phone}
           onChange={(e) => setFormData({...formData, phone: e.target.value})}
         />
         <textarea
-          placeholder="Viesti / Message"
+          placeholder={t.messagePlaceholder || 'Viesti / Message'}
           rows={4}
           className="w-full px-4 py-3 border border-gray-300 focus:border-[#002349] focus:outline-none text-sm resize-none"
           value={formData.message}

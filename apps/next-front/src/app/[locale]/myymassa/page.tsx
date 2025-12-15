@@ -447,26 +447,6 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
           </div>
         </section>
 
-        {/* Consumer Dispute Section */}
-        <section className="py-12 bg-[var(--color-primary)] text-white">
-          <div className="container mx-auto px-4">
-            <div className="text-center">
-              <h2 className="text-2xl font-light mb-4">
-                {t.disputeTitle}
-              </h2>
-              <p className="font-light mb-2">
-                {t.disputeText}
-              </p>
-              <p className="font-light">
-                {t.disputeLink}{' '}
-                <a href="https://www.kuluttajariita.fi" target="_blank" rel="noopener noreferrer" 
-                   className="text-white underline hover:text-gray-200">
-                  www.kuluttajariita.fi
-                </a>
-              </p>
-            </div>
-          </div>
-        </section>
       </main>
     </div>
   );
