@@ -390,7 +390,7 @@ export default function InternationalPage({ params }: { params: { locale: Locale
               
               {/* Urban Metropolitan */}
               <a 
-                href="https://www.sothebysrealty.com/eng/sales/int/mountain-lstyle" 
+                href="https://www.sothebysrealty.com/eng/sales/int/urban-lstyle" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="group cursor-pointer"
@@ -410,6 +410,33 @@ export default function InternationalPage({ params }: { params: { locale: Locale
                     </h3>
                     <button className="border border-white px-6 py-2 hover:bg-white hover:text-black transition-all uppercase text-sm font-light whitespace-pre-line">
                       {t.discoverUrban}
+                    </button>
+                  </div>
+                </div>
+              </a>
+
+              {/* Lovely Ski Properties */}
+              <a 
+                href="https://www.sothebysrealty.com/eng/sales/int/ski-lstyle" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="group cursor-pointer"
+              >
+                <div className="h-64 relative overflow-hidden">
+                  <Image
+                    src="/images/international/ski-mountain-property.jpg"
+                    alt="Lovely Ski Properties"
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors"></div>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-6">
+                    <h3 className="text-2xl font-light mb-4">
+                      Lovely Ski<br />
+                      Properties
+                    </h3>
+                    <button className="border border-white px-6 py-2 hover:bg-white hover:text-black transition-all uppercase text-sm font-light">
+                      {t.findSki}
                     </button>
                   </div>
                 </div>
@@ -452,85 +479,111 @@ export default function InternationalPage({ params }: { params: { locale: Locale
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
               
               {/* Florida */}
-              <div className="bg-gray-50 p-8">
-                <h3 className="text-2xl font-light text-gray-900 mb-4">Florida</h3>
-                <p className="text-sm text-gray-600 font-light italic mb-3">
-                  The Sunshine State is the Subtropical Capital of Cool<br />
-                  by: Amy Reeves
-                </p>
-                <p className="text-gray-700 font-light text-sm leading-relaxed mb-4">
-                  Welcome to Miami, a city with two distinct personalities. Over the years, it has played a colorful array 
-                  of roles from pirates' lair to drug runners' paradise to a refined beach resort. It has survived booms and 
-                  busts. It was built on a murky mangrove swamp that once lured only mosquitoes and snakes. The one constant 
-                  in Miami: It has always courted reinvention.<br /><br />
-                  The greater Miami mindset is one of preservation and reinvention. Historic Art Deco and Miami 
-                  Modern architecture, mix with spiraling post-modern towers. It is an evolving, sun-drenched 
-                  skyline.<br /><br />
-                  The fact is that art permeates the city year-round. Whole neighborhoods have been revitalized by its 
-                  creative community, making Miami real estate a great investment for aesthetes...
-                </p>
-                <a 
-                  href="https://www.sothebysrealty.com/eng/category/florida"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[var(--color-primary)] hover:underline font-light text-sm"
-                >
-                  Read more...
-                </a>
+              <div className="group">
+                <div className="h-64 relative overflow-hidden">
+                  <Image
+                    src="/images/international/florida-luxury-property.jpg"
+                    alt="Florida"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-2xl font-light text-gray-900 mb-2">Florida</h3>
+                  <p className="text-sm text-gray-600 font-light italic mb-3">
+                    Subtropical Capital of Cool<br />
+                    by: Iyna Bort Caruso
+                  </p>
+                  <p className="text-gray-700 font-light text-sm leading-relaxed mb-4">
+                    Discover luxury real estate in the Sunshine State. From waterside villas in the north to Miami in the 
+                    south, enjoy some of America's most sought-after beaches on both Atlantic and Gulf coasts along 
+                    with world-class golf glamour that Florida has to offer.
+                    <br /><br />
+                    The greater Miami mindset is one of preservation and reinvention. Historic Art Deco and Miami 
+                    Modern architecture, mix with spiraling post-modern towers. It is an evolving, sun-drenched 
+                    skyline...
+                  </p>
+                  <a 
+                    href="https://www.sothebysrealty.com/eng/category/florida"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[var(--color-primary)] hover:underline font-light text-sm"
+                  >
+                    {t.readMore}
+                  </a>
+                </div>
               </div>
 
               {/* Provence */}
-              <div className="bg-gray-50 p-8">
-                <h3 className="text-2xl font-light text-gray-900 mb-4">Provence-Alpes – Côte d'Azur</h3>
-                <p className="text-sm text-gray-600 font-light italic mb-3">
-                  Real Estate Royalty<br />
-                  by: Amy Reeves
-                </p>
-                <p className="text-gray-700 font-light text-sm leading-relaxed mb-4">
-                  Sunny southeastern France shines brightly above the region's bounty. The area, known as Provence-Alpes-
-                  Côte d'Azur, covers a section of France with near fairy-tale riches. Within a short drive, one can travel from an Alpine peak, pass 
-                  lavender fields, vineyards and medieval villages and end up on the glorious Mediterranean coast.<br /><br />
-                  This historically stable and resilient property market has long attracted European elite. Buyers 
-                  from the U.K. famously make their playground here but the locale has a global stature. The region 
-                  borders Italy to the east, the Mediterranean to the south, the Rhone River to the west and the 
-                  foothills of the Southern Alps to the north...
-                </p>
-                <a 
-                  href="https://www.sothebysrealty.com/eng/destinations/french-riviera-france"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[var(--color-primary)] hover:underline font-light text-sm"
-                >
-                  Read more...
-                </a>
+              <div className="group">
+                <div className="h-64 relative overflow-hidden">
+                  <Image
+                    src="/images/international/french-riviera.jpg"
+                    alt="Provence-Alpes – Côte d'Azur"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-2xl font-light text-gray-900 mb-2">Provence-Alpes – Côte d'Azur</h3>
+                  <p className="text-sm text-gray-600 font-light italic mb-3">
+                    Real Estate Royalty<br />
+                    by: Iyna Bort Caruso
+                  </p>
+                  <p className="text-gray-700 font-light text-sm leading-relaxed mb-4">
+                    The south coast of France casts a brilliant glow on the world. Provence-Alpes-Côte d'Azur covers a cohort of 
+                    France with near fairy-tale riches. Within a short drive, one can travel from an Alpine peak, pass 
+                    lavender fields, vineyards and medieval villages and end up on the glorious Mediterranean coast.
+                    <br /><br />
+                    This historically stable and resilient property market has long attracted European elite. Buyers 
+                    from the U.K. famously make their playground here but the locale has a global stature...
+                  </p>
+                  <a 
+                    href="https://www.sothebysrealty.com/eng/destinations/french-riviera-france"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[var(--color-primary)] hover:underline font-light text-sm"
+                  >
+                    {t.readMore}
+                  </a>
+                </div>
               </div>
 
               {/* New York */}
-              <div className="bg-gray-50 p-8">
-                <h3 className="text-2xl font-light text-gray-900 mb-4">New York</h3>
-                <p className="text-sm text-gray-600 font-light italic mb-3">
-                  America's Global Address<br />
-                  by: Amy Reeves
-                </p>
-                <p className="text-gray-700 font-light text-sm leading-relaxed mb-4">
-                  Think of Manhattan, and a barrage of images comes to mind. Broadway, Wall Street, Times 
-                  Square. The city is as boundless as a skyscraper and as diverse as the structures that line its 
-                  horizon. Manhattan isn't just an American city but a world capital fueled by finance, fashion, health 
-                  care, and media. This makes Manhattan one of the premier markets in the world for luxury real estate, 
-                  with high end condos, luxurious penthouses and elegant homes...
-                </p>
-                <a 
-                  href="https://www.sothebysrealty.com/eng/category/new-york-usa"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[var(--color-primary)] hover:underline font-light text-sm"
-                >
-                  Read more...
-                </a>
+              <div className="group">
+                <div className="h-64 relative overflow-hidden">
+                  <Image
+                    src="/images/international/new-york-skyline.jpg"
+                    alt="New York"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-2xl font-light text-gray-900 mb-2">New York</h3>
+                  <p className="text-sm text-gray-600 font-light italic mb-3">
+                    America's Global Address<br />
+                    by: Iyna Bort Caruso
+                  </p>
+                  <p className="text-gray-700 font-light text-sm leading-relaxed mb-4">
+                    Discover luxury real estate in the Empire State. Know the varying expressions of New York City and 
+                    vibrant Atlantic coastal towns to the sprawling acres of historic countryside and recreational 
+                    Highlands, explore all that New York has to offer.
+                    <br /><br />
+                    Think of Manhattan, and a barrage of images comes to mind. Broadway, Wall Street, Times 
+                    Square. The city is as boundless as a skyscraper and as diverse as the structures that line its 
+                    horizon...
+                  </p>
+                  <a 
+                    href="https://www.sothebysrealty.com/eng/category/new-york-usa"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[var(--color-primary)] hover:underline font-light text-sm"
+                  >
+                    {t.readMore}
+                  </a>
+                </div>
               </div>
-
-              {/* Empty space for layout */}
-              <div></div>
 
             </div>
           </div>
@@ -563,6 +616,33 @@ export default function InternationalPage({ params }: { params: { locale: Locale
                     </h3>
                     <button className="border border-white px-6 py-2 hover:bg-white hover:text-black transition-all uppercase text-sm font-light whitespace-pre-line">
                       {t.searchVineyard}
+                    </button>
+                  </div>
+                </div>
+              </a>
+
+              {/* Championship Golf */}
+              <a 
+                href="https://www.sothebysrealty.com/eng/sales/int/golf-lstyle" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="group cursor-pointer"
+              >
+                <div className="h-64 relative overflow-hidden">
+                  <Image
+                    src="/images/international/golf-property.jpg"
+                    alt="Championship Golf Properties"
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors"></div>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-6">
+                    <h3 className="text-2xl font-light mb-4">
+                      Championship Golf<br />
+                      Properties
+                    </h3>
+                    <button className="border border-white px-6 py-2 hover:bg-white hover:text-black transition-all uppercase text-sm font-light">
+                      {t.viewGolf}
                     </button>
                   </div>
                 </div>
