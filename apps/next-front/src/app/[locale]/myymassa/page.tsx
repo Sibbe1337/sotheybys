@@ -361,27 +361,27 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
                     <tbody className="text-gray-700">
                       <tr>
                         <td className="py-2 font-light pl-4">{t.pricingApartments}</td>
-                        <td className="py-2 text-right font-bold">5 % sis. alv 25,5%*</td>
+                        <td className="py-2 text-right font-bold">5 % sis. alv 25.5%*</td>
                       </tr>
                       <tr>
                         <td className="py-2 font-light pl-4">{t.pricingProperties}</td>
-                        <td className="py-2 text-right font-bold">6 % sis. alv 25,5%*</td>
+                        <td className="py-2 text-right font-bold">6 % sis. alv 25.5%*</td>
                       </tr>
                       <tr>
                         <td className="py-2 font-light pl-4">{t.pricingRemote}</td>
-                        <td className="py-2 text-right font-bold">7 % sis. alv 25,5%*</td>
+                        <td className="py-2 text-right font-bold">7 % sis. alv 25.5%*</td>
                       </tr>
                       <tr>
-                        <td className="py-2 font-light">{t.pricingRental}</td>
-                        <td className="py-2 text-right font-bold">2 kk vuokra sis. alv 25,5%*</td>
+                        <td className="py-2 font-light pl-4">{t.pricingRental}</td>
+                        <td className="py-2 text-right font-bold">2 kk vuokra sis. alv 25.5%*</td>
                       </tr>
                       <tr>
-                        <td className="py-2 font-light">{t.pricingMinimum}</td>
-                        <td className="py-2 text-right font-bold">5750 € sis. alv 25,5%*</td>
+                        <td className="py-2 font-light pl-4">{t.pricingMinimum}</td>
+                        <td className="py-2 text-right font-bold">5750 € sis. alv 25.5%*</td>
                       </tr>
                       <tr>
-                        <td className="py-2 font-light">{t.pricingInternational}</td>
-                        <td className="py-2 text-right font-bold">+0,50 % sis. alv 25,5%**</td>
+                        <td className="py-2 font-light pl-4">{t.pricingInternational}</td>
+                        <td className="py-2 text-right font-bold">+0,50 % sis. alv 25.5%**</td>
                       </tr>
                     </tbody>
                   </table>
@@ -396,11 +396,11 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
                     <tbody className="text-gray-700">
                       <tr>
                         <td className="py-2 font-light pl-4">{t.pricingApartments}</td>
-                        <td className="py-2 text-right font-bold">Alkaen 500 € sis. alv 25,5%*</td>
+                        <td className="py-2 text-right font-bold">Alkaen 500 € sis. alv 25.5%*</td>
                       </tr>
                       <tr>
                         <td className="py-2 font-light pl-4">{t.pricingPropertiesRemote}</td>
-                        <td className="py-2 text-right font-bold">Alkaen 3000 € sis. alv 25,5%*</td>
+                        <td className="py-2 text-right font-bold">Alkaen 3000 € sis. alv 25.5%*</td>
                       </tr>
                     </tbody>
                   </table>
