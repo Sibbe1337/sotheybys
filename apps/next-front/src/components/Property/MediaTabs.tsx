@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { ImageCarousel } from './ImageCarousel';
+import { SinglePropertyMap } from '@/components/Map/SinglePropertyMap';
 import { t } from '@/lib/i18n/property-translations';
 import type { Locale } from '@/lib/domain/property.types';
 
@@ -105,15 +106,10 @@ export function MediaTabs({
         {activeTab === 'map' && (
           <div className="w-full h-full flex items-center justify-center bg-gray-50">
             {coordinates ? (
-              <iframe
-                title="Property Location Map"
-                src={`https://www.google.com/maps?q=${coordinates.lat},${coordinates.lon}&output=embed&z=15`}
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                allow="geolocation"
+              <SinglePropertyMap 
+                lat={coordinates.lat} 
+                lng={coordinates.lon} 
+                title={title}
               />
             ) : (
               <div className="text-center text-gray-500 p-8">
