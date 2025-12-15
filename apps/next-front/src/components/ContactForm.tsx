@@ -40,27 +40,27 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"
-          placeholder={t.namePlaceholder || 'Nimi / Name'}
+          placeholder={t.namePlaceholder || 'Nimi'}
           className="w-full px-4 py-3 border border-gray-300 focus:border-[#002349] focus:outline-none text-sm"
           value={formData.name}
           onChange={(e) => setFormData({...formData, name: e.target.value})}
         />
         <input
           type="email"
-          placeholder={t.emailPlaceholder || 'Sähköposti / Email'}
+          placeholder={t.emailPlaceholder || 'Sähköposti'}
           className="w-full px-4 py-3 border border-gray-300 focus:border-[#002349] focus:outline-none text-sm"
           value={formData.email}
           onChange={(e) => setFormData({...formData, email: e.target.value})}
         />
         <input
           type="tel"
-          placeholder={t.phonePlaceholder || 'Puhelin / Phone'}
+          placeholder={t.phonePlaceholder || 'Puhelin'}
           className="w-full px-4 py-3 border border-gray-300 focus:border-[#002349] focus:outline-none text-sm"
           value={formData.phone}
           onChange={(e) => setFormData({...formData, phone: e.target.value})}
         />
         <textarea
-          placeholder={t.messagePlaceholder || 'Viesti / Message'}
+          placeholder={t.messagePlaceholder || 'Viesti'}
           rows={4}
           className="w-full px-4 py-3 border border-gray-300 focus:border-[#002349] focus:outline-none text-sm resize-none"
           value={formData.message}
