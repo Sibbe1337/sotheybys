@@ -168,17 +168,31 @@ export function DetailView({ vm, locale }: Props) {
           </div>
         )}
 
-        {/* Title, Address, Type - Feedback fix: Address as main heading, remove marketing title */}
-        <div className="my-4 sm:my-6 md:my-8">
-          {titleLine && (
+        {/* Title Line - Property type and room description */}
+        {titleLine && (
+          <div className="my-4 sm:my-6 md:my-8">
             <p className="text-base sm:text-lg text-gray-600">{titleLine}</p>
-          )}
-        </div>
+          </div>
+        )}
 
-        {/* Description - Feedback: Removed heading, improved paragraph spacing */}
+        {/* Description - Clean prose styling with proper paragraph spacing */}
         {vm.description && (
           <div className="mb-8 sm:mb-10 md:mb-12">
-            <div className="prose prose-base sm:prose-lg max-w-none text-gray-800 leading-relaxed [&>p]:mb-6 [&>p]:leading-relaxed [&>p:first-child]:mt-0 [&>p:last-child]:mb-0">
+            <div 
+              className="prose prose-lg max-w-none text-gray-800"
+              style={{
+                lineHeight: '1.8',
+              }}
+            >
+              <style jsx global>{`
+                .prose p {
+                  margin-bottom: 1.5em;
+                  line-height: 1.8;
+                }
+                .prose p:last-child {
+                  margin-bottom: 0;
+                }
+              `}</style>
               <RichText html={vm.description} />
             </div>
           </div>

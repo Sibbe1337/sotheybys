@@ -342,9 +342,9 @@ export default function HomePageClient({
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  {/* Gradient overlay ONLY at bottom where text is */}
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent pt-20 pb-6 px-6 flex flex-col items-center text-white">
-                    <h3 className="text-lg md:text-xl font-light mb-4 text-center leading-relaxed">
+                  {/* Dark overlay with centered content */}
+                  <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white px-6">
+                    <h3 className="text-lg md:text-xl font-light mb-4 text-center leading-relaxed italic">
                       {getHomepageTranslation('openNewDoors', language)}
                     </h3>
                     <span className="inline-block border border-white text-white px-6 py-2.5
@@ -365,9 +365,9 @@ export default function HomePageClient({
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  {/* Gradient overlay ONLY at bottom where text is */}
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent pt-20 pb-6 px-6 flex flex-col items-center text-white">
-                    <h3 className="text-lg md:text-xl font-light mb-4 text-center leading-relaxed">
+                  {/* Dark overlay with centered content */}
+                  <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white px-6">
+                    <h3 className="text-lg md:text-xl font-light mb-4 text-center leading-relaxed italic">
                       {getHomepageTranslation('expertiseHeading', language)}
                     </h3>
                     <span className="inline-block border border-white text-white px-6 py-2.5
@@ -388,9 +388,9 @@ export default function HomePageClient({
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  {/* Gradient overlay ONLY at bottom where text is */}
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent pt-20 pb-6 px-6 flex flex-col items-center text-white">
-                    <h3 className="text-lg md:text-xl font-light mb-4 text-center leading-relaxed">
+                  {/* Dark overlay with centered content */}
+                  <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white px-6">
+                    <h3 className="text-lg md:text-xl font-light mb-4 text-center leading-relaxed italic">
                       {getHomepageTranslation('freeValuationHeading', language)}
                     </h3>
                     <span className="inline-block border border-white text-white px-6 py-2.5
