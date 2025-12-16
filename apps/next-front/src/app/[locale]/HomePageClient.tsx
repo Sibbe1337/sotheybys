@@ -331,7 +331,7 @@ export default function HomePageClient({
         <section id="avaamme-uusia-ovia" className="py-8 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
-              {/* Three Columns - Matching old website style with gradient overlay */}
+              {/* Three Columns - Matching old website style */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {/* Column 1 - Löydä unelmiesi koti */}
                 <Link href="/kohteet" className="relative aspect-[4/3] group overflow-hidden block">
@@ -342,8 +342,8 @@ export default function HomePageClient({
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  {/* Gradient overlay from bottom - more subtle like old site */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent group-hover:from-black/80 transition-all duration-300 flex flex-col items-center justify-center text-white p-6">
+                  {/* Gradient overlay ONLY at bottom where text is */}
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent pt-20 pb-6 px-6 flex flex-col items-center text-white">
                     <h3 className="text-lg md:text-xl font-light mb-4 text-center leading-relaxed">
                       {getHomepageTranslation('openNewDoors', language)}
                     </h3>
@@ -365,8 +365,8 @@ export default function HomePageClient({
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  {/* Gradient overlay from bottom */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent group-hover:from-black/80 transition-all duration-300 flex flex-col items-center justify-center text-white p-6">
+                  {/* Gradient overlay ONLY at bottom where text is */}
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent pt-20 pb-6 px-6 flex flex-col items-center text-white">
                     <h3 className="text-lg md:text-xl font-light mb-4 text-center leading-relaxed">
                       {getHomepageTranslation('expertiseHeading', language)}
                     </h3>
@@ -388,8 +388,8 @@ export default function HomePageClient({
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  {/* Gradient overlay from bottom */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent group-hover:from-black/80 transition-all duration-300 flex flex-col items-center justify-center text-white p-6">
+                  {/* Gradient overlay ONLY at bottom where text is */}
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent pt-20 pb-6 px-6 flex flex-col items-center text-white">
                     <h3 className="text-lg md:text-xl font-light mb-4 text-center leading-relaxed">
                       {getHomepageTranslation('freeValuationHeading', language)}
                     </h3>
