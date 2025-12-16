@@ -178,21 +178,7 @@ export function DetailView({ vm, locale }: Props) {
         {/* Description - Clean prose styling with proper paragraph spacing */}
         {vm.description && (
           <div className="mb-8 sm:mb-10 md:mb-12">
-            <div 
-              className="prose prose-lg max-w-none text-gray-800"
-              style={{
-                lineHeight: '1.8',
-              }}
-            >
-              <style jsx global>{`
-                .prose p {
-                  margin-bottom: 1.5em;
-                  line-height: 1.8;
-                }
-                .prose p:last-child {
-                  margin-bottom: 0;
-                }
-              `}</style>
+            <div className="max-w-none text-gray-800 text-base sm:text-lg leading-relaxed space-y-6 [&>div>p]:mb-6 [&>div>p]:leading-relaxed">
               <RichText html={vm.description} />
             </div>
           </div>

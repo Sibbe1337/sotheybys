@@ -6,6 +6,28 @@ interface RichTextProps {
 }
 
 /**
+ * Remove unwanted headings like "Kuvaus", "Beskrivning", "Description"
+ * These are often embedded in API content but should not be displayed
+ */
+function removeUnwantedHeadings(html: string): string {
+  // Remove standalone "Kuvaus", "Beskrivning", "Description" headings
+  const headingPatterns = [
+    /<h[1-6][^>]*>\s*Kuvaus\s*<\/h[1-6]>/gi,
+    /<h[1-6][^>]*>\s*Beskrivning\s*<\/h[1-6]>/gi,
+    /<h[1-6][^>]*>\s*Description\s*<\/h[1-6]>/gi,
+    /<strong>\s*Kuvaus\s*<\/strong>/gi,
+    /<b>\s*Kuvaus\s*<\/b>/gi,
+  ];
+  
+  let cleaned = html;
+  for (const pattern of headingPatterns) {
+    cleaned = cleaned.replace(pattern, '');
+  }
+  
+  return cleaned;
+}
+
+/**
  * Convert plain text with double line breaks to paragraphs
  * Robert 2025-11-25: Fix for Mellstenintie description spacing
  */
@@ -44,11 +66,14 @@ function convertToParas(html: string): string {
  * Prevents XSS attacks from Linear/WP content
  */
 export function RichText({ html, className }: RichTextProps) {
-  // First convert plain text to paragraphs if needed
-  const withParas = convertToParas(html);
+  // Remove unwanted headings first
+  const withoutHeadings = removeUnwantedHeadings(html);
+  
+  // Then convert plain text to paragraphs if needed
+  const withParas = convertToParas(withoutHeadings);
   
   const sanitized = DOMPurify.sanitize(withParas, {
-    ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'a', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+    ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'a', 'ul', 'ol', 'li'],
     ALLOWED_ATTR: ['href', 'target', 'rel']
   });
 
