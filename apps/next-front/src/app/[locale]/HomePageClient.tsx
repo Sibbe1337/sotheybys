@@ -359,7 +359,7 @@ export default function HomePageClient({
                 {/* Column 2 - Om oss / Yritys */}
                 <Link href="/yritys" className="relative aspect-[4/3] group overflow-hidden block">
                   <Image
-                    src="/images/content/snellman-sothebys-yritys.jpg"
+                    src="/images/content/snellman-sothebys-yritys-01.jpg"
                     alt={getHomepageTranslation('expertiseHeading', language)}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
