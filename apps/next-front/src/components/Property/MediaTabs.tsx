@@ -65,8 +65,8 @@ export function MediaTabs({
   return (
     <div className="w-full">
       {/* Content - Dennis: Images FIRST, then buttons below */}
-      {/* Dennis 2025-11-19: Fixed height based on image aspect ratio to prevent jumping when switching tabs */}
-      <div className="w-full bg-gray-50 overflow-hidden mb-2 aspect-[3/2] sm:aspect-[16/9] lg:aspect-[21/9]">
+      {/* Fixed aspect ratio that works for both portrait and landscape images - entire image visible */}
+      <div className="w-full bg-gray-50 overflow-hidden mb-2 aspect-[4/3] sm:aspect-[3/2] lg:aspect-[16/10]">
         {activeTab === 'photos' && photoImages.length > 0 && (
           <ImageCarousel images={photoImages} title={title} propertyId={propertyId} />
         )}
@@ -157,8 +157,8 @@ export function MediaTabs({
         {activeTab === 'video' && (
           <div className="w-full">
             {videoUrl ? (
-              // Dennis 2025-11-19: Video samma aspect ratio som bilder (3:2 mobil, 16:9 tablet, 21:9 desktop)
-              <div className="w-full aspect-[3/2] sm:aspect-[16/9] lg:aspect-[21/9]">
+              // Video same aspect ratio as images for consistency
+              <div className="w-full aspect-[4/3] sm:aspect-[3/2] lg:aspect-[16/10]">
                 <iframe 
                   src={getEmbedUrl(videoUrl)} 
                   className="w-full h-full border-0"
