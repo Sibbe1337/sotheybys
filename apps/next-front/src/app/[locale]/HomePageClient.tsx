@@ -336,7 +336,7 @@ export default function HomePageClient({
                 {/* Column 1 - Löydä unelmiesi koti */}
                 <Link href="/kohteet" className="relative aspect-[4/3] group overflow-hidden block">
                   <Image
-                    src="/images/content/snellman-sothebys-toimisto.jpg"
+                    src="/images/content/snellman-sothebys-yritys.jpg"
                     alt={getHomepageTranslation('openNewDoors', language)}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
@@ -382,7 +382,7 @@ export default function HomePageClient({
                 {/* Column 3 - Myymässä / Sälja */}
                 <Link href="/myymassa" className="relative aspect-[4/3] group overflow-hidden block">
                   <Image
-                    src="/images/content/snellman-sothebys-kutsu-arviokaynnille.jpg"
+                    src="/images/content/myymassa-banner.jpg"
                     alt={getHomepageTranslation('freeValuationHeading', language)}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
