@@ -342,14 +342,15 @@ export default function HomePageClient({
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  {/* Dark overlay with centered content */}
-                  <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white px-6">
-                    <h3 className="text-lg md:text-xl font-light mb-4 text-center leading-relaxed italic">
+                  {/* Dark overlay with centered content - enhanced visibility */}
+                  <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white px-4">
+                    <h3 className="text-xl md:text-2xl font-light mb-6 text-center leading-relaxed italic drop-shadow-lg">
                       {getHomepageTranslation('openNewDoors', language)}
                     </h3>
-                    <span className="inline-block border border-white text-white px-6 py-2.5
+                    <span className="inline-block border-2 border-white text-white px-8 py-3
+                               bg-black/30 backdrop-blur-sm
                                group-hover:bg-white group-hover:text-black transition-all duration-300
-                               text-[10px] tracking-[0.12em] uppercase font-normal"
+                               text-xs tracking-[0.15em] uppercase font-medium shadow-lg"
                     >
                       {getHomepageTranslation('findDreamHome', language)} ›
                     </span>
@@ -365,14 +366,15 @@ export default function HomePageClient({
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  {/* Dark overlay with centered content */}
-                  <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white px-6">
-                    <h3 className="text-lg md:text-xl font-light mb-4 text-center leading-relaxed italic">
+                  {/* Dark overlay with centered content - enhanced visibility */}
+                  <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white px-4">
+                    <h3 className="text-xl md:text-2xl font-light mb-6 text-center leading-relaxed italic drop-shadow-lg">
                       {getHomepageTranslation('expertiseHeading', language)}
                     </h3>
-                    <span className="inline-block border border-white text-white px-6 py-2.5
+                    <span className="inline-block border-2 border-white text-white px-8 py-3
+                               bg-black/30 backdrop-blur-sm
                                group-hover:bg-white group-hover:text-black transition-all duration-300
-                               text-[10px] tracking-[0.12em] uppercase font-normal"
+                               text-xs tracking-[0.15em] uppercase font-medium shadow-lg"
                     >
                       {getHomepageTranslation('readMoreAboutUs', language)} ›
                     </span>
@@ -388,14 +390,15 @@ export default function HomePageClient({
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  {/* Dark overlay with centered content */}
-                  <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white px-6">
-                    <h3 className="text-lg md:text-xl font-light mb-4 text-center leading-relaxed italic">
+                  {/* Dark overlay with centered content - enhanced visibility */}
+                  <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white px-4">
+                    <h3 className="text-xl md:text-2xl font-light mb-6 text-center leading-relaxed italic drop-shadow-lg">
                       {getHomepageTranslation('freeValuationHeading', language)}
                     </h3>
-                    <span className="inline-block border border-white text-white px-6 py-2.5
+                    <span className="inline-block border-2 border-white text-white px-8 py-3
+                               bg-black/30 backdrop-blur-sm
                                group-hover:bg-white group-hover:text-black transition-all duration-300
-                               text-[10px] tracking-[0.12em] uppercase font-normal"
+                               text-xs tracking-[0.15em] uppercase font-medium shadow-lg"
                     >
                       {getHomepageTranslation('contactUs', language)} ›
                     </span>
