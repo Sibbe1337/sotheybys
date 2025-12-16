@@ -344,7 +344,7 @@ export default function HomePageClient({
                   />
                   {/* Dark overlay with centered content - enhanced visibility */}
                   <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white px-4">
-                    <h3 className="text-xl md:text-2xl font-light mb-6 text-center leading-relaxed italic drop-shadow-lg">
+                    <h3 className="text-xl md:text-2xl font-bold mb-6 text-center leading-relaxed drop-shadow-lg">
                       {getHomepageTranslation('openNewDoors', language)}
                     </h3>
                     <span className="inline-block border-2 border-white text-white px-8 py-3
@@ -368,7 +368,7 @@ export default function HomePageClient({
                   />
                   {/* Dark overlay with centered content - enhanced visibility */}
                   <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white px-4">
-                    <h3 className="text-xl md:text-2xl font-light mb-6 text-center leading-relaxed italic drop-shadow-lg">
+                    <h3 className="text-xl md:text-2xl font-bold mb-6 text-center leading-relaxed drop-shadow-lg">
                       {getHomepageTranslation('expertiseHeading', language)}
                     </h3>
                     <span className="inline-block border-2 border-white text-white px-8 py-3
@@ -392,7 +392,7 @@ export default function HomePageClient({
                   />
                   {/* Dark overlay with centered content - enhanced visibility */}
                   <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white px-4">
-                    <h3 className="text-xl md:text-2xl font-light mb-6 text-center leading-relaxed italic drop-shadow-lg">
+                    <h3 className="text-xl md:text-2xl font-bold mb-6 text-center leading-relaxed drop-shadow-lg">
                       {getHomepageTranslation('freeValuationHeading', language)}
                     </h3>
                     <span className="inline-block border-2 border-white text-white px-8 py-3
