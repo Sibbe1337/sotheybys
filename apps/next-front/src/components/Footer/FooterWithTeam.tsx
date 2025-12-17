@@ -187,9 +187,9 @@ export default function FooterWithTeam({ contact, social, logo }: FooterProps = 
               </div>
             </div>
 
-            {/* RIGHT COLUMN: Team Photo - Aligned to bottom edge */}
+            {/* RIGHT COLUMN: Team Photo - Extends below footer edge */}
             <div className="flex items-end justify-center lg:justify-end">
-              <div className="relative h-[500px] w-full overflow-visible group">
+              <div className="relative h-[500px] w-full overflow-visible group translate-y-16">
                 <Image
                   src="/images/staff/team-photo.jpg"
                   alt="Snellman Sotheby's International Realty Team"
