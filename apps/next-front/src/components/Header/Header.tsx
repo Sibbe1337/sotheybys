@@ -209,7 +209,7 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
       }`}
     >
       {/* TOP BAR - RAD 1 (Language + Search) - Dölj på mobil när scrollad ELLER landscape */}
-      <div className={`border-b border-white/10 transition-all duration-300 ${
+      <div className={`md:border-b md:border-white/10 transition-all duration-300 ${
         isScrolled || isLandscape ? 'hidden md:block md:py-1' : 'block'
       }`}>
         <div className="max-w-[1400px] mx-auto px-6">
@@ -423,8 +423,8 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
             })}
             
             {/* Mobile Language Switcher - 🔥 LINUS FIX: Use native Link for dynamic routes */}
-            <div className="mt-2 pt-2 border-t border-white/10">
-              <div className="flex items-center justify-center gap-4 text-xs pb-2">
+            <div className="mt-4 pt-4">
+              <div className="flex items-center justify-center gap-4 text-xs pb-4">
                 <NextLink
                   href={languageSwitcherUrls.fi}
                   className={`transition-opacity [font-family:'freight-sans-pro',sans-serif] ${currentLang === 'fi' ? 'font-semibold text-white' : 'text-white/80 hover:text-white'}`}
