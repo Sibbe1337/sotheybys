@@ -330,27 +330,27 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
         </section>
 
         {/* Palvelumme Section - 2 columns matching original design */}
-        <section className="py-0">
+        <section id="palvelut" className="py-0">
           <div className="w-full">
             <div className="grid grid-cols-1 lg:grid-cols-2">
               {/* Left Column - Palvelumme */}
               <div className="bg-white p-8 lg:py-16 lg:px-12 xl:px-20">
-                <h2 className="text-2xl lg:text-3xl font-light text-gray-900 mb-8 text-right" style={{ fontFamily: 'freight-display-pro, Georgia, serif' }}>
+                <h2 className="heading-secondary mb-8 text-right">
                   {t.servicesTitle}
                 </h2>
-                <div className="text-sm text-gray-600 leading-relaxed text-right space-y-4" style={{ fontFamily: 'freight-text-pro, Georgia, serif' }}>
+                <div className="text-sm text-gray-600 leading-relaxed text-right space-y-4">
                   <p>{t.servicesText1}</p>
                   <p>{t.servicesText2}</p>
                 </div>
               </div>
 
               {/* Right Column - Palveluhinnasto */}
-              <div className="p-8 lg:py-16 lg:px-12 xl:px-20" style={{ backgroundColor: '#CCCCCC' }}>
-                <h2 className="text-2xl lg:text-3xl font-light text-gray-900 mb-8" style={{ fontFamily: 'freight-display-pro, Georgia, serif' }}>
+              <div className="bg-[#CCCCCC] p-8 lg:py-16 lg:px-12 xl:px-20">
+                <h2 className="heading-secondary mb-8">
                   {t.pricingTitle}
                 </h2>
               
-                <div className="text-sm" style={{ fontFamily: 'freight-text-pro, Georgia, serif' }}>
+                <div className="text-sm">
                   {/* Välittäjä / Myyntitoimeksiannot */}
                   <div className="mb-6">
                     <p className="text-gray-900 mb-3">{t.pricingBroker}</p>

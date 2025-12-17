@@ -159,7 +159,7 @@ const staffMembers = [
   },
   {
     id: '4',
-    name: 'Kadri-Ann Õunap',
+    name: 'Kadri-Ann Öunap',
     title: 'Sales Associate, Notary, KED, KiAT',
     email: 'kadri-ann@sothebysrealty.fi',
     phone: '+358 (0)40 154 7844',

@@ -73,7 +73,7 @@ const staffMembers = [
     order: 5,
   },
   {
-    name: 'Kadri-Ann Õunap',
+    name: 'Kadri-Ann Öunap',
     role: {
       fi: 'Sales Associate, Notary, KED, KIAT',
       sv: 'Försäljningsassistent, Notarie, KED, KIAT',
