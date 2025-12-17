@@ -50,17 +50,16 @@ export function ImageCarousel({ images, title, propertyId }: ImageCarouselProps)
 
   return (
     <>
-      {/* Main Carousel - Fixed aspect ratio that works for both portrait and landscape images */}
-      <section className="relative w-full bg-black">
-        {/* Use 4:3 aspect ratio which works well for both portrait and landscape images */}
-        {/* object-contain ensures the ENTIRE image is visible without cropping */}
-        <div className="relative w-full aspect-[4/3] sm:aspect-[3/2] lg:aspect-[16/10] overflow-hidden bg-black">
+      {/* Main Carousel - Fixed aspect ratio, image fills entire area */}
+      <section className="relative w-full">
+        {/* Use 4:3 aspect ratio, object-cover fills container without black bars */}
+        <div className="relative w-full aspect-[4/3] sm:aspect-[3/2] lg:aspect-[16/10] overflow-hidden">
           {/* Use native img tag with API proxy to bypass CORS */}
           <img
             key={imageKey}
             src={currentImageUrl}
             alt={`${title} - Bild ${currentIndex + 1}`}
-            className="absolute inset-0 w-full h-full object-contain"
+            className="absolute inset-0 w-full h-full object-cover"
             onError={(e) => {
               e.currentTarget.style.display = 'none';
             }}
