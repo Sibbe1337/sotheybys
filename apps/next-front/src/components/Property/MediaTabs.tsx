@@ -15,6 +15,13 @@ interface MediaTabsProps {
   brochureUrl?: string;
   videoUrl?: string;
   locale: Locale;
+  // Additional props for map info window
+  address?: string;
+  postalCode?: string;
+  city?: string;
+  livingArea?: number;
+  price?: number;
+  propertySlug?: string;
 }
 
 type TabId = 'photos' | 'floor' | 'map' | 'brochure' | 'video';
@@ -27,7 +34,13 @@ export function MediaTabs({
   coordinates, 
   brochureUrl, 
   videoUrl, 
-  locale 
+  locale,
+  address,
+  postalCode,
+  city,
+  livingArea,
+  price,
+  propertySlug
 }: MediaTabsProps) {
   // Extract floor plan images from main images
   const photoImages = images.filter(img => !img.floorPlan);
@@ -110,6 +123,14 @@ export function MediaTabs({
                 lat={coordinates.lat} 
                 lng={coordinates.lon} 
                 title={title}
+                imageUrl={images.find(img => !img.floorPlan)?.url}
+                address={address}
+                postalCode={postalCode}
+                city={city}
+                area={livingArea}
+                price={price}
+                propertySlug={propertySlug}
+                locale={locale}
               />
             ) : (
               <div className="text-center text-gray-500 p-8">

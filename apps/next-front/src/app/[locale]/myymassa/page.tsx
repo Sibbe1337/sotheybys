@@ -329,85 +329,78 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
           </div>
         </section>
 
-        {/* Palvelumme Section - 2 columns */}
+        {/* Palvelumme Section - 2 columns matching original design */}
         <section className="py-0">
           <div className="w-full">
             <div className="grid grid-cols-1 lg:grid-cols-2">
               {/* Left Column - Palvelumme */}
-              <div style={{ backgroundColor: '#FFFFFF' }} className="p-8 lg:p-16">
-                <h2 className="text-3xl font-light text-gray-900 mb-6 text-right">
+              <div className="bg-white p-8 lg:py-16 lg:px-12 xl:px-20">
+                <h2 className="text-2xl lg:text-3xl font-light text-gray-900 mb-8 text-right" style={{ fontFamily: 'freight-display-pro, Georgia, serif' }}>
                   {t.servicesTitle}
                 </h2>
-                <div className="space-y-4 text-gray-700 font-light leading-relaxed text-right">
+                <div className="text-sm text-gray-600 leading-relaxed text-right space-y-4" style={{ fontFamily: 'freight-text-pro, Georgia, serif' }}>
                   <p>{t.servicesText1}</p>
                   <p>{t.servicesText2}</p>
                 </div>
               </div>
 
               {/* Right Column - Palveluhinnasto */}
-              <div style={{ backgroundColor: '#CCCCCC' }} className="p-8 lg:p-16">
-                <h2 className="text-3xl font-light text-gray-900 mb-6">
+              <div className="p-8 lg:py-16 lg:px-12 xl:px-20" style={{ backgroundColor: '#CCCCCC' }}>
+                <h2 className="text-2xl lg:text-3xl font-light text-gray-900 mb-8" style={{ fontFamily: 'freight-display-pro, Georgia, serif' }}>
                   {t.pricingTitle}
                 </h2>
               
-                <div>
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr>
-                        <th className="text-left pb-2 font-normal text-gray-900">{t.pricingBroker}</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody className="text-gray-700">
-                      <tr>
-                        <td className="py-2 font-light pl-4">{t.pricingApartments}</td>
-                        <td className="py-2 text-right font-bold">5 % sis. alv 25.5%*</td>
-                      </tr>
-                      <tr>
-                        <td className="py-2 font-light pl-4">{t.pricingProperties}</td>
-                        <td className="py-2 text-right font-bold">6 % sis. alv 25.5%*</td>
-                      </tr>
-                      <tr>
-                        <td className="py-2 font-light pl-4">{t.pricingRemote}</td>
-                        <td className="py-2 text-right font-bold">7 % sis. alv 25.5%*</td>
-                      </tr>
-                      <tr>
-                        <td className="py-2 font-light pl-4">{t.pricingRental}</td>
-                        <td className="py-2 text-right font-bold">2 kk vuokra sis. alv 25.5%*</td>
-                      </tr>
-                      <tr>
-                        <td className="py-2 font-light pl-4">{t.pricingMinimum}</td>
-                        <td className="py-2 text-right font-bold">5750 € sis. alv 25.5%*</td>
-                      </tr>
-                      <tr>
-                        <td className="py-2 font-light pl-4">{t.pricingInternational}</td>
-                        <td className="py-2 text-right font-bold">+0,50 % sis. alv 25.5%**</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                <div className="text-sm" style={{ fontFamily: 'freight-text-pro, Georgia, serif' }}>
+                  {/* Välittäjä / Myyntitoimeksiannot */}
+                  <div className="mb-6">
+                    <p className="text-gray-900 mb-3">{t.pricingBroker}</p>
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-baseline">
+                        <span className="text-gray-700 pl-6">{t.pricingApartments}</span>
+                        <span className="text-gray-900 font-semibold whitespace-nowrap">5 % sis. alv 25.5%*</span>
+                      </div>
+                      <div className="flex justify-between items-baseline">
+                        <span className="text-gray-700 pl-6">{t.pricingProperties}</span>
+                        <span className="text-gray-900 font-semibold whitespace-nowrap">6 % sis. alv 25.5%*</span>
+                      </div>
+                      <div className="flex justify-between items-baseline">
+                        <span className="text-gray-700 pl-6">{t.pricingRemote}</span>
+                        <span className="text-gray-900 font-semibold whitespace-nowrap">7 % sis. alv 25.5%*</span>
+                      </div>
+                      <div className="flex justify-between items-baseline">
+                        <span className="text-gray-700 pl-6">{t.pricingRental}</span>
+                        <span className="text-gray-900 font-semibold whitespace-nowrap">2 kk vuokra sis. alv 25.5%*</span>
+                      </div>
+                      <div className="flex justify-between items-baseline">
+                        <span className="text-gray-700 pl-6">{t.pricingMinimum}</span>
+                        <span className="text-gray-900 font-semibold whitespace-nowrap">5750 € sis. alv 25.5%*</span>
+                      </div>
+                      <div className="flex justify-between items-baseline">
+                        <span className="text-gray-700 pl-6">{t.pricingInternational}</span>
+                        <span className="text-gray-900 font-semibold whitespace-nowrap">+0,50 % sis. alv 25.5%**</span>
+                      </div>
+                    </div>
+                  </div>
                   
-                  <table className="w-full mt-6 text-sm">
-                    <thead>
-                      <tr>
-                        <th className="text-left pb-2 font-normal text-gray-900">{t.pricingStartFee}</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody className="text-gray-700">
-                      <tr>
-                        <td className="py-2 font-light pl-4">{t.pricingApartments}</td>
-                        <td className="py-2 text-right font-bold">Alkaen 500 € sis. alv 25.5%*</td>
-                      </tr>
-                      <tr>
-                        <td className="py-2 font-light pl-4">{t.pricingPropertiesRemote}</td>
-                        <td className="py-2 text-right font-bold">Alkaen 3000 € sis. alv 25.5%*</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  {/* Aloitusmaksu */}
+                  <div className="mb-6">
+                    <p className="text-gray-900 mb-3">{t.pricingStartFee}</p>
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-baseline">
+                        <span className="text-gray-700 pl-6">{t.pricingApartments}</span>
+                        <span className="text-gray-900 font-semibold whitespace-nowrap">Alkaen 500 € sis. alv 25.5%*</span>
+                      </div>
+                      <div className="flex justify-between items-baseline">
+                        <span className="text-gray-700 pl-6">{t.pricingPropertiesRemote}</span>
+                        <span className="text-gray-900 font-semibold whitespace-nowrap">Alkaen 3000 € sis. alv 25.5%*</span>
+                      </div>
+                    </div>
+                  </div>
                   
-                  <div className="mt-6 text-xs text-gray-600 font-light">
-                    <p><strong>{t.pricingNote1}</strong></p>
-                    <p><strong>{t.pricingNote2}</strong></p>
+                  {/* Notes */}
+                  <div className="text-xs text-gray-600 mt-8">
+                    <p>{t.pricingNote1}</p>
+                    <p>{t.pricingNote2}</p>
                   </div>
                 </div>
               </div>

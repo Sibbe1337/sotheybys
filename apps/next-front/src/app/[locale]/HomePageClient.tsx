@@ -525,7 +525,7 @@ export default function HomePageClient({
                                group-hover:bg-white group-hover:text-[#1a3a4a] transition-all duration-300
                                font-light uppercase tracking-wider text-xs"
                     >
-                      {language === 'fi' ? 'Katso referenssit' : language === 'sv' ? 'Se referenser' : 'View references'}
+                      {language === 'fi' ? 'Katso referenssit ›' : language === 'sv' ? 'Se referenser ›' : 'View references ›'}
                     </span>
                   </div>
                 </Link>
@@ -547,7 +547,7 @@ export default function HomePageClient({
                                group-hover:bg-white group-hover:text-[#1a3a4a] transition-all duration-300
                                font-light uppercase tracking-wider text-xs"
                     >
-                      {language === 'fi' ? 'Vuokraa nyt' : language === 'sv' ? 'Hyr nu' : 'Rent now'}
+                      {language === 'fi' ? 'Vuokraa nyt ›' : language === 'sv' ? 'Hyr nu ›' : 'Rent now ›'}
                     </span>
                   </div>
                 </Link>
@@ -569,7 +569,7 @@ export default function HomePageClient({
                                group-hover:bg-white group-hover:text-[#1a3a4a] transition-all duration-300
                                font-light uppercase tracking-wider text-xs"
                     >
-                      {language === 'fi' ? 'Työskentele kanssamme' : language === 'sv' ? 'Arbeta med oss' : 'Work with us'}
+                      {language === 'fi' ? 'Työskentele kanssamme ›' : language === 'sv' ? 'Arbeta med oss ›' : 'Work with us ›'}
                     </span>
                   </div>
                 </Link>

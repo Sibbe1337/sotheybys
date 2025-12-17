@@ -18,6 +18,21 @@ type VM = import('@/lib/presentation/property.view-model').PropertyDetailVM;
 type Locale = 'fi' | 'sv' | 'en';
 type Props = { vm: VM; locale: Locale };
 
+// Helper to detect Swedish placeholder/instruction texts from CMS
+function isPlaceholderText(text?: string): boolean {
+  if (!text) return true;
+  const placeholders = [
+    'lägg till',           // "Add" in Swedish
+    'skriv in',            // "Write in" in Swedish  
+    'fyll i',              // "Fill in" in Swedish
+    'här före texten',     // "here before the text"
+    'före lägenhetsbeskrivningen', // "before the apartment description"
+    'presentationstexten', // "presentation text"
+  ];
+  const lower = text.toLowerCase();
+  return placeholders.some(p => lower.includes(p));
+}
+
 export function DetailView({ vm, locale }: Props) {
   // 🔥 2025-11-18 DENNIS FIX: Use productGroup first, then typeCode (matches property-type-helpers.ts)
   const typeCode = (vm.typeCode || '').toUpperCase();
@@ -118,6 +133,12 @@ export function DetailView({ vm, locale }: Props) {
             brochureUrl={vm.documents?.brochure || vm.documents?.brochureIntl}
             videoUrl={vm.documents?.video}
             locale={locale}
+            address={displayAddress}
+            postalCode={vm.postalCode}
+            city={vm.city}
+            livingArea={vm.livingArea}
+            price={vm.debtFreePrice || vm.askPrice}
+            propertySlug={vm.slug}
           />
         </div>
       </div>
@@ -168,11 +189,24 @@ export function DetailView({ vm, locale }: Props) {
           </div>
         )}
 
+        {/* Main Address Title - H1 heading with street address */}
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-gray-900 mt-6 mb-2">
+          {displayAddress}
+        </h1>
+
         {/* Title Line - Property type and room description */}
         {titleLine && (
-          <div className="my-4 sm:my-6 md:my-8">
+          <div className="mb-6 sm:mb-8">
             <p className="text-base sm:text-lg text-gray-600">{titleLine}</p>
           </div>
+        )}
+
+        {/* Description Title - Marketing headline before description */}
+        {/* Filter out Swedish placeholder texts like "Lägg till Rubriken för presentationstexten här före texten" */}
+        {vm.descriptionTitle && !isPlaceholderText(vm.descriptionTitle) && (
+          <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-4">
+            {vm.descriptionTitle}
+          </h2>
         )}
 
         {/* Description - Clean prose styling with proper paragraph spacing */}

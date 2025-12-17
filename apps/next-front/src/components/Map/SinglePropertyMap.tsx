@@ -6,13 +6,34 @@ interface SinglePropertyMapProps {
   lat: number;
   lng: number;
   title?: string;
+  // New props for info window
+  imageUrl?: string;
+  address?: string;
+  postalCode?: string;
+  city?: string;
+  area?: number;
+  price?: number;
+  propertySlug?: string;
+  locale?: 'fi' | 'sv' | 'en';
 }
 
 /**
- * Single property map with Sotheby's branded "S" marker
+ * Single property map with Sotheby's branded "S" marker and info window
  * Uses Google Maps JavaScript API for custom marker support
  */
-export function SinglePropertyMap({ lat, lng, title }: SinglePropertyMapProps) {
+export function SinglePropertyMap({ 
+  lat, 
+  lng, 
+  title,
+  imageUrl,
+  address,
+  postalCode,
+  city,
+  area,
+  price,
+  propertySlug,
+  locale = 'fi'
+}: SinglePropertyMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -55,7 +76,7 @@ export function SinglePropertyMap({ lat, lng, title }: SinglePropertyMapProps) {
           stylers: [{ visibility: 'off' }]
         }
       ],
-      mapTypeControl: false,
+      mapTypeControl: true,
       streetViewControl: true,
       fullscreenControl: true,
     });
@@ -69,7 +90,7 @@ export function SinglePropertyMap({ lat, lng, title }: SinglePropertyMapProps) {
     `;
 
     // Create marker with custom icon
-    new google.maps.Marker({
+    const marker = new google.maps.Marker({
       position: { lat, lng },
       map,
       title: title || 'Property location',
@@ -79,7 +100,81 @@ export function SinglePropertyMap({ lat, lng, title }: SinglePropertyMapProps) {
         anchor: new google.maps.Point(22, 22),
       },
     });
-  }, [isLoaded, lat, lng, title]);
+
+    // Build info window content with property details
+    const fullAddress = [address, postalCode, city].filter(Boolean).join(', ');
+    const formattedPrice = price ? new Intl.NumberFormat('fi-FI', { 
+      style: 'decimal', 
+      maximumFractionDigits: 0 
+    }).format(price) + ' €' : '';
+    const formattedArea = area ? `${area} m²` : '';
+
+    // Determine the property URL based on locale
+    const propertyUrl = propertySlug 
+      ? `/${locale}/${locale === 'sv' ? 'objekt' : locale === 'en' ? 'properties' : 'kohde'}/${propertySlug}`
+      : '';
+
+    // Labels based on locale
+    const additionalInfoLabel = locale === 'sv' ? 'YTTERLIGARE INFO' : locale === 'en' ? 'ADDITIONAL INFO' : 'LISÄTIETOJA';
+
+    const infoWindowContent = `
+      <div style="max-width: 280px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        ${imageUrl ? `
+          <div style="position: relative; width: 100%; height: 140px; margin-bottom: 12px; overflow: hidden; border-radius: 4px;">
+            <img 
+              src="${imageUrl}" 
+              alt="${fullAddress}" 
+              style="width: 100%; height: 100%; object-fit: cover;"
+            />
+            <button 
+              onclick="this.closest('.gm-style-iw-c')?.querySelector('button[aria-label=Close]')?.click()"
+              style="position: absolute; top: 8px; right: 8px; width: 24px; height: 24px; border-radius: 50%; background: rgba(0,0,0,0.5); border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px;"
+            >×</button>
+          </div>
+        ` : ''}
+        <div style="padding: 0 4px 8px;">
+          <h3 style="margin: 0 0 8px 0; font-size: 15px; font-weight: 600; color: #1a1a1a; line-height: 1.3;">
+            ${fullAddress || title || 'Property'}
+          </h3>
+          ${formattedArea ? `
+            <p style="margin: 0 0 4px 0; font-size: 14px; color: #666;">
+              ${formattedArea}
+            </p>
+          ` : ''}
+          ${formattedPrice ? `
+            <p style="margin: 0 0 12px 0; font-size: 16px; font-weight: 600; color: #002349;">
+              ${formattedPrice}
+            </p>
+          ` : ''}
+          ${propertyUrl ? `
+            <a 
+              href="${propertyUrl}"
+              style="display: inline-block; padding: 8px 16px; border: 1px solid #002349; color: #002349; text-decoration: none; font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s;"
+              onmouseover="this.style.backgroundColor='#002349'; this.style.color='white';"
+              onmouseout="this.style.backgroundColor='transparent'; this.style.color='#002349';"
+            >
+              ${additionalInfoLabel} ›
+            </a>
+          ` : ''}
+        </div>
+      </div>
+    `;
+
+    // Create info window
+    const infoWindow = new google.maps.InfoWindow({
+      content: infoWindowContent,
+      maxWidth: 320,
+    });
+
+    // Open info window on marker click
+    marker.addListener('click', () => {
+      infoWindow.open(map, marker);
+    });
+
+    // Optionally auto-open the info window
+    // infoWindow.open(map, marker);
+
+  }, [isLoaded, lat, lng, title, imageUrl, address, postalCode, city, area, price, propertySlug, locale]);
 
   if (error) {
     return (
@@ -100,4 +195,3 @@ export function SinglePropertyMap({ lat, lng, title }: SinglePropertyMapProps) {
     <div ref={mapRef} className="w-full h-full" style={{ minHeight: '300px' }} />
   );
 }
-
