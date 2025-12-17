@@ -58,6 +58,7 @@ export interface PropertyDetailVM extends PropertyCardVM {
   // Property-specific fields (DENNIS SPEC)
   propertyIdentifier?: string;       // Kiinteistötunnus
   plotArea?: number;                 // Tontin koko (in m², format in component)
+  livingArea?: number;               // Raw living area in m² (for map info window)
   propertyBuildingRights?: string;   // Rakennusoikeus
   propertyRestrictions?: string;     // Rasitteet ja oikeudet
   propertyMortgages?: string;        // Kiinnitykset
@@ -244,6 +245,7 @@ export class PropertyVM {
       // Property-specific fields (DENNIS SPEC)
       propertyIdentifier: p.meta.propertyIdentifier,
       plotArea: p.dimensions.plot, // Keep as number, format in component
+      livingArea: p.dimensions.living, // Raw living area for map info window
       propertyBuildingRights: p.meta.propertyBuildingRights,
       propertyRestrictions: lpick(p.meta.restrictions, l),
       propertyMortgages: undefined, // TODO: Add to Property type if needed

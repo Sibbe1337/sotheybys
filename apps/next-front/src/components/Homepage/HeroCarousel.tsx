@@ -106,7 +106,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
           </div>
 
           {/* Content - Centered text */}
-          <div className="relative h-full flex items-end sm:items-center pb-24 sm:pb-0">
+          <div className="relative h-full flex items-center justify-center">
             <div className="container mx-auto px-6 sm:px-16 md:px-20 lg:px-24">
               <div className="max-w-4xl mx-auto text-center">
                 {/* Subtitle - appears first */}
