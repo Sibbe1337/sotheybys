@@ -187,15 +187,15 @@ export default function FooterWithTeam({ contact, social, logo }: FooterProps = 
               </div>
             </div>
 
-            {/* RIGHT COLUMN: Team Photo - Smaller, positioned left within column */}
+            {/* RIGHT COLUMN: Team Photo - Large, positioned within column */}
             <div className="flex items-end justify-start lg:justify-start">
-              <div className="relative h-[280px] lg:h-[320px] w-[85%] lg:w-[70%] overflow-visible group">
+              <div className="relative h-[350px] lg:h-[450px] w-[100%] lg:w-[90%] overflow-visible group">
                 <Image
                   src="/images/staff/team-photo.jpg"
                   alt="Snellman Sotheby's International Realty Team"
                   fill
                   className="object-contain object-bottom grayscale group-hover:grayscale-0 transition-all duration-500"
-                  sizes="(max-width: 768px) 280px, 400px"
+                  sizes="(max-width: 768px) 350px, 600px"
                   style={{ left: '115px', top: '46px' }}
                 />
               </div>
