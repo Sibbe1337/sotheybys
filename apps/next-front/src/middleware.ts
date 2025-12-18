@@ -31,7 +31,9 @@ export default createMiddleware({
 
 export const config = {
   // Match all routes except:
+  // - / (root - Christmas landing page)
   // - /api/* (API routes)
   // - /_next/* (Next.js internals)
   // - Static files (*.*)
-  matcher: ['/', '/((?!api|_next|.*\\..*).*)']}
+  matcher: ['/((?!api|_next|.*\\..*)(?!$).*)']
+}
