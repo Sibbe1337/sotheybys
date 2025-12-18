@@ -55,7 +55,7 @@ const staffMembers = [
     name: 'Tea Käyhkö',
     title: 'Senior Broker, BA, MA, LKV',
     email: 'tea@sothebysrealty.fi',
-    phone: '+358 (0)50 370 1893',
+    phone: '+358 (0)50 370 1883',
     image: '/images/staff/tea-kayhko.jpg',
     flags: ['fi', 'se', 'gb']
   },
@@ -64,7 +64,7 @@ const staffMembers = [
     name: 'Sima Shaygan',
     title: 'Sales Associate, B.Sc, KiLaT',
     email: 'sima@sothebysrealty.fi',
-    phone: '+358 (0)44 235 3979',
+    phone: '+358 (0)44 239 3979',
     image: '/images/staff/sima-shaygan.jpg',
     flags: ['fi', 'gb', 'ir', 'tr']
   },
@@ -91,7 +91,7 @@ const staffMembers = [
     name: 'Eeva Kyläkoski',
     title: 'Senior Advisor - Board Member, LKV',
     email: 'eeva@sothebysrealty.fi',
-    phone: '+358 (0)40 861 4611',
+    phone: '+358 (0)46 850 5850',
     image: '/images/staff/eeva-kylakoski.jpg',
     flags: ['fi', 'gb']
   },
@@ -109,7 +109,7 @@ const staffMembers = [
     name: 'Petteri Huovila',
     title: 'Senior Advisor, LKV',
     email: 'petteri@sothebysrealty.fi',
-    phone: '+358 (0)400 484 138',
+    phone: '+358 (0)400 889 138',
     image: '/images/staff/petteri-huovila.jpg',
     flags: ['fi', 'se', 'gb']
   }
