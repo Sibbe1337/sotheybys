@@ -64,8 +64,8 @@ export const HOMEPAGE_TRANSLATIONS: HomepageTranslations = {
   },
   expertiseHeading: {
     fi: 'Asiantuntemus joka ulottuu korttelista kaupunkiin ja aina maailman ympäri',
-    sv: 'Expertis som sträcker sig från kvarteret till staden och runt om i världen',
-    en: 'Expertise that extends from the neighborhood to the city and around the world'
+    sv: 'Expertis som når från kvarteret runt om i hela världen',
+    en: 'Expertise that reaches down the block and around the world'
   },
   readMoreAboutUs: {
     fi: 'LUE LISÄÄ YRITYKSESTÄMME',
