@@ -196,6 +196,7 @@ export default function FooterWithTeam({ contact, social, logo }: FooterProps = 
                   fill
                   className="object-contain object-bottom grayscale group-hover:grayscale-0 transition-all duration-500"
                   sizes="(max-width: 768px) 280px, 400px"
+                  style={{ left: '115px', top: '46px' }}
                 />
               </div>
             </div>
