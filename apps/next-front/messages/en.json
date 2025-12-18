@@ -26,13 +26,13 @@
   "navigation": {
     "home": "Home",
     "properties": "Properties",
-    "forSale": "For Sale",
-    "forRent": "For Rent",
+    "forSale": "Properties For Sale",
+    "forRent": "Rental Properties",
     "rentals": "Rentals",
     "references": "References",
     "purchaseAssignments": "Purchase Assignments",
     "about": "About Us",
-    "contact": "Contact",
+    "contact": "Contact Us",
     "staff": "Staff",
     "international": "International",
     "sellWithUs": "Sell With Us",
@@ -96,21 +96,22 @@
   "homepage": {
     "hero": {
       "title": "Snellman Sotheby's International Realty",
-      "subtitle": "Luxury Real Estate in Finland",
-      "description": "International expertise with local experience"
+      "subtitle": "Your international broker locally",
+      "description": "26,100 brokers in 1,100 affiliate offices in 84 countries and territories",
+      "button": "We open new doors"
     },
     "featured": {
-      "title": "Featured",
+      "title": "Featured Properties",
       "subtitle": "A selection of our most exclusive properties",
       "viewAll": "View All"
     },
     "forSale": {
-      "title": "For Sale",
+      "title": "Properties For Sale",
       "subtitle": "Browse our comprehensive selection of properties for sale",
-      "viewAll": "View All For Sale"
+      "viewAll": "View All Properties"
     },
     "forRent": {
-      "title": "For Rent",
+      "title": "Rental Properties",
       "subtitle": "Find the perfect rental home",
       "viewAll": "View All Rentals"
     },
@@ -241,7 +242,15 @@
     "emailAddress": "Email Address",
     "allRightsReserved": "All Rights Reserved",
     "privacy": "Privacy",
-    "terms": "Terms of Service"
+    "terms": "Terms of Service",
+    "office": "Helsinki",
+    "address": "Kasarmikatu 34, 00130 Helsinki",
+    "phone": "+358 (0)10 315 6900",
+    "email": "info@sothebysrealty.fi",
+    "companyId": "Business ID: 2644749-2",
+    "livingInFinland": "Living in Finland",
+    "sirListings": "SIR.COM Listings",
+    "openNewDoors": "Opens new doors and possibilities"
   },
   "errors": {
     "pageNotFound": "Page Not Found",
@@ -253,13 +262,16 @@
   },
   "meta": {
     "defaultTitle": "Snellman Sotheby's International Realty",
-    "defaultDescription": "International real estate brokerage locally - Premium real estate services in Finland",
+    "defaultDescription": "Your international broker locally - Real Estate Brokerage in Finland",
     "homeTitle": "Home | Snellman Sotheby's International Realty",
-    "propertiesTitle": "Properties | Snellman Sotheby's International Realty",
-    "rentalsTitle": "Rentals | Snellman Sotheby's International Realty",
+    "propertiesTitle": "Properties For Sale | Snellman Sotheby's International Realty",
+    "rentalsTitle": "Rental Properties | Snellman Sotheby's International Realty",
     "referencesTitle": "References | Snellman Sotheby's International Realty",
-    "aboutTitle": "About Us | Snellman Sotheby's International Realty",
-    "contactTitle": "Contact | Snellman Sotheby's International Realty"
+    "aboutTitle": "About Us | Your international broker locally | Snellman Sotheby's International Realty",
+    "contactTitle": "Contact Us | Snellman Sotheby's International Realty | Real Estate Broker",
+    "staffTitle": "Staff | Snellman Sotheby's International Realty | Real Estate Broker",
+    "sellWithUsTitle": "Sell With Us | Snellman Sotheby's International Realty",
+    "internationalTitle": "International | Real Estate Broker | Snellman Sotheby's International Realty"
   },
   "property": {
     "media": {

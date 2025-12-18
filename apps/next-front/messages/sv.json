@@ -26,7 +26,7 @@
   "navigation": {
     "home": "Hem",
     "properties": "Objekt",
-    "forSale": "Till salu",
+    "forSale": "Objekt till salu",
     "forRent": "Hyresobjekt",
     "rentals": "Hyresobjekt",
     "references": "Referenser",
@@ -96,18 +96,19 @@
   "homepage": {
     "hero": {
       "title": "Snellman Sotheby's International Realty",
-      "subtitle": "Lyxfastigheter i Finland",
-      "description": "Internationell kompetens med lokal erfarenhet"
+      "subtitle": "Din internationella mäklare lokalt",
+      "description": "26 100 mäklare i 1100 kontor i 84 länder och regioner",
+      "button": "Vi öppnar nya dörrar"
     },
     "featured": {
-      "title": "Utvalda",
+      "title": "Utvalda objekt",
       "subtitle": "Ett urval av våra mest exklusiva objekt",
       "viewAll": "Visa alla"
     },
     "forSale": {
-      "title": "Till salu",
+      "title": "Objekt till salu",
       "subtitle": "Bläddra i vårt omfattande utbud av fastigheter till salu",
-      "viewAll": "Se alla till salu"
+      "viewAll": "Se alla objekt"
     },
     "forRent": {
       "title": "Hyresobjekt",
@@ -241,7 +242,15 @@
     "emailAddress": "E-postadress",
     "allRightsReserved": "Alla rättigheter förbehållna",
     "privacy": "Integritet",
-    "terms": "Användarvillkor"
+    "terms": "Användarvillkor",
+    "office": "Helsingfors",
+    "address": "Kaserngatan 34, 00130 Helsingfors",
+    "phone": "+358 (0)10 315 6900",
+    "email": "info@sothebysrealty.fi",
+    "companyId": "Y-tunnus: 2644749-2",
+    "livingInFinland": "Living in Finland",
+    "sirListings": "SIR.COM Listings",
+    "openNewDoors": "Öppnar nya dörrar och möjligheter"
   },
   "errors": {
     "pageNotFound": "Sidan hittades inte",
@@ -253,13 +262,16 @@
   },
   "meta": {
     "defaultTitle": "Snellman Sotheby's International Realty",
-    "defaultDescription": "Internationell fastighetsmäkling lokalt - Premium fastighets tjänster i Finland",
+    "defaultDescription": "Din internationella mäklare lokalt - Fastighetsmäkleri i Finland",
     "homeTitle": "Hem | Snellman Sotheby's International Realty",
-    "propertiesTitle": "Objekt | Snellman Sotheby's International Realty",
+    "propertiesTitle": "Objekt till salu | Snellman Sotheby's International Realty",
     "rentalsTitle": "Hyresobjekt | Snellman Sotheby's International Realty",
     "referencesTitle": "Referenser | Snellman Sotheby's International Realty",
-    "aboutTitle": "Om oss | Snellman Sotheby's International Realty",
-    "contactTitle": "Kontakt | Snellman Sotheby's International Realty"
+    "aboutTitle": "Om oss | Din internationella mäklare lokalt | Snellman Sotheby's International Realty",
+    "contactTitle": "Kontakta oss | Snellman Sotheby's International Realty | Fastighetsmäkleri",
+    "staffTitle": "Personal | Snellman Sotheby's International Realty | Fastighetsmäkleri",
+    "sellWithUsTitle": "Sälj med oss | Snellman Sotheby's International Realty",
+    "internationalTitle": "Internationellt | Snellman Sotheby's International Realty"
   },
   "property": {
     "media": {
