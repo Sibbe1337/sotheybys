@@ -182,11 +182,7 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
       resizeTimeout = setTimeout(() => {
         const isLandscapeMode = window.innerWidth > window.innerHeight && window.innerWidth < 1024;
         setIsLandscape(isLandscapeMode);
-        
-        // Stäng mobilmenyn automatiskt i landscape för att inte täcka skärmen
-        if (isLandscapeMode && isMobileMenuOpen) {
-          setIsMobileMenuOpen(false);
-        }
+        // Don't auto-close menu in landscape - let user control it
       }, 100); // 100ms debounce
     };
     
@@ -199,7 +195,7 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
       window.removeEventListener('resize', checkOrientation);
       window.removeEventListener('orientationchange', checkOrientation);
     };
-  }, [isMobileMenuOpen]);
+  }, []);
 
   return (
     <header 
@@ -331,14 +327,14 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
             </ul>
           </nav>
 
-          {/* Mobile Menu Button - Statisk storlek */}
+          {/* Mobile Menu Button - Larger touch area for landscape mode */}
           <button 
-            className="lg:hidden text-white p-2"
+            className="lg:hidden text-white p-3 -mr-2 z-50 relative"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
             <svg 
-              className="w-6 h-6"
+              className="w-7 h-7"
               fill="none" 
               stroke="currentColor" 
               viewBox="0 0 24 24"

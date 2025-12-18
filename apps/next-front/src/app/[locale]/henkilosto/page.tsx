@@ -26,7 +26,7 @@ const translations = {
     formLastName: 'Sukunimi',
     formEmail: 'Sähköposti',
     formPhone: 'Puhelinnumero',
-    formAddress: 'Osoite',
+    formAddress: 'Osoite',  
     formMessage: 'Viesti',
     formPrivacyText: 'Olen tutustunut Tietosuojaselosteeseen',
     formPrivacyLink: 'Tietosuojaseloste',
@@ -446,39 +446,39 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
           <div className="container mx-auto px-4">
             <div className="max-w-7xl mx-auto">
               {/* First 8 members in regular grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
                 {staffMembers.slice(0, 8).map((member) => (
                   <div key={member.id} className="text-center">
-                    {/* Photo */}
-                    <div className="relative mb-4 mx-auto" style={{ width: '200px', height: '280px' }}>
+                    {/* Photo - Responsive sizing */}
+                    <div className="relative mb-3 sm:mb-4 mx-auto w-full max-w-[160px] sm:max-w-[180px] lg:max-w-[200px] aspect-[5/7]">
                       <Image
                         src={member.image}
                         alt={member.name}
                         fill
-                        sizes="200px"
+                        sizes="(max-width: 640px) 140px, (max-width: 1024px) 180px, 200px"
                         className="object-cover grayscale"
                       />
                     </div>
                     
-                    {/* Info */}
-                    <h3 className="text-2xl font-normal text-gray-900 mb-1">
+                    {/* Info - Responsive text */}
+                    <h3 className="text-base sm:text-lg lg:text-2xl font-normal text-gray-900 mb-0.5 sm:mb-1">
                       {member.name}
                     </h3>
-                    <p className="text-lg text-gray-600 mb-2">
+                    <p className="text-xs sm:text-sm lg:text-lg text-gray-600 mb-1 sm:mb-2 leading-tight">
                       {member.title}
                     </p>
                     
-                    {/* Contact */}
-                    <div className="space-y-1 mb-3">
+                    {/* Contact - Responsive text */}
+                    <div className="space-y-0.5 sm:space-y-1 mb-2 sm:mb-3">
                       <a 
                         href={`tel:${member.phone.replace(/\s/g, '')}`} 
-                        className="block text-lg text-gray-700 hover:text-[#002349] transition-colors"
+                        className="block text-xs sm:text-sm lg:text-base text-gray-700 hover:text-[#002349] transition-colors"
                       >
                         {member.phone}
                       </a>
                       <a 
                         href={`mailto:${member.email}`} 
-                        className="block text-lg text-gray-700 hover:text-[#002349] transition-colors"
+                        className="block text-xs sm:text-sm lg:text-base text-gray-700 hover:text-[#002349] transition-colors truncate"
                       >
                         {member.email}
                       </a>
@@ -492,39 +492,39 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
               
               {/* Last row centered */}
               {staffMembers.length > 8 && (
-                <div className="flex justify-center gap-8 mt-8">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:flex lg:justify-center gap-4 sm:gap-6 lg:gap-8 mt-6 sm:mt-8">
                   {staffMembers.slice(8).map((member) => (
-                    <div key={member.id} className="text-center" style={{ width: '200px' }}>
-                      {/* Photo */}
-                      <div className="relative mb-4 mx-auto" style={{ width: '200px', height: '280px' }}>
+                    <div key={member.id} className="text-center lg:w-[200px]">
+                      {/* Photo - Responsive sizing */}
+                      <div className="relative mb-3 sm:mb-4 mx-auto w-full max-w-[160px] sm:max-w-[180px] lg:max-w-[200px] aspect-[5/7]">
                         <Image
                           src={member.image}
                           alt={member.name}
                           fill
-                          sizes="200px"
+                          sizes="(max-width: 640px) 140px, (max-width: 1024px) 180px, 200px"
                           className="object-cover grayscale"
                         />
                       </div>
                       
-                      {/* Info */}
-                      <h3 className="text-2xl font-normal text-gray-900 mb-1">
+                      {/* Info - Responsive text */}
+                      <h3 className="text-base sm:text-lg lg:text-2xl font-normal text-gray-900 mb-0.5 sm:mb-1">
                         {member.name}
                       </h3>
-                      <p className="text-lg text-gray-600 mb-2">
+                      <p className="text-xs sm:text-sm lg:text-lg text-gray-600 mb-1 sm:mb-2 leading-tight">
                         {member.title}
                       </p>
                       
-                      {/* Contact */}
-                      <div className="space-y-1 mb-3">
+                      {/* Contact - Responsive text */}
+                      <div className="space-y-0.5 sm:space-y-1 mb-2 sm:mb-3">
                         <a 
                           href={`tel:${member.phone.replace(/\s/g, '')}`} 
-                          className="block text-lg text-gray-700 hover:text-[#002349] transition-colors"
+                          className="block text-xs sm:text-sm lg:text-base text-gray-700 hover:text-[#002349] transition-colors"
                         >
                           {member.phone}
                         </a>
                         <a 
                           href={`mailto:${member.email}`} 
-                          className="block text-lg text-gray-700 hover:text-[#002349] transition-colors"
+                          className="block text-xs sm:text-sm lg:text-base text-gray-700 hover:text-[#002349] transition-colors truncate"
                         >
                           {member.email}
                         </a>
