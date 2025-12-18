@@ -1,6 +1,8 @@
 {
   "common": {
     "viewProperty": "Se objekt",
+    "viewListing": "VISA OBJEKT",
+    "showListing": "VISA OBJEKT",
     "readMore": "Läs mer",
     "contactUs": "Kontakta oss",
     "search": "Sök",
@@ -10,7 +12,9 @@
     "error": "Fel",
     "backToHome": "Tillbaka till startsidan",
     "viewAll": "Visa alla",
+    "seeMore": "Se mer",
     "learnMore": "Läs mer",
+    "readMoreLink": "Läs mera",
     "sendMessage": "Skicka meddelande",
     "close": "Stäng",
     "next": "Nästa",
@@ -21,7 +25,10 @@
     "reset": "Återställ",
     "save": "Spara",
     "cancel": "Avbryt",
-    "submit": "Skicka"
+    "submit": "Skicka",
+    "findDreamHome": "Hitta ditt drömhem",
+    "moreAboutUs": "Mer om oss",
+    "rentNow": "Hyr nu"
   },
   "navigation": {
     "home": "Hem",
@@ -100,20 +107,47 @@
       "description": "26 100 mäklare i 1100 kontor i 84 länder och regioner",
       "button": "Vi öppnar nya dörrar"
     },
+    "welcome": {
+      "title": "Välkommen till en extraordinär objektvisning!",
+      "subtitle": "Se alla våra objekt till salu.",
+      "button": "Hitta ditt drömhem",
+      "description": "Vi har fört expertisen och erfarenheten från ett av världens ledande fastighetsmärken Sotheby's International Realty® till den finska fastighetsmarknaden. Genom att öppna marknaden utanför våra nationella gränser vill vi utveckla fastighetsbranschen som helhet. Vår inspiration kommer från intressanta och unika fastigheter från hela världen."
+    },
     "featured": {
-      "title": "Utvalda objekt",
+      "title": "Ett urval av våra objekt till salu",
       "subtitle": "Ett urval av våra mest exklusiva objekt",
-      "viewAll": "Visa alla"
+      "viewAll": "Se alla våra objekt till salu"
     },
     "forSale": {
       "title": "Objekt till salu",
-      "subtitle": "Bläddra i vårt omfattande utbud av fastigheter till salu",
-      "viewAll": "Se alla objekt"
+      "subtitle": "Se alla våra objekt till salu",
+      "viewAll": "Se alla våra objekt till salu"
     },
     "forRent": {
-      "title": "Hyresobjekt",
+      "title": "Våra senaste hyresobjekt",
       "subtitle": "Hitta det perfekta hyresbostaden",
-      "viewAll": "Se alla hyresobjekt"
+      "viewAll": "Se alla våra hyresobjekt"
+    },
+    "references": {
+      "title": "Referenser",
+      "subtitle": "Ett urval av sålda objekt",
+      "viewAll": "Se mer",
+      "seeReferences": "Se våra referenser"
+    },
+    "sellWithUs": {
+      "title": "Snellman Sotheby's International Realty®",
+      "subtitle": "Alla har vi olika behov och preferenser och vi diskuterar och skräddar syr efter kundens behov och önskan. Vår uppgift är att göra din dröm till verklighet.",
+      "button": "Gör ditt livs bostadsaffär"
+    },
+    "cta": {
+      "expertise": "Expertis som når runt hela världen",
+      "expertiseButton": "Mer om oss",
+      "appraisal": "Kontakta oss för en kostnadsfri värdering",
+      "appraisalButton": "Sälj med oss",
+      "officeHours": "Vårt underbara kontor är öppet vardagar 10:00 – 17:00 samt andra tider enligt överenskommelse.",
+      "rentNow": "Hyr nu",
+      "workWithUs": "En utsiktsplats för internationell fastighetsmarknad",
+      "workWithUsButton": "Jobba hos oss"
     },
     "whyChooseUs": {
       "title": "Varför välja oss",
@@ -123,12 +157,17 @@
       "networkDesc": "Globalt nätverk, lokal expertis",
       "service": "Service",
       "serviceDesc": "Personlig service till varje kund"
+    },
+    "luxuryOutlook": {
+      "title": "2025 Luxury Outlook℠",
+      "description": "2025 Luxury Outlook℠ fördjupar sig i de avgörande, framåtblickande frågorna som formar lyxiga bostadsmarknader runt om i världen.",
+      "button": "LÄS HELA 2025 LUXURY OUTLOOK℠ RAPPORTEN"
     }
   },
   "pages": {
     "properties": {
-      "title": "Objekt",
-      "subtitle": "Bläddra i vårt exklusiva urval",
+      "title": "Objekt till salu",
+      "subtitle": "Exklusiva fastigheter och bostäder till salu",
       "filters": "Filter",
       "priceRange": "Prisintervall",
       "areaRange": "Ytintervall",
@@ -139,13 +178,13 @@
     },
     "references": {
       "title": "Referenser",
-      "subtitle": "Nyligen sålda objekt",
+      "subtitle": "Ett urval av sålda objekt",
       "soldIn": "Såld i",
       "noReferences": "Inga referenser just nu"
     },
     "rentals": {
       "title": "Hyresobjekt",
-      "subtitle": "Kvalitetsbostäder till uthyrning",
+      "subtitle": "Våra senaste hyresobjekt",
       "availableFrom": "Tillgänglig från",
       "noRentals": "Inga hyresobjekt just nu"
     },
@@ -155,7 +194,7 @@
       "heroText": "26 100 mäklare i 1100 kontor i 84 länder och regioner",
       "heroButton": "Vi öppnar nya dörrar",
       "mission": "Vårt uppdrag",
-      "missionText": "Vi kombinerar Sotheby's-varumärkets 280 år långa historia och internationella nätverk med lokal expertis.",
+      "missionText": "Vi har fört expertisen och erfarenheten från ett av världens ledande fastighetsmärken Sotheby's International Realty® till den finska fastighetsmarknaden.",
       "values": "Våra värderingar",
       "trust": "Förtroende",
       "trustDesc": "Vi bygger långsiktiga kundrelationer baserade på förtroende",
@@ -169,12 +208,15 @@
     },
     "contact": {
       "title": "Kontakta oss",
-      "subtitle": "Vi är här för dig",
+      "subtitle": "Kontakta oss för en kostnadsfri värdering!",
+      "formIntro": "Funderar du på att köpa eller sälja? Letar du efter fastigheter att investera i?",
+      "formSubtitle": "Berätta hur vi kan hjälpa till så hör vi av oss.",
+      "newsletterIntro": "Är du intresserad av vackra hem och unika fastigheter? Prenumerera på vårt nyhetsbrev så håller vi dig uppdaterad.",
       "name": "Namn",
       "firstName": "Förnamn",
       "lastName": "Efternamn",
       "email": "E-post",
-      "phone": "Telefon",
+      "phone": "Telefonnummer",
       "message": "Meddelande",
       "send": "Skicka meddelande",
       "office": "Kontor",
@@ -202,12 +244,12 @@
       "expertMarketingDesc": "Professionell fotografering och marknadsföring för varje objekt",
       "personalService": "Personlig service",
       "personalServiceDesc": "Dedikerad mäklare och skräddarsydd försäljningsstrategi",
-      "requestValuation": "Begär värdering",
-      "getStarted": "Kom igång"
+      "requestValuation": "Kontakta oss för en kostnadsfri värdering",
+      "getStarted": "Sälj med oss"
     },
     "international": {
       "title": "Internationellt",
-      "subtitle": "Sotheby's International Realty-nätverket",
+      "subtitle": "Din internationella mäklare lokalt",
       "globalNetwork": "Globalt nätverk",
       "globalNetworkDesc": "26 100 mäklare i 1100 kontor i 84 länder och regioner",
       "luxuryMarket": "Lyxmarknad",
@@ -215,11 +257,11 @@
     },
     "workWithUs": {
       "title": "Jobba hos oss",
-      "subtitle": "Gå med i vårt team",
+      "subtitle": "En utsiktsplats för internationell fastighetsmarknad",
       "careers": "Karriärmöjligheter",
       "careersDesc": "Vi söker motiverade fastighetsproffs",
       "benefits": "Fördelar",
-      "sendApplication": "Skicka ansökan"
+      "sendApplication": "Jobba hos oss"
     }
   },
   "forms": {
@@ -236,12 +278,13 @@
     "aboutUsText": "Snellman Sotheby's International Realty är en del av världens ledande lyxfastighetsnätverk.",
     "quickLinks": "Snabblänkar",
     "followUs": "Följ oss",
-    "newsletter": "Nyhetsbrev",
+    "newsletter": "Prenumerera på vårt nyhetsbrev",
     "newsletterText": "Prenumerera på vårt nyhetsbrev för att få information om nya objekt",
+    "newsletterPrivacy": "Jag har läst integritetspolicyn",
     "subscribe": "Prenumerera",
     "emailAddress": "E-postadress",
     "allRightsReserved": "Alla rättigheter förbehållna",
-    "privacy": "Integritet",
+    "privacy": "Integritetspolicy",
     "terms": "Användarvillkor",
     "office": "Helsingfors",
     "address": "Kaserngatan 34, 00130 Helsingfors",
@@ -250,7 +293,11 @@
     "companyId": "Y-tunnus: 2644749-2",
     "livingInFinland": "Living in Finland",
     "sirListings": "SIR.COM Listings",
-    "openNewDoors": "Öppnar nya dörrar och möjligheter"
+    "openNewDoors": "Öppnar nya dörrar och möjligheter",
+    "copyright": "© 2025 Ab Snellman LKV Oy. Alla rättigheter förbehållna.",
+    "sirDisclaimer": "Sotheby's International Realty® och Sotheby's International Realty-logotypen är tjänstemärken licensierade till Sotheby's International Realty Affiliates LLC och används med tillstånd.",
+    "fairHousing": "Ab Snellman LKV Oy stödjer fullt ut principerna för rättvis bostadsförmedling. Varje kontor ägs och drivs självständigt.",
+    "franchiseDisclaimer": "Alla tjänster eller produkter som tillhandahålls av självständigt ägda och drivna franchisetagare tillhandahålls inte av, är inte anslutna till eller relaterade till Sotheby's International Realty Affiliates LLC eller något av dess anslutna företag."
   },
   "errors": {
     "pageNotFound": "Sidan hittades inte",
@@ -262,8 +309,8 @@
   },
   "meta": {
     "defaultTitle": "Snellman Sotheby's International Realty",
-    "defaultDescription": "Din internationella mäklare lokalt - Fastighetsmäkleri i Finland",
-    "homeTitle": "Hem | Snellman Sotheby's International Realty",
+    "defaultDescription": "Exklusiva fastigheter och bostäder till salu",
+    "homeTitle": "Exklusiva fastigheter och bostäder till salu | Snellman Sotheby's International Realty",
     "propertiesTitle": "Objekt till salu | Snellman Sotheby's International Realty",
     "rentalsTitle": "Hyresobjekt | Snellman Sotheby's International Realty",
     "referencesTitle": "Referenser | Snellman Sotheby's International Realty",
