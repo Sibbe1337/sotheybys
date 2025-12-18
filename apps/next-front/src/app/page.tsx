@@ -1,12 +1,11 @@
-import { redirect } from 'next/navigation';
-import { defaultLocale } from '@/i18n/config';
+import { ChristmasLandingPage } from '@/components/ChristmasLanding';
 
 /**
- * Root page - redirects to default locale
+ * Root page - Christmas/New Year greeting page
  *
- * With next-intl's localePrefix: 'as-needed', the root path needs to explicitly
- * redirect to the default locale path for proper routing.
+ * This page shows a festive greeting before visitors enter the main site.
+ * Visitors can click through to access the main site at /fi, /sv, or /en
  */
 export default function RootPage() {
-  redirect(`/${defaultLocale}`);
+  return <ChristmasLandingPage />;
 }
