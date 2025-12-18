@@ -288,57 +288,116 @@ export default function ContactPage({ params }: { params: { locale: string } }) 
         </section>
 
         {/* Staff Section - static */}
-        <section className="py-12 bg-white">
+        <section className="py-12 lg:py-20 bg-white">
           <div className="container mx-auto px-4">
-            <h2 className="text-2xl font-light text-gray-900 mb-10 text-center">
+            <h2 className="text-2xl lg:text-3xl font-light text-gray-900 mb-10 lg:mb-16 text-center">
               {t.staffTitle}
             </h2>
             
-            {/* Staff Grid - 4 columns */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
-              {staffMembers.map((member) => (
-                <div key={member.id} className="text-center">
-                  {/* Photo */}
-                  <div className="relative w-32 h-40 mx-auto mb-3 overflow-hidden">
-                    <Image
-                      src={member.image}
-                      alt={member.name}
-                      fill
-                      className="object-cover object-top grayscale"
-                    />
+            <div className="max-w-7xl mx-auto">
+              {/* First 8 members in regular grid */}
+              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10">
+                {staffMembers.slice(0, 8).map((member) => (
+                  <div key={member.id} className="text-center">
+                    {/* Photo - Larger responsive sizing */}
+                    <div className="relative mb-4 mx-auto w-full max-w-[160px] sm:max-w-[180px] lg:max-w-[200px] aspect-[5/7]">
+                      <Image
+                        src={member.image}
+                        alt={member.name}
+                        fill
+                        sizes="(max-width: 640px) 160px, (max-width: 1024px) 180px, 200px"
+                        className="object-cover object-top grayscale"
+                      />
+                    </div>
+                    
+                    {/* Flags */}
+                    <div className="flex gap-1 justify-center mb-2">
+                      {member.flags.map((flag) => (
+                        <span key={flag} className="text-base">{flagEmojis[flag]}</span>
+                      ))}
+                    </div>
+                    
+                    {/* Name */}
+                    <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-1">
+                      {member.name}
+                    </h3>
+                    
+                    {/* Title */}
+                    <p className="text-xs sm:text-sm text-gray-600 mb-2 leading-tight">
+                      {member.title}
+                    </p>
+                    
+                    {/* Phone */}
+                    <a 
+                      href={`tel:${member.phone.replace(/\s/g, '')}`}
+                      className="block text-xs sm:text-sm text-gray-600 hover:text-[#002349] transition-colors mb-1"
+                    >
+                      {member.phone}
+                    </a>
+                    
+                    {/* Email */}
+                    <a 
+                      href={`mailto:${member.email}`}
+                      className="text-xs sm:text-sm text-gray-600 hover:text-[#002349] transition-colors"
+                    >
+                      {member.email}
+                    </a>
                   </div>
-                  
-                  {/* Flags */}
-                  <div className="flex gap-1 justify-center mb-2">
-                    {member.flags.map((flag) => (
-                      <span key={flag} className="text-sm">{flagEmojis[flag]}</span>
-                    ))}
-                  </div>
-                  
-                  {/* Name */}
-                  <h3 className="text-sm font-medium text-gray-900 mb-1">
-                    {member.name}
-                  </h3>
-                  
-                  {/* Title */}
-                  <p className="text-xs text-gray-600 mb-2 leading-tight">
-                    {member.title}
-                  </p>
-                  
-                  {/* Phone */}
-                  <p className="text-xs text-gray-600 mb-1">
-                    {member.phone}
-                  </p>
-                  
-                  {/* Email */}
-                  <a 
-                    href={`mailto:${member.email}`}
-                    className="text-xs text-gray-600 hover:text-[#002349] transition-colors"
-                  >
-                    {member.email}
-                  </a>
+                ))}
+              </div>
+              
+              {/* Last row centered (remaining 3 members) */}
+              {staffMembers.length > 8 && (
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:flex lg:justify-center gap-6 sm:gap-8 lg:gap-10 mt-8 lg:mt-12">
+                  {staffMembers.slice(8).map((member) => (
+                    <div key={member.id} className="text-center lg:w-[200px]">
+                      {/* Photo - Larger responsive sizing */}
+                      <div className="relative mb-4 mx-auto w-full max-w-[160px] sm:max-w-[180px] lg:max-w-[200px] aspect-[5/7]">
+                        <Image
+                          src={member.image}
+                          alt={member.name}
+                          fill
+                          sizes="(max-width: 640px) 160px, (max-width: 1024px) 180px, 200px"
+                          className="object-cover object-top grayscale"
+                        />
+                      </div>
+                      
+                      {/* Flags */}
+                      <div className="flex gap-1 justify-center mb-2">
+                        {member.flags.map((flag) => (
+                          <span key={flag} className="text-base">{flagEmojis[flag]}</span>
+                        ))}
+                      </div>
+                      
+                      {/* Name */}
+                      <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-1">
+                        {member.name}
+                      </h3>
+                      
+                      {/* Title */}
+                      <p className="text-xs sm:text-sm text-gray-600 mb-2 leading-tight">
+                        {member.title}
+                      </p>
+                      
+                      {/* Phone */}
+                      <a 
+                        href={`tel:${member.phone.replace(/\s/g, '')}`}
+                        className="block text-xs sm:text-sm text-gray-600 hover:text-[#002349] transition-colors mb-1"
+                      >
+                        {member.phone}
+                      </a>
+                      
+                      {/* Email */}
+                      <a 
+                        href={`mailto:${member.email}`}
+                        className="text-xs sm:text-sm text-gray-600 hover:text-[#002349] transition-colors"
+                      >
+                        {member.email}
+                      </a>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              )}
             </div>
           </div>
         </section>
