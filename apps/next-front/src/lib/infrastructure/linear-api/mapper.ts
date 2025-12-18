@@ -149,6 +149,11 @@ function normalizeStatus(val: any): 'ACTIVE' | 'SOLD' | 'RESERVED' | undefined {
   return undefined;
 }
 
+// Hardcoded coordinates for properties that don't geocode well (islands, etc.)
+const KNOWN_COORDINATES: Record<string, { lat: number; lon: number }> = {
+  'remmarholmen': { lat: 59.9680, lon: 24.3610 }, // Island in Porkkala, Kirkkonummi
+};
+
 async function extractCoordinates(
   src: LinearListing, 
   nv: any,
@@ -174,7 +179,18 @@ async function extractCoordinates(
     return { lat, lon };
   }
 
-  // FALLBACK: Geocode from address if coordinates missing
+  // FALLBACK 1: Check hardcoded coordinates for known problematic addresses
+  if (address) {
+    const normalizedAddress = address.toLowerCase().trim();
+    for (const [key, coords] of Object.entries(KNOWN_COORDINATES)) {
+      if (normalizedAddress.includes(key)) {
+        console.log(`[Mapper] Using hardcoded coordinates for ${address}`);
+        return coords;
+      }
+    }
+  }
+
+  // FALLBACK 2: Geocode from address if coordinates missing
   if (address && city) {
     try {
       const fullAddress = postalCode 

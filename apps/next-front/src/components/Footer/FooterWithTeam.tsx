@@ -32,7 +32,7 @@ export default function FooterWithTeam({ contact, social, logo }: FooterProps = 
   
   const socialLinks = social || {
     facebook: 'https://www.facebook.com/snellmansothebysrealty',
-    instagram: 'https://www.instagram.com/snellmansothebysrealty',
+    instagram: 'https://www.instagram.com/sothebysrealtyfinland',
     linkedin: 'https://www.linkedin.com/company/snellman-sotheby-s-international-realty',
     youtube: 'https://www.youtube.com/channel/UCUDafZp-yXwW6d-amvxoebQ'
   };

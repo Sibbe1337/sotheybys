@@ -218,7 +218,7 @@ export default function ChristmasLandingPage() {
               Facebook
             </a>
             <a 
-              href="https://www.instagram.com/snellmansothebysrealty"
+              href="https://www.instagram.com/sothebysrealtyfinland"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-[var(--color-gold)] transition-colors text-white"
