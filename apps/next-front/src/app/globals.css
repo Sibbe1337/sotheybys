@@ -34,10 +34,13 @@
 
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
 
   html, body {
     color: var(--text-default);
+    max-width: 100vw;
+    overflow-x: hidden;
   }
 
   body {
