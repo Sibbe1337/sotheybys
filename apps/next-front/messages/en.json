@@ -1,8 +1,10 @@
 {
   "common": {
     "viewProperty": "View Property",
+    "viewListing": "VIEW LISTING",
+    "showListing": "SHOW LISTING",
     "readMore": "Read More",
-    "contactUs": "Contact Us",
+    "contactUs": "Contact us",
     "search": "Search",
     "month": "month",
     "noPropertiesFound": "No properties found",
@@ -10,6 +12,7 @@
     "error": "Error",
     "backToHome": "Back to Home",
     "viewAll": "View All",
+    "seeMore": "See more",
     "learnMore": "Learn More",
     "sendMessage": "Send Message",
     "close": "Close",
@@ -21,22 +24,25 @@
     "reset": "Reset",
     "save": "Save",
     "cancel": "Cancel",
-    "submit": "Submit"
+    "submit": "Submit",
+    "findDreamHome": "Find your dream home",
+    "moreAboutUs": "More about us",
+    "rentNow": "Rent now"
   },
   "navigation": {
     "home": "Home",
     "properties": "Properties",
-    "forSale": "Properties For Sale",
-    "forRent": "Rental Properties",
-    "rentals": "Rentals",
+    "forSale": "Properties for sale",
+    "forRent": "Rental listings",
+    "rentals": "Rental listings",
     "references": "References",
-    "purchaseAssignments": "Purchase Assignments",
-    "about": "About Us",
-    "contact": "Contact Us",
-    "staff": "Staff",
+    "purchaseAssignments": "Purchase Mandates",
+    "about": "About",
+    "contact": "Contact us",
+    "staff": "Personnel",
     "international": "International",
-    "sellWithUs": "Sell With Us",
-    "workWithUs": "Work With Us",
+    "sellWithUs": "Sell with us",
+    "workWithUs": "Join us",
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service"
   },
@@ -97,23 +103,50 @@
     "hero": {
       "title": "Snellman Sotheby's International Realty",
       "subtitle": "Your international broker locally",
-      "description": "26,100 brokers in 1,100 affiliate offices in 84 countries and territories",
+      "description": "26 100 brokers in 1100 affiliate offices in 84 countries and territories",
       "button": "We open new doors"
     },
+    "welcome": {
+      "title": "Welcome to an extraordinary property listing!",
+      "subtitle": "See all our properties for sale.",
+      "button": "Find your dream home",
+      "description": "We brought the expertise and experience of one of the world's leading real estate brands Sotheby's International Realty® to the Finnish real estate market. By opening the market beyond our national borders, we want to develop the real estate industry as a whole. Our inspiration comes from interesting and unique properties from all around the world."
+    },
     "featured": {
-      "title": "Featured Properties",
+      "title": "A selection of our properties for sale",
       "subtitle": "A selection of our most exclusive properties",
-      "viewAll": "View All"
+      "viewAll": "See all our properties for sale"
     },
     "forSale": {
-      "title": "Properties For Sale",
-      "subtitle": "Browse our comprehensive selection of properties for sale",
-      "viewAll": "View All Properties"
+      "title": "Properties for sale",
+      "subtitle": "See all our properties for sale",
+      "viewAll": "See all our properties for sale"
     },
     "forRent": {
-      "title": "Rental Properties",
+      "title": "Our newest rental listings",
       "subtitle": "Find the perfect rental home",
-      "viewAll": "View All Rentals"
+      "viewAll": "See all our rental listings"
+    },
+    "references": {
+      "title": "References",
+      "subtitle": "A sample of sold listings",
+      "viewAll": "See more",
+      "seeReferences": "See our references"
+    },
+    "sellWithUs": {
+      "title": "Snellman Sotheby's International Realty®",
+      "subtitle": "We all have different needs and preferences, we discuss and customize according to our customers' wishes and requirements. Our mission is to make your dream come true.",
+      "button": "Make the listing of your life"
+    },
+    "cta": {
+      "expertise": "Expertise that reaches down the block and around the world",
+      "expertiseButton": "More about us",
+      "appraisal": "Contact us for a complimentary appraisal",
+      "appraisalButton": "Sell with us",
+      "officeHours": "Our wonderful office is open on weekdays 10:00 – 17:00 as well as other times by appointment.",
+      "rentNow": "Rent now",
+      "workWithUs": "A vantage point for international real estate",
+      "workWithUsButton": "Work with us"
     },
     "whyChooseUs": {
       "title": "Why Choose Us",
@@ -123,12 +156,17 @@
       "networkDesc": "Global network, local expertise",
       "service": "Service",
       "serviceDesc": "Personal service for every client"
+    },
+    "luxuryOutlook": {
+      "title": "2025 Luxury Outlook℠",
+      "description": "The 2025 Luxury Outlook℠ delves into the pivotal, forward-looking issues shaping luxury residential property markets around the world.",
+      "button": "READ THE FULL 2025 LUXURY OUTLOOK℠ REPORT"
     }
   },
   "pages": {
     "properties": {
-      "title": "Properties",
-      "subtitle": "Browse our exclusive selection",
+      "title": "Properties for sale",
+      "subtitle": "Luxury Real Estate and Homes for Sale",
       "filters": "Filters",
       "priceRange": "Price Range",
       "areaRange": "Area Range",
@@ -139,23 +177,23 @@
     },
     "references": {
       "title": "References",
-      "subtitle": "Recently sold properties",
+      "subtitle": "A sample of sold listings",
       "soldIn": "Sold in",
       "noReferences": "No references at this time"
     },
     "rentals": {
-      "title": "Rentals",
-      "subtitle": "Quality rental properties",
+      "title": "Rental listings",
+      "subtitle": "Our newest rental listings",
       "availableFrom": "Available from",
       "noRentals": "No rentals at this time"
     },
     "about": {
-      "title": "About Us",
-      "subtitle": "Your international real estate agent locally",
-      "heroText": "26,100 agents in 1,100 offices in 84 countries and regions",
+      "title": "About",
+      "subtitle": "Your international broker locally",
+      "heroText": "26 100 brokers in 1100 affiliate offices in 84 countries and territories",
       "heroButton": "We open new doors",
       "mission": "Our Mission",
-      "missionText": "We combine the Sotheby's brand's 280-year history and international network with local expertise.",
+      "missionText": "We brought the expertise and experience of one of the world's leading real estate brands Sotheby's International Realty® to the Finnish real estate market.",
       "values": "Our Values",
       "trust": "Trust",
       "trustDesc": "We build long-term client relationships based on trust",
@@ -165,11 +203,14 @@
       "internationalDesc": "We leverage our global network locally",
       "auctionHouse": "Sotheby's ® Auction House",
       "sirNetwork": "Sotheby's International Realty ®",
-      "meetStaff": "Get to know our staff"
+      "meetStaff": "Get to know our personnel"
     },
     "contact": {
-      "title": "Contact Us",
-      "subtitle": "We're here for you",
+      "title": "Contact us",
+      "subtitle": "Contact us for a complimentary appraisal!",
+      "formIntro": "Are you considering buying or selling? Are you looking for properties to invest in?",
+      "formSubtitle": "Let us know how we can help and we will get in touch.",
+      "newsletterIntro": "Do you have an interest in beautiful homes and unique properties? Subscribe to our newsletter and we will keep you updated.",
       "name": "Name",
       "firstName": "First Name",
       "lastName": "Last Name",
@@ -186,15 +227,15 @@
       "address": "Kasarmikatu 34, 00130 Helsinki"
     },
     "staff": {
-      "title": "Staff",
-      "subtitle": "Get to know our staff",
+      "title": "Personnel",
+      "subtitle": "Get to know our personnel",
       "meetTeam": "Meet our team",
       "contactAgent": "Contact"
     },
     "sellWithUs": {
-      "title": "Sell With Us",
+      "title": "Sell with us",
       "subtitle": "We all have different needs and preferences, we discuss and customize according to our customers' wishes and requirements. Our mission is to make your dream come true.",
-      "heroButton": "Make the sale of your life",
+      "heroButton": "Make the listing of your life",
       "whySellWithUs": "Why Sell With Us",
       "globalReach": "Global Reach",
       "globalReachDesc": "We reach buyers worldwide through the Sotheby's network",
@@ -202,24 +243,24 @@
       "expertMarketingDesc": "Professional photography and marketing for every property",
       "personalService": "Personal Service",
       "personalServiceDesc": "Dedicated agent and tailored sales strategy",
-      "requestValuation": "Request Valuation",
-      "getStarted": "Get Started"
+      "requestValuation": "Contact us for a complimentary appraisal",
+      "getStarted": "Sell with us"
     },
     "international": {
       "title": "International",
-      "subtitle": "The Sotheby's International Realty Network",
+      "subtitle": "Your international broker locally",
       "globalNetwork": "Global Network",
-      "globalNetworkDesc": "26,100 agents in 1,100 offices in 84 countries and regions",
+      "globalNetworkDesc": "26 100 brokers in 1100 affiliate offices in 84 countries and territories",
       "luxuryMarket": "Luxury Market",
       "luxuryMarketDesc": "Specialized in luxury and unique properties"
     },
     "workWithUs": {
-      "title": "Work With Us",
-      "subtitle": "Join our team",
+      "title": "Join us",
+      "subtitle": "A vantage point for international real estate",
       "careers": "Career Opportunities",
       "careersDesc": "We're looking for motivated real estate professionals",
       "benefits": "Benefits",
-      "sendApplication": "Send Application"
+      "sendApplication": "Work with us"
     }
   },
   "forms": {
@@ -232,25 +273,30 @@
     "selectOption": "Select option"
   },
   "footer": {
-    "aboutUs": "About Us",
+    "aboutUs": "About",
     "aboutUsText": "Snellman Sotheby's International Realty is part of the world's leading luxury real estate network.",
     "quickLinks": "Quick Links",
     "followUs": "Follow Us",
-    "newsletter": "Newsletter",
+    "newsletter": "Subscribe to our newsletter",
     "newsletterText": "Subscribe to our newsletter to receive information about new properties",
+    "newsletterPrivacy": "I have read the Privacy Policy",
     "subscribe": "Subscribe",
     "emailAddress": "Email Address",
-    "allRightsReserved": "All Rights Reserved",
-    "privacy": "Privacy",
+    "allRightsReserved": "All rights reserved",
+    "privacy": "Privacy Policy",
     "terms": "Terms of Service",
     "office": "Helsinki",
     "address": "Kasarmikatu 34, 00130 Helsinki",
     "phone": "+358 (0)10 315 6900",
     "email": "info@sothebysrealty.fi",
-    "companyId": "Business ID: 2644749-2",
+    "companyId": "Y-tunnus: 2644749-2",
     "livingInFinland": "Living in Finland",
     "sirListings": "SIR.COM Listings",
-    "openNewDoors": "Opens new doors and possibilities"
+    "openNewDoors": "Opens new doors and possibilities",
+    "copyright": "© 2025 Ab Snellman LKV Oy. All rights reserved.",
+    "sirDisclaimer": "Sotheby's International Realty® and the Sotheby's International Realty Logo are service marks licensed to Sotheby's International Realty Affiliates LLC and used with permission.",
+    "fairHousing": "Ab Snellman LKV Oy fully supports the principles of the Fair Housing Act and the Equal Opportunity Act. Each office is independently owned and operated.",
+    "franchiseDisclaimer": "Any services or products provided by independently owned and operated franchisees are not provided by, affiliated with or related to Sotheby's International Realty Affiliates LLC nor any of its affiliated companies."
   },
   "errors": {
     "pageNotFound": "Page Not Found",
@@ -262,15 +308,15 @@
   },
   "meta": {
     "defaultTitle": "Snellman Sotheby's International Realty",
-    "defaultDescription": "Your international broker locally - Real Estate Brokerage in Finland",
-    "homeTitle": "Home | Snellman Sotheby's International Realty",
-    "propertiesTitle": "Properties For Sale | Snellman Sotheby's International Realty",
-    "rentalsTitle": "Rental Properties | Snellman Sotheby's International Realty",
+    "defaultDescription": "Luxury Real Estate and Homes for Sale",
+    "homeTitle": "Luxury Real Estate and Homes for Sale | Snellman Sotheby's International Realty",
+    "propertiesTitle": "Properties for sale | Snellman Sotheby's International Realty",
+    "rentalsTitle": "Rental listings | Snellman Sotheby's International Realty",
     "referencesTitle": "References | Snellman Sotheby's International Realty",
-    "aboutTitle": "About Us | Your international broker locally | Snellman Sotheby's International Realty",
-    "contactTitle": "Contact Us | Snellman Sotheby's International Realty | Real Estate Broker",
-    "staffTitle": "Staff | Snellman Sotheby's International Realty | Real Estate Broker",
-    "sellWithUsTitle": "Sell With Us | Snellman Sotheby's International Realty",
+    "aboutTitle": "About | Snellman Sotheby's International Realty",
+    "contactTitle": "Contact us | Snellman Sotheby's International Realty",
+    "staffTitle": "Personnel | Snellman Sotheby's International Realty",
+    "sellWithUsTitle": "Sell with us | Snellman Sotheby's International Realty",
     "internationalTitle": "International | Real Estate Broker | Snellman Sotheby's International Realty"
   },
   "property": {
