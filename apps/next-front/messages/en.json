@@ -149,8 +149,10 @@
       "noRentals": "No rentals at this time"
     },
     "about": {
-      "title": "Snellman Sotheby's International Realty",
-      "subtitle": "Opening new doors since 2015",
+      "title": "About Us",
+      "subtitle": "Your international real estate agent locally",
+      "heroText": "26,100 agents in 1,100 offices in 84 countries and regions",
+      "heroButton": "We open new doors",
       "mission": "Our Mission",
       "missionText": "We combine the Sotheby's brand's 280-year history and international network with local expertise.",
       "values": "Our Values",
@@ -159,12 +161,17 @@
       "passion": "Passion",
       "passionDesc": "We are passionate about our work and committed to results",
       "international": "International",
-      "internationalDesc": "We leverage our global network locally"
+      "internationalDesc": "We leverage our global network locally",
+      "auctionHouse": "Sotheby's ® Auction House",
+      "sirNetwork": "Sotheby's International Realty ®",
+      "meetStaff": "Get to know our staff"
     },
     "contact": {
       "title": "Contact Us",
       "subtitle": "We're here for you",
       "name": "Name",
+      "firstName": "First Name",
+      "lastName": "Last Name",
       "email": "Email",
       "phone": "Phone",
       "message": "Message",
@@ -174,17 +181,19 @@
       "callUs": "Call Us",
       "emailUs": "Email Us",
       "successMessage": "Thank you for your message! We'll contact you soon.",
-      "errorMessage": "Failed to send message. Please try again."
+      "errorMessage": "Failed to send message. Please try again.",
+      "address": "Kasarmikatu 34, 00130 Helsinki"
     },
     "staff": {
       "title": "Staff",
-      "subtitle": "Meet our experts",
+      "subtitle": "Get to know our staff",
       "meetTeam": "Meet our team",
       "contactAgent": "Contact"
     },
     "sellWithUs": {
       "title": "Sell With Us",
-      "subtitle": "Get the best result for your property",
+      "subtitle": "We all have different needs and preferences, we discuss and customize according to our customers' wishes and requirements. Our mission is to make your dream come true.",
+      "heroButton": "Make the sale of your life",
       "whySellWithUs": "Why Sell With Us",
       "globalReach": "Global Reach",
       "globalReachDesc": "We reach buyers worldwide through the Sotheby's network",
@@ -199,7 +208,7 @@
       "title": "International",
       "subtitle": "The Sotheby's International Realty Network",
       "globalNetwork": "Global Network",
-      "globalNetworkDesc": "Over 1,100 offices in 84 countries and territories",
+      "globalNetworkDesc": "26,100 agents in 1,100 offices in 84 countries and regions",
       "luxuryMarket": "Luxury Market",
       "luxuryMarketDesc": "Specialized in luxury and unique properties"
     },

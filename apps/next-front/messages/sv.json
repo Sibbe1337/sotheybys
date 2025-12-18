@@ -149,8 +149,10 @@
       "noRentals": "Inga hyresobjekt just nu"
     },
     "about": {
-      "title": "Snellman Sotheby's International Realty",
-      "subtitle": "Öppnar nya dörrar sedan 2015",
+      "title": "Om oss",
+      "subtitle": "Din internationella mäklare lokalt",
+      "heroText": "26 100 mäklare i 1100 kontor i 84 länder och regioner",
+      "heroButton": "Vi öppnar nya dörrar",
       "mission": "Vårt uppdrag",
       "missionText": "Vi kombinerar Sotheby's-varumärkets 280 år långa historia och internationella nätverk med lokal expertis.",
       "values": "Våra värderingar",
@@ -159,12 +161,17 @@
       "passion": "Passion",
       "passionDesc": "Vi brinner för vårt arbete och är engagerade i resultat",
       "international": "Internationell",
-      "internationalDesc": "Vi utnyttjar vårt globala nätverk lokalt"
+      "internationalDesc": "Vi utnyttjar vårt globala nätverk lokalt",
+      "auctionHouse": "Sotheby's ® Auktionshus",
+      "sirNetwork": "Sotheby's International Realty ®",
+      "meetStaff": "Lär dig känna vår personal"
     },
     "contact": {
       "title": "Kontakta oss",
       "subtitle": "Vi är här för dig",
       "name": "Namn",
+      "firstName": "Förnamn",
+      "lastName": "Efternamn",
       "email": "E-post",
       "phone": "Telefon",
       "message": "Meddelande",
@@ -174,17 +181,19 @@
       "callUs": "Ring oss",
       "emailUs": "Maila oss",
       "successMessage": "Tack för ditt meddelande! Vi kontaktar dig snart.",
-      "errorMessage": "Det gick inte att skicka meddelandet. Försök igen."
+      "errorMessage": "Det gick inte att skicka meddelandet. Försök igen.",
+      "address": "Kaserngatan 34, 00130 Helsingfors"
     },
     "staff": {
       "title": "Personal",
-      "subtitle": "Möt våra experter",
+      "subtitle": "Lär dig känna vår personal",
       "meetTeam": "Möt vårt team",
       "contactAgent": "Kontakta"
     },
     "sellWithUs": {
       "title": "Sälj med oss",
-      "subtitle": "Få bästa möjliga resultat för din fastighet",
+      "subtitle": "Alla har vi olika behov och preferenser och vi diskuterar och skräddar syr efter kundens behov och önskan. Vår uppgift är att göra din dröm till verklighet.",
+      "heroButton": "Gör ditt livs bostadsaffär",
       "whySellWithUs": "Varför sälja med oss",
       "globalReach": "Global räckvidd",
       "globalReachDesc": "Vi når köpare över hela världen genom Sotheby's-nätverket",
@@ -199,7 +208,7 @@
       "title": "Internationellt",
       "subtitle": "Sotheby's International Realty-nätverket",
       "globalNetwork": "Globalt nätverk",
-      "globalNetworkDesc": "Över 1100 kontor i 84 länder och territorier",
+      "globalNetworkDesc": "26 100 mäklare i 1100 kontor i 84 länder och regioner",
       "luxuryMarket": "Lyxmarknad",
       "luxuryMarketDesc": "Specialiserade på lyxiga och unika fastigheter"
     },
