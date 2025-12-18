@@ -43,7 +43,7 @@ export default function FooterWithTeam({ contact, social, logo }: FooterProps = 
     <footer>
       {/* Main Footer Section with Team Photo */}
       <div className="bg-[#001731] text-white">
-        <div className="container mx-auto px-4 py-12">
+        <div className="container mx-auto px-4 py-12 pb-16 lg:pb-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             
             {/* LEFT COLUMN: Logo, Contact, Badges, Social */}
@@ -187,9 +187,9 @@ export default function FooterWithTeam({ contact, social, logo }: FooterProps = 
               </div>
             </div>
 
-            {/* RIGHT COLUMN: Team Photo - Extends below footer edge */}
-            <div className="flex items-end justify-center lg:justify-end">
-              <div className="relative h-[500px] w-full overflow-visible group translate-y-16">
+            {/* RIGHT COLUMN: Team Photo - Positioned higher to avoid overlapping footer */}
+            <div className="flex items-center justify-center lg:justify-end">
+              <div className="relative h-[450px] w-full overflow-visible group -mt-8 lg:-mt-16">
                 <Image
                   src="/images/staff/team-photo.jpg"
                   alt="Snellman Sotheby's International Realty Team"
