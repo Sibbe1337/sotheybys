@@ -1,6 +1,8 @@
 {
   "common": {
     "viewProperty": "Katso kohde",
+    "viewListing": "NÄYTÄ KOHDE",
+    "showListing": "NÄYTÄ KOHDE",
     "readMore": "Lue lisää",
     "contactUs": "Ota yhteyttä",
     "search": "Hae",

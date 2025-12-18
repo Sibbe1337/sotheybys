@@ -519,13 +519,13 @@ export default function HomePageClient({
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-25 flex flex-col items-center justify-center text-white p-6">
                     <h3 className="text-xl font-light mb-3 text-center">
-                      {language === 'fi' ? 'Valikoima myydyistä kohteista' : language === 'sv' ? 'Urval av sålda objekt' : 'Selection of sold properties'}
+                      {language === 'fi' ? 'Valikoima myydyistä kohteista' : language === 'sv' ? 'Ett urval av sålda objekt' : 'A selection of sold properties'}
                     </h3>
                     <span className="inline-block border-2 border-white text-white px-4 py-2
                                group-hover:bg-white group-hover:text-[#1a3a4a] transition-all duration-300
                                font-light uppercase tracking-wider text-xs"
                     >
-                      {language === 'fi' ? 'Katso referenssit ›' : language === 'sv' ? 'Se referenser ›' : 'View references ›'}
+                      {language === 'fi' ? 'Katso referenssit ›' : language === 'sv' ? 'Se referenser ›' : 'See references ›'}
                     </span>
                   </div>
                 </Link>
@@ -563,13 +563,13 @@ export default function HomePageClient({
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-25 flex flex-col items-center justify-center text-white p-6">
                     <h3 className="text-xl font-light mb-3 text-center">
-                      {language === 'fi' ? 'Näköalapaikka kansainväliseen kiinteistönvälitykseen' : language === 'sv' ? 'Utsiktsplats för internationell fastighetsförmedling' : 'International real estate career opportunity'}
+                      {language === 'fi' ? 'Näköalapaikka kansainväliseen kiinteistönvälitykseen' : language === 'sv' ? 'En utsiktsplats för internationell fastighetsförmedling' : 'A vantage point for international real estate'}
                     </h3>
                     <span className="inline-block border-2 border-white text-white px-4 py-2
                                group-hover:bg-white group-hover:text-[#1a3a4a] transition-all duration-300
                                font-light uppercase tracking-wider text-xs"
                     >
-                      {language === 'fi' ? 'Työskentele kanssamme ›' : language === 'sv' ? 'Arbeta med oss ›' : 'Work with us ›'}
+                      {language === 'fi' ? 'Työskentele kanssamme ›' : language === 'sv' ? 'Jobba med oss ›' : 'Work with us ›'}
                     </span>
                   </div>
                 </Link>
@@ -726,7 +726,7 @@ export default function HomePageClient({
                                      font-normal uppercase tracking-wide text-sm"
                             prefetch={true}
                           >
-                            {language === 'fi' ? 'NÄYTÄ KOHDE' : language === 'sv' ? 'VISA OBJEKT' : 'VIEW PROPERTY'}
+                            {language === 'fi' ? 'NÄYTÄ KOHDE' : language === 'sv' ? 'VISA OBJEKTET' : 'VIEW LISTING'}
                           </NextLink>
                         </div>
                       </div>
@@ -815,7 +815,7 @@ export default function HomePageClient({
                                    font-normal uppercase tracking-wide text-sm mt-auto"
                           prefetch={true}
                         >
-                          {language === 'fi' ? 'NÄYTÄ KOHDE' : language === 'sv' ? 'VISA OBJEKT' : 'VIEW PROPERTY'}
+                          {language === 'fi' ? 'NÄYTÄ KOHDE' : language === 'sv' ? 'VISA OBJEKTET' : 'VIEW LISTING'}
                         </NextLink>
                       </div>
                     </div>
