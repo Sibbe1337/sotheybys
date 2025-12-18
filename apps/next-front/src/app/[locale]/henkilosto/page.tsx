@@ -369,64 +369,6 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
           </div>
         </section>
 
-        {/* Three Promo Boxes */}
-        <section className="py-12 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-              {/* Box 1 - Auction House */}
-              <div className="relative h-[250px] group overflow-hidden">
-                <Image
-                  src="/images/content/snellman-sothebys-auction-house.jpg"
-                  alt={t.box1Title}
-                  fill
-                  className="object-cover grayscale group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white p-6">
-                  <h3 className="text-xl font-light mb-4 text-center">{t.box1Title}</h3>
-                  <a href="https://www.sothebys.com" target="_blank" rel="noopener noreferrer"
-                     className="border border-white px-4 py-2 text-xs uppercase tracking-wider hover:bg-white hover:text-[#002349] transition-all">
-                    {t.box1Button}
-                  </a>
-                </div>
-              </div>
-              
-              {/* Box 2 - SIR */}
-              <div className="relative h-[250px] group overflow-hidden">
-                <Image
-                  src="/images/content/snellman-sothebys-sothebys-international-realty.jpg"
-                  alt={t.box2Title}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-[#002349]/70 flex flex-col items-center justify-center text-white p-6">
-                  <h3 className="text-xl font-light mb-4 text-center">{t.box2Title}</h3>
-                  <a href="https://www.sothebysrealty.com" target="_blank" rel="noopener noreferrer"
-                     className="border border-white px-4 py-2 text-xs uppercase tracking-wider hover:bg-white hover:text-[#002349] transition-all">
-                    {t.box2Button}
-                  </a>
-                </div>
-              </div>
-              
-              {/* Box 3 - Staff */}
-              <div className="relative h-[250px] group overflow-hidden">
-                <Image
-                  src="/images/content/snellman-sothebys-valittajat-2025-11-dark.png"
-                  alt={t.box3Title}
-                  fill
-                  className="object-cover grayscale group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white p-6">
-                  <h3 className="text-xl font-light mb-4 text-center">{t.box3Title}</h3>
-                  <Link href="/yhteystiedot" prefetch={true}
-                     className="border border-white px-4 py-2 text-xs uppercase tracking-wider hover:bg-white hover:text-[#002349] transition-all">
-                    {t.box3Button}
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Introduction Section */}
         <section className="py-12 bg-white">
           <div className="container mx-auto px-4">
