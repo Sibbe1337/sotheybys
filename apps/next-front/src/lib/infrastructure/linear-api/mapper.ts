@@ -151,7 +151,7 @@ function normalizeStatus(val: any): 'ACTIVE' | 'SOLD' | 'RESERVED' | undefined {
 
 // Hardcoded coordinates for properties that don't geocode well (islands, etc.)
 const KNOWN_COORDINATES: Record<string, { lat: number; lon: number }> = {
-  'remmarholmen': { lat: 59.9680, lon: 24.3610 }, // Island in Porkkala, Kirkkonummi
+  'remmarholmen': { lat: 60.0650, lon: 24.3850 }, // Island in Kirkkonummi archipelago
 };
 
 async function extractCoordinates(
