@@ -40,10 +40,10 @@ export default function ChristmasLandingPage() {
             background: 'linear-gradient(180deg, #3a5f7c 0%, #5a7f9c 30%, #8aa5b8 60%, #c5d5e0 80%, #e8f0f5 100%)',
           }}
         />
-        {/* Winter landscape image - add your image at /images/backgrounds/winter-landscape.jpg */}
+        {/* Winter landscape image */}
         <Image
-          src="/images/backgrounds/winter-landscape.jpg"
-          alt="Winter landscape"
+          src="/images/backgrounds/snellman-sothebys-merry-christmas-2025-web.jpg"
+          alt="Finnish winter landscape"
           fill
           className="object-cover"
           priority
