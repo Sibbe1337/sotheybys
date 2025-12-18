@@ -143,7 +143,7 @@ export default function ChristmasLandingPage() {
               SNELLMAN SOTHEBY&apos;S »
             </Link>
             <a 
-              href="https://www.etuovi.com/myytavat-asunnot?hpipc=2644749-2"
+              href="https://www.etuovi.com/yritykset/2014/snellman-sotheby's-international-realty"
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3 border-2 border-white text-white hover:bg-white hover:text-[#002349] transition-all duration-300 text-sm tracking-widest"
@@ -151,7 +151,7 @@ export default function ChristmasLandingPage() {
               ETUOVI »
             </a>
             <a 
-              href="https://asunnot.oikotie.fi/myytavat-asunnot?cardType=relative&companyId=17628"
+              href="https://asunnot.oikotie.fi/yritys/snellman-sothebys-international-realty-10084959"
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3 border-2 border-white text-white hover:bg-white hover:text-[#002349] transition-all duration-300 text-sm tracking-widest"
