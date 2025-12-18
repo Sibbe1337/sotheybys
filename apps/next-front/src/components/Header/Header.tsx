@@ -63,30 +63,31 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
   // All routes MUST match filesystem structure: kohteet, henkilosto, myymassa, etc.
   const getMenuItemsForLanguage = (lang: string): MenuItem[] => {
     // ALL LOCALES use same Finnish filesystem paths
-      return [
-      { id: '1', label: lang === 'sv' ? 'HEM' : lang === 'en' ? 'HOME' : 'KOTI', path: '/', url: '/' },
-        { 
-          id: '2', 
-        label: lang === 'sv' ? 'OBJEKT' : lang === 'en' ? 'PROPERTIES' : 'KOHTEET', 
+    // Labels match the old website: sothebysrealty.fi/sv/ and sothebysrealty.fi/en/
+    return [
+      { id: '1', label: lang === 'sv' ? 'Hem' : lang === 'en' ? 'Home' : 'Koti', path: '/', url: '/' },
+      { 
+        id: '2', 
+        label: lang === 'sv' ? 'Objekt' : lang === 'en' ? 'Properties' : 'Kohteet', 
         path: '/kohteet', 
         url: '/kohteet',
-          childItems: {
-            nodes: [
+        childItems: {
+          nodes: [
             { 
               id: '2-1', 
-              label: lang === 'sv' ? 'Försäljningsobjekt' : lang === 'en' ? 'For Sale' : 'Myyntikohteet', 
+              label: lang === 'sv' ? 'Objekt till salu' : lang === 'en' ? 'Properties for sale' : 'Myyntikohteet', 
               path: '/kohteet', 
               url: '/kohteet' 
             },
             { 
               id: '2-2', 
-              label: lang === 'sv' ? 'Hyresobjekt' : lang === 'en' ? 'For Rent' : 'Vuokrakohteet', 
+              label: lang === 'sv' ? 'Hyresobjekt' : lang === 'en' ? 'Rental listings' : 'Vuokrakohteet', 
               path: '/kohteet/vuokrakohteet', 
               url: '/kohteet/vuokrakohteet' 
             },
             { 
               id: '2-3', 
-              label: lang === 'sv' ? 'Köpuppdrag' : lang === 'en' ? 'Purchase Assignments' : 'Ostotoimeksiannot', 
+              label: lang === 'sv' ? 'Köpuppdrag' : lang === 'en' ? 'Purchase Mandate' : 'Ostotoimeksiannot', 
               path: '/kohteet/ostotoimeksiannot', 
               url: '/kohteet/ostotoimeksiannot' 
             },
@@ -96,50 +97,50 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
               path: '/kohteet/referenssit', 
               url: '/kohteet/referenssit' 
             },
-            ]
-          }
-        },
+          ]
+        }
+      },
       { 
         id: '3', 
-        label: lang === 'sv' ? 'SÄLJA' : lang === 'en' ? 'SELLING' : 'MYYMÄSSÄ', 
+        label: lang === 'sv' ? 'Sälj med oss' : lang === 'en' ? 'Sell with us' : 'Myymässä', 
         path: '/myymassa', 
         url: '/myymassa' 
       },
       { 
         id: '4', 
-        label: lang === 'sv' ? 'INTERNATIONELLT' : lang === 'en' ? 'INTERNATIONALLY' : 'KANSAINVÄLISESTI', 
+        label: lang === 'sv' ? 'Internationellt' : lang === 'en' ? 'International' : 'Kansainvälisesti', 
         path: '/kansainvalisesti', 
         url: '/kansainvalisesti' 
       },
       { 
         id: '5', 
-        label: lang === 'sv' ? 'PERSONAL' : lang === 'en' ? 'STAFF' : 'HENKILÖSTÖ', 
+        label: lang === 'sv' ? 'Personal' : lang === 'en' ? 'Personnel' : 'Henkilöstö', 
         path: '/henkilosto', 
         url: '/henkilosto' 
       },
-        { 
-          id: '6', 
-        label: lang === 'sv' ? 'KONTAKTA OSS' : lang === 'en' ? 'CONTACT US' : 'OTA YHTEYTTÄ', 
+      { 
+        id: '6', 
+        label: lang === 'sv' ? 'Kontakta oss' : lang === 'en' ? 'Contact us' : 'Ota yhteyttä', 
         path: '/yhteystiedot', 
         url: '/yhteystiedot',
-          childItems: {
-            nodes: [
+        childItems: {
+          nodes: [
             { 
               id: '6-1', 
-              label: lang === 'sv' ? 'Företaget' : lang === 'en' ? 'About Us' : 'Yritys', 
+              label: lang === 'sv' ? 'Om oss' : lang === 'en' ? 'About' : 'Yritys', 
               path: '/yritys', 
               url: '/yritys' 
             },
             { 
               id: '6-2', 
-              label: lang === 'sv' ? 'Jobba hos oss' : lang === 'en' ? 'Join Us' : 'Meille töihin', 
+              label: lang === 'sv' ? 'Jobba hos oss' : lang === 'en' ? 'Join us' : 'Meille töihin', 
               path: '/meille-toihin', 
               url: '/meille-toihin' 
             },
-            ]
-          }
-        },
-      ];
+          ]
+        }
+      },
+    ];
   };
 
   // ✅ LINUS FIX: Always use dynamic menu items based on current language
