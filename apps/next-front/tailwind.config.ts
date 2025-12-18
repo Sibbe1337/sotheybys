@@ -7,6 +7,22 @@ const config: Config = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    // Override container to use consistent max-width (matching old site)
+    container: {
+      center: true,
+      padding: {
+        DEFAULT: '1rem',
+        sm: '1.5rem',
+        lg: '2rem',
+      },
+      screens: {
+        sm: '640px',
+        md: '768px',
+        lg: '1024px',
+        xl: '1200px',    // Match old site's max container width
+        '2xl': '1200px', // Keep same at larger screens
+      },
+    },
     extend: {
       colors: {
         primary: {
