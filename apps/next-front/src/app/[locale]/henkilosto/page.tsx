@@ -327,48 +327,6 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
           </div>
         </section>
 
-        {/* Intro Section */}
-        <section className="py-8 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-4">
-                {t.introTitle}
-              </h2>
-              <p className="text-sm text-gray-600 font-light leading-relaxed">
-                {t.introText}
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Office Hours */}
-        <section className="py-6 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center text-gray-600 font-light text-sm">
-              <p className="mb-1">{t.officeHoursTitle}</p>
-              <p className="mb-1">{t.officeHours}</p>
-              <p>{t.officeExtra}</p>
-            </div>
-          </div>
-        </section>
-
-        {/* Contact Info Bar */}
-        <section className="py-6 bg-white border-t border-b">
-          <div className="container mx-auto px-4">
-            <div className="flex flex-wrap justify-center items-center gap-6 md:gap-12 text-sm text-gray-700">
-              <a href="tel:+358103156900" className="hover:text-[#002349] transition-colors">
-                +358 (0)10 315 6900
-              </a>
-              <span className="hidden md:inline text-gray-300">|</span>
-              <span>Kasarmikatu 34, 00130 Helsinki</span>
-              <span className="hidden md:inline text-gray-300">|</span>
-              <a href="mailto:info@sothebysrealty.fi" className="hover:text-[#002349] transition-colors">
-                info@sothebysrealty.fi
-              </a>
-            </div>
-          </div>
-        </section>
-
         {/* Introduction Section */}
         <section className="py-12 bg-white">
           <div className="container mx-auto px-4">
