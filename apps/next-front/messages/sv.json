@@ -108,10 +108,10 @@
       "button": "Vi öppnar nya dörrar"
     },
     "welcome": {
-      "title": "Välkommen till en extraordinär objektvisning!",
+      "title": "Välkommen till en extraordinär bostadsaffär!",
       "subtitle": "Se alla våra objekt till salu.",
       "button": "Hitta ditt drömhem",
-      "description": "Vi har fört expertisen och erfarenheten från ett av världens ledande fastighetsmärken Sotheby's International Realty® till den finska fastighetsmarknaden. Genom att öppna marknaden utanför våra nationella gränser vill vi utveckla fastighetsbranschen som helhet. Vår inspiration kommer från intressanta och unika fastigheter från hela världen."
+      "description": "Vi hämtade en av världens ledande fastighetsskedjor Sotheby's International Realty®:s kompetens och erfarenhet till den finländska bostadsmarknaden. Genom att öppna fastighetsmarknaden utöver de nationella gränserna vill vi utveckla hela industrin. Vår inspiration kommer från intressanta och unika objekt runt omkring hela världen."
     },
     "featured": {
       "title": "Ett urval av våra objekt till salu",
@@ -144,7 +144,7 @@
       "expertiseButton": "Läs mer om oss",
       "appraisal": "Bjud in oss för en kostnadsfri värdering",
       "appraisalButton": "Sälj med oss",
-      "officeHours": "Vårt underbara kontor är öppet vardagar 10:00 – 17:00 samt andra tider enligt överenskommelse.",
+      "officeHours": "Vårt högklassiga kontor betjänar Er på vardagar 10:00 – 17:00 på helgerna är vi öppna efter överenskommelse.",
       "rentNow": "Hyr nu",
       "workWithUs": "En utsiktsplats för internationell fastighetsförmedling",
       "workWithUsButton": "Jobba med oss"
@@ -208,10 +208,10 @@
     },
     "contact": {
       "title": "Kontakta oss",
-      "subtitle": "Kontakta oss för en kostnadsfri värdering!",
-      "formIntro": "Funderar du på att köpa eller sälja? Letar du efter fastigheter att investera i?",
-      "formSubtitle": "Berätta hur vi kan hjälpa till så hör vi av oss.",
-      "newsletterIntro": "Är du intresserad av vackra hem och unika fastigheter? Prenumerera på vårt nyhetsbrev så håller vi dig uppdaterad.",
+      "subtitle": "Bjud in oss för en kostnadsfri värdering!",
+      "formIntro": "Funderar du på att köpa eller sälja? Söker du investeringsobjekt?",
+      "formSubtitle": "Är du intresserad av exklusiva hem och värdefastigheter? Kontakta oss!",
+      "newsletterIntro": "Beställ vårt nyhetsbrev så håller vi dig uppdaterad om bostadsmarknaden.",
       "name": "Namn",
       "firstName": "Förnamn",
       "lastName": "Efternamn",
