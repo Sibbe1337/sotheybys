@@ -136,7 +136,7 @@
     "sellWithUs": {
       "title": "Snellman Sotheby's International Realty®",
       "subtitle": "We all have different needs and preferences, we discuss and customize according to our customers' wishes and requirements. Our mission is to make your dream come true.",
-      "button": "Make the listing of your life"
+      "button": "Make the sale of your life"
     },
     "cta": {
       "expertise": "Expertise that reaches down the block and around the world",
@@ -167,10 +167,14 @@
     "properties": {
       "title": "Properties for sale",
       "subtitle": "Luxury Real Estate and Homes for Sale",
+      "searchTitle": "Search properties",
       "filters": "Filters",
+      "area": "Area",
+      "allAreas": "All areas",
       "priceRange": "Price Range",
       "areaRange": "Area Range",
-      "propertyType": "Property Type",
+      "propertyType": "Property type",
+      "allPropertyTypes": "All property types",
       "location": "Location",
       "noResults": "No results for your filters",
       "tryAdjusting": "Try adjusting your filters"
@@ -184,8 +188,22 @@
     "rentals": {
       "title": "Rental listings",
       "subtitle": "Our newest rental listings",
+      "welcomeTitle": "Welcome as our customer!",
+      "welcomeDesc": "Do you want to rent your home or business premises to a reliable tenant? Snellman Sotheby's International Realty also offers rental services for demanding properties.",
+      "officeHours": "Your professional rental broker serves you from Monday to Friday 10 – 17, as well as other times by appointment.",
+      "landlordContact": "Landlord, contact us!",
+      "landlordDesc": "Please let us know how we can help and we will get back to you as soon as possible.",
+      "serviceDesc": "Our service includes rental brokerage from start to finish, ie, among other things, appraisals of the apartment or Commercial spaces, the search for a tenant that meets your criteria, and the preparation of a lease agreement.",
       "availableFrom": "Available from",
       "noRentals": "No rentals at this time"
+    },
+    "purchaseAssignments": {
+      "title": "Purchase Mandates",
+      "subtitle": "Our client, ie the buyer, pays the full commission. Have you considered selling your home?",
+      "contactInfo": "If you have any questions, you can always contact us by calling, sending an email or stopping by our office!",
+      "officeTitle": "Our Helsinki Office",
+      "officeDesc": "In 2015 a new era began in Finland. Ab Snellman LKV Oy Sotheby's International Realty opened its doors to the Finnish market, with goals to bring real estate to a whole new level. In the office, located in the dynamic capital Helsinki, awaits a team motivated experts ready to make your dream come true. The office may be located in Southern Finland but our sales and operations cover the whole country. From the beautiful archipelago up to enchanting Lapland and everything in-between is ours to conquer.",
+      "directions": "Directions"
     },
     "about": {
       "title": "About",
@@ -208,6 +226,9 @@
     "contact": {
       "title": "Contact us",
       "subtitle": "Contact us for a complimentary appraisal!",
+      "welcomeText": "Your international broker locally.",
+      "officeDescription": "Our office is located right in the center of Helsinki. The lively Esplanadi with all its cafés and Senaatintori with its beautiful seashore as neighbors on Kasarmikatu 34.",
+      "welcomeVisit": "You are always welcome to stop by, say hello and have a cup of coffee to talk of and get inspired by the real estate market. We are happy to tell you more about ourselves and all our amazing properties for sale.",
       "formIntro": "Are you considering buying or selling? Are you looking for properties to invest in?",
       "formSubtitle": "Let us know how we can help and we will get in touch.",
       "newsletterIntro": "Do you have an interest in beautiful homes and unique properties? Subscribe to our newsletter and we will keep you updated.",
@@ -222,20 +243,37 @@
       "visitUs": "Visit Us",
       "callUs": "Call Us",
       "emailUs": "Email Us",
+      "ourTeam": "Our personnel",
+      "contactInfo": "If you have any questions, you can always contact us by calling, sending an email or stopping by our office!",
       "successMessage": "Thank you for your message! We'll contact you soon.",
       "errorMessage": "Failed to send message. Please try again.",
       "address": "Kasarmikatu 34, 00130 Helsinki"
     },
     "staff": {
       "title": "Personnel",
-      "subtitle": "Get to know our personnel",
+      "subtitle": "Our experienced and professional personnel will be happy to give you more information.",
+      "welcome": "Welcome to meet us, we are more than happy to listen to how we can help you.",
+      "ourTeam": "Our personnel",
       "meetTeam": "Meet our team",
-      "contactAgent": "Contact"
+      "contactAgent": "Contact",
+      "contactInfo": "If you have any questions, you can always contact us by calling, sending an email or stopping by our office!"
     },
     "sellWithUs": {
       "title": "Sell with us",
       "subtitle": "We all have different needs and preferences, we discuss and customize according to our customers' wishes and requirements. Our mission is to make your dream come true.",
       "heroButton": "Make the sale of your life",
+      "attentionTitle": "Dont just get it on the market. Get it the attention it deserves.",
+      "attentionDesc": "For those who demand an elevated service like none other, there's Sotheby's International Realty. We're the industry's best agents, curating with incomparable attention to style and detail. We're here for you to help sell your home at a scale you just won't find anywhere else.",
+      "valuationTitle": "Contact us for a complimentary appraisal!",
+      "valuableRelationship": "A valuable relationship",
+      "valuableRelationshipDesc": "Our wish is that cooperation with us always equals a long-term relationship on a personal level. We regard every single one of our customers as unique and valuable, all aspects considered. We all have different needs and preferences, and we discuss and customize according to our customers' wishes and requirements. Our mission is to make your dream come true.",
+      "membershipDesc": "Snellman Sotheby's International Realty Finland is part of one of the most prestigious real estate chains in the world. Membership in Sotheby's International Realty® equals membership in a global network with excessive expertise, vital contacts, extraordinary sales channels as well as access to the most effective marketing channels available.",
+      "specializeDesc": "We specialize in luxury and high-end real estate and we provide you the most desirable of homes that the market has to offer. Our experienced team members are always honored to share their expertise with you and we wish to be part of the process from beginning to end. We guarantee you access to the latest marketing channels, the correct customer network, the highest possible price and of course an experience you will fondly remember.",
+      "servicePromise": "Our Servicepromise",
+      "servicePromiseDesc": "We want to support you when you are about to make one of the most important financial decisions of your life and make sure you take the right choice. We guarantee that you get our experienced experts opinion and support throughout the whole process. Our highest wish is that all our customers feel comfortable with us and that cooperation in the future will be a natural decision for every one of our customers. Please do not forget to ask for a service offer.",
+      "priceList": "Price list",
+      "consumerDispute": "Consumer Dispute",
+      "consumerDisputeDesc": "In cases where consumer disputes appear, the case can be solved by The Consumer Disputes Board.",
       "whySellWithUs": "Why Sell With Us",
       "globalReach": "Global Reach",
       "globalReachDesc": "We reach buyers worldwide through the Sotheby's network",
@@ -248,7 +286,10 @@
     },
     "international": {
       "title": "International",
-      "subtitle": "Your international broker locally",
+      "subtitle": "Unrivaled global reach and local expertise",
+      "openDoors": "We open new doors internationally",
+      "openDoorsDesc": "We do not only reach the local market, but have access to exposure and in-depth market knowledge on a global level as well, due to intense cooperation with our partner affiliates around the world. Sotheby's International Realty® holds access to the most effective, influential marketing and advertising channels available on the market.",
+      "presentationDesc": "We make sure all our objects are presented as the unique, premium homes they represent and that expansion reaches both locally and globally meaningful channels.",
       "globalNetwork": "Global Network",
       "globalNetworkDesc": "26 100 brokers in 1100 affiliate offices in 84 countries and territories",
       "luxuryMarket": "Luxury Market",
@@ -272,6 +313,9 @@
       "areaRepresentativeDesc": "Our office may be located physically in Helsinki but our commitment covers the entire country. Our listings are situated all over Finland and require experienced area representatives. We are partnering with local brokers to support us with the sales process.",
       "contactUs": "We hope to hear from you. Contact us:",
       "aboutTitle": "About Snellman Sotheby's International Realty®",
+      "aboutDesc": "Founded in 1976 to provide independent brokerages with a powerful marketing and referral program for luxury listings, the Sotheby's International Realty® network was designed to connect the finest independent real estate companies to the most prestigious clientele in the world. Today Sotheby's International Realty is a company with local knowledge, global presence and wide experience with 26 100 brokers and 1100 offices in 84 countries worldwide.",
+      "aboutFinland": "In late 2015, Sotheby's International Realty expanded its presence to the land of the thousand lakes – Finland. The office is situated in the dynamic and trendy capital of Helsinki, yet its operations reach and serve the whole country.",
+      "sirInFinland": "Sotheby's International Realty® in Finland",
       "joinTeam": "Join our incredible team!",
       "coverLetter": "Cover letter",
       "uploadCV": "Upload your CV:",
