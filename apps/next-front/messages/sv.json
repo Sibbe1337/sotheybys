@@ -136,7 +136,7 @@
     },
     "sellWithUs": {
       "title": "Snellman Sotheby's International Realty®",
-      "subtitle": "Alla har vi olika behov och preferenser och vi diskuterar och skräddar syr efter kundens behov och önskan. Vår uppgift är att göra din dröm till verklighet.",
+      "subtitle": "Alla har vi olika behov och preferenser och vi diskuterar och skräddarsyr efter kundens behov och önskan. Vår uppgift är att göra din dröm till verklighet.",
       "button": "Gör ditt livs bostadsaffär"
     },
     "cta": {
@@ -168,10 +168,14 @@
     "properties": {
       "title": "Objekt till salu",
       "subtitle": "Exklusiva fastigheter och bostäder till salu",
+      "searchTitle": "Sök objekt",
       "filters": "Filter",
+      "area": "Område",
+      "allAreas": "Alla områden",
       "priceRange": "Prisintervall",
       "areaRange": "Ytintervall",
       "propertyType": "Objekttyp",
+      "allPropertyTypes": "Alla objekttyper",
       "location": "Plats",
       "noResults": "Inga resultat för dina filter",
       "tryAdjusting": "Försök justera dina filter"
@@ -185,12 +189,29 @@
     "rentals": {
       "title": "Hyresobjekt",
       "subtitle": "Våra senaste hyresobjekt",
+      "welcomeTitle": "Välkommen som vår kund!",
+      "welcomeDesc": "Vill du hyra ditt hem eller din affärslokal till en pålitlig hyresgäst? Snellman Sotheby's International Realty erbjuder också uthyrningstjänster för krävande objekt.",
+      "officeHours": "Din professionella uthyrnings mäklare betjänar er från måndag till fredag från 10 – 17, andra tider är vi öppna efter överenskommelse.",
+      "landlordContact": "Hyresvärd, kontakta oss!",
+      "landlordDesc": "Meddela oss hur vi kan hjälpa så återkommer vi så snart som möjligt.",
+      "serviceDesc": "Vår tjänst inkluderar uthyrningsförmedling från början till slut, dvs bland annat visning av lägenheten eller kommersiellt utrymmet, sökandet efter en hyresgäst som uppfyller dina kriterier och upprättandet av ett hyresavtal.",
       "availableFrom": "Tillgänglig från",
       "noRentals": "Inga hyresobjekt just nu"
     },
+    "purchaseAssignments": {
+      "title": "Köpuppdrag",
+      "subtitle": "Vår kund betalar förmedlingsprovisionen. Har ni övervägt en försäljning av er bostad?",
+      "contactInfo": "Om du har några frågor kan du alltid kontakta oss genom att ringa, skicka ett email eller med att besöka vårt kontor!",
+      "officeTitle": "Vårt Helsingfors kontor",
+      "officeDesc1": "Hösten 2015 börjar en ny era i Finland. Ab Snellman LKV Oy Sotheby's International Realty tillträder den finska marknaden och tar fastighetsförmedling till en helt ny nivå. På huvudkontoret i Finlands dynamiska huvudstad Helsingfors, sitter ett gäng inspirerade förmedlare och arbetstagare och väntar på att få förverkliga just din dröm.",
+      "officeDesc2": "Vår verksamhet sköts i huvudsak från huvudstadsregionen, men sträcker sig över hela landet.",
+      "officeDesc3": "Från Södra Finlands vackra skärgård upp till det förtrollande Lappland och allting där emellan är vårt att tillsammans erövra.",
+      "directions": "Vägbeskrivning"
+    },
     "about": {
       "title": "Om oss",
-      "subtitle": "Din internationella mäklare lokalt",
+      "companyName": "Snellman Sotheby's International Realty®",
+      "subtitle": "I dagens läge har Sotheby's International Realty® verksamhet i 84 länder, med 1100 mäklarbyråer och 26 100 mäklare runt om i världen och sitter på ett av världens starkaste varumärken gällande fastigheter. Företaget följer ett franchise koncept som möjliggör tillträde på den globala marknaden för värdefastigheter runt om i hela världen.",
       "heroText": "26 100 mäklare i 1100 kontor i 84 länder och regioner",
       "heroButton": "Vi öppnar nya dörrar",
       "mission": "Vårt uppdrag",
@@ -203,12 +224,17 @@
       "international": "Internationell",
       "internationalDesc": "Vi utnyttjar vårt globala nätverk lokalt",
       "auctionHouse": "Sotheby's ® Auktionshus",
+      "auctionHouseButton": "Läs mera",
       "sirNetwork": "Sotheby's International Realty ®",
-      "meetStaff": "Lär dig känna vår personal"
+      "sirNetworkButton": "Läs mer",
+      "meetStaff": "Lär dig känna vår personal",
+      "meetStaffButton": "Kontakta oss"
     },
     "contact": {
       "title": "Kontakta oss",
       "subtitle": "Bjud in oss för en kostnadsfri värdering!",
+      "welcomeText": "Vår dörr är alltid öppen för dig.",
+      "officeDescription": "Vårt kontor ligger i kärncentrum, med både livliga Esplanaden med alla dess caféer och Finska vikens underbara vattenbryn och Senatstorget nära till hands. Titta gärna förbi och säg hej så bjuder vi på en kopp kaffe och berättar mer om oss själva.",
       "formIntro": "Funderar du på att köpa eller sälja? Söker du investeringsobjekt?",
       "formSubtitle": "Är du intresserad av exklusiva hem och värdefastigheter? Kontakta oss!",
       "newsletterIntro": "Beställ vårt nyhetsbrev så håller vi dig uppdaterad om bostadsmarknaden.",
@@ -223,20 +249,32 @@
       "visitUs": "Besök oss",
       "callUs": "Ring oss",
       "emailUs": "Maila oss",
+      "ourTeam": "Våra medarbetare",
+      "contactInfo": "Om du har några frågor kan du alltid kontakta oss genom att ringa, skicka ett email eller med att besöka vårt kontor!",
       "successMessage": "Tack för ditt meddelande! Vi kontaktar dig snart.",
       "errorMessage": "Det gick inte att skicka meddelandet. Försök igen.",
       "address": "Kaserngatan 34, 00130 Helsingfors"
     },
     "staff": {
       "title": "Personal",
-      "subtitle": "Lär dig känna vår personal",
+      "subtitle": "Vår erfarna och professionella personal ger dig gärna mer information.",
+      "welcome": "Välkommen att träffa oss, vi lyssnar gärna på hur vi kan hjälpa dig.",
+      "ourTeam": "Våra medarbetare",
       "meetTeam": "Möt vårt team",
-      "contactAgent": "Kontakta"
+      "contactAgent": "Kontakta",
+      "contactInfo": "Om du har några frågor kan du alltid kontakta oss genom att ringa, skicka ett email eller med att besöka vårt kontor!"
     },
     "sellWithUs": {
       "title": "Sälj med oss",
-      "subtitle": "Alla har vi olika behov och preferenser och vi diskuterar och skräddar syr efter kundens behov och önskan. Vår uppgift är att göra din dröm till verklighet.",
+      "subtitle": "Alla har vi olika behov och preferenser och vi diskuterar och skräddarsyr efter kundens behov och önskan. Vår uppgift är att göra din dröm till verklighet.",
       "heroButton": "Gör ditt livs bostadsaffär",
+      "welcomeTitle": "Välkommen till en lyckad bostadsförsäljning!",
+      "valuationTitle": "Kontakta oss för en kostnadsfri värdering!",
+      "valuationIntro": "Vet du vad är din fastighet eller lägenhet är värd?",
+      "valuationDesc": "Kontakta oss för en kostnadsfri värdering – Våra experter hjälper dig att slutföra ditt livs viktigaste affär.",
+      "partnershipTitle": "Ett värdefullt samarbete",
+      "servicePromiseTitle": "Vårt tjänstelöfte",
+      "priceListTitle": "Prislista",
       "whySellWithUs": "Varför sälja med oss",
       "globalReach": "Global räckvidd",
       "globalReachDesc": "Vi når köpare över hela världen genom Sotheby's-nätverket",
@@ -249,7 +287,9 @@
     },
     "international": {
       "title": "Internationellt",
-      "subtitle": "Din internationella mäklare lokalt",
+      "subtitle": "Ojämförlig global räckvidd och lokal expertis",
+      "openDoors": "Vi öppnar dörrar till världen",
+      "openDoorsDesc": "Vi når inte bara den lokala marknaden utan har även tillträde till global exponering och marknadskunskap i och med våra samarbetspartners runt om i världen. Sotheby's International Realty® har åtgång till de mest effektiva och inflytelserika marknadsförings- och reklamkanalerna som finns tillgängliga på marknaden.",
       "globalNetwork": "Globalt nätverk",
       "globalNetworkDesc": "26 100 mäklare i 1100 kontor i 84 länder och regioner",
       "luxuryMarket": "Lyxmarknad",
