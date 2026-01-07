@@ -519,13 +519,13 @@ export default function HomePageClient({
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-25 flex flex-col items-center justify-center text-white p-6">
                     <h3 className="text-xl font-light mb-3 text-center">
-                      {language === 'fi' ? 'Valikoima myydyistä kohteista' : language === 'sv' ? 'Ett urval av sålda objekt' : 'A selection of sold properties'}
+                      {language === 'fi' ? 'Valikoima myydyistä kohteista' : language === 'sv' ? 'Ett urval av sålda objekt' : 'A sample of sold listings'}
                     </h3>
                     <span className="inline-block border-2 border-white text-white px-4 py-2
                                group-hover:bg-white group-hover:text-[#1a3a4a] transition-all duration-300
                                font-light uppercase tracking-wider text-xs"
                     >
-                      {language === 'fi' ? 'Katso referenssit ›' : language === 'sv' ? 'Se referenser ›' : 'See references ›'}
+                      {language === 'fi' ? 'Katso referenssit ›' : language === 'sv' ? 'Se referenser ›' : 'See our references ›'}
                     </span>
                   </div>
                 </Link>
@@ -541,7 +541,7 @@ export default function HomePageClient({
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-25 flex flex-col items-center justify-center text-white p-6">
                     <h3 className="text-xl font-light mb-3 text-center">
-                      {language === 'fi' ? 'Katso meidän uusimmat vuokrakohteet' : language === 'sv' ? 'Se våra senaste hyresobjekt' : 'View our latest rental properties'}
+                      {language === 'fi' ? 'Katso meidän uusimmat vuokrakohteet' : language === 'sv' ? 'Se våra senaste hyresobjekt' : 'See our latest rental listings'}
                     </h3>
                     <span className="inline-block border-2 border-white text-white px-4 py-2
                                group-hover:bg-white group-hover:text-[#1a3a4a] transition-all duration-300
@@ -726,7 +726,7 @@ export default function HomePageClient({
                                      font-normal uppercase tracking-wide text-sm"
                             prefetch={true}
                           >
-                            {language === 'fi' ? 'NÄYTÄ KOHDE' : language === 'sv' ? 'VISA OBJEKTET' : 'VIEW LISTING'}
+                            {language === 'fi' ? 'NÄYTÄ KOHDE' : language === 'sv' ? 'VISA OBJEKTET' : 'SHOW LISTING'}
                           </NextLink>
                         </div>
                       </div>
@@ -815,7 +815,7 @@ export default function HomePageClient({
                                    font-normal uppercase tracking-wide text-sm mt-auto"
                           prefetch={true}
                         >
-                          {language === 'fi' ? 'NÄYTÄ KOHDE' : language === 'sv' ? 'VISA OBJEKTET' : 'VIEW LISTING'}
+                          {language === 'fi' ? 'NÄYTÄ KOHDE' : language === 'sv' ? 'VISA OBJEKTET' : 'SHOW LISTING'}
                         </NextLink>
                       </div>
                     </div>
@@ -894,7 +894,7 @@ export default function HomePageClient({
                       />
                       <input
                         type="text"
-                        placeholder={language === 'fi' ? 'Sukunimi' : language === 'sv' ? 'Efternamn' : 'Last name'}
+                        placeholder={language === 'fi' ? 'Sukunimi' : language === 'sv' ? 'Efternamn' : 'Surname'}
                         className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:border-[#002349] text-center bg-white placeholder-gray-400"
                         required
                       />
@@ -902,13 +902,13 @@ export default function HomePageClient({
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       <input
                         type="email"
-                        placeholder={language === 'fi' ? 'Sähköposti' : language === 'sv' ? 'E-post' : 'Email'}
+                        placeholder={language === 'fi' ? 'Sähköposti' : language === 'sv' ? 'Email' : 'Email'}
                         className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:border-[#002349] text-center bg-white placeholder-gray-400"
                         required
                       />
                       <input
                         type="tel"
-                        placeholder={language === 'fi' ? 'Puhelinnumero' : language === 'sv' ? 'Telefonnummer' : 'Phone number'}
+                        placeholder={language === 'fi' ? 'Puhelinnumero' : language === 'sv' ? 'Telefonnummer' : 'Phonenumber'}
                         className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:border-[#002349] text-center bg-white placeholder-gray-400"
                         required
                       />

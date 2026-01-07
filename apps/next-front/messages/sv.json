@@ -132,7 +132,7 @@
       "title": "Referenser",
       "subtitle": "Ett urval av sålda objekt",
       "viewAll": "Se mer",
-      "seeReferences": "Se våra referenser"
+      "seeReferences": "Se referenser"
     },
     "sellWithUs": {
       "title": "Snellman Sotheby's International Realty®",
@@ -141,13 +141,13 @@
     },
     "cta": {
       "expertise": "Expertis som når från kvarteret runt om i hela världen",
-      "expertiseButton": "Mer om oss",
-      "appraisal": "Kontakta oss för en kostnadsfri värdering",
+      "expertiseButton": "Läs mer om oss",
+      "appraisal": "Bjud in oss för en kostnadsfri värdering",
       "appraisalButton": "Sälj med oss",
       "officeHours": "Vårt underbara kontor är öppet vardagar 10:00 – 17:00 samt andra tider enligt överenskommelse.",
       "rentNow": "Hyr nu",
-      "workWithUs": "En utsiktsplats för internationell fastighetsmarknad",
-      "workWithUsButton": "Jobba hos oss"
+      "workWithUs": "En utsiktsplats för internationell fastighetsförmedling",
+      "workWithUsButton": "Jobba med oss"
     },
     "whyChooseUs": {
       "title": "Varför välja oss",
@@ -160,7 +160,7 @@
     },
     "luxuryOutlook": {
       "title": "2025 Luxury Outlook℠",
-      "description": "2025 Luxury Outlook℠ fördjupar sig i de avgörande, framåtblickande frågorna som formar lyxiga bostadsmarknader runt om i världen.",
+      "description": "2025 Luxury Outlook℠ fördjupar sig i de avgörande, framåtblickande frågor som formar marknader för lyxbostäder runt om i världen.",
       "button": "LÄS HELA 2025 LUXURY OUTLOOK℠ RAPPORTEN"
     }
   },
@@ -257,11 +257,11 @@
     },
     "workWithUs": {
       "title": "Jobba hos oss",
-      "subtitle": "En utsiktsplats för internationell fastighetsmarknad",
+      "subtitle": "En utsiktsplats för internationell fastighetsförmedling",
       "careers": "Karriärmöjligheter",
       "careersDesc": "Vi söker motiverade fastighetsproffs",
       "benefits": "Fördelar",
-      "sendApplication": "Jobba hos oss"
+      "sendApplication": "Jobba med oss"
     }
   },
   "forms": {
