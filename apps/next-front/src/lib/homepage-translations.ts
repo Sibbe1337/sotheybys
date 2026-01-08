@@ -86,18 +86,18 @@ export const HOMEPAGE_TRANSLATIONS: HomepageTranslations = {
   // Office Hours
   officeHoursLine1: {
     fi: 'Upea toimistomme palvelee',
-    sv: 'Vårt härliga kontor betjänar',
-    en: 'Our beautiful office serves'
+    sv: 'Vårt högklassiga kontor betjänar Er',
+    en: 'Our wonderful office is open'
   },
   officeHoursLine2: {
     fi: 'teitä arkisin 10:00 – 17:00',
-    sv: 'dig vardagar 10:00 – 17:00',
-    en: 'you weekdays 10:00 – 17:00'
+    sv: 'på vardagar 10:00 – 17:00',
+    en: 'on weekdays 10:00 – 17:00'
   },
   officeHoursLine3: {
     fi: 'sekä muina aikoina sopimuksen mukaan.',
-    sv: 'samt andra tider enligt överenskommelse.',
-    en: 'and other times by appointment.'
+    sv: 'på helgerna är vi öppna efter överenskommelse.',
+    en: 'as well as other times by appointment.'
   },
   
   // Newsletter

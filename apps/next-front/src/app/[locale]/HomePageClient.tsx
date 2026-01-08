@@ -422,15 +422,15 @@ export default function HomePageClient({
                   </>
                 ) : language === 'sv' ? (
                   <>
-                    Vårt fantastiska kontor betjänar<br />
-                    dig vardagar 10:00 – 17:00<br />
-                    samt andra tider enligt överenskommelse.
+                    Vårt högklassiga kontor betjänar Er<br />
+                    på vardagar 10:00 – 17:00<br />
+                    på helgerna är vi öppna efter överenskommelse.
                   </>
                 ) : (
                   <>
-                    Our great office serves<br />
-                    you on weekdays 10:00 – 17:00<br />
-                    and at other times by appointment.
+                    Our wonderful office is open<br />
+                    on weekdays 10:00 – 17:00<br />
+                    as well as other times by appointment.
                   </>
                 )}
               </h3>
