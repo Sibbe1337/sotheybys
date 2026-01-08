@@ -42,12 +42,12 @@ export const HOMEPAGE_TRANSLATIONS: HomepageTranslations = {
   // Three Column Section
   welcomeHeading: {
     fi: 'Tervetuloa onnistuneeseen asuntokauppaan!',
-    sv: 'Välkommen till en framgångsrik fastighetsaffär!',
+    sv: 'Välkommen till en extraordinär bostadsaffär!',
     en: 'Welcome to successful property transactions!'
   },
   welcomeText: {
     fi: 'Olemme tuoneet Suomen asuntomarkkinoille yhden maailman suurimman kiinteistönvälitysketjun Sotheby\'s International Realty®:n osaamisen ja kokemuksen. Avaamalla kiinteistömarkkinat yli valtakunnan rajojen haluamme kehittää koko alaa. Inspiraationamme toimivat mielenkiintoiset ja uniikit kohteet kaikkialla maailmassa.',
-    sv: 'Vi har fört Sotheby\'s International Realty®:s expertis och erfarenhet till den finska fastighetsmarknaden, en av världens största fastighetskedjor. Genom att öppna fastighetsmarknaden över nationsgränserna vill vi utveckla hela branschen. Vår inspiration är intressanta och unika objekt över hela världen.',
+    sv: 'Vi hämtade en av världens ledande fastighetsskedjor Sotheby\'s International Realty®:s kompetens och erfarenhet till den finländska bostadsmarknaden. Genom att öppna fastighetsmarknaden utöver de nationella gränserna vill vi utveckla hela industrin. Vår inspiration kommer från intressanta och unika objekt runt omkring hela världen.',
     en: 'We have brought the expertise and experience of Sotheby\'s International Realty®, one of the world\'s largest real estate networks, to the Finnish property market. By opening property markets across borders, we aim to develop the entire industry. Our inspiration comes from interesting and unique properties around the world.'
   },
   
@@ -189,7 +189,7 @@ export const HOMEPAGE_TRANSLATIONS: HomepageTranslations = {
   },
   hero2Title: {
     fi: 'Tervetuloa onnistuneeseen asuntokauppaan!',
-    sv: 'Välkommen till en framgångsrik fastighetsaffär!',
+    sv: 'Välkommen till en extraordinär bostadsaffär!',
     en: 'Welcome to successful property transactions!'
   },
   hero2Subtitle: {
