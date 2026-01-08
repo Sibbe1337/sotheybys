@@ -208,9 +208,9 @@ export const HOMEPAGE_TRANSLATIONS: HomepageTranslations = {
     en: 'Snellman Sotheby\'s International Realty®'
   },
   hero3Subtitle: {
-    fi: 'Haluamme luoda kestävän asiakassuhteen, jossa otamme huomioon teidän pienimmätkin toiveet ja tarpeet.',
-    sv: 'Vi vill skapa en hållbar kundrelation där vi tar hänsyn till era minsta önskemål och behov.',
-    en: 'We want to create a lasting customer relationship where we consider your smallest wishes and needs.'
+    fi: 'Meillä kaikilla on erilaiset tarpeet ja toiveet, ja me otamme ne huomioon ja räätälöimme ratkaisun teidän tarpeidenne ja toiveidenne mukaan. Tehtävämme on tehdä unelmastasi totta.',
+    sv: 'Vi alla har olika behov och preferenser och vi beaktar dem och skräddarsyr en lösning efter ert behov och er önskan. Vår uppgift är att göra din dröm till verklighet.',
+    en: 'We all have different needs and preferences, and we consider them and tailor a solution to your needs and wishes. Our mission is to make your dream come true.'
   },
   hero3Button: {
     fi: 'Tutustu toimintatapaamme',
