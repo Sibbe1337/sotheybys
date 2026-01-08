@@ -258,6 +258,12 @@ export const HOMEPAGE_TRANSLATIONS: HomepageTranslations = {
     sv: 'Kontakta mäklaren',
     en: 'Contact agent'
   },
+  // Address
+  address: {
+    fi: 'Kasarmikatu 34, 00130 Helsinki',
+    sv: 'Kaserngatan 34, 00130 Helsingfors',
+    en: 'Kasarmikatu 34, 00130 Helsinki'
+  },
 };
 
 /**

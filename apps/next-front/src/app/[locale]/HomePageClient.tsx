@@ -441,7 +441,7 @@ export default function HomePageClient({
                 <span className="hidden md:inline text-gray-400">|</span>
                 <a href="https://goo.gl/maps/8HptT8TwUp42" target="_blank" rel="noopener noreferrer" 
                    className="text-lg hover:text-[var(--color-primary)] transition-colors font-light">
-                  Kasarmikatu 34, 00130 Helsinki
+                  {getHomepageTranslation('address', language)}
                 </a>
                 <span className="hidden md:inline text-gray-400">|</span>
                 <a href="mailto:info@sothebysrealty.fi" className="text-lg hover:text-[var(--color-primary)] transition-colors font-light">

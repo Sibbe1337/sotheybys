@@ -37,6 +37,7 @@ const translations = {
     philosophyText2: 'Kiinteistönvälittäjänä ja arvoasuntojen asiantuntijana olemme ylpeitä saadessamme yhdistää toisiinsa täydellisesti yhteensopivat kodit sekä asukkaat. Jokainen välittämämme koti on yhtä ainutlaatuinen kuin jokainen asiakkaamme.',
     philosophyText3: 'Suomessa olemme keskittyneet välittämään pääkaupunkiseudun ja sitä ympäröivän rannikkoalueen premium-asuntoja ja -kiinteistöjä. Valikoimaamme kuuluu muun muassa laadukkaita loft- ja penthouse-asuntoja sekä arvokkaita uudisrakennuskohteita. Lisäksi välitämme vapaa-ajankohteita rannikon huviloista Lapin hiihtomajoihin.',
     openDoorsTitle: 'Avaamme uusia ovia',
+    address: 'Kasarmikatu 34, 00130 Helsinki',
   },
   sv: {
     introTitle: 'Snellman Sotheby\'s International Realty®',
@@ -61,6 +62,7 @@ const translations = {
     philosophyText2: 'Som experter inom fastighetsförmedling är vi extremt stolta över att få koppla ihop rätt kund med rätt hem. Vi är av den åsikt att varje fastighet vi förmedlar är lika unik och normbrytande som varje kund vi har äran att få samarbeta med.',
     philosophyText3: 'I Finland koncentrerar vi oss än så länge på att förmedla premium fastigheter i huvudstadsregionen – Till våra säljobjekt hör allting från lyxiga takvåningar till värdefulla nybyggen. Förutom fastigheter i centrum förmedlar vi bland annat villor och fritidshus i Södra Finland samt stugor uppe i Lappland.',
     openDoorsTitle: 'Vi öppnar nya dörrar',
+    address: 'Kaserngatan 34, 00130 Helsingfors',
   },
   en: {
     introTitle: 'Snellman Sotheby\'s International Realty®',
@@ -85,6 +87,7 @@ const translations = {
     philosophyText2: 'As a real estate broker and expert in valuable homes, we are proud to bring together perfectly compatible homes and residents. Every home we broker is as unique as every customer.',
     philosophyText3: 'In Finland, we have focused on brokering premium apartments and properties in the capital region and the surrounding coastal area.',
     openDoorsTitle: 'We open new doors',
+    address: 'Kasarmikatu 34, 00130 Helsinki',
   },
 };
 
@@ -196,7 +199,7 @@ export default function CompanyPage({ params }: { params: { locale: string } }) 
                 +358 (0)10 315 6900
               </a>
               <span className="hidden md:inline text-gray-300">|</span>
-              <span>Kasarmikatu 34, 00130 Helsinki</span>
+              <span>{t.address}</span>
               <span className="hidden md:inline text-gray-300">|</span>
               <a href="mailto:info@sothebysrealty.fi" className="hover:text-[#002349] transition-colors">
                 info@sothebysrealty.fi

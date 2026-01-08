@@ -31,6 +31,8 @@ const translations = {
     exploreRugged: 'EXPLORE RUGGED\nLANDSCAPES & RETREATS...►',
     videoTitle: 'Kansainvälinen verkostomme',
     videoSubtitle: 'Tutustu Sotheby\'s International Realty -verkostoon',
+    addressStreet: 'Kasarmikatu 34, 00130',
+    addressCity: 'Helsinki',
   },
   sv: {
     heroTitle: 'Ojämförlig global räckvidd och lokal expertis',
@@ -50,6 +52,8 @@ const translations = {
     exploreRugged: 'Majestic Mountain Properties\nExplore rugged landscapes & retreats...',
     videoTitle: 'Vårt internationella nätverk',
     videoSubtitle: 'Bekanta dig med Sotheby\'s International Realty-nätverket',
+    addressStreet: 'Kaserngatan 34, 00130',
+    addressCity: 'Helsingfors',
   },
   en: {
     heroTitle: 'Unrivaled global reach and local expertise',
@@ -69,6 +73,8 @@ const translations = {
     exploreRugged: 'Majestic Mountain Properties\nExplore rugged landscapes & retreats...',
     videoTitle: 'Our International Network',
     videoSubtitle: 'Explore the Sotheby\'s International Realty network',
+    addressStreet: 'Kasarmikatu 34, 00130',
+    addressCity: 'Helsinki',
   },
 };
 
@@ -162,8 +168,8 @@ export default function InternationalPage({ params }: { params: { locale: Locale
                 <span className="hidden md:inline text-gray-400">|</span>
                 <a href="https://goo.gl/maps/8HptT8TwUp42" target="_blank" rel="noopener noreferrer" 
                    className="hover:text-[var(--color-primary)] transition-colors font-light">
-                  Kasarmikatu 34, 00130<br className="md:hidden" />
-                  Helsinki
+                  {t.addressStreet}<br className="md:hidden" />
+                  {t.addressCity}
                 </a>
                 <span className="hidden md:inline text-gray-400">|</span>
                 <a href="mailto:info@sothebysrealty.fi" className="hover:text-[var(--color-primary)] transition-colors font-light">

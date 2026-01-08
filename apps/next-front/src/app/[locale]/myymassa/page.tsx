@@ -57,8 +57,18 @@ const translations = {
     pricingPropertiesRemote: 'Kiinteistöt / Etä- ja erikoiskohteet',
     pricingNote1: '* Tai sopimuksen mukaan',
     pricingNote2: '** Soveltuvin osin',
+    pricingValue1: '5 % sis. alv 25,5%*',
+    pricingValue2: '6 % sis. alv 25,5%*',
+    pricingValue3: '7 % sis. alv 25,5%*',
+    pricingValue4: '2 kk vuokra sis. alv 25,5%*',
+    pricingValue5: '5750 € sis. alv 25,5%*',
+    pricingValue6: '+0,50 % sis. alv 25,5%**',
+    pricingValue7: 'Alkaen 500 € sis. alv 25,5%*',
+    pricingValue8: 'Alkaen 3000 € sis. alv 25,5%*',
     videoTitle: 'Miksi myydä kanssamme?',
     videoSubtitle: 'Katso miten autamme asiakkaitamme onnistuneeseen asuntokauppaan',
+    addressStreet: 'Kasarmikatu 34,',
+    addressCity: '00130 Helsinki',
   },
   sv: {
     title: 'Sälj med oss',
@@ -100,8 +110,18 @@ const translations = {
     pricingPropertiesRemote: 'Fastigheter / Fjärr- och specialobjekt',
     pricingNote1: '* Eller enligt överenskommelse',
     pricingNote2: '** När tillämpligt',
+    pricingValue1: '5 % inkl. moms 25,5%*',
+    pricingValue2: '6 % inkl. moms 25,5%*',
+    pricingValue3: '7 % inkl. moms 25,5%*',
+    pricingValue4: '2 månaders hyra inkl. moms 25,5%*',
+    pricingValue5: '5750 € inkl. moms 25,5%*',
+    pricingValue6: '+0,50 % inkl. moms 25,5%**',
+    pricingValue7: 'Från 500 € inkl. moms 25,5%*',
+    pricingValue8: 'Från 3000 € inkl. moms 25,5%*',
     videoTitle: 'Varför sälja med oss?',
     videoSubtitle: 'Se hur vi hjälper våra kunder till en framgångsrik bostadsaffär',
+    addressStreet: 'Kaserngatan 34,',
+    addressCity: '00130 Helsingfors',
     servicesTitle: 'Vårt tjänstelöfte',
     servicesText1: 'Vi vill vara med då du gör ett av ditt livs största ekonomiska beslut. Vi garanterar att du får våra erfarna experters åsikt och stöd längs hela processen. Vår önskan är att alla våra kunder trivs med oss och att det blir ett naturligt val att samarbeta med oss även i framtiden.',
     servicesText2: 'Glöm inte att be ett service erbjudande av oss.',
@@ -146,8 +166,18 @@ const translations = {
     pricingPropertiesRemote: 'Properties / Long-distance and special listings',
     pricingNote1: '* According to agreement',
     pricingNote2: '** When applicable',
+    pricingValue1: '5 % incl. VAT 25.5%*',
+    pricingValue2: '6 % incl. VAT 25.5%*',
+    pricingValue3: '7 % incl. VAT 25.5%*',
+    pricingValue4: '2 months rent incl. VAT 25.5%*',
+    pricingValue5: '5750 € incl. VAT 25.5%*',
+    pricingValue6: '+0.50 % incl. VAT 25.5%**',
+    pricingValue7: 'From 500 € incl. VAT 25.5%*',
+    pricingValue8: 'From 3000 € incl. VAT 25.5%*',
     videoTitle: 'Why sell with us?',
     videoSubtitle: 'See how we help our clients achieve successful property transactions',
+    addressStreet: 'Kasarmikatu 34,',
+    addressCity: '00130 Helsinki',
     servicesTitle: 'Our Servicepromise',
     servicesText1: 'We want to support you when you are about to make one of the most important financial decisions of your life and make sure you take the right choice. We guarantee that you get our experienced experts opinion and support throughout the whole process.',
     servicesText2: 'Our highest wish is that all our customers feel comfortable with us and that cooperation in the future will be a natural decision for every one of our customers. Please do not forget to ask for a service offer.',
@@ -201,8 +231,8 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
                 <span className="hidden md:inline text-gray-400">|</span>
                 <a href="https://goo.gl/maps/8HptT8TwUp42" target="_blank" rel="noopener noreferrer" 
                    className="hover:text-[var(--color-primary)] transition-colors font-light">
-                  Kasarmikatu 34,<br className="md:hidden" />
-                  00130 Helsinki
+                  {t.addressStreet}<br className="md:hidden" />
+                  {t.addressCity}
                 </a>
                 <span className="hidden md:inline text-gray-400">|</span>
                 <a href="mailto:info@sothebysrealty.fi" className="hover:text-[var(--color-primary)] transition-colors font-light">
@@ -357,27 +387,27 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
                     <div className="space-y-2">
                       <div className="flex justify-between items-baseline">
                         <span className="text-gray-700 pl-6">{t.pricingApartments}</span>
-                        <span className="text-gray-900 font-semibold whitespace-nowrap">5 % sis. alv 25.5%*</span>
+                        <span className="text-gray-900 font-semibold whitespace-nowrap">{t.pricingValue1}</span>
                       </div>
                       <div className="flex justify-between items-baseline">
                         <span className="text-gray-700 pl-6">{t.pricingProperties}</span>
-                        <span className="text-gray-900 font-semibold whitespace-nowrap">6 % sis. alv 25.5%*</span>
+                        <span className="text-gray-900 font-semibold whitespace-nowrap">{t.pricingValue2}</span>
                       </div>
                       <div className="flex justify-between items-baseline">
                         <span className="text-gray-700 pl-6">{t.pricingRemote}</span>
-                        <span className="text-gray-900 font-semibold whitespace-nowrap">7 % sis. alv 25.5%*</span>
+                        <span className="text-gray-900 font-semibold whitespace-nowrap">{t.pricingValue3}</span>
                       </div>
                       <div className="flex justify-between items-baseline">
                         <span className="text-gray-700 pl-6">{t.pricingRental}</span>
-                        <span className="text-gray-900 font-semibold whitespace-nowrap">2 kk vuokra sis. alv 25.5%*</span>
+                        <span className="text-gray-900 font-semibold whitespace-nowrap">{t.pricingValue4}</span>
                       </div>
                       <div className="flex justify-between items-baseline">
                         <span className="text-gray-700 pl-6">{t.pricingMinimum}</span>
-                        <span className="text-gray-900 font-semibold whitespace-nowrap">5750 € sis. alv 25.5%*</span>
+                        <span className="text-gray-900 font-semibold whitespace-nowrap">{t.pricingValue5}</span>
                       </div>
                       <div className="flex justify-between items-baseline">
                         <span className="text-gray-700 pl-6">{t.pricingInternational}</span>
-                        <span className="text-gray-900 font-semibold whitespace-nowrap">+0,50 % sis. alv 25.5%**</span>
+                        <span className="text-gray-900 font-semibold whitespace-nowrap">{t.pricingValue6}</span>
                       </div>
                     </div>
                   </div>
@@ -388,11 +418,11 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
                     <div className="space-y-2">
                       <div className="flex justify-between items-baseline">
                         <span className="text-gray-700 pl-6">{t.pricingApartments}</span>
-                        <span className="text-gray-900 font-semibold whitespace-nowrap">Alkaen 500 € sis. alv 25.5%*</span>
+                        <span className="text-gray-900 font-semibold whitespace-nowrap">{t.pricingValue7}</span>
                       </div>
                       <div className="flex justify-between items-baseline">
                         <span className="text-gray-700 pl-6">{t.pricingPropertiesRemote}</span>
-                        <span className="text-gray-900 font-semibold whitespace-nowrap">Alkaen 3000 € sis. alv 25.5%*</span>
+                        <span className="text-gray-900 font-semibold whitespace-nowrap">{t.pricingValue8}</span>
                       </div>
                     </div>
                   </div>

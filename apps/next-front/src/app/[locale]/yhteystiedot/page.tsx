@@ -151,6 +151,8 @@ const translations = {
     officeLocationText2: 'Toimistoamme ympäröi dynaaminen Kaartinkaupunki muotiputiikkeineen, fine-dine-ravintoloineen sekä korkeatasoisine hotelleineen.',
     officeLocationText3: 'Kävelet toimistollemme vain muutamassa minuutissa Esplanadilta tai Senaatintorilta.',
     directionsBtn: 'REITTIOHJEET »',
+    addressStreet: 'Kasarmikatu 34,',
+    addressCity: '00130 Helsinki',
   },
   sv: {
     heroTitle: 'Kontakta oss',
@@ -174,6 +176,8 @@ const translations = {
     officeLocationText2: 'Vår verksamhet sköts i huvudsak från huvudstadsregionen, men sträcker sig över hela landet.',
     officeLocationText3: 'Från Södra Finlands vackra skärgård upp till det förtrollande Lappland och allting där emellan är vårt att tillsammans erövra.',
     directionsBtn: 'Vägbeskrivning',
+    addressStreet: 'Kaserngatan 34,',
+    addressCity: '00130 Helsingfors',
   },
   en: {
     heroTitle: 'Contact us',
@@ -197,6 +201,8 @@ const translations = {
     officeLocationText2: 'The office may be located in Southern Finland but our sales and operations cover the whole country.',
     officeLocationText3: 'From the beautiful archipelago up to enchanting Lapland and everything in-between is ours to conquer.',
     directionsBtn: 'Directions',
+    addressStreet: 'Kasarmikatu 34,',
+    addressCity: '00130 Helsinki',
   },
 };
 
@@ -416,7 +422,7 @@ export default function ContactPage({ params }: { params: { locale: string } }) 
                   +358 (0)10 315 6900
                 </a>
                 <span className="hidden md:inline text-gray-300">|</span>
-                <span>Kasarmikatu 34,<br className="md:hidden" /> 00130 Helsinki</span>
+                <span>{t.addressStreet}<br className="md:hidden" /> {t.addressCity}</span>
                 <span className="hidden md:inline text-gray-300">|</span>
                 <a href="mailto:info@sothebysrealty.fi" className="hover:text-[#002349] transition-colors">
                   info@sothebysrealty.fi

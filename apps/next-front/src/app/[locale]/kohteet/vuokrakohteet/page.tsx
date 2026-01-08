@@ -42,6 +42,8 @@ const translations = {
     formPrivacy: 'Olen lukenut',
     formPrivacyLink: 'Tietosuojaselosteen',
     formSubmit: 'Lähetä viesti',
+    addressStreet: 'Kasarmikatu 34,',
+    addressCity: '00130 Helsinki',
   },
   sv: {
     title: 'Hyresobjekt',
@@ -72,6 +74,8 @@ const translations = {
     formPrivacy: 'Jag har bekantat mig med Privacy Policyn',
     formPrivacyLink: 'Tietosuojaseloste',
     formSubmit: 'Skicka',
+    addressStreet: 'Kaserngatan 34,',
+    addressCity: '00130 Helsingfors',
   },
   en: {
     title: 'Rental listings',
@@ -102,6 +106,8 @@ const translations = {
     formPrivacy: 'I have read the',
     formPrivacyLink: 'Privacy Policy',
     formSubmit: 'Send message',
+    addressStreet: 'Kasarmikatu 34,',
+    addressCity: '00130 Helsinki',
   },
 };
 
@@ -253,8 +259,8 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
               <div className="text-center">
                 <div className="text-3xl mb-4">📍</div>
                 <p className="text-lg text-gray-700 font-light">
-                  Kasarmikatu 34,<br />
-                  00130 Helsinki
+                  {t.addressStreet}<br />
+                  {t.addressCity}
                 </p>
               </div>
               <div className="text-center">

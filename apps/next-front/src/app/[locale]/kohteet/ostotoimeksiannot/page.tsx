@@ -21,6 +21,7 @@ const translations = {
     officeTitle: 'Helsingin toimistomme',
     officeText: 'Vuonna 2015 alkoi uusi aikakausi Suomessa. Ab Snellman LKV Oy Sotheby\'s International Realty avasi ovensa suomalaisille markkinoille tavoitteenaan nostaa kiinteistönvälitys aivan uudelle tasolle. Dynaamisessa pääkaupungissa Helsingissä sijaitsevassa toimistossa odottaa motivoitunut asiantuntijatiimi, joka on valmis toteuttamaan unelmasi. Vaikka toimisto sijaitsee Etelä-Suomessa, myyntimme ja toimintamme kattavat koko maan. Kauniista saaristosta lumovaan Lappiin ja kaikkea siltä väliltä.',
     directionsBtn: 'REITTIOHJEET »',
+    address: 'Kasarmikatu 34, 00130 Helsinki',
   },
   sv: {
     heroTitle: 'Köpuppdrag',
@@ -32,6 +33,7 @@ const translations = {
     officeTitle: 'Vårt Helsingfors kontor',
     officeText: 'Hösten 2015 börjar en ny era i Finland. Ab Snellman LKV Oy Sotheby\'s International Realty tillträder den finska marknaden och tar fastighetsförmedling till en helt ny nivå. På huvudkontoret i Finlands dynamiska huvudstad Helsingfors, sitter ett gäng inspirerade förmedlare och arbetstagare och väntar på att få förverkliga just din dröm. Vår verksamhet sköts i huvudsak från huvudstadsregionen, men sträcker sig över hela landet. Från Södra Finlands vackra skärgård upp till det förtrollande Lappland och allting där emellan är vårt att tillsammans erövra.',
     directionsBtn: 'Vägbeskrivning',
+    address: 'Kaserngatan 34, 00130 Helsingfors',
   },
   en: {
     heroTitle: 'Purchase Mandates',
@@ -43,6 +45,7 @@ const translations = {
     officeTitle: 'Our Helsinki Office',
     officeText: 'In 2015 a new era began in Finland. Ab Snellman LKV Oy Sotheby\'s International Realty opened its doors to the Finnish market, with goals to bring real estate to a whole new level. In the office, located in the dynamic capital Helsinki, awaits a team motivated experts ready to make your dream come true. The office may be located in Southern Finland but our sales and operations cover the whole country. From the beautiful archipelago up to enchanting Lapland and everything in-between is ours to conquer.',
     directionsBtn: 'Directions',
+    address: 'Kasarmikatu 34, 00130 Helsinki',
   },
 };
 
@@ -143,7 +146,7 @@ export default function PurchaseAssignmentsPage({ params }: { params: { locale: 
                       rel="noopener noreferrer"
                       className="text-gray-900 hover:text-[#1a3a4a] transition-colors"
                     >
-                      Kasarmikatu 34, 00130 Helsinki
+                      {t.address}
                     </a>
                   </h4>
                 </div>

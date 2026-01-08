@@ -48,6 +48,8 @@ const translations = {
     officeHoursTitle: 'Upea toimistomme palvelee',
     officeHours: 'teitä arkisin 10:00 – 17:00',
     officeExtra: 'sekä muina aikoina sopimuksen mukaan.',
+    addressStreet: 'Kasarmikatu 34,',
+    addressCity: '00130 Helsinki',
   },
   sv: {
     title: 'Personal',
@@ -85,6 +87,8 @@ const translations = {
     officeHoursTitle: 'Vårt högklassiga kontor',
     officeHours: 'betjänar Er på vardagar 10:00 – 17:00',
     officeExtra: 'på helgerna är vi öppna efter överenskommelse.',
+    addressStreet: 'Kaserngatan 34,',
+    addressCity: '00130 Helsingfors',
   },
   en: {
     title: 'Personnel',
@@ -122,6 +126,8 @@ const translations = {
     officeHoursTitle: 'Our beautiful office serves',
     officeHours: 'you on weekdays 10:00 – 17:00',
     officeExtra: 'and at other times by appointment.',
+    addressStreet: 'Kasarmikatu 34,',
+    addressCity: '00130 Helsinki',
   },
 };
 
@@ -455,8 +461,8 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
                 </div>
                 <div className="hidden md:block text-gray-400">|</div>
                 <div>
-                  <p className="text-lg">Kasarmikatu 34,</p>
-                  <p className="text-lg">00130 Helsinki</p>
+                  <p className="text-lg">{t.addressStreet}</p>
+                  <p className="text-lg">{t.addressCity}</p>
                 </div>
                 <div className="hidden md:block text-gray-400">|</div>
                 <div>
