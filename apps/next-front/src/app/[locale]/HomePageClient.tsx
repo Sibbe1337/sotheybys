@@ -16,6 +16,14 @@ function stripHtml(html: string): string {
   return html.replace(/<[^>]*>/g, '').trim();
 }
 
+// Helper: Get localized value with fallback to Finnish
+function getLocalized<T>(value: { fi: T; sv?: T; en?: T } | T | undefined, locale: string): T | undefined {
+  if (value === undefined || value === null) return undefined;
+  if (typeof value !== 'object') return value;
+  const localized = value as { fi: T; sv?: T; en?: T };
+  return localized[locale as keyof typeof localized] || localized.fi;
+}
+
 // Helper: Format plot area with smart units
 // < 10 000 m² → m², ≥ 10 000 m² → ha
 function formatPlot(n: number | null | undefined, locale: string): string {
@@ -40,22 +48,23 @@ function formatPlot(n: number | null | undefined, locale: string): string {
 }
 
 // Function to get translated hero slides
+// Order: 1. Welcome/Välkommen, 2. International agent, 3. Snellman SIR, 4. References
 const getTranslatedSlides = (language: SupportedLanguage) => [
   {
     id: '1',
-    image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/57809e7b-2fe2-430d-a7d7-aff39337d0c1/ead27130-4e08-465e-af6d-500d593ae0db.jpg',
-    title: getHomepageTranslation('hero1Title', language),
-    subtitle: getHomepageTranslation('hero1Subtitle', language),
-    buttonText: getHomepageTranslation('hero1Button', language),
-    buttonLink: '/yhteystiedot'
-  },
-  {
-    id: '2',
     image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/3cfbb584-8fc0-493a-8b2f-66edf18b027a/e3ffa954-b4a1-4ed6-bed1-f131955d96c2.jpg',
     title: getHomepageTranslation('hero2Title', language),
     subtitle: getHomepageTranslation('hero2Subtitle', language),
     buttonText: getHomepageTranslation('hero2Button', language),
     buttonLink: '/kohteet'
+  },
+  {
+    id: '2',
+    image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/57809e7b-2fe2-430d-a7d7-aff39337d0c1/ead27130-4e08-465e-af6d-500d593ae0db.jpg',
+    title: getHomepageTranslation('hero1Title', language),
+    subtitle: getHomepageTranslation('hero1Subtitle', language),
+    buttonText: getHomepageTranslation('hero1Button', language),
+    buttonLink: '/yhteystiedot'
   },
   {
     id: '3',
@@ -594,20 +603,12 @@ export default function HomePageClient({
               {/* Property Cards Grid - 3 columns, 2 rows = 6 properties */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {featuredProperties.map((property) => {
-                  const addressStr = typeof property.address === 'string' ? property.address : property.address.fi;
-                  const cityStr = typeof property.city === 'string' ? property.city : property.city.fi;
-                  const descriptionRaw = property.description 
-                    ? (typeof property.description === 'string' ? property.description : property.description.fi)
-                    : '';
+                  const addressStr = getLocalized(property.address, locale) || '';
+                  const cityStr = getLocalized(property.city, locale) || '';
+                  const descriptionRaw = getLocalized(property.description, locale) || '';
                   const descriptionStr = stripHtml(descriptionRaw);
-                  const listingTypeStr = property.meta.listingTypeLabel
-                    ? (typeof property.meta.listingTypeLabel === 'string' 
-                        ? property.meta.listingTypeLabel 
-                        : property.meta.listingTypeLabel.fi)
-                    : '';
-                  const districtStr = property.district
-                    ? (typeof property.district === 'string' ? property.district : property.district.fi)
-                    : '';
+                  const listingTypeStr = getLocalized(property.meta.listingTypeLabel, locale) || '';
+                  const districtStr = getLocalized(property.district, locale) || '';
 
                   return (
                     <div
@@ -764,11 +765,9 @@ export default function HomePageClient({
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {rentalProperties.map((property) => {
-                  const addressStr = typeof property.address === 'string' ? property.address : property.address.fi;
-                  const cityStr = typeof property.city === 'string' ? property.city : property.city.fi;
-                  const descriptionRaw = property.description 
-                    ? (typeof property.description === 'string' ? property.description : property.description.fi)
-                    : '';
+                  const addressStr = getLocalized(property.address, locale) || '';
+                  const cityStr = getLocalized(property.city, locale) || '';
+                  const descriptionRaw = getLocalized(property.description, locale) || '';
                   const descriptionStr = stripHtml(descriptionRaw);
 
                   return (
