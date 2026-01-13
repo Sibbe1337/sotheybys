@@ -293,7 +293,7 @@ export default function CompanyPage({ params }: { params: { locale: string } }) 
               />
               <div className="absolute inset-0 flex items-end justify-center pb-8">
                 <Image
-                  src="/images/logos/snellman-sothebys-logo-white.png"
+                  src="/images/logos/logo-white.png"
                   alt="Snellman Sotheby's"
                   width={200}
                   height={50}
@@ -341,7 +341,7 @@ export default function CompanyPage({ params }: { params: { locale: string } }) 
               />
               <div className="absolute inset-0 flex items-end justify-end p-8">
                 <Image
-                  src="/images/logos/snellman-sothebys-logo-white.png"
+                  src="/images/logos/logo-white.png"
                   alt="Snellman Sotheby's"
                   width={180}
                   height={45}
@@ -369,7 +369,7 @@ export default function CompanyPage({ params }: { params: { locale: string } }) 
             {/* Logo on left */}
             <div className="hidden lg:block flex-shrink-0 mr-8">
               <Image
-                src="/images/logos/snellman-sothebys-logo-white.png"
+                src="/images/logos/logo-white.png"
                 alt="Snellman Sotheby's"
                 width={200}
                 height={50}
