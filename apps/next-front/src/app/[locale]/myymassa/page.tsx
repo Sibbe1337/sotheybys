@@ -34,6 +34,7 @@ const translations = {
     honorText1: 'Snellman | Sotheby\'s International Realty Finland toimii osana maailman suurimpiin kuuluvaa, menestyksekästä kiinteistönvälitysketjua Sotheby\'s International Realty®, joten tarjoamme käyttöösi laajan kontaktiverkoston asiantuntijoineen. Myyntikanavamme kattavat tehokkaan maailmanlaajuisen markkinointiverkoston.',
     honorText2: 'Olemme erikoistuneet arvoasuntoihin. Jokainen toimeksianto saa myyntikohteenamme aseman, joka takaa sille erityisen, tavallista laadukkaamman palvelun.',
     honorText3: 'Tarjoamme käyttöösi laajan asiantuntemuksen niin kotimaan kuin kansainvälisilläkin markkinoilla. Edustamme alan parasta osaamista ja hoidamme sydämellä koko myyntiprosessin alusta loppuun asti. Takaamme, että käytössäsi on kauttamme alan moderneimmat ja tehokkaimmat markkinointikanavat sekä laaja asiakasverkosto. Näin saavutamme kohteellesi korkeimman mahdollisen myyntihinnan.',
+    honorText4: '',
     relationshipTitle: 'Arvokas asiakassuhde',
     relationshipText1: 'Toivomme, että yhteistyö kanssamme on aina pitkäaikainen suhde henkilökohtaisella tasolla. Pidämme jokaista asiakastamme ainutlaatuisena ja arvokkaana kaikilta osa-alueilta. Meillä kaikilla on erilaiset tarpeet ja toiveet, keskustelemme ja räätälöimme asiakkaidemme toiveiden ja vaatimusten mukaan. Tehtävämme on tehdä unelmastasi totta.',
     relationshipText2: 'Snellman Sotheby\'s International Realty Finland kuuluu yhdeksi maailman arvostetuimmista kiinteistönvälitysketjuista. Jäsenyys Sotheby\'s International Realty®:ssä merkitsee jäsenyyttä globaalissa verkostossa, jolla on laaja asiantuntemus, elintärkeät kontaktit, poikkeukselliset myyntikanavat sekä pääsy tehokkaimpiin markkinointikanaviin.',
@@ -91,6 +92,7 @@ const translations = {
     honorText1: 'Att samarbeta med oss innebär ett långvarigt förhållande på personlig nivå. Vi betraktar alla våra kunder som unika på sitt eget sätt. Alla har vi olika behov och preferenser och vi diskuterar och skräddarsyr efter kundens behov och önskan. Vår uppgift är att göra din dröm till verklighet.',
     honorText2: 'Ab Snellman LKV Oy Sotheby\'s International Realty Finland verkar inom ramen för en av världens största och mest framgångsrika fastighetsförmedlingskedjor. Medlemskap i Sotheby\'s International Realty® innebär tillträde till ett globalt varumärke och ett enormt nätverk av kontakter, expertis och försäljningskanaler såväl som enastående marknadsföringsmöjligheter.',
     honorText3: 'Vi specialiserar oss på förmedling av de lyxigaste av hem som existerar på marknaden och varje hem och kontext som förknippas med Snellman Sotheby\'s International Realty garanterar något utöver det vanliga.',
+    honorText4: 'Vi erbjuder våra kunder expertis gällande marknaden både på nationell och internationell nivå samtidigt som vi levererar kundservice av högsta standard. Vi representerar branschens bästa och sköter hela försäljningsprocessen från början till slut. Vi garanterar att du får till ditt förfogande de senaste och mest effektiva marknadsföringskanalerna, rätt kundnätverk, högsta möjliga försäljningspris samt en oförglömlig upplevelse då du samarbetar med oss.',
     relationshipTitle: 'Vårt tjänstelöfte',
     relationshipText1: 'Vi erbjuder våra kunder expertis gällande marknaden både på nationell och internationell nivå samtidigt som vi levererar kundservice av högsta standard. Vi representerar branschens bästa och sköter hela försäljningsprocessen från början till till slut. Vi garanterar att du får till ditt förfogande de senaste och mest effektiva marknadsföringskanalerna, rätt kundnätverk, högsta möjliga försäljningspris samt en oförglömlig upplevelse då du samarbetar med oss.',
     relationshipText2: 'Vi vill vara med då du gör ett av ditt livs största ekonomiska beslut. Vi garanterar att du får våra erfarna experters åsikt och stöd längs hela processen. Vår önskan är att alla våra kunder trivs med oss och att det blir ett naturligt val att samarbeta med oss även i framtiden. Glöm inte att be ett service erbjudande av oss.',
@@ -147,6 +149,7 @@ const translations = {
     honorText1: 'Our wish is that cooperation with us always equals a long-term relationship on a personal level. We regard every single one of our customers as unique and valuable, all aspects considered. We all have different needs and preferences, and we discuss and customize according to our customers\' wishes and requirements. Our mission is to make your dream come true.',
     honorText2: 'Snellman Sotheby\'s International Realty Finland is part of one of the most prestigious real estate chains in the world. Membership in Sotheby\'s International Realty® equals membership in a global network with excessive expertise, vital contacts, extraordinary sales channels as well as access to the most effective marketing channels available.',
     honorText3: 'We specialize in luxury and high-end real estate and we provide you the most desirable of homes that the market has to offer. Our experienced team members are always honored to share their expertise with you and we wish to be part of the process from beginning to end. We guarantee you access to the latest marketing channels, the correct customer network, the highest possible price and of course an experience you will fondly remember.',
+    honorText4: '',
     relationshipTitle: 'Our Servicepromise',
     relationshipText1: 'We want to support you when you are about to make one of the most important financial decisions of your life and make sure you take the right choice. We guarantee that you get our experienced experts opinion and support throughout the whole process. Our highest wish is that all our customers feel comfortable with us and that cooperation in the future will be a natural decision for every one of our customers.',
     relationshipText2: 'Please do not forget to ask for a service offer.',
@@ -353,6 +356,7 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
                   <p>{t.honorText1}</p>
                   <p>{t.honorText2}</p>
                   <p>{t.honorText3}</p>
+                  {t.honorText4 && <p>{t.honorText4}</p>}
                 </div>
               </div>
             </div>
