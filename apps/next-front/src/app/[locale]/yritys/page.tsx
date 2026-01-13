@@ -104,7 +104,7 @@ const getHeroSlides = (locale: string) => [
   {
     id: 2,
     image: '/images/content/snellman-sothebys-yritys.jpg',
-    title: locale === 'fi' ? 'Tervetuloa onnistuneeseen asuntokauppaan!' : locale === 'sv' ? 'Välkommen till en framgångsrik bostadsaffär!' : 'Welcome to a successful property transaction!',
+    title: locale === 'fi' ? 'Tervetuloa onnistuneeseen asuntokauppaan!' : locale === 'sv' ? 'Välkommen till en extraordinär bostadsaffär!' : 'Welcome to successful property transactions!',
     subtitle: locale === 'fi' ? 'Katso kaikki myynnissä olevat kohteemme.' : locale === 'sv' ? 'Se alla våra objekt till salu.' : 'See all our properties for sale.',
     buttonText: locale === 'fi' ? 'LÖYDÄ UNELMIESI KOTI »' : locale === 'sv' ? 'HITTA DITT DRÖMHEM »' : 'FIND YOUR DREAM HOME »',
     buttonLink: '/kohteet'
