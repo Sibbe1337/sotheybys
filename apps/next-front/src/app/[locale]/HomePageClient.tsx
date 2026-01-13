@@ -61,7 +61,8 @@ function isApartment(property: Property): boolean {
 }
 
 // Function to get translated hero slides
-// Order: 1. Welcome/Välkommen, 2. International agent, 3. Snellman SIR, 4. References
+// Order: 1. Welcome/Välkommen (hero2), 2. International agent (hero1), 3. Snellman SIR (hero3), 4. References (hero4)
+// IMPORTANT: First slide MUST be "Välkommen till en extraordinär bostadsaffär!" / "Welcome to successful property transactions!"
 const getTranslatedSlides = (language: SupportedLanguage) => [
   {
     id: '1',
