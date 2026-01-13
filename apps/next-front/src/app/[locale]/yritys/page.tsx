@@ -36,6 +36,7 @@ const translations = {
     philosophyText1: 'Unelma täydellisestä kodista on unelmiemme työtä, sillä koti on paikka, jossa saavutettavissa oleva elämänlaatu kiteytyy parhaiten. Parasta luksusta koti on silloin, kun siinä on jotakin erityistä verrattuna alueen muihin asuntoihin sekä silloin, kun se vastaa asukkaidensa elämäntyyliä ja unelmia. Eksklusiivinen koti on erityinen niin ratkaisuiltaan, rakennuksena kuin sijainniltaan.',
     philosophyText2: 'Kiinteistönvälittäjänä ja arvoasuntojen asiantuntijana olemme ylpeitä saadessamme yhdistää toisiinsa täydellisesti yhteensopivat kodit sekä asukkaat. Jokainen välittämämme koti on yhtä ainutlaatuinen kuin jokainen asiakkaamme.',
     philosophyText3: 'Suomessa olemme keskittyneet välittämään pääkaupunkiseudun ja sitä ympäröivän rannikkoalueen premium-asuntoja ja -kiinteistöjä. Valikoimaamme kuuluu muun muassa laadukkaita loft- ja penthouse-asuntoja sekä arvokkaita uudisrakennuskohteita. Lisäksi välitämme vapaa-ajankohteita rannikon huviloista Lapin hiihtomajoihin.',
+    philosophyText4: 'Sotheby\'s International Realtyn osana meillä on osaamista sekä kotimaisista että kansainvälisistä kiinteistömarkkinoista. Halusitpa ostaa tai myydä asuntosi, huvilasi, vapaa-ajan asuntosi tai kartanosi, haluamme olla osa prosessia ja auttaa sinua tekemään elämäsi kaupat. Toivomme rakentavamme elinikäisen suhteen jokaisen asiakkaamme kanssa.',
     openDoorsTitle: 'Avaamme uusia ovia',
     address: 'Kasarmikatu 34, 00130 Helsinki',
   },
@@ -61,6 +62,7 @@ const translations = {
     philosophyText1: 'Att leverera drömmarnas hem åt våra kunder är vårt jobb men även vår största passion. Hemmet är den plats som reflekterar önskad livskvalitet allra bäst och vi strävar efter att koppla ihop våra kunders hem med deras drömmar och livsstil. Lyxiga hem förmedlar alltid något utöver det vanliga. Ett hem av denna standard är unikt ända från dess planläggning till dess estetiska innehåll och till dess geografiska läge.',
     philosophyText2: 'Som experter inom fastighetsförmedling är vi extremt stolta över att få koppla ihop rätt kund med rätt hem. Vi är av den åsikt att varje fastighet vi förmedlar är lika unik och normbrytande som varje kund vi har äran att få samarbeta med.',
     philosophyText3: 'I Finland koncentrerar vi oss än så länge på att förmedla premium fastigheter i huvudstadsregionen – Till våra säljobjekt hör allting från lyxiga takvåningar till värdefulla nybyggen. Förutom fastigheter i centrum förmedlar vi bland annat villor och fritidshus i Södra Finland samt stugor uppe i Lappland.',
+    philosophyText4: 'Tack vare vår bakgrund som del av Sotheby\'s International Realty, besitter vi kunskap gällande både den inhemska marknaden likväl som den internationella marknaden för fastigheter. Oberoende önskar du köpa eller sälja din lägenhet, din villa, ditt fritidshus eller din herrgård, vill vi vara en del av processen och hjälpa dig verkställa ditt livs affär. Vi hoppas bygga en livslång relation med varenda kund vi arbetar med.',
     openDoorsTitle: 'Vi öppnar nya dörrar',
     address: 'Kaserngatan 34, 00130 Helsingfors',
   },
@@ -85,7 +87,8 @@ const translations = {
     philosophyTitle: 'Our Service Philosophy',
     philosophyText1: 'The dream of the perfect home is our dream work, because home is the place where achievable quality of life is best crystallized.',
     philosophyText2: 'As a real estate broker and expert in valuable homes, we are proud to bring together perfectly compatible homes and residents. Every home we broker is as unique as every customer.',
-    philosophyText3: 'In Finland, we have focused on brokering premium apartments and properties in the capital region and the surrounding coastal area.',
+    philosophyText3: 'In Finland, we have focused on brokering premium apartments and properties in the capital region and the surrounding coastal area. Our selection includes high-quality loft and penthouse apartments as well as valuable new construction projects. We also broker vacation properties from coastal villas to ski lodges in Lapland.',
+    philosophyText4: 'Thanks to our background as part of Sotheby\'s International Realty, we possess knowledge of both the domestic and international real estate markets. Whether you wish to buy or sell your apartment, villa, vacation home, or manor, we want to be part of the process and help you make the deal of your life. We hope to build a lifelong relationship with every customer we work with.',
     openDoorsTitle: 'We open new doors',
     address: 'Kasarmikatu 34, 00130 Helsinki',
   },
@@ -328,6 +331,7 @@ export default function CompanyPage({ params }: { params: { locale: string } }) 
                 <p>{t.philosophyText1}</p>
                 <p>{t.philosophyText2}</p>
                 <p>{t.philosophyText3}</p>
+                <p>{t.philosophyText4}</p>
               </div>
             </div>
             
