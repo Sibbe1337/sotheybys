@@ -68,28 +68,28 @@ const translations = {
   },
   en: {
     introTitle: 'Snellman Sotheby\'s International Realty®',
-    introText: 'Today with 84 countries, 1,100 offices and 26,100 agents, Sotheby\'s International Realty® is one of the world\'s largest real estate brands. Our global network opens the door to international luxury real estate markets for clients around the world.',
-    officeTitle: 'Our beautiful office serves',
-    officeHours: 'you on weekdays 10:00 – 17:00',
-    officeExtra: 'and at other times by appointment.',
-    box1Title: 'Sotheby\'s Auction House',
-    box1Button: 'READ MORE »',
+    introText: 'Today, Sotheby\'s International Realty operates in more than 84 countries, has 1100 offices and 26 100 brokers around the world and holds one of the strongest brands when it comes to real estate in the world. The company is following a franchise concept, making it possible to connect the real estate market on a global level.',
+    officeTitle: 'Our wonderful office is open',
+    officeHours: 'on weekdays 10:00 – 17:00',
+    officeExtra: 'as well as other times by appointment.',
+    box1Title: 'Sotheby\'s® Auction house',
+    box1Button: 'Read more',
     box2Title: 'Sotheby\'s International Realty®',
-    box2Button: 'READ MORE »',
-    box3Title: 'Meet our staff',
-    box3Button: 'CONTACT »',
-    historyTitle: 'Sotheby\'s® & Sotheby\'s International Realty®',
-    historyText: 'Alongside the traditional Sotheby\'s auction house founded in 1744, a real estate brokerage chain was founded in 1976 whose cornerstone is to offer quality-conscious customers the same strong market knowledge and service level in the real estate market as in art and antique brokerage, individually and discreetly.',
+    box2Button: 'Read more',
+    box3Title: 'Get to know our personnel',
+    box3Button: 'Contact us',
+    historyTitle: 'Sotheby\'s and Sotheby\'s International Realty®',
+    historyText: 'Sotheby\'s International Realty® has its origins in the English auction house Sotheby\'s, established back in 1744. Sotheby\'s is known for auctioning extraordinary artwork and valuable antiques with various origins. Today Sotheby\'s is the second oldest, still active, auction house in the whole world. Years later, a vision of conveying real estate with the same qualitative customer focus and market knowledge as the auction house offers, but with focus on extraordinary properties instead was born, and in 1977 Sotheby\'s International Realty was founded.',
     aboutTitle: 'Snellman Sotheby\'s International Realty®',
-    aboutText1: 'Snellman Sotheby\'s International Realty Finland started its operations in Helsinki in the fall of 2015. We are one of the few brokers specializing in valuable properties that can offer quality-conscious customers unique properties and individualized service both in Finland and around the world. We broker unique properties, with style.',
-    aboutText2: 'Whether you are buying or selling a home, property, vacation property, farm or an entire manor area, we want to help you make the deal of your life.',
-    aboutText3: 'We are at home both in your local area and in international luxury real estate markets.',
-    philosophyTitle: 'Our Service Philosophy',
-    philosophyText1: 'The dream of the perfect home is our dream work, because home is the place where achievable quality of life is best crystallized.',
-    philosophyText2: 'As a real estate broker and expert in valuable homes, we are proud to bring together perfectly compatible homes and residents. Every home we broker is as unique as every customer.',
-    philosophyText3: 'In Finland, we have focused on brokering premium apartments and properties in the capital region and the surrounding coastal area. Our selection includes high-quality loft and penthouse apartments as well as valuable new construction projects. We also broker vacation properties from coastal villas to ski lodges in Lapland.',
-    philosophyText4: 'Thanks to our background as part of Sotheby\'s International Realty, we possess knowledge of both the domestic and international real estate markets. Whether you wish to buy or sell your apartment, villa, vacation home, or manor, we want to be part of the process and help you make the deal of your life. We hope to build a lifelong relationship with every customer we work with.',
-    openDoorsTitle: 'We open new doors',
+    aboutText1: 'Ab Snellman LKV Oy Sotheby\'s International Realty Finland opened their doors to the Finnish market in the fall 2015. We are one of few who specialize in sales of luxury real estate and we will make sure to provide you with the absolute best the market has to offer.',
+    aboutText2: 'Why Finland? Helsinki – Finland\'s dynamic and trending capital, located by the Gulf of Finland, currently has one of the highest potential for expansion, not only in the Nordics but in whole of Europe. Prognosis also estimates that Helsinki will grow as an area tremendously during the upcoming decade.',
+    aboutText3: 'Our capital is known for its high-tech atmosphere, trending commerce and fine-dine reputation along with its beautiful seaside and historically charming design blocks. Apart from the capital area, our country offers astonishing landscapes, from the unique archipelago in Southern Finland all the way up to the enchanting, arctic Lapland in the North. Finland is more ready than ever to be exposed to the rest of the world through a globally strong and meaningful brand.',
+    philosophyTitle: 'Our service philosophy',
+    philosophyText1: 'Finding the homes of our customers dreams is not only our job but also our greatest passion. Home is the place where you can reflect over your lifestyle and communicate wished quality of life in the best of ways. Luxurious homes like the ones we provide are unique from its planning stage to its esthetics and geographic location, and everyone has different views of what their dream home looks like. We know we have done a great work when we have connected the right people to the right home.',
+    philosophyText2: 'In Finland we focus on premium properties in the capital area – To our sales portfolio we have a wide range of alternatives, from luxurious penthouse apartments to new development projects. Apart from properties in the center we convey private villas and weekend houses in Southern Finland as well as luxurious cottages in Northern Lapland.',
+    philosophyText3: 'Regardless if your wish is to buy or sell your apartment, villa, island or yard, we want to be part of the process and help you make the best deal of your life. We hope to achieve a relationship that will last a lifetime with all our customers we have to honor to work with.',
+    philosophyText4: '',
+    openDoorsTitle: 'We open new doors.',
     address: 'Kasarmikatu 34, 00130 Helsinki',
   },
 };
@@ -331,7 +331,7 @@ export default function CompanyPage({ params }: { params: { locale: string } }) 
                 <p>{t.philosophyText1}</p>
                 <p>{t.philosophyText2}</p>
                 <p>{t.philosophyText3}</p>
-                <p>{t.philosophyText4}</p>
+                {t.philosophyText4 && <p>{t.philosophyText4}</p>}
               </div>
             </div>
             
