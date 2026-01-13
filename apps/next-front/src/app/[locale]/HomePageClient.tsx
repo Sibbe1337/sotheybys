@@ -47,24 +47,37 @@ function formatPlot(n: number | null | undefined, locale: string): string {
   return `${formatted} ha`;
 }
 
+// Helper: Check if property is an apartment (should not show plot size)
+function isApartment(property: Property): boolean {
+  const apartmentTypes = ['kerrostalo', 'lägenhet', 'apartment', 'huoneisto'];
+  const typeLabel = property.meta.listingTypeLabel;
+  
+  // Check localized values
+  const typeStr = typeof typeLabel === 'string' 
+    ? typeLabel 
+    : typeLabel?.fi || typeLabel?.sv || typeLabel?.en || '';
+  
+  return apartmentTypes.some(apt => typeStr.toLowerCase().includes(apt));
+}
+
 // Function to get translated hero slides
-// Order: 1. International agent, 2. Welcome/Välkommen, 3. Snellman SIR, 4. References
+// Order: 1. Welcome/Välkommen, 2. International agent, 3. Snellman SIR, 4. References
 const getTranslatedSlides = (language: SupportedLanguage) => [
   {
     id: '1',
-    image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/57809e7b-2fe2-430d-a7d7-aff39337d0c1/ead27130-4e08-465e-af6d-500d593ae0db.jpg',
-    title: getHomepageTranslation('hero1Title', language),
-    subtitle: getHomepageTranslation('hero1Subtitle', language),
-    buttonText: getHomepageTranslation('hero1Button', language),
-    buttonLink: '/yhteystiedot'
-  },
-  {
-    id: '2',
     image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/3cfbb584-8fc0-493a-8b2f-66edf18b027a/e3ffa954-b4a1-4ed6-bed1-f131955d96c2.jpg',
     title: getHomepageTranslation('hero2Title', language),
     subtitle: getHomepageTranslation('hero2Subtitle', language),
     buttonText: getHomepageTranslation('hero2Button', language),
     buttonLink: '/kohteet'
+  },
+  {
+    id: '2',
+    image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/57809e7b-2fe2-430d-a7d7-aff39337d0c1/ead27130-4e08-465e-af6d-500d593ae0db.jpg',
+    title: getHomepageTranslation('hero1Title', language),
+    subtitle: getHomepageTranslation('hero1Subtitle', language),
+    buttonText: getHomepageTranslation('hero1Button', language),
+    buttonLink: '/yhteystiedot'
   },
   {
     id: '3',
@@ -664,7 +677,7 @@ export default function HomePageClient({
                           <p className="text-sm text-gray-600 mb-4">
                             {property.dimensions.living && `${Math.round(property.dimensions.living)} m²`}
                             {property.dimensions.total && property.dimensions.total !== property.dimensions.living && ` / ${Math.round(property.dimensions.total)} m²`}
-                            {property.dimensions.plot && ` | ${formatPlot(property.dimensions.plot, language)}`}
+                            {property.dimensions.plot && !isApartment(property) && ` | ${formatPlot(property.dimensions.plot, language)}`}
                           </p>
                         </NextLink>
                         

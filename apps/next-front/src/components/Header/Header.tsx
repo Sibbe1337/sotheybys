@@ -64,15 +64,15 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
   const getMenuItemsForLanguage = (lang: string): MenuItem[] => {
     // ALL LOCALES use same Finnish filesystem paths
     // Labels match the old website: sothebysrealty.fi/sv/ and sothebysrealty.fi/en/
-    return [
+      return [
       { id: '1', label: lang === 'sv' ? 'Hem' : lang === 'en' ? 'Home' : 'Koti', path: '/', url: '/' },
-      { 
-        id: '2', 
+        { 
+          id: '2', 
         label: lang === 'sv' ? 'Objekt' : lang === 'en' ? 'Properties' : 'Kohteet', 
         path: '/kohteet', 
         url: '/kohteet',
-        childItems: {
-          nodes: [
+          childItems: {
+            nodes: [
             { 
               id: '2-1', 
               label: lang === 'sv' ? 'Objekt till salu' : lang === 'en' ? 'Properties for sale' : 'Myyntikohteet', 
@@ -97,9 +97,9 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
               path: '/kohteet/referenssit', 
               url: '/kohteet/referenssit' 
             },
-          ]
-        }
-      },
+            ]
+          }
+        },
       { 
         id: '3', 
         label: lang === 'sv' ? 'Sälj med oss' : lang === 'en' ? 'Sell with us' : 'Myymässä', 
@@ -118,13 +118,13 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
         path: '/henkilosto', 
         url: '/henkilosto' 
       },
-      { 
-        id: '6', 
+        { 
+          id: '6', 
         label: lang === 'sv' ? 'Kontakta oss' : lang === 'en' ? 'Contact us' : 'Ota yhteyttä', 
         path: '/yhteystiedot', 
         url: '/yhteystiedot',
-        childItems: {
-          nodes: [
+          childItems: {
+            nodes: [
             { 
               id: '6-1', 
               label: lang === 'sv' ? 'Om oss' : lang === 'en' ? 'About' : 'Yritys', 
@@ -137,10 +137,10 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
               path: '/meille-toihin', 
               url: '/meille-toihin' 
             },
-          ]
-        }
-      },
-    ];
+            ]
+          }
+        },
+      ];
   };
 
   // ✅ LINUS FIX: Always use dynamic menu items based on current language

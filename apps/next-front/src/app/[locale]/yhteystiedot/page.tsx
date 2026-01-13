@@ -304,46 +304,46 @@ export default function ContactPage({ params }: { params: { locale: string } }) 
               {/* First 8 members in regular grid */}
               <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10">
                 {staffMembers.slice(0, 8).map((member) => (
-                  <div key={member.id} className="text-center">
+                <div key={member.id} className="text-center">
                     {/* Photo - Larger responsive sizing */}
                     <div className="relative mb-4 mx-auto w-full max-w-[160px] sm:max-w-[180px] lg:max-w-[200px] aspect-[5/7]">
-                      <Image
-                        src={member.image}
-                        alt={member.name}
-                        fill
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      fill
                         sizes="(max-width: 640px) 160px, (max-width: 1024px) 180px, 200px"
-                        className="object-cover object-top grayscale"
-                      />
-                    </div>
-                    
-                    {/* Flags */}
-                    <div className="flex gap-1 justify-center mb-2">
-                      {member.flags.map((flag) => (
+                      className="object-cover object-top grayscale"
+                    />
+                  </div>
+                  
+                  {/* Flags */}
+                  <div className="flex gap-1 justify-center mb-2">
+                    {member.flags.map((flag) => (
                         <span key={flag} className="text-base">{flagEmojis[flag]}</span>
-                      ))}
-                    </div>
-                    
-                    {/* Name */}
+                    ))}
+                  </div>
+                  
+                  {/* Name */}
                     <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-1">
-                      {member.name}
-                    </h3>
-                    
-                    {/* Title */}
+                    {member.name}
+                  </h3>
+                  
+                  {/* Title */}
                     <p className="text-xs sm:text-sm text-gray-600 mb-2 leading-tight">
-                      {member.title}
-                    </p>
-                    
-                    {/* Phone */}
+                    {member.title}
+                  </p>
+                  
+                  {/* Phone */}
                     <a 
                       href={`tel:${member.phone.replace(/\s/g, '')}`}
                       className="block text-xs sm:text-sm text-gray-600 hover:text-[#002349] transition-colors mb-1"
                     >
-                      {member.phone}
+                    {member.phone}
                     </a>
-                    
-                    {/* Email */}
-                    <a 
-                      href={`mailto:${member.email}`}
+                  
+                  {/* Email */}
+                  <a 
+                    href={`mailto:${member.email}`}
                       className="text-xs sm:text-sm text-gray-600 hover:text-[#002349] transition-colors"
                     >
                       {member.email}
@@ -397,11 +397,11 @@ export default function ContactPage({ params }: { params: { locale: string } }) 
                       <a 
                         href={`mailto:${member.email}`}
                         className="text-xs sm:text-sm text-gray-600 hover:text-[#002349] transition-colors"
-                      >
-                        {member.email}
-                      </a>
-                    </div>
-                  ))}
+                  >
+                    {member.email}
+                  </a>
+                </div>
+              ))}
                 </div>
               )}
             </div>
