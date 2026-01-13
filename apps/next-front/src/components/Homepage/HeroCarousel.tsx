@@ -23,6 +23,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
   const params = useParams();
   const router = useRouter();
   const locale = params?.locale || 'fi';
+  // IMPORTANT: Start at slide 0 (Välkommen till en extraordinär bostadsaffär!)
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [hasInitialized, setHasInitialized] = useState(false);
