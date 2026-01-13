@@ -846,38 +846,38 @@ export default function HomePageClient({
                 <div>
                   <h2 className="text-3xl lg:text-4xl font-light text-black mb-6">
                     {language === 'fi' 
-                      ? 'Kutsu meidät arviokäynnille!'
+                      ? 'Kutsu meidät maksuttomalle arviokäynnille!'
                       : language === 'sv'
-                      ? 'Bjud in oss till ett värderingsbesök!'
-                      : 'Invite us for a valuation visit!'}
+                      ? 'Bjud in oss för en kostnadsfri värdering!'
+                      : 'Invite us for a free property valuation!'}
                   </h2>
                   <p className="text-base text-black font-light leading-relaxed mb-4">
                     {language === 'fi' 
                       ? 'Oletko ostamassa? Oletko myymässä? Etsitkö sijoituskohteita?'
                       : language === 'sv'
-                      ? 'Köper du? Säljer du? Letar du efter investeringsobjekt?'
+                      ? 'Funderar du på att köpa eller sälja? Söker du investeringsobjekt?'
                       : 'Are you buying? Are you selling? Looking for investment properties?'}
                   </p>
                   <p className="text-base text-black font-light leading-relaxed mb-4">
                     {language === 'fi' 
                       ? 'Kerro miten voimme auttaa ja otamme sinuun yhteyttä.'
                       : language === 'sv'
-                      ? 'Berätta hur vi kan hjälpa till så kontaktar vi dig.'
+                      ? 'Berätta hur vi kan hjälpa så kontaktar vi dig.'
                       : 'Tell us how we can help and we will contact you.'}
                   </p>
                   <p className="text-base text-black font-light leading-relaxed mb-4">
                     {language === 'fi' 
-                      ? 'Oletko kiinnostunut arvokodeista ja uniikeista kiinteistöistä?'
+                      ? 'Oletko kiinnostunut arvokkaista kodeista ja ainutlaatuisista kiinteistöistä?'
                       : language === 'sv'
-                      ? 'Är du intresserad av värdefulla hem och unika fastigheter?'
-                      : 'Interested in valuable homes and unique properties?'}
+                      ? 'Är du intresserad av exklusiva hem och värdefastigheter? Kontakta oss!'
+                      : 'Interested in valuable homes and unique properties? Contact us!'}
                   </p>
                   <p className="text-base text-black font-light leading-relaxed">
                     {language === 'fi' 
-                      ? 'Tilaa uutiskirjeemme, niin pysyt ajan tasalla.'
+                      ? 'Tilaa uutiskirjeemme, niin pysyt ajan tasalla asuntomarkkinoiden kehityksestä.'
                       : language === 'sv'
-                      ? 'Prenumerera på vårt nyhetsbrev så håller du dig uppdaterad.'
-                      : 'Subscribe to our newsletter to stay updated.'}
+                      ? 'Beställ vårt nyhetsbrev så håller vi dig uppdaterad om bostadsmarknaden.'
+                      : 'Subscribe to our newsletter to stay updated on the housing market.'}
                   </p>
                 </div>
 
