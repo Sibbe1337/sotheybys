@@ -23,14 +23,19 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
   const params = useParams();
   const router = useRouter();
   const locale = params?.locale || 'fi';
-  // IMPORTANT: Start at slide 0 (Välkommen till en extraordinär bostadsaffär!)
+  // Start at slide 0 - "Välkommen till en extraordinär bostadsaffär!"
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(false); // Start paused
   const [hasInitialized, setHasInitialized] = useState(false);
 
+  // Start autoplay after component is fully mounted and first slide is visible
   useEffect(() => {
-    // Set initialization flag after first render
     setHasInitialized(true);
+    // Delay autoplay start to ensure first slide renders properly
+    const timer = setTimeout(() => {
+      setIsAutoPlaying(true);
+    }, 1000);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
