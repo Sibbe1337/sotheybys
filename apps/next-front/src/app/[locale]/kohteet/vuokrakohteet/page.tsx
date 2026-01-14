@@ -1,5 +1,4 @@
 import PropertyGridNew from '@/components/Property/PropertyGridNew';
-import { Link } from '@/lib/navigation';
 import { locales, type Locale } from '@/i18n/config';
 import { fetchRentalProperties } from '@/lib/server/fetch-properties';
 
@@ -16,10 +15,6 @@ const translations = {
   fi: {
     title: 'Vuokrakohteet',
     noProperties: 'Ei vuokrakohteita saatavilla tällä hetkellä.',
-    heroTitle: 'Palveleva vuokranvälityksesi!',
-    heroText: 'Onko kotisi tai toimistotilasi vuokraaminen ajankohtaista? Ammattitaitoiset välittäjämme auttavat sinua myös silloin, kun kotisi tai sijoitusasuntosi on vuokralaisen tarpeessa. Ota yhteyttä, niin keskustellaan mielellämme asunnon vuokraamisesta kanssasi.',
-    contactBtn: 'Ota yhteyttä',
-    rentalsBtn: 'Vuokrakohteet',
     contactInfoTitle: 'Tervetuloa asiakkaaksemme!',
     contactInfoText1: 'Haluatko vuokrata kotisi tai liiketilasi luotettavalle vuokralaiselle? Snellman Sotheby\'s International Realty tarjoaa vuokrauspalveluja myös vaativille kiinteistöille.',
     contactInfoText2: 'Ammattitaitoinen vuokranvälittäjäsi palvelee sinua maanantaista perjantaihin klo 10 – 17,\nsekä muina aikoina sopimuksen mukaan.',
@@ -39,10 +34,6 @@ const translations = {
   sv: {
     title: 'Hyresobjekt',
     noProperties: 'Inga hyresobjekt tillgängliga för tillfället.',
-    heroTitle: 'Välkommen som vår kund!',
-    heroText: 'Vill du hyra ditt hem eller din affärslokal till en pålitlig hyresgäst? Snellman Sotheby\'s International Realty erbjuder också uthyrningstjänster för krävande objekt.',
-    contactBtn: 'Kontakta oss',
-    rentalsBtn: 'Hyresobjekt',
     contactInfoTitle: 'Välkommen som vår kund!',
     contactInfoText1: 'Vill du hyra ditt hem eller din affärslokal till en pålitlig hyresgäst? Snellman Sotheby\'s International Realty erbjuder också uthyrningstjänster för krävande objekt.',
     contactInfoText2: 'Din professionella uthyrnings mäklare betjänar er från måndag till fredag från 10 – 17,\nandra tider är vi öppna efter överenskommelse.',
@@ -62,10 +53,6 @@ const translations = {
   en: {
     title: 'Rental listings',
     noProperties: 'No rental properties available at the moment.',
-    heroTitle: 'Welcome as our customer!',
-    heroText: 'Do you want to rent your home or business premises to a reliable tenant? Snellman Sotheby\'s International Realty also offers rental services for demanding properties.',
-    contactBtn: 'Contact us',
-    rentalsBtn: 'Rental listings',
     contactInfoTitle: 'Welcome as our customer!',
     contactInfoText1: 'Do you want to rent your home or business premises to a reliable tenant? Snellman Sotheby\'s International Realty also offers rental services for demanding properties.',
     contactInfoText2: 'Your professional rental broker serves you from Monday to Friday 10 – 17,\nas well as other times by appointment.',
@@ -113,36 +100,6 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
               </p>
             </div>
           )}
-        </div>
-      </section>
-
-      {/* Hero Section */}
-      <section className="py-20 lg:py-32 bg-gray-50">
-        <div className="max-w-[1400px] mx-auto px-6 text-center">
-          <h1 className="text-4xl lg:text-5xl font-light text-gray-900 mb-6">
-            {t.heroTitle}
-          </h1>
-          <p className="text-xl font-light text-gray-700 leading-relaxed mb-12 max-w-4xl mx-auto">
-            {t.heroText}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/yhteystiedot"
-              className="inline-block bg-[var(--color-primary)] text-white px-10 py-4 
-                       hover:bg-[var(--color-primary-dark)] transition-colors 
-                       uppercase tracking-wider text-sm font-light"
-            >
-              {t.contactBtn}
-            </Link>
-            <a
-              href="#vuokrakohteet"
-              className="inline-block border-2 border-[var(--color-primary)] text-[var(--color-primary)] px-10 py-4 
-                       hover:bg-[var(--color-primary)] hover:text-white transition-all 
-                       uppercase tracking-wider text-sm font-light"
-            >
-              {t.rentalsBtn}
-            </a>
-          </div>
         </div>
       </section>
 
