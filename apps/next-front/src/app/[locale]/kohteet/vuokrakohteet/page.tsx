@@ -198,7 +198,7 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
                       type="text"
                       placeholder={t.formName}
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-[var(--color-primary)]"
+                      className="w-full px-4 py-3 bg-white border border-gray-300 rounded focus:outline-none focus:border-[var(--color-primary)]"
                     />
                   </div>
                   <div>
@@ -206,7 +206,7 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
                       type="email"
                       placeholder={t.formEmail}
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-[var(--color-primary)]"
+                      className="w-full px-4 py-3 bg-white border border-gray-300 rounded focus:outline-none focus:border-[var(--color-primary)]"
                     />
                   </div>
                 </div>
@@ -214,7 +214,7 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
                   <input
                     type="tel"
                     placeholder={t.formPhone}
-                    className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-[var(--color-primary)]"
+                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded focus:outline-none focus:border-[var(--color-primary)]"
                   />
                 </div>
                 <div>
@@ -222,7 +222,7 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
                     placeholder={t.formMessage}
                     required
                     rows={6}
-                    className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-[var(--color-primary)]"
+                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded focus:outline-none focus:border-[var(--color-primary)]"
                   />
                 </div>
                 <div className="flex items-start gap-3">
