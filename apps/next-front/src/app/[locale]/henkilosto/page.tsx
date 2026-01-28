@@ -109,7 +109,7 @@ const translations = {
     formPrivacyText: 'I have read the',
     formPrivacyLink: 'Tietosuojaseloste',
     formRecaptchaText: 'This site is protected by reCAPTCHA and the Google',
-    formRecaptchaPrivacy: 'tietosuojakäytännöt ja',
+    formRecaptchaPrivacy: 'Privacy Policy',
     formRecaptchaTerms: 'Terms of Service',
     formRecaptchaEnd: 'apply.',
     formSubmit: 'Send',
