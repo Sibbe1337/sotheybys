@@ -70,6 +70,11 @@ const translations = {
     videoSubtitle: 'Katso miten autamme asiakkaitamme onnistuneeseen asuntokauppaan',
     addressStreet: 'Kasarmikatu 34,',
     addressCity: '00130 Helsinki',
+    recaptchaText: 'Tämän sivun suojaa reCAPTCHA, mikä tarkoittaa, että Googlen',
+    recaptchaPrivacy: 'tietosuojakäytännöt',
+    recaptchaAnd: 'ja',
+    recaptchaTerms: 'käyttöehdot',
+    recaptchaApply: 'ovat voimassa.',
   },
   sv: {
     title: 'Sälj med oss',
@@ -127,6 +132,11 @@ const translations = {
     servicesTitle: 'Vårt tjänstelöfte',
     servicesText1: 'Vi vill vara med då du gör ett av ditt livs största ekonomiska beslut. Vi garanterar att du får våra erfarna experters åsikt och stöd längs hela processen. Vår önskan är att alla våra kunder trivs med oss och att det blir ett naturligt val att samarbeta med oss även i framtiden.',
     servicesText2: 'Glöm inte att be ett service erbjudande av oss.',
+    recaptchaText: 'Denna sida skyddas av reCAPTCHA, vilket innebär att Googles',
+    recaptchaPrivacy: 'sekretesspolicy',
+    recaptchaAnd: 'och',
+    recaptchaTerms: 'användarvillkor',
+    recaptchaApply: 'gäller.',
   },
   en: {
     title: 'Sell with us',
@@ -184,6 +194,11 @@ const translations = {
     servicesTitle: 'Our Servicepromise',
     servicesText1: 'We want to support you when you are about to make one of the most important financial decisions of your life and make sure you take the right choice. We guarantee that you get our experienced experts opinion and support throughout the whole process.',
     servicesText2: 'Our highest wish is that all our customers feel comfortable with us and that cooperation in the future will be a natural decision for every one of our customers. Please do not forget to ask for a service offer.',
+    recaptchaText: 'This page is protected by reCAPTCHA, which means that Google\'s',
+    recaptchaPrivacy: 'privacy policy',
+    recaptchaAnd: 'and',
+    recaptchaTerms: 'terms of service',
+    recaptchaApply: 'apply.',
   },
 };
 
@@ -326,15 +341,15 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
                   </div>
                   
                   <p className="text-xs text-white font-light">
-                    Tämän sivun suojaa reCAPTCHA, mikä tarkoittaa, että Googlen{' '}
-                    <a href="https://policies.google.com/privacy?hl=fi" target="_blank" rel="noopener noreferrer" className="text-white underline">
-                      tietosuojakäytännöt
+                    {t.recaptchaText}{' '}
+                    <a href={`https://policies.google.com/privacy?hl=${params.locale}`} target="_blank" rel="noopener noreferrer" className="text-white underline">
+                      {t.recaptchaPrivacy}
                     </a>{' '}
-                    ja{' '}
-                    <a href="https://policies.google.com/terms?hl=fi" target="_blank" rel="noopener noreferrer" className="text-white underline">
-                      käyttöehdot
+                    {t.recaptchaAnd}{' '}
+                    <a href={`https://policies.google.com/terms?hl=${params.locale}`} target="_blank" rel="noopener noreferrer" className="text-white underline">
+                      {t.recaptchaTerms}
                     </a>{' '}
-                    ovat voimassa.
+                    {t.recaptchaApply}
                   </p>
                   
                   <button
