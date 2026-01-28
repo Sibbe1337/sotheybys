@@ -1,11 +1,10 @@
-import { ChristmasLandingPage } from '@/components/ChristmasLanding';
+import { redirect } from 'next/navigation';
 
 /**
- * Root page - Christmas/New Year greeting page
+ * Root page - Redirects to Finnish homepage
  *
- * This page shows a festive greeting before visitors enter the main site.
- * Visitors can click through to access the main site at /fi, /sv, or /en
+ * Visitors landing on / are redirected to /fi (default locale)
  */
 export default function RootPage() {
-  return <ChristmasLandingPage />;
+  redirect('/fi');
 }
