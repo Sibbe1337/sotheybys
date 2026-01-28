@@ -43,7 +43,7 @@ export const HOMEPAGE_TRANSLATIONS: HomepageTranslations = {
   welcomeHeading: {
     fi: 'Tervetuloa onnistuneeseen asuntokauppaan!',
     sv: 'Välkommen till en extraordinär bostadsaffär!',
-    en: 'Welcome to successful property transactions!'
+    en: 'Welcome to an extraordinary property listing!'
   },
   welcomeText: {
     fi: 'Olemme tuoneet Suomen asuntomarkkinoille yhden maailman suurimman kiinteistönvälitysketjun Sotheby\'s International Realty®:n osaamisen ja kokemuksen. Avaamalla kiinteistömarkkinat yli valtakunnan rajojen haluamme kehittää koko alaa. Inspiraationamme toimivat mielenkiintoiset ja uniikit kohteet kaikkialla maailmassa.',
@@ -190,7 +190,7 @@ export const HOMEPAGE_TRANSLATIONS: HomepageTranslations = {
   hero2Title: {
     fi: 'Tervetuloa onnistuneeseen asuntokauppaan!',
     sv: 'Välkommen till en extraordinär bostadsaffär!',
-    en: 'Welcome to successful property transactions!'
+    en: 'Welcome to an extraordinary property listing!'
   },
   hero2Subtitle: {
     fi: 'Katso kaikki myynnissä olevat kohteemme.',
@@ -208,9 +208,9 @@ export const HOMEPAGE_TRANSLATIONS: HomepageTranslations = {
     en: 'Snellman Sotheby\'s International Realty®'
   },
   hero3Subtitle: {
-    fi: 'Meillä kaikilla on erilaiset tarpeet ja toiveet, ja me otamme ne huomioon ja räätälöimme ratkaisun teidän tarpeidenne ja toiveidenne mukaan. Tehtävämme on tehdä unelmastasi totta.',
+    fi: 'Haluamme luoda kestävän asiakassuhteen, jossa otamme huomioon teidän pienimmätkin toiveet ja tarpeet.',
     sv: 'Vi alla har olika behov och preferenser och vi beaktar dem och skräddarsyr en lösning efter ert behov och er önskan. Vår uppgift är att göra din dröm till verklighet.',
-    en: 'We all have different needs and preferences, and we consider them and tailor a solution to your needs and wishes. Our mission is to make your dream come true.'
+    en: 'We want to create a lasting customer relationship where we take into account your smallest wishes and needs.'
   },
   hero3Button: {
     fi: 'Tutustu toimintatapaamme',
