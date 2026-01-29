@@ -81,7 +81,10 @@ export async function GET(
       } : undefined,
       estateAgentName: domainProperty.agent?.name || '',
       estateAgentPhone: domainProperty.agent?.phone || '',
-      estateAgentEmail: domainProperty.agent?.email || ''
+      estateAgentEmail: domainProperty.agent?.email || '',
+      // Dennis 2025-01-29: Include international URL for Global Listing button
+      internationalUrl: domainProperty.internationalUrl || null,
+      biddingUrl: domainProperty.pricing.biddingUrl || null
     };
     
     return NextResponse.json(

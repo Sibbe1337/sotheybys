@@ -733,6 +733,34 @@ export default function HomePageClient({
                             </div>
                           )}
                           
+                          {/* Bidding Button */}
+                          {property.pricing.biddingUrl && (
+                            <a
+                              href={property.pricing.biddingUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="block w-full bg-[#8e740b] text-white text-center px-6 py-2.5 mb-2
+                                       hover:bg-[#6d5708] transition-colors duration-300
+                                       font-normal uppercase tracking-wide text-sm"
+                            >
+                              {language === 'fi' ? 'SEURAA TARJOUSKAUPPAA' : language === 'sv' ? 'FÖLJ BUDGIVNINGEN' : 'FOLLOW BIDDING'}
+                            </a>
+                          )}
+                          
+                          {/* Global Listing Button */}
+                          {property.internationalUrl && (
+                            <a
+                              href={property.internationalUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="block w-full bg-gray-800 text-white text-center px-6 py-2.5 mb-2
+                                       hover:bg-black transition-colors duration-300
+                                       font-normal uppercase tracking-wide text-sm"
+                            >
+                              GLOBAL LISTING
+                            </a>
+                          )}
+                          
                           <NextLink
                             href={`/${locale}/kohde/${property.slug}`}
                             className="block w-full bg-[#002349] text-white text-center px-6 py-2.5
