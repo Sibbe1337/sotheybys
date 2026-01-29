@@ -353,24 +353,26 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
 
         {/* Dennis 2025-11-11: SEURAA TARJOUSKAUPPA button (only for bidding properties) */}
         {/* Dennis 2025-11-13: Kantiga knappar, enhetlig stil */}
+        {/* Dennis 2025-01-29: Mer avstånd mellan knappar */}
         {biddingUrl && (
           <a
             href={biddingUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2 w-full rounded-none bg-[#8e740b] px-4 py-3 text-center text-xs sm:text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-[#6d5708] shadow-sm hover:shadow-md"
+            className="mt-4 w-full rounded-none bg-[#8e740b] px-4 py-3 text-center text-xs sm:text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-[#6d5708] shadow-sm hover:shadow-md"
           >
             {locale === 'fi' ? 'SEURAA TARJOUSKAUPPAA' : locale === 'sv' ? 'FÖLJ BUDGIVNINGEN' : 'FOLLOW BIDDING'}
           </a>
         )}
         
         {/* Dennis 2025-11-11: GLOBAL LISTING button (only if published internationally) */}
+        {/* Dennis 2025-01-29: Mer avstånd mellan knappar */}
         {internationalUrl && (
           <a
             href={internationalUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2 w-full rounded-none bg-gray-800 px-4 py-3 text-center text-xs sm:text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-black shadow-sm hover:shadow-md"
+            className="mt-3 w-full rounded-none bg-gray-800 px-4 py-3 text-center text-xs sm:text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-black shadow-sm hover:shadow-md"
           >
             GLOBAL LISTING
           </a>
@@ -378,9 +380,10 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
 
         {/* Dennis: "Katso kohde" tar upp hela bredden */}
         {/* Dennis 2025-11-13: Enhetlig stil - font-bold, tracking-wide */}
+        {/* Dennis 2025-01-29: Mer avstånd från andra knappar */}
         <Link
           href={href}
-          className="mt-auto w-full rounded-none bg-[#002349] px-4 py-3 text-center text-xs sm:text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-[#001731] shadow-sm hover:shadow-md"
+          className="mt-3 w-full rounded-none bg-[#002349] px-4 py-3 text-center text-xs sm:text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-[#001731] shadow-sm hover:shadow-md"
         >
           {viewText}
         </Link>
