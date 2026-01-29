@@ -427,6 +427,31 @@ export class LinearToPropertyMapper {
       return found?.value || found?.url || found;
     };
     
+    // Dennis 2025-01-29: Extract URL from links array by link NAME (e.g., "SIR")
+    const extractLinkByName = (name: string): string | undefined => {
+      const linksArray = (src as any).links;
+      
+      if (!linksArray) {
+        return undefined;
+      }
+      
+      // Handle if links is localized object with arrays
+      const localeLinks = linksArray[locale] || linksArray['fi'] || linksArray;
+      const actualLinks = localeLinks?.value || localeLinks;
+      
+      if (!Array.isArray(actualLinks)) {
+        return undefined;
+      }
+      
+      // Find link by name (case-insensitive)
+      const found = actualLinks.find((link: any) => {
+        const linkName = link?.name || link?.key || link?.label || '';
+        return linkName.toLowerCase() === name.toLowerCase();
+      });
+      
+      return found?.value || found?.url;
+    };
+    
     const floorPlanUrl = lget(src.floorPlanUrl!, locale) || 
                          src.images?.find(i => i.isFloorPlan)?.url || 
                          extractLinkFromArray(/pohjakuva|floorplan|planritning/i, 'floor plan') ||
@@ -444,10 +469,12 @@ export class LinearToPropertyMapper {
                          undefined;
     
     // Dennis 2025-12-15: International URL (Global Listing on sothebysrealty.com)
+    // Dennis 2025-01-29: Updated to match more URL patterns and also find by link name "SIR"
     const internationalUrl = lget((src as any).internationalUrl!, locale) ||
                              lget((src as any).internationalListingUrl!, locale) ||
                              lget((src as any).globalListingUrl!, locale) ||
-                             extractLinkFromArray(/sothebysrealty\.com\/(eng|id-id|zh-cn|ru-ru|pt-pt|es-mx|fr-fr|ja-jp|ko-kr|de-de)\/sales/i, 'global listing') ||
+                             extractLinkFromArray(/sothebysrealty\.com/i, 'global listing') ||
+                             extractLinkByName('SIR') ||
                              undefined;
     
     const videoUrl = lget(src.videoUrl!, locale) || 
