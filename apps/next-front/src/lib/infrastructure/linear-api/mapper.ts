@@ -470,11 +470,25 @@ export class LinearToPropertyMapper {
     
     // Dennis 2025-12-15: International URL (Global Listing on sothebysrealty.com)
     // Dennis 2025-01-29: Updated to match more URL patterns and also find by link name "SIR"
+    const sirFromName = extractLinkByName('SIR');
+    const sirFromPattern = extractLinkFromArray(/sothebysrealty\.com/i, 'global listing');
+    
+    // Debug: log what we found
+    const addressDebug = typeof (src as any).address === 'string' 
+      ? (src as any).address 
+      : (src as any).address?.fi?.value || 'UNKNOWN';
+    if (addressDebug.toLowerCase().includes('heikkil')) {
+      console.log('🔍 DEBUG Heikkiläntie links:');
+      console.log('  - Raw links:', JSON.stringify((src as any).links)?.substring(0, 300));
+      console.log('  - SIR from name:', sirFromName);
+      console.log('  - SIR from pattern:', sirFromPattern);
+    }
+    
     const internationalUrl = lget((src as any).internationalUrl!, locale) ||
                              lget((src as any).internationalListingUrl!, locale) ||
                              lget((src as any).globalListingUrl!, locale) ||
-                             extractLinkFromArray(/sothebysrealty\.com/i, 'global listing') ||
-                             extractLinkByName('SIR') ||
+                             sirFromPattern ||
+                             sirFromName ||
                              undefined;
     
     const videoUrl = lget(src.videoUrl!, locale) || 
