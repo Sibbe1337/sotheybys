@@ -67,7 +67,7 @@ const getTranslatedSlides = (language: SupportedLanguage) => [
     id: '1',
     image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/3cfbb584-8fc0-493a-8b2f-66edf18b027a/e3ffa954-b4a1-4ed6-bed1-f131955d96c2.jpg',
     title: getHomepageTranslation('hero2Title', language), // "Välkommen till en extraordinär bostadsaffär!"
-    subtitle: getHomepageTranslation('hero2Subtitle', language), // "Se alla våra objekt till salu."
+    subtitle: '', // Removed - only show title and button
     buttonText: getHomepageTranslation('hero2Button', language), // "Hitta ditt drömhem"
     buttonLink: '/kohteet'
   },
@@ -75,7 +75,7 @@ const getTranslatedSlides = (language: SupportedLanguage) => [
     id: '2',
     image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/57809e7b-2fe2-430d-a7d7-aff39337d0c1/ead27130-4e08-465e-af6d-500d593ae0db.jpg',
     title: getHomepageTranslation('hero1Title', language), // "Din internationella mäklare lokalt"
-    subtitle: getHomepageTranslation('hero1Subtitle', language),
+    subtitle: '', // Removed - only show title and button
     buttonText: getHomepageTranslation('hero1Button', language),
     buttonLink: '/yhteystiedot'
   },
@@ -83,7 +83,7 @@ const getTranslatedSlides = (language: SupportedLanguage) => [
     id: '3',
     image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/d01a884f-d504-4652-adf7-29026c1a7449/700fc7d6-6bab-4e3b-baf8-816b8a9f5a02.jpg',
     title: getHomepageTranslation('hero3Title', language),
-    subtitle: getHomepageTranslation('hero3Subtitle', language),
+    subtitle: '', // Removed - only show title and button
     buttonText: getHomepageTranslation('hero3Button', language),
     buttonLink: '/yritys'
   },
@@ -91,7 +91,7 @@ const getTranslatedSlides = (language: SupportedLanguage) => [
     id: '4',
     image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/95bfa5eb-449f-40b8-987b-6f65dde19cc0/9e7aa9bf-6a73-4120-a0f4-b75e1eb29b4c.jpg',
     title: getHomepageTranslation('hero4Title', language),
-    subtitle: getHomepageTranslation('hero4Subtitle', language),
+    subtitle: '', // Removed - only show title and button
     buttonText: getHomepageTranslation('hero4Button', language),
     buttonLink: '/kohteet/referenssit'
   }
