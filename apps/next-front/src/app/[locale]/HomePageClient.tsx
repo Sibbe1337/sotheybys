@@ -1040,7 +1040,7 @@ export default function HomePageClient({
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-[#8e740b] text-white px-6 py-3 hover:bg-[#7a6409]
+                  className="w-full bg-[var(--color-primary)] text-white px-6 py-3 hover:bg-[var(--color-primary-dark)]
                            transition-colors duration-300 font-light uppercase tracking-wider text-sm"
                 >
                   {getHomepageTranslation('subscribe', language)}
