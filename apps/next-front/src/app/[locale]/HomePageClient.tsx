@@ -67,7 +67,7 @@ const getTranslatedSlides = (language: SupportedLanguage) => [
     id: '1',
     image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/3cfbb584-8fc0-493a-8b2f-66edf18b027a/e3ffa954-b4a1-4ed6-bed1-f131955d96c2.jpg',
     title: getHomepageTranslation('hero2Title', language), // "Välkommen till en extraordinär bostadsaffär!"
-    subtitle: '', // No subtitle for this slide
+    subtitle: getHomepageTranslation('hero2Subtitle', language), // "Katso kaikki myynnissä olevat kohteemme"
     buttonText: getHomepageTranslation('hero2Button', language), // "Hitta ditt drömhem"
     buttonLink: '/kohteet'
   },
