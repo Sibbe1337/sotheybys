@@ -474,6 +474,13 @@ export default function HomePageClient({
           </div>
         </section>
 
+        {/* Video Section - Sotheby's International Realty */}
+        <VideoSection 
+          videoId="wThbkUjil94"
+          title={language === 'fi' ? 'Katso videomme' : language === 'sv' ? 'Se vår video' : 'Watch Our Video'}
+          subtitle={language === 'fi' ? 'Tutustu Sotheby\'s International Realty -brändiin' : language === 'sv' ? 'Lär känna Sotheby\'s International Realty-varumärket' : 'Discover the Sotheby\'s International Realty brand'}
+        />
+
         {/* Luxury Outlook Report Section */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
