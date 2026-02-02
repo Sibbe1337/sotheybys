@@ -134,8 +134,8 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
             { 
               id: '6-2', 
               label: lang === 'sv' ? 'Jobba hos oss' : lang === 'en' ? 'Join us' : 'Meille töihin', 
-              path: '/meille-toihin', 
-              url: '/meille-toihin' 
+              path: '/en/meille-toihin',  // 🔥 LINUS FIX: Careers page is ONLY in English
+              url: '/en/meille-toihin' 
             },
             ]
           }
@@ -306,19 +306,36 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
                     {item.childItems && item.childItems.nodes.length > 0 && activeDropdown === item.id && (
                       <div className="absolute top-full left-0 mt-0 w-64 bg-[#f5f3f0] shadow-lg z-50">
                         <ul className="py-2">
-                          {item.childItems.nodes.map((childItem) => (
-                            <li key={childItem.id}>
-                              <Link
-                                href={(childItem.path || childItem.url) as any}
-                                locale={currentLang}
-                                prefetch={true}
-                                className="block px-4 py-3 text-sm text-gray-700 hover:text-[var(--color-gold)] hover:bg-gray-50 transition-colors [font-family:'freight-sans-pro',sans-serif]"
-                                target={childItem.target}
-                              >
-                                {childItem.label}
-                              </Link>
-                            </li>
-                          ))}
+                          {item.childItems.nodes.map((childItem) => {
+                            const childPath = childItem.path || childItem.url;
+                            // 🔥 LINUS FIX: Use NextLink for paths that already include locale (e.g., /en/meille-toihin)
+                            const hasLocalePrefix = childPath.match(/^\/(fi|sv|en)\//);
+                            
+                            return (
+                              <li key={childItem.id}>
+                                {hasLocalePrefix ? (
+                                  <NextLink
+                                    href={childPath}
+                                    prefetch={true}
+                                    className="block px-4 py-3 text-sm text-gray-700 hover:text-[var(--color-gold)] hover:bg-gray-50 transition-colors [font-family:'freight-sans-pro',sans-serif]"
+                                    target={childItem.target}
+                                  >
+                                    {childItem.label}
+                                  </NextLink>
+                                ) : (
+                                  <Link
+                                    href={childPath as any}
+                                    locale={currentLang}
+                                    prefetch={true}
+                                    className="block px-4 py-3 text-sm text-gray-700 hover:text-[var(--color-gold)] hover:bg-gray-50 transition-colors [font-family:'freight-sans-pro',sans-serif]"
+                                    target={childItem.target}
+                                  >
+                                    {childItem.label}
+                                  </Link>
+                                )}
+                              </li>
+                            );
+                          })}
                         </ul>
                       </div>
                     )}
@@ -401,18 +418,34 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
                   {/* Mobile dropdown items */}
                   {hasChildren && isExpanded && item.childItems && (
                     <div className="pl-4 bg-white/5">
-                      {item.childItems.nodes.map((childItem) => (
-                        <Link
-                          key={childItem.id}
-                          href={(childItem.path || childItem.url) as any}
-                          locale={currentLang}
-                          className="block py-2 text-sm text-white/80 hover:text-[var(--color-gold)] border-b border-white/5 [font-family:'freight-sans-pro',sans-serif]"
-                          target={childItem.target}
-                          onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                          {childItem.label}
-                        </Link>
-                      ))}
+                      {item.childItems.nodes.map((childItem) => {
+                        const childPath = childItem.path || childItem.url;
+                        // 🔥 LINUS FIX: Use NextLink for paths that already include locale (e.g., /en/meille-toihin)
+                        const hasLocalePrefix = childPath.match(/^\/(fi|sv|en)\//);
+                        
+                        return hasLocalePrefix ? (
+                          <NextLink
+                            key={childItem.id}
+                            href={childPath}
+                            className="block py-2 text-sm text-white/80 hover:text-[var(--color-gold)] border-b border-white/5 [font-family:'freight-sans-pro',sans-serif]"
+                            target={childItem.target}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            {childItem.label}
+                          </NextLink>
+                        ) : (
+                          <Link
+                            key={childItem.id}
+                            href={childPath as any}
+                            locale={currentLang}
+                            className="block py-2 text-sm text-white/80 hover:text-[var(--color-gold)] border-b border-white/5 [font-family:'freight-sans-pro',sans-serif]"
+                            target={childItem.target}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            {childItem.label}
+                          </Link>
+                        );
+                      })}
                     </div>
                   )}
                 </div>

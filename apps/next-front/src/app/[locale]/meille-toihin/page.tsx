@@ -1,6 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import type { Locale } from '@/lib/domain/property.types';
+
+// 🔥 LINUS FIX: Careers page is ONLY available in English (like current site)
+// Redirect fi/sv visitors to English version
+export const dynamic = 'force-static';
 
 const translations = {
   fi: {
@@ -202,7 +207,14 @@ interface CareersPageProps {
 
 export default function CareersPage({ params }: CareersPageProps) {
   const { locale } = params;
-  const t = translations[locale] || translations.fi;
+  
+  // 🔥 LINUS FIX: Careers page is ONLY available in English (like current sothebysrealty.fi site)
+  // Redirect fi/sv visitors to English version
+  if (locale !== 'en') {
+    redirect('/en/meille-toihin');
+  }
+  
+  const t = translations.en; // Always use English translations
 
   return (
     <main className="min-h-screen bg-white">

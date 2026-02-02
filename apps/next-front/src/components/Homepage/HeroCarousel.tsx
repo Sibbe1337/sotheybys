@@ -115,39 +115,53 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
           <div className="relative h-full flex items-center justify-center">
             <div className="container mx-auto px-6 sm:px-16 md:px-20 lg:px-24">
               <div className="max-w-4xl mx-auto text-center">
-                {/* Subtitle - appears first */}
+                {/* Title - appears first */}
+                <div className="overflow-hidden mb-4 sm:mb-6">
+                  <h1 
+                    className={`text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-thin leading-tight transform transition-all duration-1000 ${
+                      index === currentSlide 
+                        ? 'translate-y-0 opacity-100' 
+                        : 'translate-y-full opacity-0'
+                    }`}
+                    style={{ 
+                      transitionDelay: (!hasInitialized && index === 0) ? '0ms' : '200ms',
+                      fontFamily: slide.title.includes('Sotheby') ? 'Georgia, serif' : 'inherit',
+                      fontStyle: slide.title.includes('Sotheby') ? 'italic' : 'normal'
+                    }}
+                  >
+                    {slide.title}
+                  </h1>
+                </div>
+
+                {/* Decorative line - only if subtitle exists */}
                 {slide.subtitle && (
                   <div 
-                    className={`overflow-hidden mb-4 ${
-                      index === currentSlide ? '' : ''
+                    className={`flex justify-center mb-4 transform transition-all duration-1000 ${
+                      index === currentSlide 
+                        ? 'opacity-100 scale-x-100' 
+                        : 'opacity-0 scale-x-0'
                     }`}
+                    style={{ transitionDelay: (!hasInitialized && index === 0) ? '0ms' : '400ms' }}
                   >
+                    <div className="w-16 h-px bg-white/60" />
+                  </div>
+                )}
+                
+                {/* Subtitle - appears after title */}
+                {slide.subtitle && (
+                  <div className="overflow-hidden mb-6 sm:mb-8">
                     <p 
-                      className={`text-white/90 text-lg md:text-xl font-light tracking-wide transform transition-all duration-1000 ${
+                      className={`text-white/90 text-base md:text-lg lg:text-xl font-light tracking-wide transform transition-all duration-1000 ${
                         index === currentSlide 
                           ? 'translate-y-0 opacity-100' 
                           : 'translate-y-full opacity-0'
                       }`}
-                      style={{ transitionDelay: (!hasInitialized && index === 0) ? '0ms' : '200ms' }}
+                      style={{ transitionDelay: (!hasInitialized && index === 0) ? '0ms' : '500ms' }}
                     >
                       {slide.subtitle}
                     </p>
                   </div>
                 )}
-                
-                {/* Title */}
-                <div className="overflow-hidden mb-6 sm:mb-8">
-                  <h1 
-                    className={`text-white text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-thin leading-tight sm:leading-none transform transition-all duration-1000 ${
-                      index === currentSlide 
-                        ? 'translate-y-0 opacity-100' 
-                        : 'translate-y-full opacity-0'
-                    }`}
-                    style={{ transitionDelay: (!hasInitialized && index === 0) ? '0ms' : '400ms' }}
-                  >
-                    {slide.title}
-                  </h1>
-                </div>
 
                 {/* Button - Centered */}
                 {slide.buttonText && slide.buttonLink && (
@@ -157,7 +171,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                         ? 'translate-y-0 opacity-100' 
                         : 'translate-y-10 opacity-0'
                     }`}
-                    style={{ transitionDelay: (!hasInitialized && index === 0) ? '0ms' : '600ms' }}
+                    style={{ transitionDelay: (!hasInitialized && index === 0) ? '0ms' : '700ms' }}
                   >
                       <a
                       href={slide.buttonLink.startsWith('#') ? slide.buttonLink : `/${locale}${slide.buttonLink}`}

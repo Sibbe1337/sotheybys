@@ -61,39 +61,39 @@ function isApartment(property: Property): boolean {
 }
 
 // Function to get translated hero slides
-// Order adjusted: Välkommen slide first, then International agent, etc.
+// Order matches current sothebysrealty.fi website
 const getTranslatedSlides = (language: SupportedLanguage) => [
   {
     id: '1',
     image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/3cfbb584-8fc0-493a-8b2f-66edf18b027a/e3ffa954-b4a1-4ed6-bed1-f131955d96c2.jpg',
     title: getHomepageTranslation('hero2Title', language), // "Välkommen till en extraordinär bostadsaffär!"
-    subtitle: '', // Removed - only show title and button
+    subtitle: '', // No subtitle for this slide
     buttonText: getHomepageTranslation('hero2Button', language), // "Hitta ditt drömhem"
     buttonLink: '/kohteet'
   },
   {
     id: '2',
-    image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/57809e7b-2fe2-430d-a7d7-aff39337d0c1/ead27130-4e08-465e-af6d-500d593ae0db.jpg',
-    title: getHomepageTranslation('hero1Title', language), // "Din internationella mäklare lokalt"
-    subtitle: '', // Removed - only show title and button
-    buttonText: getHomepageTranslation('hero1Button', language),
-    buttonLink: '/yhteystiedot'
+    image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/95bfa5eb-449f-40b8-987b-6f65dde19cc0/9e7aa9bf-6a73-4120-a0f4-b75e1eb29b4c.jpg',
+    title: getHomepageTranslation('hero4Title', language), // "Referenssit"
+    subtitle: getHomepageTranslation('hero4Subtitle', language), // "Valikoima myydyistä kohteista"
+    buttonText: getHomepageTranslation('hero4Button', language), // "Tutustu kohteisiin"
+    buttonLink: '/kohteet/referenssit'
   },
   {
     id: '3',
     image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/d01a884f-d504-4652-adf7-29026c1a7449/700fc7d6-6bab-4e3b-baf8-816b8a9f5a02.jpg',
-    title: getHomepageTranslation('hero3Title', language),
-    subtitle: '', // Removed - only show title and button
-    buttonText: getHomepageTranslation('hero3Button', language),
+    title: getHomepageTranslation('hero3Title', language), // "Snellman Sotheby's International Realty®"
+    subtitle: getHomepageTranslation('hero3Subtitle', language), // Customer relationship text
+    buttonText: getHomepageTranslation('hero3Button', language), // "Tutustu toimintatapaamme"
     buttonLink: '/yritys'
   },
   {
     id: '4',
-    image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/95bfa5eb-449f-40b8-987b-6f65dde19cc0/9e7aa9bf-6a73-4120-a0f4-b75e1eb29b4c.jpg',
-    title: getHomepageTranslation('hero4Title', language),
-    subtitle: '', // Removed - only show title and button
-    buttonText: getHomepageTranslation('hero4Button', language),
-    buttonLink: '/kohteet/referenssit'
+    image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/57809e7b-2fe2-430d-a7d7-aff39337d0c1/ead27130-4e08-465e-af6d-500d593ae0db.jpg',
+    title: getHomepageTranslation('hero1Title', language), // "Kansainvälinen välittäjäsi paikallisesti"
+    subtitle: getHomepageTranslation('hero1Subtitle', language), // "25 800 välittäjää 1100 välitystoimistossa 85 maassa"
+    buttonText: getHomepageTranslation('hero1Button', language), // "Avaamme uusia ovia"
+    buttonLink: '/yhteystiedot'
   }
 ];
 
@@ -574,8 +574,8 @@ export default function HomePageClient({
                   </div>
                 </Link>
 
-                {/* Careers */}
-                <Link href="/meille-toihin" className="relative h-80 group overflow-hidden block">
+                {/* Careers - 🔥 LINUS FIX: Careers page is ONLY in English */}
+                <NextLink href="/en/meille-toihin" className="relative h-80 group overflow-hidden block">
                   <Image
                     src="/images/content/snellman-sothebys-nakoalapaikka.jpg"
                     alt={language === 'fi' ? 'Työpaikat' : language === 'sv' ? 'Karriär' : 'Careers'}
@@ -594,7 +594,7 @@ export default function HomePageClient({
                       {language === 'fi' ? 'Työskentele kanssamme ›' : language === 'sv' ? 'Jobba med oss ›' : 'Work with us ›'}
                     </span>
                   </div>
-                </Link>
+                </NextLink>
               </div>
             </div>
           </div>

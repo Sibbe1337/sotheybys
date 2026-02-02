@@ -256,19 +256,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     },
 
-    // Work with us (all languages)
-    {
-      url: `${baseUrl}/meille-toihin`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/sv/meille-toihin`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
-    },
+    // Work with us (English only - like current sothebysrealty.fi site)
     {
       url: `${baseUrl}/en/meille-toihin`,
       lastModified: new Date(),

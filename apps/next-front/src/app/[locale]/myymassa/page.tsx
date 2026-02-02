@@ -226,6 +226,7 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
             </p>
             <Link 
               href="/yhteystiedot"
+              locale={params.locale}
               className="inline-block bg-transparent border-2 border-white text-white px-8 py-3 
                        hover:bg-white hover:text-[var(--color-primary)] transition-all duration-300 
                        font-light uppercase tracking-wider text-sm"
