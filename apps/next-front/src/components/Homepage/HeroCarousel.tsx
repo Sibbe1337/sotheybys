@@ -4,12 +4,13 @@ import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { CarouselArrowButton } from '../ui/CarouselArrowButton';
+import { VideoModal } from '../ui/VideoModal';
 
 interface Slide {
   id: string;
   image?: string;
   video?: string;
-  youtubeId?: string;  // YouTube video ID for background video
+  youtubeId?: string;  // YouTube video ID for play button modal
   title: string;
   subtitle: string;
   buttonText?: string;
@@ -28,6 +29,21 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(false); // Start paused
   const [hasInitialized, setHasInitialized] = useState(false);
+  const [videoModalOpen, setVideoModalOpen] = useState(false);
+  const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
+
+  const openVideoModal = (videoId: string) => {
+    setActiveVideoId(videoId);
+    setVideoModalOpen(true);
+    setIsAutoPlaying(false); // Pause carousel when video is open
+  };
+
+  const closeVideoModal = () => {
+    setVideoModalOpen(false);
+    setActiveVideoId(null);
+    // Resume autoplay after closing
+    setTimeout(() => setIsAutoPlaying(true), 1000);
+  };
 
   // Start autoplay after component is fully mounted and first slide is visible
   useEffect(() => {
@@ -84,18 +100,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
         >
           {/* Background Image or Video with Ken Burns Effect */}
           <div className="absolute inset-0 overflow-hidden">
-            {slide.youtubeId ? (
-              /* YouTube video background - autoplay, muted, loop, no controls */
-              <div className="absolute inset-0 w-full h-full overflow-hidden">
-                <iframe
-                  src={`https://www.youtube-nocookie.com/embed/${slide.youtubeId}?autoplay=1&mute=1&loop=1&playlist=${slide.youtubeId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&start=4`}
-                  title={slide.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  className="absolute top-1/2 left-1/2 min-w-[100%] min-h-[100%] w-auto h-auto -translate-x-1/2 -translate-y-1/2 scale-150 pointer-events-none"
-                  style={{ border: 'none' }}
-                />
-              </div>
-            ) : slide.video ? (
+            {slide.video ? (
               <video
                 autoPlay
                 loop
@@ -122,6 +127,30 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
             <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
           </div>
+
+          {/* Play Button for YouTube videos */}
+          {slide.youtubeId && (
+            <button
+              onClick={() => openVideoModal(slide.youtubeId!)}
+              className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20
+                         w-20 h-20 md:w-24 md:h-24 rounded-full 
+                         bg-white/20 backdrop-blur-sm border-2 border-white/60
+                         flex items-center justify-center
+                         transition-all duration-500 group/play
+                         hover:bg-white/30 hover:scale-110 hover:border-white
+                         ${index === currentSlide ? 'opacity-100 scale-100' : 'opacity-0 scale-75'}`}
+              style={{ transitionDelay: index === currentSlide ? '800ms' : '0ms' }}
+              aria-label="Spela video"
+            >
+              <svg 
+                className="w-8 h-8 md:w-10 md:h-10 text-white ml-1 transition-transform duration-300 group-hover/play:scale-110" 
+                fill="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </button>
+          )}
 
           {/* Content - Centered text */}
           <div className="relative h-full flex items-center justify-center">
@@ -262,6 +291,16 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
         <CarouselArrowButton direction="left" onClick={prevSlide} variant="light" />
         <CarouselArrowButton direction="right" onClick={nextSlide} variant="light" />
       </div>
+
+      {/* Video Modal */}
+      {activeVideoId && (
+        <VideoModal
+          isOpen={videoModalOpen}
+          onClose={closeVideoModal}
+          videoId={activeVideoId}
+          title={slides[currentSlide]?.title || 'Video'}
+        />
+      )}
     </div>
   );
 }
