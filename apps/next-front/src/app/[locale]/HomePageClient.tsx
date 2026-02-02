@@ -62,9 +62,11 @@ function isApartment(property: Property): boolean {
 
 // Function to get translated hero slides
 // Order matches current sothebysrealty.fi website
+// YouTube videos: ESp0yn3NFuE (short brand video), wThbkUjil94 (longer brand video)
 const getTranslatedSlides = (language: SupportedLanguage) => [
   {
     id: '1',
+    youtubeId: 'ESp0yn3NFuE', // Sotheby's brand video (00:04-00:22)
     image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/3cfbb584-8fc0-493a-8b2f-66edf18b027a/e3ffa954-b4a1-4ed6-bed1-f131955d96c2.jpg',
     title: getHomepageTranslation('hero2Title', language), // "Välkommen till en extraordinär bostadsaffär!"
     subtitle: getHomepageTranslation('hero2Subtitle', language), // "Katso kaikki myynnissä olevat kohteemme"
@@ -81,6 +83,7 @@ const getTranslatedSlides = (language: SupportedLanguage) => [
   },
   {
     id: '3',
+    youtubeId: 'wThbkUjil94', // Sotheby's brand video (00:26-2:08)
     image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/d01a884f-d504-4652-adf7-29026c1a7449/700fc7d6-6bab-4e3b-baf8-816b8a9f5a02.jpg',
     title: getHomepageTranslation('hero3Title', language), // "Snellman Sotheby's International Realty®"
     subtitle: getHomepageTranslation('hero3Subtitle', language), // Customer relationship text
