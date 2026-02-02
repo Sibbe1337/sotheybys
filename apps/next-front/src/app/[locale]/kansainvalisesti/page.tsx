@@ -15,7 +15,7 @@ export function generateStaticParams() {
 const translations = {
   fi: {
     heroTitle: 'Kansainvälinen välittäjäsi\npaikallisesti',
-    heroStats: '26 100 välittäjää • 1 000 välitystoimistossa • 84 maassa ja alueella',
+    heroStats: '25 800 välittäjää • 1 100 välitystoimistossa • 85 maassa ja alueella',
     heroButton: 'LUE LISÄÄ',
     contactTitle: 'Ainutlaatuinen maailmanlaajuinen\nulottuvuus ja paikallinen asiantuntemus',
     discoverText: 'Discover the world\'s finest homes on',
@@ -36,7 +36,7 @@ const translations = {
   },
   sv: {
     heroTitle: 'Ojämförlig global räckvidd och lokal expertis',
-    heroStats: '26 100 mäklare • 1 100 kontor • 84 länder och territorier',
+    heroStats: '25 800 mäklare • 1 100 kontor • 85 länder och territorier',
     heroButton: 'LÄS MER',
     contactTitle: 'Ojämförlig global räckvidd\noch lokal expertis',
     discoverText: 'Upptäck världens finaste hem på',
@@ -57,7 +57,7 @@ const translations = {
   },
   en: {
     heroTitle: 'Unrivaled global reach and local expertise',
-    heroStats: '26,100 agents • 1,100 offices • 84 countries and territories',
+    heroStats: '25,800 agents • 1,100 offices • 85 countries and territories',
     heroButton: 'READ MORE',
     contactTitle: 'Unrivaled global reach\nand local expertise',
     discoverText: 'Discover the world\'s finest homes on',
