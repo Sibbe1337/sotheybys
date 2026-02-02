@@ -365,7 +365,7 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
 
               {/* Box 2: Kunniatehtävä - White background (#FFF) */}
               <div style={{ backgroundColor: '#FFFFFF' }} className="p-8 lg:p-16">
-                <h2 className="text-2xl font-light text-gray-900 mb-6">
+                <h2 className="heading-secondary mb-8">
                   {t.honorTitle}
                 </h2>
                 <div className="space-y-4 text-gray-700 font-light leading-relaxed text-sm">
