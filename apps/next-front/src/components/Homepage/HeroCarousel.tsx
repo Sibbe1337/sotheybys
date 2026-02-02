@@ -165,9 +165,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                         : 'translate-y-full opacity-0'
                     }`}
                     style={{ 
-                      transitionDelay: (!hasInitialized && index === 0) ? '0ms' : '200ms',
-                      fontFamily: slide.title.includes('Sotheby') ? 'Georgia, serif' : 'inherit',
-                      fontStyle: slide.title.includes('Sotheby') ? 'italic' : 'normal'
+                      transitionDelay: (!hasInitialized && index === 0) ? '0ms' : '200ms'
                     }}
                   >
                     {slide.title}

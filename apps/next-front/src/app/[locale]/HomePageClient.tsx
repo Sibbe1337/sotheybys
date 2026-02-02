@@ -493,7 +493,7 @@ export default function HomePageClient({
                 <div 
                   className="absolute inset-0 bg-scroll"
                   style={{
-                    backgroundImage: 'url(/images/content/2025-luxury-outlook-report-sothebys-international-realty.jpg)',
+                    backgroundImage: 'url(/images/content/2025-luxury-outlook-report-sothebys-international-realty.jpg)', // TODO: Replace with 2026 image when available
                     backgroundPosition: 'center center',
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'cover'
@@ -507,25 +507,25 @@ export default function HomePageClient({
                 <div className="relative z-10 px-4">
                   <div className="max-w-3xl mx-auto text-center">
                     <h2 className="text-2xl md:text-3xl font-light text-white mb-3 [text-shadow:_0_2px_4px_rgb(0_0_0_/40%)]">
-                      2025 Luxury Outlook℠
+                      2026 Luxury Outlook℠
                     </h2>
                     <h4 className="text-sm md:text-base text-white font-light leading-snug mb-4 [text-shadow:_0_1px_2px_rgb(0_0_0_/40%)]">
                       {language === 'fi' 
-                        ? 'Vuoden 2025 Luxury Outlook℠ tutkii keskeisiä, tulevaisuuteen suuntautuvia kysymyksiä, jotka muokkaavat luksusasuntomarkkinoita ympäri maailmaa.'
+                        ? 'Vuoden 2026 Luxury Outlook℠ tutkii keskeisiä, tulevaisuuteen suuntautuvia kysymyksiä, jotka muokkaavat luksusasuntomarkkinoita ympäri maailmaa.'
                         : language === 'sv'
-                        ? 'Luxury Outlook℠ 2025 undersöker viktiga, framåtblickande frågor som formar lyxbostadsmarknaderna runt om i världen.'
-                        : 'The 2025 Luxury Outlook℠ explores key, forward-looking questions shaping luxury real estate markets around the world.'}
+                        ? 'Luxury Outlook℠ 2026 undersöker viktiga, framåtblickande frågor som formar lyxbostadsmarknaderna runt om i världen.'
+                        : 'The 2026 Luxury Outlook℠ explores key, forward-looking questions shaping luxury real estate markets around the world.'}
                     </h4>
                     <p className="text-center">
                       <a
-                        href="https://sothebysrealty.fi/2025-luxury-outlook-report/"
+                        href="https://www.sothebysrealty.com/extraordinary-living-blog/2026-luxury-outlook"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-block border-2 border-white text-white px-8 py-3
                                  hover:bg-white hover:text-black transition-colors duration-300
                                  font-light tracking-wider text-sm uppercase"
                       >
-                        {language === 'fi' ? 'LUE KOKO 2025 LUXURY OUTLOOK℠ -RAPORTTI ›' : language === 'sv' ? 'LÄS HELA 2025 LUXURY OUTLOOK℠-RAPPORTEN ›' : 'READ THE FULL 2025 LUXURY OUTLOOK℠ REPORT ›'}
+                        {language === 'fi' ? 'LUE KOKO 2026 LUXURY OUTLOOK℠ -RAPORTTI ›' : language === 'sv' ? 'LÄS HELA 2026 LUXURY OUTLOOK℠-RAPPORTEN ›' : 'READ THE FULL 2026 LUXURY OUTLOOK℠ REPORT ›'}
                       </a>
                     </p>
                   </div>
