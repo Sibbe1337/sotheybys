@@ -207,7 +207,7 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
   const viewText = locale === 'fi' ? 'Katso kohde »' : locale === 'sv' ? 'Se objekt »' : 'View property »';
 
   return (
-    <div className="group flex flex-col overflow-hidden rounded-none border border-gray-200 bg-white shadow-sm transition hover:shadow-md">
+    <div className="group flex flex-col overflow-hidden rounded-none border border-gray-200 bg-white shadow-sm transition hover:shadow-md select-none">
       {/* Image - Dennis: Carousel if showCarousel=true (Objekt), single if false (Hem) */}
       <div 
         className="relative block aspect-[16/10] w-full overflow-hidden bg-gray-100"
