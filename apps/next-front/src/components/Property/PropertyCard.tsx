@@ -139,24 +139,28 @@ export default function PropertyCard({
           </span>
         )}
 
-        {/* Karusellkontroller - Square arrows matching CarouselArrowButton size (48x48px) */}
+        {/* Karusellkontroller - Consistent arrows with SVG icons */}
         {images.length > 1 && (
           <>
             <button
               type="button"
-              onClick={(e) => { e.preventDefault(); setIdx((idx - 1 + images.length) % images.length); }}
-              className="absolute left-2 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center rounded-none bg-white/70 hover:bg-white/90 text-xl shadow-md transition-all"
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIdx((idx - 1 + images.length) % images.length); }}
+              className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white/80 hover:bg-white border border-gray-200 shadow-sm transition-all"
               aria-label="Previous image"
             >
-              ‹
+              <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
             </button>
             <button
               type="button"
-              onClick={(e) => { e.preventDefault(); setIdx((idx + 1) % images.length); }}
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center rounded-none bg-white/70 hover:bg-white/90 text-xl shadow-md transition-all"
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIdx((idx + 1) % images.length); }}
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white/80 hover:bg-white border border-gray-200 shadow-sm transition-all"
               aria-label="Next image"
             >
-              ›
+              <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
             </button>
           </>
         )}

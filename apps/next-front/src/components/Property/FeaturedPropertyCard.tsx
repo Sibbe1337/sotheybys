@@ -225,7 +225,7 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
           />
         </Link>
 
-        {/* Carousel controls - Square arrows matching CarouselArrowButton size (48x48px) */}
+        {/* Carousel controls - Consistent SVG arrows */}
         {showCarousel && hasMultipleImages && (
           <>
             {/* Previous button */}
@@ -236,10 +236,12 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
                 e.stopPropagation();
                 setIdx((idx - 1 + displayImages.length) % displayImages.length); 
               }}
-              className="absolute left-2 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center rounded-none bg-white/70 hover:bg-white/90 text-xl shadow-md transition-all z-10"
+              className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white/80 hover:bg-white border border-gray-200 shadow-sm transition-all z-10"
               aria-label="Previous image"
             >
-              ‹
+              <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
             </button>
 
             {/* Next button */}
@@ -250,13 +252,13 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
                 e.stopPropagation();
                 setIdx((idx + 1) % displayImages.length); 
               }}
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center rounded-none bg-white/70 hover:bg-white/90 text-xl shadow-md transition-all z-10"
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white/80 hover:bg-white border border-gray-200 shadow-sm transition-all z-10"
               aria-label="Next image"
             >
-              ›
+              <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
             </button>
-
-            {/* Dennis 2025-11-10: DOTS BORTTAGNA - Ska INTE synas någonstans! */}
           </>
         )}
       </div>
