@@ -98,7 +98,7 @@ const translations = {
 const getHeroSlides = (locale: string) => [
   {
     id: 1,
-    image: '/images/content/about-hero.jpg', // DJI_0842 - Helsinki harbor view
+    image: '/images/content/snellman-sothebys-yritys-01.jpg',
     title: locale === 'fi' ? 'Kansainvälinen välittäjäsi paikallisesti' : locale === 'sv' ? 'Din internationella mäklare lokalt' : 'Your international agent locally',
     subtitle: locale === 'fi' ? '25 800 välittäjää 1100 välitystoimistossa 85 maassa ja alueella' : locale === 'sv' ? '25 800 mäklare 1100 kontor 85 länder och regioner' : '25,800 agents 1,100 offices 85 countries and territories',
     buttonText: locale === 'fi' ? 'AVAAMME UUSIA OVIA »' : locale === 'sv' ? 'VI ÖPPNAR NYA DÖRRAR »' : 'WE OPEN NEW DOORS »',
