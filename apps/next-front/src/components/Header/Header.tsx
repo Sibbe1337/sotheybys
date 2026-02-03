@@ -91,12 +91,6 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
               path: '/kohteet/ostotoimeksiannot', 
               url: '/kohteet/ostotoimeksiannot' 
             },
-            { 
-              id: '2-4', 
-              label: lang === 'sv' ? 'Referenser' : lang === 'en' ? 'References' : 'Referenssit', 
-              path: '/kohteet/referenssit', 
-              url: '/kohteet/referenssit' 
-            },
             ]
           }
         },

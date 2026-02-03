@@ -116,26 +116,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
 
-    // References (all languages)
-    {
-      url: `${baseUrl}/kohteet/referenssit`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/sv/kohteet/referenssit`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/en/kohteet/referenssit`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-    },
-
     // Purchase assignments (all languages)
     {
       url: `${baseUrl}/kohteet/ostotoimeksiannot`,

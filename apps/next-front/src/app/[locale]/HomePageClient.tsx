@@ -74,14 +74,6 @@ const getTranslatedSlides = (language: SupportedLanguage) => [
   },
   {
     id: '2',
-    image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/95bfa5eb-449f-40b8-987b-6f65dde19cc0/9e7aa9bf-6a73-4120-a0f4-b75e1eb29b4c.jpg',
-    title: getHomepageTranslation('hero4Title', language), // "Referenssit"
-    subtitle: getHomepageTranslation('hero4Subtitle', language), // "Valikoima myydyistä kohteista"
-    buttonText: getHomepageTranslation('hero4Button', language), // "Tutustu kohteisiin"
-    buttonLink: '/kohteet/referenssit'
-  },
-  {
-    id: '3',
     image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/d01a884f-d504-4652-adf7-29026c1a7449/700fc7d6-6bab-4e3b-baf8-816b8a9f5a02.jpg',
     youtubeId: 'wThbkUjil94', // Play button opens this video
     title: getHomepageTranslation('hero3Title', language), // "Snellman Sotheby's International Realty®"
@@ -90,7 +82,7 @@ const getTranslatedSlides = (language: SupportedLanguage) => [
     buttonLink: '/yritys'
   },
   {
-    id: '4',
+    id: '3',
     image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/57809e7b-2fe2-430d-a7d7-aff39337d0c1/ead27130-4e08-465e-af6d-500d593ae0db.jpg',
     title: getHomepageTranslation('hero1Title', language), // "Kansainvälinen välittäjäsi paikallisesti"
     subtitle: getHomepageTranslation('hero1Subtitle', language), // "25 800 välittäjää 1100 välitystoimistossa 85 maassa"
@@ -528,33 +520,11 @@ export default function HomePageClient({
           </div>
         </section>
 
-        {/* Three Image Links Section */}
+        {/* Two Image Links Section */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
-            <div className="max-w-5xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* References */}
-                <Link href="/kohteet/referenssit" className="relative h-80 group overflow-hidden block">
-                  <Image
-                    src="/images/content/snellman-sothebys-referenssit.jpg"
-                    alt={language === 'fi' ? 'Referenssit' : language === 'sv' ? 'Referenser' : 'References'}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black bg-opacity-25 flex flex-col items-center justify-center text-white p-6">
-                    <h3 className="text-xl font-light mb-3 text-center">
-                      {language === 'fi' ? 'Valikoima myydyistä kohteista' : language === 'sv' ? 'Ett urval av sålda objekt' : 'A sample of sold listings'}
-                    </h3>
-                    <span className="inline-block border-2 border-white text-white px-4 py-2
-                               group-hover:bg-white group-hover:text-[#1a3a4a] transition-all duration-300
-                               font-light uppercase tracking-wider text-xs"
-                    >
-                      {language === 'fi' ? 'Katso referenssit ›' : language === 'sv' ? 'Se referenser ›' : 'See our references ›'}
-                    </span>
-                  </div>
-                </Link>
-
+            <div className="max-w-4xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Rentals */}
                 <Link href="/kohteet/vuokrakohteet" className="relative h-80 group overflow-hidden block">
                   <Image

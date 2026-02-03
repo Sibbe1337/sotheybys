@@ -25,8 +25,6 @@ export const pathnames = {
   // Purchase assignments - ALL locales use Finnish filesystem path
   '/kohteet/ostotoimeksiannot': '/kohteet/ostotoimeksiannot',
   
-  // References - ALL locales use Finnish filesystem path
-  '/kohteet/referenssit': '/kohteet/referenssit',
   
   // Sell - ALL locales use Finnish filesystem path
   '/myymassa': '/myymassa',
