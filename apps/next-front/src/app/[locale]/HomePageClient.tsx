@@ -66,7 +66,7 @@ const getTranslatedSlides = (language: SupportedLanguage) => [
   {
     id: '1',
     image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/3cfbb584-8fc0-493a-8b2f-66edf18b027a/e3ffa954-b4a1-4ed6-bed1-f131955d96c2.jpg',
-    youtubeId: 'ESp0yn3NFuE', // Play button opens this video
+    // youtubeId removed - no play button needed
     title: getHomepageTranslation('hero2Title', language), // "Välkommen till en extraordinär bostadsaffär!"
     subtitle: getHomepageTranslation('hero2Subtitle', language), // "Katso kaikki myynnissä olevat kohteemme"
     buttonText: getHomepageTranslation('hero2Button', language), // "Hitta ditt drömhem"
@@ -75,7 +75,7 @@ const getTranslatedSlides = (language: SupportedLanguage) => [
   {
     id: '2',
     image: 'https://d33xsej2pkrh3b.cloudfront.net/1920x1280,fit,q85,f=webp/oviproprodmedia/Production/realty/d01a884f-d504-4652-adf7-29026c1a7449/700fc7d6-6bab-4e3b-baf8-816b8a9f5a02.jpg',
-    youtubeId: 'wThbkUjil94', // Play button opens this video
+    // youtubeId removed - no play button needed
     title: getHomepageTranslation('hero3Title', language), // "Snellman Sotheby's International Realty®"
     subtitle: getHomepageTranslation('hero3Subtitle', language), // Customer relationship text
     buttonText: getHomepageTranslation('hero3Button', language), // "Tutustu toimintatapaamme"
