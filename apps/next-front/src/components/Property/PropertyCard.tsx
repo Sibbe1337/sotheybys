@@ -139,13 +139,13 @@ export default function PropertyCard({
           </span>
         )}
 
-        {/* Karusellkontroller - Consistent arrows with SVG icons */}
+        {/* Karusellkontroller - z-20 to be above Link, cursor-pointer for UX */}
         {images.length > 1 && (
           <>
             <button
               type="button"
               onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIdx((idx - 1 + images.length) % images.length); }}
-              className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white/80 hover:bg-white border border-gray-200 shadow-sm transition-all"
+              className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white/80 hover:bg-white border border-gray-200 shadow-sm transition-all z-20 cursor-pointer"
               aria-label="Previous image"
             >
               <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -155,7 +155,7 @@ export default function PropertyCard({
             <button
               type="button"
               onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIdx((idx + 1) % images.length); }}
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white/80 hover:bg-white border border-gray-200 shadow-sm transition-all"
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white/80 hover:bg-white border border-gray-200 shadow-sm transition-all z-20 cursor-pointer"
               aria-label="Next image"
             >
               <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">

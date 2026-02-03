@@ -215,7 +215,8 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
         onTouchMove={showCarousel && hasMultipleImages ? onTouchMove : undefined}
         onTouchEnd={showCarousel && hasMultipleImages ? onTouchEnd : undefined}
       >
-        <Link href={href} className="block w-full h-full">
+        {/* Image with Link - z-0 so buttons can be on top */}
+        <Link href={href} className="absolute inset-0 z-0">
           <Image
             src={currentImage.url}
             alt={currentImage.alt || fullAddress}
@@ -225,7 +226,7 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
           />
         </Link>
 
-        {/* Carousel controls - Consistent SVG arrows */}
+        {/* Carousel controls - z-20 to be above Link, cursor-pointer for UX */}
         {showCarousel && hasMultipleImages && (
           <>
             {/* Previous button */}
@@ -236,7 +237,7 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
                 e.stopPropagation();
                 setIdx((idx - 1 + displayImages.length) % displayImages.length); 
               }}
-              className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white/80 hover:bg-white border border-gray-200 shadow-sm transition-all z-10"
+              className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white/80 hover:bg-white border border-gray-200 shadow-sm transition-all z-20 cursor-pointer"
               aria-label="Previous image"
             >
               <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -252,7 +253,7 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
                 e.stopPropagation();
                 setIdx((idx + 1) % displayImages.length); 
               }}
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white/80 hover:bg-white border border-gray-200 shadow-sm transition-all z-10"
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white/80 hover:bg-white border border-gray-200 shadow-sm transition-all z-20 cursor-pointer"
               aria-label="Next image"
             >
               <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
