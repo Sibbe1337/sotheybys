@@ -368,18 +368,7 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
           </a>
         )}
         
-        {/* Dennis 2025-11-11: GLOBAL LISTING button (only if published internationally) */}
-        {/* Dennis 2025-01-29: Mer avstånd mellan knappar */}
-        {internationalUrl && (
-          <a
-            href={internationalUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-3 w-full rounded-none bg-gray-800 px-4 py-3 text-center text-xs sm:text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-black shadow-sm hover:shadow-md"
-          >
-            GLOBAL LISTING
-          </a>
-        )}
+        {/* Dennis 2025-02-03: Global Listing button removed from cards - only shown on property detail page */}
 
         {/* Dennis: "Katso kohde" tar upp hela bredden */}
         {/* Dennis 2025-11-13: Enhetlig stil - font-bold, tracking-wide */}
