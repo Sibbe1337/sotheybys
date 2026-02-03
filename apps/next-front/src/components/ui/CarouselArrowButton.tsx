@@ -13,12 +13,13 @@ export function CarouselArrowButton({
   className = '',
   variant = 'light'
 }: CarouselArrowButtonProps) {
-  // Always centered vertically on all devices
-  const baseClasses = 'absolute top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center bg-transparent backdrop-blur-sm transition-all duration-200 rounded-none border-2';
+  // Responsive sizing: smaller on mobile (40px), larger on desktop (48px)
+  // More visible background on mobile for better UX
+  const baseClasses = 'absolute top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center transition-all duration-200 rounded-none';
   
   const variantClasses = variant === 'dark'
-    ? 'border-black/20 hover:border-black/40 hover:bg-black/10'
-    : 'border-white/30 hover:border-white/60 hover:bg-white/20';
+    ? 'bg-white/70 sm:bg-white/50 hover:bg-white/90 border border-gray-300 shadow-sm'
+    : 'bg-black/40 sm:bg-black/30 hover:bg-black/60 border border-white/40 hover:border-white/70 backdrop-blur-sm';
   
   const positionClasses = direction === 'left' 
     ? 'left-2 sm:left-4' 
@@ -37,15 +38,15 @@ export function CarouselArrowButton({
       aria-label={direction === 'left' ? 'Previous' : 'Next'}
     >
       <svg 
-        className={`w-6 h-6 ${variant === 'dark' ? 'text-black' : 'text-white'}`}
+        className={`w-5 h-5 sm:w-6 sm:h-6 ${variant === 'dark' ? 'text-gray-800' : 'text-white'}`}
         fill="none" 
         stroke="currentColor" 
         viewBox="0 0 24 24"
       >
         {direction === 'left' ? (
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
         ) : (
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
         )}
       </svg>
     </button>
