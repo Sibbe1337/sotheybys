@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import HeroCarousel from '@/components/Homepage/HeroCarousel';
 import FeaturedPropertyGrid from '@/components/Property/FeaturedPropertyGrid';
+import FeaturedPropertyCard from '@/components/Property/FeaturedPropertyCard';
+import { isCommercial } from '@/lib/domain/property-type-helpers';
 import { Link } from '@/lib/navigation';
 import NextLink from 'next/link';  // Native Link for dynamic routes
 import Image from 'next/image';
@@ -584,166 +586,62 @@ export default function HomePageClient({
                     : 'Selected properties for sale'}
               </h2>
 
-              {/* Property Cards Grid - 3 columns, 2 rows = 6 properties */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Property Cards Grid - Same as Objekt page using FeaturedPropertyCard */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {featuredProperties.map((property) => {
+                  // Same logic as PropertySearch - determine variant
+                  const rent = property.meta.rent || property.rental?.monthlyRent || 0;
+                  const isRental = rent > 0;
+                  const isCommercialProperty = isCommercial(property);
+                  const typeCode = (property.meta.typeCode || '').toLowerCase();
+                  const isPropertyType = ['kiinteistö', 'fastighet', 'property', 'omakotitalo', 'mökki', 'villa', 'cottage', 'stuga'].some(t => typeCode.includes(t));
+                  
+                  let variant: 'apartment' | 'property' | 'rental' | 'commercial' = 'apartment';
+                  if (isCommercialProperty) variant = 'commercial';
+                  else if (isRental) variant = 'rental';
+                  else if (isPropertyType) variant = 'property';
+
                   const addressStr = getLocalized(property.address, locale) || '';
                   const cityStr = getLocalized(property.city, locale) || '';
-                  const descriptionRaw = getLocalized(property.description, locale) || '';
-                  const descriptionStr = stripHtml(descriptionRaw);
                   const listingTypeStr = getLocalized(property.meta.listingTypeLabel, locale) || '';
                   const districtStr = getLocalized(property.district, locale) || '';
+                  const apartmentTypeStr = getLocalized(property.apartmentType, locale) || '';
+                  const marketingTitleStr = getLocalized(property.marketingTitle, locale) || '';
+                  const fullAddress = cityStr ? `${addressStr}, ${property.postalCode || ''} ${cityStr}`.trim() : addressStr;
+                  const images = property.media.images.map(img => ({ url: img.url, alt: img.alt }));
 
                   return (
-                    <div
+                    <FeaturedPropertyCard
                       key={property.id}
-                      className="bg-white border border-gray-200 hover:shadow-lg transition-shadow duration-300 flex flex-col"
-                    >
-                      {/* Property Image with Carousel Navigation */}
-                      <div className="relative group">
-                        <NextLink href={`/${locale}/kohde/${property.slug}`} className="block" prefetch={true}>
-                          <div className="relative h-56 overflow-hidden">
-                            <Image
-                              src={property.media.images[0]?.url || '/images/placeholder.jpg'}
-                              alt={addressStr}
-                              fill
-                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                              className="object-cover"
-                            />
-                          </div>
-                        </NextLink>
-                        {/* Carousel Arrows */}
-                        {property.media.images.length > 1 && (
-                          <>
-                            <button className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                              </svg>
-                            </button>
-                            <button className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                              </svg>
-                            </button>
-                          </>
-                        )}
-                      </div>
-
-                      {/* Property Details */}
-                      <div className="p-5 flex-grow flex flex-col">
-                        <NextLink href={`/${locale}/kohde/${property.slug}`} className="block mb-auto" prefetch={true}>
-                          <h3 className="text-lg font-medium text-gray-900 mb-2">
-                            {addressStr}
-                          </h3>
-                          <p className="text-lg font-normal text-gray-900 mb-3">
-                            {property.pricing.debtFree 
-                              ? new Intl.NumberFormat('fi-FI').format(property.pricing.debtFree) + ' €'
-                              : property.pricing.sales 
-                                ? new Intl.NumberFormat('fi-FI').format(property.pricing.sales) + ' €'
-                                : ''}
-                          </p>
-                          <p className="text-sm text-gray-700 font-light mb-3 line-clamp-3 leading-relaxed">
-                            {descriptionStr}
-                          </p>
-                          <p className="text-sm text-gray-600 mb-4">
-                            {property.dimensions.living && `${Math.round(property.dimensions.living)} m²`}
-                            {property.dimensions.total && property.dimensions.total !== property.dimensions.living && ` / ${Math.round(property.dimensions.total)} m²`}
-                            {property.dimensions.plot && !isApartment(property) && ` | ${formatPlot(property.dimensions.plot, language)}`}
-                          </p>
-                        </NextLink>
-                        
-                        {/* Property Type and Location Tags */}
-                        {(listingTypeStr || districtStr) && (
-                          <div className="flex flex-wrap items-center gap-2 mb-4 text-xs text-gray-600">
-                            {listingTypeStr && (
-                              <span className="inline-flex items-center">
-                                <svg className="w-3.5 h-3.5 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                  <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-                                </svg>
-                                {listingTypeStr}
-                              </span>
-                            )}
-                            {districtStr && (
-                              <span className="inline-flex items-center">
-                                <svg className="w-3.5 h-3.5 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                                </svg>
-                                {districtStr}
-                              </span>
-                            )}
-                          </div>
-                        )}
-
-                        {/* Agent Info & Buttons */}
-                        <div className="mt-auto pt-4 border-t border-gray-200">
-                          {property.agent && (
-                            <div className="flex items-center justify-between mb-3">
-                              <div className="flex items-center gap-2 min-w-0 flex-1">
-                                {property.agent.photoUrl && (
-                                  <Image
-                                    src={property.agent.photoUrl}
-                                    alt={property.agent.name || ''}
-                                    width={40}
-                                    height={40}
-                                    className="rounded-full flex-shrink-0"
-                                  />
-                                )}
-                                <div className="min-w-0">
-                                  <p className="text-sm font-medium text-gray-900 truncate">{property.agent.name}</p>
-                                  <p className="text-xs text-gray-600 truncate">{property.agent.phone}</p>
-                                </div>
-                              </div>
-                              <a
-                                href={`tel:${property.agent.phone?.replace(/\s/g, '')}`}
-                                className="border border-gray-900 text-gray-900 px-3 py-1.5 text-xs
-                                         hover:bg-gray-900 hover:text-white transition-colors duration-300
-                                         font-normal uppercase tracking-wide whitespace-nowrap flex-shrink-0 ml-2"
-                              >
-                                {language === 'fi' ? 'OTA YHTEYTTÄ' : language === 'sv' ? 'KONTAKTA' : 'CONTACT'}
-                  </a>
-                            </div>
-                          )}
-                          
-                          {/* Bidding Button */}
-                          {property.pricing.biddingUrl && (
-                            <a
-                              href={property.pricing.biddingUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="block w-full bg-[#8e740b] text-white text-center px-6 py-2.5 mb-2
-                                       hover:bg-[#6d5708] transition-colors duration-300
-                                       font-normal uppercase tracking-wide text-sm"
-                            >
-                              {language === 'fi' ? 'SEURAA TARJOUSKAUPPAA' : language === 'sv' ? 'FÖLJ BUDGIVNINGEN' : 'FOLLOW BIDDING'}
-                            </a>
-                          )}
-                          
-                          {/* Global Listing Button */}
-                          {property.internationalUrl && (
-                            <a
-                              href={property.internationalUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="block w-full bg-gray-800 text-white text-center px-6 py-2.5 mb-2
-                                       hover:bg-black transition-colors duration-300
-                                       font-normal uppercase tracking-wide text-sm"
-                            >
-                              GLOBAL LISTING
-                            </a>
-                          )}
-                          
-                          <NextLink
-                            href={`/${locale}/kohde/${property.slug}`}
-                            className="block w-full bg-[#002349] text-white text-center px-6 py-2.5
-                                     hover:bg-[#001731] transition-colors duration-300
-                                     font-normal uppercase tracking-wide text-sm"
-                            prefetch={true}
-                          >
-                            {language === 'fi' ? 'NÄYTÄ KOHDE' : language === 'sv' ? 'VISA OBJEKTET' : 'SHOW LISTING'}
-                          </NextLink>
-                        </div>
-                      </div>
-                    </div>
+                      href={`/${locale}/kohde/${property.slug}`}
+                      locale={locale}
+                      title={addressStr}
+                      fullAddress={fullAddress}
+                      postalCode={property.postalCode}
+                      city={cityStr}
+                      propertyType={listingTypeStr}
+                      district={districtStr}
+                      apartmentType={apartmentTypeStr}
+                      marketingTitle={marketingTitleStr}
+                      images={images}
+                      showCarousel={true}
+                      variant={variant}
+                      debtFreePrice={property.pricing.debtFree}
+                      askPrice={property.pricing.sales}
+                      monthlyRent={rent || undefined}
+                      biddingStartPrice={property.pricing.biddingStartPrice}
+                      biddingUrl={property.pricing.biddingUrl}
+                      livingArea={property.dimensions.living}
+                      otherArea={property.dimensions.other}
+                      totalArea={property.dimensions.total}
+                      plotArea={property.dimensions.plot}
+                      agent={property.agent ? {
+                        name: property.agent.name || '',
+                        phone: property.agent.phone || '',
+                        email: property.agent.email || '',
+                        photoUrl: property.agent.photoUrl
+                      } : undefined}
+                    />
                   );
                 })}
               </div>
@@ -775,61 +673,44 @@ export default function HomePageClient({
                     : 'Latest rental properties'}
               </h2>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {rentalProperties.map((property) => {
                   const addressStr = getLocalized(property.address, locale) || '';
                   const cityStr = getLocalized(property.city, locale) || '';
-                  const descriptionRaw = getLocalized(property.description, locale) || '';
-                  const descriptionStr = stripHtml(descriptionRaw);
+                  const listingTypeStr = getLocalized(property.meta.listingTypeLabel, locale) || '';
+                  const districtStr = getLocalized(property.district, locale) || '';
+                  const apartmentTypeStr = getLocalized(property.apartmentType, locale) || '';
+                  const marketingTitleStr = getLocalized(property.marketingTitle, locale) || '';
+                  const fullAddress = cityStr ? `${addressStr}, ${property.postalCode || ''} ${cityStr}`.trim() : addressStr;
+                  const images = property.media.images.map(img => ({ url: img.url, alt: img.alt }));
+                  const rent = property.meta.rent || property.rental?.monthlyRent || 0;
 
                   return (
-                    <div
+                    <FeaturedPropertyCard
                       key={property.id}
-                      className="bg-white border border-gray-200 hover:shadow-lg transition-shadow duration-300 flex flex-col"
-                    >
-                      <div className="relative group">
-                        <NextLink href={`/${locale}/kohde/${property.slug}`} className="block" prefetch={true}>
-                          <div className="relative h-56 overflow-hidden">
-                            <Image
-                              src={property.media.images[0]?.url || '/images/placeholder.jpg'}
-                              alt={addressStr}
-                              fill
-                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                              className="object-cover"
-                            />
-                          </div>
-                        </NextLink>
-                      </div>
-
-                      <div className="p-5 flex-grow flex flex-col">
-                        <NextLink href={`/${locale}/kohde/${property.slug}`} className="block mb-auto" prefetch={true}>
-                          <h3 className="text-lg font-medium text-gray-900 mb-2">
-                            {addressStr}
-                          </h3>
-                          <p className="text-lg font-normal text-gray-900 mb-3">
-                            {property.meta.rent 
-                              ? new Intl.NumberFormat('fi-FI').format(property.meta.rent) + ' €/kk'
-                              : ''}
-                          </p>
-                          <p className="text-sm text-gray-700 font-light mb-3 line-clamp-3 leading-relaxed">
-                            {descriptionStr}
-                          </p>
-                          <p className="text-sm text-gray-600 mb-4">
-                            {property.dimensions.living && `${Math.round(property.dimensions.living)} m²`}
-                          </p>
-                        </NextLink>
-                        
-                        <NextLink
-                          href={`/${locale}/kohde/${property.slug}`}
-                          className="block w-full bg-[#002349] text-white text-center px-6 py-2.5
-                                   hover:bg-[#001731] transition-colors duration-300
-                                   font-normal uppercase tracking-wide text-sm mt-auto"
-                          prefetch={true}
-                        >
-                          {language === 'fi' ? 'NÄYTÄ KOHDE' : language === 'sv' ? 'VISA OBJEKTET' : 'SHOW LISTING'}
-                        </NextLink>
-                      </div>
-                    </div>
+                      href={`/${locale}/kohde/${property.slug}`}
+                      locale={locale}
+                      title={addressStr}
+                      fullAddress={fullAddress}
+                      postalCode={property.postalCode}
+                      city={cityStr}
+                      propertyType={listingTypeStr}
+                      district={districtStr}
+                      apartmentType={apartmentTypeStr}
+                      marketingTitle={marketingTitleStr}
+                      images={images}
+                      showCarousel={true}
+                      variant="rental"
+                      monthlyRent={rent || undefined}
+                      livingArea={property.dimensions.living}
+                      totalArea={property.dimensions.total}
+                      agent={property.agent ? {
+                        name: property.agent.name || '',
+                        phone: property.agent.phone || '',
+                        email: property.agent.email || '',
+                        photoUrl: property.agent.photoUrl
+                      } : undefined}
+                    />
                   );
                 })}
               </div>
