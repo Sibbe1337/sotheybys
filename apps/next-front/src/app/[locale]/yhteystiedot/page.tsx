@@ -52,11 +52,11 @@ const staffMembers = [
   },
   {
     id: '5',
-    name: 'Tea Käyhkö',
-    title: 'Senior Broker, BA, MA, LKV',
-    email: 'tea@sothebysrealty.fi',
-    phone: '+358 (0)50 370 1883',
-    image: '/images/staff/tea-kayhko.jpg',
+    name: 'Linn Johanson',
+    title: 'Sales & Marketing Associate',
+    email: 'linn@sothebysrealty.fi',
+    phone: '+358 (0)44 055 2342',
+    image: '/images/staff/linn-johanson.jpg',
     flags: ['fi', 'se', 'gb']
   },
   {
