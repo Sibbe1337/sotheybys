@@ -1,5 +1,3 @@
-import DOMPurify from 'isomorphic-dompurify';
-
 interface RichTextProps {
   html: string;
   className?: string;
@@ -72,9 +70,26 @@ export function RichText({ html, className }: RichTextProps) {
   // Then convert plain text to paragraphs if needed
   const withParas = convertToParas(withoutHeadings);
   
-  const sanitized = DOMPurify.sanitize(withParas, {
-    ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'a', 'ul', 'ol', 'li'],
-    ALLOWED_ATTR: ['href', 'target', 'rel']
+  // Simple HTML sanitizer - allow only safe tags (no external dependency needed)
+  const allowedTags = ['p', 'br', 'strong', 'em', 'u', 'a', 'ul', 'ol', 'li'];
+  const allowedAttrs = ['href', 'target', 'rel'];
+  
+  // Strip all tags except allowed ones
+  const sanitized = withParas.replace(/<\/?([a-zA-Z][a-zA-Z0-9]*)\b[^>]*>/gi, (match, tag) => {
+    const tagLower = tag.toLowerCase();
+    if (!allowedTags.includes(tagLower)) return '';
+    // For opening tags, strip disallowed attributes
+    if (!match.startsWith('</')) {
+      const cleanAttrs = allowedAttrs
+        .map(attr => {
+          const attrMatch = match.match(new RegExp(`${attr}\\s*=\\s*"([^"]*)"`, 'i'));
+          return attrMatch ? `${attr}="${attrMatch[1]}"` : null;
+        })
+        .filter(Boolean)
+        .join(' ');
+      return cleanAttrs ? `<${tagLower} ${cleanAttrs}>` : `<${tagLower}>`;
+    }
+    return `</${tagLower}>`;
   });
 
   return (
