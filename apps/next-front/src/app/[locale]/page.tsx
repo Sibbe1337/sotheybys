@@ -6,7 +6,7 @@ import { fetchSaleProperties } from '@/lib/server/fetch-properties';
 // Use Static Generation with ISR - page is pre-built and cached
 // Revalidates every 5 minutes in the background
 export const dynamic = 'force-static';
-export const revalidate = 60; // Regenerate every 1 minute (changed from 5 min)
+export const revalidate = 30; // Regenerate every 30 seconds
 export const dynamicParams = false;
 
 /**
