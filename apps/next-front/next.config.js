@@ -38,6 +38,8 @@ const nextConfig = {
     minimumCacheTTL: 60 * 60 * 24 * 30, // ✅ Cache images for 30 days
   },
   async rewrites() {
+    const LEGACY_URL = 'https://legacy.sothebysrealty.fi';
+
     const rewrites = {
       beforeFiles: [
         // ✅ LINUS FIX: Language-specific URLs
@@ -52,7 +54,33 @@ const nextConfig = {
           destination: '/en/kohde/:slug',
         },
       ],
-      afterFiles: [],
+      afterFiles: [
+        // Legacy content: FlowPaper brochures, presentations, reports
+        { source: '/esitteet/:path*', destination: `${LEGACY_URL}/esitteet/:path*` },
+        { source: '/flowpaper/:path*', destination: `${LEGACY_URL}/flowpaper/:path*` },
+        { source: '/3d/:path*', destination: `${LEGACY_URL}/3d/:path*` },
+        { source: '/insights/:path*', destination: `${LEGACY_URL}/insights/:path*` },
+        { source: '/pdx-images/:path*', destination: `${LEGACY_URL}/pdx-images/:path*` },
+        // Luxury Outlook reports
+        { source: '/2025-luxury-outlook-report/:path*', destination: `${LEGACY_URL}/2025-luxury-outlook-report/:path*` },
+        { source: '/luxury-outlook-2023/:path*', destination: `${LEGACY_URL}/luxury-outlook-2023/:path*` },
+        { source: '/ssir-luxury-outlook-2023/:path*', destination: `${LEGACY_URL}/ssir-luxury-outlook-2023/:path*` },
+        // Marketing materials
+        { source: '/global-media-2024/:path*', destination: `${LEGACY_URL}/global-media-2024/:path*` },
+        { source: '/global-media-2025/:path*', destination: `${LEGACY_URL}/global-media-2025/:path*` },
+        { source: '/global-media-plan-2023/:path*', destination: `${LEGACY_URL}/global-media-plan-2023/:path*` },
+        { source: '/global-property-search-ad-unit-2023/:path*', destination: `${LEGACY_URL}/global-property-search-ad-unit-2023/:path*` },
+        { source: '/gps-ad-unit-2024/:path*', destination: `${LEGACY_URL}/gps-ad-unit-2024/:path*` },
+        { source: '/gps-ad-unit-2025/:path*', destination: `${LEGACY_URL}/gps-ad-unit-2025/:path*` },
+        { source: '/the-playbook-2024/:path*', destination: `${LEGACY_URL}/the-playbook-2024/:path*` },
+        { source: '/the-playbook-2025/:path*', destination: `${LEGACY_URL}/the-playbook-2025/:path*` },
+        { source: '/the-distinction-2023/:path*', destination: `${LEGACY_URL}/the-distinction-2023/:path*` },
+        // Seasonal & special pages
+        { source: '/merry-christmas-2025/:path*', destination: `${LEGACY_URL}/merry-christmas-2025/:path*` },
+        { source: '/seasonal-greetings-2023/:path*', destination: `${LEGACY_URL}/seasonal-greetings-2023/:path*` },
+        { source: '/tahtitorninkatu-16/:path*', destination: `${LEGACY_URL}/tahtitorninkatu-16/:path*` },
+        { source: '/kotisivut.xml', destination: `${LEGACY_URL}/kotisivut.xml` },
+      ],
     };
 
     // Add WordPress rewrites if configured
