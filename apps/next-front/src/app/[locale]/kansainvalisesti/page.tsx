@@ -1,6 +1,27 @@
 import { Link } from '@/lib/navigation';
 import Image from 'next/image';
 import { locales, type Locale } from '@/i18n/config';
+import type { Metadata } from 'next';
+
+const meta = {
+  fi: {
+    title: 'Kansainvälisesti | Snellman Sotheby\'s International Realty',
+    description: 'Sotheby\'s International Realty - 25 800 välittäjää, 1100 toimistoa, 85 maassa. Kansainvälinen kiinteistönvälitys.',
+  },
+  sv: {
+    title: 'Internationellt | Snellman Sotheby\'s International Realty',
+    description: 'Sotheby\'s International Realty - 25 800 mäklare, 1100 kontor, 85 länder. Internationell fastighetsmäkleri.',
+  },
+  en: {
+    title: 'International | Snellman Sotheby\'s International Realty',
+    description: 'Sotheby\'s International Realty - 25,800 agents, 1,100 offices, 85 countries. International luxury real estate.',
+  },
+};
+
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const t = meta[(params.locale as keyof typeof meta)] || meta.fi;
+  return { title: t.title, description: t.description };
+}
 
 // ✅ LINUS FIX: Convert to Server Component with static generation
 export const dynamic = 'force-static';

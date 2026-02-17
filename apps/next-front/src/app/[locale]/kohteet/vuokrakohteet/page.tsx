@@ -1,6 +1,27 @@
 import PropertyGridNew from '@/components/Property/PropertyGridNew';
 import { locales, type Locale } from '@/i18n/config';
 import { fetchRentalProperties } from '@/lib/server/fetch-properties';
+import type { Metadata } from 'next';
+
+const meta = {
+  fi: {
+    title: 'Vuokrakohteet | Snellman Sotheby\'s International Realty',
+    description: 'Selaa vuokrattavia asuntoja. Laadukkaita vuokrakoteja pääkaupunkiseudulla.',
+  },
+  sv: {
+    title: 'Hyresobjekt | Snellman Sotheby\'s International Realty',
+    description: 'Bläddra bland hyreslägenheter. Kvalitetsbostäder att hyra i huvudstadsregionen.',
+  },
+  en: {
+    title: 'Rental Properties | Snellman Sotheby\'s International Realty',
+    description: 'Browse rental properties. Quality homes for rent in the Helsinki metropolitan area.',
+  },
+};
+
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const t = meta[(params.locale as keyof typeof meta)] || meta.fi;
+  return { title: t.title, description: t.description };
+}
 
 export const dynamic = 'force-static';
 export const dynamicParams = false;

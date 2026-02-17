@@ -2,6 +2,27 @@ import Image from 'next/image';
 import { Link } from '@/lib/navigation';
 import HeroCarousel from '@/components/HeroCarousel';
 import { locales, type Locale } from '@/i18n/config';
+import type { Metadata } from 'next';
+
+const meta = {
+  fi: {
+    title: 'Tietoa meistä | Snellman Sotheby\'s International Realty',
+    description: 'Tutustu Snellman Sotheby\'s International Realtyyn - arvokiinteistöihin erikoistunut välitystoimisto Helsingissä. Kansainvälinen verkosto, paikallinen osaaminen.',
+  },
+  sv: {
+    title: 'Om oss | Snellman Sotheby\'s International Realty',
+    description: 'Lär känna Snellman Sotheby\'s International Realty - specialiserade på exklusiva fastigheter i Helsingfors. Internationellt nätverk, lokal expertis.',
+  },
+  en: {
+    title: 'About Us | Snellman Sotheby\'s International Realty',
+    description: 'Discover Snellman Sotheby\'s International Realty - specialized in luxury real estate in Helsinki. International network, local expertise.',
+  },
+};
+
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const t = meta[(params.locale as keyof typeof meta)] || meta.fi;
+  return { title: t.title, description: t.description };
+}
 
 // ✅ LINUS FIX: Static generation for all locales
 export const dynamic = 'force-static';

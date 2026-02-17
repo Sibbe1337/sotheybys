@@ -2,6 +2,27 @@ import Image from 'next/image';
 import { Link } from '@/lib/navigation';
 import ContactForm from '@/components/ContactForm';
 import { locales, type Locale } from '@/i18n/config';
+import type { Metadata } from 'next';
+
+const meta = {
+  fi: {
+    title: 'Ota yhteyttä | Snellman Sotheby\'s International Realty',
+    description: 'Ota yhteyttä Snellman Sotheby\'s International Realtyyn. Kasarmikatu 34, 00130 Helsinki. Puh. +358 (0)10 315 6900.',
+  },
+  sv: {
+    title: 'Kontakta oss | Snellman Sotheby\'s International Realty',
+    description: 'Kontakta Snellman Sotheby\'s International Realty. Kaserngatan 34, 00130 Helsingfors. Tel. +358 (0)10 315 6900.',
+  },
+  en: {
+    title: 'Contact Us | Snellman Sotheby\'s International Realty',
+    description: 'Contact Snellman Sotheby\'s International Realty. Kasarmikatu 34, 00130 Helsinki. Tel. +358 (0)10 315 6900.',
+  },
+};
+
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const t = meta[(params.locale as keyof typeof meta)] || meta.fi;
+  return { title: t.title, description: t.description };
+}
 
 // ✅ LINUS FIX: Static generation for all locales
 export const dynamic = 'force-static';

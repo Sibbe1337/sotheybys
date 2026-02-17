@@ -2,6 +2,27 @@ import PropertySearch from '@/components/Property/PropertySearch';
 import PropertyHeroCarousel from '@/components/Property/PropertyHeroCarousel';
 import { locales, type Locale } from '@/i18n/config';
 import { fetchSaleProperties } from '@/lib/server/fetch-properties';
+import type { Metadata } from 'next';
+
+const meta = {
+  fi: {
+    title: 'Myytävät kohteet | Snellman Sotheby\'s International Realty',
+    description: 'Selaa myytäviä asuntoja ja kiinteistöjä. Luksusasuntoja, huviloita ja arvokiinteistöjä Suomessa.',
+  },
+  sv: {
+    title: 'Objekt till salu | Snellman Sotheby\'s International Realty',
+    description: 'Bläddra bland bostäder och fastigheter till salu. Lyxbostäder, villor och exklusiva fastigheter i Finland.',
+  },
+  en: {
+    title: 'Properties for Sale | Snellman Sotheby\'s International Realty',
+    description: 'Browse properties for sale. Luxury apartments, villas and premium real estate in Finland.',
+  },
+};
+
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const t = meta[(params.locale as keyof typeof meta)] || meta.fi;
+  return { title: t.title, description: t.description };
+}
 
 export const dynamic = 'force-static';
 export const dynamicParams = false;

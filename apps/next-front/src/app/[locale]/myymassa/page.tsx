@@ -2,6 +2,27 @@
 import Image from 'next/image';
 import { VideoSection } from '@/components/ui/VideoSection';
 import { locales, type Locale } from '@/i18n/config';
+import type { Metadata } from 'next';
+
+const meta = {
+  fi: {
+    title: 'Myy kanssamme | Snellman Sotheby\'s International Realty',
+    description: 'Haluatko myydä asuntosi? Kutsu meidät maksuttomalle arviokäynnille. Kansainvälinen verkosto ja paikallinen asiantuntemus.',
+  },
+  sv: {
+    title: 'Sälj med oss | Snellman Sotheby\'s International Realty',
+    description: 'Vill du sälja din bostad? Bjud in oss för ett kostnadsfritt värderingsbesök. Internationellt nätverk och lokal expertis.',
+  },
+  en: {
+    title: 'Sell With Us | Snellman Sotheby\'s International Realty',
+    description: 'Want to sell your property? Invite us for a free valuation visit. International network and local expertise.',
+  },
+};
+
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const t = meta[(params.locale as keyof typeof meta)] || meta.fi;
+  return { title: t.title, description: t.description };
+}
 
 export const dynamic = 'force-static';
 export const dynamicParams = false;

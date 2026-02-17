@@ -1,7 +1,28 @@
 import type { Locale } from '@/i18n/config';
 import { locales } from '@/i18n/config';
+import type { Metadata } from 'next';
 import HomePageClient from './HomePageClient';
 import { fetchSaleProperties } from '@/lib/server/fetch-properties';
+
+const meta = {
+  fi: {
+    title: 'Snellman Sotheby\'s International Realty | Kiinteistönvälitys Suomessa',
+    description: 'Arvokiinteistöihin erikoistunut kiinteistönvälitys. 25 800 välittäjää, 1100 toimistoa, 85 maassa. Löydä unelmiesi koti.',
+  },
+  sv: {
+    title: 'Snellman Sotheby\'s International Realty | Fastighetsmäklare i Finland',
+    description: 'Specialiserade på exklusiva fastigheter. 25 800 mäklare, 1100 kontor, 85 länder. Hitta ditt drömhem.',
+  },
+  en: {
+    title: 'Snellman Sotheby\'s International Realty | Premium Real Estate in Finland',
+    description: 'Specialized in luxury real estate. 25,800 agents, 1,100 offices, 85 countries. Find your dream home.',
+  },
+};
+
+export async function generateMetadata({ params: { locale } }: { params: { locale: string } }): Promise<Metadata> {
+  const t = meta[(locale as keyof typeof meta)] || meta.fi;
+  return { title: t.title, description: t.description };
+}
 
 // Use Static Generation with ISR - page is pre-built and cached
 // Revalidates every 5 minutes in the background
