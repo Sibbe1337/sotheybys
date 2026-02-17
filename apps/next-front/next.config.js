@@ -84,7 +84,9 @@ const nextConfig = {
         { source: '/tahtitorninkatu-16/:path*', destination: `${LEGACY_URL}/tahtitorninkatu-16/:path*` },
         { source: '/kotisivut.xml', destination: `${LEGACY_URL}/kotisivut.xml` },
 
-        // Language-specific URLs
+        // Language-specific URLs - old WordPress formats served directly (no redirect)
+        { source: '/en/listing/:slug', destination: '/en/kohde/:slug' },
+        { source: '/sv/saluobjekt/:slug', destination: '/sv/kohde/:slug' },
         { source: '/sv/objekt/:slug', destination: '/sv/kohde/:slug' },
         { source: '/en/properties/:slug', destination: '/en/kohde/:slug' },
       ],
@@ -108,11 +110,7 @@ const nextConfig = {
       // Ensures all old links continue to work
       // ====================================================
 
-      // PROPERTY PAGES - Old WordPress URL formats
-      // EN: /en/listing/slug → /en/kohde/slug
-      { source: '/en/listing/:slug', destination: '/en/kohde/:slug', permanent: true },
-      // SV: /sv/saluobjekt/slug → /sv/kohde/slug
-      { source: '/sv/saluobjekt/:slug', destination: '/sv/kohde/:slug', permanent: true },
+      // PROPERTY PAGES - only formats not handled by rewrites
       // FI without prefix: /kohde/slug → /fi/kohde/slug
       { source: '/kohde/:slug', destination: '/fi/kohde/:slug', permanent: true },
       // Old /property/ format
