@@ -103,12 +103,55 @@ const nextConfig = {
   },
   async redirects() {
     return [
-      // Redirect old /property/ routes to /kohde/
-      {
-        source: '/property/:slug',
-        destination: '/kohde/:slug',
-        permanent: true,
-      },
+      // ====================================================
+      // OLD WORDPRESS URL REDIRECTS
+      // Ensures all old links continue to work
+      // ====================================================
+
+      // PROPERTY PAGES - Old WordPress URL formats
+      // EN: /en/listing/slug → /en/kohde/slug
+      { source: '/en/listing/:slug', destination: '/en/kohde/:slug', permanent: true },
+      // SV: /sv/saluobjekt/slug → /sv/kohde/slug
+      { source: '/sv/saluobjekt/:slug', destination: '/sv/kohde/:slug', permanent: true },
+      // FI without prefix: /kohde/slug → /fi/kohde/slug
+      { source: '/kohde/:slug', destination: '/fi/kohde/:slug', permanent: true },
+      // Old /property/ format
+      { source: '/property/:slug', destination: '/fi/kohde/:slug', permanent: true },
+
+      // LISTING PAGES - Old WordPress category pages
+      // EN: /en/properties/ → /en/kohteet
+      { source: '/en/properties', destination: '/en/kohteet', permanent: true },
+      { source: '/en/properties/', destination: '/en/kohteet', permanent: true },
+      { source: '/en/properties/apartments', destination: '/en/kohteet', permanent: true },
+      { source: '/en/properties/real-estates', destination: '/en/kohteet', permanent: true },
+      { source: '/en/properties/references', destination: '/en/kohteet', permanent: true },
+      { source: '/en/properties/rental-listings', destination: '/en/kohteet/vuokrakohteet', permanent: true },
+      { source: '/en/properties/purchase-mandates', destination: '/en/kohteet/ostotoimeksiannot', permanent: true },
+      // SV: /sv/objekt/ → /sv/kohteet
+      { source: '/sv/objekt', destination: '/sv/kohteet', permanent: true },
+      { source: '/sv/objekt/', destination: '/sv/kohteet', permanent: true },
+      { source: '/sv/objekt/aktielagenheter', destination: '/sv/kohteet', permanent: true },
+      { source: '/sv/objekt/fastigheter', destination: '/sv/kohteet', permanent: true },
+      { source: '/sv/objekt/referenser', destination: '/sv/kohteet', permanent: true },
+      { source: '/sv/objekt/hyresobjekt', destination: '/sv/kohteet/vuokrakohteet', permanent: true },
+      { source: '/sv/objekt/kopuppdrag', destination: '/sv/kohteet/ostotoimeksiannot', permanent: true },
+      // FI without prefix
+      { source: '/kohteet/osakehuoneistot', destination: '/fi/kohteet', permanent: true },
+      { source: '/kohteet/kiinteistot', destination: '/fi/kohteet', permanent: true },
+      { source: '/kohteet/referenssit', destination: '/fi/kohteet', permanent: true },
+
+      // STATIC PAGES - Old WordPress page URLs
+      // EN pages
+      { source: '/en/personnel/:slug', destination: '/en/henkilosto', permanent: true },
+      { source: '/en/home-abroad', destination: '/en/kansainvalisesti', permanent: true },
+      // SV pages
+      { source: '/sv/personal/:slug', destination: '/sv/henkilosto', permanent: true },
+      { source: '/sv/yhteydenotto', destination: '/sv/yhteystiedot', permanent: true },
+      { source: '/sv/hem-utomlands', destination: '/sv/kansainvalisesti', permanent: true },
+      // FI without prefix
+      { source: '/henkilosto/:slug', destination: '/fi/henkilosto', permanent: true },
+      { source: '/myymassa', destination: '/fi/myymassa', permanent: true },
+      { source: '/koti-ulkomailta', destination: '/fi/kansainvalisesti', permanent: true },
     ];
   },
 };
