@@ -55,7 +55,9 @@ const nextConfig = {
         { source: '/insights/:path*', destination: `${LEGACY_URL}/insights/:path*` },
         { source: '/pdx-images/:path*', destination: `${LEGACY_URL}/pdx-images/:path*` },
 
-        // Luxury Outlook reports
+        // Luxury Outlook reports (with and without locale prefix)
+        { source: '/:locale(fi|sv|en)/2026-luxury-outlook-report/:path*', destination: `${LEGACY_URL}/2026-luxury-outlook-report/:path*` },
+        { source: '/:locale(fi|sv|en)/2025-luxury-outlook-report/:path*', destination: `${LEGACY_URL}/2025-luxury-outlook-report/:path*` },
         { source: '/2026-luxury-outlook-report/:path*', destination: `${LEGACY_URL}/2026-luxury-outlook-report/:path*` },
         { source: '/2025-luxury-outlook-report/:path*', destination: `${LEGACY_URL}/2025-luxury-outlook-report/:path*` },
         { source: '/luxury-outlook-2023/:path*', destination: `${LEGACY_URL}/luxury-outlook-2023/:path*` },
