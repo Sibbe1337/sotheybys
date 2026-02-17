@@ -38,7 +38,7 @@ const nextConfig = {
     minimumCacheTTL: 60 * 60 * 24 * 30, // ✅ Cache images for 30 days
   },
   async rewrites() {
-    const LEGACY_URL = 'https://legacy.sothebysrealty.fi';
+    const LEGACY_URL = 'http://legacy.sothebysrealty.fi';
 
     const rewrites = {
       beforeFiles: [
