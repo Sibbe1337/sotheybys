@@ -38,15 +38,15 @@ const nextConfig = {
     minimumCacheTTL: 60 * 60 * 24 * 30, // ✅ Cache images for 30 days
   },
   async rewrites() {
-    const LEGACY_URL = 'http://legacy.sothebysrealty.fi';
+    const LEGACY_URL = 'https://wordpress-1000100-3520965.cloudwaysapps.com';
 
     const rewrites = {
       beforeFiles: [
-        // Legacy content with locale prefix (/fi/esitteet/, /sv/esitteet/, /en/esitteet/)
-        { source: '/:locale(fi|sv|en)/esitteet/:path*', destination: `${LEGACY_URL}/:locale/esitteet/:path*` },
-        { source: '/:locale(fi|sv|en)/flowpaper/:path*', destination: `${LEGACY_URL}/:locale/flowpaper/:path*` },
-        { source: '/:locale(fi|sv|en)/3d/:path*', destination: `${LEGACY_URL}/:locale/3d/:path*` },
-        { source: '/:locale(fi|sv|en)/insights/:path*', destination: `${LEGACY_URL}/:locale/insights/:path*` },
+        // Legacy content with locale prefix - strip locale, files are at root
+        { source: '/:locale(fi|sv|en)/esitteet/:path*', destination: `${LEGACY_URL}/esitteet/:path*` },
+        { source: '/:locale(fi|sv|en)/flowpaper/:path*', destination: `${LEGACY_URL}/flowpaper/:path*` },
+        { source: '/:locale(fi|sv|en)/3d/:path*', destination: `${LEGACY_URL}/3d/:path*` },
+        { source: '/:locale(fi|sv|en)/insights/:path*', destination: `${LEGACY_URL}/insights/:path*` },
 
         // Legacy content without locale prefix
         { source: '/esitteet/:path*', destination: `${LEGACY_URL}/esitteet/:path*` },
