@@ -8,6 +8,7 @@ const nextConfig = {
   // ✅ Performance: Enable React Compiler for faster re-renders (Next.js 14+)
   reactStrictMode: true,
   
+  
   // ✅ Performance: Enable compression
   compress: true,
   
