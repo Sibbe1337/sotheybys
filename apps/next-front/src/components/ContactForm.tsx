@@ -26,9 +26,39 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
     privacy: false
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    setIsSubmitting(true);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: formData.name.split(' ')[0] || formData.name,
+          lastName: formData.name.split(' ').slice(1).join(' ') || '',
+          email: formData.email,
+          phone: formData.phone,
+          subject: 'Kontaktformulär / Contact form',
+          message: formData.message,
+          language: 'fi',
+        }),
+      });
+      if (res.ok) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', phone: '', message: '', privacy: false });
+        setTimeout(() => setSubmitStatus('idle'), 5000);
+      } else {
+        throw new Error();
+      }
+    } catch {
+      setSubmitStatus('error');
+      setTimeout(() => setSubmitStatus('idle'), 5000);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -84,11 +114,23 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
           {t.recaptchaText}
         </p>
         
+        {submitStatus === 'success' && (
+          <div className="p-3 bg-green-50 text-green-800 text-sm text-center">
+            Kiitos yhteydenotostasi! / Tack för din kontakt! / Thank you!
+          </div>
+        )}
+        {submitStatus === 'error' && (
+          <div className="p-3 bg-red-50 text-red-800 text-sm text-center">
+            Virhe! Yritä uudelleen. / Fel! Försök igen. / Error! Try again.
+          </div>
+        )}
+
         <button
           type="submit"
-          className="w-full bg-[#002349] text-white py-3 hover:bg-[#001731] transition-colors text-sm uppercase tracking-wider"
+          disabled={isSubmitting || !formData.privacy}
+          className="w-full bg-[#002349] text-white py-3 hover:bg-[#001731] transition-colors text-sm uppercase tracking-wider disabled:opacity-50"
         >
-          {t.submitBtn}
+          {isSubmitting ? '...' : t.submitBtn}
         </button>
       </form>
     </div>

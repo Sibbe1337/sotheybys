@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { VideoSection } from '@/components/ui/VideoSection';
 import { locales, type Locale } from '@/i18n/config';
 import type { Metadata } from 'next';
+import { InlineContactForm } from '@/components/forms/InlineContactForm';
 
 const meta = {
   fi: {
@@ -299,89 +300,20 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
                   {t.formText}
                 </p>
                 
-                <form className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input
-                      type="text"
-                      placeholder={t.firstName}
-                      className="w-full px-4 py-3 bg-white border-0 focus:outline-none font-light text-center"
-                      required
-                    />
-                    <input
-                      type="text"
-                      placeholder={t.lastName}
-                      className="w-full px-4 py-3 bg-white border-0 focus:outline-none font-light text-center"
-                      required
-                    />
-                  </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input
-                      type="email"
-                      placeholder={t.email}
-                      className="w-full px-4 py-3 bg-white border-0 focus:outline-none font-light text-center"
-                      required
-                    />
-                    <input
-                      type="tel"
-                      placeholder={t.phone}
-                      className="w-full px-4 py-3 bg-white border-0 focus:outline-none font-light text-center"
-                      required
-                    />
-                  </div>
-                  
-                  <textarea
-                    placeholder={t.message}
-                    rows={5}
-                    className="w-full px-4 py-3 bg-white border-0 focus:outline-none font-light resize-none text-center"
-                  />
-                  
-                  <div className="flex items-start gap-3">
-                    <input
-                      type="checkbox"
-                      id="privacy"
-                      required
-                      className="mt-1"
-                    />
-                    <label htmlFor="privacy" className="text-sm text-gray-700 font-light">
-                      {t.privacyText}{' '}
-                      <a href="/tietosuojaseloste" className="text-[var(--color-primary)] hover:underline">
-                        {t.privacyLink}
-                      </a>
-                    </label>
-                  </div>
-                  
-                  <div className="flex items-start gap-3">
-                    <input
-                      type="checkbox"
-                      id="newsletter"
-                      className="mt-1"
-                    />
-                    <label htmlFor="newsletter" className="text-sm text-gray-700 font-light">
-                      {t.newsletterText}
-                    </label>
-                  </div>
-                  
-                  <p className="text-xs text-white font-light">
-                    {t.recaptchaText}{' '}
-                    <a href={`https://policies.google.com/privacy?hl=${params.locale}`} target="_blank" rel="noopener noreferrer" className="text-white underline">
-                      {t.recaptchaPrivacy}
-                    </a>{' '}
-                    {t.recaptchaAnd}{' '}
-                    <a href={`https://policies.google.com/terms?hl=${params.locale}`} target="_blank" rel="noopener noreferrer" className="text-white underline">
-                      {t.recaptchaTerms}
-                    </a>{' '}
-                    {t.recaptchaApply}
-                  </p>
-                  
-                  <button
-                    type="submit"
-                    className="w-full bg-[var(--color-primary)] text-white px-6 py-3 hover:bg-[var(--color-primary-dark)] 
-                             transition-colors duration-300 font-light text-center"
-                  >
-                    {t.submitButton}
-                  </button>
-                </form>
+                <InlineContactForm
+                  language={params.locale as 'fi' | 'sv' | 'en'}
+                  translations={{
+                    firstName: t.firstName,
+                    lastName: t.lastName,
+                    email: t.email,
+                    phone: t.phone,
+                    message: t.message,
+                    privacyText: t.privacyText,
+                    privacyLink: t.privacyLink,
+                    newsletterText: t.newsletterText,
+                    submitButton: t.submitButton,
+                  }}
+                />
               </div>
 
               {/* Box 2: Kunniatehtävä - White background (#FFF) */}
