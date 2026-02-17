@@ -798,16 +798,45 @@ export default function HomePageClient({
 
                 {/* Right column - Form */}
                 <div className="bg-white p-6">
-                  <form className="space-y-3">
+                  <form className="space-y-3" onSubmit={async (e) => {
+                    e.preventDefault();
+                    const form = e.currentTarget;
+                    const data = new FormData(form);
+                    const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+                    btn.disabled = true;
+                    btn.textContent = '...';
+                    try {
+                      const res = await fetch('/api/contact', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          firstName: data.get('firstName'),
+                          lastName: data.get('lastName'),
+                          email: data.get('email'),
+                          phone: data.get('phone'),
+                          subject: language === 'fi' ? 'Yhteydenottolomake' : language === 'sv' ? 'Kontaktformulär' : 'Contact form',
+                          message: data.get('message'),
+                          language,
+                        }),
+                      });
+                      if (res.ok) {
+                        form.reset();
+                        btn.textContent = language === 'fi' ? 'Kiitos!' : language === 'sv' ? 'Tack!' : 'Thank you!';
+                        setTimeout(() => { btn.textContent = language === 'fi' ? 'Lähetä' : language === 'sv' ? 'Skicka' : 'Send'; btn.disabled = false; }, 3000);
+                      } else { throw new Error(); }
+                    } catch { btn.textContent = language === 'fi' ? 'Virhe!' : language === 'sv' ? 'Fel!' : 'Error!'; btn.disabled = false; }
+                  }}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       <input
                         type="text"
+                        name="firstName"
                         placeholder={language === 'fi' ? 'Etunimi' : language === 'sv' ? 'Förnamn' : 'First name'}
                         className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:border-[#002349] text-center bg-white placeholder-gray-400"
                         required
                       />
                       <input
                         type="text"
+                        name="lastName"
                         placeholder={language === 'fi' ? 'Sukunimi' : language === 'sv' ? 'Efternamn' : 'Surname'}
                         className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:border-[#002349] text-center bg-white placeholder-gray-400"
                         required
@@ -816,18 +845,21 @@ export default function HomePageClient({
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       <input
                         type="email"
+                        name="email"
                         placeholder={language === 'fi' ? 'Sähköposti' : language === 'sv' ? 'Email' : 'Email'}
                         className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:border-[#002349] text-center bg-white placeholder-gray-400"
                         required
                       />
                       <input
                         type="tel"
+                        name="phone"
                         placeholder={language === 'fi' ? 'Puhelinnumero' : language === 'sv' ? 'Telefonnummer' : 'Phonenumber'}
                         className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:border-[#002349] text-center bg-white placeholder-gray-400"
                         required
                       />
                     </div>
                     <textarea
+                      name="message"
                       placeholder={language === 'fi' ? 'Viesti' : language === 'sv' ? 'Meddelande' : 'Message'}
                       rows={5}
                       className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:border-[#002349] text-center bg-white placeholder-gray-400"
@@ -900,16 +932,45 @@ export default function HomePageClient({
                     : 'Interested in valuable homes and unique properties? Subscribe to our newsletter to stay updated.'}
                 </p>
               </div>
-              <form className="space-y-4 bg-white/10 backdrop-blur-sm p-8">
+              <form className="space-y-4 bg-white/10 backdrop-blur-sm p-8" onSubmit={async (e) => {
+                    e.preventDefault();
+                    const form = e.currentTarget;
+                    const data = new FormData(form);
+                    const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+                    btn.disabled = true;
+                    btn.textContent = '...';
+                    try {
+                      const res = await fetch('/api/contact', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          firstName: data.get('nl_firstName'),
+                          lastName: data.get('nl_lastName'),
+                          email: data.get('nl_email'),
+                          phone: '',
+                          subject: language === 'fi' ? 'Uutiskirjeen tilaus' : language === 'sv' ? 'Nyhetsbrevsprenumeration' : 'Newsletter subscription',
+                          message: language === 'fi' ? 'Haluan tilata uutiskirjeen' : language === 'sv' ? 'Jag vill prenumerera på nyhetsbrevet' : 'I want to subscribe to the newsletter',
+                          language,
+                        }),
+                      });
+                      if (res.ok) {
+                        form.reset();
+                        btn.textContent = language === 'fi' ? 'Kiitos!' : language === 'sv' ? 'Tack!' : 'Thank you!';
+                        setTimeout(() => { btn.textContent = getHomepageTranslation('subscribe', language); btn.disabled = false; }, 3000);
+                      } else { throw new Error(); }
+                    } catch { btn.textContent = language === 'fi' ? 'Virhe!' : language === 'sv' ? 'Fel!' : 'Error!'; btn.disabled = false; }
+                  }}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <input
                   type="text"
+                  name="nl_firstName"
                   placeholder={getHomepageTranslation('firstName', language)}
                     className="w-full px-4 py-3 bg-white border border-gray-300 focus:outline-none focus:border-[var(--color-primary)] font-light"
                     required
                 />
                 <input
                   type="text"
+                  name="nl_lastName"
                   placeholder={getHomepageTranslation('lastName', language)}
                     className="w-full px-4 py-3 bg-white border border-gray-300 focus:outline-none focus:border-[var(--color-primary)] font-light"
                     required
@@ -917,6 +978,7 @@ export default function HomePageClient({
                 </div>
                 <input
                   type="email"
+                  name="nl_email"
                   placeholder={getHomepageTranslation('email', language)}
                   className="w-full px-4 py-3 bg-white border border-gray-300 focus:outline-none focus:border-[var(--color-primary)] font-light"
                   required

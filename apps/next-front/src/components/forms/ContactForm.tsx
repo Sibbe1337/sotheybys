@@ -125,16 +125,23 @@ export const ContactForm: React.FC<ContactFormProps> = ({
       
       const emailSubject = `${t.emailSubject}${subjectText}`;
       
-      // TODO: Implement actual email sending logic here
-      // For now, we'll simulate a successful submission
-      console.log('Form submission:', {
-        ...formData,
-        emailSubject,
-        language
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          phone: formData.phone,
+          subject: subjectText,
+          message: formData.message,
+          language,
+        }),
       });
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      if (!response.ok) {
+        throw new Error('Failed to send');
+      }
       
       setSubmitStatus('success');
       setFormData({
