@@ -85,10 +85,17 @@ const nextConfig = {
         { source: '/kotisivut.xml', destination: `${LEGACY_URL}/kotisivut.xml` },
 
         // Language-specific URLs - old WordPress formats served directly (no redirect)
+        // Property detail pages
         { source: '/en/listing/:slug', destination: '/en/kohde/:slug' },
         { source: '/sv/saluobjekt/:slug', destination: '/sv/kohde/:slug' },
-        { source: '/sv/objekt/:slug', destination: '/sv/kohde/:slug' },
+        // Listing pages
+        { source: '/en/properties', destination: '/en/kohteet' },
+        { source: '/en/properties/', destination: '/en/kohteet' },
+        { source: '/sv/objekt', destination: '/sv/kohteet' },
+        { source: '/sv/objekt/', destination: '/sv/kohteet' },
+        // Subcategory pages
         { source: '/en/properties/:slug', destination: '/en/kohde/:slug' },
+        { source: '/sv/objekt/:slug', destination: '/sv/kohde/:slug' },
       ],
       afterFiles: [],
     };
@@ -116,18 +123,12 @@ const nextConfig = {
       // Old /property/ format
       { source: '/property/:slug', destination: '/fi/kohde/:slug', permanent: true },
 
-      // LISTING PAGES - Old WordPress category pages
-      // EN: /en/properties/ → /en/kohteet
-      { source: '/en/properties', destination: '/en/kohteet', permanent: true },
-      { source: '/en/properties/', destination: '/en/kohteet', permanent: true },
+      // LISTING PAGES - subcategories that don't have rewrites
       { source: '/en/properties/apartments', destination: '/en/kohteet', permanent: true },
       { source: '/en/properties/real-estates', destination: '/en/kohteet', permanent: true },
       { source: '/en/properties/references', destination: '/en/kohteet', permanent: true },
       { source: '/en/properties/rental-listings', destination: '/en/kohteet/vuokrakohteet', permanent: true },
       { source: '/en/properties/purchase-mandates', destination: '/en/kohteet/ostotoimeksiannot', permanent: true },
-      // SV: /sv/objekt/ → /sv/kohteet
-      { source: '/sv/objekt', destination: '/sv/kohteet', permanent: true },
-      { source: '/sv/objekt/', destination: '/sv/kohteet', permanent: true },
       { source: '/sv/objekt/aktielagenheter', destination: '/sv/kohteet', permanent: true },
       { source: '/sv/objekt/fastigheter', destination: '/sv/kohteet', permanent: true },
       { source: '/sv/objekt/referenser', destination: '/sv/kohteet', permanent: true },
