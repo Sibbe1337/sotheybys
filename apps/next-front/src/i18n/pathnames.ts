@@ -13,42 +13,69 @@
  */
 
 export const pathnames = {
-  // Homepage
   '/': '/',
   
-  // Properties - ALL locales use Finnish filesystem path
-  '/kohteet': '/kohteet',
+  '/kohteet': {
+    fi: '/kohteet',
+    sv: '/objekt',
+    en: '/properties',
+  },
   
-  // Rentals - ALL locales use Finnish filesystem path
-  '/kohteet/vuokrakohteet': '/kohteet/vuokrakohteet',
+  '/kohteet/vuokrakohteet': {
+    fi: '/kohteet/vuokrakohteet',
+    sv: '/objekt/hyresobjekt',
+    en: '/properties/rental-listings',
+  },
   
-  // Purchase assignments - ALL locales use Finnish filesystem path
-  '/kohteet/ostotoimeksiannot': '/kohteet/ostotoimeksiannot',
+  '/kohteet/ostotoimeksiannot': {
+    fi: '/kohteet/ostotoimeksiannot',
+    sv: '/objekt/kopuppdrag',
+    en: '/properties/purchase-mandates',
+  },
   
+  '/myymassa': {
+    fi: '/myymassa',
+    sv: '/salj-med-oss',
+    en: '/sell-with-us',
+  },
   
-  // Sell - ALL locales use Finnish filesystem path
-  '/myymassa': '/myymassa',
+  '/kansainvalisesti': {
+    fi: '/kansainvalisesti',
+    sv: '/internationellt',
+    en: '/international',
+  },
   
-  // International - ALL locales use Finnish filesystem path
-  '/kansainvalisesti': '/kansainvalisesti',
+  '/henkilosto': {
+    fi: '/henkilosto',
+    sv: '/personal',
+    en: '/personnel',
+  },
   
-  // Staff - ALL locales use Finnish filesystem path
-  '/henkilosto': '/henkilosto',
+  '/yhteystiedot': {
+    fi: '/yhteystiedot',
+    sv: '/kontakt',
+    en: '/contact',
+  },
   
-  // Contact - ALL locales use Finnish filesystem path
-  '/yhteystiedot': '/yhteystiedot',
+  '/yritys': {
+    fi: '/yritys',
+    sv: '/om-oss',
+    en: '/about',
+  },
   
-  // About - ALL locales use Finnish filesystem path
-  '/yritys': '/yritys',
+  '/meille-toihin': {
+    fi: '/meille-toihin',
+    sv: '/jobba-hos-oss',
+    en: '/careers',
+  },
   
-  // Careers/Join us - ALL locales use Finnish filesystem path
-  '/meille-toihin': '/meille-toihin',
+  '/kohde/[slug]': {
+    fi: '/kohde/[slug]',
+    sv: '/saluobjekt/[slug]',
+    en: '/listing/[slug]',
+  },
   
-  // Property detail - dynamic route
-  '/kohde/[slug]': '/kohde/[slug]',
-  
-  // Blog (same across all locales)
-  '/blog': '/blog'
+  '/blog': '/blog',
 } as const;
 
 export type Pathnames = typeof pathnames;
