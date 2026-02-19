@@ -153,7 +153,7 @@ export function MediaTabs({
           <div className="w-full h-full flex items-center justify-center">
             {brochureUrl ? (
               <iframe 
-                src={brochureUrl} 
+                src={brochureUrl.replace('https://sothebysrealty.fi/', 'https://legacy.sothebysrealty.fi/').replace('https://www.sothebysrealty.fi/', 'https://legacy.sothebysrealty.fi/')} 
                 className="w-full h-full border-0"
                 title="Property brochure"
                 allowFullScreen
