@@ -49,8 +49,9 @@ const nextConfig = {
         { source: '/:locale(fi|sv|en)/3d/:path*', destination: `${LEGACY_URL}/3d/:path*` },
         { source: '/:locale(fi|sv|en)/insights/:path*', destination: `${LEGACY_URL}/insights/:path*` },
 
-        // WordPress uploads (email signatures, old images etc.)
+        // WordPress uploads, email signatures, old images etc.
         { source: '/wp-content/:path*', destination: `${LEGACY_URL}/wp-content/:path*` },
+        { source: '/email/:path*', destination: `${LEGACY_URL}/email/:path*` },
 
         // Legacy content without locale prefix
         { source: '/esitteet/:path*', destination: `${LEGACY_URL}/esitteet/:path*` },
