@@ -1,6 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { Turnstile } from '@/components/ui/Turnstile';
+
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '';
 
 interface ContactFormProps {
   translations: {
@@ -28,9 +31,11 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [turnstileToken, setTurnstileToken] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (TURNSTILE_SITE_KEY && !turnstileToken) return;
     setIsSubmitting(true);
     try {
       const res = await fetch('/api/contact', {
@@ -44,6 +49,7 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
           subject: 'Kontaktformulär / Contact form',
           message: formData.message,
           language: 'fi',
+          turnstileToken,
         }),
       });
       if (res.ok) {
@@ -110,9 +116,13 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
           </label>
         </div>
         
-        <p className="text-[10px] text-gray-500 leading-tight">
-          {t.recaptchaText}
-        </p>
+        {TURNSTILE_SITE_KEY && (
+          <Turnstile
+            siteKey={TURNSTILE_SITE_KEY}
+            onVerify={setTurnstileToken}
+            onExpire={() => setTurnstileToken('')}
+          />
+        )}
         
         {submitStatus === 'success' && (
           <div className="p-3 bg-green-50 text-green-800 text-sm text-center">

@@ -2,6 +2,9 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/Button';
+import { Turnstile } from '@/components/ui/Turnstile';
+
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '';
 
 interface ContactFormProps {
   language: 'fi' | 'sv' | 'en';
@@ -96,6 +99,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [turnstileToken, setTurnstileToken] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
@@ -115,6 +119,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (TURNSTILE_SITE_KEY && !turnstileToken) return;
     setIsSubmitting(true);
     
     try {
@@ -136,6 +141,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
           subject: subjectText,
           message: formData.message,
           language,
+          turnstileToken,
         }),
       });
 
@@ -286,6 +292,14 @@ export const ContactForm: React.FC<ContactFormProps> = ({
           </a> *
         </label>
       </div>
+
+      {TURNSTILE_SITE_KEY && (
+        <Turnstile
+          siteKey={TURNSTILE_SITE_KEY}
+          onVerify={setTurnstileToken}
+          onExpire={() => setTurnstileToken('')}
+        />
+      )}
 
       {submitStatus === 'success' && (
         <div className="p-4 bg-green-50 text-green-800 rounded-lg">

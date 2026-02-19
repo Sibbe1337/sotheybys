@@ -1,6 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { Turnstile } from '@/components/ui/Turnstile';
+
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '';
 
 interface InlineContactFormProps {
   language: 'fi' | 'sv' | 'en';
@@ -22,9 +25,11 @@ interface InlineContactFormProps {
 export function InlineContactForm({ language, translations: t, className = '' }: InlineContactFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [turnstileToken, setTurnstileToken] = useState('');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (TURNSTILE_SITE_KEY && !turnstileToken) return;
     setIsSubmitting(true);
     const form = e.currentTarget;
     const data = new FormData(form);
@@ -41,6 +46,7 @@ export function InlineContactForm({ language, translations: t, className = '' }:
           subject: language === 'fi' ? 'Myyntitoimeksianto' : language === 'sv' ? 'Säljuppdrag' : 'Selling inquiry',
           message: data.get('message') || (language === 'fi' ? 'Yhteydenottopyyntö myyntisivulta' : language === 'sv' ? 'Kontaktförfrågan från säljsidan' : 'Contact request from selling page'),
           language,
+          turnstileToken,
         }),
       });
       if (res.ok) {
@@ -81,6 +87,14 @@ export function InlineContactForm({ language, translations: t, className = '' }:
           <input type="checkbox" id="newsletter-sell" className="mt-1" />
           <label htmlFor="newsletter-sell" className="text-sm text-gray-700 font-light">{t.newsletterText}</label>
         </div>
+      )}
+
+      {TURNSTILE_SITE_KEY && (
+        <Turnstile
+          siteKey={TURNSTILE_SITE_KEY}
+          onVerify={setTurnstileToken}
+          onExpire={() => setTurnstileToken('')}
+        />
       )}
 
       {status === 'success' && (

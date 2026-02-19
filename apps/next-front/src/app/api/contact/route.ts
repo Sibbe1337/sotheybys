@@ -13,16 +13,40 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+async function verifyTurnstile(token: string): Promise<boolean> {
+  const secret = process.env.TURNSTILE_SECRET_KEY;
+  if (!secret) return true; // Skip verification if no secret configured
+  
+  const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({ secret, response: token }),
+  });
+  const data = await res.json();
+  return data.success === true;
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { firstName, lastName, email, phone, subject, message, language } = body;
+    const { firstName, lastName, email, phone, subject, message, language, turnstileToken } = body;
 
     if (!firstName || !lastName || !email || !message) {
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
       );
+    }
+
+    // Verify Turnstile CAPTCHA
+    if (process.env.TURNSTILE_SECRET_KEY) {
+      if (!turnstileToken) {
+        return NextResponse.json({ error: 'CAPTCHA required' }, { status: 400 });
+      }
+      const valid = await verifyTurnstile(turnstileToken);
+      if (!valid) {
+        return NextResponse.json({ error: 'CAPTCHA verification failed' }, { status: 403 });
+      }
     }
 
     const subjectLine = subject
