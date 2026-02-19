@@ -123,6 +123,8 @@ const nextConfig = {
       { source: '/kohde/:slug', destination: '/fi/kohde/:slug', permanent: true },
       // Old /property/ format
       { source: '/property/:slug', destination: '/fi/kohde/:slug', permanent: true },
+      // Short URL: /slug → /fi/kohde/slug (for window signs, print materials etc.)
+      { source: '/listing/:slug', destination: '/fi/kohde/:slug', permanent: true },
 
       // LISTING PAGES - subcategories that don't have rewrites
       { source: '/en/properties/apartments', destination: '/en/kohteet', permanent: true },
@@ -152,6 +154,11 @@ const nextConfig = {
       { source: '/henkilosto/:slug', destination: '/fi/henkilosto', permanent: true },
       { source: '/myymassa', destination: '/fi/myymassa', permanent: true },
       { source: '/koti-ulkomailta', destination: '/fi/kansainvalisesti', permanent: true },
+      { source: '/kohteet', destination: '/fi/kohteet', permanent: true },
+      { source: '/yritys', destination: '/fi/yritys', permanent: true },
+      { source: '/henkilosto', destination: '/fi/henkilosto', permanent: true },
+      { source: '/yhteystiedot', destination: '/fi/yhteystiedot', permanent: true },
+      { source: '/kansainvalisesti', destination: '/fi/kansainvalisesti', permanent: true },
     ];
   },
 };

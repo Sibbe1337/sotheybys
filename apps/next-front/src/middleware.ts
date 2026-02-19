@@ -36,5 +36,5 @@ export const config = {
   // - /_next/* (Next.js internals)
   // - Static files (*.*)
   // - Legacy content paths (esitteet, flowpaper, reports, marketing, etc.)
-  matcher: ['/((?!api|_next|.*\\..*|wp-content|email|esitteet|flowpaper|3d|insights|pdx-images|2026-luxury-outlook-report|2025-luxury-outlook-report|luxury-outlook-2023|ssir-luxury-outlook-2023|global-media-2024|global-media-2025|global-media-plan-2023|global-property-search-ad-unit-2023|gps-ad-unit-2024|gps-ad-unit-2025|the-playbook-2024|the-playbook-2025|the-distinction-2023|merry-christmas-2025|seasonal-greetings-2023|tahtitorninkatu-16|kotisivut\\.xml)(?!$).*)']
+  matcher: ['/((?!api|_next|.*\\..*|wp-content|email|listing|esitteet|flowpaper|3d|insights|pdx-images|2026-luxury-outlook-report|2025-luxury-outlook-report|luxury-outlook-2023|ssir-luxury-outlook-2023|global-media-2024|global-media-2025|global-media-plan-2023|global-property-search-ad-unit-2023|gps-ad-unit-2024|gps-ad-unit-2025|the-playbook-2024|the-playbook-2025|the-distinction-2023|merry-christmas-2025|seasonal-greetings-2023|tahtitorninkatu-16|kotisivut\\.xml)(?!$).*)']
 }
