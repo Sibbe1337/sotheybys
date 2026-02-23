@@ -60,35 +60,7 @@ const nextConfig = {
         { source: '/insights/:path*', destination: `${LEGACY_URL}/insights/:path*` },
         { source: '/pdx-images/:path*', destination: `${LEGACY_URL}/pdx-images/:path*` },
 
-        // Luxury Outlook reports (with and without locale prefix)
-        { source: '/:locale(fi|sv|en)/2026-luxury-outlook-report/:path*', destination: `${LEGACY_URL}/2026-luxury-outlook-report/:path*` },
-        { source: '/:locale(fi|sv|en)/2025-luxury-outlook-report/:path*', destination: `${LEGACY_URL}/2025-luxury-outlook-report/:path*` },
-        { source: '/2026-luxury-outlook-report/:path*', destination: `${LEGACY_URL}/2026-luxury-outlook-report/:path*` },
-        { source: '/2025-luxury-outlook-report/:path*', destination: `${LEGACY_URL}/2025-luxury-outlook-report/:path*` },
-        { source: '/luxury-outlook-2023/:path*', destination: `${LEGACY_URL}/luxury-outlook-2023/:path*` },
-        { source: '/ssir-luxury-outlook-2023/:path*', destination: `${LEGACY_URL}/ssir-luxury-outlook-2023/:path*` },
-
-        // Marketing materials (2026)
-        { source: '/global-media-2026/:path*', destination: `${LEGACY_URL}/global-media-2026/:path*` },
-        { source: '/listing-presentation-2026/:path*', destination: `${LEGACY_URL}/listing-presentation-2026/:path*` },
-        { source: '/buyers-guide-2026/:path*', destination: `${LEGACY_URL}/buyers-guide-2026/:path*` },
-        { source: '/gps-ad-unit-2026/:path*', destination: `${LEGACY_URL}/gps-ad-unit-2026/:path*` },
-        { source: '/the-playbook-2026/:path*', destination: `${LEGACY_URL}/the-playbook-2026/:path*` },
-        // Marketing materials (2024-2025)
-        { source: '/global-media-2024/:path*', destination: `${LEGACY_URL}/global-media-2024/:path*` },
-        { source: '/global-media-2025/:path*', destination: `${LEGACY_URL}/global-media-2025/:path*` },
-        { source: '/global-media-plan-2023/:path*', destination: `${LEGACY_URL}/global-media-plan-2023/:path*` },
-        { source: '/global-property-search-ad-unit-2023/:path*', destination: `${LEGACY_URL}/global-property-search-ad-unit-2023/:path*` },
-        { source: '/gps-ad-unit-2024/:path*', destination: `${LEGACY_URL}/gps-ad-unit-2024/:path*` },
-        { source: '/gps-ad-unit-2025/:path*', destination: `${LEGACY_URL}/gps-ad-unit-2025/:path*` },
-        { source: '/the-playbook-2024/:path*', destination: `${LEGACY_URL}/the-playbook-2024/:path*` },
-        { source: '/the-playbook-2025/:path*', destination: `${LEGACY_URL}/the-playbook-2025/:path*` },
-        { source: '/the-distinction-2023/:path*', destination: `${LEGACY_URL}/the-distinction-2023/:path*` },
-
-        // Seasonal & special pages
-        { source: '/merry-christmas-2025/:path*', destination: `${LEGACY_URL}/merry-christmas-2025/:path*` },
-        { source: '/seasonal-greetings-2023/:path*', destination: `${LEGACY_URL}/seasonal-greetings-2023/:path*` },
-        { source: '/tahtitorninkatu-16/:path*', destination: `${LEGACY_URL}/tahtitorninkatu-16/:path*` },
+        // FlowPaper/marketing/seasonal pages handled via redirects below (relative path issues)
         { source: '/kotisivut.xml', destination: `${LEGACY_URL}/kotisivut.xml` },
 
         // Language-specific URLs - old WordPress formats served directly (no redirect)
@@ -118,7 +90,38 @@ const nextConfig = {
     return rewrites;
   },
   async redirects() {
+    const LEGACY_REDIRECT = 'https://legacy.sothebysrealty.fi';
     return [
+      // ====================================================
+      // FLOWPAPER / LEGACY CONTENT → redirect to legacy server
+      // (FlowPaper uses relative paths, rewrites break CSS/JS loading)
+      // ====================================================
+      // Marketing materials 2026
+      { source: '/global-media-2026/:path*', destination: `${LEGACY_REDIRECT}/global-media-2026/:path*`, permanent: false },
+      { source: '/listing-presentation-2026/:path*', destination: `${LEGACY_REDIRECT}/listing-presentation-2026/:path*`, permanent: false },
+      { source: '/buyers-guide-2026/:path*', destination: `${LEGACY_REDIRECT}/buyers-guide-2026/:path*`, permanent: false },
+      { source: '/gps-ad-unit-2026/:path*', destination: `${LEGACY_REDIRECT}/gps-ad-unit-2026/:path*`, permanent: false },
+      { source: '/the-playbook-2026/:path*', destination: `${LEGACY_REDIRECT}/the-playbook-2026/:path*`, permanent: false },
+      // Marketing materials 2023-2025
+      { source: '/global-media-2024/:path*', destination: `${LEGACY_REDIRECT}/global-media-2024/:path*`, permanent: false },
+      { source: '/global-media-2025/:path*', destination: `${LEGACY_REDIRECT}/global-media-2025/:path*`, permanent: false },
+      { source: '/global-media-plan-2023/:path*', destination: `${LEGACY_REDIRECT}/global-media-plan-2023/:path*`, permanent: false },
+      { source: '/global-property-search-ad-unit-2023/:path*', destination: `${LEGACY_REDIRECT}/global-property-search-ad-unit-2023/:path*`, permanent: false },
+      { source: '/gps-ad-unit-2024/:path*', destination: `${LEGACY_REDIRECT}/gps-ad-unit-2024/:path*`, permanent: false },
+      { source: '/gps-ad-unit-2025/:path*', destination: `${LEGACY_REDIRECT}/gps-ad-unit-2025/:path*`, permanent: false },
+      { source: '/the-playbook-2024/:path*', destination: `${LEGACY_REDIRECT}/the-playbook-2024/:path*`, permanent: false },
+      { source: '/the-playbook-2025/:path*', destination: `${LEGACY_REDIRECT}/the-playbook-2025/:path*`, permanent: false },
+      { source: '/the-distinction-2023/:path*', destination: `${LEGACY_REDIRECT}/the-distinction-2023/:path*`, permanent: false },
+      // Luxury Outlook reports
+      { source: '/2026-luxury-outlook-report/:path*', destination: `${LEGACY_REDIRECT}/2026-luxury-outlook-report/:path*`, permanent: false },
+      { source: '/2025-luxury-outlook-report/:path*', destination: `${LEGACY_REDIRECT}/2025-luxury-outlook-report/:path*`, permanent: false },
+      { source: '/luxury-outlook-2023/:path*', destination: `${LEGACY_REDIRECT}/luxury-outlook-2023/:path*`, permanent: false },
+      { source: '/ssir-luxury-outlook-2023/:path*', destination: `${LEGACY_REDIRECT}/ssir-luxury-outlook-2023/:path*`, permanent: false },
+      // Seasonal & special pages
+      { source: '/merry-christmas-2025/:path*', destination: `${LEGACY_REDIRECT}/merry-christmas-2025/:path*`, permanent: false },
+      { source: '/seasonal-greetings-2023/:path*', destination: `${LEGACY_REDIRECT}/seasonal-greetings-2023/:path*`, permanent: false },
+      { source: '/tahtitorninkatu-16/:path*', destination: `${LEGACY_REDIRECT}/tahtitorninkatu-16/:path*`, permanent: false },
+
       // ====================================================
       // OLD WORDPRESS URL REDIRECTS
       // Ensures all old links continue to work
