@@ -68,7 +68,13 @@ const nextConfig = {
         { source: '/luxury-outlook-2023/:path*', destination: `${LEGACY_URL}/luxury-outlook-2023/:path*` },
         { source: '/ssir-luxury-outlook-2023/:path*', destination: `${LEGACY_URL}/ssir-luxury-outlook-2023/:path*` },
 
-        // Marketing materials
+        // Marketing materials (2026)
+        { source: '/global-media-2026/:path*', destination: `${LEGACY_URL}/global-media-2026/:path*` },
+        { source: '/listing-presentation-2026/:path*', destination: `${LEGACY_URL}/listing-presentation-2026/:path*` },
+        { source: '/buyers-guide-2026/:path*', destination: `${LEGACY_URL}/buyers-guide-2026/:path*` },
+        { source: '/gps-ad-unit-2026/:path*', destination: `${LEGACY_URL}/gps-ad-unit-2026/:path*` },
+        { source: '/the-playbook-2026/:path*', destination: `${LEGACY_URL}/the-playbook-2026/:path*` },
+        // Marketing materials (2024-2025)
         { source: '/global-media-2024/:path*', destination: `${LEGACY_URL}/global-media-2024/:path*` },
         { source: '/global-media-2025/:path*', destination: `${LEGACY_URL}/global-media-2025/:path*` },
         { source: '/global-media-plan-2023/:path*', destination: `${LEGACY_URL}/global-media-plan-2023/:path*` },
