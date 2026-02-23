@@ -121,14 +121,9 @@ const nextConfig = {
       { source: '/merry-christmas-2025/:path*', destination: `${LEGACY_REDIRECT}/merry-christmas-2025/:path*`, permanent: false },
       { source: '/seasonal-greetings-2023/:path*', destination: `${LEGACY_REDIRECT}/seasonal-greetings-2023/:path*`, permanent: false },
       { source: '/tahtitorninkatu-16/:path*', destination: `${LEGACY_REDIRECT}/tahtitorninkatu-16/:path*`, permanent: false },
-      // Privacy policy (WordPress page)
-      { source: '/tietosuojaseloste', destination: `${LEGACY_REDIRECT}/tietosuojaseloste/`, permanent: false },
-      { source: '/tietosuojaseloste/', destination: `${LEGACY_REDIRECT}/tietosuojaseloste/`, permanent: false },
-      { source: '/sv/tietosuojaseloste', destination: `${LEGACY_REDIRECT}/sv/tietosuojaseloste/`, permanent: false },
-      { source: '/sv/tietosuojaseloste/', destination: `${LEGACY_REDIRECT}/sv/tietosuojaseloste/`, permanent: false },
-      { source: '/en/tietosuojaseloste', destination: `${LEGACY_REDIRECT}/en/tietosuojaseloste/`, permanent: false },
-      { source: '/en/tietosuojaseloste/', destination: `${LEGACY_REDIRECT}/en/tietosuojaseloste/`, permanent: false },
-      { source: '/en/privacy-policy', destination: `${LEGACY_REDIRECT}/en/tietosuojaseloste/`, permanent: false },
+      // Privacy policy - now a Next.js page, redirect old formats
+      { source: '/tietosuojaseloste', destination: '/fi/tietosuojaseloste', permanent: true },
+      { source: '/en/privacy-policy', destination: '/en/tietosuojaseloste', permanent: true },
 
       // ====================================================
       // OLD WORDPRESS URL REDIRECTS
