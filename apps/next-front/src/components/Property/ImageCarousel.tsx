@@ -58,7 +58,7 @@ export function ImageCarousel({ images, title, propertyId }: ImageCarouselProps)
           <img
             key={imageKey}
             src={currentImageUrl}
-            alt={`${title} - Bild ${currentIndex + 1}`}
+            alt=""
             className="absolute inset-0 w-full h-full object-cover"
             onError={(e) => {
               e.currentTarget.style.display = 'none';
@@ -128,7 +128,7 @@ export function ImageCarousel({ images, title, propertyId }: ImageCarouselProps)
             <img
               key={imageKey}
               src={currentImageUrl}
-              alt={`${title} - Bild ${currentIndex + 1}`}
+              alt=""
               className="max-w-full max-h-full object-contain"
             />
           </div>
