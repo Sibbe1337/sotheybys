@@ -853,7 +853,7 @@ export default function HomePageClient({
                       <input
                         type="tel"
                         name="phone"
-                        placeholder={language === 'fi' ? 'Puhelinnumero' : language === 'sv' ? 'Telefonnummer' : 'Phonenumber'}
+                        placeholder={language === 'fi' ? 'Puhelinnumero' : language === 'sv' ? 'Telefonnummer' : 'Phone number'}
                         className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:border-[#002349] text-center bg-white placeholder-gray-400"
                         required
                       />

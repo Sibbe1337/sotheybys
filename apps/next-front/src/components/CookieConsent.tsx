@@ -9,16 +9,24 @@ type ConsentStatus = 'pending' | 'accepted' | 'rejected';
 export function CookieConsent() {
   const [status, setStatus] = useState<ConsentStatus>('pending');
   const [visible, setVisible] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const stored = localStorage.getItem(CONSENT_KEY);
-    if (stored === 'accepted') {
-      setStatus('accepted');
-      loadAnalytics();
-    } else if (stored === 'rejected') {
-      setStatus('rejected');
-    } else {
-      setVisible(true);
+    setMounted(true);
+    try {
+      const stored = localStorage.getItem(CONSENT_KEY);
+      if (stored === 'accepted') {
+        setStatus('accepted');
+        loadAnalytics();
+      } else if (stored === 'rejected') {
+        setStatus('rejected');
+      } else {
+        // Small delay to avoid flash during page transitions/redirects
+        const timer = setTimeout(() => setVisible(true), 500);
+        return () => clearTimeout(timer);
+      }
+    } catch {
+      // localStorage not available (SSR)
     }
   }, []);
 
@@ -35,7 +43,7 @@ export function CookieConsent() {
     setVisible(false);
   };
 
-  if (!visible) return null;
+  if (!mounted || !visible) return null;
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-[9999] bg-[#002349] text-white p-4 sm:p-6 shadow-2xl">

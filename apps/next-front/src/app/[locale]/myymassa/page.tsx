@@ -171,7 +171,7 @@ const translations = {
     firstName: 'First name',
     lastName: 'Surname',
     email: 'Email',
-    phone: 'Phonenumber',
+    phone: 'Phone number',
     message: 'Message',
     privacyText: 'I have read the',
     privacyLink: 'Tietosuojaseloste',

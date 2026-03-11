@@ -38,7 +38,7 @@ const staffMembers = [
   {
     id: '1',
     name: 'Heidi Metsänen',
-    title: 'Global Sales Coordinator, M.Sc., LKV',
+    title: 'Senior Broker, Global Sales Coordinator, M.Sc., LKV',
     email: 'heidi@sothebysrealty.fi',
     phone: '+358 (0)50 421 0905',
     image: '/images/staff/heidi-metsanen.jpg',
@@ -74,7 +74,7 @@ const staffMembers = [
   {
     id: '5',
     name: 'Linn Johanson',
-    title: 'Sales & Marketing Associate',
+    title: 'Sales & Marketing Associate, M.Sc.',
     email: 'linn@sothebysrealty.fi',
     phone: '+358 (0)44 055 2342',
     image: '/images/staff/linn-johanson.jpg',
@@ -208,7 +208,7 @@ const translations = {
     submitBtn: 'Send',
     namePlaceholder: 'First name',
     emailPlaceholder: 'Email',
-    phonePlaceholder: 'Phonenumber',
+    phonePlaceholder: 'Phone number',
     messagePlaceholder: 'Message',
     welcomeTitle: 'Your international broker locally.',
     welcomeText: 'Our office is located right in the center of Helsinki. The lively Esplanadi with all its cafés and Senaatintori with its beautiful seashore as neighbors on Kasarmikatu 34. You are always welcome to stop by, say hello and have a cup of coffee to talk of and get inspired by the real estate market. We are happy to tell you more about ourselves and all our amazing properties for sale.',

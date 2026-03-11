@@ -157,7 +157,7 @@ const staffMembers = [
   {
     id: '1',
     name: 'Heidi Metsänen',
-    title: 'Global Sales Coordinator, M.Sc., LKV',
+    title: 'Senior Broker, Global Sales Coordinator, M.Sc., LKV',
     email: 'heidi@sothebysrealty.fi',
     phone: '+358 (0)50 421 0905',
     image: '/images/staff/heidi-metsanen.jpg',
@@ -197,7 +197,7 @@ const staffMembers = [
   {
     id: '5',
     name: 'Linn Johanson',
-    title: 'Sales & Marketing Associate',
+    title: 'Sales & Marketing Associate, M.Sc.',
     email: 'linn@sothebysrealty.fi',
     phone: '+358 (0)44 055 2342',
     image: '/images/staff/linn-johanson.jpg',
