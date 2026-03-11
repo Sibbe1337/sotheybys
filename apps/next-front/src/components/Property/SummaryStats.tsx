@@ -47,8 +47,11 @@ export function SummaryStats({ vm, locale, isApartment, isProperty, isRental, is
   // Dennis: Only show STADSDEL (district), NOT city in stats
   const districtValue = vm.district || vm.subtitle?.split(' • ')[1];
 
-  // Apartment stats
-  if (isApartment && !isRental) {
+  // If both isApartment and isProperty are true (e.g. egnahemshus with productGroup APARTMENTS),
+  // show property stats since it's physically a property (detached house, townhouse etc.)
+  
+  // Apartment stats (only if NOT also a property type)
+  if (isApartment && !isProperty && !isRental) {
     return (
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 sm:gap-6 py-4 sm:py-6 border-y border-gray-200">
         <Stat 
