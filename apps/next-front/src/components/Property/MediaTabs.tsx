@@ -85,12 +85,12 @@ export function MediaTabs({
         )}
         
         {activeTab === 'floor' && (
-          <div className="w-full h-full flex items-center justify-center p-4">
+          <div className="w-full h-full flex items-center justify-center p-2">
             {floorImages.length > 0 ? (
               <img 
                 src={floorImages[0].url} 
                 alt="Floor plan" 
-                className="max-w-full max-h-[600px] object-contain"
+                className="w-full h-full object-contain"
               />
             ) : floorPlans && floorPlans.length > 0 ? (
               <iframe 
