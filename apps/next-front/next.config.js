@@ -138,17 +138,13 @@ const nextConfig = {
       // Short URL: /slug → /fi/kohde/slug (for window signs, print materials etc.)
       { source: '/listing/:slug', destination: '/fi/kohde/:slug', permanent: true },
 
-      // LISTING PAGES - subcategories that don't have rewrites
-      { source: '/en/properties/apartments', destination: '/en/kohteet', permanent: true },
-      { source: '/en/properties/real-estates', destination: '/en/kohteet', permanent: true },
-      { source: '/en/properties/references', destination: '/en/kohteet', permanent: true },
-      { source: '/en/properties/rental-listings', destination: '/en/kohteet/vuokrakohteet', permanent: true },
-      { source: '/en/properties/purchase-mandates', destination: '/en/kohteet/ostotoimeksiannot', permanent: true },
-      { source: '/sv/objekt/aktielagenheter', destination: '/sv/kohteet', permanent: true },
-      { source: '/sv/objekt/fastigheter', destination: '/sv/kohteet', permanent: true },
-      { source: '/sv/objekt/referenser', destination: '/sv/kohteet', permanent: true },
-      { source: '/sv/objekt/hyresobjekt', destination: '/sv/kohteet/vuokrakohteet', permanent: true },
-      { source: '/sv/objekt/kopuppdrag', destination: '/sv/kohteet/ostotoimeksiannot', permanent: true },
+      // LISTING PAGES - old subcategories that don't exist as separate pages
+      { source: '/en/properties/apartments', destination: '/en/properties', permanent: true },
+      { source: '/en/properties/real-estates', destination: '/en/properties', permanent: true },
+      { source: '/en/properties/references', destination: '/en/properties', permanent: true },
+      { source: '/sv/objekt/aktielagenheter', destination: '/sv/objekt', permanent: true },
+      { source: '/sv/objekt/fastigheter', destination: '/sv/objekt', permanent: true },
+      { source: '/sv/objekt/referenser', destination: '/sv/objekt', permanent: true },
       // FI without prefix
       { source: '/kohteet/osakehuoneistot', destination: '/fi/kohteet', permanent: true },
       { source: '/kohteet/kiinteistot', destination: '/fi/kohteet', permanent: true },
@@ -156,19 +152,19 @@ const nextConfig = {
 
       // STATIC PAGES - Old WordPress page URLs
       // EN pages
-      { source: '/en/personnel/:slug', destination: '/en/henkilosto', permanent: true },
-      { source: '/en/home-abroad', destination: '/en/kansainvalisesti', permanent: true },
+      { source: '/en/personnel/:slug', destination: '/en/personnel', permanent: true },
+      { source: '/en/home-abroad', destination: '/en/international', permanent: true },
       // SV pages
-      { source: '/sv/personal/:slug', destination: '/sv/henkilosto', permanent: true },
-      { source: '/sv/yhteydenotto', destination: '/sv/yhteystiedot', permanent: true },
-      { source: '/sv/hem-utomlands', destination: '/sv/kansainvalisesti', permanent: true },
-      // FI without prefix
+      { source: '/sv/personal/:slug', destination: '/sv/personal', permanent: true },
+      { source: '/sv/yhteydenotto', destination: '/sv/kontakt', permanent: true },
+      { source: '/sv/hem-utomlands', destination: '/sv/internationellt', permanent: true },
+      // FI pages without locale prefix
       { source: '/henkilosto/:slug', destination: '/fi/henkilosto', permanent: true },
+      { source: '/henkilosto', destination: '/fi/henkilosto', permanent: true },
       { source: '/myymassa', destination: '/fi/myymassa', permanent: true },
       { source: '/koti-ulkomailta', destination: '/fi/kansainvalisesti', permanent: true },
       { source: '/kohteet', destination: '/fi/kohteet', permanent: true },
       { source: '/yritys', destination: '/fi/yritys', permanent: true },
-      { source: '/henkilosto', destination: '/fi/henkilosto', permanent: true },
       { source: '/yhteystiedot', destination: '/fi/yhteystiedot', permanent: true },
       { source: '/kansainvalisesti', destination: '/fi/kansainvalisesti', permanent: true },
     ];
