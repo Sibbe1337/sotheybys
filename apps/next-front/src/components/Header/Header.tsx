@@ -193,9 +193,10 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
   }, []);
 
   return (
-    <header 
+    <header
       key={currentLang}
-      className={`sticky top-0 z-50 bg-[var(--color-primary)] text-white transition-all duration-300 ${
+      id="site-header"
+      className={`fixed top-0 left-0 right-0 z-50 bg-[var(--color-primary)] text-white transition-all duration-300 ${
         isScrolled || isLandscape ? 'shadow-lg' : ''
       }`}
     >

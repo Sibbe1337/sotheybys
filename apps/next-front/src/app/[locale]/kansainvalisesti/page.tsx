@@ -417,7 +417,7 @@ export default function InternationalPage({ params }: { params: { locale: Locale
               
               {/* Urban Metropolitan */}
               <a 
-                href="https://www.sothebysrealty.com/eng/sales/int/urban-lstyle" 
+                href="https://www.sothebysrealty.com/eng/sales/int/metropolitan-lstyle" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="group cursor-pointer"
@@ -444,7 +444,7 @@ export default function InternationalPage({ params }: { params: { locale: Locale
 
               {/* Lovely Ski Properties */}
               <a 
-                href="https://www.sothebysrealty.com/eng/sales/int/ski-lstyle" 
+                href="https://www.sothebysrealty.com/eng/sales/int/ski-in-sk" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="group cursor-pointer"
