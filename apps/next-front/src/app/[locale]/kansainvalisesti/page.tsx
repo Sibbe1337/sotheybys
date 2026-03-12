@@ -444,7 +444,7 @@ export default function InternationalPage({ params }: { params: { locale: Locale
 
               {/* Lovely Ski Properties */}
               <a 
-                href="https://www.sothebysrealty.com/eng/sales/int/ski-in-sk" 
+                href="https://www.sothebysrealty.com/eng/sales/int/ski-in-ski-out-lotf" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="group cursor-pointer"
