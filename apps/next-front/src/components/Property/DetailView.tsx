@@ -272,14 +272,18 @@ export function DetailView({ vm, locale }: Props) {
           </div>
         )}
 
-        {/* Type-specific Sections - Dennis 2025-11-11: Added commercial support */}
-        {/* Robert 2025-11-25: productGroup APARTMENTS always shows ApartmentSections (for vederlag/prices) */}
-        {/* Even if typeCode is OMAKOTITALO, if productGroup is APARTMENTS, show ApartmentSections */}
+        {/* Type-specific Sections
+            - Rental → RentalSections
+            - Commercial → PropertySections (commercial mode)
+            - Apartment (höghus/kerrostalo only) → ApartmentSections
+            - Property (including egnahemshus/parhus with productGroup APARTMENTS) → PropertySections
+        */}
         <div className="mb-12">
           {isRental && <RentalSections vm={vm} locale={locale} />}
           {!isRental && isCommercialProperty && <PropertySections vm={vm} locale={locale} isCommercial={true} />}
-          {!isRental && !isCommercialProperty && productGroup === 'APARTMENTS' && <ApartmentSections vm={vm} locale={locale} />}
-          {!isRental && !isCommercialProperty && productGroup !== 'APARTMENTS' && isProperty && <PropertySections vm={vm} locale={locale} />}
+          {!isRental && !isCommercialProperty && isApartment && !isProperty && <ApartmentSections vm={vm} locale={locale} />}
+          {!isRental && !isCommercialProperty && isProperty && <PropertySections vm={vm} locale={locale} />}
+          {!isRental && !isCommercialProperty && !isApartment && !isProperty && <ApartmentSections vm={vm} locale={locale} />}
         </div>
       </div>
     </div>

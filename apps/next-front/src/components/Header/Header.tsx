@@ -175,7 +175,7 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
       // Debounce resize events to prevent excessive re-renders
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(() => {
-        const isLandscapeMode = window.innerWidth > window.innerHeight && window.innerWidth < 1024;
+        const isLandscapeMode = window.innerWidth > window.innerHeight && window.innerWidth < 1280;
         setIsLandscape(isLandscapeMode);
         // Don't auto-close menu in landscape - let user control it
       }, 100); // 100ms debounce
@@ -269,7 +269,7 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center">
+          <nav className="hidden xl:flex items-center">
             <ul className="flex items-center gap-1">
               {items.map((item) => {
                 const isActive = pathname === item.path || 
@@ -342,7 +342,7 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
 
           {/* Mobile Menu Button - Larger touch area for landscape mode */}
           <button 
-            className="lg:hidden text-white p-3 -mr-2 z-50 relative"
+            className="xl:hidden text-white p-3 -mr-2 z-50 relative"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -364,7 +364,7 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
 
       {/* Mobile Menu - Statisk storlek */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden bg-[var(--color-primary)]">
+        <div className="xl:hidden bg-[var(--color-primary)]">
           <nav className="max-w-[1400px] mx-auto px-6 py-2">
             {/* Mobile Navigation */}
             {items.map((item) => {
