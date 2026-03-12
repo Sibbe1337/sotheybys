@@ -237,10 +237,10 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
                 e.stopPropagation();
                 setIdx((idx - 1 + displayImages.length) % displayImages.length); 
               }}
-              className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white/80 hover:bg-white border border-gray-200 shadow-sm transition-all z-20 cursor-pointer"
+              className="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center bg-black/20 hover:bg-black/40 transition-all z-20 cursor-pointer"
               aria-label="Previous image"
             >
-              <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
@@ -253,10 +253,10 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
                 e.stopPropagation();
                 setIdx((idx + 1) % displayImages.length); 
               }}
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white/80 hover:bg-white border border-gray-200 shadow-sm transition-all z-20 cursor-pointer"
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center bg-black/20 hover:bg-black/40 transition-all z-20 cursor-pointer"
               aria-label="Next image"
             >
-              <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </button>
