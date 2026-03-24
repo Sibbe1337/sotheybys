@@ -30,6 +30,17 @@ export function ImageCarousel({ images, title, propertyId }: ImageCarouselProps)
     setImageError(false);
   }, [images, propertyId]);
 
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') setCurrentIndex(prev => (prev + 1) % images.length);
+      if (e.key === 'ArrowLeft') setCurrentIndex(prev => (prev - 1 + images.length) % images.length);
+      if (e.key === 'Escape' && isFullscreen) setIsFullscreen(false);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [images.length, isFullscreen]);
+
   if (!images || images.length === 0) return null;
 
   const goToNext = () => setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -96,14 +107,14 @@ export function ImageCarousel({ images, title, propertyId }: ImageCarouselProps)
           {/* Close Button */}
           <button
             onClick={() => setIsFullscreen(false)}
-            className="absolute top-4 right-4 w-12 h-12 flex items-center justify-center bg-white/90 hover:bg-white text-gray-900 rounded-full shadow-lg z-20"
+            className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center bg-black/30 hover:bg-black/50 text-white transition-all z-20"
             aria-label="Stäng fullskärm"
           >
-            <X className="w-6 h-6" />
+            <X className="w-5 h-5" />
           </button>
 
           {/* Image Counter */}
-          <div className="absolute top-4 left-4 bg-white/90 text-gray-900 px-4 py-2 rounded-full text-sm font-medium z-20">
+          <div className="absolute top-4 left-4 bg-black/30 text-white px-3 py-1.5 text-sm font-medium z-20">
             {currentIndex + 1} / {images.length}
           </div>
 
