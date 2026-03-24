@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import type { Locale } from '@/lib/domain/property.types';
+import { JobPosition } from '@/components/careers/JobPosition';
 
 // 🔥 LINUS FIX: Careers page is ONLY available in English (like current site)
 // Redirect fi/sv visitors to English version
@@ -251,276 +252,48 @@ export default function CareersPage({ params }: CareersPageProps) {
         </div>
       </section>
 
-      {/* Positions Grid */}
+      {/* Positions - Expandable */}
       <section className="py-16 bg-white">
-        <div className="container mx-auto px-4 max-w-7xl">
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Position 1 */}
-            <div className="bg-white border border-gray-200 p-8">
-              <div className="mb-6">
-                <p className="text-sm text-gray-600 mb-2">{t.pos1Category}</p>
-                <h3 className="text-2xl font-normal text-gray-900 mb-4">
-                  {t.pos1Title}
-                </h3>
-                <p className="text-gray-700 leading-relaxed mb-4">
-                  {t.pos1Intro}
-                </p>
-                <a
-                  href="#position1-details"
-                  className="text-[#002349] hover:underline font-light"
-                >
-                  {t.readMore}
-                </a>
-              </div>
-            </div>
+        <div className="container mx-auto px-4 max-w-5xl space-y-6">
+          <JobPosition
+            category={t.pos1Category}
+            title={t.pos1Title}
+            intro={t.pos1Intro}
+            description={t.pos1Description}
+            requirements={[t.pos1Req1, t.pos1Req2, t.pos1Req3, t.pos1Req4, t.pos1Req5, t.pos1Req6, t.pos1Req7]}
+            reqTitle={t.pos1ReqTitle}
+            offers={[t.pos1Offer1, t.pos1Offer2, t.pos1Offer3, t.pos1Offer4, t.pos1Offer5, t.pos1Offer6, t.pos1Offer7, t.pos1Offer8]}
+            offerTitle={t.pos1OfferTitle}
+            location={t.pos1Location}
+            contactName={t.contactName}
+            contactTitle={t.contactTitle}
+            contactPhone={t.contactPhone}
+            contactEmail={t.contactEmail}
+            forMoreInfo={t.forMoreInfo}
+            contactCta={t.contactCta}
+            applyBtn={t.applyBtn}
+            readMore={t.readMore}
+          />
 
-            {/* Position 2 */}
-            <div className="bg-white border border-gray-200 p-8">
-              <div className="mb-6">
-                <p className="text-sm text-gray-600 mb-2">{t.pos2Category}</p>
-                <h3 className="text-2xl font-normal text-gray-900 mb-4">
-                  {t.pos2Title}
-                </h3>
-                <p className="text-gray-700 leading-relaxed mb-4">
-                  {t.pos2Intro}
-                </p>
-                <a
-                  href="#position2-details"
-                  className="text-[#002349] hover:underline font-light"
-                >
-                  {t.readMore}
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Position 1 Details */}
-      <section id="position1-details" className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4 max-w-5xl">
-          <h3 className="text-3xl font-light text-gray-900 mb-6">
-            {t.pos1Title}
-          </h3>
-          <p className="text-gray-700 leading-relaxed mb-8 whitespace-pre-line">
-            {t.pos1Description}
-          </p>
-
-          <div className="grid md:grid-cols-2 gap-8 mb-8">
-            <div>
-              <h4 className="text-xl font-normal text-gray-900 mb-4">
-                {t.pos1ReqTitle}
-              </h4>
-              <ul className="space-y-2">
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos1Req1}</span>
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos1Req2}</span>
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos1Req3}</span>
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos1Req4}</span>
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos1Req5}</span>
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos1Req6}</span>
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos1Req7}</span>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-xl font-normal text-gray-900 mb-4">
-                {t.pos1OfferTitle}
-              </h4>
-              <ul className="space-y-2">
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos1Offer1}</span>
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos1Offer2}</span>
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos1Offer3}</span>
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos1Offer4}</span>
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos1Offer5}</span>
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos1Offer6}</span>
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos1Offer7}</span>
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos1Offer8}</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <p className="text-gray-700 mb-6">{t.pos1Location}</p>
-
-          <div className="bg-white border-l-4 border-[#002349] p-6 mb-6">
-            <p className="font-normal text-gray-900 mb-2">{t.forMoreInfo}</p>
-            <p className="text-gray-900 font-normal">{t.contactName}</p>
-            <p className="text-gray-700">{t.contactTitle}</p>
-            <p className="text-gray-700">{t.contactPhone}</p>
-            <p className="text-gray-700">
-              <a href={`mailto:${t.contactEmail}`} className="text-[#002349] hover:underline">
-                {t.contactEmail}
-              </a>
-            </p>
-          </div>
-
-          <p className="text-gray-700 mb-6">{t.contactCta}</p>
-          <a
-            href={`mailto:${t.contactEmail}`}
-            className="inline-block bg-[#002349] text-white px-8 py-3
-                     hover:bg-[#001731] transition-colors duration-300
-                     font-light uppercase tracking-wider text-sm"
-          >
-            {t.applyBtn}
-          </a>
-        </div>
-      </section>
-
-      {/* Position 2 Details */}
-      <section id="position2-details" className="py-16 bg-white">
-        <div className="container mx-auto px-4 max-w-5xl">
-          <h3 className="text-3xl font-light text-gray-900 mb-6">
-            {t.pos2Title}
-          </h3>
-          <p className="text-gray-700 leading-relaxed mb-8">
-            {t.pos2Description}
-          </p>
-
-          <div className="grid md:grid-cols-2 gap-8 mb-8">
-            <div>
-              <h4 className="text-xl font-normal text-gray-900 mb-4">
-                {t.pos2ReqTitle}
-              </h4>
-              <ul className="space-y-2">
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos2Req1}</span>
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos2Req2}</span>
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos2Req3}</span>
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos2Req4}</span>
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos2Req5}</span>
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos2Req6}</span>
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos2Req7}</span>
-                </li>
-              </ul>
-        </div>
-
-            <div>
-              <h4 className="text-xl font-normal text-gray-900 mb-4">
-                {t.pos2OfferTitle}
-              </h4>
-              <ul className="space-y-2">
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos2Offer1}</span>
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos2Offer2}</span>
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos2Offer3}</span>
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos2Offer4}</span>
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos2Offer5}</span>
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos2Offer6}</span>
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos2Offer7}</span>
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <span className="mr-2">•</span>
-                  <span>{t.pos2Offer8}</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <p className="text-gray-700 mb-6">{t.pos2Location}</p>
-
-          <div className="bg-gray-50 border-l-4 border-[#002349] p-6 mb-6">
-            <p className="font-normal text-gray-900 mb-2">{t.forMoreInfo}</p>
-            <p className="text-gray-900 font-normal">{t.contactName}</p>
-            <p className="text-gray-700">{t.contactTitle}</p>
-            <p className="text-gray-700">{t.contactPhone}</p>
-            <p className="text-gray-700">
-              <a href={`mailto:${t.contactEmail}`} className="text-[#002349] hover:underline">
-                {t.contactEmail}
-              </a>
-            </p>
-          </div>
-
-          <p className="text-gray-700 mb-6">{t.contactCta}</p>
-          <a
-            href={`mailto:${t.contactEmail}`}
-            className="inline-block bg-[#002349] text-white px-8 py-3
-                     hover:bg-[#001731] transition-colors duration-300
-                     font-light uppercase tracking-wider text-sm"
-          >
-            {t.applyBtn}
-          </a>
+          <JobPosition
+            category={t.pos2Category}
+            title={t.pos2Title}
+            intro={t.pos2Intro}
+            description={t.pos2Description}
+            requirements={[t.pos2Req1, t.pos2Req2, t.pos2Req3, t.pos2Req4, t.pos2Req5, t.pos2Req6, t.pos2Req7]}
+            reqTitle={t.pos2ReqTitle}
+            offers={[t.pos2Offer1, t.pos2Offer2, t.pos2Offer3, t.pos2Offer4, t.pos2Offer5, t.pos2Offer6, t.pos2Offer7, t.pos2Offer8]}
+            offerTitle={t.pos2OfferTitle}
+            location={t.pos2Location}
+            contactName={t.contactName}
+            contactTitle={t.contactTitle}
+            contactPhone={t.contactPhone}
+            contactEmail={t.contactEmail}
+            forMoreInfo={t.forMoreInfo}
+            contactCta={t.contactCta}
+            applyBtn={t.applyBtn}
+            readMore={t.readMore}
+          />
         </div>
       </section>
     </main>
