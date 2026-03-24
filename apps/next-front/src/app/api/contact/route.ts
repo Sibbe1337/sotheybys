@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
+export const maxDuration = 30;
+
 const RECIPIENT_EMAIL = process.env.CONTACT_EMAIL || 'info@sothebysrealty.fi';
 
 const transporter = nodemailer.createTransport({
@@ -11,6 +13,9 @@ const transporter = nodemailer.createTransport({
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
   },
+  connectionTimeout: 10000,
+  greetingTimeout: 10000,
+  socketTimeout: 20000,
 });
 
 async function verifyTurnstile(token: string): Promise<boolean> {
@@ -67,7 +72,7 @@ export async function POST(request: NextRequest) {
     `;
 
     await transporter.sendMail({
-      from: `"Sotheby's Realty Website" <${process.env.SMTP_USER}>`,
+      from: process.env.SMTP_USER || 'info@sothebysrealty.fi',
       to: RECIPIENT_EMAIL,
       replyTo: email,
       subject: subjectLine,
