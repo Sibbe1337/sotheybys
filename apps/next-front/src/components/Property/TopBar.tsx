@@ -36,7 +36,7 @@ export function TopBar({ address, postalCode, city, agentEmail, locale }: TopBar
     : 'mailto:info@sothebysrealty.fi';
 
   return (
-    <div className="bg-white border-b border-gray-200 sticky top-[60px] sm:top-[70px] xl:top-[120px] z-40 shadow-sm">
+    <div className="bg-white border-b border-gray-200 sticky top-[56px] sm:top-[64px] xl:top-[100px] z-40 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
         {/* Dennis 2025-11-12: Stack på mobil så knappen INTE täcker adressen */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">

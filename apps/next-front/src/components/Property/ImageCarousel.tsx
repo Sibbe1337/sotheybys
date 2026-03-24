@@ -110,17 +110,17 @@ export function ImageCarousel({ images, title, propertyId }: ImageCarouselProps)
           {/* Navigation Arrows */}
           <button
             onClick={goToPrev}
-            className="absolute left-4 top-1/2 -translate-y-1/2 w-14 h-14 flex items-center justify-center bg-white/90 hover:bg-white text-gray-900 rounded-full shadow-lg transition-all hover:scale-110 z-20"
+            className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-black/20 hover:bg-black/40 transition-all z-20"
             aria-label="Föregående bild"
           >
-            <ChevronLeft className="w-7 h-7" />
+            <ChevronLeft className="w-5 h-5 text-white" />
           </button>
           <button
             onClick={goToNext}
-            className="absolute right-4 top-1/2 -translate-y-1/2 w-14 h-14 flex items-center justify-center bg-white/90 hover:bg-white text-gray-900 rounded-full shadow-lg transition-all hover:scale-110 z-20"
+            className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-black/20 hover:bg-black/40 transition-all z-20"
             aria-label="Nästa bild"
           >
-            <ChevronRight className="w-7 h-7" />
+            <ChevronRight className="w-5 h-5 text-white" />
           </button>
 
           {/* Fullscreen Image */}
