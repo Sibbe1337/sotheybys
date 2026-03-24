@@ -33,10 +33,19 @@ export function generateStaticParams() {
   return (locales as readonly Locale[]).map((locale) => ({ locale }));
 }
 
-// Staff members data - static, no need for client-side
+// Staff data - ordered per Who We Are PDF 2026-03-24
 const staffMembers = [
   {
     id: '1',
+    name: 'Robert Charpentier',
+    title: 'Chairman, M.Sc., LKV',
+    email: 'robert@sothebysrealty.fi',
+    phone: '+358 (0)400 243 011',
+    image: '/images/staff/robert-charpentier.jpg',
+    flags: ['fi', 'se', 'gb', 'fr']
+  },
+  {
+    id: '2',
     name: 'Heidi Metsänen',
     title: 'Senior Broker, Global Sales Coordinator, M.Sc., LKV',
     email: 'heidi@sothebysrealty.fi',
@@ -45,7 +54,7 @@ const staffMembers = [
     flags: ['fi', 'se', 'gb', 'fr', 'de']
   },
   {
-    id: '2',
+    id: '3',
     name: 'Soile Goodall',
     title: 'Senior Broker, LKV',
     email: 'soile@sothebysrealty.fi',
@@ -54,7 +63,7 @@ const staffMembers = [
     flags: ['fi', 'gb']
   },
   {
-    id: '3',
+    id: '4',
     name: 'Ali Ahola',
     title: 'Senior Broker, LKV',
     email: 'ali@sothebysrealty.fi',
@@ -63,16 +72,25 @@ const staffMembers = [
     flags: ['fi']
   },
   {
-    id: '4',
-    name: 'Kadri-Ann Öunap',
-    title: 'Sales Associate, Notary, KED, KiAT',
-    email: 'kadri-ann@sothebysrealty.fi',
-    phone: '+358 (0)40 154 7844',
-    image: '/images/staff/kadri-ann-ounap.jpg',
-    flags: ['fi', 'gb', 'ee']
+    id: '5',
+    name: 'Eeva Kyläkoski',
+    title: 'Senior Advisor - Board Member, LKV',
+    email: 'eeva@sothebysrealty.fi',
+    phone: '+358 (0)46 850 5850',
+    image: '/images/staff/eeva-kylakoski.jpg',
+    flags: ['fi', 'se', 'gb']
   },
   {
-    id: '5',
+    id: '6',
+    name: 'Petteri Huovila',
+    title: 'Senior Advisor, LKV',
+    email: 'petteri@sothebysrealty.fi',
+    phone: '+358 (0)400 889 138',
+    image: '/images/staff/petteri-huovila.jpg',
+    flags: ['fi', 'se', 'gb']
+  },
+  {
+    id: '7',
     name: 'Linn Johanson',
     title: 'Sales & Marketing Associate, M.Sc.',
     email: 'linn@sothebysrealty.fi',
@@ -81,16 +99,16 @@ const staffMembers = [
     flags: ['fi', 'se', 'gb']
   },
   {
-    id: '6',
+    id: '8',
     name: 'Sima Shaygan',
-    title: 'Sales Associate, B.Sc, KiLaT',
+    title: 'Sales Associate, B.Sc., KiLaT',
     email: 'sima@sothebysrealty.fi',
     phone: '+358 (0)44 239 3979',
     image: '/images/staff/sima-shaygan.jpg',
     flags: ['fi', 'gb', 'ir', 'tr']
   },
   {
-    id: '7',
+    id: '9',
     name: 'Dennis Forsman',
     title: 'Sales Assistant, B.Sc.',
     email: 'dennis@sothebysrealty.fi',
