@@ -43,7 +43,7 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           firstName: formData.name.split(' ')[0] || formData.name,
-          lastName: formData.name.split(' ').slice(1).join(' ') || '',
+          lastName: formData.name.split(' ').slice(1).join(' ') || '-',
           email: formData.email,
           phone: formData.phone,
           subject: 'Kontaktformulär / Contact form',

@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { firstName, lastName, email, phone, subject, message, language, turnstileToken } = body;
 
-    if (!firstName || !lastName || !email || !message) {
+    if (!firstName || !email || !message) {
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
