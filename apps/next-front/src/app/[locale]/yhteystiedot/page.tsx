@@ -124,33 +124,6 @@ const staffMembers = [
     phone: '+358 (0)50 536 9106',
     image: '/images/staff/johan-schroder.jpg',
     flags: ['fi', 'se', 'gb']
-  },
-  {
-    id: '9',
-    name: 'Eeva Kyläkoski',
-    title: 'Senior Advisor - Board Member, LKV',
-    email: 'eeva@sothebysrealty.fi',
-    phone: '+358 (0)46 850 5850',
-    image: '/images/staff/eeva-kylakoski.jpg',
-    flags: ['fi', 'gb']
-  },
-  {
-    id: '10',
-    name: 'Robert Charpentier',
-    title: 'Chairman, M.Sc., LKV',
-    email: 'robert@sothebysrealty.fi',
-    phone: '+358 (0)400 243 011',
-    image: '/images/staff/robert-charpentier.jpg',
-    flags: ['fi', 'se', 'gb', 'de']
-  },
-  {
-    id: '11',
-    name: 'Petteri Huovila',
-    title: 'Senior Advisor, LKV',
-    email: 'petteri@sothebysrealty.fi',
-    phone: '+358 (0)400 889 138',
-    image: '/images/staff/petteri-huovila.jpg',
-    flags: ['fi', 'se', 'gb']
   }
 ];
 
