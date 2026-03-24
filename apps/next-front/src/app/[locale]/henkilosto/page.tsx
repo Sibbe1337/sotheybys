@@ -366,7 +366,7 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
               {/* First 8 members in regular grid */}
               <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
                 {staffMembers.slice(0, 8).map((member) => (
-                  <div key={member.id} className="text-center">
+                  <div key={member.id} className="text-center group cursor-pointer">
                     {/* Photo - Responsive sizing */}
                     <div className="relative mb-3 sm:mb-4 mx-auto w-full max-w-[160px] sm:max-w-[180px] lg:max-w-[200px] aspect-[5/7]">
                       <Image
@@ -374,7 +374,7 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
                         alt={member.name}
                         fill
                         sizes="(max-width: 640px) 140px, (max-width: 1024px) 180px, 200px"
-                        className="object-cover grayscale"
+                        className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
                       />
                     </div>
                     
@@ -412,7 +412,7 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
               {staffMembers.length > 8 && (
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:flex lg:justify-center gap-4 sm:gap-6 lg:gap-8 mt-6 sm:mt-8">
                   {staffMembers.slice(8).map((member) => (
-                    <div key={member.id} className="text-center lg:w-[200px]">
+                    <div key={member.id} className="text-center lg:w-[200px] group cursor-pointer">
                       {/* Photo - Responsive sizing */}
                       <div className="relative mb-3 sm:mb-4 mx-auto w-full max-w-[160px] sm:max-w-[180px] lg:max-w-[200px] aspect-[5/7]">
                         <Image
@@ -420,7 +420,7 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
                           alt={member.name}
                           fill
                           sizes="(max-width: 640px) 140px, (max-width: 1024px) 180px, 200px"
-                          className="object-cover grayscale"
+                          className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
                         />
                       </div>
                       
