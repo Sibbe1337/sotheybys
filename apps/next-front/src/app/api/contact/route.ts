@@ -81,9 +81,10 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Contact form error:', error);
+    const err = error instanceof Error ? error : new Error(String(error));
+    console.error('Contact form error:', err.message, err.stack);
     return NextResponse.json(
-      { error: 'Failed to send email' },
+      { error: 'Failed to send email', detail: err.message, smtpUser: process.env.SMTP_USER ? 'set' : 'MISSING', smtpPass: process.env.SMTP_PASS ? 'set' : 'MISSING', smtpHost: process.env.SMTP_HOST || 'default' },
       { status: 500 }
     );
   }
