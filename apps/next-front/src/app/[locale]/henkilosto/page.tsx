@@ -2,6 +2,7 @@ import { Link } from '@/lib/navigation';
 import Image from 'next/image';
 import { locales, type Locale } from '@/i18n/config';
 import type { Metadata } from 'next';
+import { InlineContactForm } from '@/components/forms/InlineContactForm';
 
 const meta = {
   fi: {
@@ -484,86 +485,19 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
 
             {/* Form */}
             <div className="max-w-3xl mx-auto bg-gray-100 p-8 md:p-12">
-              <form className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <input
-                      type="text"
-                      placeholder={t.formFirstName}
-                      className="w-full px-4 py-3 border-0 bg-white placeholder-gray-500 font-light"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <input
-                      type="text"
-                      placeholder={t.formLastName}
-                      className="w-full px-4 py-3 border-0 bg-white placeholder-gray-500 font-light"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <input
-                      type="email"
-                      placeholder={t.formEmail}
-                      className="w-full px-4 py-3 border-0 bg-white placeholder-gray-500 font-light"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <input
-                      type="tel"
-                      placeholder={t.formPhone}
-                      className="w-full px-4 py-3 border-0 bg-white placeholder-gray-500 font-light"
-                      required
-                    />
-                  </div>
-                </div>
-                
-                <div>
-                  <input
-                    type="text"
-                    placeholder={t.formAddress}
-                    className="w-full px-4 py-3 border-0 bg-white placeholder-gray-500 font-light"
-                  />
-                </div>
-                
-                <div>
-                  <textarea
-                    placeholder={t.formMessage}
-                    rows={6}
-                    className="w-full px-4 py-3 border-0 bg-white placeholder-gray-500 font-light resize-none"
-                    required
-                  />
-                </div>
-                
-                <div className="flex items-start">
-                  <input
-                    type="checkbox"
-                    id="privacy-staff"
-                    name="privacy"
-                    required
-                    className="mt-1 mr-3"
-                  />
-                  <label htmlFor="privacy-staff" className="text-sm font-light text-gray-700">
-                    {t.formPrivacyText} <a href="#" className="text-[var(--color-primary)] underline">{t.formPrivacyLink}</a>
-                  </label>
-                </div>
-                
-                <div className="text-center">
-                  <p className="text-xs font-light text-gray-600 mb-4">
-                    {t.formRecaptchaText}{' '}
-                    <a href="#" className="text-[var(--color-primary)] underline">{t.formRecaptchaPrivacy}</a> {t.formRecaptchaTerms &&
-                     <>{' '}<a href="#" className="text-[var(--color-primary)] underline">{t.formRecaptchaTerms}</a> {t.formRecaptchaEnd}</>}
-                  </p>
-                  <button
-                    type="submit"
-                    className="px-8 py-3 bg-[var(--color-primary)] text-white hover:bg-[#0f2633] transition-colors font-light uppercase tracking-wider"
-                  >
-                    {t.formSubmit}
-                  </button>
-                </div>
-              </form>
+              <InlineContactForm
+                language={locale}
+                translations={{
+                  firstName: t.formFirstName,
+                  lastName: t.formLastName,
+                  email: t.formEmail,
+                  phone: t.formPhone,
+                  message: t.formMessage,
+                  privacyText: t.formPrivacyText,
+                  privacyLink: t.formPrivacyLink,
+                  submitButton: t.formSubmit,
+                }}
+              />
             </div>
           </div>
         </section>
