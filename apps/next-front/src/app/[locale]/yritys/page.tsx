@@ -37,7 +37,7 @@ export function generateStaticParams() {
 const translations = {
   fi: {
     introTitle: 'Snellman Sotheby\'s International Realty®',
-    introText: 'Tänä päivänä 85 maassa, 1100 välitystoimiston ja 25 800 välittäjän vahvuudella palveleva Sotheby\'s International Realty® kuuluu maailman suurimpiin kiinteistöalan brändeihin. Globaali verkostomme avaa asiakkaille eri puolilla maailmaa oven kansainvälisille arvokiinteistömarkkinoille.',
+    introText: 'Tänä päivänä 86 maassa, 1 100 välitystoimiston ja 26 000 välittäjän vahvuudella palveleva Sotheby\'s International Realty® kuuluu maailman suurimpiin kiinteistöalan brändeihin. Globaali verkostomme avaa asiakkaille eri puolilla maailmaa oven kansainvälisille arvokiinteistömarkkinoille.',
     officeTitle: 'Upea toimistomme palvelee',
     officeHours: 'teitä arkisin 10:00 – 17:00',
     officeExtra: 'sekä muina aikoina sopimuksen mukaan.',
@@ -63,7 +63,7 @@ const translations = {
   },
   sv: {
     introTitle: 'Snellman Sotheby\'s International Realty®',
-    introText: 'I dagens läge har Sotheby\'s International Realty® verksamhet i 85 länder, med 1100 mäklarbyråer och 25 800 mäklare runt om i världen och sitter på ett av världens starkaste varumärken gällande fastigheter. Företaget följer ett franchise koncept som möjliggör tillträde på den globala marknaden för värdefastigheter runt om i hela världen.',
+    introText: 'I dagens läge har Sotheby\'s International Realty® verksamhet i 86 länder, med 1 100 mäklarbyråer och 26 000 mäklare runt om i världen och sitter på ett av världens starkaste varumärken gällande fastigheter. Företaget följer ett franchise koncept som möjliggör tillträde på den globala marknaden för värdefastigheter runt om i hela världen.',
     officeTitle: 'Vårt högklassiga kontor',
     officeHours: 'betjänar Er på vardagar 10:00 – 17:00',
     officeExtra: 'på helgerna är vi öppna efter överenskommelse.',
@@ -89,7 +89,7 @@ const translations = {
   },
   en: {
     introTitle: 'Snellman Sotheby\'s International Realty®',
-    introText: 'Today, Sotheby\'s International Realty operates in more than 85 countries, has 1100 offices and 25,800 brokers around the world and holds one of the strongest brands when it comes to real estate in the world. The company is following a franchise concept, making it possible to connect the real estate market on a global level.',
+    introText: 'Today, Sotheby\'s International Realty operates in more than 86 countries, has 1,100 offices and 26,000 brokers around the world and holds one of the strongest brands when it comes to real estate in the world. The company is following a franchise concept, making it possible to connect the real estate market on a global level.',
     officeTitle: 'Our wonderful office is open',
     officeHours: 'on weekdays 10:00 – 17:00',
     officeExtra: 'as well as other times by appointment.',
@@ -121,7 +121,7 @@ const getHeroSlides = (locale: string) => [
     id: 1,
     image: '/images/content/snellman-sothebys-yritys-01.jpg',
     title: locale === 'fi' ? 'Kansainvälinen välittäjäsi paikallisesti' : locale === 'sv' ? 'Din internationella mäklare lokalt' : 'Your international agent locally',
-    subtitle: locale === 'fi' ? '25 800 välittäjää 1100 välitystoimistossa 85 maassa ja alueella' : locale === 'sv' ? '25 800 mäklare 1100 kontor 85 länder och regioner' : '25,800 agents 1,100 offices 85 countries and territories',
+    subtitle: locale === 'fi' ? '26 000 välittäjää 1 100 välitystoimistossa 86 maassa ja alueella' : locale === 'sv' ? '26 000 mäklare 1 100 kontor 86 länder och regioner' : '26,000 agents 1,100 offices 86 countries and territories',
     buttonText: locale === 'fi' ? 'AVAAMME UUSIA OVIA »' : locale === 'sv' ? 'VI ÖPPNAR NYA DÖRRAR »' : 'WE OPEN NEW DOORS »',
     buttonLink: '/kohteet'
   },

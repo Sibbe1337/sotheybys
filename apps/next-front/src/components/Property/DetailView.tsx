@@ -161,16 +161,15 @@ export function DetailView({ vm, locale }: Props) {
         />
 
         {/* Bidding Link - if bidding property */}
-        {vm.price?.includes('alkaen') && (
-          <div className="my-4 p-4 bg-yellow-50 border-l-4 border-yellow-400">
-            <p className="text-sm text-gray-700 mb-2">
-              {locale === 'sv' ? 'Budgivning med start från' : locale === 'en' ? 'Bidding starting from' : 'Budgivning alkaa hinnasta'} {vm.price}
-            </p>
-            <a 
-              href="#bidding" 
-              className="inline-block text-[#002349] font-medium hover:underline"
+        {vm.biddingUrl && (
+          <div className="my-4 text-center">
+            <a
+              href={vm.biddingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block w-full max-w-md bg-[#8e740b] text-white px-8 py-3 text-sm font-bold uppercase tracking-wide hover:bg-[#6d5708] transition-colors"
             >
-              {locale === 'sv' ? 'Följ budgivningen »' : locale === 'en' ? 'Follow bidding »' : 'Seuraa tarjouskilpailua »'}
+              {locale === 'sv' ? 'FÖLJ BUDGIVNINGEN' : locale === 'en' ? 'FOLLOW BIDDING' : 'SEURAA TARJOUSKAUPPAA'}
             </a>
           </div>
         )}

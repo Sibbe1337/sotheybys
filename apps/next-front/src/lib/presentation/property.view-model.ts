@@ -118,6 +118,7 @@ export interface PropertyDetailVM extends PropertyCardVM {
   
   // International marketing
   internationalUrl?: string;  // GLOBAL LISTING URL
+  biddingUrl?: string;        // Bidding/auction URL
   
   // Agent
   agent?: {
@@ -296,6 +297,7 @@ export class PropertyVM {
 
       // International marketing
       internationalUrl: p.internationalUrl,
+      biddingUrl: p.pricing.biddingUrl || undefined,
 
       // Agent
       agent: p.agent,

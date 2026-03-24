@@ -6,15 +6,15 @@ import type { Metadata } from 'next';
 const meta = {
   fi: {
     title: 'Kansainvälisesti | Snellman Sotheby\'s International Realty',
-    description: 'Sotheby\'s International Realty - 25 800 välittäjää, 1100 toimistoa, 85 maassa. Kansainvälinen kiinteistönvälitys.',
+    description: 'Sotheby\'s International Realty - 26 000 välittäjää, 1 100 toimistoa, 86 maassa. Kansainvälinen kiinteistönvälitys.',
   },
   sv: {
     title: 'Internationellt | Snellman Sotheby\'s International Realty',
-    description: 'Sotheby\'s International Realty - 25 800 mäklare, 1100 kontor, 85 länder. Internationell fastighetsmäkleri.',
+    description: 'Sotheby\'s International Realty - 26 000 mäklare, 1 100 kontor, 86 länder. Internationell fastighetsmäkleri.',
   },
   en: {
     title: 'International | Snellman Sotheby\'s International Realty',
-    description: 'Sotheby\'s International Realty - 25,800 agents, 1,100 offices, 85 countries. International luxury real estate.',
+    description: 'Sotheby\'s International Realty - 26,000 agents, 1,100 offices, 86 countries. International luxury real estate.',
   },
 };
 
@@ -36,7 +36,7 @@ export function generateStaticParams() {
 const translations = {
   fi: {
     heroTitle: 'Kansainvälinen välittäjäsi\npaikallisesti',
-    heroStats: '25 800 välittäjää • 1 100 välitystoimistossa • 85 maassa ja alueella',
+    heroStats: '26 000 välittäjää • 1 100 välitystoimistossa • 86 maassa ja alueella',
     heroButton: 'LUE LISÄÄ',
     contactTitle: 'Ainutlaatuinen maailmanlaajuinen\nulottuvuus ja paikallinen asiantuntemus',
     discoverText: 'Discover the world\'s finest homes on',
@@ -57,7 +57,7 @@ const translations = {
   },
   sv: {
     heroTitle: 'Ojämförlig global räckvidd och lokal expertis',
-    heroStats: '25 800 mäklare • 1 100 kontor • 85 länder och territorier',
+    heroStats: '26 000 mäklare • 1 100 kontor • 86 länder och territorier',
     heroButton: 'LÄS MER',
     contactTitle: 'Ojämförlig global räckvidd\noch lokal expertis',
     discoverText: 'Upptäck världens finaste hem på',
@@ -78,7 +78,7 @@ const translations = {
   },
   en: {
     heroTitle: 'Unrivaled global reach and local expertise',
-    heroStats: '25,800 agents • 1,100 offices • 85 countries and territories',
+    heroStats: '26,000 agents • 1,100 offices • 86 countries and territories',
     heroButton: 'READ MORE',
     contactTitle: 'Unrivaled global reach\nand local expertise',
     discoverText: 'Discover the world\'s finest homes on',

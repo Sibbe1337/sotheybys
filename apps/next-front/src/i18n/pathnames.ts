@@ -52,7 +52,7 @@ export const pathnames = {
   },
   
   '/yhteystiedot': {
-    fi: '/yhteystiedot',
+    fi: '/ota-yhteytta',
     sv: '/kontakt',
     en: '/contact',
   },

@@ -165,7 +165,8 @@ const nextConfig = {
       { source: '/koti-ulkomailta', destination: '/fi/kansainvalisesti', permanent: true },
       { source: '/kohteet', destination: '/fi/kohteet', permanent: true },
       { source: '/yritys', destination: '/fi/yritys', permanent: true },
-      { source: '/yhteystiedot', destination: '/fi/yhteystiedot', permanent: true },
+      { source: '/yhteystiedot', destination: '/fi/ota-yhteytta', permanent: true },
+      { source: '/ota-yhteytta', destination: '/fi/ota-yhteytta', permanent: true },
       { source: '/kansainvalisesti', destination: '/fi/kansainvalisesti', permanent: true },
     ];
   },

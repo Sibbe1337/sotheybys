@@ -6,16 +6,16 @@ import { fetchSaleProperties } from '@/lib/server/fetch-properties';
 
 const meta = {
   fi: {
-    title: 'Snellman Sotheby\'s International Realty | Kiinteistönvälitys Suomessa',
-    description: 'Arvokiinteistöihin erikoistunut kiinteistönvälitys. 25 800 välittäjää, 1100 toimistoa, 85 maassa. Löydä unelmiesi koti.',
+    title: 'Snellman Sotheby\'s International Realty | Kiinteistönvälitysliike | Helsinki',
+    description: 'Kansainvälinen kiinteistönvälittäjäsi paikallisesti. Palvelemme teitä arkisin 10-17. Muina aikoina sopimuksen mukaan. Kasarmikatu 34, Helsinki, Suomi',
   },
   sv: {
-    title: 'Snellman Sotheby\'s International Realty | Fastighetsmäklare i Finland',
-    description: 'Specialiserade på exklusiva fastigheter. 25 800 mäklare, 1100 kontor, 85 länder. Hitta ditt drömhem.',
+    title: 'Snellman Sotheby\'s International Realty | Fastighetsmäklare | Helsingfors',
+    description: 'Din internationella fastighetsmäklare lokalt. Vi betjänar er vardagar 10-17. Övriga tider enligt överenskommelse. Kaserngatan 34, Helsingfors, Finland',
   },
   en: {
-    title: 'Snellman Sotheby\'s International Realty | Premium Real Estate in Finland',
-    description: 'Specialized in luxury real estate. 25,800 agents, 1,100 offices, 85 countries. Find your dream home.',
+    title: 'Snellman Sotheby\'s International Realty | Real Estate | Helsinki',
+    description: 'Your international real estate agent locally. We serve you weekdays 10-17. Other times by appointment. Kasarmikatu 34, Helsinki, Finland',
   },
 };
 
