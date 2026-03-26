@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
 
 export const dynamic = 'force-static';
 export const dynamicParams = false;
-export const revalidate = 300;
+export const revalidate = 30;
 
 export function generateStaticParams() {
   return (locales as readonly Locale[]).map((locale) => ({ locale }));
