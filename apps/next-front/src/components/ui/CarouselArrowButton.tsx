@@ -16,7 +16,7 @@ export function CarouselArrowButton({
   const baseClasses = 'absolute top-1/2 -translate-y-1/2 z-10 w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center transition-all duration-200';
   
   const variantClasses = variant === 'dark'
-    ? 'bg-white/50 hover:bg-white/70'
+    ? 'bg-black/20 hover:bg-black/40'
     : 'bg-black/20 hover:bg-black/40';
   
   const positionClasses = direction === 'left' 
@@ -36,7 +36,7 @@ export function CarouselArrowButton({
       aria-label={direction === 'left' ? 'Previous' : 'Next'}
     >
       <svg 
-        className={`w-4 h-4 sm:w-5 sm:h-5 ${variant === 'dark' ? 'text-gray-700' : 'text-white'}`}
+        className="w-4 h-4 sm:w-5 sm:h-5 text-white"
         fill="none" 
         stroke="currentColor" 
         viewBox="0 0 24 24"
