@@ -96,7 +96,7 @@ export default async function LocaleLayout({
     <NextIntlClientProvider locale={validLocale} messages={messages}>
       <div className="min-h-screen flex flex-col">
         <Header locale={locale as 'fi' | 'sv' | 'en'} />
-        <div className="h-[56px] sm:h-[64px] xl:h-[100px]" aria-hidden="true" />
+        <div className="h-[100px] md:h-[140px]" style={{ height: 'var(--header-height, 100px)' }} aria-hidden="true" />
         {children}
         <FooterWithTeam />
       </div>

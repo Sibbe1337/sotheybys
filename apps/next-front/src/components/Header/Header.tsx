@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { usePathname, useRouter, Link } from '@/lib/navigation';
 import { useLocale } from 'next-intl';
 import Image from 'next/image';
@@ -57,6 +57,21 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
   const [expandedMobileMenu, setExpandedMobileMenu] = useState<string | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLandscape, setIsLandscape] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+
+  // Sync CSS variable --header-height with the actual header height
+  const syncHeaderHeight = useCallback(() => {
+    if (headerRef.current) {
+      const h = headerRef.current.offsetHeight;
+      document.documentElement.style.setProperty('--header-height', `${h}px`);
+    }
+  }, []);
+
+  useEffect(() => {
+    syncHeaderHeight();
+    window.addEventListener('resize', syncHeaderHeight);
+    return () => window.removeEventListener('resize', syncHeaderHeight);
+  }, [syncHeaderHeight]);
 
   // 🔥 LINUS FIX: Use filesystem paths (Finnish names) - App Router limitation
   // App Router uses filesystem-based routes, cannot use pathname mappings
@@ -157,6 +172,8 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
         // Use requestAnimationFrame for smooth 60fps throttling
         requestAnimationFrame(() => {
           setIsScrolled(lastScrollY > 50);
+          // Re-measure header after scroll state changes height
+          syncHeaderHeight();
           ticking = false;
         });
         ticking = true;
@@ -194,6 +211,7 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
 
   return (
     <header
+      ref={headerRef}
       key={currentLang}
       id="site-header"
       className={`fixed top-0 left-0 right-0 z-50 bg-[var(--color-primary)] text-white transition-all duration-300 ${

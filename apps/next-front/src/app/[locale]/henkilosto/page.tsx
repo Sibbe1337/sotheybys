@@ -486,7 +486,7 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
             {/* Form */}
             <div className="max-w-3xl mx-auto bg-gray-100 p-8 md:p-12">
               <InlineContactForm
-                language={locale}
+                language={params.locale}
                 translations={{
                   firstName: t.formFirstName,
                   lastName: t.formLastName,

@@ -22,13 +22,8 @@ export function CookieConsent() {
         setStatus('rejected');
         return;
       }
-      // Wait for redirects to settle, then show banner
-      const timer = setTimeout(() => {
-        // Double-check in case another redirect happened
-        const check = localStorage.getItem(CONSENT_KEY);
-        if (!check) setVisible(true);
-      }, 1500);
-      return () => clearTimeout(timer);
+      // No stored preference — show the banner
+      setVisible(true);
     } catch {
       // localStorage not available
     }
