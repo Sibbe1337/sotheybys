@@ -10,7 +10,7 @@ interface PageProps {
   };
 }
 
-export const revalidate = 60; // ISR: revalidate every 60 seconds
+export const revalidate = 3600; // 1h — WordPress content changes rarely
 
 export default async function DynamicPage({ params }: PageProps) {
   const { slug } = params;

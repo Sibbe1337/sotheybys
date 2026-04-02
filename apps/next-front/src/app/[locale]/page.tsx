@@ -24,10 +24,8 @@ export async function generateMetadata({ params: { locale } }: { params: { local
   return { title: t.title, description: t.description };
 }
 
-// Use Static Generation with ISR - page is pre-built and cached
-// Revalidates every 5 minutes in the background
-export const dynamic = 'force-static';
-export const revalidate = 30; // Regenerate every 30 seconds
+// ISR: revalidate every 5 min (matches property listing pages)
+export const revalidate = 300;
 export const dynamicParams = false;
 
 /**

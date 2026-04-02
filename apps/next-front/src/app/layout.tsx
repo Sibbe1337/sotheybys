@@ -55,11 +55,13 @@ export default function RootLayout({
         <link rel="alternate" hrefLang="en" href="https://sothebysrealty.fi/en" />
         <link rel="alternate" hrefLang="x-default" href="https://sothebysrealty.fi" />
 
-        {/* Preconnect to external resources for faster loading */}
+        {/* Preconnect to external resources */}
+        <link rel="preconnect" href="https://use.typekit.net" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://images.linear.fi" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://www.youtube.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://player.vimeo.com" crossOrigin="anonymous" />
-        <link rel="stylesheet" href="https://use.typekit.net/uhz3avz.css" />
+        <link rel="dns-prefetch" href="https://cdn.sanity.io" />
+        {/* Typekit fonts with non-blocking load */}
+        <link rel="stylesheet" href="https://use.typekit.net/uhz3avz.css" media="print" onLoad="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://use.typekit.net/uhz3avz.css" /></noscript>
       </head>
       <body suppressHydrationWarning className="antialiased bg-white text-gray-900">
         {children}

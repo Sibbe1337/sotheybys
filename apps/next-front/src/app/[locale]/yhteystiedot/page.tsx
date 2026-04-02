@@ -27,8 +27,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   return { title: t.title, description: t.description };
 }
 
-// ✅ LINUS FIX: Static generation for all locales
-export const revalidate = 60;
+export const revalidate = 3600; // 1h — contact info changes infrequently
 
 export function generateStaticParams() {
   return (locales as readonly Locale[]).map((locale) => ({ locale }));

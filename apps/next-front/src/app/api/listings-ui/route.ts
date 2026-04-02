@@ -50,6 +50,8 @@ export async function GET(request: Request) {
       language,
       format: 'card',
       source: 'clean-architecture'
+    }, {
+      headers: { 'Cache-Control': 'public, max-age=300, stale-while-revalidate=600' },
     });
   } catch (error) {
     console.error('Error fetching UI listings:', error);

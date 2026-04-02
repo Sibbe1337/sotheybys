@@ -72,6 +72,8 @@ export async function GET(
       language,
       format,
       data
+    }, {
+      headers: { 'Cache-Control': 'public, max-age=300, stale-while-revalidate=600' },
     });
   } catch (error) {
     console.error('Error fetching property:', error);

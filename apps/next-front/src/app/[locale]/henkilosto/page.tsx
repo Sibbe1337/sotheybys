@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   return { title: t.title, description: t.description };
 }
 
-export const revalidate = 60;
+export const revalidate = 3600; // 1h — staff changes infrequently
 
 export function generateStaticParams() {
   return (locales as readonly Locale[]).map((locale) => ({ locale }));
