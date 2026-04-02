@@ -2,74 +2,19 @@
 
 import { useEffect, useState } from 'react';
 import HeroCarousel from '@/components/Homepage/HeroCarousel';
-import FeaturedPropertyGrid from '@/components/Property/FeaturedPropertyGrid';
-import FeaturedPropertyCard from '@/components/Property/FeaturedPropertyCard';
-import { isCommercial } from '@/lib/domain/property-type-helpers';
-import { Link } from '@/lib/navigation';
-import NextLink from 'next/link';  // Native Link for dynamic routes
-import Image from 'next/image';
+import FeaturedPropertiesSection from '@/components/Homepage/FeaturedPropertiesSection';
+import InfoSection from '@/components/Homepage/InfoSection';
+import ContactCtaSection from '@/components/Homepage/ContactCtaSection';
+import NewsletterSection from '@/components/Homepage/NewsletterSection';
 import { getHomepageTranslation, type SupportedLanguage } from '@/lib/homepage-translations';
-// Legacy imports removed - now using new API endpoints
 import type { Locale } from '@/i18n/config';
-import { company } from '@/lib/config/company';
+import type { Property } from '@/lib/domain/property.types';
 
-// Helper: Strip HTML tags from description
-function stripHtml(html: string): string {
-  return html.replace(/<[^>]*>/g, '').trim();
-}
-
-// Helper: Get localized value with fallback to Finnish
-function getLocalized<T>(value: { fi: T; sv?: T; en?: T } | T | undefined, locale: string): T | undefined {
-  if (value === undefined || value === null) return undefined;
-  if (typeof value !== 'object') return value;
-  const localized = value as { fi: T; sv?: T; en?: T };
-  return localized[locale as keyof typeof localized] || localized.fi;
-}
-
-// Helper: Format plot area with smart units
-// < 10 000 m² → m², ≥ 10 000 m² → ha
-function formatPlot(n: number | null | undefined, locale: string): string {
-  if (typeof n !== 'number' || n <= 0) return '';
-  const L = locale === 'sv' ? 'sv-SE' : locale === 'en' ? 'en-GB' : 'fi-FI';
-  
-  if (n < 10000) {
-    const formatted = new Intl.NumberFormat(L, {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-    }).format(Math.round(n));
-    return `${formatted} m²`;
-  }
-  
-  // ≥ 10 000 m² → convert to hectares
-  const ha = n / 10000;
-  const formatted = new Intl.NumberFormat(L, {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  }).format(ha);
-  return `${formatted} ha`;
-}
-
-// Helper: Check if property is an apartment (should not show plot size)
-function isApartment(property: Property): boolean {
-  const apartmentTypes = ['kerrostalo', 'lägenhet', 'apartment', 'huoneisto'];
-  const typeLabel = property.meta.listingTypeLabel;
-  
-  // Check localized values
-  const typeStr = typeof typeLabel === 'string' 
-    ? typeLabel 
-    : typeLabel?.fi || typeLabel?.sv || typeLabel?.en || '';
-  
-  return apartmentTypes.some(apt => typeStr.toLowerCase().includes(apt));
-}
-
-// Function to get translated hero slides
-// Order matches current sothebysrealty.fi website
-// YouTube videos shown via play button modal (cleaner than background embed)
 const getTranslatedSlides = (language: SupportedLanguage) => [
   {
     id: '1',
-    youtubeBg: 'vZRncaI6Lw8', // Sotheby's Brand Essence background video
-    image: '/images/hero/slide-1.jpg', // Fallback image
+    youtubeBg: 'vZRncaI6Lw8',
+    image: '/images/hero/slide-1.jpg',
     title: getHomepageTranslation('hero2Title', language),
     subtitle: getHomepageTranslation('hero2Subtitle', language),
     buttonText: getHomepageTranslation('hero2Button', language),
@@ -77,113 +22,63 @@ const getTranslatedSlides = (language: SupportedLanguage) => [
   },
   {
     id: '2',
-    image: '/images/hero/slide-2.jpg', // DJI_0037 - Archipelago
-    title: getHomepageTranslation('hero3Title', language), // "Snellman Sotheby's International Realty®"
-    subtitle: getHomepageTranslation('hero3Subtitle', language), // Customer relationship text
-    buttonText: getHomepageTranslation('hero3Button', language), // "Tutustu toimintatapaamme"
+    image: '/images/hero/slide-2.jpg',
+    title: getHomepageTranslation('hero3Title', language),
+    subtitle: getHomepageTranslation('hero3Subtitle', language),
+    buttonText: getHomepageTranslation('hero3Button', language),
     buttonLink: '/yritys'
   },
   {
     id: '3',
-    image: '/images/hero/slide-3.jpg', // 06_DJI_0782 - Helsinki city
-    title: getHomepageTranslation('hero1Title', language), // "Kansainvälinen välittäjäsi paikallisesti"
-    subtitle: getHomepageTranslation('hero1Subtitle', language), // "25 800 välittäjää 1100 välitystoimistossa 85 maassa"
-    buttonText: getHomepageTranslation('hero1Button', language), // "Avaamme uusia ovia"
+    image: '/images/hero/slide-3.jpg',
+    title: getHomepageTranslation('hero1Title', language),
+    subtitle: getHomepageTranslation('hero1Subtitle', language),
+    buttonText: getHomepageTranslation('hero1Button', language),
     buttonLink: '/yhteystiedot'
   }
 ];
 
-/**
- * Client component for homepage
- * Accepts locale as prop from server component parent
- */
-import type { Property } from '@/lib/domain/property.types';
-
-export default function HomePageClient({ 
-  locale, 
-  initialProperties = [] 
-}: { 
+export default function HomePageClient({
+  locale,
+  initialProperties = []
+}: {
   locale: Locale;
   initialProperties?: Property[];
 }) {
   const language = locale as SupportedLanguage;
   const [properties, setProperties] = useState<Property[]>(initialProperties);
-  const [loading, setLoading] = useState(false);
 
-  // 🏗️ SERVER-SIDE RENDERING: Properties are now fetched on server (no CORS!)
   useEffect(() => {
     if (initialProperties.length > 0) {
-      console.log('✅ Using server-fetched properties:', initialProperties.length);
       setProperties(initialProperties);
-    } else {
-      console.warn('⚠️ No server properties, showing empty state');
     }
   }, [initialProperties]);
 
-  // Get translated slides
   const heroSlides = getTranslatedSlides(language);
-  const displayProperties = properties;
-
-  // Split properties into references (sold) and featured (for sale)
-  const referenceProperties = displayProperties.filter(p => 
-    p.meta.status === 'SOLD' || p.meta.status === 'RESERVED'
-  ).slice(0, 6);
-  
-  const featuredProperties = displayProperties.filter(p => 
-    !p.meta.status || p.meta.status === 'ACTIVE'
-  ).slice(0, 6);
-  
-  const rentalProperties = displayProperties.filter(p => 
-    p.meta.rent && p.meta.rent > 0
-  ).slice(0, 4);
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Main Content */}
       <main className="flex-1">
-        {/* Hero Carousel */}
         <HeroCarousel slides={heroSlides} />
 
         {/* Social Share Links */}
         <section className="py-8 bg-white">
           <div className="container mx-auto px-4">
             <div className="flex justify-center gap-4">
-              <a 
-                href={`https://www.facebook.com/sharer/sharer.php?u=https://sothebysrealty.fi/`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-[#3b5998] flex items-center justify-center text-white hover:opacity-80 transition-opacity"
-                title="Share on Facebook"
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
+              <a href="https://www.facebook.com/sharer/sharer.php?u=https://sothebysrealty.fi/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-[#3b5998] flex items-center justify-center text-white hover:opacity-80 transition-opacity" title="Share on Facebook">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
               </a>
-              <a 
-                href={`https://www.linkedin.com/shareArticle?mini=true&url=https://sothebysrealty.fi/`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-[#0077b5] flex items-center justify-center text-white hover:opacity-80 transition-opacity"
-                title="Share on LinkedIn"
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                </svg>
+              <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://sothebysrealty.fi/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-[#0077b5] flex items-center justify-center text-white hover:opacity-80 transition-opacity" title="Share on LinkedIn">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
               </a>
-              <a 
-                href={`mailto:?subject=&body=https://sothebysrealty.fi/`}
-                className="w-10 h-10 rounded-full bg-[#666666] flex items-center justify-center text-white hover:opacity-80 transition-opacity"
-                title="Send by email"
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                </svg>
+              <a href="mailto:?subject=&body=https://sothebysrealty.fi/" className="w-10 h-10 rounded-full bg-[#666666] flex items-center justify-center text-white hover:opacity-80 transition-opacity" title="Send by email">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
               </a>
             </div>
           </div>
         </section>
 
-        {/* Welcome Section - "Tervetuloa onnistuneeseen asuntokauppaan!" */}
+        {/* Welcome Section */}
         <section className="py-12 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
@@ -197,676 +92,10 @@ export default function HomePageClient({
           </div>
         </section>
 
-        {/* Three Column Section - Avaamme uusia ovia */}
-        <section id="avaamme-uusia-ovia" className="py-8 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="max-w-6xl mx-auto">
-              {/* Three Columns - Matching old website style */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {/* Column 1 - Löydä unelmiesi koti */}
-                <Link href="/kohteet" className="relative aspect-[4/3] group overflow-hidden block">
-                  <Image
-                    src="/images/content/snellman-sothebys-yritys.jpg"
-                    alt={getHomepageTranslation('openNewDoors', language)}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  {/* Dark overlay with centered content - enhanced visibility */}
-                  <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white px-4">
-                    <h3 className="text-xl md:text-2xl font-bold mb-6 text-center leading-relaxed drop-shadow-lg">
-                      {getHomepageTranslation('openNewDoors', language)}
-                    </h3>
-                    <span className="inline-block border-2 border-white text-white px-8 py-3
-                               bg-black/30 backdrop-blur-sm
-                               group-hover:bg-white group-hover:text-black transition-all duration-300
-                               text-xs tracking-[0.15em] uppercase font-medium shadow-lg"
-                    >
-                      {getHomepageTranslation('findDreamHome', language)} ›
-                    </span>
-                  </div>
-                </Link>
-
-                {/* Column 2 - Om oss / Yritys */}
-                <Link href="/yritys" className="relative aspect-[4/3] group overflow-hidden block">
-                  <Image
-                    src="/images/content/snellman-sothebys-yritys-01.jpg"
-                    alt={getHomepageTranslation('expertiseHeading', language)}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  {/* Dark overlay with centered content - enhanced visibility */}
-                  <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white px-4">
-                    <h3 className="text-xl md:text-2xl font-bold mb-6 text-center leading-relaxed drop-shadow-lg">
-                      {getHomepageTranslation('expertiseHeading', language)}
-                    </h3>
-                    <span className="inline-block border-2 border-white text-white px-8 py-3
-                               bg-black/30 backdrop-blur-sm
-                               group-hover:bg-white group-hover:text-black transition-all duration-300
-                               text-xs tracking-[0.15em] uppercase font-medium shadow-lg"
-                    >
-                      {getHomepageTranslation('readMoreAboutUs', language)} ›
-                    </span>
-                  </div>
-                </Link>
-
-                {/* Column 3 - Myymässä / Sälja */}
-                <Link href="/myymassa" className="relative aspect-[4/3] group overflow-hidden block">
-                  <Image
-                    src="/images/content/myymassa-banner.jpg"
-                    alt={getHomepageTranslation('freeValuationHeading', language)}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  {/* Dark overlay with centered content - enhanced visibility */}
-                  <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white px-4">
-                    <h3 className="text-xl md:text-2xl font-bold mb-6 text-center leading-relaxed drop-shadow-lg">
-                      {getHomepageTranslation('freeValuationHeading', language)}
-                    </h3>
-                    <span className="inline-block border-2 border-white text-white px-8 py-3
-                               bg-black/30 backdrop-blur-sm
-                               group-hover:bg-white group-hover:text-black transition-all duration-300
-                               text-xs tracking-[0.15em] uppercase font-medium shadow-lg"
-                    >
-                      {getHomepageTranslation('contactUs', language)} ›
-                    </span>
-                  </div>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Office Hours Section */}
-        <section className="py-12 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center">
-              <h3 className="text-xl md:text-2xl text-gray-900 mb-8 font-light leading-relaxed">
-                {language === 'fi' ? (
-                  <>
-                    Upea toimistomme palvelee<br />
-                    teitä arkisin 10:00 – 17:00<br />
-                    sekä muina aikoina sopimuksen mukaan.
-                  </>
-                ) : language === 'sv' ? (
-                  <>
-                    Vårt högklassiga kontor betjänar Er<br />
-                    på vardagar 10:00 – 17:00<br />
-                    på helgerna är vi öppna efter överenskommelse.
-                  </>
-                ) : (
-                  <>
-                    Our wonderful office is open<br />
-                    on weekdays 10:00 – 17:00<br />
-                    as well as other times by appointment.
-                  </>
-                )}
-              </h3>
-              <div className="mt-8 flex flex-col md:flex-row justify-center items-center gap-6 text-gray-700">
-                <a href={company.contact.phoneTel} className="text-lg hover:text-[var(--color-primary)] transition-colors font-light">
-                  {company.contact.phone}
-                </a>
-                <span className="hidden md:inline text-gray-400">|</span>
-                <a href="https://goo.gl/maps/8HptT8TwUp42" target="_blank" rel="noopener noreferrer"
-                   className="text-lg hover:text-[var(--color-primary)] transition-colors font-light">
-                  {getHomepageTranslation('address', language)}
-                </a>
-                <span className="hidden md:inline text-gray-400">|</span>
-                <a href={company.contact.mailto} className="text-lg hover:text-[var(--color-primary)] transition-colors font-light">
-                  {company.contact.email}
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-
-        {/* Luxury Outlook Report Section */}
-        <section className="py-16 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="max-w-5xl mx-auto">
-              <div className="relative overflow-hidden bg-[#16223c]" style={{ paddingTop: '60px', paddingBottom: '60px' }}>
-                {/* Background Image */}
-                <div 
-                  className="absolute inset-0 bg-scroll"
-                  style={{
-                    backgroundImage: 'url(/images/content/2026-luxury-outlook-report.jpg)',
-                    backgroundPosition: 'center center',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundSize: 'cover'
-                  }}
-                >
-                  {/* Overlay */}
-                  <div className="absolute inset-0 bg-black/25"></div>
-                </div>
-                
-                {/* Content */}
-                <div className="relative z-10 px-4">
-                  <div className="max-w-3xl mx-auto text-center">
-                    <h2 className="text-2xl md:text-3xl font-light text-white mb-3 [text-shadow:_0_2px_4px_rgb(0_0_0_/40%)]">
-                      2026 Luxury Outlook℠
-                    </h2>
-                    <h4 className="text-sm md:text-base text-white font-light leading-snug mb-4 [text-shadow:_0_1px_2px_rgb(0_0_0_/40%)]">
-                      {language === 'fi' 
-                        ? 'Vuoden 2026 Luxury Outlook℠ tutkii keskeisiä, tulevaisuuteen suuntautuvia kysymyksiä, jotka muokkaavat luksusasuntomarkkinoita ympäri maailmaa.'
-                        : language === 'sv'
-                        ? 'Luxury Outlook℠ 2026 undersöker viktiga, framåtblickande frågor som formar lyxbostadsmarknaderna runt om i världen.'
-                        : 'The 2026 Luxury Outlook℠ explores key, forward-looking questions shaping luxury real estate markets around the world.'}
-                    </h4>
-                    <p className="text-center">
-                      <a
-                        href="https://legacy.sothebysrealty.fi/2026-luxury-outlook-report/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-block border-2 border-white text-white px-8 py-3
-                                 hover:bg-white hover:text-black transition-colors duration-300
-                                 font-light tracking-wider text-sm uppercase"
-                      >
-                        {language === 'fi' ? 'LUE KOKO 2026 LUXURY OUTLOOK℠ -RAPORTTI ›' : language === 'sv' ? 'LÄS HELA 2026 LUXURY OUTLOOK℠-RAPPORTEN ›' : 'READ THE FULL 2026 LUXURY OUTLOOK℠ REPORT ›'}
-                      </a>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Two Image Links Section */}
-        <section className="py-16 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Rentals */}
-                <Link href="/kohteet/vuokrakohteet" className="relative h-80 group overflow-hidden block">
-                  <Image
-                    src="/images/content/snellman-sothebys-vuokrakohteet.jpg"
-                    alt={language === 'fi' ? 'Vuokrakohteet' : language === 'sv' ? 'Hyresobjekt' : 'Rental properties'}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black bg-opacity-25 flex flex-col items-center justify-center text-white p-6">
-                    <h3 className="text-xl font-light mb-3 text-center">
-                      {language === 'fi' ? 'Katso meidän uusimmat vuokrakohteet' : language === 'sv' ? 'Se våra senaste hyresobjekt' : 'See our latest rental listings'}
-                    </h3>
-                    <span className="inline-block border-2 border-white text-white px-4 py-2
-                               group-hover:bg-white group-hover:text-[#1a3a4a] transition-all duration-300
-                               font-light uppercase tracking-wider text-xs"
-                    >
-                      {language === 'fi' ? 'Vuokraa nyt ›' : language === 'sv' ? 'Hyr nu ›' : 'Rent now ›'}
-                    </span>
-                  </div>
-                </Link>
-
-                {/* Careers - 🔥 LINUS FIX: Careers page is ONLY in English */}
-                <NextLink href="/en/meille-toihin" className="relative h-80 group overflow-hidden block">
-                  <Image
-                    src="/images/content/snellman-sothebys-nakoalapaikka.jpg"
-                    alt={language === 'fi' ? 'Työpaikat' : language === 'sv' ? 'Karriär' : 'Careers'}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black bg-opacity-25 flex flex-col items-center justify-center text-white p-6">
-                    <h3 className="text-xl font-light mb-3 text-center">
-                      {language === 'fi' ? 'Näköalapaikka kansainväliseen kiinteistönvälitykseen' : language === 'sv' ? 'En utsiktsplats för internationell fastighetsförmedling' : 'A vantage point for international real estate'}
-                    </h3>
-                    <span className="inline-block border-2 border-white text-white px-4 py-2
-                               group-hover:bg-white group-hover:text-[#1a3a4a] transition-all duration-300
-                               font-light uppercase tracking-wider text-xs"
-                    >
-                      {language === 'fi' ? 'Työskentele kanssamme ›' : language === 'sv' ? 'Jobba med oss ›' : 'Work with us ›'}
-                    </span>
-                  </div>
-                </NextLink>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Featured Properties Section - 3 Column Grid */}
-        {featuredProperties.length > 0 && (
-          <section className="py-16 bg-white">
-            <div className="container mx-auto px-4">
-              {/* Section Title */}
-              <h2 className="text-3xl lg:text-4xl font-light text-center mb-12">
-                {language === 'fi' 
-                  ? 'Valikoidut myynnissä olevat kohteet'
-                  : language === 'sv' 
-                    ? 'Utvalda objekt till salu' 
-                    : 'Selected properties for sale'}
-              </h2>
-
-              {/* Property Cards Grid - Same FeaturedPropertyCard as Objekt page */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {featuredProperties.map((property) => {
-                  // Exact same mapping as PropertySearch on Objekt page
-                  const rent = property.meta.rent || property.rental?.monthlyRent || 0;
-                  const isRental = rent > 0;
-                  const isCommercialProperty = isCommercial(property);
-                  const typeCode = (property.meta.typeCode || '').toLowerCase();
-                  const isApartmentType = typeCode.includes('kerrostalo') || typeCode.includes('flat') || typeCode.includes('apartment');
-                  
-                  let variant: 'apartment' | 'property' | 'rental' | 'commercial' = 'property';
-                  if (isRental) variant = 'rental';
-                  else if (isCommercialProperty) variant = 'commercial';
-                  else if (isApartmentType) variant = 'apartment';
-
-                  const addressParts = [
-                    property.address[language] || property.address.fi,
-                    property.gate || '',
-                  ].filter(Boolean);
-                  const title = addressParts.join(' ').trim();
-                  const postalCode = property.postalCode;
-                  const city = property.city[language] || property.city.fi;
-                  const fullAddress = postalCode 
-                    ? `${title}, ${postalCode} ${city}`.trim()
-                    : `${title}, ${city}`.trim();
-
-                  const images = (property.media.images || [])
-                    .filter(img => !img.floorPlan)
-                    .slice(0, 3)
-                    .map(img => ({ url: img.url, alt: title }));
-
-                  const district = property.district?.[language] || property.district?.fi;
-                  const propertyType = property.meta.listingTypeLabel?.[language] || property.meta.listingTypeLabel?.fi || property.meta.typeCode;
-                  const apartmentType = property.meta.apartmentType?.[language] || property.meta.apartmentType?.fi;
-                  const marketingTitle = property.descriptionTitle?.[language] || property.descriptionTitle?.fi;
-                  
-                  const balconyArea = property.dimensions.balcony || 0;
-                  const terraceArea = property.dimensions.terrace || 0;
-                  const otherArea = balconyArea + terraceArea > 0 ? balconyArea + terraceArea : undefined;
-
-                  const agent = property.agent ? {
-                    name: property.agent.name || '',
-                    phone: property.agent.phone || '',
-                    email: property.agent.email || '',
-                    photoUrl: property.agent.photoUrl || undefined,
-                  } : undefined;
-
-                  return (
-                    <FeaturedPropertyCard
-                      key={property.id}
-                      href={`/${language}/kohde/${property.slug}`}
-                      locale={language}
-                      title={title}
-                      fullAddress={fullAddress}
-                      propertyType={propertyType}
-                      apartmentType={apartmentType}
-                      marketingTitle={marketingTitle}
-                      district={district}
-                      images={images}
-                      showCarousel={true}
-                      variant={variant}
-                      livingArea={property.dimensions.living}
-                      otherArea={otherArea}
-                      totalArea={property.dimensions.total}
-                      businessArea={property.dimensions.business}
-                      plotArea={property.dimensions.plot}
-                      askPrice={property.pricing.sales}
-                      debtFreePrice={property.pricing.debtFree}
-                      monthlyRent={rent}
-                      biddingStartPrice={property.pricing.biddingStartPrice}
-                      biddingUrl={property.pricing.biddingUrl}
-                      agent={agent}
-                    />
-                  );
-                })}
-              </div>
-              
-              {/* View All Button */}
-              <div className="text-center mt-12">
-                <Link
-                  href="/kohteet"
-                  className="inline-block bg-[#002349] text-white px-8 py-3
-                           hover:bg-[#001731] transition-colors duration-300
-                           font-light uppercase tracking-wider text-sm"
-                >
-                  {language === 'fi' ? 'Kaikki myynnissä olevat kohteemme' : language === 'sv' ? 'Alla våra objekt till salu' : 'All our properties for sale'}
-                </Link>
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* Latest Rental Properties Section */}
-        {rentalProperties.length > 0 && (
-          <section className="py-16 bg-white">
-            <div className="container mx-auto px-4">
-              <h2 className="text-3xl lg:text-4xl font-light text-center mb-12">
-                {language === 'fi' 
-                  ? 'Uusimmat vuokrakohteet'
-                  : language === 'sv' 
-                    ? 'Senaste hyresobjekt' 
-                    : 'Latest rental properties'}
-              </h2>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {rentalProperties.map((property) => {
-                  const addressParts = [
-                    property.address[language] || property.address.fi,
-                    property.gate || '',
-                  ].filter(Boolean);
-                  const title = addressParts.join(' ').trim();
-                  const postalCode = property.postalCode;
-                  const city = property.city[language] || property.city.fi;
-                  const fullAddress = postalCode 
-                    ? `${title}, ${postalCode} ${city}`.trim()
-                    : `${title}, ${city}`.trim();
-                  const images = (property.media.images || [])
-                    .filter(img => !img.floorPlan)
-                    .slice(0, 3)
-                    .map(img => ({ url: img.url, alt: title }));
-                  const district = property.district?.[language] || property.district?.fi;
-                  const propertyType = property.meta.listingTypeLabel?.[language] || property.meta.listingTypeLabel?.fi || property.meta.typeCode;
-                  const rent = property.meta.rent || property.rental?.monthlyRent || 0;
-                  const agent = property.agent ? {
-                    name: property.agent.name || '',
-                    phone: property.agent.phone || '',
-                    email: property.agent.email || '',
-                    photoUrl: property.agent.photoUrl || undefined,
-                  } : undefined;
-
-                  return (
-                    <FeaturedPropertyCard
-                      key={property.id}
-                      href={`/${language}/kohde/${property.slug}`}
-                      locale={language}
-                      title={title}
-                      fullAddress={fullAddress}
-                      propertyType={propertyType}
-                      district={district}
-                      images={images}
-                      showCarousel={true}
-                      variant="rental"
-                      livingArea={property.dimensions.living}
-                      totalArea={property.dimensions.total}
-                      monthlyRent={rent}
-                      agent={agent}
-                    />
-                  );
-                })}
-              </div>
-              
-              <div className="text-center mt-12">
-                <Link
-                  href="/kohteet/vuokrakohteet"
-                  className="inline-block bg-[#002349] text-white px-8 py-3
-                           hover:bg-[#001731] transition-colors duration-300
-                           font-light uppercase tracking-wider text-sm"
-                  prefetch={true}
-                  >
-                  {language === 'fi' ? 'Kaikki vuokrakohteemme' : language === 'sv' ? 'Alla våra hyresobjekt' : 'All our rental properties'}
-                </Link>
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* Contact CTA Section - "Kutsu meidät arviokäynnille!" */}
-        <section className="py-16 bg-[#d8d8d8]">
-          <div className="container mx-auto px-4">
-            <div className="max-w-6xl mx-auto">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-                {/* Left column - Text */}
-                <div>
-                  <h2 className="text-3xl lg:text-4xl font-light text-black mb-6">
-                    {language === 'fi' 
-                      ? 'Kutsu meidät maksuttomalle arviokäynnille!'
-                      : language === 'sv'
-                      ? 'Bjud in oss för en kostnadsfri värdering!'
-                      : 'Invite us for a free property valuation!'}
-                  </h2>
-                  <p className="text-base text-black font-light leading-relaxed mb-4">
-                    {language === 'fi' 
-                      ? 'Oletko ostamassa? Oletko myymässä? Etsitkö sijoituskohteita?'
-                      : language === 'sv'
-                      ? 'Funderar du på att köpa eller sälja? Söker du investeringsobjekt?'
-                      : 'Are you buying? Are you selling? Looking for investment properties?'}
-                  </p>
-                  <p className="text-base text-black font-light leading-relaxed mb-4">
-                    {language === 'fi' 
-                      ? 'Kerro miten voimme auttaa ja otamme sinuun yhteyttä.'
-                      : language === 'sv'
-                      ? 'Berätta hur vi kan hjälpa så kontaktar vi dig.'
-                      : 'Tell us how we can help and we will contact you.'}
-                  </p>
-                  <p className="text-base text-black font-light leading-relaxed mb-4">
-                    {language === 'fi' 
-                      ? 'Oletko kiinnostunut arvokkaista kodeista ja ainutlaatuisista kiinteistöistä?'
-                      : language === 'sv'
-                      ? 'Är du intresserad av exklusiva hem och värdefastigheter? Kontakta oss!'
-                      : 'Interested in valuable homes and unique properties? Contact us!'}
-                  </p>
-                  <p className="text-base text-black font-light leading-relaxed">
-                    {language === 'fi' 
-                      ? 'Tilaa uutiskirjeemme, niin pysyt ajan tasalla asuntomarkkinoiden kehityksestä.'
-                      : language === 'sv'
-                      ? 'Beställ vårt nyhetsbrev så håller vi dig uppdaterad om bostadsmarknaden.'
-                      : 'Subscribe to our newsletter to stay updated on the housing market.'}
-                  </p>
-                </div>
-
-                {/* Right column - Form */}
-                <div className="bg-white p-6">
-                  <form className="space-y-3" onSubmit={async (e) => {
-                    e.preventDefault();
-                    const form = e.currentTarget;
-                    const data = new FormData(form);
-                    const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
-                    btn.disabled = true;
-                    btn.textContent = '...';
-                    try {
-                      const res = await fetch('/api/contact', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                          firstName: data.get('firstName'),
-                          lastName: data.get('lastName'),
-                          email: data.get('email'),
-                          phone: data.get('phone'),
-                          subject: language === 'fi' ? 'Yhteydenottolomake' : language === 'sv' ? 'Kontaktformulär' : 'Contact form',
-                          message: data.get('message'),
-                          language,
-                        }),
-                      });
-                      if (res.ok) {
-                        form.reset();
-                        btn.textContent = language === 'fi' ? 'Kiitos!' : language === 'sv' ? 'Tack!' : 'Thank you!';
-                        setTimeout(() => { btn.textContent = language === 'fi' ? 'Lähetä' : language === 'sv' ? 'Skicka' : 'Send'; btn.disabled = false; }, 3000);
-                      } else { throw new Error(); }
-                    } catch { btn.textContent = language === 'fi' ? 'Virhe!' : language === 'sv' ? 'Fel!' : 'Error!'; btn.disabled = false; }
-                  }}>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <input
-                        type="text"
-                        name="firstName"
-                        placeholder={language === 'fi' ? 'Etunimi' : language === 'sv' ? 'Förnamn' : 'First name'}
-                        className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:border-[#002349] text-center bg-white placeholder-gray-400"
-                        required
-                      />
-                      <input
-                        type="text"
-                        name="lastName"
-                        placeholder={language === 'fi' ? 'Sukunimi' : language === 'sv' ? 'Efternamn' : 'Surname'}
-                        className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:border-[#002349] text-center bg-white placeholder-gray-400"
-                        required
-                      />
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <input
-                        type="email"
-                        name="email"
-                        placeholder={language === 'fi' ? 'Sähköposti' : language === 'sv' ? 'Email' : 'Email'}
-                        className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:border-[#002349] text-center bg-white placeholder-gray-400"
-                        required
-                      />
-                      <input
-                        type="tel"
-                        name="phone"
-                        placeholder={language === 'fi' ? 'Puhelinnumero' : language === 'sv' ? 'Telefonnummer' : 'Phone number'}
-                        className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:border-[#002349] text-center bg-white placeholder-gray-400"
-                        required
-                      />
-                    </div>
-                    <textarea
-                      name="message"
-                      placeholder={language === 'fi' ? 'Viesti' : language === 'sv' ? 'Meddelande' : 'Message'}
-                      rows={5}
-                      className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:border-[#002349] text-center bg-white placeholder-gray-400"
-                      required
-                    />
-                    <div className="flex items-start gap-2">
-                      <input type="checkbox" id="privacy-contact" required className="mt-1" />
-                      <label htmlFor="privacy-contact" className="text-xs text-gray-700">
-                        {language === 'fi' 
-                          ? <>Olen tutustunut <a href="http://sothebysrealty.fi/tietosuojaseloste/" target="_blank" rel="noopener noreferrer" className="underline">Tietosuojaselosteeseen</a></>
-                          : language === 'sv'
-                          ? <>Jag har läst <a href="http://sothebysrealty.fi/sv/tietosuojaseloste/" target="_blank" rel="noopener noreferrer" className="underline">Integritetspolicyn</a></>
-                          : <>I have read the <a href="http://sothebysrealty.fi/en/privacy-policy/" target="_blank" rel="noopener noreferrer" className="underline">Privacy Policy</a></>}
-                      </label>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <input type="checkbox" id="newsletter-contact" className="mt-1" />
-                      <label htmlFor="newsletter-contact" className="text-xs text-gray-700">
-                        {language === 'fi' 
-                          ? 'Haluan vastaanottaa Snellman Sotheby\'s uutiskirjeen'
-                          : language === 'sv'
-                          ? 'Jag vill ta emot Snellman Sotheby\'s nyhetsbrev'
-                          : 'I want to receive Snellman Sotheby\'s newsletter'}
-                      </label>
-                    </div>
-                    <p className="text-xs text-gray-500">
-                      {language === 'fi' 
-                        ? <>Tämän sivun suojaa reCAPTCHA, mikä tarkoittaa, että Googlen <a href="https://policies.google.com/privacy?hl=fi" target="_blank" rel="noopener noreferrer" className="underline">tietosuojakäytännöt</a> ja <a href="https://policies.google.com/terms?hl=fi" target="_blank" rel="noopener noreferrer" className="underline">käyttöehdot</a> ovat voimassa.</>
-                        : language === 'sv'
-                        ? <>Denna sida skyddas av reCAPTCHA, vilket innebär att Googles <a href="https://policies.google.com/privacy?hl=sv" target="_blank" rel="noopener noreferrer" className="underline">sekretesspolicy</a> och <a href="https://policies.google.com/terms?hl=sv" target="_blank" rel="noopener noreferrer" className="underline">användarvillkor</a> gäller.</>
-                        : <>This page is protected by reCAPTCHA, which means that Google's <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="underline">privacy policy</a> and <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" className="underline">terms of service</a> apply.</>}
-                    </p>
-                    <button
-                      type="submit"
-                      className="w-full bg-[#002349] text-white px-6 py-3 hover:bg-[#001731]
-                               transition-colors duration-300 font-light text-center uppercase tracking-wider text-sm"
-                    >
-                      {language === 'fi' ? 'Lähetä' : language === 'sv' ? 'Skicka' : 'Send'}
-                    </button>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Newsletter Section */}
-        <section id="newsletter" className="py-16 relative">
-          {/* Background Image */}
-          <div className="absolute inset-0">
-            <Image
-              src="/images/content/snellman-sothebys-newsletter.jpg"
-              alt=""
-              fill
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-[#002349]/80"></div>
-          </div>
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-2xl mx-auto">
-              <div className="text-center mb-8">
-                <h2 className="text-3xl lg:text-4xl font-light text-white mb-4">
-                {getHomepageTranslation('subscribeNewsletter', language)}
-              </h2>
-                <p className="text-lg text-white/80 font-light">
-                  {language === 'fi' 
-                    ? 'Oletko kiinnostunut arvokodeista ja uniikeista kiinteistöistä? Tilaa uutiskirjeemme, niin pysyt ajan tasalla.'
-                    : language === 'sv'
-                    ? 'Är du intresserad av värdefulla hem och unika fastigheter? Prenumerera på vårt nyhetsbrev så håller du dig uppdaterad.'
-                    : 'Interested in valuable homes and unique properties? Subscribe to our newsletter to stay updated.'}
-                </p>
-              </div>
-              <form className="space-y-4 bg-white/10 backdrop-blur-sm p-8" onSubmit={async (e) => {
-                    e.preventDefault();
-                    const form = e.currentTarget;
-                    const data = new FormData(form);
-                    const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
-                    btn.disabled = true;
-                    btn.textContent = '...';
-                    try {
-                      const res = await fetch('/api/contact', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                          firstName: data.get('nl_firstName'),
-                          lastName: data.get('nl_lastName'),
-                          email: data.get('nl_email'),
-                          phone: '',
-                          subject: language === 'fi' ? 'Uutiskirjeen tilaus' : language === 'sv' ? 'Nyhetsbrevsprenumeration' : 'Newsletter subscription',
-                          message: language === 'fi' ? 'Haluan tilata uutiskirjeen' : language === 'sv' ? 'Jag vill prenumerera på nyhetsbrevet' : 'I want to subscribe to the newsletter',
-                          language,
-                        }),
-                      });
-                      if (res.ok) {
-                        form.reset();
-                        btn.textContent = language === 'fi' ? 'Kiitos!' : language === 'sv' ? 'Tack!' : 'Thank you!';
-                        setTimeout(() => { btn.textContent = getHomepageTranslation('subscribe', language); btn.disabled = false; }, 3000);
-                      } else { throw new Error(); }
-                    } catch { btn.textContent = language === 'fi' ? 'Virhe!' : language === 'sv' ? 'Fel!' : 'Error!'; btn.disabled = false; }
-                  }}>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input
-                  type="text"
-                  name="nl_firstName"
-                  placeholder={getHomepageTranslation('firstName', language)}
-                    className="w-full px-4 py-3 bg-white border border-gray-300 focus:outline-none focus:border-[var(--color-primary)] font-light"
-                    required
-                />
-                <input
-                  type="text"
-                  name="nl_lastName"
-                  placeholder={getHomepageTranslation('lastName', language)}
-                    className="w-full px-4 py-3 bg-white border border-gray-300 focus:outline-none focus:border-[var(--color-primary)] font-light"
-                    required
-                />
-                </div>
-                <input
-                  type="email"
-                  name="nl_email"
-                  placeholder={getHomepageTranslation('email', language)}
-                  className="w-full px-4 py-3 bg-white border border-gray-300 focus:outline-none focus:border-[var(--color-primary)] font-light"
-                  required
-                />
-                <div className="flex items-start gap-3">
-                  <input type="checkbox" id="privacy-newsletter" required className="mt-1" />
-                  <label htmlFor="privacy-newsletter" className="text-sm text-white font-light">
-                    {getHomepageTranslation('privacyConsent', language)}{' '}
-                    <a href="/tietosuojaseloste" className="text-white underline hover:text-white/80">
-                      {getHomepageTranslation('privacyPolicy', language)}
-                    </a>
-                  </label>
-                </div>
-                <div className="flex items-start gap-3">
-                  <input type="checkbox" id="newsletter-consent" className="mt-1" />
-                  <label htmlFor="newsletter-consent" className="text-sm text-white font-light">
-                    {language === 'fi' 
-                      ? 'Haluan vastaanottaa Snellman Sotheby\'s uutiskirjeen'
-                      : language === 'sv'
-                      ? 'Jag vill ta emot Snellman Sotheby\'s nyhetsbrev'
-                      : 'I want to receive Snellman Sotheby\'s newsletter'}
-                  </label>
-                </div>
-                <button
-                  type="submit"
-                  className="w-full bg-[var(--color-primary)] text-white px-6 py-3 hover:bg-[var(--color-primary-dark)]
-                           transition-colors duration-300 font-light uppercase tracking-wider text-sm"
-                >
-                  {getHomepageTranslation('subscribe', language)}
-                </button>
-              </form>
-            </div>
-          </div>
-        </section>
+        <InfoSection language={language} />
+        <FeaturedPropertiesSection properties={properties} language={language} />
+        <ContactCtaSection language={language} />
+        <NewsletterSection language={language} />
       </main>
     </div>
   );
