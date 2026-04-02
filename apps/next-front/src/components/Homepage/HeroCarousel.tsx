@@ -11,6 +11,7 @@ interface Slide {
   image?: string;
   video?: string;
   youtubeId?: string;  // YouTube video ID for play button modal
+  youtubeBg?: string;  // YouTube video ID for muted background video
   title: string;
   subtitle: string;
   buttonText?: string;
@@ -100,7 +101,18 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
         >
           {/* Background Image or Video with Ken Burns Effect */}
           <div className="absolute inset-0 overflow-hidden">
-            {slide.video ? (
+            {slide.youtubeBg ? (
+              <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <iframe
+                  src={`https://www.youtube-nocookie.com/embed/${slide.youtubeBg}?autoplay=1&mute=1&loop=1&playlist=${slide.youtubeBg}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`}
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300%] h-[300%] md:w-[200%] md:h-[200%]"
+                  style={{ border: 0 }}
+                  allow="autoplay; encrypted-media"
+                  tabIndex={-1}
+                  aria-hidden="true"
+                />
+              </div>
+            ) : slide.video ? (
               <video
                 autoPlay
                 loop

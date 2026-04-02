@@ -67,10 +67,11 @@ function isApartment(property: Property): boolean {
 const getTranslatedSlides = (language: SupportedLanguage) => [
   {
     id: '1',
-    image: '/images/hero/slide-1.jpg', // DJI_0563 - Island summer
-    title: getHomepageTranslation('hero2Title', language), // "Välkommen till en extraordinär bostadsaffär!"
-    subtitle: getHomepageTranslation('hero2Subtitle', language), // "Katso kaikki myynnissä olevat kohteemme"
-    buttonText: getHomepageTranslation('hero2Button', language), // "Hitta ditt drömhem"
+    youtubeBg: 'vZRncaI6Lw8', // Sotheby's Brand Essence background video
+    image: '/images/hero/slide-1.jpg', // Fallback image
+    title: getHomepageTranslation('hero2Title', language),
+    subtitle: getHomepageTranslation('hero2Subtitle', language),
+    buttonText: getHomepageTranslation('hero2Button', language),
     buttonLink: '/kohteet'
   },
   {

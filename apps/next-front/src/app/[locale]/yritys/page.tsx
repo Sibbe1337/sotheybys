@@ -204,6 +204,34 @@ export default function CompanyPage({ params }: { params: { locale: string } }) 
           </div>
         </section>
 
+        {/* Brand Story Videos */}
+        <section className="py-12 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-8 text-center">Brand Story</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+              {[
+                { id: 'BN8B-USaKeE', title: 'Part I' },
+                { id: 'hwaaNQ-m9fk', title: 'Part II' },
+                { id: 'xdlWMvz6dlY', title: 'Part III' },
+              ].map((v) => (
+                <div key={v.id}>
+                  <div className="relative aspect-video rounded-lg overflow-hidden shadow-lg">
+                    <iframe
+                      src={`https://www.youtube-nocookie.com/embed/${v.id}`}
+                      title={`Brand Story ${v.title}`}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className="absolute inset-0 w-full h-full"
+                      style={{ border: 0 }}
+                    />
+                  </div>
+                  <p className="text-center text-sm font-light text-gray-600 mt-3">{v.title}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Office Hours - static */}
         <section className="py-6 bg-white">
           <div className="container mx-auto px-4">

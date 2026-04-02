@@ -106,17 +106,19 @@ export default function InternationalPage({ params }: { params: { locale: Locale
       <main className="flex-1">
         {/* Hero Section with Video Background */}
         <section className="relative h-[700px] flex items-center justify-center text-white overflow-hidden">
-          {/* Video Background */}
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover"
-            poster="/images/international/stockholm-cityscape.jpg"
-          >
-            <source src="https://www.sothebysrealty.com/extraordinary-living-blog/wp-content/uploads/sites/2/2023/12/SIR_BRAND_FILM_16x9_FINAL.mp4" type="video/mp4" />
-          </video>
+          {/* YouTube Background Video */}
+          <div className="absolute inset-0 pointer-events-none">
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/Q9xlSscTaYU?autoplay=1&mute=1&loop=1&playlist=Q9xlSscTaYU&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300%] h-[300%] md:w-[200%] md:h-[200%]"
+              style={{ border: 0 }}
+              allow="autoplay; encrypted-media"
+              tabIndex={-1}
+              aria-hidden="true"
+            />
+          </div>
+          {/* Fallback poster */}
+          <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: 'url("/images/international/stockholm-cityscape.jpg")' }} />
           <div className="absolute inset-0 bg-black/50"></div>
           <div className="relative z-10 text-center px-4 max-w-4xl">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-thin mb-6 whitespace-pre-line">

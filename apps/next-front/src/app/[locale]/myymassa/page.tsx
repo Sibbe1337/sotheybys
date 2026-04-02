@@ -229,15 +229,24 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <main className="flex-1">
-        {/* Hero Section with Background */}
-        <section 
-          className="relative h-[600px] flex items-center justify-center text-white"
-          style={{
-            backgroundImage: 'url("/images/content/myymassa-banner.jpg")',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        >
+        {/* Hero Section with Background Video */}
+        <section className="relative h-[600px] flex items-center justify-center text-white overflow-hidden">
+          {/* YouTube Background Video */}
+          <div className="absolute inset-0 pointer-events-none">
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/hdXkBWw9wk0?autoplay=1&mute=1&loop=1&playlist=hdXkBWw9wk0&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300%] h-[300%] md:w-[200%] md:h-[200%]"
+              style={{ border: 0 }}
+              allow="autoplay; encrypted-media"
+              tabIndex={-1}
+              aria-hidden="true"
+            />
+          </div>
+          {/* Fallback background image (visible before video loads) */}
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: 'url("/images/content/myymassa-banner.jpg")' }}
+          />
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-primary)]/70 to-[var(--color-primary)]/50"></div>
           <div className="relative z-10 text-center px-4 max-w-4xl">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-thin mb-8">
