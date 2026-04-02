@@ -3,6 +3,8 @@ import { Link } from '@/lib/navigation';
 import ContactForm from '@/components/ContactForm';
 import { locales, type Locale } from '@/i18n/config';
 import type { Metadata } from 'next';
+import { getStaffMembers, type SanityStaffMember } from '@/lib/sanity-queries';
+import { urlFor } from '@/lib/sanity';
 
 const meta = {
   fi: {
@@ -25,107 +27,37 @@ export async function generateMetadata({ params }: { params: { locale: string } 
 }
 
 // ✅ LINUS FIX: Static generation for all locales
-export const dynamic = 'force-static';
-export const dynamicParams = false;
-export const revalidate = 3600; // Revalidate every hour
+export const revalidate = 60;
 
 export function generateStaticParams() {
   return (locales as readonly Locale[]).map((locale) => ({ locale }));
 }
 
-// Staff data - ordered per Who We Are PDF 2026-03-24
-const staffMembers = [
-  {
-    id: '1',
-    name: 'Robert Charpentier',
-    title: 'Chairman, M.Sc., LKV',
-    email: 'robert@sothebysrealty.fi',
-    phone: '+358 (0)400 243 011',
-    image: '/images/staff/robert-charpentier.jpg',
-    flags: ['fi', 'se', 'gb', 'fr']
-  },
-  {
-    id: '2',
-    name: 'Heidi Metsänen',
-    title: 'Senior Broker, Global Sales Coordinator, M.Sc., LKV',
-    email: 'heidi@sothebysrealty.fi',
-    phone: '+358 (0)50 421 0905',
-    image: '/images/staff/heidi-metsanen.jpg',
-    flags: ['fi', 'se', 'gb', 'fr', 'de']
-  },
-  {
-    id: '3',
-    name: 'Soile Goodall',
-    title: 'Senior Broker, LKV',
-    email: 'soile@sothebysrealty.fi',
-    phone: '+358 (0)40 533 5533',
-    image: '/images/staff/soile-goodall.jpg',
-    flags: ['fi', 'gb']
-  },
-  {
-    id: '4',
-    name: 'Ali Ahola',
-    title: 'Senior Broker, LKV',
-    email: 'ali@sothebysrealty.fi',
-    phone: '+358 (0)40 923 2561',
-    image: '/images/staff/ali-ahola.jpg',
-    flags: ['fi']
-  },
-  {
-    id: '5',
-    name: 'Eeva Kyläkoski',
-    title: 'Senior Advisor - Board Member, LKV',
-    email: 'eeva@sothebysrealty.fi',
-    phone: '+358 (0)46 850 5850',
-    image: '/images/staff/eeva-kylakoski.jpg',
-    flags: ['fi', 'se', 'gb']
-  },
-  {
-    id: '6',
-    name: 'Petteri Huovila',
-    title: 'Senior Advisor, LKV',
-    email: 'petteri@sothebysrealty.fi',
-    phone: '+358 (0)400 889 138',
-    image: '/images/staff/petteri-huovila.jpg',
-    flags: ['fi', 'se', 'gb']
-  },
-  {
-    id: '7',
-    name: 'Linn Johanson',
-    title: 'Sales & Marketing Associate, M.Sc.',
-    email: 'linn@sothebysrealty.fi',
-    phone: '+358 (0)44 055 2342',
-    image: '/images/staff/linn-johanson.jpg',
-    flags: ['fi', 'se', 'gb']
-  },
-  {
-    id: '8',
-    name: 'Sima Shaygan',
-    title: 'Sales Associate, B.Sc., KiLaT',
-    email: 'sima@sothebysrealty.fi',
-    phone: '+358 (0)44 239 3979',
-    image: '/images/staff/sima-shaygan.jpg',
-    flags: ['fi', 'gb', 'ir', 'tr']
-  },
-  {
-    id: '9',
-    name: 'Dennis Forsman',
-    title: 'Sales Assistant, B.Sc.',
-    email: 'dennis@sothebysrealty.fi',
-    phone: '+358 (0)44 599 4407',
-    image: '/images/staff/dennis-forsman.jpg',
-    flags: ['fi', 'se', 'gb']
-  },
-  {
-    id: '8',
-    name: 'Johan Schröder',
-    title: 'Graphic Designer',
-    email: 'johan@sothebysrealty.fi',
-    phone: '+358 (0)50 536 9106',
-    image: '/images/staff/johan-schroder.jpg',
-    flags: ['fi', 'se', 'gb']
-  }
+// Fallback staff data - used when Sanity is unavailable
+const fallbackStaffMembers = [
+  { id: '1', name: 'Heidi Metsänen', title: 'Senior Broker, Global Sales Coordinator, M.Sc., LKV', email: 'heidi@sothebysrealty.fi', phone: '+358 (0)50 421 0905', image: '/images/staff/heidi-metsanen.jpg', flags: ['fi', 'se', 'gb', 'fr', 'de'] },
+  { id: '2', name: 'Soile Goodall', title: 'Senior Broker, LKV', email: 'soile@sothebysrealty.fi', phone: '+358 (0)40 533 5533', image: '/images/staff/soile-goodall.jpg', flags: ['fi', 'gb'] },
+  { id: '3', name: 'Ali Ahola', title: 'Senior Broker, LKV', email: 'ali@sothebysrealty.fi', phone: '+358 (0)40 923 2561', image: '/images/staff/ali-ahola.jpg', flags: ['fi'] },
+  { id: '4', name: 'Eeva Kyläkoski', title: 'Senior Advisor - Board Member, LKV', email: 'eeva@sothebysrealty.fi', phone: '+358 (0)46 850 5850', image: '/images/staff/eeva-kylakoski.jpg', flags: ['fi', 'se', 'gb'] },
+  { id: '5', name: 'Linn Johanson', title: 'Sales & Marketing Associate, M.Sc.', email: 'linn@sothebysrealty.fi', phone: '+358 (0)44 055 2342', image: '/images/staff/linn-johanson.jpg', flags: ['fi', 'se', 'gb'] },
+  { id: '6', name: 'Robert Charpentier', title: 'Chairman, M.Sc., LKV', email: 'robert@sothebysrealty.fi', phone: '+358 (0)400 243 011', image: '/images/staff/robert-charpentier.jpg', flags: ['fi', 'se', 'gb', 'fr'] },
+  { id: '7', name: 'Petteri Huovila', title: 'Senior Advisor, LKV', email: 'petteri@sothebysrealty.fi', phone: '+358 (0)400 889 138', image: '/images/staff/petteri-huovila.jpg', flags: ['fi', 'se', 'gb'] },
+  { id: '8', name: 'Dennis Forsman', title: 'Sales Assistant, B.Sc.', email: 'dennis@sothebysrealty.fi', phone: '+358 (0)44 599 4407', image: '/images/staff/dennis-forsman.jpg', flags: ['fi', 'se', 'gb'] },
+  { id: '9', name: 'Sima Shaygan', title: 'Sales Associate, B.Sc., KiLaT', email: 'sima@sothebysrealty.fi', phone: '+358 (0)44 239 3979', image: '/images/staff/sima-shaygan.jpg', flags: ['fi', 'gb', 'ir', 'tr'] },
+  { id: '10', name: 'Johan Schröder', title: 'Graphic Designer', email: 'johan@sothebysrealty.fi', phone: '+358 (0)50 536 9106', image: '/images/staff/johan-schroder.jpg', flags: ['fi', 'se', 'gb'] },
 ];
+
+function mapSanityStaff(members: SanityStaffMember[], locale: string) {
+  return members.map((m) => ({
+    id: m._id,
+    name: m.name,
+    title: m.role?.[locale as 'fi' | 'sv' | 'en'] || m.role?.en || m.role?.fi || '',
+    email: m.email,
+    phone: m.phone,
+    image: m.photo ? urlFor(m.photo).width(400).auto('format').url() : '/images/staff/placeholder.jpg',
+    flags: m.languages || [],
+  }));
+}
 
 // Flag emoji mapping
 const flagEmojis: Record<string, string> = {
@@ -220,10 +152,16 @@ const translations = {
 
 type LocaleType = 'fi' | 'sv' | 'en';
 
-// ✅ SERVER COMPONENT - pre-rendered at build time
-export default function ContactPage({ params }: { params: { locale: string } }) {
+// ✅ SERVER COMPONENT
+export default async function ContactPage({ params }: { params: { locale: string } }) {
   const locale = (params.locale || 'fi') as LocaleType;
   const t = translations[locale] || translations.fi;
+
+  // Fetch staff from Sanity CMS, fall back to hardcoded data
+  const sanityStaff = await getStaffMembers();
+  const staffMembers = sanityStaff.length > 0
+    ? mapSanityStaff(sanityStaff, locale)
+    : fallbackStaffMembers;
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
@@ -271,7 +209,7 @@ export default function ContactPage({ params }: { params: { locale: string } }) 
                 <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
               </svg>
             </a>
-            <a href="https://www.linkedin.com/company/snellman-sotheby-s-international-realty" target="_blank" rel="noopener noreferrer"
+            <a href="https://www.linkedin.com/company/snellman-sothebys-international-realty" target="_blank" rel="noopener noreferrer"
                className="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:border-[#002349] hover:text-[#002349] transition-colors">
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>

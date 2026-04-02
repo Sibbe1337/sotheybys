@@ -98,7 +98,7 @@ export default function PurchaseAssignmentsPage({ params }: { params: { locale: 
                   <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
                 </svg>
               </a>
-              <a href="https://www.linkedin.com/company/snellman-sotheby's-international-realty/" target="_blank" rel="noopener noreferrer"
+              <a href="https://www.linkedin.com/company/snellman-sothebys-international-realty" target="_blank" rel="noopener noreferrer"
                  className="w-12 h-12 rounded-full border-2 border-[var(--color-primary)] text-[var(--color-primary)] 
                           flex items-center justify-center hover:bg-[var(--color-primary)] hover:text-white transition-all">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
