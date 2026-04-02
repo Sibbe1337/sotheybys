@@ -2,6 +2,7 @@
 
 import { t } from '@/lib/i18n/property-translations';
 import type { Locale } from '@/lib/domain/property.types';
+import { company } from '@/lib/config/company';
 
 interface TopBarProps {
   address: string;
@@ -33,7 +34,7 @@ export function TopBar({ address, postalCode, city, agentEmail, locale }: TopBar
   const contactSubject = `${translations.forSale[locale]}: ${fullAddress}`;
   const mailtoLink = agentEmail 
     ? `mailto:${agentEmail}?subject=${encodeURIComponent(contactSubject)}`
-    : 'mailto:info@sothebysrealty.fi';
+    : company.contact.mailto;
 
   return (
     <div className="bg-white border-b border-gray-200 sticky top-[96px] xl:top-[160px] z-40 shadow-sm">

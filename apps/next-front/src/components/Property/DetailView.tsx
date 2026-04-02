@@ -13,6 +13,7 @@ import { HeroAddressBadge } from './HeroAddressBadge';
 import { TopBar } from './TopBar';
 import { t } from '@/lib/i18n/property-translations';
 import { isCommercial } from '@/lib/domain/property-type-helpers';
+import { company } from '@/lib/config/company';
 
 type VM = import('@/lib/presentation/property.view-model').PropertyDetailVM;
 type Locale = 'fi' | 'sv' | 'en';
@@ -261,7 +262,7 @@ export function DetailView({ vm, locale }: Props) {
                   </p>
                 )}
                 <a
-                  href={`mailto:${agent.email || 'info@sothebysrealty.fi'}`}
+                  href={`mailto:${agent.email || company.contact.email}`}
                   className="inline-block px-6 py-2 bg-[#002349] text-white font-semibold rounded-none hover:bg-[#001731] transition-colors"
                 >
                   {locale === 'sv' ? 'TA KONTAKT' : locale === 'en' ? 'CONTACT US' : 'OTA YHTEYTTÄ'}

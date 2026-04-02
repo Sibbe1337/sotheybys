@@ -4,6 +4,7 @@ import { VideoSection } from '@/components/ui/VideoSection';
 import { locales, type Locale } from '@/i18n/config';
 import type { Metadata } from 'next';
 import { InlineContactForm } from '@/components/forms/InlineContactForm';
+import { company } from '@/lib/config/company';
 
 const meta = {
   fi: {
@@ -275,18 +276,18 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
                 {t.welcomeTitle}
               </h2>
               <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8 text-gray-700">
-                <a href="tel:+358103156900" className="hover:text-[var(--color-primary)] transition-colors font-light">
-                  +358 (0)10 315 6900
+                <a href={company.contact.phoneTel} className="hover:text-[var(--color-primary)] transition-colors font-light">
+                  {company.contact.phone}
                 </a>
                 <span className="hidden md:inline text-gray-400">|</span>
-                <a href="https://goo.gl/maps/8HptT8TwUp42" target="_blank" rel="noopener noreferrer" 
+                <a href="https://goo.gl/maps/8HptT8TwUp42" target="_blank" rel="noopener noreferrer"
                    className="hover:text-[var(--color-primary)] transition-colors font-light">
                   {t.addressStreet}<br className="md:hidden" />
                   {t.addressCity}
                 </a>
                 <span className="hidden md:inline text-gray-400">|</span>
-                <a href="mailto:info@sothebysrealty.fi" className="hover:text-[var(--color-primary)] transition-colors font-light">
-                  info@sothebysrealty.fi
+                <a href={company.contact.mailto} className="hover:text-[var(--color-primary)] transition-colors font-light">
+                  {company.contact.email}
                 </a>
               </div>
             </div>

@@ -1,5 +1,6 @@
 import { Link } from '@/lib/navigation';
 import { locales, type Locale } from '@/i18n/config';
+import { company } from '@/lib/config/company';
 
 export const dynamic = 'force-static';
 export const dynamicParams = false;
@@ -91,21 +92,21 @@ export default function PurchaseAssignmentsPage({ params }: { params: { locale: 
           <div className="max-w-[1400px] mx-auto px-6">
             {/* Social Icons */}
             <div className="flex justify-center gap-4 mb-12">
-              <a href="https://www.facebook.com/SnellmanSIR/" target="_blank" rel="noopener noreferrer"
+              <a href={company.social.facebook} target="_blank" rel="noopener noreferrer"
                  className="w-12 h-12 rounded-full border-2 border-[var(--color-primary)] text-[var(--color-primary)] 
                           flex items-center justify-center hover:bg-[var(--color-primary)] hover:text-white transition-all">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
                 </svg>
               </a>
-              <a href="https://www.linkedin.com/company/snellman-sothebys-international-realty" target="_blank" rel="noopener noreferrer"
+              <a href={company.social.linkedin} target="_blank" rel="noopener noreferrer"
                  className="w-12 h-12 rounded-full border-2 border-[var(--color-primary)] text-[var(--color-primary)] 
                           flex items-center justify-center hover:bg-[var(--color-primary)] hover:text-white transition-all">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                 </svg>
               </a>
-              <a href="mailto:info@sothebysrealty.fi"
+              <a href={company.contact.mailto}
                  className="w-12 h-12 rounded-full border-2 border-[var(--color-primary)] text-[var(--color-primary)] 
                           flex items-center justify-center hover:bg-[var(--color-primary)] hover:text-white transition-all">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -133,8 +134,8 @@ export default function PurchaseAssignmentsPage({ params }: { params: { locale: 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center mb-20">
                 <div>
                   <h4 className="text-lg font-light">
-                    <a href="tel:+358103156900" className="text-gray-900 hover:text-[#1a3a4a] transition-colors">
-                      +358 (0)10 315 6900
+                    <a href={company.contact.phoneTel} className="text-gray-900 hover:text-[#1a3a4a] transition-colors">
+                      {company.contact.phone}
                     </a>
                   </h4>
                 </div>
@@ -153,10 +154,10 @@ export default function PurchaseAssignmentsPage({ params }: { params: { locale: 
                 <div>
                   <h4 className="text-lg font-light">
                     <a
-                      href="mailto:info@sothebysrealty.fi"
+                      href={company.contact.mailto}
                       className="text-gray-900 hover:text-[#1a3a4a] transition-colors"
                     >
-                      info@sothebysrealty.fi
+                      {company.contact.email}
                     </a>
                   </h4>
                 </div>
@@ -178,8 +179,8 @@ export default function PurchaseAssignmentsPage({ params }: { params: { locale: 
                   <p>{t.officeText}</p>
                 </div>
                 <a 
-                  href="https://goo.gl/maps/LjvLpXQFdT82" 
-                  target="_blank" 
+                  href={company.mapsLink}
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="inline-block mt-8 border border-white text-white px-6 py-2 hover:bg-white hover:text-[#001731] transition-all uppercase text-sm tracking-wider"
                 >
@@ -191,7 +192,7 @@ export default function PurchaseAssignmentsPage({ params }: { params: { locale: 
             {/* Right side - Google Map */}
             <div className="lg:w-1/2 h-[300px] lg:h-auto lg:min-h-[400px]">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1984.4!2d24.9456!3d60.1656!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46920bcb6d8b8e8f%3A0x5c8b8e8f8e8f8e8f!2sKasarmikatu%2034%2C%2000130%20Helsinki!5e0!3m2!1sfi!2sfi!4v1699999999999!5m2!1sfi!2sfi"
+                src={company.mapsEmbed}
                 width="100%"
                 height="100%"
                 style={{ border: 0, minHeight: '300px' }}

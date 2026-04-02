@@ -1,5 +1,6 @@
 import { locales, type Locale } from '@/i18n/config';
 import type { Metadata } from 'next';
+import { company } from '@/lib/config/company';
 
 export const dynamic = 'force-static';
 export const dynamicParams = false;
@@ -49,7 +50,7 @@ export default function PrivacyPolicyPage({ params }: { params: { locale: string
           <p className="text-sm text-gray-700 leading-relaxed">
             Ab Snellman LKV Oy<br />
             Kasarmikatu 34, 00130 Helsinki<br />
-            Y-tunnus: 2644749-2
+            Y-tunnus: {company.businessId}
           </p>
           <p className="text-sm text-gray-700 leading-relaxed mt-4">
             <strong>Yhteyshenkilö tietosuoja-asioissa</strong><br />

@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { locales, type Locale } from '@/i18n/config';
 import type { Metadata } from 'next';
 import { InlineContactForm } from '@/components/forms/InlineContactForm';
+import { company } from '@/lib/config/company';
 import { getStaffMembers, type SanityStaffMember } from '@/lib/sanity-queries';
 import { urlFor } from '@/lib/sanity';
 
@@ -241,7 +242,7 @@ export default async function StaffPage({ params }: { params: { locale: Locale }
           <div className="container mx-auto px-4">
             <div className="flex justify-center items-center gap-6">
               <a 
-                href="https://www.facebook.com/Snellmansothebysrealty/" 
+                href={company.social.facebook} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full border border-gray-400 flex items-center justify-center
@@ -252,7 +253,7 @@ export default async function StaffPage({ params }: { params: { locale: Locale }
                 </svg>
               </a>
               <a 
-                href="https://www.linkedin.com/company/snellman-sothebys-international-realty" 
+                href={company.social.linkedin} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full border border-gray-400 flex items-center justify-center
@@ -263,7 +264,7 @@ export default async function StaffPage({ params }: { params: { locale: Locale }
                 </svg>
               </a>
               <a 
-                href="mailto:info@sothebysrealty.fi"
+                href={company.contact.mailto}
                 className="w-10 h-10 rounded-full border border-gray-400 flex items-center justify-center
                          text-gray-600 hover:text-[var(--color-primary)] hover:border-[var(--color-primary)] transition-colors"
               >
@@ -399,7 +400,7 @@ export default async function StaffPage({ params }: { params: { locale: Locale }
               
               <div className="flex flex-col md:flex-row justify-center items-center gap-8 mt-8 text-gray-700 font-light">
                 <div>
-                  <p className="text-lg">+358 (0)10 315 6900</p>
+                  <p className="text-lg">{company.contact.phone}</p>
                 </div>
                 <div className="hidden md:block text-gray-400">|</div>
                 <div>
@@ -408,7 +409,7 @@ export default async function StaffPage({ params }: { params: { locale: Locale }
                 </div>
                 <div className="hidden md:block text-gray-400">|</div>
                 <div>
-                  <p className="text-lg">info@sothebysrealty.fi</p>
+                  <p className="text-lg">{company.contact.email}</p>
                 </div>
               </div>
             </div>
@@ -449,8 +450,8 @@ export default async function StaffPage({ params }: { params: { locale: Locale }
                   {t.officeDesc3}
                 </p>
                 <a 
-                  href="https://goo.gl/maps/LjvLpXQFdT82" 
-                  target="_blank" 
+                  href={company.mapsLink}
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="inline-block mt-4 text-white border border-white px-6 py-2 hover:bg-white hover:text-[#001731] transition-all"
                 >
@@ -463,11 +464,11 @@ export default async function StaffPage({ params }: { params: { locale: Locale }
             <div className="h-full min-h-[450px]">
               <iframe 
                 loading="lazy" 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1984.9571707835125!2d24.94553971610621!3d60.164887881959004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46920bc8de21e969%3A0xb98ee1b9d2531ab!2sSnellman+Sotheby's+International+Realty!5e0!3m2!1sen!2sfi!4v1549539258229" 
-                width="100%" 
-                height="100%" 
-                frameBorder="0" 
-                style={{ border: 0, minHeight: '450px' }} 
+                src={company.mapsEmbed}
+                width="100%"
+                height="100%"
+                frameBorder="0"
+                style={{ border: 0, minHeight: '450px' }}
                 allowFullScreen
               />
             </div>

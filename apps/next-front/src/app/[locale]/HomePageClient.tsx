@@ -11,6 +11,7 @@ import Image from 'next/image';
 import { getHomepageTranslation, type SupportedLanguage } from '@/lib/homepage-translations';
 // Legacy imports removed - now using new API endpoints
 import type { Locale } from '@/i18n/config';
+import { company } from '@/lib/config/company';
 
 // Helper: Strip HTML tags from description
 function stripHtml(html: string): string {
@@ -304,17 +305,17 @@ export default function HomePageClient({
                 )}
               </h3>
               <div className="mt-8 flex flex-col md:flex-row justify-center items-center gap-6 text-gray-700">
-                <a href="tel:+358103156900" className="text-lg hover:text-[var(--color-primary)] transition-colors font-light">
-                  +358 (0)10 315 6900
+                <a href={company.contact.phoneTel} className="text-lg hover:text-[var(--color-primary)] transition-colors font-light">
+                  {company.contact.phone}
                 </a>
                 <span className="hidden md:inline text-gray-400">|</span>
-                <a href="https://goo.gl/maps/8HptT8TwUp42" target="_blank" rel="noopener noreferrer" 
+                <a href="https://goo.gl/maps/8HptT8TwUp42" target="_blank" rel="noopener noreferrer"
                    className="text-lg hover:text-[var(--color-primary)] transition-colors font-light">
                   {getHomepageTranslation('address', language)}
                 </a>
                 <span className="hidden md:inline text-gray-400">|</span>
-                <a href="mailto:info@sothebysrealty.fi" className="text-lg hover:text-[var(--color-primary)] transition-colors font-light">
-                  info@sothebysrealty.fi
+                <a href={company.contact.mailto} className="text-lg hover:text-[var(--color-primary)] transition-colors font-light">
+                  {company.contact.email}
                 </a>
               </div>
             </div>

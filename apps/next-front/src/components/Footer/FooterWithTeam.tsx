@@ -3,6 +3,7 @@
 import { Link } from '@/lib/navigation';
 import Image from 'next/image';
 import GoToTopButton from './GoToTopButton';
+import { company } from '@/lib/config/company';
 
 interface FooterProps {
   contact?: {
@@ -23,18 +24,18 @@ interface FooterProps {
 export default function FooterWithTeam({ contact, social, logo }: FooterProps = {} as FooterProps) {
   const currentYear = new Date().getFullYear();
   
-  // Fallback values if Sanity data not available
+  // Fallback values from centralized config
   const contactInfo = contact || {
-    email: 'info@sothebysrealty.fi',
-    phone: '+358 (0)10 315 6900',
-    address: 'Kasarmikatu 34, 00130 Helsinki'
+    email: company.contact.email,
+    phone: company.contact.phone,
+    address: `${company.address.fi.street} ${company.address.fi.city}`
   };
-  
+
   const socialLinks = social || {
-    facebook: 'https://www.facebook.com/snellmansothebysrealty',
-    instagram: 'https://www.instagram.com/sothebysrealtyfinland',
-    linkedin: 'https://www.linkedin.com/company/snellman-sothebys-international-realty',
-    youtube: 'https://www.youtube.com/channel/UCUDafZp-yXwW6d-amvxoebQ'
+    facebook: company.social.facebook,
+    instagram: company.social.instagram,
+    linkedin: company.social.linkedin,
+    youtube: company.social.youtube,
   };
   
   const logoSrc = logo || '/images/logos/logo-white.png';
@@ -107,7 +108,7 @@ export default function FooterWithTeam({ contact, social, logo }: FooterProps = 
                       <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z" />
                       </svg>
-                      Y-tunnus: 2644749-2
+                      Y-tunnus: {company.businessId}
                     </p>
                   </div>
                 </div>
@@ -174,8 +175,8 @@ export default function FooterWithTeam({ contact, social, logo }: FooterProps = 
                       <path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 01.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/>
                     </svg>
                   </a>
-                  <a href="https://www.linkedin.com/company/snellman-sothebys-international-realty" 
-                        target="_blank" 
+                  <a href={company.social.linkedin}
+                        target="_blank"
                         rel="noopener noreferrer"
                         aria-label="LinkedIn" 
                         className="text-white/60 hover:text-[var(--color-gold)] transition-colors">

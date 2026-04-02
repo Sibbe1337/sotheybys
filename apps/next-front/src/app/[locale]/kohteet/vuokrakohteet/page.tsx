@@ -2,6 +2,7 @@ import PropertyGridNew from '@/components/Property/PropertyGridNew';
 import { locales, type Locale } from '@/i18n/config';
 import { fetchRentalProperties } from '@/lib/server/fetch-properties';
 import type { Metadata } from 'next';
+import { company } from '@/lib/config/company';
 
 const meta = {
   fi: {
@@ -140,14 +141,14 @@ export default async function RentalPropertiesPage({ params }: RentalPropertiesP
             
             {/* Contact Info Bar - matching other pages */}
             <div className="flex flex-wrap justify-center items-center gap-6 md:gap-12 text-sm text-gray-700">
-              <a href="tel:+358103156900" className="hover:text-[#002349] transition-colors">
-                  +358 (0)10 315 6900
+              <a href={company.contact.phoneTel} className="hover:text-[#002349] transition-colors">
+                  {company.contact.phone}
                 </a>
               <span className="hidden md:inline text-gray-300">|</span>
               <span>{t.addressStreet}<br className="md:hidden" /> {t.addressCity}</span>
               <span className="hidden md:inline text-gray-300">|</span>
-              <a href="mailto:info@sothebysrealty.fi" className="hover:text-[#002349] transition-colors">
-                  info@sothebysrealty.fi
+              <a href={company.contact.mailto} className="hover:text-[#002349] transition-colors">
+                  {company.contact.email}
                 </a>
             </div>
           </div>

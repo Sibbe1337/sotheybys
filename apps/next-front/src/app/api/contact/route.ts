@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import { company } from '@/lib/config/company';
 
 export const maxDuration = 30;
 
-const RECIPIENT_EMAIL = process.env.CONTACT_EMAIL || 'info@sothebysrealty.fi';
+const RECIPIENT_EMAIL = process.env.CONTACT_EMAIL || company.contact.email;
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST || 'smtp.office365.com',
@@ -90,7 +91,7 @@ export async function POST(request: NextRequest) {
     `;
 
     await transporter.sendMail({
-      from: process.env.SMTP_USER || 'info@sothebysrealty.fi',
+      from: process.env.SMTP_USER || company.contact.email,
       to: RECIPIENT_EMAIL,
       replyTo: email,
       subject: subjectLine,
