@@ -206,27 +206,38 @@ export default function CompanyPage({ params }: { params: { locale: string } }) 
         </section>
 
         {/* Brand Story Videos */}
-        <section className="py-12 bg-gray-50">
+        <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
-            <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-8 text-center">Brand Story</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-4 text-center">Brand Story</h2>
+            <p className="text-center text-gray-600 font-light mb-12 max-w-2xl mx-auto">
+              {locale === 'fi' ? 'Tutustu Sotheby\'s International Realtyn tarinaan' : locale === 'sv' ? 'Lär känna Sotheby\'s International Realtys historia' : 'Discover the Sotheby\'s International Realty story'}
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               {[
                 { id: 'BN8B-USaKeE', title: 'Part I' },
                 { id: 'hwaaNQ-m9fk', title: 'Part II' },
                 { id: 'xdlWMvz6dlY', title: 'Part III' },
               ].map((v) => (
-                <div key={v.id}>
-                  <div className="relative aspect-video rounded-lg overflow-hidden shadow-lg">
+                <div key={v.id} className="group">
+                  <div className="relative aspect-video overflow-hidden shadow-lg bg-[#002349]">
+                    {/* YouTube thumbnail as poster */}
+                    <img
+                      src={`https://img.youtube.com/vi/${v.id}/hqdefault.jpg`}
+                      alt={`Brand Story ${v.title}`}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    {/* Iframe loads on top */}
                     <iframe
-                      src={`https://www.youtube-nocookie.com/embed/${v.id}`}
+                      src={`https://www.youtube-nocookie.com/embed/${v.id}?rel=0&modestbranding=1`}
                       title={`Brand Story ${v.title}`}
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
                       className="absolute inset-0 w-full h-full"
                       style={{ border: 0 }}
+                      loading="lazy"
                     />
                   </div>
-                  <p className="text-center text-sm font-light text-gray-600 mt-3">{v.title}</p>
+                  <h3 className="text-center text-lg font-light text-gray-900 mt-4">{v.title}</h3>
                 </div>
               ))}
             </div>

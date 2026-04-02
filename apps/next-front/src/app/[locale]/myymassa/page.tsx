@@ -268,6 +268,30 @@ export default function SellingPage({ params }: { params: { locale: Locale } }) 
           </div>
         </section>
 
+        {/* Video Section */}
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <div className="relative aspect-video overflow-hidden shadow-lg bg-[#002349]">
+                <img
+                  src="https://img.youtube.com/vi/hdXkBWw9wk0/maxresdefault.jpg"
+                  alt="Sotheby's International Realty"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <iframe
+                  src="https://www.youtube-nocookie.com/embed/hdXkBWw9wk0?rel=0&modestbranding=1"
+                  title="Sotheby's International Realty® Brand Essence"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="absolute inset-0 w-full h-full"
+                  style={{ border: 0 }}
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Welcome Section */}
         <section className="py-12 bg-white border-b border-gray-200">
           <div className="container mx-auto px-4">

@@ -139,6 +139,30 @@ export default function InternationalPage({ params }: { params: { locale: Locale
           </div>
         </section>
 
+        {/* Video Section */}
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <div className="relative aspect-video overflow-hidden shadow-lg bg-[#002349]">
+                <img
+                  src="https://img.youtube.com/vi/Q9xlSscTaYU/maxresdefault.jpg"
+                  alt="Sotheby's International Realty"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <iframe
+                  src="https://www.youtube-nocookie.com/embed/Q9xlSscTaYU?rel=0&modestbranding=1"
+                  title="Every home is one of a kind"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="absolute inset-0 w-full h-full"
+                  style={{ border: 0 }}
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Social Media Icons */}
         <section id="content" className="py-6 bg-white scroll-mt-20">
           <div className="container mx-auto px-4">
