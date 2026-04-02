@@ -153,20 +153,10 @@ const translations = {
   },
 };
 
-// Staff data - ordered per Who We Are PDF 2026-03-24
+// Staff data - ordered per Who We Are PDF 2026-04-02
 const staffMembers = [
   {
     id: '1',
-    name: 'Robert Charpentier',
-    title: 'Chairman, M.Sc., LKV',
-    email: 'robert@sothebysrealty.fi',
-    phone: '+358 (0)400 243 011',
-    image: '/images/staff/robert-charpentier.jpg',
-    description: '',
-    flags: ['fi', 'se', 'gb', 'fr']
-  },
-  {
-    id: '2',
     name: 'Heidi Metsänen',
     title: 'Senior Broker, Global Sales Coordinator, M.Sc., LKV',
     email: 'heidi@sothebysrealty.fi',
@@ -176,7 +166,7 @@ const staffMembers = [
     flags: ['fi', 'se', 'gb', 'fr', 'de']
   },
   {
-    id: '3',
+    id: '2',
     name: 'Soile Goodall',
     title: 'Senior Broker, LKV',
     email: 'soile@sothebysrealty.fi',
@@ -186,7 +176,7 @@ const staffMembers = [
     flags: ['fi', 'gb']
   },
   {
-    id: '4',
+    id: '3',
     name: 'Ali Ahola',
     title: 'Senior Broker, LKV',
     email: 'ali@sothebysrealty.fi',
@@ -196,7 +186,7 @@ const staffMembers = [
     flags: ['fi']
   },
   {
-    id: '5',
+    id: '4',
     name: 'Eeva Kyläkoski',
     title: 'Senior Advisor - Board Member, LKV',
     email: 'eeva@sothebysrealty.fi',
@@ -206,17 +196,7 @@ const staffMembers = [
     flags: ['fi', 'se', 'gb']
   },
   {
-    id: '6',
-    name: 'Petteri Huovila',
-    title: 'Senior Advisor, LKV',
-    email: 'petteri@sothebysrealty.fi',
-    phone: '+358 (0)400 889 138',
-    image: '/images/staff/petteri-huovila.jpg',
-    description: '',
-    flags: ['fi', 'se', 'gb']
-  },
-  {
-    id: '7',
+    id: '5',
     name: 'Linn Johanson',
     title: 'Sales & Marketing Associate, M.Sc.',
     email: 'linn@sothebysrealty.fi',
@@ -226,17 +206,27 @@ const staffMembers = [
     flags: ['fi', 'se', 'gb']
   },
   {
-    id: '8',
-    name: 'Sima Shaygan',
-    title: 'Sales Associate, B.Sc., KiLaT',
-    email: 'sima@sothebysrealty.fi',
-    phone: '+358 (0)44 239 3979',
-    image: '/images/staff/sima-shaygan.jpg',
+    id: '6',
+    name: 'Robert Charpentier',
+    title: 'Chairman, M.Sc., LKV',
+    email: 'robert@sothebysrealty.fi',
+    phone: '+358 (0)400 243 011',
+    image: '/images/staff/robert-charpentier.jpg',
     description: '',
-    flags: ['fi', 'gb', 'ir', 'tr']
+    flags: ['fi', 'se', 'gb', 'fr']
   },
   {
-    id: '9',
+    id: '7',
+    name: 'Petteri Huovila',
+    title: 'Senior Advisor, LKV',
+    email: 'petteri@sothebysrealty.fi',
+    phone: '+358 (0)400 889 138',
+    image: '/images/staff/petteri-huovila.jpg',
+    description: '',
+    flags: ['fi', 'se', 'gb']
+  },
+  {
+    id: '8',
     name: 'Dennis Forsman',
     title: 'Sales Assistant, B.Sc.',
     email: 'dennis@sothebysrealty.fi',
@@ -244,6 +234,16 @@ const staffMembers = [
     image: '/images/staff/dennis-forsman.jpg',
     description: '',
     flags: ['fi', 'se', 'gb']
+  },
+  {
+    id: '9',
+    name: 'Sima Shaygan',
+    title: 'Sales Associate, B.Sc., KiLaT',
+    email: 'sima@sothebysrealty.fi',
+    phone: '+358 (0)44 239 3979',
+    image: '/images/staff/sima-shaygan.jpg',
+    description: '',
+    flags: ['fi', 'gb', 'ir', 'tr']
   },
   {
     id: '10',
@@ -374,7 +374,7 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
                         alt={member.name}
                         fill
                         sizes="(max-width: 640px) 140px, (max-width: 1024px) 180px, 200px"
-                        className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                        className="object-cover"
                       />
                     </div>
                     
@@ -420,7 +420,7 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
                           alt={member.name}
                           fill
                           sizes="(max-width: 640px) 140px, (max-width: 1024px) 180px, 200px"
-                          className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                          className="object-cover"
                         />
                       </div>
                       
@@ -486,7 +486,7 @@ export default function StaffPage({ params }: { params: { locale: Locale } }) {
             {/* Form */}
             <div className="max-w-3xl mx-auto bg-gray-100 p-8 md:p-12">
               <InlineContactForm
-                language={params.locale}
+                language={locale}
                 translations={{
                   firstName: t.formFirstName,
                   lastName: t.formLastName,

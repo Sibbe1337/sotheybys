@@ -242,7 +242,7 @@ export default function CompanyPage({ params }: { params: { locale: string } }) 
                   src="/images/content/snellman-sothebys-auction-house.jpg"
                   alt={t.box1Title}
                   fill
-                  className="object-cover grayscale group-hover:scale-105 transition-transform duration-500"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white p-6">
                   <h3 className="text-xl font-light mb-4 text-center">{t.box1Title}</h3>
@@ -276,7 +276,7 @@ export default function CompanyPage({ params }: { params: { locale: string } }) 
                   src="/images/content/snellman-sothebys-valittajat-2025-11-dark.png"
                   alt={t.box3Title}
                   fill
-                  className="object-cover grayscale group-hover:scale-105 transition-transform duration-500"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white p-6">
                   <h3 className="text-xl font-light mb-4 text-center">{t.box3Title}</h3>

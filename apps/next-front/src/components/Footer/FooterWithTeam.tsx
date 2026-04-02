@@ -194,7 +194,7 @@ export default function FooterWithTeam({ contact, social, logo }: FooterProps = 
                   src="/images/staff/team-photo.jpg"
                   alt="Snellman Sotheby's International Realty Team"
                   fill
-                  className="object-contain object-bottom grayscale group-hover:grayscale-0 transition-all duration-500 lg:translate-x-[115px] lg:translate-y-[46px]"
+                  className="object-contain object-bottom transition-all duration-500 lg:translate-x-[115px] lg:translate-y-[46px]"
                   sizes="(max-width: 768px) 350px, 600px"
                 />
               </div>

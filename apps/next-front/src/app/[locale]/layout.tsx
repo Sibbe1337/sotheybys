@@ -6,6 +6,7 @@ import { locales, defaultLocale } from '@/i18n/config';
 import type { Locale } from '@/i18n/config';
 import Header from '@/components/Header/Header';
 import FooterWithTeam from '@/components/Footer/FooterWithTeam';
+import { CookieConsent } from '@/components/CookieConsent';
 import '../globals.css';
 
 const inter = Inter({
@@ -96,10 +97,11 @@ export default async function LocaleLayout({
     <NextIntlClientProvider locale={validLocale} messages={messages}>
       <div className="min-h-screen flex flex-col">
         <Header locale={locale as 'fi' | 'sv' | 'en'} />
-        <div className="h-[100px] md:h-[140px]" style={{ height: 'var(--header-height, 100px)' }} aria-hidden="true" />
+        <div className="h-[96px] xl:h-[160px]" aria-hidden="true" />
         {children}
         <FooterWithTeam />
       </div>
+      <CookieConsent />
     </NextIntlClientProvider>
       </body>
     </html>

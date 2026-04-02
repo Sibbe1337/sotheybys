@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { usePathname, useRouter, Link } from '@/lib/navigation';
 import { useLocale } from 'next-intl';
 import Image from 'next/image';
@@ -57,21 +57,6 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
   const [expandedMobileMenu, setExpandedMobileMenu] = useState<string | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLandscape, setIsLandscape] = useState(false);
-  const headerRef = useRef<HTMLElement>(null);
-
-  // Sync CSS variable --header-height with the actual header height
-  const syncHeaderHeight = useCallback(() => {
-    if (headerRef.current) {
-      const h = headerRef.current.offsetHeight;
-      document.documentElement.style.setProperty('--header-height', `${h}px`);
-    }
-  }, []);
-
-  useEffect(() => {
-    syncHeaderHeight();
-    window.addEventListener('resize', syncHeaderHeight);
-    return () => window.removeEventListener('resize', syncHeaderHeight);
-  }, [syncHeaderHeight]);
 
   // 🔥 LINUS FIX: Use filesystem paths (Finnish names) - App Router limitation
   // App Router uses filesystem-based routes, cannot use pathname mappings
@@ -172,8 +157,6 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
         // Use requestAnimationFrame for smooth 60fps throttling
         requestAnimationFrame(() => {
           setIsScrolled(lastScrollY > 50);
-          // Re-measure header after scroll state changes height
-          syncHeaderHeight();
           ticking = false;
         });
         ticking = true;
@@ -211,16 +194,15 @@ export default function Header({ menuItems, locale: propLocale }: HeaderProps) {
 
   return (
     <header
-      ref={headerRef}
       key={currentLang}
       id="site-header"
       className={`fixed top-0 left-0 right-0 z-50 bg-[var(--color-primary)] text-white transition-all duration-300 ${
         isScrolled || isLandscape ? 'shadow-lg' : ''
       }`}
     >
-      {/* TOP BAR - RAD 1 (Language + Search) - Dölj på mobil när scrollad ELLER landscape */}
-      <div className={`md:border-b md:border-white/10 transition-all duration-300 ${
-        isScrolled || isLandscape ? 'hidden md:block md:py-1' : 'block'
+      {/* TOP BAR - RAD 1 (Language + Search) - Always hidden on mobile, compressed on desktop scroll */}
+      <div className={`hidden md:block md:border-b md:border-white/10 transition-all duration-300 ${
+        isScrolled || isLandscape ? 'md:py-1' : ''
       }`}>
         <div className="max-w-[1400px] mx-auto px-6">
           <div className="flex items-center justify-end gap-6 py-2">

@@ -9,7 +9,6 @@
 
 import { Inter, Playfair_Display } from 'next/font/google';
 import './globals.css';
-import { CookieConsent } from '@/components/CookieConsent';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -64,7 +63,6 @@ export default function RootLayout({
       </head>
       <body suppressHydrationWarning className="antialiased bg-white text-gray-900">
         {children}
-        <CookieConsent />
       </body>
     </html>
   );

@@ -324,7 +324,7 @@ export default function ContactPage({ params }: { params: { locale: string } }) 
                       alt={member.name}
                       fill
                         sizes="(max-width: 640px) 160px, (max-width: 1024px) 180px, 200px"
-                      className="object-cover object-top grayscale"
+                      className="object-cover object-top"
                     />
                   </div>
                   
@@ -376,7 +376,7 @@ export default function ContactPage({ params }: { params: { locale: string } }) 
                           alt={member.name}
                           fill
                           sizes="(max-width: 640px) 160px, (max-width: 1024px) 180px, 200px"
-                          className="object-cover object-top grayscale"
+                          className="object-cover object-top"
                         />
                       </div>
                       
