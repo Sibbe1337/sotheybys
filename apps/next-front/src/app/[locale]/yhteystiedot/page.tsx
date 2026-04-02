@@ -247,7 +247,7 @@ export default function ContactPage({ params }: { params: { locale: string } }) 
           <div className="relative z-10 container mx-auto px-4 py-16 flex items-center justify-center min-h-[500px] md:min-h-[600px]">
             <div className="max-w-md w-full">
               {/* Contact Form - Client Component */}
-              <ContactForm translations={{
+              <ContactForm language={locale as 'fi' | 'sv' | 'en'} translations={{
                 heroTitle: t.heroTitle,
                 privacyLabel: t.privacyLabel,
                 privacyLink: t.privacyLink,

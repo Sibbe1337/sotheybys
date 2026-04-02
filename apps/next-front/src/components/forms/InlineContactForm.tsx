@@ -79,7 +79,7 @@ export function InlineContactForm({ language, translations: t, className = '' }:
         <input type="checkbox" id="privacy-sell" required className="mt-1" />
         <label htmlFor="privacy-sell" className="text-sm text-gray-700 font-light">
           {t.privacyText}{' '}
-          <a href="/tietosuojaseloste" className="text-[var(--color-primary)] hover:underline">{t.privacyLink}</a>
+          <a href={`/${language}/tietosuojaseloste`} className="text-[var(--color-primary)] hover:underline">{t.privacyLink}</a>
         </label>
       </div>
       {t.newsletterText && (

@@ -6,13 +6,13 @@ import { Turnstile } from '@/components/ui/Turnstile';
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '';
 
 interface ContactFormProps {
+  language?: 'fi' | 'sv' | 'en';
   translations: {
     heroTitle: string;
     privacyLabel: string;
     privacyLink: string;
     recaptchaText: string;
     submitBtn: string;
-    // Language-specific placeholders
     namePlaceholder?: string;
     emailPlaceholder?: string;
     phonePlaceholder?: string;
@@ -20,7 +20,7 @@ interface ContactFormProps {
   };
 }
 
-export default function ContactForm({ translations: t }: ContactFormProps) {
+export default function ContactForm({ language = 'fi', translations: t }: ContactFormProps) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -48,7 +48,7 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
           phone: formData.phone,
           subject: 'Kontaktformulär / Contact form',
           message: formData.message,
-          language: 'fi',
+          language,
           turnstileToken,
         }),
       });
@@ -80,6 +80,7 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
           className="w-full px-4 py-3 border border-gray-300 focus:border-[#002349] focus:outline-none text-sm"
           value={formData.name}
           onChange={(e) => setFormData({...formData, name: e.target.value})}
+          required
         />
         <input
           type="email"
@@ -87,6 +88,7 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
           className="w-full px-4 py-3 border border-gray-300 focus:border-[#002349] focus:outline-none text-sm"
           value={formData.email}
           onChange={(e) => setFormData({...formData, email: e.target.value})}
+          required
         />
         <input
           type="tel"
@@ -112,7 +114,7 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
             onChange={(e) => setFormData({...formData, privacy: e.target.checked})}
           />
           <label htmlFor="privacy" className="text-xs text-gray-600">
-            {t.privacyLabel} <a href="#" className="text-[#002349] underline">{t.privacyLink}</a>
+            {t.privacyLabel} <a href="/fi/tietosuojaseloste" className="text-[#002349] underline">{t.privacyLink}</a>
           </label>
         </div>
         
