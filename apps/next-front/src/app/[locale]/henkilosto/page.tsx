@@ -3,6 +3,8 @@ import Image from 'next/image';
 import { locales, type Locale } from '@/i18n/config';
 import type { Metadata } from 'next';
 import { InlineContactForm } from '@/components/forms/InlineContactForm';
+import { getStaffMembers, type SanityStaffMember } from '@/lib/sanity-queries';
+import { urlFor } from '@/lib/sanity';
 
 const meta = {
   fi: {
@@ -24,9 +26,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   return { title: t.title, description: t.description };
 }
 
-export const dynamic = 'force-static';
-export const dynamicParams = false;
-export const revalidate = 30;
+export const revalidate = 60;
 
 export function generateStaticParams() {
   return (locales as readonly Locale[]).map((locale) => ({ locale }));
@@ -153,109 +153,32 @@ const translations = {
   },
 };
 
-// Staff data - ordered per Who We Are PDF 2026-04-02
-const staffMembers = [
-  {
-    id: '1',
-    name: 'Heidi Metsänen',
-    title: 'Senior Broker, Global Sales Coordinator, M.Sc., LKV',
-    email: 'heidi@sothebysrealty.fi',
-    phone: '+358 (0)50 421 0905',
-    image: '/images/staff/heidi-metsanen.jpg',
-    description: '',
-    flags: ['fi', 'se', 'gb', 'fr', 'de']
-  },
-  {
-    id: '2',
-    name: 'Soile Goodall',
-    title: 'Senior Broker, LKV',
-    email: 'soile@sothebysrealty.fi',
-    phone: '+358 (0)40 533 5533',
-    image: '/images/staff/soile-goodall.jpg',
-    description: '',
-    flags: ['fi', 'gb']
-  },
-  {
-    id: '3',
-    name: 'Ali Ahola',
-    title: 'Senior Broker, LKV',
-    email: 'ali@sothebysrealty.fi',
-    phone: '+358 (0)40 923 2561',
-    image: '/images/staff/ali-ahola.jpg',
-    description: '',
-    flags: ['fi']
-  },
-  {
-    id: '4',
-    name: 'Eeva Kyläkoski',
-    title: 'Senior Advisor - Board Member, LKV',
-    email: 'eeva@sothebysrealty.fi',
-    phone: '+358 (0)46 850 5850',
-    image: '/images/staff/eeva-kylakoski.jpg',
-    description: '',
-    flags: ['fi', 'se', 'gb']
-  },
-  {
-    id: '5',
-    name: 'Linn Johanson',
-    title: 'Sales & Marketing Associate, M.Sc.',
-    email: 'linn@sothebysrealty.fi',
-    phone: '+358 (0)44 055 2342',
-    image: '/images/staff/linn-johanson.jpg',
-    description: '',
-    flags: ['fi', 'se', 'gb']
-  },
-  {
-    id: '6',
-    name: 'Robert Charpentier',
-    title: 'Chairman, M.Sc., LKV',
-    email: 'robert@sothebysrealty.fi',
-    phone: '+358 (0)400 243 011',
-    image: '/images/staff/robert-charpentier.jpg',
-    description: '',
-    flags: ['fi', 'se', 'gb', 'fr']
-  },
-  {
-    id: '7',
-    name: 'Petteri Huovila',
-    title: 'Senior Advisor, LKV',
-    email: 'petteri@sothebysrealty.fi',
-    phone: '+358 (0)400 889 138',
-    image: '/images/staff/petteri-huovila.jpg',
-    description: '',
-    flags: ['fi', 'se', 'gb']
-  },
-  {
-    id: '8',
-    name: 'Dennis Forsman',
-    title: 'Sales Assistant, B.Sc.',
-    email: 'dennis@sothebysrealty.fi',
-    phone: '+358 (0)44 599 4407',
-    image: '/images/staff/dennis-forsman.jpg',
-    description: '',
-    flags: ['fi', 'se', 'gb']
-  },
-  {
-    id: '9',
-    name: 'Sima Shaygan',
-    title: 'Sales Associate, B.Sc., KiLaT',
-    email: 'sima@sothebysrealty.fi',
-    phone: '+358 (0)44 239 3979',
-    image: '/images/staff/sima-shaygan.jpg',
-    description: '',
-    flags: ['fi', 'gb', 'ir', 'tr']
-  },
-  {
-    id: '10',
-    name: 'Johan Schröder',
-    title: 'Graphic Designer',
-    email: 'johan@sothebysrealty.fi',
-    phone: '+358 (0)50 536 9106',
-    image: '/images/staff/johan-schroder.jpg',
-    description: '',
-    flags: ['fi', 'se', 'gb']
-  },
+// Fallback staff data - used when Sanity is empty or unavailable
+const fallbackStaffMembers = [
+  { id: '1', name: 'Heidi Metsänen', title: 'Senior Broker, Global Sales Coordinator, M.Sc., LKV', email: 'heidi@sothebysrealty.fi', phone: '+358 (0)50 421 0905', image: '/images/staff/heidi-metsanen.jpg', flags: ['fi', 'se', 'gb', 'fr', 'de'] },
+  { id: '2', name: 'Soile Goodall', title: 'Senior Broker, LKV', email: 'soile@sothebysrealty.fi', phone: '+358 (0)40 533 5533', image: '/images/staff/soile-goodall.jpg', flags: ['fi', 'gb'] },
+  { id: '3', name: 'Ali Ahola', title: 'Senior Broker, LKV', email: 'ali@sothebysrealty.fi', phone: '+358 (0)40 923 2561', image: '/images/staff/ali-ahola.jpg', flags: ['fi'] },
+  { id: '4', name: 'Eeva Kyläkoski', title: 'Senior Advisor - Board Member, LKV', email: 'eeva@sothebysrealty.fi', phone: '+358 (0)46 850 5850', image: '/images/staff/eeva-kylakoski.jpg', flags: ['fi', 'se', 'gb'] },
+  { id: '5', name: 'Linn Johanson', title: 'Sales & Marketing Associate, M.Sc.', email: 'linn@sothebysrealty.fi', phone: '+358 (0)44 055 2342', image: '/images/staff/linn-johanson.jpg', flags: ['fi', 'se', 'gb'] },
+  { id: '6', name: 'Robert Charpentier', title: 'Chairman, M.Sc., LKV', email: 'robert@sothebysrealty.fi', phone: '+358 (0)400 243 011', image: '/images/staff/robert-charpentier.jpg', flags: ['fi', 'se', 'gb', 'fr'] },
+  { id: '7', name: 'Petteri Huovila', title: 'Senior Advisor, LKV', email: 'petteri@sothebysrealty.fi', phone: '+358 (0)400 889 138', image: '/images/staff/petteri-huovila.jpg', flags: ['fi', 'se', 'gb'] },
+  { id: '8', name: 'Dennis Forsman', title: 'Sales Assistant, B.Sc.', email: 'dennis@sothebysrealty.fi', phone: '+358 (0)44 599 4407', image: '/images/staff/dennis-forsman.jpg', flags: ['fi', 'se', 'gb'] },
+  { id: '9', name: 'Sima Shaygan', title: 'Sales Associate, B.Sc., KiLaT', email: 'sima@sothebysrealty.fi', phone: '+358 (0)44 239 3979', image: '/images/staff/sima-shaygan.jpg', flags: ['fi', 'gb', 'ir', 'tr'] },
+  { id: '10', name: 'Johan Schröder', title: 'Graphic Designer', email: 'johan@sothebysrealty.fi', phone: '+358 (0)50 536 9106', image: '/images/staff/johan-schroder.jpg', flags: ['fi', 'se', 'gb'] },
 ];
+
+// Map Sanity staff to display format
+function mapSanityStaff(members: SanityStaffMember[], locale: Locale) {
+  return members.map((m, i) => ({
+    id: m._id,
+    name: m.name,
+    title: m.role?.[locale] || m.role?.en || m.role?.fi || '',
+    email: m.email,
+    phone: m.phone,
+    image: m.photo ? urlFor(m.photo).width(400).auto('format').url() : '/images/staff/placeholder.jpg',
+    flags: m.languages || [],
+  }));
+}
 
 // Language flag components
 const LanguageFlags = ({ flags }: { flags: string[] }) => {
@@ -282,8 +205,15 @@ const LanguageFlags = ({ flags }: { flags: string[] }) => {
   );
 };
 
-export default function StaffPage({ params }: { params: { locale: Locale } }) {
-  const t = translations[params.locale] || translations.fi;
+export default async function StaffPage({ params }: { params: { locale: Locale } }) {
+  const locale = params.locale;
+  const t = translations[locale] || translations.fi;
+
+  // Fetch staff from Sanity CMS, fall back to hardcoded data
+  const sanityStaff = await getStaffMembers();
+  const staffMembers = sanityStaff.length > 0
+    ? mapSanityStaff(sanityStaff, locale)
+    : fallbackStaffMembers;
   
   return (
     <div className="min-h-screen flex flex-col bg-white">

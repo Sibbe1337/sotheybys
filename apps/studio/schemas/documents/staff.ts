@@ -87,6 +87,26 @@ export const staff = defineType({
       ],
     }),
     defineField({
+      name: 'languages',
+      title: 'Language Flags',
+      type: 'array',
+      description: 'Language codes shown as flags (e.g. fi, se, gb, fr, de)',
+      of: [{ type: 'string' }],
+      options: {
+        list: [
+          { title: '🇫🇮 Finnish', value: 'fi' },
+          { title: '🇸🇪 Swedish', value: 'se' },
+          { title: '🇬🇧 English', value: 'gb' },
+          { title: '🇫🇷 French', value: 'fr' },
+          { title: '🇩🇪 German', value: 'de' },
+          { title: '🇷🇺 Russian', value: 'ru' },
+          { title: '🇪🇪 Estonian', value: 'ee' },
+          { title: '🇮🇷 Persian', value: 'ir' },
+          { title: '🇹🇷 Turkish', value: 'tr' },
+        ],
+      },
+    }),
+    defineField({
       name: 'specialization',
       title: 'Specialization',
       type: 'array',

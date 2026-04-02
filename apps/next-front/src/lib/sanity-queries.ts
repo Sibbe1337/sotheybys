@@ -17,6 +17,7 @@ export interface SanityStaffMember {
     sv?: any[];
     en?: any[];
   };
+  languages?: string[];
   specialization?: string[];
   order: number;
 }

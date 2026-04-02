@@ -28,6 +28,7 @@ export const queries = {
     phone,
     photo,
     bio,
+    languages,
     specialization,
     order
   }`,

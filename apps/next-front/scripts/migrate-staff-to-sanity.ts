@@ -10,127 +10,67 @@ const sanityClient = createClient({
   useCdn: false,
 });
 
-// Staff data från befintlig sida
+// Staff data per Who We Are PDF 2026-04-02
 const staffMembers = [
   {
-    name: 'Robert Charpentier',
-    role: {
-      fi: 'Chairman, M.Sc., LKV',
-      sv: 'Ordförande, M.Sc., LKV',
-      en: 'Chairman, M.Sc., LKV'
-    },
-    email: 'robert@sothebysrealty.fi',
-    phone: '+358 (0)400 243 011',
-    imagePath: '/images/staff/robert-charpentier.jpg',
-    order: 1,
-  },
-  {
     name: 'Heidi Metsänen',
-    role: {
-      fi: 'Global Sales Coordinator, M.Sc., LKV',
-      sv: 'Global försäljningskoordinator, M.Sc., LKV',
-      en: 'Global Sales Coordinator, M.Sc., LKV'
-    },
-    email: 'heidi@sothebysrealty.fi',
-    phone: '+358 (0)50 421 0905',
-    imagePath: '/images/staff/heidi-metsanen.jpg',
-    order: 2,
-  },
-  {
-    name: 'Eeva Kyläkoski',
-    role: {
-      fi: 'Senior Advisor - Board Member, LKV',
-      sv: 'Senior rådgivare - styrelseledamot, LKV',
-      en: 'Senior Advisor - Board Member, LKV'
-    },
-    email: 'eeva@sothebysrealty.fi',
-    phone: '+358 (0)46 850 5850',
-    imagePath: '/images/staff/eeva-kylakoski.jpg',
-    order: 3,
+    role: { fi: 'Senior Broker, Global Sales Coordinator, M.Sc., LKV', sv: 'Senior mäklare, global försäljningskoordinator, M.Sc., LKV', en: 'Senior Broker, Global Sales Coordinator, M.Sc., LKV' },
+    email: 'heidi@sothebysrealty.fi', phone: '+358 (0)50 421 0905',
+    imagePath: '/images/staff/heidi-metsanen.jpg', order: 1, languages: ['fi', 'se', 'gb', 'fr', 'de'],
   },
   {
     name: 'Soile Goodall',
-    role: {
-      fi: 'Senior Broker, LKV',
-      sv: 'Senior mäklare, LKV',
-      en: 'Senior Broker, LKV'
-    },
-    email: 'soile@sothebysrealty.fi',
-    phone: '+358 (0)40 533 5333',
-    imagePath: '/images/staff/soile-goodall.jpg',
-    order: 4,
-  },
-  {
-    name: 'Tea Käyhkö',
-    role: {
-      fi: 'Senior Broker, BA, MA, LKV',
-      sv: 'Senior mäklare, BA, MA, LKV',
-      en: 'Senior Broker, BA, MA, LKV'
-    },
-    email: 'tea@sothebysrealty.fi',
-    phone: '+358 (0)50 370 1893',
-    imagePath: '/images/staff/tea-kayhko.jpg',
-    order: 5,
-  },
-  {
-    name: 'Kadri-Ann Öunap',
-    role: {
-      fi: 'Sales Associate, Notary, KED, KIAT',
-      sv: 'Försäljningsassistent, Notarie, KED, KIAT',
-      en: 'Sales Associate, Notary, KED, KIAT'
-    },
-    email: 'kadri-ann@sothebysrealty.fi',
-    phone: '+358 (0)40 154 7844',
-    imagePath: '/images/staff/kadri-ann-ounap.jpg',
-    order: 6,
+    role: { fi: 'Senior Broker, LKV', sv: 'Senior mäklare, LKV', en: 'Senior Broker, LKV' },
+    email: 'soile@sothebysrealty.fi', phone: '+358 (0)40 533 5533',
+    imagePath: '/images/staff/soile-goodall.jpg', order: 2, languages: ['fi', 'gb'],
   },
   {
     name: 'Ali Ahola',
-    role: {
-      fi: 'Senior Broker, LKV',
-      sv: 'Senior mäklare, LKV',
-      en: 'Senior Broker, LKV'
-    },
-    email: 'ali@sothebysrealty.fi',
-    phone: '+358 (0)40 523 5251',
-    imagePath: '/images/staff/ali-ahola.jpg',
-    order: 7,
+    role: { fi: 'Senior Broker, LKV', sv: 'Senior mäklare, LKV', en: 'Senior Broker, LKV' },
+    email: 'ali@sothebysrealty.fi', phone: '+358 (0)40 923 2561',
+    imagePath: '/images/staff/ali-ahola.jpg', order: 3, languages: ['fi'],
+  },
+  {
+    name: 'Eeva Kyläkoski',
+    role: { fi: 'Senior Advisor - Board Member, LKV', sv: 'Senior rådgivare - styrelseledamot, LKV', en: 'Senior Advisor - Board Member, LKV' },
+    email: 'eeva@sothebysrealty.fi', phone: '+358 (0)46 850 5850',
+    imagePath: '/images/staff/eeva-kylakoski.jpg', order: 4, languages: ['fi', 'se', 'gb'],
+  },
+  {
+    name: 'Linn Johanson',
+    role: { fi: 'Sales & Marketing Associate, M.Sc.', sv: 'Försäljnings- och marknadsföringsassistent, M.Sc.', en: 'Sales & Marketing Associate, M.Sc.' },
+    email: 'linn@sothebysrealty.fi', phone: '+358 (0)44 055 2342',
+    imagePath: '/images/staff/linn-johanson.jpg', order: 5, languages: ['fi', 'se', 'gb'],
+  },
+  {
+    name: 'Robert Charpentier',
+    role: { fi: 'Chairman, M.Sc., LKV', sv: 'Ordförande, M.Sc., LKV', en: 'Chairman, M.Sc., LKV' },
+    email: 'robert@sothebysrealty.fi', phone: '+358 (0)400 243 011',
+    imagePath: '/images/staff/robert-charpentier.jpg', order: 6, languages: ['fi', 'se', 'gb', 'fr'],
   },
   {
     name: 'Petteri Huovila',
-    role: {
-      fi: 'Senior Advisor, LKV',
-      sv: 'Senior rådgivare, LKV',
-      en: 'Senior Advisor, LKV'
-    },
-    email: 'petteri@sothebysrealty.fi',
-    phone: '+358 (0)400 889 138',
-    imagePath: '/images/staff/petteri-huovila.jpg',
-    order: 8,
-  },
-  {
-    name: 'Sima Shaygan',
-    role: {
-      fi: 'Sales Associate, B.Sc, KiLaT',
-      sv: 'Försäljningsassistent, B.Sc, KiLaT',
-      en: 'Sales Associate, B.Sc, KiLaT'
-    },
-    email: 'sima@sothebysrealty.fi',
-    phone: '+358 (0)44 235 3979',
-    imagePath: '/images/staff/sima-shaygan.jpg',
-    order: 9,
+    role: { fi: 'Senior Advisor, LKV', sv: 'Senior rådgivare, LKV', en: 'Senior Advisor, LKV' },
+    email: 'petteri@sothebysrealty.fi', phone: '+358 (0)400 889 138',
+    imagePath: '/images/staff/petteri-huovila.jpg', order: 7, languages: ['fi', 'se', 'gb'],
   },
   {
     name: 'Dennis Forsman',
-    role: {
-      fi: 'Sales Associate, B.Sc, KED',
-      sv: 'Försäljningsassistent, B.Sc, KED',
-      en: 'Sales Associate, B.Sc, KED'
-    },
-    email: 'dennis@sothebysrealty.fi',
-    phone: '+358 (0)40 510 0080',
-    imagePath: '/images/staff/dennis-forsman.jpg',
-    order: 10,
+    role: { fi: 'Sales Assistant, B.Sc.', sv: 'Försäljningsassistent, B.Sc.', en: 'Sales Assistant, B.Sc.' },
+    email: 'dennis@sothebysrealty.fi', phone: '+358 (0)44 599 4407',
+    imagePath: '/images/staff/dennis-forsman.jpg', order: 8, languages: ['fi', 'se', 'gb'],
+  },
+  {
+    name: 'Sima Shaygan',
+    role: { fi: 'Sales Associate, B.Sc., KiLaT', sv: 'Försäljningsassistent, B.Sc., KiLaT', en: 'Sales Associate, B.Sc., KiLaT' },
+    email: 'sima@sothebysrealty.fi', phone: '+358 (0)44 239 3979',
+    imagePath: '/images/staff/sima-shaygan.jpg', order: 9, languages: ['fi', 'gb', 'ir', 'tr'],
+  },
+  {
+    name: 'Johan Schröder',
+    role: { fi: 'Graphic Designer', sv: 'Grafisk formgivare', en: 'Graphic Designer' },
+    email: 'johan@sothebysrealty.fi', phone: '+358 (0)50 536 9106',
+    imagePath: '/images/staff/johan-schroder.jpg', order: 10, languages: ['fi', 'se', 'gb'],
   },
 ];
 
@@ -195,6 +135,7 @@ async function migrateStaff() {
         email: member.email,
         phone: member.phone,
         photo,
+        languages: member.languages,
         order: member.order,
         active: true,
       };
