@@ -59,9 +59,8 @@ export default function RootLayout({
         <link rel="preconnect" href="https://use.typekit.net" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://images.linear.fi" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://cdn.sanity.io" />
-        {/* Typekit fonts with non-blocking load */}
-        <link rel="stylesheet" href="https://use.typekit.net/uhz3avz.css" media="print" onLoad="this.media='all'" />
-        <noscript><link rel="stylesheet" href="https://use.typekit.net/uhz3avz.css" /></noscript>
+        {/* Typekit fonts — preconnect above reduces latency */}
+        <link rel="stylesheet" href="https://use.typekit.net/uhz3avz.css" />
       </head>
       <body suppressHydrationWarning className="antialiased bg-white text-gray-900">
         {children}
