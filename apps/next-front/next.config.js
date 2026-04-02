@@ -24,14 +24,13 @@ const nextConfig = {
   },
   images: {
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-      {
-        protocol: 'http',
-        hostname: '**',
-      },
+      { protocol: 'https', hostname: 'images.linear.fi' },
+      { protocol: 'https', hostname: 'cdn.sanity.io' },
+      { protocol: 'https', hostname: 'sothebysrealty.fi' },
+      { protocol: 'https', hostname: '*.sothebysrealty.fi' },
+      { protocol: 'https', hostname: 'd33xsej2pkrh3b.cloudfront.net' },
+      { protocol: 'https', hostname: '*.youtube.com' },
+      { protocol: 'https', hostname: '*.vimeocdn.com' },
     ],
     formats: ['image/avif', 'image/webp'], // ✅ LINUS: Modern formats
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048], // ✅ Responsive breakpoints

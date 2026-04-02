@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { getPageBySlug, getPostBySlug } from '@/lib/wordpress';
 import Image from 'next/image';
 import { Link } from '@/lib/navigation';
+import { RichText } from '@/lib/presentation/components/RichText';
 
 interface PageProps {
   params: {
@@ -97,9 +98,9 @@ export default async function DynamicPage({ params }: PageProps) {
             {/* Excerpt */}
             {content.excerpt && (
               <div className="mb-12">
-                <div 
+                <RichText
+                  html={content.excerpt}
                   className="text-xl lg:text-2xl font-light text-gray-700 leading-relaxed"
-                  dangerouslySetInnerHTML={{ __html: content.excerpt }} 
                 />
               </div>
             )}

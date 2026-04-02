@@ -31,6 +31,15 @@ async function verifyTurnstile(token: string): Promise<boolean> {
   return data.success === true;
 }
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -54,21 +63,30 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const subjectLine = subject
-      ? `${language === 'sv' ? 'Kontakt' : language === 'en' ? 'Contact Inquiry' : 'Yhteydenotto'}: ${subject}`
-      : `${language === 'sv' ? 'Kontaktformulär' : language === 'en' ? 'Contact Form' : 'Yhteydenottolomake'} - sothebysrealty.fi`;
+    // Sanitize all user input
+    const safeFirstName = escapeHtml(String(firstName));
+    const safeLastName = escapeHtml(String(lastName || ''));
+    const safeEmail = escapeHtml(String(email));
+    const safePhone = escapeHtml(String(phone || ''));
+    const safeSubject = escapeHtml(String(subject || ''));
+    const safeMessage = escapeHtml(String(message));
+    const safeLang = ['fi', 'sv', 'en'].includes(language) ? language : 'fi';
+
+    const subjectLine = safeSubject
+      ? `${safeLang === 'sv' ? 'Kontakt' : safeLang === 'en' ? 'Contact Inquiry' : 'Yhteydenotto'}: ${safeSubject}`
+      : `${safeLang === 'sv' ? 'Kontaktformulär' : safeLang === 'en' ? 'Contact Form' : 'Yhteydenottolomake'} - sothebysrealty.fi`;
 
     const htmlBody = `
       <h2>${subjectLine}</h2>
       <table style="border-collapse: collapse; width: 100%; max-width: 600px;">
-        <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold; width: 140px;">Name</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${firstName} ${lastName}</td></tr>
-        <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Email</td><td style="padding: 8px; border-bottom: 1px solid #eee;"><a href="mailto:${email}">${email}</a></td></tr>
-        ${phone ? `<tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Phone</td><td style="padding: 8px; border-bottom: 1px solid #eee;"><a href="tel:${phone}">${phone}</a></td></tr>` : ''}
-        ${subject ? `<tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Subject</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${subject}</td></tr>` : ''}
-        <tr><td style="padding: 8px; font-weight: bold; vertical-align: top;">Message</td><td style="padding: 8px; white-space: pre-wrap;">${message}</td></tr>
+        <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold; width: 140px;">Name</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${safeFirstName} ${safeLastName}</td></tr>
+        <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Email</td><td style="padding: 8px; border-bottom: 1px solid #eee;"><a href="mailto:${safeEmail}">${safeEmail}</a></td></tr>
+        ${safePhone ? `<tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Phone</td><td style="padding: 8px; border-bottom: 1px solid #eee;"><a href="tel:${safePhone}">${safePhone}</a></td></tr>` : ''}
+        ${safeSubject ? `<tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Subject</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${safeSubject}</td></tr>` : ''}
+        <tr><td style="padding: 8px; font-weight: bold; vertical-align: top;">Message</td><td style="padding: 8px; white-space: pre-wrap;">${safeMessage}</td></tr>
       </table>
       <hr style="margin-top: 20px;" />
-      <p style="color: #999; font-size: 12px;">Sent from sothebysrealty.fi contact form (${language})</p>
+      <p style="color: #999; font-size: 12px;">Sent from sothebysrealty.fi contact form (${safeLang})</p>
     `;
 
     await transporter.sendMail({
@@ -82,9 +100,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: true });
   } catch (error) {
     const err = error instanceof Error ? error : new Error(String(error));
-    console.error('Contact form error:', err.message, err.stack);
+    console.error('Contact form error:', err.message);
     return NextResponse.json(
-      { error: 'Failed to send email', detail: err.message, smtpUser: process.env.SMTP_USER ? 'set' : 'MISSING', smtpPass: process.env.SMTP_PASS ? 'set' : 'MISSING', smtpHost: process.env.SMTP_HOST || 'default' },
+      { error: 'Failed to send email' },
       { status: 500 }
     );
   }
