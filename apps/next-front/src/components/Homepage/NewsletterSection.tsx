@@ -16,6 +16,7 @@ export default function NewsletterSection({ language }: Props) {
           src="/images/content/snellman-sothebys-newsletter.jpg"
           alt=""
           fill
+          sizes="100vw"
           className="object-cover"
         />
         <div className="absolute inset-0 bg-[#002349]/80"></div>

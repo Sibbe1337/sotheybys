@@ -66,6 +66,7 @@ export default function HeroCarousel({ slides, height = 'h-[400px] md:h-[500px]'
           src={slide.image}
           alt=""
           fill
+          sizes="100vw"
           className="object-cover object-center"
           priority
         />

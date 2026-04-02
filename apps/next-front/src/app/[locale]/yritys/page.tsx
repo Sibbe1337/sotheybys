@@ -271,6 +271,7 @@ export default function CompanyPage({ params }: { params: { locale: string } }) 
                   src="/images/content/snellman-sothebys-auction-house.jpg"
                   alt={t.box1Title}
                   fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white p-6">
@@ -288,6 +289,7 @@ export default function CompanyPage({ params }: { params: { locale: string } }) 
                   src="/images/content/snellman-sothebys-sothebys-international-realty.jpg"
                   alt={t.box2Title}
                   fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-[#002349]/70 flex flex-col items-center justify-center text-white p-6">
@@ -305,6 +307,7 @@ export default function CompanyPage({ params }: { params: { locale: string } }) 
                   src="/images/content/snellman-sothebys-valittajat-2025-11-dark.png"
                   alt={t.box3Title}
                   fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white p-6">
@@ -342,6 +345,7 @@ export default function CompanyPage({ params }: { params: { locale: string } }) 
                 src="/images/content/snellman-sothebys-yritys.jpg"
                 alt="Office"
                 fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover object-center"
               />
               <div className="absolute inset-0 flex items-end justify-center pb-8">
@@ -391,6 +395,7 @@ export default function CompanyPage({ params }: { params: { locale: string } }) 
                 src="/images/content/snellman-sothebys-yritys-01.jpg"
                 alt="Service"
                 fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover object-center"
               />
               <div className="absolute inset-0 flex items-end justify-end p-8">
@@ -414,6 +419,7 @@ export default function CompanyPage({ params }: { params: { locale: string } }) 
               src="/images/content/snellman-sothebys-yritys.jpg"
               alt=""
               fill
+              sizes="100vw"
               className="object-cover object-center"
             />
             <div className="absolute inset-0 bg-[#001731]/80"></div>

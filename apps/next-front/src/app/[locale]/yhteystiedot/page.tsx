@@ -175,6 +175,7 @@ export default async function ContactPage({ params }: { params: { locale: string
               src="/images/content/snellman-sothebys-yritys-01.jpg"
               alt=""
               fill
+              sizes="100vw"
               className="object-cover object-center"
               priority
             />
@@ -393,6 +394,7 @@ export default async function ContactPage({ params }: { params: { locale: string
                   src="/images/content/snellman-sothebys-yritys.jpg"
                   alt=""
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover object-center"
                 />
                 <div className="absolute inset-0 bg-[#00234A]/80"></div>
