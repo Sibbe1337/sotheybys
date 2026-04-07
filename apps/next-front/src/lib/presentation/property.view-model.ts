@@ -18,68 +18,60 @@ export interface PropertyCardVM {
   image: string | undefined;
   hasDebt: boolean;
   hasPlot: boolean;
-  isRental: boolean;  // NEW Phase 3
-  isSold: boolean;    // NEW Phase 3
+  isRental: boolean;
+  isSold: boolean;
 }
 
 export interface PropertyDetailVM extends PropertyCardVM {
-  address: string;      // Street address only (e.g., "Heikkiläntie 1")
+  address: string;
   postalCode: string;
   city: string;
-  district?: string;    // Stadsdel/District (e.g., "Lauttasaari") - separate from city
-  gate?: string;  // Staircase letter only (e.g., "C")
-  
-  // Rich content (NEW Phase 3)
-  description?: string;        // Sanitized HTML
+  district?: string;
+  gate?: string;
+
+  description?: string;
   descriptionTitle?: string;
-  
-  // Dimensions (expanded Phase 3)
-  rooms?: string;              // e.g. "3h+k"
+
+  rooms?: string;
   bedrooms?: number;
   bathrooms?: number;
-  balconyArea?: string;        // Formatted
-  terraceArea?: string;        // Formatted
-  
-  // Fees (NEW Phase 3)
+  balconyArea?: string;
+  terraceArea?: string;
+
   fees: {
-    maintenance?: string;      // Formatted as "450 €/kk"
+    maintenance?: string;
     financing?: string;
-    total?: string;            // Sum of all fees
+    total?: string;
     water?: string;
     heating?: string;
     electricity?: string;
     parking?: string;
     sauna?: string;
   };
-  
-  // Property tax (ONLY for properties, NOT apartments)
+
   propertyTax?: number;
-  
-  // Property-specific fields (DENNIS SPEC)
-  propertyIdentifier?: string;       // Kiinteistötunnus
-  plotArea?: number;                 // Tontin koko (in m², format in component)
-  livingArea?: number;               // Raw living area in m² (for map info window)
-  
-  // Raw prices (for map info window)
-  askPrice?: number;                 // Raw sales/ask price
-  debtFreePrice?: number;            // Raw debt-free price
-  propertyBuildingRights?: string;   // Rakennusoikeus
-  propertyRestrictions?: string;     // Rasitteet ja oikeudet
-  propertyMortgages?: string;        // Kiinnitykset
-  propertyOtherFees?: string;        // Muut maksut
-  
-  // Features (NEW Phase 3)
+
+  propertyIdentifier?: string;
+  plotArea?: number;
+  livingArea?: number;
+
+  askPrice?: number;
+  debtFreePrice?: number;
+  propertyBuildingRights?: string;
+  propertyRestrictions?: string;
+  propertyMortgages?: string;
+  propertyOtherFees?: string;
+
   features: {
-    label: string;             // Localized
+    label: string;
     value: boolean;
   }[];
-  
-  // Meta
-  status?: 'ACTIVE' | 'SOLD' | 'RESERVED';  // NEW Phase 3
+
+  status?: 'ACTIVE' | 'SOLD' | 'RESERVED';
   typeCode?: string;
-  productGroup?: string;        // Product group from Linear (APARTMENTS, PROPERTIES, etc.)
+  productGroup?: string;
   apartmentType?: string;
-  condition?: string;          // Kunto / Skick (for rentals)
+  condition?: string;
   energyClass?: string;
   energyCertStatus?: string;
   heatingSystem?: string;
@@ -91,23 +83,20 @@ export interface PropertyDetailVM extends PropertyCardVM {
   zoning?: string;
   yearBuilt?: number;
   floorsTotal?: number;
-  floor?: string;              // NEW Phase 3
+  floor?: string;
   hasElevator: boolean;
-  
-  // Housing company
+
   housingCompanyName?: string;
   companyLoans?: number;
   companyEncumbrances?: number;
   companyLoansDate?: string;
-  
-  // Media
+
   images: { url: string; thumb?: string; floorPlan?: boolean }[];
-  coordinates?: {              // NEW Phase 3
+  coordinates?: {
     lat: number;
     lon: number;
   };
-  
-  // Documents (NEW Phase 3)
+
   documents: {
     floorPlan?: string;
     brochure?: string;
@@ -115,12 +104,10 @@ export interface PropertyDetailVM extends PropertyCardVM {
     video?: string;
     energyCert?: string;
   };
-  
-  // International marketing
-  internationalUrl?: string;  // GLOBAL LISTING URL
-  biddingUrl?: string;        // Bidding/auction URL
-  
-  // Agent
+
+  internationalUrl?: string;
+  biddingUrl?: string;
+
   agent?: {
     name?: string;
     phone?: string;
@@ -128,10 +115,9 @@ export interface PropertyDetailVM extends PropertyCardVM {
     photoUrl?: string;
     title?: string;
   };
-  
-  // Rental (NEW Phase 3)
+
   rental?: {
-    monthlyRent: string;       // Formatted
+    monthlyRent: string;
     securityDeposit?: string;
     contractType?: string;
     earliestTermination?: string;
@@ -144,34 +130,31 @@ export interface PropertyDetailVM extends PropertyCardVM {
 
 export class PropertyVM {
   static toCard(p: Property, l: Locale): PropertyCardVM {
-    // ✅ MÄKLARE SPEC: Build address with gate letter ONLY (NOT apartment number)
-    // Example: "Heikkiläntie 1 C" (not "Heikkiläntie 1 C 47")
+    // Build address with gate letter only (not apartment number)
     const address = p.address[l] || p.address.fi;
     const title = p.gate ? `${address} ${p.gate}` : address;
-    // ✅ SPEC: Use localized listing type label instead of raw code
     const type = lpick(p.meta.listingTypeLabel, l) || (p.meta.typeCode || '').replace(/_/g, ' ');
     const district = p.city[l] || p.city.fi;
     const localeStr = l === 'sv' ? 'sv-SE' : l === 'en' ? 'en-GB' : 'fi-FI';
-    
-    // Dennis 2025-11-11: Commercial properties show businessArea, rentals show both living + total
+
     const isCommercialProperty = isCommercial(p);
     const isRental = this.isRental(p);
-    
-    const area = isCommercialProperty 
-      ? fmtArea(p.dimensions.business || p.dimensions.total, localeStr) // Commercial: business area or total as fallback
-      : fmtArea(p.dimensions.living, localeStr); // Normal: living area
-    
+
+    // Commercial: business area (or total fallback). Normal: living area.
+    const area = isCommercialProperty
+      ? fmtArea(p.dimensions.business || p.dimensions.total, localeStr)
+      : fmtArea(p.dimensions.living, localeStr);
+
     const extra = isRental && p.dimensions.total
-      ? fmtArea(p.dimensions.total, localeStr) // Rentals: show total area as well
-      : (p.dimensions.total ? fmtArea(p.dimensions.total, localeStr) : undefined); // Properties: show total if exists
-    
+      ? fmtArea(p.dimensions.total, localeStr)
+      : (p.dimensions.total ? fmtArea(p.dimensions.total, localeStr) : undefined);
+
     return {
       id: p.id,
       slug: p.slug,
       title,
       subtitle: [type, district].filter(Boolean).join(' • '),
       price: fmtCurrency(p.pricing.sales, localeStr),
-      // Dennis: ALWAYS show debtFree price for apartments, even when debt = 0 (Vh = Mh)
       priceDebtFree: fmtCurrency(p.pricing.debtFree, localeStr),
       area,
       areaExtra: extra,
@@ -186,57 +169,30 @@ export class PropertyVM {
   static toDetail(p: Property, l: Locale): PropertyDetailVM {
     const card = this.toCard(p, l);
     const localeStr = l === 'sv' ? 'sv-SE' : l === 'en' ? 'en-GB' : 'fi-FI';
-
-    // Calculate total fees
     const totalFees = calculateTotalFees(p.fees);
 
     return {
       ...card,
-      address: p.address[l] || p.address.fi,  // Street address only
+      address: p.address[l] || p.address.fi,
       postalCode: p.postalCode,
       city: p.city[l] || p.city.fi,
-      district: p.district ? (p.district[l] || p.district.fi) : undefined,  // Separate district field
+      district: p.district ? (p.district[l] || p.district.fi) : undefined,
       gate: p.gate,
-      
-      // Rich content (NEW Phase 3)
-      // ✅ SPEC: Allow FI fallback for descriptions (user-friendly), but strict for other fields
-      description: (() => {
-        const desc = lpickWithFallback(p.description, l, true);
-        console.log('[🔍 DESCRIPTION DEBUG]', { 
-          locale: l,
-          description: p.description,
-          fi: p.description?.fi?.substring(0, 100),
-          sv: p.description?.sv?.substring(0, 100),
-          en: p.description?.en?.substring(0, 100),
-          selected: desc?.substring(0, 100)
-        });
-        return desc;
-      })(),
-      descriptionTitle: (() => {
-        const title = lpickWithFallback(p.descriptionTitle, l, true);
-        console.log('[🔍 TITLE DEBUG]', {
-          locale: l,
-          title: p.descriptionTitle,
-          fi: p.descriptionTitle?.fi,
-          sv: p.descriptionTitle?.sv,
-          en: p.descriptionTitle?.en,
-          selected: title
-        });
-        return title;
-      })(),
 
-      // Dimensions (NEW Phase 3)
+      // Allow FI fallback for descriptions (user-friendly)
+      description: lpickWithFallback(p.description, l, true),
+      descriptionTitle: lpickWithFallback(p.descriptionTitle, l, true),
+
       rooms: p.dimensions.rooms,
       bedrooms: p.dimensions.bedrooms,
       bathrooms: p.dimensions.bathrooms,
       balconyArea: p.dimensions.balcony ? fmtArea(p.dimensions.balcony, localeStr) : undefined,
       terraceArea: p.dimensions.terrace ? fmtArea(p.dimensions.terrace, localeStr) : undefined,
 
-      // Fees (NEW Phase 3)
       fees: {
-        maintenance: fmtFee(p.fees.maintenance, localeStr, true),  // Robert 2025-11-25: Show 2 decimals for vederlag
-        financing: fmtFee(p.fees.financing, localeStr, true),      // Robert 2025-11-25: Show 2 decimals for vederlag
-        total: totalFees > 0 ? fmtFee(totalFees, localeStr, true) : undefined,  // Robert 2025-11-25: Show 2 decimals for vederlag
+        maintenance: fmtFee(p.fees.maintenance, localeStr, true),
+        financing: fmtFee(p.fees.financing, localeStr, true),
+        total: totalFees > 0 ? fmtFee(totalFees, localeStr, true) : undefined,
         water: fmtFee(p.fees.water, localeStr),
         heating: fmtFee(p.fees.heating, localeStr),
         electricity: fmtFee(p.fees.electricity, localeStr),
@@ -244,28 +200,21 @@ export class PropertyVM {
         sauna: fmtFee(p.fees.sauna, localeStr)
       },
 
-      // Property tax (ONLY for properties, NOT apartments)
       propertyTax: p.pricing.propertyTax || undefined,
 
-      // Property-specific fields (DENNIS SPEC)
       propertyIdentifier: p.meta.propertyIdentifier,
-      plotArea: p.dimensions.plot, // Keep as number, format in component
-      livingArea: p.dimensions.living, // Raw living area for map info window
-      askPrice: p.pricing.sales, // Raw ask price for map info window
-      debtFreePrice: p.pricing.debtFree, // Raw debt-free price for map info window
+      plotArea: p.dimensions.plot,
+      livingArea: p.dimensions.living,
+      askPrice: p.pricing.sales,
+      debtFreePrice: p.pricing.debtFree,
       propertyBuildingRights: p.meta.propertyBuildingRights,
       propertyRestrictions: lpick(p.meta.restrictions, l),
-      propertyMortgages: undefined, // TODO: Add to Property type if needed
-      propertyOtherFees: undefined, // TODO: Add to Property type if needed
 
-      // Features (NEW Phase 3)
       features: this.getFeaturesList(p, l),
 
-      // Meta
       status: p.meta.status,
       typeCode: p.meta.typeCode,
-      productGroup: p.meta.productGroup, // Product group from Linear (APARTMENTS, PROPERTIES, etc.)
-      // ✅ SPEC: Use lpick for technical data (allows FI fallback for non-translated system values)
+      productGroup: p.meta.productGroup,
       apartmentType: lpick(p.meta.apartmentType, l),
       condition: lpick(p.meta.condition, l),
       energyClass: p.meta.energyClass,
@@ -282,30 +231,23 @@ export class PropertyVM {
       floor: p.meta.floor,
       hasElevator: p.meta.elevator === true,
 
-      // Housing company (allow FI fallback for company names)
       housingCompanyName: lpick(p.meta.housingCompany.name, l),
       companyLoans: p.meta.housingCompany.loans || undefined,
       companyEncumbrances: p.meta.housingCompany.encumbrances || undefined,
       companyLoansDate: p.meta.housingCompany.loansDate ? formatDate(p.meta.housingCompany.loansDate, l) : undefined,
 
-      // Media
       images: p.media.images,
       coordinates: p.media.coordinates,
 
-      // Documents (NEW Phase 3)
       documents: p.documents,
 
-      // International marketing
       internationalUrl: p.internationalUrl,
       biddingUrl: p.pricing.biddingUrl || undefined,
 
-      // Agent
       agent: p.agent,
 
-      // Rental (NEW Phase 3)
       rental: p.rental ? {
         monthlyRent: fmtFee(p.rental.monthlyRent, localeStr),
-        // ✅ SPEC: Rental metadata with FI fallback (technical data)
         securityDeposit: lpick(p.rental.securityDeposit, l),
         contractType: lpick(p.rental.contractType, l),
         earliestTermination: lpick(p.rental.earliestTermination, l),
@@ -317,16 +259,10 @@ export class PropertyVM {
     };
   }
 
-  /**
-   * Check if property is a rental
-   */
   static isRental(p: Property): boolean {
     return !!p.meta.rent && p.meta.rent > 0;
   }
 
-  /**
-   * Get localized feature list
-   */
   static getFeaturesList(p: Property, l: Locale): { label: string; value: boolean }[] {
     const labels = {
       fi: {
@@ -367,4 +303,3 @@ export class PropertyVM {
     ];
   }
 }
-
