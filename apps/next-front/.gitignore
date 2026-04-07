@@ -1,6 +1,5 @@
 .vercel
-
-# PM2
 logs/
+reports/
 *.log
-.pm2/
+tsconfig.tsbuildinfo

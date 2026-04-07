@@ -16,7 +16,7 @@ const nextConfig = {
   generateEtags: true,
   
   experimental: {
-    serverComponentsExternalPackages: ['@apollo/client'],
+    serverComponentsExternalPackages: [],
     instrumentationHook: true,
     // 🔥 DISABLED: These cause "t is not a constructor" error on Vercel
     // optimizeCss: true,
@@ -128,6 +128,9 @@ const nextConfig = {
       // OLD WORDPRESS URL REDIRECTS
       // Ensures all old links continue to work
       // ====================================================
+
+      // Legacy contact page URL
+      { source: '/ota-yhteytta', destination: '/fi/yhteystiedot', permanent: true },
 
       // PROPERTY PAGES - only formats not handled by rewrites
       // FI without prefix: /kohde/slug → /fi/kohde/slug
