@@ -14,7 +14,7 @@
     "test:run": "vitest run",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
-    "codegen": "graphql-codegen --config ../../codegen.yml",
+
     "deploy:preview": "wrangler pages deploy .next --project-name=sothebys-finland --branch=preview",
     "deploy:production": "wrangler pages deploy .next --project-name=sothebys-finland --branch=main",
     "wrangler:login": "wrangler login",
@@ -37,7 +37,7 @@
     "data-quality:dry-run": "node scripts/blueprint-auto-fix.js --apply --dry-run"
   },
   "dependencies": {
-    "@apollo/client": "^3.8.8",
+
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
     "@portabletext/react": "^3.2.4",
@@ -46,7 +46,7 @@
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@vis.gl/react-google-maps": "^1.6.1",
     "clsx": "^2.1.1",
-    "graphql": "^16.8.1",
+
     "isomorphic-dompurify": "^2.11.0",
     "lucide-react": "^0.544.0",
     "next": "14.0.4",
@@ -59,10 +59,6 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^5.0.0",
-    "@graphql-codegen/typescript": "^4.0.1",
-    "@graphql-codegen/typescript-operations": "^4.0.1",
-    "@graphql-codegen/typescript-react-apollo": "^4.0.0",
     "@types/dompurify": "^3.0.5",
     "@types/node": "^20.10.0",
     "@types/nodemailer": "^7.0.10",

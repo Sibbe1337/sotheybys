@@ -82,16 +82,3 @@ export async function GET(request: Request) {
   }
 }
 
-/**
- * POST /api/listings
- * 
- * ⚠️ DEPRECATED: Cache sync no longer needed with new architecture
- * Returns success for backward compatibility
- */
-export async function POST() {
-  return NextResponse.json({
-    success: true,
-    message: 'Cache sync deprecated - new architecture fetches directly',
-    deprecated: true
-  });
-}

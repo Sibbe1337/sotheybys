@@ -100,6 +100,130 @@ const translations = {
   },
 };
 
+const destinationsTop = [
+  {
+    image: '/images/international/sweden-waterfront.jpg',
+    title: 'Sweden',
+    subtitle: 'Perfecting Work-Life Balance',
+    author: 'Iyna Bort Caruso',
+    description: 'Sweden real estate dates back centuries and yet progressiveness defines its architecture, design aesthetic and social welfare system. One of the world\'s most generous social services systems includes universal health care, affordable child care and a parental leave policy of up to 480 paid days per child. Life is good for seniors, too. A 2013 report by Global AgeWatch ranked Sweden first out of 91 countries when considering such factors as health care, income security and the environment for older adults. On the job, Sweden\'s corporate culture emphasizes live-work balance believing perks like flexible working hours yields a more productive work force...',
+    link: 'https://www.sothebysrealty.com/eng/destinations/sweden',
+  },
+  {
+    image: '/images/international/portugal-coast.jpg',
+    title: 'Portugal',
+    subtitle: 'Iberian Beauty',
+    author: 'Iyna Bort Caruso',
+    description: 'Portugal is a country best appreciated slowly, like a sip of its vintage port wine.\n\nA founding member of the European Union and euro zone, Portugal has transitioned from an economy based on traditional industries to one based on technology. Leading international companies are investing here. Its infrastructure is strong and establishing a business is fast. For those interested in relocating, the opportunity to settle in this charmed corner of the continent through a burgeoning Portugal luxury real estate market is a powerful incentive...',
+    link: 'https://www.sothebysrealty.com/eng/destinations/portugal',
+  },
+  {
+    image: '/images/international/mallorca-harbor.jpg',
+    title: 'Mallorca',
+    subtitle: 'Abundance in the Balearics',
+    author: 'Iyna Bort Caruso',
+    description: 'Joan Miró painted here. Frederic Chopin composed here. Robert Graves wrote here.\n\nHere is Mallorca, part of Spain\'s Balearic Islands. The Balearic isles, an autonomous archipelago, are clustered in the Mediterranean. Mallorca is the largest of the four main islands, followed by Minorca, Ibiza and Formentera. The Carthaginians, Romans, Vandals, Moors, French and British all left their marks here...',
+    link: 'https://www.sothebysrealty.com/eng/destinations/mallorca-spain',
+  },
+  {
+    image: '/images/international/snellman-sothebys-international-kakumae-web-768x480.jpg',
+    title: 'Estonia',
+    subtitle: 'Living in Estonia',
+    author: 'Iyna Bort Caruso',
+    description: 'Estonia withstood centuries of foreign rule including the Danes, Swedes, Germans and Russians \u2013 both Tsarist and Soviet, the last Russian troops left in 1994. Today the smallest of the Baltic States is a member of the European Union and NATO. It is especially proud of its high tech culture. It also has one of the world\'s longest paid maternity leaves.\n\nEstonia lies on the shores of the Baltic Sea, a ferry ride from Finland and Sweden and a three-hour flight or less to most major European cities. The republic is made up of 15 counties and more than 2,000 islands, most of them small in size with tiny populations to match...',
+    link: 'https://www.sothebysrealty.com/eng/destinations/estonia',
+  },
+  {
+    image: '/images/international/french-riviera-marina.jpg',
+    title: 'French Riviera',
+    subtitle: 'The Jewel of the Mediterranean',
+    author: 'Iyna Bort Caruso',
+    description: 'The French Riviera, or Côte d\'Azur, stretches along France\'s southeastern Mediterranean coast from Saint-Tropez to the Italian border. This glamorous coastline has long been a playground for the rich and famous, offering a perfect blend of natural beauty, cultural sophistication, and luxury living.\n\nWith its mild climate, stunning beaches, world-class dining, and vibrant arts scene, the French Riviera continues to attract discerning buyers seeking exceptional properties in one of Europe\'s most prestigious locations. From Belle Époque villas to contemporary masterpieces, the region offers unparalleled real estate opportunities...',
+    link: 'https://www.sothebysrealty.com/eng/destinations/french-riviera-france',
+  },
+];
+
+const destinationsBottom = [
+  {
+    image: '/images/international/florida-luxury-property.jpg',
+    title: 'Florida',
+    subtitle: 'Subtropical Capital of Cool',
+    author: 'Iyna Bort Caruso',
+    description: 'Discover luxury real estate in the Sunshine State. From waterside villas in the north to Miami in the south, enjoy some of America\'s most sought-after beaches on both Atlantic and Gulf coasts along with world-class golf glamour that Florida has to offer.\n\nThe greater Miami mindset is one of preservation and reinvention. Historic Art Deco and Miami Modern architecture, mix with spiraling post-modern towers. It is an evolving, sun-drenched skyline...',
+    link: 'https://www.sothebysrealty.com/eng/category/florida',
+  },
+  {
+    image: '/images/international/french-riviera.jpg',
+    title: 'Provence-Alpes \u2013 Côte d\'Azur',
+    subtitle: 'Real Estate Royalty',
+    author: 'Iyna Bort Caruso',
+    description: 'The south coast of France casts a brilliant glow on the world. Provence-Alpes-Côte d\'Azur covers a cohort of France with near fairy-tale riches. Within a short drive, one can travel from an Alpine peak, pass lavender fields, vineyards and medieval villages and end up on the glorious Mediterranean coast.\n\nThis historically stable and resilient property market has long attracted European elite. Buyers from the U.K. famously make their playground here but the locale has a global stature...',
+    link: 'https://www.sothebysrealty.com/eng/destinations/french-riviera-france',
+  },
+  {
+    image: '/images/international/new-york-skyline.jpg',
+    title: 'New York',
+    subtitle: 'America\'s Global Address',
+    author: 'Iyna Bort Caruso',
+    description: 'Discover luxury real estate in the Empire State. Know the varying expressions of New York City and vibrant Atlantic coastal towns to the sprawling acres of historic countryside and recreational Highlands, explore all that New York has to offer.\n\nThink of Manhattan, and a barrage of images comes to mind. Broadway, Wall Street, Times Square. The city is as boundless as a skyscraper and as diverse as the structures that line its horizon...',
+    link: 'https://www.sothebysrealty.com/eng/category/new-york-usa',
+  },
+];
+
+const propertyTypesTop = (t: typeof translations.fi) => [
+  {
+    image: '/images/international/new-york-skyline.jpg',
+    alt: 'Urban Metropolitan Properties',
+    title: <>Urban Metropolitan<br />Properties</>,
+    buttonText: t.discoverUrban,
+    link: 'https://www.sothebysrealty.com/eng/sales/int/metropolitan-lstyle',
+    preLineButton: true,
+  },
+  {
+    image: '/images/international/ski-mountain-property.jpg',
+    alt: 'Lovely Ski Properties',
+    title: <>Lovely Ski<br />Properties</>,
+    buttonText: t.findSki,
+    link: 'https://www.sothebysrealty.com/eng/sales/int/ski-in-ski-out-lotf',
+    preLineButton: false,
+  },
+  {
+    image: '/images/international/beachfront-property.jpg',
+    alt: 'Tranquil Beachfront Homes',
+    title: <>Tranquil Beachfront<br />Homes</>,
+    buttonText: t.ownParadise,
+    link: 'https://www.sothebysrealty.com/eng/sales/int/beach-lstyle',
+    preLineButton: false,
+  },
+];
+
+const propertyTypesBottom = (t: typeof translations.fi) => [
+  {
+    image: '/images/international/vineyard-property.jpg',
+    alt: 'Wine & Vineyard Properties',
+    title: <>Wine &amp; Vineyard<br />Properties</>,
+    buttonText: t.searchVineyard,
+    link: 'https://www.sothebysrealty.com/eng/sales/int/wine-vineyard-lstyle',
+    preLineButton: true,
+  },
+  {
+    image: '/images/international/golf-property.jpg',
+    alt: 'Championship Golf Properties',
+    title: <>Championship Golf<br />Properties</>,
+    buttonText: t.viewGolf,
+    link: 'https://www.sothebysrealty.com/eng/sales/int/golf-lstyle',
+    preLineButton: false,
+  },
+  {
+    image: '/images/international/ski-mountain-property.jpg',
+    alt: 'Majestic Mountain Properties',
+    title: <>Majestic Mountain<br />Properties</>,
+    buttonText: t.exploreRugged,
+    link: 'https://www.sothebysrealty.com/eng/sales/int/mountain-lstyle',
+    preLineButton: true,
+  },
+];
+
 export default function InternationalPage({ params }: { params: { locale: Locale } }) {
   const t = translations[params.locale] || translations.fi;
   return (
@@ -266,173 +390,19 @@ export default function InternationalPage({ params }: { params: { locale: Locale
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-              
-              {/* Sweden */}
-              <div className="group">
-                <div className="h-64 relative overflow-hidden">
-                  <Image
-                    src="/images/international/sweden-waterfront.jpg"
-                    alt="Sweden"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
+              {destinationsTop.map((d) => (
+                <div key={d.title} className="group">
+                  <div className="h-64 relative overflow-hidden">
+                    <Image src={d.image} alt={d.title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-2xl font-light text-gray-900 mb-2">{d.title}</h3>
+                    <p className="text-sm text-gray-600 font-light italic mb-3">{d.subtitle}<br />by: {d.author}</p>
+                    <p className="text-gray-700 font-light text-sm leading-relaxed mb-4 whitespace-pre-line">{d.description}</p>
+                    <a href={d.link} target="_blank" rel="noopener noreferrer" className="text-[var(--color-primary)] hover:underline font-light text-sm">{t.readMore}</a>
+                  </div>
                 </div>
-                <div className="p-6">
-                  <h3 className="text-2xl font-light text-gray-900 mb-2">Sweden</h3>
-                  <p className="text-sm text-gray-600 font-light italic mb-3">
-                    Perfecting Work-Life Balance<br />
-                    by: Iyna Bort Caruso
-                  </p>
-                  <p className="text-gray-700 font-light text-sm leading-relaxed mb-4">
-                    Sweden real estate dates back centuries and yet progressiveness defines its architecture, design 
-                    aesthetic and social welfare system. One of the world's most generous social services systems 
-                    includes universal health care, affordable child care and a parental leave policy of up to 480 paid 
-                    days per child. Life is good for seniors, too. A 2013 report by Global AgeWatch ranked Sweden 
-                    first out of 91 countries when considering such factors as health care, income security and the 
-                    environment for older adults. On the job, Sweden's corporate culture emphasizes live-work 
-                    balance believing perks like flexible working hours yields a more productive work force...
-                  </p>
-                  <a 
-                    href="https://www.sothebysrealty.com/eng/destinations/sweden" 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[var(--color-primary)] hover:underline font-light text-sm"
-                  >
-                    {t.readMore}
-                  </a>
-                </div>
-              </div>
-
-              {/* Portugal */}
-              <div className="group">
-                <div className="h-64 relative overflow-hidden">
-                  <Image
-                    src="/images/international/portugal-coast.jpg"
-                    alt="Portugal"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-2xl font-light text-gray-900 mb-2">Portugal</h3>
-                  <p className="text-sm text-gray-600 font-light italic mb-3">
-                    Iberian Beauty<br />
-                    by: Iyna Bort Caruso
-                  </p>
-                  <p className="text-gray-700 font-light text-sm leading-relaxed mb-4">
-                    Portugal is a country best appreciated slowly, like a sip of its vintage port wine.<br /><br />
-                    A founding member of the European Union and euro zone, Portugal has transitioned from an economy 
-                    based on traditional industries to one based on technology. Leading international companies are 
-                    investing here. Its infrastructure is strong and establishing a business is fast. For those interested in 
-                    relocating, the opportunity to settle in this charmed corner of the continent through a burgeoning 
-                    Portugal luxury real estate market is a powerful incentive...
-                  </p>
-                  <a 
-                    href="https://www.sothebysrealty.com/eng/destinations/portugal"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[var(--color-primary)] hover:underline font-light text-sm"
-                  >
-                    {t.readMore}
-                  </a>
-                </div>
-              </div>
-
-              {/* Mallorca */}
-              <div className="group">
-                <div className="h-64 relative overflow-hidden">
-                  <Image
-                    src="/images/international/mallorca-harbor.jpg"
-                    alt="Mallorca"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-2xl font-light text-gray-900 mb-2">Mallorca</h3>
-                  <p className="text-sm text-gray-600 font-light italic mb-3">
-                    Abundance in the Balearics<br />
-                    by: Iyna Bort Caruso
-                  </p>
-                  <p className="text-gray-700 font-light text-sm leading-relaxed mb-4">
-                    Joan Miró painted here. Frederic Chopin composed here. Robert Graves wrote here.<br /><br />
-                    Here is Mallorca, part of Spain's Balearic Islands. The Balearic isles, an autonomous archipelago, are 
-                    clustered in the Mediterranean. Mallorca is the largest of the four main islands, followed by Minorca, Ibiza 
-                    and Formentera. The Carthaginians, Romans, Vandals, Moors, French and British all left their marks here...
-                  </p>
-                  <a 
-                    href="https://www.sothebysrealty.com/eng/destinations/mallorca-spain"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[var(--color-primary)] hover:underline font-light text-sm"
-                  >
-                    {t.readMore}
-                  </a>
-                </div>
-              </div>
-
-              {/* Estonia */}
-              <div className="group">
-                <div className="h-64 relative overflow-hidden">
-                  <Image
-                    src="/images/international/snellman-sothebys-international-kakumae-web-768x480.jpg"
-                    alt="Estonia"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-2xl font-light text-gray-900 mb-2">Estonia</h3>
-                  <p className="text-sm text-gray-600 font-light italic mb-3">
-                    Living in Estonia<br />
-                    by: Iyna Bort Caruso
-                  </p>
-                  <p className="text-gray-700 font-light text-sm leading-relaxed mb-4">
-                    Estonia withstood centuries of foreign rule including the Danes, Swedes, Germans and Russians – both Tsarist and Soviet, the last Russian troops left in 1994. Today the smallest of the Baltic States is a member of the European Union and NATO. It is especially proud of its high tech culture. It also has one of the world's longest paid maternity leaves.<br /><br />
-                    Estonia lies on the shores of the Baltic Sea, a ferry ride from Finland and Sweden and a three-hour flight or less to most major European cities. The republic is made up of 15 counties and more than 2,000 islands, most of them small in size with tiny populations to match...
-                  </p>
-                  <a 
-                    href="https://www.sothebysrealty.com/eng/destinations/estonia"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[var(--color-primary)] hover:underline font-light text-sm"
-                  >
-                    {t.readMore}
-                  </a>
-                </div>
-              </div>
-
-              {/* French Riviera */}
-              <div className="group">
-                <div className="h-64 relative overflow-hidden">
-                  <Image
-                    src="/images/international/french-riviera-marina.jpg"
-                    alt="French Riviera"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-2xl font-light text-gray-900 mb-2">French Riviera</h3>
-                  <p className="text-sm text-gray-600 font-light italic mb-3">
-                    The Jewel of the Mediterranean<br />
-                    by: Iyna Bort Caruso
-                  </p>
-                  <p className="text-gray-700 font-light text-sm leading-relaxed mb-4">
-                    The French Riviera, or Côte d'Azur, stretches along France's southeastern Mediterranean coast from Saint-Tropez to the Italian border. This glamorous coastline has long been a playground for the rich and famous, offering a perfect blend of natural beauty, cultural sophistication, and luxury living.<br /><br />
-                    With its mild climate, stunning beaches, world-class dining, and vibrant arts scene, the French Riviera continues to attract discerning buyers seeking exceptional properties in one of Europe's most prestigious locations. From Belle Époque villas to contemporary masterpieces, the region offers unparalleled real estate opportunities...
-                  </p>
-                  <a 
-                    href="https://www.sothebysrealty.com/eng/destinations/french-riviera-france"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[var(--color-primary)] hover:underline font-light text-sm"
-                  >
-                    {t.readMore}
-                  </a>
-                </div>
-              </div>
-
+              ))}
             </div>
           </div>
         </section>
@@ -441,88 +411,18 @@ export default function InternationalPage({ params }: { params: { locale: Locale
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-              
-              {/* Urban Metropolitan */}
-              <a 
-                href="https://www.sothebysrealty.com/eng/sales/int/metropolitan-lstyle" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="group cursor-pointer"
-              >
-                <div className="h-64 relative overflow-hidden">
-                  <Image
-                    src="/images/international/new-york-skyline.jpg"
-                    alt="Urban Metropolitan Properties"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors"></div>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-6">
-                    <h3 className="text-2xl font-light mb-4">
-                      Urban Metropolitan<br />
-                      Properties
-                    </h3>
-                    <button className="border border-white px-6 py-2 hover:bg-white hover:text-black transition-all uppercase text-sm font-light whitespace-pre-line">
-                      {t.discoverUrban}
-                    </button>
+              {propertyTypesTop(t).map((p) => (
+                <a key={p.alt} href={p.link} target="_blank" rel="noopener noreferrer" className="group cursor-pointer">
+                  <div className="h-64 relative overflow-hidden">
+                    <Image src={p.image} alt={p.alt} fill className="object-cover" />
+                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors"></div>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-6">
+                      <h3 className="text-2xl font-light mb-4">{p.title}</h3>
+                      <button className={`border border-white px-6 py-2 hover:bg-white hover:text-black transition-all uppercase text-sm font-light${p.preLineButton ? ' whitespace-pre-line' : ''}`}>{p.buttonText}</button>
+                    </div>
                   </div>
-                </div>
-              </a>
-
-              {/* Lovely Ski Properties */}
-              <a 
-                href="https://www.sothebysrealty.com/eng/sales/int/ski-in-ski-out-lotf" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="group cursor-pointer"
-              >
-                <div className="h-64 relative overflow-hidden">
-                  <Image
-                    src="/images/international/ski-mountain-property.jpg"
-                    alt="Lovely Ski Properties"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors"></div>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-6">
-                    <h3 className="text-2xl font-light mb-4">
-                      Lovely Ski<br />
-                      Properties
-                    </h3>
-                    <button className="border border-white px-6 py-2 hover:bg-white hover:text-black transition-all uppercase text-sm font-light">
-                      {t.findSki}
-                    </button>
-                  </div>
-                </div>
-              </a>
-
-              {/* Tranquil Beachfront */}
-              <a 
-                href="https://www.sothebysrealty.com/eng/sales/int/beach-lstyle" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="group cursor-pointer"
-              >
-                <div className="h-64 relative overflow-hidden">
-                  <Image
-                    src="/images/international/beachfront-property.jpg"
-                    alt="Tranquil Beachfront Homes"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors"></div>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-6">
-                    <h3 className="text-2xl font-light mb-4">
-                      Tranquil Beachfront<br />
-                      Homes
-                    </h3>
-                    <button className="border border-white px-6 py-2 hover:bg-white hover:text-black transition-all uppercase text-sm font-light">
-                      {t.ownParadise}
-                    </button>
-                  </div>
-                </div>
-              </a>
-
+                </a>
+              ))}
             </div>
           </div>
         </section>
@@ -531,114 +431,19 @@ export default function InternationalPage({ params }: { params: { locale: Locale
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-              
-              {/* Florida */}
-              <div className="group">
-                <div className="h-64 relative overflow-hidden">
-                  <Image
-                    src="/images/international/florida-luxury-property.jpg"
-                    alt="Florida"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
+              {destinationsBottom.map((d) => (
+                <div key={d.title} className="group">
+                  <div className="h-64 relative overflow-hidden">
+                    <Image src={d.image} alt={d.title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-2xl font-light text-gray-900 mb-2">{d.title}</h3>
+                    <p className="text-sm text-gray-600 font-light italic mb-3">{d.subtitle}<br />by: {d.author}</p>
+                    <p className="text-gray-700 font-light text-sm leading-relaxed mb-4 whitespace-pre-line">{d.description}</p>
+                    <a href={d.link} target="_blank" rel="noopener noreferrer" className="text-[var(--color-primary)] hover:underline font-light text-sm">{t.readMore}</a>
+                  </div>
                 </div>
-                <div className="p-6">
-                  <h3 className="text-2xl font-light text-gray-900 mb-2">Florida</h3>
-                  <p className="text-sm text-gray-600 font-light italic mb-3">
-                    Subtropical Capital of Cool<br />
-                    by: Iyna Bort Caruso
-                  </p>
-                  <p className="text-gray-700 font-light text-sm leading-relaxed mb-4">
-                    Discover luxury real estate in the Sunshine State. From waterside villas in the north to Miami in the 
-                    south, enjoy some of America's most sought-after beaches on both Atlantic and Gulf coasts along 
-                    with world-class golf glamour that Florida has to offer.
-                    <br /><br />
-                    The greater Miami mindset is one of preservation and reinvention. Historic Art Deco and Miami 
-                    Modern architecture, mix with spiraling post-modern towers. It is an evolving, sun-drenched 
-                    skyline...
-                  </p>
-                  <a 
-                    href="https://www.sothebysrealty.com/eng/category/florida"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[var(--color-primary)] hover:underline font-light text-sm"
-                  >
-                    {t.readMore}
-                  </a>
-                </div>
-              </div>
-
-              {/* Provence */}
-              <div className="group">
-                <div className="h-64 relative overflow-hidden">
-                  <Image
-                    src="/images/international/french-riviera.jpg"
-                    alt="Provence-Alpes – Côte d'Azur"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-2xl font-light text-gray-900 mb-2">Provence-Alpes – Côte d'Azur</h3>
-                  <p className="text-sm text-gray-600 font-light italic mb-3">
-                    Real Estate Royalty<br />
-                    by: Iyna Bort Caruso
-                  </p>
-                  <p className="text-gray-700 font-light text-sm leading-relaxed mb-4">
-                    The south coast of France casts a brilliant glow on the world. Provence-Alpes-Côte d'Azur covers a cohort of 
-                    France with near fairy-tale riches. Within a short drive, one can travel from an Alpine peak, pass 
-                    lavender fields, vineyards and medieval villages and end up on the glorious Mediterranean coast.
-                    <br /><br />
-                    This historically stable and resilient property market has long attracted European elite. Buyers 
-                    from the U.K. famously make their playground here but the locale has a global stature...
-                  </p>
-                  <a 
-                    href="https://www.sothebysrealty.com/eng/destinations/french-riviera-france"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[var(--color-primary)] hover:underline font-light text-sm"
-                  >
-                    {t.readMore}
-                  </a>
-                </div>
-              </div>
-
-              {/* New York */}
-              <div className="group">
-                <div className="h-64 relative overflow-hidden">
-                  <Image
-                    src="/images/international/new-york-skyline.jpg"
-                    alt="New York"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-2xl font-light text-gray-900 mb-2">New York</h3>
-                  <p className="text-sm text-gray-600 font-light italic mb-3">
-                    America's Global Address<br />
-                    by: Iyna Bort Caruso
-                  </p>
-                  <p className="text-gray-700 font-light text-sm leading-relaxed mb-4">
-                    Discover luxury real estate in the Empire State. Know the varying expressions of New York City and 
-                    vibrant Atlantic coastal towns to the sprawling acres of historic countryside and recreational 
-                    Highlands, explore all that New York has to offer.
-                    <br /><br />
-                    Think of Manhattan, and a barrage of images comes to mind. Broadway, Wall Street, Times 
-                    Square. The city is as boundless as a skyscraper and as diverse as the structures that line its 
-                    horizon...
-                  </p>
-                  <a 
-                    href="https://www.sothebysrealty.com/eng/category/new-york-usa"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[var(--color-primary)] hover:underline font-light text-sm"
-                  >
-                    {t.readMore}
-                  </a>
-                </div>
-              </div>
-
+              ))}
             </div>
           </div>
         </section>
@@ -647,88 +452,18 @@ export default function InternationalPage({ params }: { params: { locale: Locale
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-              
-              {/* Wine & Vineyard */}
-              <a 
-                href="https://www.sothebysrealty.com/eng/sales/int/wine-vineyard-lstyle" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="group cursor-pointer"
-              >
-                <div className="h-64 relative overflow-hidden">
-                  <Image
-                    src="/images/international/vineyard-property.jpg"
-                    alt="Wine & Vineyard Properties"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors"></div>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-6">
-                    <h3 className="text-2xl font-light mb-4">
-                      Wine & Vineyard<br />
-                      Properties
-                    </h3>
-                    <button className="border border-white px-6 py-2 hover:bg-white hover:text-black transition-all uppercase text-sm font-light whitespace-pre-line">
-                      {t.searchVineyard}
-                    </button>
+              {propertyTypesBottom(t).map((p) => (
+                <a key={p.alt} href={p.link} target="_blank" rel="noopener noreferrer" className="group cursor-pointer">
+                  <div className="h-64 relative overflow-hidden">
+                    <Image src={p.image} alt={p.alt} fill className="object-cover" />
+                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors"></div>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-6">
+                      <h3 className="text-2xl font-light mb-4">{p.title}</h3>
+                      <button className={`border border-white px-6 py-2 hover:bg-white hover:text-black transition-all uppercase text-sm font-light${p.preLineButton ? ' whitespace-pre-line' : ''}`}>{p.buttonText}</button>
+                    </div>
                   </div>
-                </div>
-              </a>
-
-              {/* Championship Golf */}
-              <a 
-                href="https://www.sothebysrealty.com/eng/sales/int/golf-lstyle" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="group cursor-pointer"
-              >
-                <div className="h-64 relative overflow-hidden">
-                  <Image
-                    src="/images/international/golf-property.jpg"
-                    alt="Championship Golf Properties"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors"></div>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-6">
-                    <h3 className="text-2xl font-light mb-4">
-                      Championship Golf<br />
-                      Properties
-                    </h3>
-                    <button className="border border-white px-6 py-2 hover:bg-white hover:text-black transition-all uppercase text-sm font-light">
-                      {t.viewGolf}
-                    </button>
-                  </div>
-                </div>
-              </a>
-
-              {/* Majestic Mountain */}
-              <a 
-                href="https://www.sothebysrealty.com/eng/sales/int/mountain-lstyle" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="group cursor-pointer"
-              >
-                <div className="h-64 relative overflow-hidden">
-                  <Image
-                    src="/images/international/ski-mountain-property.jpg"
-                    alt="Majestic Mountain Properties"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors"></div>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-6">
-                    <h3 className="text-2xl font-light mb-4">
-                      Majestic Mountain<br />
-                      Properties
-                    </h3>
-                    <button className="border border-white px-6 py-2 hover:bg-white hover:text-black transition-all uppercase text-sm font-light whitespace-pre-line">
-                      {t.exploreRugged}
-                    </button>
-                  </div>
-                </div>
-              </a>
-
+                </a>
+              ))}
             </div>
           </div>
         </section>

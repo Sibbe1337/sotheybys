@@ -1,216 +1,31 @@
 /**
  * LINEAR API TO DOMAIN MODEL MAPPER
- * 
+ *
  * This mapper transforms raw Linear API data into our Property domain model.
- * 
+ *
  * 📖 DOCUMENTATION: See field-mappings.ts for complete field mapping blueprint
  *    showing all Linear API fields, their target domain fields, and transformation rules.
- * 
+ *
  * Based on: DENNIS_IMPLEMENTATIONSLISTA_DETALJERAD.md
  */
 
-import { Property, LocalizedValue } from '@/lib/domain/property.types';
+import { Property } from '@/lib/domain/property.types';
 import { parseEuro } from '@/lib/domain/property.value-objects';
 import { normalizeEnergyStatus } from '@/lib/domain/energy';
 import { buildSlug } from '@/lib/domain/slug';
 import { cleanAgentData } from '@/lib/domain/agent-utils';
 import { validateProperty } from '@/lib/domain/property.schema';
-import { log, warn } from '@/lib/logger';
+import { warn } from '@/lib/logger';
 import { localizeListingType } from './listing-type-localizer';
-import { LinearListing, LinearLocalized } from './types';
+import { LinearListing } from './types';
 
-const YES = new Set(['kyllä', 'ja', 'yes', 'on', '1', 'true', true, 1]);
-const NO = new Set(['ei', 'nej', 'no', 'off', '0', 'false', false, 0]);
-
-function lget(src: LinearLocalized, l: 'fi' | 'sv' | 'en'): string {
-  if (src == null) return '';
-  if (typeof src === 'string') return src || '';
-  const v = (src as any)[l];
-  if (!v) return '';
-  return typeof v === 'string' ? v : (v?.value ?? '');
-}
-
-function lv(src: LinearLocalized | undefined): LocalizedValue {
-  return {
-    fi: lget(src, 'fi'),
-    sv: lget(src, 'sv') || undefined,
-    en: lget(src, 'en') || undefined
-  };
-}
-
-// LINUS FIX: Convert plain text line breaks to HTML paragraphs
-function textToHtml(text: string | undefined | null): string {
-  if (!text) return '';
-  
-  // Split by double line breaks (paragraphs) or single line breaks
-  const paragraphs = text
-    .split(/\n\n+/) // Split on double+ line breaks (paragraph separators)
-    .map(para => para.trim())
-    .filter(para => para.length > 0)
-    .map(para => {
-      // Within each paragraph, replace single line breaks with <br>
-      const withBreaks = para.replace(/\n/g, '<br>');
-      return `<p>${withBreaks}</p>`;
-    });
-  
-  return paragraphs.join('');
-}
-
-// LINUS FIX: Apply textToHtml to LocalizedValue
-function lvHtml(src: LinearLocalized | undefined): LocalizedValue {
-  return {
-    fi: textToHtml(lget(src, 'fi')),
-    sv: textToHtml(lget(src, 'sv')),
-    en: textToHtml(lget(src, 'en')),
-  };
-}
-
-function toBool(v: any): boolean | undefined {
-  // ✅ FIX: Extract value from localized object structure
-  let rawValue = v;
-  
-  // Handle localized object: { fi: { key: '...', value: 'Kyllä', category: '...' } }
-  if (v && typeof v === 'object' && v.fi?.value !== undefined) {
-    rawValue = v.fi.value;
-  }
-  // Handle LinearLocalized: { fi: 'Kyllä', sv: 'Ja', en: 'Yes' }
-  else if (v && typeof v === 'object' && v.fi !== undefined && typeof v.fi === 'string') {
-    rawValue = v.fi;
-  }
-  
-  if (rawValue === null || rawValue === undefined) return undefined;
-  
-  const s = String(rawValue).trim().toLowerCase();
-  if (YES.has(s) || YES.has(rawValue)) return true;
-  if (NO.has(s) || NO.has(rawValue)) return false;
-  
-  log('⚠️ Unrecognized boolean value:', v);
-  return undefined;
-}
-
-function pickNV(nv: any, ...keys: string[]) {
-  for (const k of keys) {
-    if (nv?.[k] != null && nv[k] !== '') return nv[k];
-  }
-  return undefined;
-}
-
-function parseNum(val: any): number | undefined {
-  if (val == null || val === '') return undefined;
-  const str = String(val).replace(/[^\d.,]/g, '').replace(',', '.');
-  const num = parseFloat(str);
-  return Number.isFinite(num) && num > 0 ? num : undefined;
-}
-
-// LINUS FIX: Robust area number parsing (handles "2 400 m²" → 2400)
-function parseAreaNumber(input: any): number | undefined {
-  if (!input) return undefined;
-  const s = String(input).replace(/\s+/g, '').replace(/[^\d.,-]/g, '').replace(',', '.');
-  const n = parseFloat(s);
-  return Number.isFinite(n) && n > 0 ? n : undefined;
-}
-
-// LINUS FIX: Get first valid number from multiple sources
-function firstNumber(...vals: Array<any>): number | undefined {
-  for (const v of vals) {
-    const n = typeof v === 'number' ? v : parseAreaNumber(v);
-    if (Number.isFinite(n) && (n as number) > 0) return n as number;
-  }
-  return undefined;
-}
-
-// LINUS FIX: Unit-aware area conversion
-// Dennis 2025-11-10: VIKTIGT! Kolla HECTARE FÖRST annars matchar 'HECTARE' på 'ARE'!
-function normalizeUnit(u?: string | null): 'SQM'|'ARE'|'HECTARE'|undefined {
-  if (!u) return undefined;
-  const s = String(u).trim().toUpperCase();
-  if (s.includes('SQUARE') || s.includes('SQM') || s === 'M2' || s === 'M²') return 'SQM';
-  // Dennis: Check HECTARE before ARE! ('HECTARE'.includes('ARE') === true)
-  if (s.includes('HECTAR') || s === 'HA') return 'HECTARE';
-  if (s.includes('ARE') || s === 'A') return 'ARE';
-  return undefined;
-}
-
-function applyUnit(n: number, unit?: string | null, rawText?: string | null): number {
-  const nu = normalizeUnit(unit);
-  if (nu === 'ARE') return n * 100;
-  if (nu === 'HECTARE') return n * 10000;
-  // Fallback: localized string contains 'ha'
-  const raw = (rawText || '').toLowerCase();
-  if (raw.includes(' ha') || raw.endsWith('ha') || raw.includes('hehtaari')) return n * 10000;
-  return n; // default m²
-}
-
-function normalizeStatus(val: any): 'ACTIVE' | 'SOLD' | 'RESERVED' | undefined {
-  const s = String(val || '').toLowerCase();
-  if (/myyty|sold|såld/.test(s)) return 'SOLD';
-  if (/varattu|reserved|reserverad/.test(s)) return 'RESERVED';
-  if (/aktiivinen|active|aktiv/.test(s)) return 'ACTIVE';
-  return undefined;
-}
-
-// Hardcoded coordinates for properties that don't geocode well (islands, etc.)
-const KNOWN_COORDINATES: Record<string, { lat: number; lon: number }> = {
-  'remmarholmen': { lat: 60.00, lon: 24.51 }, // Island in Porkkala, Kirkkonummi
-};
-
-async function extractCoordinates(
-  src: LinearListing, 
-  nv: any,
-  address?: string,
-  postalCode?: string,
-  city?: string
-): Promise<{ lat: number; lon: number } | undefined> {
-  // Try multiple field names for latitude/longitude
-  const lat = parseNum(
-    pickNV(nv, 'latitude', 'lat') ?? 
-    lget(src.latitude!, 'fi') ?? 
-    lget((src as any).mapCoordinates!, 'fi')?.split(',')[0]
-  );
-  
-  const lon = parseNum(
-    pickNV(nv, 'longitude', 'lon', 'lng') ?? 
-    lget(src.longitude!, 'fi') ?? 
-    lget((src as any).mapCoordinates!, 'fi')?.split(',')[1]
-  );
-
-  // If coordinates exist, return them
-  if (lat && lon) {
-    return { lat, lon };
-  }
-
-  // FALLBACK 1: Check hardcoded coordinates for known problematic addresses
-  if (address) {
-    const normalizedAddress = address.toLowerCase().trim();
-    for (const [key, coords] of Object.entries(KNOWN_COORDINATES)) {
-      if (normalizedAddress.includes(key)) {
-        console.log(`[Mapper] Using hardcoded coordinates for ${address}`);
-        return coords;
-      }
-    }
-  }
-
-  // FALLBACK 2: Geocode from address if coordinates missing
-  if (address && city) {
-    try {
-      const fullAddress = postalCode 
-        ? `${address}, ${postalCode} ${city}, Finland`
-        : `${address}, ${city}, Finland`;
-      
-      // Use dynamic import to avoid circular dependencies
-      const { geocodeAddress } = await import('@/lib/utils/geocoding');
-      const result = await geocodeAddress(fullAddress);
-      
-      if (result) {
-        return { lat: result.lat, lon: result.lon };
-      }
-    } catch (error) {
-      console.error('[Mapper] Geocoding failed:', error);
-    }
-  }
-
-  return undefined;
-}
+import {
+  lget, lv, lvHtml, toBool, pickNV,
+  parseNum, parseAreaNumber, firstNumber,
+  applyUnit, normalizeStatus
+} from './mapper-helpers';
+import { extractCoordinates } from './mapper-coordinates';
+import { extractDocumentUrls } from './mapper-documents';
 
 export class LinearToPropertyMapper {
   private existingSlugs = new Set<string>();
@@ -223,15 +38,15 @@ export class LinearToPropertyMapper {
     const postalCode = lget(src.postalCode!, locale);
     const cityFi = lget(src.city!, 'fi');
     const districtData = lv(src.district ?? src.districtFree);
-    
-    const slug = src.slug 
-      ? String(src.slug) 
+
+    const slug = src.slug
+      ? String(src.slug)
       : buildSlug(addressFi, {
           postalCode,
           city: cityFi,
           existingSlugs: this.existingSlugs
         });
-    
+
     this.existingSlugs.add(slug);
 
     // ========== RICH CONTENT (NEW) ==========
@@ -243,30 +58,30 @@ export class LinearToPropertyMapper {
     const sales = parseEuro(pickNV(nv, 'askPrice') ?? (src.askPrice && lget(src.askPrice, locale)));
     const debtFree = parseEuro(pickNV(nv, 'debtFreePrice') ?? (src.debtFreePrice && lget(src.debtFreePrice, locale)));
     const debt = Math.max(0, debtFree - sales);
-    
+
     // Property tax (Kiinteistövero) - ONLY for properties, not apartments
     // Dennis 2025-11-24: ALWAYS use Finnish value - tax amount is the same regardless of language
     // Fixes issue where English shows "3 €/year" instead of "3000 €/year"
     const propertyTax = parseEuro(
-      pickNV(nv, 'propertyTax', 'realEstateTax') ?? 
-      (src.propertyTax && lget(src.propertyTax, 'fi')) ?? 
+      pickNV(nv, 'propertyTax', 'realEstateTax') ??
+      (src.propertyTax && lget(src.propertyTax, 'fi')) ??
       (src.realEstateTax && lget(src.realEstateTax, 'fi'))
     ) || undefined;
-    
+
     // Dennis 2025-11-11: Tarjouskauppa (bidding) fields
     const biddingStartPrice = parseEuro(
-      pickNV(nv, 'debtlessStartPrice') ?? 
+      pickNV(nv, 'debtlessStartPrice') ??
       (src.debtlessStartPrice && lget(src.debtlessStartPrice, locale))
     ) || undefined;
     const biddingUrl = (src as any).biddingUrl || (nv as any).biddingUrl || undefined;
 
     // ========== DIMENSIONS (EXPANDED) ==========
     const living = parseNum(pickNV(nv, 'area') ?? lget(src.area!, 'fi')) || 0;
-    
-    // Dennis 2025-11-10: Parse "Yta för andra utrymmen" 
+
+    // Dennis 2025-11-10: Parse "Yta för andra utrymmen"
     // lget() already extracts .value from Linear's nested structure
     const otherSpaces = parseNum(pickNV(nv, 'otherArea') ?? lget((src as any).otherArea, 'fi'));
-    
+
     // Dennis 2025-11-10: Total area for properties
     // lget() handles Linear's structure: overallArea.fi.value = "60 m²"
     let total = parseNum(
@@ -279,7 +94,7 @@ export class LinearToPropertyMapper {
     if (!total && otherSpaces && otherSpaces > 0) {
       total = living + otherSpaces;
     }
-    
+
     // LINUS FIX: Unit-aware plot area - try multiple sources + convert units to m²
     // Dennis 2025-11-10: Added propertyArea, estateArea for "Fastighetens areal"
     // Dennis 2025-11-24: DEBUG - let's see what Linear returns for plot size
@@ -290,25 +105,25 @@ export class LinearToPropertyMapper {
     const siteAreaFi = lget((src as any).siteArea, 'fi');
     const propertyAreaFi = lget((src as any).propertyArea, 'fi');
     const estateAreaFi = lget((src as any).estateArea, 'fi');
-    
+
     const localizedPlot = firstNumber(plotAreaFi, lotAreaFi, siteAreaFi, propertyAreaFi, estateAreaFi);
     // Source value + unit conversion (output always in m²)
     const plotCandidate = nvPlot ?? localizedPlot;
     const plot = plotCandidate !== undefined ? applyUnit(plotCandidate, unitNv, plotAreaFi || lotAreaFi || siteAreaFi || propertyAreaFi || estateAreaFi) : undefined;
-    
-    // Dennis 2025-11-10: Plot area conversion fixed! 
+
+    // Dennis 2025-11-10: Plot area conversion fixed!
     // Problem was: normalizeUnit() checked 'ARE' before 'HECTARE'
     // So 'HECTARE'.includes('ARE') matched and returned wrong unit
     // Fixed by checking HECTARE first in normalizeUnit()
-    
+
     // Dennis 2025-11-11: Business premises area for commercial properties
     // Fallback: if no businessPremiseArea, use totalArea for commercial
     const business = parseNum(
-      pickNV(nv, 'businessPremiseArea') ?? 
+      pickNV(nv, 'businessPremiseArea') ??
       lget(src.businessPremiseArea!, 'fi') ??
       (total && total > 0 ? undefined : undefined) // Use total as fallback only if explicitly commercial
     );
-    
+
     const balcony = parseNum(pickNV(nv, 'balconyArea') ?? lget(src.balconyArea!, 'fi'));
     const terrace = parseNum(pickNV(nv, 'terraceArea') ?? lget(src.terraceArea!, 'fi'));
     const rooms = lget(src.rooms!, locale) || pickNV(nv, 'rooms') || undefined;
@@ -318,16 +133,16 @@ export class LinearToPropertyMapper {
     // ========== FEES (NEW) ==========
     // Dennis 2025-11-10: FI fallback för fees - Linear har inte alltid SV/EN översättningar
     const maintenance = parseEuro(
-      pickNV(nv, 'renovationCharge', 'maintenanceCharge') ?? 
-      lget(src.maintenanceCharge!, locale) ?? 
+      pickNV(nv, 'renovationCharge', 'maintenanceCharge') ??
+      lget(src.maintenanceCharge!, locale) ??
       lget(src.maintenanceCharge!, 'fi') ??  // FI fallback
       lget(src.renovationCharge!, locale) ??
       lget(src.renovationCharge!, 'fi')     // FI fallback
     ) || undefined;
 
     const financing = parseEuro(
-      pickNV(nv, 'fundingCharge', 'financingCharge') ?? 
-      lget(src.fundingCharge!, locale) ?? 
+      pickNV(nv, 'fundingCharge', 'financingCharge') ??
+      lget(src.fundingCharge!, locale) ??
       lget(src.fundingCharge!, 'fi') ??      // FI fallback
       lget(src.financingCharge!, locale) ??
       lget(src.financingCharge!, 'fi')       // FI fallback
@@ -335,15 +150,15 @@ export class LinearToPropertyMapper {
 
     const water = parseEuro(pickNV(nv, 'waterCharge') ?? lget(src.waterCharge!, locale) ?? lget(src.waterCharge!, 'fi')) || undefined;
     const heating = parseEuro(
-      pickNV(nv, 'heatingCharge', 'averageTotalHeatingCharge', 'electricHeatingCharge') ?? 
-      lget(src.heatingCharge!, locale) ?? 
+      pickNV(nv, 'heatingCharge', 'averageTotalHeatingCharge', 'electricHeatingCharge') ??
+      lget(src.heatingCharge!, locale) ??
       lget(src.heatingCharge!, 'fi') ??                           // FI fallback
-      lget(src.averageTotalHeatingCharge!, locale) ?? 
+      lget(src.averageTotalHeatingCharge!, locale) ??
       lget(src.averageTotalHeatingCharge!, 'fi') ??               // FI fallback
       lget(src.electricHeatingCharge!, locale) ??
       lget(src.electricHeatingCharge!, 'fi')                      // FI fallback
     ) || undefined;
-    
+
     const electricity = parseEuro(pickNV(nv, 'electricHeatingCharge') ?? lget(src.electricHeatingCharge!, locale) ?? lget(src.electricHeatingCharge!, 'fi')) || undefined;
     const parking = parseEuro(pickNV(nv, 'parkingCharge') ?? lget(src.parkingCharge!, locale) ?? lget(src.parkingCharge!, 'fi')) || undefined;
     const saunaFee = parseEuro(pickNV(nv, 'saunaCharge') ?? lget(src.saunaCharge!, locale) ?? lget(src.saunaCharge!, 'fi')) || undefined;
@@ -379,109 +194,26 @@ export class LinearToPropertyMapper {
     // ========== ADDITIONAL META (Blueprint completion) ==========
     const identifierFi = pickNV(nv, 'identifier', 'propertyId') ?? lget((src as any).identifier!, 'fi') ?? undefined;
     const condition = lv((src as any).condition);
-    
+
     // Dennis: Property data often only in Finnish - use 'fi' as fallback
-    const propertyIdentifier = pickNV(nv, 'propertyIdentifier', 'estateName') ?? 
-      lget((src as any).propertyIdentifier!, locale) ?? 
-      lget((src as any).propertyIdentifier!, 'fi') ?? 
+    const propertyIdentifier = pickNV(nv, 'propertyIdentifier', 'estateName') ??
+      lget((src as any).propertyIdentifier!, locale) ??
+      lget((src as any).propertyIdentifier!, 'fi') ??
       undefined;
-    
-    const propertyBuildingRights = pickNV(nv, 'propertyBuildingRights', 'buildingRights') ?? 
-      lget((src as any).propertyBuildingRights!, locale) ?? 
-      lget((src as any).propertyBuildingRights!, 'fi') ?? 
+
+    const propertyBuildingRights = pickNV(nv, 'propertyBuildingRights', 'buildingRights') ??
+      lget((src as any).propertyBuildingRights!, locale) ??
+      lget((src as any).propertyBuildingRights!, 'fi') ??
       undefined;
-    
+
     const restrictions = lv((src as any).restrictions);
 
     // ========== COORDINATES (NEW) ==========
     const coordinates = await extractCoordinates(src, nv, addressFi, postalCode, cityFi);
 
     // ========== DOCUMENTS (NEW) ==========
-    
-    // 🔥 DENNIS FIX: Extract URLs from "Länkar" field in Linear CMS
-    // Linear CMS has a generic "links" array where all URLs are stored
-    const extractLinkFromArray = (pattern: RegExp, purpose: string): string | undefined => {
-      const linksArray = (src as any).links;
-      
-      if (!linksArray) {
-        return undefined;
-      }
-      
-      // Handle if links is localized object with arrays
-      const localeLinks = linksArray[locale] || linksArray['fi'] || linksArray;
-      
-      // 🎯 FIX: Linear returns { key, value: [...], category }, extract the value!
-      const actualLinks = localeLinks?.value || localeLinks;
-      
-      if (!Array.isArray(actualLinks)) {
-        return undefined;
-      }
-      
-      // Find first link matching pattern
-      // 🎯 FIX: Linear API uses "value" key, not "url"!
-      const found = actualLinks.find((link: any) => {
-        const url = link?.value || link?.url || link;
-        return pattern.test(url);
-      });
-      
-      return found?.value || found?.url || found;
-    };
-    
-    // Dennis 2025-01-29: Extract URL from links array by link NAME (e.g., "SIR")
-    const extractLinkByName = (name: string): string | undefined => {
-      const linksArray = (src as any).links;
-      
-      if (!linksArray) {
-        return undefined;
-      }
-      
-      // Handle if links is localized object with arrays
-      const localeLinks = linksArray[locale] || linksArray['fi'] || linksArray;
-      const actualLinks = localeLinks?.value || localeLinks;
-      
-      if (!Array.isArray(actualLinks)) {
-        return undefined;
-      }
-      
-      // Find link by name (case-insensitive)
-      const found = actualLinks.find((link: any) => {
-        const linkName = link?.name || link?.key || link?.label || '';
-        return linkName.toLowerCase() === name.toLowerCase();
-      });
-      
-      return found?.value || found?.url;
-    };
-    
-    const floorPlanUrl = lget(src.floorPlanUrl!, locale) || 
-                         src.images?.find(i => i.isFloorPlan)?.url || 
-                         extractLinkFromArray(/pohjakuva|floorplan|planritning/i, 'floor plan') ||
-                         undefined;
-    
-    // 🔥 DENNIS FIX: Broschyr kan vara i flera olika fält eller i links-array
-    const brochureUrl = lget((src as any).virtualTourUrl!, locale) ||
-                        lget(src.brochureUrl!, locale) || 
-                        lget(src.propertyBrochureUrl!, locale) ||
-                        extractLinkFromArray(/esitteet|brochure|broschyr/i, 'brochure') ||
-                        undefined;
-    
-    const brochureIntl = lget(src.internationalBrochureUrl!, locale) || 
-                         extractLinkFromArray(/sothebysrealty\.com\/eng/i, 'international listing') ||
-                         undefined;
-    
-    // Dennis 2025-12-15: International URL (Global Listing on sothebysrealty.com)
-    // Dennis 2025-01-29: Updated to match more URL patterns and also find by link name "SIR"
-    const internationalUrl = lget((src as any).internationalUrl!, locale) ||
-                             lget((src as any).internationalListingUrl!, locale) ||
-                             lget((src as any).globalListingUrl!, locale) ||
-                             extractLinkFromArray(/sothebysrealty\.com/i, 'global listing') ||
-                             extractLinkByName('SIR') ||
-                             undefined;
-    
-    const videoUrl = lget(src.videoUrl!, locale) || 
-                     extractLinkFromArray(/youtu\.be|youtube\.com|vimeo\.com/i, 'video') ||
-                     undefined;
-    
-    const energyCertUrl = lget(src.energyCertificateUrl!, locale) || undefined;
+    const { floorPlanUrl, brochureUrl, brochureIntl, internationalUrl, videoUrl, energyCertUrl } =
+      extractDocumentUrls(src, locale, nv);
 
     // ========== RENTAL (NEW) ==========
     let rentalData: Property['rental'] = undefined;
@@ -512,9 +244,9 @@ export class LinearToPropertyMapper {
       phone: (src as any).estateAgentPhone,
       email: (src as any).estateAgentEmail
     };
-    
+
     const { warnings: agentWarnings, ...agentData } = cleanAgentData(rawAgent);
-    
+
     if (agentWarnings.length > 0) {
       warn('Agent data warnings for', addressFi, agentWarnings);
     }
@@ -541,18 +273,18 @@ export class LinearToPropertyMapper {
       description: description.fi || description.sv || description.en ? description : undefined,
       descriptionTitle: descriptionTitle.fi || descriptionTitle.sv || descriptionTitle.en ? descriptionTitle : undefined,
 
-      pricing: { 
-        sales, 
-        debtFree, 
-        debt, 
+      pricing: {
+        sales,
+        debtFree,
+        debt,
         propertyTax,
         biddingStartPrice,  // Dennis 2025-11-11
         biddingUrl          // Dennis 2025-11-11
       },
 
-      dimensions: { 
-        living, 
-        total, 
+      dimensions: {
+        living,
+        total,
         plot,
         business,  // Dennis 2025-11-11: Commercial premises area
         balcony,
@@ -588,17 +320,17 @@ export class LinearToPropertyMapper {
         typeCode: (() => {
           // Try listingType first (preferred - this is the objekttyp)
           let rawType = lget(src.listingType, 'en') || lget(src.listingType, 'fi') || lget(src.listingType, 'sv');
-          
+
           // Fallback to propertyType if listingType is empty
           if (!rawType) {
             rawType = lget(src.propertyType, 'en') || lget(src.propertyType, 'fi') || lget(src.propertyType, 'sv');
           }
-          
+
           // Final fallback to type field
           if (!rawType) {
             rawType = lget(src.type, 'en') || lget(src.type, 'fi') || lget(src.type, 'sv');
           }
-          
+
           return rawType ? rawType.toUpperCase().replace(/ /g, '_') : undefined;
         })(),
         // Dennis 2025-11-19: Use localizeListingType() to ensure correct translations (Kerrostalo -> Höghus in Swedish)
@@ -608,12 +340,12 @@ export class LinearToPropertyMapper {
           const typeCode = nv?.listingType || lget(src.listingType, 'fi') || '';
           return localizeListingType(typeCode);
         })(),
-        
+
         // Basic metadata (from blueprint)
         identifierFi,
         apartmentType: lv(src.typeOfApartment),
         condition: condition.fi || condition.sv || condition.en ? condition : undefined,
-        
+
         // Energy & systems - LINUS FIX: Fallback locale → fi → nv
         energyClass: (() => {
           const fromLocale = lget((src as any).energyClass, locale);
@@ -627,21 +359,21 @@ export class LinearToPropertyMapper {
           const fromFi = lget(src.listingHasEnergyCertificate!, 'fi');
           const fromSv = lget(src.listingHasEnergyCertificate!, 'sv');
           const fromEn = lget(src.listingHasEnergyCertificate!, 'en');
-          
+
           // Try each language and return first non-null result
           for (const text of [fromFi, fromSv, fromEn]) {
             const status = normalizeEnergyStatus(text);
             if (status !== null) return status;
           }
-          
+
           return null;
         })(),
         heatingSystem: lv(src.heatingSystem),
         ventilationSystem: lv(src.ventilationSystem),
-        
+
         // Ownership & tenure
         ownershipType: lv((src as any).ownershipType),
-        
+
         // Dennis 2025-11-19: Tomtägandeform - try all possible field names
         plotOwnership: (() => {
             const fields = [
@@ -658,7 +390,7 @@ export class LinearToPropertyMapper {
             }
             return { fi: '', sv: '', en: '' };
         })(),
-        
+
         // Dennis 2025-11-19: Förvaltningsform/Hallintamuoto - try all possible field names
         housingTenure: (() => {
             // DEBUG: Log ownership-related fields
@@ -667,7 +399,7 @@ export class LinearToPropertyMapper {
             console.log('  ownershipForm:', (src as any).ownershipForm ? JSON.stringify((src as any).ownershipForm) : 'null');
             console.log('  ägandeform:', (src as any).ägandeform ? JSON.stringify((src as any).ägandeform) : 'null');
             console.log('  agandeform:', (src as any).agandeform ? JSON.stringify((src as any).agandeform) : 'null');
-            
+
             const fields = [
                 (src as any).housingTenure,
                 (src as any).hallintamuoto,  // Finnish field name
@@ -680,7 +412,7 @@ export class LinearToPropertyMapper {
                 nv?.hallintamuoto,
                 nv?.housingCooperativeForm
             ];
-            
+
             if ((src as any).housingTenure) {
                 console.log('🔍 LINEAR API housingTenure FULL OBJECT:', JSON.stringify((src as any).housingTenure, null, 2));
                 console.log('🔍 housingTenure.fi:', (src as any).housingTenure.fi);
@@ -689,7 +421,7 @@ export class LinearToPropertyMapper {
             } else {
                 console.log('❌ housingTenure field does not exist in API response');
             }
-            
+
             for (const field of fields) {
                 const value = lv(field);
                 if (value.fi || value.sv || value.en) {
@@ -698,8 +430,8 @@ export class LinearToPropertyMapper {
                 }
             }
             console.log('❌ No housingTenure found in any field - using default for apartments');
-            
-            // TEMPORARY FIX: If this is an apartment and housingTenure is null, 
+
+            // TEMPORARY FIX: If this is an apartment and housingTenure is null,
             // default to "Bostadsrättsförening" (most common in Finland/Sweden)
             const listingType = nv?.listingType || '';
             if (listingType === 'FLAT' || listingType === 'APARTMENT') {
@@ -709,26 +441,26 @@ export class LinearToPropertyMapper {
                     en: 'Housing cooperative'
                 };
             }
-            
+
             return { fi: '', sv: '', en: '' };
         })(),
-        
+
         // Property-specific
         propertyIdentifier,
         propertyBuildingRights,
         restrictions: restrictions.fi || restrictions.sv || restrictions.en ? restrictions : undefined,
-        
+
         // Dates & availability
         availableFrom: lv((src as any).availableFrom ?? (src as any).release ?? (src as any).freeOnText),
         zoning: lv((src as any).zoningStatus),
-        
+
         // Building details
         yearBuilt: (() => {
           const year = Number(
-            nv.yearBuilt ?? 
-            nv.completeYear ?? 
-            (src as any).yearBuilt ?? 
-            (src as any).completeYear ?? 
+            nv.yearBuilt ??
+            nv.completeYear ??
+            (src as any).yearBuilt ??
+            (src as any).completeYear ??
             lget((src as any).completeYear!, 'fi')
           );
           return (!isNaN(year) && year > 0) ? year : undefined;
@@ -736,10 +468,10 @@ export class LinearToPropertyMapper {
         floorsTotal: Number(nv.floorCount ?? (src as any).floorCount) || undefined,
         floor,
         elevator: hasElevator,
-        
+
         // Rental flag
         rent: rentValue,
-        
+
         // Housing company info
         housingCompany: {
           name: lv((src as any).housingCooperativeName),
@@ -785,4 +517,3 @@ export class LinearToPropertyMapper {
     return property;
   }
 }
-
