@@ -135,9 +135,9 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
               quality={90}
             />
             ) : null}
-            {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
+            {/* Gradient Overlay — z-10 ensures it covers YouTube iframe UI */}
+            <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+            <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
           </div>
 
           {/* Play Button for YouTube videos */}
@@ -164,8 +164,8 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
             </button>
           )}
 
-          {/* Content - Centered text */}
-          <div className="relative h-full flex items-center justify-center">
+          {/* Content - Centered text — z-20 to be above gradient overlays */}
+          <div className="relative z-20 h-full flex items-center justify-center">
             <div className="container mx-auto px-6 sm:px-16 md:px-20 lg:px-24">
               <div className="max-w-4xl mx-auto text-center">
                 {/* Title - appears first */}
