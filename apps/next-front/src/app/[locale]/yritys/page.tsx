@@ -208,28 +208,33 @@ export default function CompanyPage({ params }: { params: { locale: string } }) 
         {/* Brand Story Videos */}
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-4 text-center">Brand Story</h2>
+            <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-4 text-center">
+              {locale === 'fi' ? 'Brändin tarina' : locale === 'sv' ? 'Varumärkeshistoria' : 'Brand Story'}
+            </h2>
             <p className="text-center text-gray-600 font-light mb-12 max-w-2xl mx-auto">
               {locale === 'fi' ? 'Tutustu Sotheby\'s International Realtyn tarinaan' : locale === 'sv' ? 'Lär känna Sotheby\'s International Realtys historia' : 'Discover the Sotheby\'s International Realty story'}
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               {[
-                { id: 'BN8B-USaKeE', title: 'Part I' },
-                { id: 'hwaaNQ-m9fk', title: 'Part II' },
-                { id: 'xdlWMvz6dlY', title: 'Part III' },
-              ].map((v) => (
+                { id: 'BN8B-USaKeE', part: 1 },
+                { id: 'hwaaNQ-m9fk', part: 2 },
+                { id: 'xdlWMvz6dlY', part: 3 },
+              ].map((v) => {
+                const roman = v.part === 1 ? 'I' : v.part === 2 ? 'II' : 'III';
+                const partLabel = locale === 'fi' ? `Osa ${roman}` : locale === 'sv' ? `Del ${roman}` : `Part ${roman}`;
+                return (
                 <div key={v.id} className="group">
                   <div className="relative aspect-video overflow-hidden shadow-lg bg-[#002349]">
                     {/* YouTube thumbnail as poster */}
                     <img
                       src={`https://img.youtube.com/vi/${v.id}/hqdefault.jpg`}
-                      alt={`Brand Story ${v.title}`}
+                      alt={`Brand Story ${partLabel}`}
                       className="absolute inset-0 w-full h-full object-cover"
                     />
                     {/* Iframe loads on top */}
                     <iframe
                       src={`https://www.youtube-nocookie.com/embed/${v.id}?rel=0&modestbranding=1`}
-                      title={`Brand Story ${v.title}`}
+                      title={`Brand Story ${partLabel}`}
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
                       className="absolute inset-0 w-full h-full"
@@ -237,9 +242,10 @@ export default function CompanyPage({ params }: { params: { locale: string } }) 
                       loading="lazy"
                     />
                   </div>
-                  <h3 className="text-center text-lg font-light text-gray-900 mt-4">{v.title}</h3>
+                  <h3 className="text-center text-lg font-light text-gray-900 mt-4">{partLabel}</h3>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>

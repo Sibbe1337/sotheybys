@@ -346,7 +346,7 @@ export default function FeaturedPropertyCard(props: FeaturedPropertyCardProps) {
             </div>
             {/* Dennis: "Ota yhteyttä" flyttad till höger bredvid mäklarinfo */}
             <a
-              href={`tel:${agent.phone.replace(/\s/g, '')}`}
+              href={`mailto:${agent.email}`}
               className="flex-shrink-0 rounded-none border border-gray-900 px-4 py-2 text-center text-xs font-medium uppercase tracking-wider text-gray-900 transition-colors hover:bg-gray-900 hover:text-white"
             >
               {contactText}
