@@ -56,9 +56,17 @@ export default function HomePageClient({
 
   const heroSlides = getTranslatedSlides(language);
 
+  const h1Text =
+    language === 'fi'
+      ? "Snellman Sotheby's International Realty — Kiinteistönvälitys Helsingissä"
+      : language === 'sv'
+      ? "Snellman Sotheby's International Realty — Fastighetsmäklare i Helsingfors"
+      : "Snellman Sotheby's International Realty — Real Estate in Helsinki";
+
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-1">
+        <h1 className="sr-only">{h1Text}</h1>
         <HeroCarousel slides={heroSlides} />
 
         {/* Social Share Links */}

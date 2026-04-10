@@ -91,9 +91,38 @@ export default async function LocaleLayout({
   // Fetch messages for the locale
   const messages = await getMessages();
 
+  const base = process.env.NEXT_PUBLIC_BASE_URL || 'https://sothebysrealty.fi';
+  const organizationJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'RealEstateAgent',
+    name: "Snellman Sotheby's International Realty",
+    alternateName: "Sotheby's International Realty Finland",
+    url: base,
+    logo: `${base}/og-image.jpg`,
+    image: `${base}/og-image.jpg`,
+    telephone: '+358 10 315 6900',
+    email: 'info@sothebysrealty.fi',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Kasarmikatu 34',
+      addressLocality: 'Helsinki',
+      postalCode: '00130',
+      addressCountry: 'FI',
+    },
+    sameAs: [
+      'https://www.sothebysrealty.com',
+      'https://www.facebook.com/SnellmanSothebysInternationalRealty',
+      'https://www.linkedin.com/company/snellman-sotheby-s-international-realty',
+    ],
+  };
+
   return (
     <html lang={validLocale}>
       <body className={`${inter.variable} ${playfair.variable}`}>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+    />
     <NextIntlClientProvider locale={validLocale} messages={messages}>
       <div className="min-h-screen flex flex-col">
         <Header locale={locale as 'fi' | 'sv' | 'en'} />
