@@ -464,7 +464,7 @@
       "energyCertStatus": {
         "HAS_CERTIFICATE": "Yes",
         "NOT_REQUIRED_BY_LAW": "No energy certificate required by law",
-        "EXEMPT_BY_ACT": "Exempt by act"
+        "EXEMPT_BY_ACT": "Energy certificate not required"
       },
       "heatingSystem": "Heating System",
       "ventilationSystem": "Ventilation",

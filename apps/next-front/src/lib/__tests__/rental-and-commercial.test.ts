@@ -228,8 +228,8 @@ describe('Rental & Commercial Properties', () => {
       
       const expectedLabels = [
         'Yes',
-        'Not required by law',
-        'Exempt by Act'
+        'No statutory energy certificate',
+        'Energy certificate not required'
       ];
       
       statuses.forEach((status, index) => {
@@ -241,13 +241,13 @@ describe('Rental & Commercial Properties', () => {
     it('should show energy status in Swedish correctly', () => {
       expect(getEnergyStatusLabel('HAS_CERTIFICATE', 'sv')).toBe('Ja');
       expect(getEnergyStatusLabel('NOT_REQUIRED_BY_LAW', 'sv')).toBe('Inget lagstadgat energicertifikat');
-      expect(getEnergyStatusLabel('EXEMPT_BY_ACT', 'sv')).toBe('Undantagen enligt energicertifikatlagen');
+      expect(getEnergyStatusLabel('EXEMPT_BY_ACT', 'sv')).toBe('Energicertifikat krävs ej');
     });
     
     it('should show energy status in Finnish correctly', () => {
       expect(getEnergyStatusLabel('HAS_CERTIFICATE', 'fi')).toBe('Kyllä');
       expect(getEnergyStatusLabel('NOT_REQUIRED_BY_LAW', 'fi')).toBe('Ei lain edellyttämää energiatodistusta');
-      expect(getEnergyStatusLabel('EXEMPT_BY_ACT', 'fi')).toBe('Vapautettu energiatodistuslain nojalla');
+      expect(getEnergyStatusLabel('EXEMPT_BY_ACT', 'fi')).toBe('Energiatodistusta ei vaadita');
     });
   });
   

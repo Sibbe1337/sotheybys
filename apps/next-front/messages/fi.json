@@ -335,7 +335,7 @@
       "energyCertStatus": {
         "HAS_CERTIFICATE": "Kyllä",
         "NOT_REQUIRED_BY_LAW": "Ei lain edellyttämää energiatodistusta",
-        "EXEMPT_BY_ACT": "Kohde on vapautettu energiatodistuksesta"
+        "EXEMPT_BY_ACT": "Energiatodistusta ei vaadita"
       },
       "heatingSystem": "Lämmitysjärjestelmä",
       "ventilationSystem": "Ilmanvaihto",

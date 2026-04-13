@@ -9,15 +9,17 @@ export function normalizeEnergyStatus(txt: string): EnergyStatus {
   const s = (txt || '').toLowerCase();
   if (!s) return null;
   
-  // Not required by law - CHECK THIS FIRST before "has certificate"
-  // Dennis 2025-11-24: Finnish patterns for "not required"
-  // LINUS FIX 2025-11-25: Added more patterns for all three languages
-  if (/ei.*edellytt|ei.*tarvita|ei tarvitse|ei lain|not required|inget.*lagstadgat|ej.*lagstadgat|behöver inte|fastigheten behöver inte|no statutory|ingen lagstadgad/.test(s)) {
+  // Exempt by act - option 3 in Linear. MUST run before NOT_REQUIRED_BY_LAW
+  // because the Swedish/Finnish phrasings both contain "behöver inte" / "ei tarvitse"
+  // which would otherwise match option 2's bucket.
+  if (/vapautettu|exempt|undantagen|undantaget|energiatodistuslain nojalla|ei.*energiatodistus.*tarvitse|ei tarvitse.*energiatodistus|behöver inte.*energicertifikat|fastigheten behöver inte/.test(s)) {
+    return 'EXEMPT_BY_ACT';
+  }
+
+  // Not required by law - option 2 in Linear
+  if (/ei lain edellytt|ei.*edellyttämää|not required|inget.*lagstadgat|ej.*lagstadgat|no statutory|ingen lagstadgad/.test(s)) {
     return 'NOT_REQUIRED_BY_LAW';
   }
-  
-  // Exempt by act
-  if (/vapautettu|exempt|undantagen|undantaget/.test(s)) return 'EXEMPT_BY_ACT';
   
   // Has certificate - CHECK THIS LAST to avoid false positives
   // Dennis 2025-11-24: Use word boundaries + check for complete "Kyllä" word
@@ -33,19 +35,19 @@ export const energyLabels = {
   fi: {
     HAS_CERTIFICATE: 'Kyllä',
     NOT_REQUIRED_BY_LAW: 'Ei lain edellyttämää energiatodistusta',
-    EXEMPT_BY_ACT: 'Vapautettu energiatodistuslain nojalla',
+    EXEMPT_BY_ACT: 'Energiatodistusta ei vaadita',
     null: 'Ei tietoa'
   },
   sv: {
     HAS_CERTIFICATE: 'Ja',
     NOT_REQUIRED_BY_LAW: 'Inget lagstadgat energicertifikat',
-    EXEMPT_BY_ACT: 'Undantagen enligt energicertifikatlagen',
+    EXEMPT_BY_ACT: 'Energicertifikat krävs ej',
     null: 'Ingen information'
   },
   en: {
     HAS_CERTIFICATE: 'Yes',
     NOT_REQUIRED_BY_LAW: 'No statutory energy certificate',
-    EXEMPT_BY_ACT: 'Exempt by Act',
+    EXEMPT_BY_ACT: 'Energy certificate not required',
     null: 'No information'
   }
 } as const;

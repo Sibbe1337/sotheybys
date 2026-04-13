@@ -78,7 +78,10 @@ describe('LinearToPropertyMapper', () => {
     const testCases = [
       { input: 'Kyllä', expected: 'HAS_CERTIFICATE' as const },
       { input: 'Ei lain edellyttämää energiatodistusta', expected: 'NOT_REQUIRED_BY_LAW' as const },
+      { input: 'Inget lagstadgat energicertifikat', expected: 'NOT_REQUIRED_BY_LAW' as const },
       { input: 'Vapautettu energiatodistuslain nojalla', expected: 'EXEMPT_BY_ACT' as const },
+      { input: 'Kohteella ei energiatodistuslain nojalla tarvitse olla energiatodistusta', expected: 'EXEMPT_BY_ACT' as const },
+      { input: 'Fastigheten behöver inte ett energicertifikat enligt lagen om energicertifikat', expected: 'EXEMPT_BY_ACT' as const },
       { input: '', expected: null }
     ];
 

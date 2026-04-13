@@ -441,7 +441,7 @@
       "energyCertStatus": {
         "HAS_CERTIFICATE": "Ja",
         "NOT_REQUIRED_BY_LAW": "Inget lagstadgat energicertifikat",
-        "EXEMPT_BY_ACT": "Undantagen enligt energicertifikatlagen"
+        "EXEMPT_BY_ACT": "Energicertifikat krävs ej"
       },
       "heatingSystem": "Värmesystem",
       "ventilationSystem": "Ventilation",
